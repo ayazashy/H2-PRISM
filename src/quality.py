@@ -4,7 +4,7 @@ Checks sensor health, missing data, stuck sensors, timestamp continuity, and phy
 Flags observations without destructive deletions.
 """
 
-from typing import Dict, List, Tuple
+from typing import Dict, List, Tuple, Any
 import numpy as np
 import pandas as pd
 from .schema import QualityFlag
