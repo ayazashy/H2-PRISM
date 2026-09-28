@@ -63,3 +63,7 @@ results/*.pkl
 results/*.joblib
 !results/.gitkeep
 !results/figures/.gitkeep
+
+# Local inspection and backup files
+*_names.txt
+src/data.py.step4_backup
