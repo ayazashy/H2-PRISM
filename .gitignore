@@ -47,16 +47,9 @@ Thumbs.db
 *.swp
 *.swo
 
-# Large raw datasets (keep directories via .gitkeep)
+# Large raw datasets (raw H2-SimNet untouched files)
 data/raw/*
 !data/raw/.gitkeep
-!data/raw/H2-SimNet/.gitkeep
-data/processed/*
-!data/processed/.gitkeep
-data/selected/*
-!data/selected/.gitkeep
-data/synthetic/*
-!data/synthetic/.gitkeep
 
 # Results cache
 results/*.pkl

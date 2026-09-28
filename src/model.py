@@ -13,7 +13,7 @@ from .schema import AttributionClass, MLResult
 try:
     from xgboost import XGBClassifier
     HAS_XGBOOST = True
-except ImportError:
+except Exception:
     HAS_XGBOOST = False
 
 

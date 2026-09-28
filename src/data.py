@@ -57,7 +57,7 @@ def generate_mock_scenario(
     """
     rng = np.random.default_rng(random_seed)
     n_steps = int(duration_s / dt)
-    time = np.arange(0, duration_s, dt)
+    time = np.arange(n_steps, dtype=float) * dt
 
     # Base operating conditions
     base_p1 = 5.0e6  # 5 MPa inlet
