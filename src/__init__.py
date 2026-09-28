@@ -17,6 +17,12 @@ from .schema import (
     StructuredEventReport,
 )
 
+from .pipeline import H2PrismPipeline
+from .detector import CandidateDetector
+from .decision import DecisionEngine
+from .observability import compute_observability
+from .evaluation import evaluate_pipeline_performance
+
 __all__ = [
     "EventStatus",
     "AttributionClass",
@@ -30,4 +36,9 @@ __all__ = [
     "ObservabilityResult",
     "Decision",
     "StructuredEventReport",
+    "H2PrismPipeline",
+    "CandidateDetector",
+    "DecisionEngine",
+    "compute_observability",
+    "evaluate_pipeline_performance",
 ]
