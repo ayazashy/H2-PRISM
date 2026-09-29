@@ -57,9 +57,8 @@ results/*.joblib
 !results/.gitkeep
 !results/figures/.gitkeep
 
-# Local inspection and backup files
-*_names.txt
-src/data.py.step4_backup
+# Video project builds & caches
+video-general/node_modules/
+video-general/out/
+.remotion/
 
-src/quality.py.current_backup
-src/quality.py.step6_backup

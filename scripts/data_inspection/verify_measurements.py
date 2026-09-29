@@ -11,6 +11,12 @@ import pandas as pd
 # ============================================================
 
 DATASET_ROOT = Path("data/raw/H2-SimNet")
+if not DATASET_ROOT.exists() or not any(DATASET_ROOT.rglob("*.csv")):
+    if Path("data/selected").exists() and any(Path("data/selected").rglob("*.csv")):
+        DATASET_ROOT = Path("data/selected")
+    elif Path("data/raw").exists():
+        DATASET_ROOT = Path("data/raw")
+
 
 
 # ============================================================

@@ -11,6 +11,12 @@ import pandas as pd
 # ============================================================
 
 RAW_DIR = Path("data/raw/H2-SimNet")
+if not RAW_DIR.exists() or not any(RAW_DIR.rglob("*.csv")):
+    if Path("data/selected").exists() and any(Path("data/selected").rglob("*.csv")):
+        RAW_DIR = Path("data/selected")
+    elif Path("data/raw").exists():
+        RAW_DIR = Path("data/raw")
+
 
 PRESSURE_SENSORS = [f"PS{i}" for i in range(1, 13)]
 FLOW_SENSORS = [f"MFS{i}" for i in range(1, 5)]
