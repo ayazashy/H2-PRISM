@@ -1180,15 +1180,23 @@ class QualityController:
         # ----------------------------------------------------
 
         if measurement_channels:
-
             expected_native_channels = set(
                 NATIVE_MEASUREMENT_CHANNELS
             )
-
             detected_native_channels = (
                 set(measurement_channels)
                 .intersection(
                     expected_native_channels
+                )
+            )
+
+            expected_legacy_channels = set(
+                LEGACY_CHANNELS
+            )
+            detected_legacy_channels = (
+                set(measurement_channels)
+                .intersection(
+                    expected_legacy_channels
                 )
             )
 
@@ -1216,12 +1224,14 @@ class QualityController:
                 ),
             }
 
-            data_adequacy_o_q = float(
-                native_channel_coverage
-            )
-
+            if len(detected_native_channels) > 0:
+                data_adequacy_o_q = float(native_channel_coverage)
+            elif len(detected_legacy_channels) > 0:
+                legacy_coverage = len(detected_legacy_channels) / len(expected_legacy_channels)
+                data_adequacy_o_q = float(legacy_coverage)
+            else:
+                data_adequacy_o_q = 0.0
         else:
-
             data_adequacy_details = {
                 "measurement_channel_count": 0,
                 "native_expected_channel_count": int(
