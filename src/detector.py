@@ -44,7 +44,8 @@ class CandidateDetector:
 
         # Uncorrected flow imbalance
         flow_imbalance = m_in - m_out
-        baseline_flow_std = np.std(flow_imbalance[:self.window_size]) + 1e-4
+        baseline_flow_mean = float(np.mean(flow_imbalance[:self.window_size]))
+        baseline_flow_std = float(np.std(flow_imbalance[:self.window_size])) + 1e-3
 
         # Pressure rate of change dP/dt
         dp_dt = np.abs(np.gradient(p_up, dt))
@@ -57,10 +58,10 @@ class CandidateDetector:
             if step - last_event_step < self.post_event:
                 continue
 
-            current_imbalance = abs(flow_imbalance[step])
+            current_imbalance_dev = abs(flow_imbalance[step] - baseline_flow_mean)
             current_dp = dp_dt[step]
 
-            flow_score = current_imbalance / baseline_flow_std
+            flow_score = current_imbalance_dev / baseline_flow_std
             dp_score = current_dp / self.dp_threshold
 
             if flow_score > self.flow_threshold_sigma or dp_score > 1.0:
