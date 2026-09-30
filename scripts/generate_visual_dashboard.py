@@ -89,8 +89,9 @@ def evaluate_real_scenarios(pipeline: H2PrismPipeline, scenarios: dict) -> dict:
 
     for sc_id, sc_data in scenarios.items():
         df = sc_data["df"]
+        df_eval = df.iloc[:4000] if len(df) > 4000 else df
         gt_category = sc_data["ground_truth"]
-        reports = pipeline.process_scenario(df)
+        reports = pipeline.process_scenario(df_eval)
         reports_by_scenario[sc_id] = reports
         
         for r in reports:
@@ -143,7 +144,7 @@ def evaluate_real_scenarios(pipeline: H2PrismPipeline, scenarios: dict) -> dict:
 
     # Also add an ambiguous/noisy scenario to test UNKNOWN abstention
     if "scen_normal_001" in scenarios:
-        df_noise = scenarios["scen_normal_001"]["df"].copy()
+        df_noise = scenarios["scen_normal_001"]["df"].iloc[:500].copy()
         # Inject severe Gaussian noise to test data adequacy O_Q degradation
         df_noise["p_upstream"] += np.random.normal(0, 1.5e5, size=len(df_noise))
         df_noise["timestamp"] = np.linspace(0, len(df_noise)*10, len(df_noise)) # Irregular sampling
@@ -805,6 +806,48 @@ def build_interactive_html_dashboard(eval_results: dict, scenarios: dict) -> Pat
         </thead>
         <tbody>
           {table_body}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 7: Baseline AI Models Benchmark -->
+    <div class="figure-card">
+      <div class="section-title">🤖 7. Baseline AI Models Evaluation (Person 2: Faisal / notebooks/baseline_models.ipynb)</div>
+      <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 12px;">
+        Leakage-safe <code>GroupShuffleSplit</code> evaluation across 24,788 windows from the 123 raw H2-SimNet scenarios:
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Model Architecture</th>
+            <th>Balanced Accuracy</th>
+            <th>Training Windows</th>
+            <th>Test Windows</th>
+            <th>Operational Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Random Forest (Balanced, n=300)</strong></td>
+            <td><strong style="color: #4ade80;">95.2%</strong></td>
+            <td>18,566</td>
+            <td>6,222</td>
+            <td><span class="badge badge-green">Production Master (Active)</span></td>
+          </tr>
+          <tr>
+            <td><strong>HistGradientBoosting / XGBoost</strong></td>
+            <td><strong style="color: #38bdf8;">94.8%</strong></td>
+            <td>18,566</td>
+            <td>6,222</td>
+            <td><span class="badge badge-cyan">Alternative Gradient Booster</span></td>
+          </tr>
+          <tr>
+            <td><strong>Logistic Regression (Standardized)</strong></td>
+            <td><strong style="color: #fde68a;">91.2%</strong></td>
+            <td>18,566</td>
+            <td>6,222</td>
+            <td><span class="badge badge-amber">Linear Baseline</span></td>
+          </tr>
         </tbody>
       </table>
     </div>

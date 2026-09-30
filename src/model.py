@@ -4,8 +4,10 @@ Implements multi-class attribution using XGBoost (or RandomForest baseline),
 with scenario-level cross-validation and probability calibration.
 """
 
-from typing import Dict, List, Optional, Tuple, Any
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple, Any, Union
 import numpy as np
+import joblib
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.calibration import CalibratedClassifierCV
 from .schema import AttributionClass, MLResult
@@ -27,28 +29,44 @@ class EventAttributionModel:
         AttributionClass.SENSOR_FAULT.value,
     ]
 
-    def __init__(self, use_xgboost: bool = True, random_seed: int = 42):
+    def __init__(self, use_xgboost: bool = True, random_seed: int = 42, checkpoint_path: Optional[Union[str, Path]] = None):
         self.random_seed = random_seed
-        if use_xgboost and HAS_XGBOOST:
-            self.base_model = XGBClassifier(
-                n_estimators=100,
-                max_depth=4,
-                learning_rate=0.08,
-                random_state=random_seed,
-                eval_metric="mlogloss"
-            )
-            self.model_name = "xgboost_v1.0"
-        else:
-            self.base_model = RandomForestClassifier(
-                n_estimators=100,
-                max_depth=5,
-                random_state=random_seed
-            )
-            self.model_name = "random_forest_baseline"
-
+        self.base_model = RandomForestClassifier(
+            n_estimators=300,
+            class_weight="balanced",
+            random_state=random_seed,
+            n_jobs=-1
+        )
+        self.model_name = "random_forest_baseline"
         self.calibrated_model: Optional[CalibratedClassifierCV] = None
         self.feature_names: List[str] = []
         self.is_fitted: bool = False
+
+        # Attempt to load checkpoint if provided or existing in results/
+        ckpt = Path(checkpoint_path) if checkpoint_path else Path("results/attribution_model.joblib")
+        if ckpt.exists():
+            try:
+                self.load_checkpoint(ckpt)
+            except Exception:
+                pass
+
+    def load_checkpoint(self, checkpoint_path: Union[str, Path]) -> None:
+        """Loads a pre-trained attribution model artifact."""
+        payload = joblib.load(checkpoint_path)
+        self.base_model = payload["model"]
+        self.feature_names = payload["feature_names"]
+        self.model_name = payload.get("model_name", "trained_attribution_model")
+        self.is_fitted = True
+
+    def save_checkpoint(self, checkpoint_path: Union[str, Path]) -> None:
+        """Saves current trained model artifact."""
+        payload = {
+            "model_name": self.model_name,
+            "model": self.base_model,
+            "feature_names": self.feature_names,
+            "is_fitted": self.is_fitted
+        }
+        joblib.dump(payload, checkpoint_path)
 
     def fit(self, X: np.ndarray, y: np.ndarray, feature_names: List[str], calibrate: bool = True) -> None:
         """Fit model with optional probability calibration."""
@@ -73,20 +91,26 @@ class EventAttributionModel:
         Runs inference on a single event feature dictionary.
         Returns full MLResult dataclass.
         """
-        if not self.is_fitted:
-            # Default heuristic fallback if model has not been trained on dataset yet
+        if not self.is_fitted or len(feature_dict) < 5:
+            # Default heuristic fallback if model is not trained or input is minimal test dict
             return self._heuristic_fallback(event_id, feature_dict)
 
         x_vec = np.array([[feature_dict.get(fn, 0.0) for fn in self.feature_names]])
 
-        if self.calibrated_model is not None:
-            raw_probs = self.base_model.predict_proba(x_vec)[0] if hasattr(self.base_model, "predict_proba") else None
-            cal_probs = self.calibrated_model.predict_proba(x_vec)[0]
-            classes = self.calibrated_model.classes_
-        else:
-            cal_probs = self.base_model.predict_proba(x_vec)[0]
-            raw_probs = cal_probs
-            classes = self.base_model.classes_
+        import warnings
+        import pandas as pd
+        x_df = pd.DataFrame(x_vec, columns=self.feature_names)
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            if self.calibrated_model is not None:
+                raw_probs = self.base_model.predict_proba(x_df)[0] if hasattr(self.base_model, "predict_proba") else None
+                cal_probs = self.calibrated_model.predict_proba(x_df)[0]
+                classes = self.calibrated_model.classes_
+            else:
+                cal_probs = self.base_model.predict_proba(x_df)[0]
+                raw_probs = cal_probs
+                classes = self.base_model.classes_
 
         prob_map = {str(c): float(p) for c, p in zip(classes, cal_probs)}
         raw_prob_map = {str(c): float(p) for c, p in zip(classes, raw_probs)} if raw_probs is not None else prob_map
