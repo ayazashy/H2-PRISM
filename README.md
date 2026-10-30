@@ -18,21 +18,25 @@ Abnormal pressure or flow readings in hydrogen-blend transmission networks do no
 
 ---
 
-## 2. Quickstart: 4 Simple Steps to Run & Verify
+## 2. Quickstart: 5 Simple Steps to Run & Verify
 
-Anyone opening this repository can inspect, audit, test, and visualize the entire framework in under 30 seconds:
+Anyone opening this repository can inspect data, audit, test, and visualize the entire framework in under 30 seconds:
 
 ```bash
-# Step 1: Install dependencies
+# Step 1: Install dependencies and editable package
 pip install -r requirements.txt
+pip install -e .
 
-# Step 2: Execute the deterministic dataset audit suite (Completes in ~12 seconds)
+# Step 2: Instant dataset inspection & direct scenario test load
+python3 -m h2prism.data
+
+# Step 3: Execute the deterministic dataset audit suite (Completes in ~12 seconds)
 python3 audit/run_all_audits.py
 
-# Step 3: Run the automated test suite (Audit integrity & Visualization tests)
+# Step 4: Run the automated test suite (23 passing tests: Data loader, Audits, Visualizations)
 pytest tests/
 
-# Step 4: Generate research figures & interactive HTML evaluation dashboard
+# Step 5: Generate research figures & interactive HTML evaluation dashboard
 python3 scripts/visualize.py --demo
 # (Optional: append --open to automatically launch the interactive dashboard in your browser)
 ```
@@ -105,11 +109,16 @@ H2-PRISM/
 ├── configs/                               # Configuration contracts (Faisal & Yazan)
 │   └── interface_contracts.yaml           # Schema specifications (Task F12)
 ├── data/                                  # Primary data directory
-│   └── raw/                               # Untouched raw H2-SimNet dataset (Zenodo 17871393)
+│   ├── raw/                               # Untouched raw H2-SimNet dataset (Zenodo 17871393: 998 MB)
+│   └── sample/                            # Lightweight 4-class sample dataset (Tracked in Git: 10 MB)
 ├── scripts/                               # Automation & reporting scripts
+│   ├── download_data.py                   # Automated dataset download & SHA256 integrity verifier
 │   └── visualize.py                       # Master CLI visualizer & dashboard compiler
 ├── src/                                   # Stage 2 modular codebase (H2-PRISM core package)
 │   └── h2prism/                           # Core Python package
+│       ├── data/                          # Dataset loader API (instant scenario & fold access)
+│       │   ├── loader.py                  # Direct loaders (load_scenario, load_fold, list_scenarios)
+│       │   └── __main__.py                # CLI inspection (python3 -m h2prism.data)
 │       └── visualization/                 # Academic publication plotting engine
 │           ├── theme.py                   # IEEE/Nature high-contrast, colorblind-safe theme
 │           ├── curves.py                  # Risk-coverage curves, reliability diagrams, ablations
@@ -117,7 +126,8 @@ H2-PRISM/
 │           ├── distinguishability.py      # D(x) separation density, indicator correlations
 │           ├── telemetry.py               # Synchronized pressure & mass flow timeseries
 │           └── dashboard.py               # Self-contained HTML report compiler
-├── tests/                                 # Automated test suite (Pytest: 18 passing tests)
+├── tests/                                 # Automated test suite (Pytest: 23 passing tests)
+│   ├── test_data_loader.py                # Dataset loading & fold integrity tests
 │   ├── test_dataset_audit.py              # Audit integrity & zero-leakage assertions
 │   └── test_visualization.py              # Plotting, CLI, and dashboard compilation tests
 ├── pyproject.toml                         # Project configuration
@@ -126,7 +136,38 @@ H2-PRISM/
 
 ---
 
-## 4. Team Ownership & Research Triad (Stage 2)
+## 4. Direct Dataset Access & Testing (Python API)
+
+A unified data access layer is provided in [`src/h2prism/data/`](file:///Users/ya/Documents/codes/H2-PRISM/src/h2prism/data/) and documented in [`01_dataset_audit/HOW_TO_ACCESS_DATA.md`](file:///Users/ya/Documents/codes/H2-PRISM/01_dataset_audit/HOW_TO_ACCESS_DATA.md).
+
+### 1. Where Does the Data Live?
+- **Full Benchmark (`data/raw/H2-SimNet-Dataset/`)**: **998 MB**, 265 files (Zenodo Record 17871393). Ignored by Git.
+- **Offline Quickstart Sample (`data/sample/`)**: **10 MB**, 4 complete scenarios covering all 4 target classes (`NORMAL`, `LEAK`, `COMPRESSOR_FAULT`, `COMPRESSOR_DELAY`). **Tracked in Git for immediate zero-download testing**.
+
+### 2. Load Any Scenario in Python (2 Lines):
+```python
+from h2prism.data import load_scenario, load_fold, list_scenarios
+
+# Load any scenario by short name, ID, or relative path
+df = load_scenario("leakG4")  # 20,000 timesteps x 24 channels (PS1-PS12, MFS1-MFS4)
+print(f"Loaded scenario: {df.shape}, PS1={df['PS1'].iloc[0]:.2f} MPa")
+
+# Load training and testing splits for Outer Fold 1:
+train_scenarios, test_scenarios = load_fold(fold_id=1)
+```
+
+### 3. Dataset Provisioning & Checksum Verification:
+```bash
+# Verify cryptographic SHA-256 integrity against raw_checksums.sha256
+python3 scripts/download_data.py --verify
+
+# Print dataset summary & file locations
+python3 scripts/download_data.py --summary
+```
+
+---
+
+## 5. Team Ownership & Research Triad (Stage 2)
 
 ```
 +─────────────────────────────────────────────────────────────────────────────+
@@ -148,7 +189,7 @@ H2-PRISM/
 
 ---
 
-## 5. Visualization Subpackage & Research Reporting Engine
+## 6. Visualization Subpackage & Research Reporting Engine
 
 A centralized, publication-grade visual reporting suite is implemented in [`src/h2prism/visualization/`](file:///Users/ya/Documents/codes/H2-PRISM/src/h2prism/visualization/) and documented in [`05_documentation/FIGURE_SPECIFICATION.md`](file:///Users/ya/Documents/codes/H2-PRISM/05_documentation/FIGURE_SPECIFICATION.md).
 
@@ -176,7 +217,7 @@ The compiler in [`src/h2prism/visualization/dashboard.py`](file:///Users/ya/Docu
 
 ---
 
-## 6. Verified Dataset Truth & Scientific Boundaries
+## 7. Verified Dataset Truth & Scientific Boundaries
 
 1. **Fluid Composition**: The raw dataset simulates a **10% $\text{H}_2$ / 90% $\text{CH}_4$ blend** in Simscape Gas Fluids R2025a, **not** pure hydrogen.
 2. **Sensor Channels**: Pressure transmitters `PS1` through `PS12` (MPa) and mass flow meters `MFS1` through `MFS4` (kg/s) are verified. **Zero localized temperature channels exist**.
@@ -186,7 +227,7 @@ The compiler in [`src/h2prism/visualization/dashboard.py`](file:///Users/ya/Docu
 
 ---
 
-## 7. Historical Stage 1 Archive
+## 8. Historical Stage 1 Archive
 
 All Stage 1 prototype implementations, presentation dashboard HTML, animations, and preliminary mock scripts have been retired from the active branch and are permanently preserved in Git history:
 ```bash

@@ -1,0 +1,77 @@
+# H2-PRISM Dataset Access & Provisioning Guide
+**Owner**: Yazan (Lead, Dataset Audit, Data Engineering & Dataset Readiness)
+
+---
+
+## 1. Where Is the Dataset Stored?
+
+| Dataset Tier | Directory Path | Size | Status in Git | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| **Full Raw Benchmark** | `data/raw/H2-SimNet-Dataset/` | **998 MB** (265 files) | **Ignored** (`.gitignore`) | Complete peer-reviewed H2-SimNet archive (Zenodo 17871393) with all parquet/csv runs, simulations, and documentation. |
+| **Quickstart Sample** | `data/sample/` | **10 MB** (4 scenarios) | **Tracked** in Git | 4 full-length (20,000 timestep) representative scenarios covering all 4 target classes for instant offline testing without downloading 1 GB. |
+
+---
+
+## 2. Instant Python API: Load in 2 Lines of Code
+
+The core Python package `h2prism.data` provides direct, one-line loading of scenarios, metadata, and cross-validation folds:
+
+```python
+from h2prism.data import load_scenario, list_scenarios, load_fold
+
+# 1. List all 58 distinct scenarios:
+scenarios = list_scenarios()
+print(scenarios[["Scenario_ID", "target_class", "topology"]].head())
+
+# 2. Load any scenario directly by short name, ID, or file path:
+df_leak = load_scenario("leakG4")  # (20,000 timesteps x 24 channels)
+df_norm = load_scenario("normality_gest_center")
+
+# 3. Access sensor readings:
+print(f"Inlet Pressure (PS1)  : {df_leak['PS1'].iloc[0]:.2f} MPa")
+print(f"Inlet Mass Flow (MFS1): {df_leak['MFS1'].iloc[0]:.2f} kg/s")
+
+# 4. Load full outer fold (1, 2, or 3) train & test splits for model training:
+train_scenarios, test_scenarios = load_fold(fold_id=1)
+print(f"Fold 1: {len(train_scenarios)} train scenarios, {len(test_scenarios)} test scenarios")
+```
+
+---
+
+## 3. Instant CLI Inspection
+
+Anyone can inspect dataset availability and verify scenario loading from the terminal:
+
+```bash
+# Print dataset summary and test instant scenario loading
+python3 -m h2prism.data
+
+# Or view dataset provisioning status
+python3 scripts/download_data.py --summary
+```
+
+---
+
+## 4. Fresh Clone Provisioning (If Raw Dataset Is Missing)
+
+Because GitHub repositories cannot host 1 GB raw archives, `data/raw/*` is gitignored.
+If someone clones the repository fresh on another machine:
+
+1. **Option A: Use the Tracked Sample Dataset (Zero Downloads Required)**:
+   The repository already includes `data/sample/` with 4 complete scenarios (`NORMAL`, `LEAK`, `COMPRESSOR_FAULT`, `COMPRESSOR_DELAY`). All pipelines, feature extraction scripts, models, and visualization engines work immediately on this sample.
+
+2. **Option B: Download Full Raw Benchmark**:
+   Run the provisioning script:
+   ```bash
+   python3 scripts/download_data.py --download
+   ```
+   Or download directly from Zenodo:
+   - **Zenodo Record**: [zenodo.org/records/17871393](https://zenodo.org/records/17871393)
+   - **GitHub Repository**: [github.com/andysinx/H2-SimNet](https://github.com/andysinx/H2-SimNet)
+   - Extract the folder into `data/raw/H2-SimNet-Dataset/`.
+
+3. **Verify Integrity**:
+   Verify cryptographic SHA-256 hashes against the frozen ledger:
+   ```bash
+   python3 scripts/download_data.py --verify
+   ```
