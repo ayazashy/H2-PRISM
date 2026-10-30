@@ -60,9 +60,25 @@ def list_scenarios(eligible_only: bool = True) -> pd.DataFrame:
     return df
 
 
+def ensure_dataset_available(auto_download: bool = False) -> bool:
+    """Checks if raw dataset is installed; auto-downloads if requested."""
+    if is_raw_dataset_available():
+        return True
+    if auto_download:
+        import sys
+        scripts_dir = WORKSPACE_ROOT / "scripts"
+        if str(scripts_dir) not in sys.path:
+            sys.path.insert(0, str(scripts_dir))
+        from download_data import setup_dataset
+        setup_dataset()
+        return is_raw_dataset_available()
+    return False
+
+
 def load_scenario(
     identifier: Union[str, Path],
     format: str = "parquet",
+    auto_download: bool = False,
 ) -> pd.DataFrame:
     """
     Directly loads a scenario as a pandas DataFrame.
@@ -78,6 +94,9 @@ def load_scenario(
     Returns:
         pd.DataFrame containing 20,000 timesteps of SCADA measurements and labels.
     """
+    if not is_raw_dataset_available() and auto_download:
+        ensure_dataset_available(auto_download=True)
+
     id_str = str(identifier).strip()
     
     # 1. Direct path check
@@ -141,8 +160,9 @@ def load_scenario(
 
     raise FileNotFoundError(
         f"Could not locate scenario '{identifier}'.\n"
-        f"Verified search locations: {RAW_DATASET_DIR} and {SAMPLE_DATASET_DIR}.\n"
-        f"If the raw dataset has not been downloaded, run 'python3 scripts/download_data.py'."
+        f"The full H2-SimNet dataset (998 MB) is not present locally.\n"
+        f"Run 'python3 setup_data.py' to automatically download and extract it in 1 click from Zenodo.\n"
+        f"Direct download link: https://zenodo.org/records/17871393/files/H2-SimNet-Dataset.zip?download=1"
     )
 
 

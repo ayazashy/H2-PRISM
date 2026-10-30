@@ -27,8 +27,8 @@ Anyone opening this repository can inspect data, audit, test, and visualize the 
 pip install -r requirements.txt
 pip install -e .
 
-# Step 2: Instant dataset inspection & direct scenario test load
-python3 -m h2prism.data
+# Step 2: 1-Click dataset setup & verification (automatically downloads from Zenodo if fresh clone)
+python3 setup_data.py
 
 # Step 3: Execute the deterministic dataset audit suite (Completes in ~12 seconds)
 python3 audit/run_all_audits.py

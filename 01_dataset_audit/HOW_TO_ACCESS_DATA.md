@@ -52,26 +52,19 @@ python3 scripts/download_data.py --summary
 
 ---
 
-## 4. Fresh Clone Provisioning (If Raw Dataset Is Missing)
+## 4. Fresh Clone Provisioning (1-Click Automated Setup)
 
-Because GitHub repositories cannot host 1 GB raw archives, `data/raw/*` is gitignored.
-If someone clones the repository fresh on another machine:
+Because raw benchmarks cannot be pushed to Git (~1 GB), running `setup_data.py` at the repository root automatically downloads, extracts, and provisions the dataset in a single step:
 
-1. **Option A: Use the Tracked Sample Dataset (Zero Downloads Required)**:
-   The repository already includes `data/sample/` with 4 complete scenarios (`NORMAL`, `LEAK`, `COMPRESSOR_FAULT`, `COMPRESSOR_DELAY`). All pipelines, feature extraction scripts, models, and visualization engines work immediately on this sample.
+```bash
+# 1-click automated download & extraction:
+python3 setup_data.py
+```
 
-2. **Option B: Download Full Raw Benchmark**:
-   Run the provisioning script:
-   ```bash
-   python3 scripts/download_data.py --download
-   ```
-   Or download directly from Zenodo:
-   - **Zenodo Record**: [zenodo.org/records/17871393](https://zenodo.org/records/17871393)
-   - **GitHub Repository**: [github.com/andysinx/H2-SimNet](https://github.com/andysinx/H2-SimNet)
-   - Extract the folder into `data/raw/H2-SimNet-Dataset/`.
-
-3. **Verify Integrity**:
-   Verify cryptographic SHA-256 hashes against the frozen ledger:
-   ```bash
-   python3 scripts/download_data.py --verify
-   ```
+### What this command does:
+1. Downloads `H2-SimNet-Dataset.zip` (509 MB) directly from the official Zenodo link:
+   [`https://zenodo.org/records/17871393/files/H2-SimNet-Dataset.zip?download=1`](https://zenodo.org/records/17871393/files/H2-SimNet-Dataset.zip?download=1)
+2. Unzips it into `data/raw/H2-SimNet-Dataset/` (998 MB uncompressed).
+3. Automatically deletes the `.zip` archive to save disk space.
+4. Validates cryptographic SHA-256 hashes against `01_dataset_audit/raw_checksums.sha256`.
+5. Executes a test load on `leakG4.parquet` to confirm the environment is 100% operational.
