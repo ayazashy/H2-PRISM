@@ -1,0 +1,106 @@
+# H2-PRISM Technical Interface Contracts (Task F12 / Coordination with Yazan & Ahmed)
+metadata:
+  project: "H2-PRISM — Identifiability-Aware Event Attribution and Selective Diagnosis in Hydrogen-Blend Pipeline Networks"
+  version: "1.0.0-frozen-contracts"
+  date: "2026-10-30"
+
+contracts:
+  manifest_schema:
+    description: "Defines the columns and types for the scenario-level dataset manifest (Yazan -> Faisal)."
+    required_columns:
+      - name: "file"
+        type: "string"
+        description: "Relative path to raw data file from workspace root."
+      - name: "Scenario_ID"
+        type: "string"
+        description: "Unique identifier for underlying physical simulation run."
+      - name: "Scenario_Family_ID"
+        type: "string"
+        description: "Primary unit of independence for grouped cross-validation."
+      - name: "duplicate_class_id"
+        type: "string"
+        description: "Group identifier for exact byte or numerical mirror exports."
+      - name: "event_label_raw"
+        type: "string"
+        description: "Original unmapped event label from raw data."
+      - name: "phase"
+        type: "string"
+        enum: ["Initial Ramp-up", "Transient", "Steady State", "Normal Baseline", "Unknown"]
+      - name: "topology"
+        type: "string"
+        enum: ["Downstream", "Center", "Upstream", "Unknown"]
+      - name: "duration_s"
+        type: "float"
+        description: "Total run duration in seconds (~20000.0s)."
+      - name: "event_onset_s"
+        type: "float"
+        description: "Ground truth event injection onset timestamp."
+      - name: "event_offset_s"
+        type: "float"
+        description: "Ground truth event injection termination timestamp."
+      - name: "eligible_primary"
+        type: "boolean"
+        description: "Flag indicating scenario eligibility for primary 4-class mutually exclusive task."
+      - name: "exclusion_reason"
+        type: "string"
+        description: "Explanation if excluded from primary evaluation."
+
+  window_manifest_schema:
+    description: "Defines the columns for the preprocessed observation windows (Faisal Task F3)."
+    required_columns:
+      - name: "window_id"
+        type: "string"
+        description: "Unique identifier: {Scenario_ID}_w{window_index:04d}"
+      - name: "Scenario_ID"
+        type: "string"
+      - name: "Scenario_Family_ID"
+        type: "string"
+      - name: "start_time"
+        type: "float"
+      - name: "end_time"
+        type: "float"
+      - name: "label_raw"
+        type: "string"
+      - name: "label_mapped"
+        type: "string"
+        enum: ["NORMAL", "LEAK", "COMPRESSOR_FAULT", "COMPRESSOR_DELAY", "UNKNOWN"]
+      - name: "phase"
+        type: "string"
+      - name: "topology"
+        type: "string"
+      - name: "boundary_status"
+        type: "string"
+        enum: ["PRE_EVENT", "DURING_EVENT", "POST_EVENT", "BOUNDARY_CROSSING"]
+      - name: "eligible_primary"
+        type: "boolean"
+      - name: "exclusion_reason"
+        type: "string"
+
+  feature_table_schema:
+    description: "Standardized feature matrix inputs for baseline and D(x) calculation (Faisal Task F3)."
+    metadata_columns:
+      - "window_id"
+      - "Scenario_ID"
+      - "Scenario_Family_ID"
+      - "label_mapped"
+    sensor_channels_available:
+      pressure_MPa: ["PS1", "PS2", "PS3", "PS4", "PS5", "PS6", "PS7", "PS8", "PS9", "PS10", "PS11", "PS12"]
+      mass_flow_kg_per_s: ["MFS1", "MFS2", "MFS3", "MFS4"]
+      temperature: null # EXPLICITLY NOT AVAILABLE IN RAW DATASET
+
+  prediction_table_schema:
+    description: "Output schema for outer-test predictions (Faisal Tasks F5, F7, F9, F10)."
+    required_columns:
+      - "window_id"
+      - "Scenario_ID"
+      - "Scenario_Family_ID"
+      - "outer_fold"
+      - "y_true"
+      - "y_pred"
+      - "C" # Confidence: max_k p_k(x)
+      - "M" # Margin: p_(1)(x) - p_(2)(x)
+      - "H" # Entropy: -sum p_k log p_k
+      - "D" # Empirical distinguishability: q_(1)(x) - q_(2)(x)
+      - "policy_outcome" # SPECIFIC, AMBIGUITY_SET, UNRESOLVED
+      - "ambiguity_set"
+      - "reason_code"

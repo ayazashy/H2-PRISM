@@ -1,0 +1,33 @@
+task_id,task_name,owner,collaborators,priority,status,dependencies,primary_output
+Y1,Complete Dataset Inventory and Integrity Audit,Yazan,Faisal; Ahmed,Critical,COMPLETED,None,01_dataset_audit/DATASET_INVENTORY.md
+Y2,Scenario Identification and Family Construction,Yazan,Ahmed; Faisal,Critical,COMPLETED,Y1,01_dataset_audit/DATASET_SCENARIO_MAP.csv
+Y3,Operating Conditions Timing and Phase Confounding,Yazan,Faisal; Ahmed,High,COMPLETED,Y1; Y2,01_dataset_audit/PHASE_CONFOUNDING_REPORT.md
+Y4,Label Inventory Hierarchy and Overlap Audit,Yazan,Faisal; Ahmed,Critical,COMPLETED,Y1; Y2; Y3,01_dataset_audit/class_mapping.yaml
+Y8,Provisional Data Freeze Early Handoff,Yazan,Faisal; Ahmed,Critical,COMPLETED,Y1; Y2; Y4,01_dataset_audit/provisional/
+Y5,Dataset Feasibility and Leakage Evidence,Yazan,Faisal; Ahmed,Critical,COMPLETED,Y2; Y4,01_dataset_audit/folds.csv
+Y6,Scientific Data Provenance and Processing History,Ahmed (transferred from Yazan),Yazan; Faisal,High,IN_PROGRESS,Y1-Y5,05_documentation/DATA_PROVENANCE.md
+Y7,Final Dataset Readiness Decision,Yazan,Faisal; Ahmed,Critical,COMPLETED,Y1-Y5; Y8,01_dataset_audit/DATASET_READINESS_REPORT.md
+F1,Repository and Implementation Audit,Faisal,Ahmed; Yazan,Critical,IN_PROGRESS,None,00_governance/REPO_CLASSIFICATION.csv
+F2,Diagnostic Problem Formulation,Faisal,Ahmed; Yazan,Critical,IN_PROGRESS,Y4,02_methodology/DIAGNOSTIC_PROBLEM_FORMULATION.md
+F3,Preprocessing and Window Generation,Faisal,Yazan; Ahmed,Critical,READY_TO_START,Y1; Y3; Y8,src/h2prism/windows.py
+F4,Final Grouped Evaluation Design and Leakage-Safe Training,Faisal,Yazan; Ahmed,Critical,READY_TO_START,Y2; Y5; Y8,02_methodology/GROUPED_EVALUATION_PROTOCOL.md
+F5,Baseline Classifier,Faisal,Ahmed; Yazan,Critical,PENDING,F2-F4,03_results/BASELINE_RESULTS.csv
+F6,Probability Calibration,Faisal,Ahmed,High,PENDING,F5,02_methodology/PROBABILITY_CALIBRATION_SPEC.md
+F7,Empirical Distinguishability Statistic D(x),Faisal,Ahmed; Yazan,Critical,PENDING,F2-F4,src/h2prism/distinguishability.py
+F8,Confidence Margin Entropy and Support Comparators,Faisal,Ahmed,High,PENDING,F5-F7,02_methodology/UNCERTAINTY_AND_DISTINGUISHABILITY_COMPARATORS.md
+F9,Three-Outcome Selective Diagnostic Policy,Faisal,Ahmed; Yazan,Critical,PENDING,F5-F8,src/h2prism/policy.py
+F10,Primary Experimental Comparison,Faisal,Ahmed; Yazan,Critical,PENDING,F5-F9,03_results/SELECTIVE_EVALUATION_RESULTS.csv
+F11,Incremental Value Ablation and Statistical Validation,Faisal,Ahmed; Yazan,High,PENDING,F10,03_results/STATISTICAL_VALIDATION_REPORT.md
+F12,Technical Integration Architecture Freeze,Faisal,Yazan; Ahmed,Critical,IN_PROGRESS,F1-F4,configs/interface_contracts.yaml
+F13,Software Testing Leakage Testing and Reproducibility,Faisal,Yazan; Ahmed,Critical,PENDING,All core modules,04_validation/TEST_RESULTS.md
+A1,Research Identity and Methodology Master Structure,Ahmed,Faisal; Yazan,Critical,IN_PROGRESS,Existing proposals,05_documentation/METHODOLOGY_MASTER_STRUCTURE.md
+A2,Problem Formulation and Scientific Motivation,Ahmed,Faisal; Yazan,High,IN_PROGRESS,A1; F2,05_documentation/PROBLEM_FORMULATION_AND_MOTIVATION.md
+A3,Dataset Description and Limitations,Ahmed,Yazan; Faisal,High,IN_PROGRESS,Y1-Y5; Y7,05_documentation/DATASET_DESCRIPTION.md
+A4,Mathematical and Conceptual Consistency Review,Ahmed,Faisal; Yazan,Critical,PENDING,F2; F7; F9,05_documentation/MATHEMATICAL_CONSISTENCY_REVIEW.md
+A5,Results Reporting Architecture and Research Figures,Ahmed,Faisal; Yazan,High,PENDING,A1; F5-F12,05_documentation/RESULTS_REPORTING_TEMPLATE.md
+A6,Method-to-Implementation Traceability,Ahmed,Faisal; Yazan,Critical,PENDING,A1; Faisal outputs; Yazan outputs,05_documentation/METHOD_IMPLEMENTATION_TRACEABILITY.md
+A7,Scientific Claim and Limitation Register,Ahmed,Faisal; Yazan,High,IN_PROGRESS,A2; A3; Y7; F10; F11,05_documentation/SCIENTIFIC_CLAIM_AND_LIMITATION_REGISTER.md
+A8,Complete Methodology Draft,Ahmed,Faisal; Yazan,Critical,PENDING,A1-A7,05_documentation/H2_PRISM_COMPLETE_METHODOLOGY_DRAFT.md
+A9,Integration Targeted Cross-Review and Final Freeze,Ahmed,Faisal; Yazan,Critical,IN_PROGRESS,All workstreams,00_governance/GATE_DECISIONS.md
+A10,Scientific Data Provenance and Processing History,Ahmed,Yazan; Faisal,High,IN_PROGRESS,Y1-Y5; F3; F4; F10,05_documentation/DATA_PROVENANCE.md
+A11,Publication and Research Deliverables,Ahmed,Faisal; Yazan,High,PENDING,A3-A10; F5-F12,05_documentation/H2_PRISM_MANUSCRIPT_DRAFT.md

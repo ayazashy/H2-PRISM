@@ -1,0 +1,59 @@
+Scenario_ID,Scenario_Family_ID,topology,phase,event_raw,has_row_level_labels,file_example
+SCEN_CENTER_INITIAL_RAMP_UP_LEAKG3,FAM_LEAK_G3,Center,Initial Ramp-up,Leak_G3,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/start_transient/leakG3.csv
+SCEN_CENTER_INITIAL_RAMP_UP_LEAKG4BROKENC1,FAM_COMBINED_LEAK_G4_BROKEN_C1,Center,Initial Ramp-up,Combined_LeakG4_CompressorFault,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/start_transient/leakG4brokenC1.csv
+SCEN_CENTER_NORMAL_BASELINE_NORMALITY_GEST_CENTER,FAM_NORMALITY,Center,Normal Baseline,NORMAL,True,H2-SimNet-Dataset/H2-SimNet-clean/normality-scenarios/csv/normality_gest_center.csv
+SCEN_CENTER_STEADY_STATE_BROKENC1G5_WEAK,FAM_COMBINED_BROKEN_C1_LEAK_G5,Center,Steady State,Combined_CompressorFault_LeakG5,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/brokenC1G5_weak.csv
+SCEN_CENTER_STEADY_STATE_BROKENC1_STRONG,FAM_COMPRESSOR_FAULT_C1,Center,Steady State,CompressorFault,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/brokenC1_strong.csv
+SCEN_CENTER_STEADY_STATE_BROKENC1_WEAK,FAM_COMPRESSOR_FAULT_C1,Center,Steady State,CompressorFault,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/brokenC1_weak.csv
+SCEN_CENTER_STEADY_STATE_LEAKG3,FAM_LEAK_G3,Center,Steady State,Leak_G3,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG3.csv
+SCEN_CENTER_STEADY_STATE_LEAKG3G4_STRONG,FAM_LEAK_G3G4_COMBINED,Center,Steady State,Leak_G3_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG3G4_strong.csv
+SCEN_CENTER_STEADY_STATE_LEAKG3G4_WEAK,FAM_LEAK_G3G4_COMBINED,Center,Steady State,Leak_G3_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG3G4_weak.csv
+SCEN_CENTER_STEADY_STATE_LEAKG3G5_OVERLAPPED,FAM_LEAK_G3G5_COMBINED,Center,Steady State,Leak_G3_G5,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG3G5_overlapped.csv
+SCEN_CENTER_STEADY_STATE_LEAKG3G6,FAM_LEAK_G3G6_COMBINED,Center,Steady State,Leak_G3_G6,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG3G6.csv
+SCEN_CENTER_STEADY_STATE_LEAKG4_STRONG,FAM_LEAK_G4,Center,Steady State,Leak_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG4_strong.csv
+SCEN_CENTER_STEADY_STATE_LEAKG4_WEAK,FAM_LEAK_G4,Center,Steady State,Leak_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG4_weak.csv
+SCEN_CENTER_STEADY_STATE_LEAKG5_STRONG,FAM_LEAK_G5,Center,Steady State,Leak_G5,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG5_strong.csv
+SCEN_CENTER_STEADY_STATE_LEAKG5_WEAK,FAM_LEAK_G5,Center,Steady State,Leak_G5,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG5_weak.csv
+SCEN_CENTER_STEADY_STATE_LEAKG6,FAM_LEAK_G6,Center,Steady State,Leak_G6,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG6.csv
+SCEN_CENTER_STEADY_STATE_STARTDELAYC1,FAM_COMPRESSOR_DELAY_C1,Center,Steady State,CompressorDelay,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/startdelayC1.csv
+SCEN_CENTER_TRANSIENT_LEAKG4,FAM_LEAK_G4,Center,Transient,Leak_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/assestment_transient/leakG4.csv
+SCEN_CENTER_TRANSIENT_LEAKG5G6_OVERLAPPED,FAM_LEAK_G5G6_COMBINED,Center,Transient,Leak_G5_G6,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/assestment_transient/leakG5G6_overlapped.csv
+SCEN_DOWNSTREAM_INITIAL_RAMP_UP_LEAKG3,FAM_LEAK_G3,Downstream,Initial Ramp-up,Leak_G3,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/start_transient/leakG3.csv
+SCEN_DOWNSTREAM_INITIAL_RAMP_UP_LEAKG4BROKENC1,FAM_COMBINED_LEAK_G4_BROKEN_C1,Downstream,Initial Ramp-up,Combined_LeakG4_CompressorFault,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/start_transient/leakG4brokenC1.csv
+SCEN_DOWNSTREAM_NORMAL_BASELINE_NORMALITY_GEST_DOWN,FAM_NORMALITY,Downstream,Normal Baseline,NORMAL,True,H2-SimNet-Dataset/H2-SimNet-clean/normality-scenarios/csv/normality_gest_down.csv
+SCEN_DOWNSTREAM_STEADY_STATE_BROKENC1G5_WEAK,FAM_COMBINED_BROKEN_C1_LEAK_G5,Downstream,Steady State,Combined_CompressorFault_LeakG5,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/brokenC1G5_weak.csv
+SCEN_DOWNSTREAM_STEADY_STATE_BROKENC1_STRONG,FAM_COMPRESSOR_FAULT_C1,Downstream,Steady State,CompressorFault,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/brokenC1_strong.csv
+SCEN_DOWNSTREAM_STEADY_STATE_BROKENC1_WEAK,FAM_COMPRESSOR_FAULT_C1,Downstream,Steady State,CompressorFault,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/brokenC1_weak.csv
+SCEN_DOWNSTREAM_STEADY_STATE_LEAKG3,FAM_LEAK_G3,Downstream,Steady State,Leak_G3,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG3.csv
+SCEN_DOWNSTREAM_STEADY_STATE_LEAKG3G4_STRONG,FAM_LEAK_G3G4_COMBINED,Downstream,Steady State,Leak_G3_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG3G4_strong.csv
+SCEN_DOWNSTREAM_STEADY_STATE_LEAKG3G4_WEAK,FAM_LEAK_G3G4_COMBINED,Downstream,Steady State,Leak_G3_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG3G4_weak.csv
+SCEN_DOWNSTREAM_STEADY_STATE_LEAKG3G5_OVERLAPPED,FAM_LEAK_G3G5_COMBINED,Downstream,Steady State,Leak_G3_G5,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG3G5_overlapped.csv
+SCEN_DOWNSTREAM_STEADY_STATE_LEAKG3G6,FAM_LEAK_G3G6_COMBINED,Downstream,Steady State,Leak_G3_G6,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG3G6.csv
+SCEN_DOWNSTREAM_STEADY_STATE_LEAKG4_STRONG,FAM_LEAK_G4,Downstream,Steady State,Leak_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG4_strong.csv
+SCEN_DOWNSTREAM_STEADY_STATE_LEAKG4_WEAK,FAM_LEAK_G4,Downstream,Steady State,Leak_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG4_weak.csv
+SCEN_DOWNSTREAM_STEADY_STATE_LEAKG5_STRONG,FAM_LEAK_G5,Downstream,Steady State,Leak_G5,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG5_strong.csv
+SCEN_DOWNSTREAM_STEADY_STATE_LEAKG5_WEAK,FAM_LEAK_G5,Downstream,Steady State,Leak_G5,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG5_weak.csv
+SCEN_DOWNSTREAM_STEADY_STATE_LEAKG6,FAM_LEAK_G6,Downstream,Steady State,Leak_G6,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG6.csv
+SCEN_DOWNSTREAM_STEADY_STATE_STARTDELAYC1,FAM_COMPRESSOR_DELAY_C1,Downstream,Steady State,CompressorDelay,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/startdelayC1.csv
+SCEN_DOWNSTREAM_TRANSIENT_LEAKG4,FAM_LEAK_G4,Downstream,Transient,Leak_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/assestment_transient/leakG4.csv
+SCEN_DOWNSTREAM_TRANSIENT_LEAKG5G6_OVERLAPPED,FAM_LEAK_G5G6_COMBINED,Downstream,Transient,Leak_G5_G6,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/assestment_transient/leakG5G6_overlapped.csv
+SCEN_UNKNOWN_UNKNOWN_LEAKG4,FAM_LEAK_G4,Unknown,Unknown,Leak_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/leakG4.parquet
+SCEN_UPSTREAM_INITIAL_RAMP_UP_LEAKG3,FAM_LEAK_G3,Upstream,Initial Ramp-up,Leak_G3,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/start_transient/leakG3.csv
+SCEN_UPSTREAM_INITIAL_RAMP_UP_LEAKG4BROKENC1,FAM_COMBINED_LEAK_G4_BROKEN_C1,Upstream,Initial Ramp-up,Combined_LeakG4_CompressorFault,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/start_transient/leakG4brokenC1.csv
+SCEN_UPSTREAM_NORMAL_BASELINE_NORMALITY_GEST_UP,FAM_NORMALITY,Upstream,Normal Baseline,NORMAL,True,H2-SimNet-Dataset/H2-SimNet-clean/normality-scenarios/csv/normality_gest_up.csv
+SCEN_UPSTREAM_STEADY_STATE_BROKENC1G5_WEAK,FAM_COMBINED_BROKEN_C1_LEAK_G5,Upstream,Steady State,Combined_CompressorFault_LeakG5,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/brokenC1G5_weak.csv
+SCEN_UPSTREAM_STEADY_STATE_BROKENC1_STRONG,FAM_COMPRESSOR_FAULT_C1,Upstream,Steady State,CompressorFault,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/brokenC1_strong.csv
+SCEN_UPSTREAM_STEADY_STATE_BROKENC1_WEAK,FAM_COMPRESSOR_FAULT_C1,Upstream,Steady State,CompressorFault,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/brokenC1_weak.csv
+SCEN_UPSTREAM_STEADY_STATE_LEAKG3,FAM_LEAK_G3,Upstream,Steady State,Leak_G3,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG3.csv
+SCEN_UPSTREAM_STEADY_STATE_LEAKG3G4_STRONG,FAM_LEAK_G3G4_COMBINED,Upstream,Steady State,Leak_G3_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG3G4_strong.csv
+SCEN_UPSTREAM_STEADY_STATE_LEAKG3G4_WEAK,FAM_LEAK_G3G4_COMBINED,Upstream,Steady State,Leak_G3_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG3G4_weak.csv
+SCEN_UPSTREAM_STEADY_STATE_LEAKG3G5_OVERLAPPED,FAM_LEAK_G3G5_COMBINED,Upstream,Steady State,Leak_G3_G5,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG3G5_overlapped.csv
+SCEN_UPSTREAM_STEADY_STATE_LEAKG3G6,FAM_LEAK_G3G6_COMBINED,Upstream,Steady State,Leak_G3_G6,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG3G6.csv
+SCEN_UPSTREAM_STEADY_STATE_LEAKG4_STRONG,FAM_LEAK_G4,Upstream,Steady State,Leak_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG4_strong.csv
+SCEN_UPSTREAM_STEADY_STATE_LEAKG4_WEAK,FAM_LEAK_G4,Upstream,Steady State,Leak_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG4_weak.csv
+SCEN_UPSTREAM_STEADY_STATE_LEAKG5_STRONG,FAM_LEAK_G5,Upstream,Steady State,Leak_G5,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG5_strong.csv
+SCEN_UPSTREAM_STEADY_STATE_LEAKG5_WEAK,FAM_LEAK_G5,Upstream,Steady State,Leak_G5,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG5_weak.csv
+SCEN_UPSTREAM_STEADY_STATE_LEAKG6,FAM_LEAK_G6,Upstream,Steady State,Leak_G6,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG6.csv
+SCEN_UPSTREAM_STEADY_STATE_STARTDELAYC1,FAM_COMPRESSOR_DELAY_C1,Upstream,Steady State,CompressorDelay,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/startdelayC1.csv
+SCEN_UPSTREAM_TRANSIENT_LEAKG4,FAM_LEAK_G4,Upstream,Transient,Leak_G4,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/assestment_transient/leakG4.csv
+SCEN_UPSTREAM_TRANSIENT_LEAKG5G6_OVERLAPPED,FAM_LEAK_G5G6_COMBINED,Upstream,Transient,Leak_G5_G6,True,H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/assestment_transient/leakG5G6_overlapped.csv

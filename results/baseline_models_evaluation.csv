@@ -1,4 +1,0 @@
-model,balanced_accuracy,train_samples,test_samples
-Random Forest,0.9518113648586871,18566,6222
-HistGradientBoosting,0.9477770261561638,18566,6222
-Logistic Regression,0.9119368394558593,18566,6222

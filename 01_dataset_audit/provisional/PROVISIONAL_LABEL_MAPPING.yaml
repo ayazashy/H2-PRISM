@@ -1,0 +1,47 @@
+metadata:
+  specification: H2-PRISM Class Mapping Specification
+  author: Yazan (Lead, Dataset Audit, Data Engineering & Dataset Readiness)
+  date: 2026-10-30 18:22:43 UTC
+  status: FROZEN_FOR_FAISAL
+primary_4_class_target:
+  description: Recommended primary multi-class attribution target separating normal
+    baseline, containment leaks, compressor faults, and compressor delays.
+  classes:
+  - class_id: 0
+    class_name: NORMAL
+    source_conditions: label_anomaly == 0 or all fault columns == 0
+    description: Normal steady-state or nominal transient pipeline operation with
+      intact containment and healthy compressors.
+  - class_id: 1
+    class_name: LEAK
+    source_conditions: Leak == 1 and CompressorFault == 0 and CompressorDelay == 0
+    description: Physical loss of containment localized across valves G3, G4, G5,
+      or G6 without concurrent compressor failure.
+  - class_id: 2
+    class_name: COMPRESSOR_FAULT
+    source_conditions: CompressorFault == 1 and Leak == 0 and CompressorDelay == 0
+    description: Severe compressor startup or ramp amplitude failure (C1) without
+      loss of containment.
+  - class_id: 3
+    class_name: COMPRESSOR_DELAY
+    source_conditions: CompressorDelay == 1 and Leak == 0 and CompressorFault == 0
+    description: Compressor startup delay caused by external power or electrical disturbances.
+  compound_events_handling:
+    combined_leak_and_compressor_fault: EXCLUDED_FROM_PRIMARY_MUTUAL_EXCLUSIVE_TASK
+    notes: Scenarios containing simultaneous Leak + CompressorFault (e.g., brokenC1G5,
+      leakG4brokenC1) violate mutual exclusivity and are reserved for secondary multi-label
+      evaluation.
+fallback_3_class_target:
+  description: Defensible fallback collapsing compressor faults and startup delays
+    into a unified OPERATIONAL_TRANSIENT class.
+  classes:
+  - class_id: 0
+    class_name: NORMAL
+    source_conditions: label_anomaly == 0
+  - class_id: 1
+    class_name: LEAK
+    source_conditions: Leak == 1 and CompressorFault == 0 and CompressorDelay == 0
+  - class_id: 2
+    class_name: OPERATIONAL_TRANSIENT
+    source_conditions: (CompressorFault == 1 or CompressorDelay == 1) and Leak ==
+      0
