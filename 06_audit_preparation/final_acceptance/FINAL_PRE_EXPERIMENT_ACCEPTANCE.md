@@ -1,3 +1,5 @@
+> **Updated by Phase 10 (2026-11-11):** the completion rates, the "7 of 9 sensitivity analyses lack a runner path" gap and the documentation gaps below are superseded by [PHASE10_BACKLOG_CLOSURE_REPORT.md](PHASE10_BACKLOG_CLOSURE_REPORT.md) and the rebuilt `TEAM_PLAN_COMPLETION_MATRIX.csv`. The four execution-blocking attestations listed here are unchanged.
+
 # Final Pre-Experiment Acceptance (authoritative)
 
 ## Verdict: `PRE_EXPERIMENT_ACCEPTANCE_BLOCKED`

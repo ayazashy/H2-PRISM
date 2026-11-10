@@ -161,3 +161,31 @@ A fifth local commit (user-approved) adds `.gitattributes` (LF for hash-pinned a
 - **Package:** `06_audit_preparation/final_acceptance/` (7 artifacts).
 - **Verdict:** `PRE_EXPERIMENT_ACCEPTANCE_BLOCKED`. Blockers are only the human attestations or waivers for F-D15, F-D16, A-D10 and PA-1.
 - **Next safe action:** owners attest, or the project lead waives; then the project lead writes the authorization file (`NEXT_PHASE_EXECUTION_HANDOFF.md`). No real-data model fitting has been done.
+
+## Update: Phase 10 pre-experiment backlog closure (recovery point)
+
+- **Branch:** `audit/preparation-integration`; base `74d8fa0`; Phase 10 commits follow. Not pushed or merged. **No primary experiment run.**
+- **Verdict:** `PRE_EXPERIMENT_TECHNICALLY_COMPLETE`; `PRIMARY_EXECUTION_AUTHORIZED: NO`.
+- **Inventory:** 37 plan tasks (Y8, F13, A16); 58 requirement rows in `final_acceptance/TEAM_PLAN_COMPLETION_MATRIX.csv`.
+  - Pre-experiment complete: 35.
+  - Incomplete: 0.
+  - Post-experiment: 12.
+  - Human attestation: 10.
+  - Not applicable: 1.
+- **Code:**
+  - 9 sensitivity execution paths (`SENSITIVITY_OVERRIDES`, `--sensitivity`, `--execute-sensitivity`);
+  - preflight now 28 checks (family column; inner folds match runner);
+  - `n_families`, `calibration_reliability.csv`, `calibration_selection.csv`;
+  - reporting bound to runner outputs (filters; synthetic → illustrative; effects and outcome-share figures);
+  - A12 spec checks manifest v0.2.
+- **Docs:**
+  - Yazan amendment, risk register, acceptance package;
+  - 16 Faisal specs, architecture freeze, frozen-config pointer, `04_validation/`;
+  - Ahmed A1–A7, A10, A12–A16 documents;
+  - README reconciled; task register in plan vocabulary; change log CC-007/CC-008.
+- **Config:** unchanged (`f788b6d8…`).
+- **Real-data dry runs:** 8 sensitivity analyses at 27/27 (structural only); primary at 28/28.
+- **Remaining:**
+  - human attestations F-D15, F-D16, A-D10, PA-1 (runner-enforced), then the project lead's authorization file;
+  - non-blocking owner approvals (Y4 reviews, Y7 decision, Yazan adoption, F-D18 with the A14 inner-scheme freeze, Ahmed's document approval).
+- **Continue with:** `06_audit_preparation/final_acceptance/NEXT_PHASE_EXECUTION_HANDOFF.md`.

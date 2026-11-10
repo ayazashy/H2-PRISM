@@ -7,7 +7,7 @@ The environment is the repository `.venv` (Python 3.12). Local paths are redacte
 | Command | Result |
 | --- | --- |
 | `python -m compileall -q src tools tests scripts` | COMPILE_OK |
-| `python -m pytest -q -rs` | **231 passed, 2 skipped, 0 failed** (233 collected; final run after the governance-gate change) |
+| `python -m pytest -q -rs` | Phase 9: 231 passed, 2 skipped. **Phase 10 final: 289 passed, 2 skipped, 0 failed (291 collected)** |
 | Skips | `test_data_loader.py:68`, `:76`: the sample-data fallback is exercised only when raw data is absent (raw data is present). Expected |
 | `validate_artifacts.py --spec configs/candidate_artifact_validation.yaml` | PASS 33 |
 | `git status 03_results` after the full suite | clean (the test side effect is fixed, D8) |
