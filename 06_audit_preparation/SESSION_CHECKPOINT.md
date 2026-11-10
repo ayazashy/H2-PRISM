@@ -122,3 +122,16 @@ A fifth local commit (user-approved) adds `.gitattributes` (LF for hash-pinned a
 - **Changed files:** `06_audit_preparation/FINAL_PROTOCOL_DECISION.md`, `FINAL_EXPERIMENT_CONFIG.yaml` (sha256 `b9f44ad7…`), `FINAL_READINESS_CHECK.md`; `tests/test_final_config.py`; this file.
 - **Validation:** 23 targeted tests passed; final-config tests 4 passed; full suite not rerun (no library code changed).
 - **Next entry point (not run):** write `tools/experiments/run_primary_protocol.py --config 06_audit_preparation/FINAL_EXPERIMENT_CONFIG.yaml` after explicit user authorisation for experiment execution.
+
+## Update: Phase 8 execution readiness (recovery point)
+
+- **Branch:** `audit/preparation-integration`; base `d9b4c3f`; two Phase 8 commits follow (code, then tests/readiness). Nothing pushed or merged.
+- **Built:** runner `src/h2prism/experiments/primary_protocol.py` + CLI `tools/experiments/run_primary_protocol.py` (`--dry-run` default; `--execute-primary`/`--execute-robustness` gated by an authorization YAML bound to the config SHA-256); synthetic fixture; `baseline.select_on_development` extracted.
+- **Defects fixed (with regression tests):** manifest v0.2 column names rejected by the feature builder; provenance columns could enter the feature matrix.
+- **Validation:** full suite 193 passed, 2 skipped; runner tests 16 passed (17 cases); A12 33/33; synthetic end-to-end run COMPLETED (SYNTHETIC_TEST only).
+- **Real-data preflight (no model fitting):** PREFLIGHT_PASSED 25/25 for noise_added and clean; 27,993 windows, 128 features each.
+- **Verdict:** `ENGINEERING_READINESS_BLOCKED`. Blockers:
+  - matched-coverage tie rule undefined (saturated RF scores; Faisal decision);
+  - F-D15, F-D16, A-D10 neither done nor waived.
+- **Evidence:** `06_audit_preparation/phase8_execution_readiness/`.
+- **Next safe action:** Faisal picks the tie rule; owners close or the project lead waives F-D15/F-D16/A-D10; then the project lead writes the authorization file. No real-data primary training has been run.

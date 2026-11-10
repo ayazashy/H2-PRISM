@@ -142,3 +142,24 @@ def test_feature_table_requires_decisions(toy_manifest):
         build_feature_table(man, root, "both", "family_primary", cfg, ["mean"], channels=["PS1"])
     with pytest.raises(KeyError):
         build_feature_table(man, root, "clean", "family_undecided", cfg, ["mean"], channels=["PS1"])
+
+
+def test_regression_feature_builder_accepts_manifest_v02_schema(toy_manifest):
+    """Phase 8 defect: builder required Phase-3 column names; manifest v0.2 uses label_mapped/eligible_primary/file_*."""
+    root, man = toy_manifest
+    v02 = man.rename(columns={"candidate_primary_class": "label_mapped", "eligible_primary_candidate": "eligible_primary",
+                              "canonical_noise_added_file": "file_noise_added", "canonical_clean_file": "file_clean"})
+    cfg = WindowConfig(60, 30, 60, "row_level", "exclude")
+    a = build_feature_table(man, root, "clean", "family_primary", cfg, ["mean"], channels=["PS1", "PS2"])
+    b = build_feature_table(v02, root, "clean", "family_primary", cfg, ["mean"], channels=["PS1", "PS2"])
+    assert a["feature_table_sha256"] == b["feature_table_sha256"]
+    with pytest.raises(ValueError, match="both"):
+        build_feature_table(v02.assign(label_mapped2=1).assign(candidate_primary_class="x"), root, "clean", "family_primary",
+                            cfg, ["mean"], channels=["PS1", "PS2"])
+
+
+def test_regression_provenance_columns_are_never_features():
+    """Phase 8 defect: provenance columns added by the runner were picked up as model features."""
+    df = pd.DataFrame({"window_id": ["w"], "Scenario_ID": ["s"], "realization": ["noise_added"], "feature_version": ["v"],
+                       "start_time": [0.0], "end_time": [60.0], "file_id": ["f"], "PS1__mean": [1.0]})
+    assert model_feature_columns(df) == ["PS1__mean"]
