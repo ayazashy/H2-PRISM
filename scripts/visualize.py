@@ -32,10 +32,16 @@ from h2prism.visualization import (
 FIG_DIR = Path("03_results/figures")
 FIG_DIR.mkdir(parents=True, exist_ok=True)
 AUDIT_DIR = Path("01_dataset_audit")
+# AUDIT FIX (audit/preparation-integration): figures 3-6 below are drawn from hard-coded
+# or randomly generated numbers, NOT from any experiment. They are written only to this
+# quarantine directory with an explicit ILLUSTRATIVE label and must never be cited as results.
+DEMO_DIR = Path("03_results/ILLUSTRATIVE_DEMO_NOT_RESULTS")
+DEMO_DIR.mkdir(parents=True, exist_ok=True)
+ILLUSTRATIVE = "ILLUSTRATIVE ONLY - NOT A RESULT: "
 
 
 def generate_demo_visualizations() -> Path:
-    """Generates all standard figures from audit data & benchmark baseline."""
+    """Generates figures 1-2 from audit data and ILLUSTRATIVE (non-result) demo figures 3-6."""
     print("=" * 80)
     print(" H2-PRISM VISUALIZATION SUITE — GENERATING RESEARCH FIGURES")
     print("=" * 80)
@@ -81,8 +87,8 @@ def generate_demo_visualizations() -> Path:
         [ 1,  2, 95,  2],
         [ 0,  1,  2, 97],
     ])
-    f3_path = FIG_DIR / "fig3_confusion_matrix.png"
-    plot_confusion_matrix(cm_demo, classes, normalize=True, title="4-Class Attribution Matrix (Target Task)", save_path=f3_path)
+    f3_path = DEMO_DIR / "fig3_confusion_matrix.png"
+    plot_confusion_matrix(cm_demo, classes, normalize=True, title=ILLUSTRATIVE + "hard-coded matrix", save_path=f3_path)
     generated_figs["confusion_matrix"] = f3_path
     print(f"    -> Saved {f3_path}")
 
@@ -96,8 +102,9 @@ def generate_demo_visualizations() -> Path:
     # Method B (Confidence only): Highest selective risk
     risk_b = 0.04 + 0.22 * (cov ** 2.5)
 
-    f4_path = FIG_DIR / "fig4_risk_coverage_curve.png"
-    plot_risk_coverage_curve(cov, risk_c, risk_c_minus_d, risk_b, save_path=f4_path)
+    f4_path = DEMO_DIR / "fig4_risk_coverage_curve.png"
+    plot_risk_coverage_curve(cov, risk_c, risk_c_minus_d, risk_b, title=ILLUSTRATIVE + "invented curves",
+                             save_path=f4_path)
     generated_figs["risk_coverage_curve"] = f4_path
     print(f"    -> Saved {f4_path}")
 
@@ -107,8 +114,9 @@ def generate_demo_visualizations() -> Path:
     acc = conf + np.random.normal(0, 0.03, len(conf))
     acc = np.clip(acc, 0, 1)
     counts = np.array([45, 80, 120, 210, 350, 480, 600, 750, 890, 1100])
-    f5_path = FIG_DIR / "fig5_calibration_reliability.png"
-    plot_calibration_reliability_diagram(conf, acc, counts, ece=0.024, brier=0.082, save_path=f5_path)
+    f5_path = DEMO_DIR / "fig5_calibration_reliability.png"
+    plot_calibration_reliability_diagram(conf, acc, counts, ece=0.024, brier=0.082,
+                                         model_name=ILLUSTRATIVE + "random numbers", save_path=f5_path)
     generated_figs["calibration_reliability"] = f5_path
     print(f"    -> Saved {f5_path}")
 
@@ -117,22 +125,27 @@ def generate_demo_visualizations() -> Path:
     np.random.seed(42)
     d_correct = np.random.beta(5, 2, size=500)   # Skewed toward high D
     d_incorrect = np.random.beta(2, 5, size=200) # Skewed toward low D
-    f6_path = FIG_DIR / "fig6_distinguishability_separation.png"
-    plot_distinguishability_distribution(d_correct, d_incorrect, save_path=f6_path)
+    f6_path = DEMO_DIR / "fig6_distinguishability_separation.png"
+    plot_distinguishability_distribution(d_correct, d_incorrect, title=ILLUSTRATIVE + "random Beta draws",
+                                         save_path=f6_path)
     generated_figs["distinguishability_separation"] = f6_path
     print(f"    -> Saved {f6_path}")
 
     # 7. Summary Scorecard & Interactive HTML Dashboard
     print("[*] Building Interactive HTML Evaluation Dashboard...")
+    # AUDIT FIX: the previous KPI cards (benchmark_accuracy 0.960, selective_risk_at_80 0.081,
+    # ece 0.024) were invented numbers and have been removed. Only audit-reported counts remain,
+    # and they are labelled as reported (see 06_audit_preparation/YAZAN_DATASET_VERIFICATION.md).
     kpis = {
-        "dataset_scenarios": 58,
-        "independent_families": 13,
-        "cv_folds": 3,
-        "benchmark_accuracy": 0.960,
-        "selective_risk_at_80": 0.081,
-        "ece_calibration_error": 0.024,
+        "audit_reported_scenarios_unverified": 58,
+        "audit_reported_families_unverified": 13,
+        "experimental_results_available": "NONE",
     }
-    dashboard_path = generate_html_report(generated_figs, kpis, output_html_path="03_results/dashboard.html")
+    dashboard_path = generate_html_report(
+        generated_figs, kpis,
+        output_html_path=str(DEMO_DIR / "dashboard_ILLUSTRATIVE.html"),
+        title="H2-PRISM ILLUSTRATIVE DEMO - contains NO experimental results",
+    )
     print(f"[✓] Dashboard generated successfully: {dashboard_path}")
     print("=" * 80)
     return dashboard_path

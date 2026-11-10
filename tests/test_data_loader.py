@@ -62,6 +62,23 @@ def test_load_scenario_by_id():
     assert "CompressorFault" in df.columns
 
 
+def test_load_scenario_sample_fallback_is_checksum_verified():
+    """AUDIT FIX: a Scenario_ID from another topology must NOT resolve to a same-named sample file."""
+    if is_raw_dataset_available():
+        pytest.skip("raw dataset present; sample fallback not exercised")
+    with pytest.raises(FileNotFoundError):
+        load_scenario("SCEN_UPSTREAM_STEADY_STATE_BROKENC1_STRONG")
+
+
+def test_load_fold_does_not_silently_return_empty():
+    """AUDIT FIX: missing fold files raise instead of being skipped silently."""
+    if is_raw_dataset_available():
+        pytest.skip("raw dataset present")
+    with pytest.raises(FileNotFoundError):
+        load_fold(fold_id=1)
+
+
+@pytest.mark.skipif(not is_raw_dataset_available(), reason="requires the raw H2-SimNet dataset (not tracked in Git)")
 def test_load_fold():
     """Verifies loading outer fold 1 train and test splits."""
     train_list, test_list = load_fold(fold_id=1)

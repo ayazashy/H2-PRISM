@@ -6,7 +6,7 @@ Builds a standalone, responsive single-page HTML report summarizing models and r
 
 import base64
 from pathlib import Path
-from typing import Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union  # AUDIT FIX: Any was used but not imported (NameError on Python < 3.14)
 import time
 
 

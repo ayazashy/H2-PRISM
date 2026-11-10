@@ -195,4 +195,5 @@ def test_visualize_cli_runner():
     res = subprocess.run(cmd, capture_output=True, text=True)
     assert res.returncode == 0, f"visualize.py failed: {res.stderr}"
     assert "Dashboard generated successfully" in res.stdout
-    assert Path("03_results/dashboard.html").exists()
+    # AUDIT FIX: demo output is quarantined as illustrative (contains no experimental results)
+    assert Path("03_results/ILLUSTRATIVE_DEMO_NOT_RESULTS/dashboard_ILLUSTRATIVE.html").exists()

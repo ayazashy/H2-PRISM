@@ -4,6 +4,8 @@ Owner: Yazan (Lead, Dataset Audit, Data Engineering & Dataset Readiness)
 Provides direct, one-line access to H2-SimNet scenarios, splits, and sample datasets.
 """
 
+import hashlib
+import warnings
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union, Any
 import pandas as pd
@@ -16,6 +18,30 @@ SAMPLE_DATASET_DIR = WORKSPACE_ROOT / "data" / "sample"
 AUDIT_DIR = WORKSPACE_ROOT / "01_dataset_audit"
 MANIFEST_FILE = AUDIT_DIR / "provisional" / "PROVISIONAL_DATA_FREEZE_MANIFEST.csv"
 FOLDS_FILE = AUDIT_DIR / "folds.csv"
+CHECKSUM_FILE = AUDIT_DIR / "raw_checksums.sha256"
+
+
+def _verified_sample_copy(raw_rel_file: str) -> Optional[Path]:
+    """AUDIT FIX (pending Yazan review): return the data/sample copy of a raw file ONLY if its
+    SHA-256 equals the raw file's entry in raw_checksums.sha256. Sample files share basenames
+    with files from other topologies (e.g. leakG4.parquet exists for Center/Downstream/Upstream),
+    so a name match alone could silently return the wrong scenario."""
+    if not CHECKSUM_FILE.exists():
+        return None
+    cand = SAMPLE_DATASET_DIR / Path(raw_rel_file).name
+    if not cand.exists():
+        return None
+    expected = None
+    for line in CHECKSUM_FILE.read_text(encoding="utf-8").splitlines():
+        parts = line.strip().split(None, 1)
+        if len(parts) == 2 and parts[1].lstrip("*") == raw_rel_file:
+            expected = parts[0]
+            break
+    if expected is None:
+        return None
+    if hashlib.sha256(cand.read_bytes()).hexdigest() != expected:
+        return None
+    return cand
 
 
 def get_dataset_dir() -> Path:
@@ -149,6 +175,12 @@ def load_scenario(
             if full_path.exists():
                 return _read_file(full_path)
 
+            # AUDIT FIX: checksum-verified fallback to the tracked sample copy
+            for cand_rel in ([pq_cand] if format == "parquet" and rel_file.endswith(".csv") else []) + [rel_file]:
+                sample = _verified_sample_copy(cand_rel)
+                if sample is not None:
+                    return _read_file(sample)
+
     # 4. Fallback: recursive glob inside data/raw
     if RAW_DATASET_DIR.exists():
         stem = Path(id_str).stem
@@ -168,11 +200,19 @@ def load_scenario(
 
 def load_fold(
     fold_id: int = 1,
+    skip_missing: bool = False,
 ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
     """
     Loads train and test scenarios for a given outer fold (1, 2, or 3)
     according to 01_dataset_audit/folds.csv.
-    
+
+    AUDIT FIX (pending Yazan review): missing files previously caused a silent `continue`,
+    so a fold could return empty train/test lists without any signal. Missing files now
+    raise FileNotFoundError unless skip_missing=True, in which case a warning lists them.
+    NOTE: folds.csv lists two files per Scenario_ID (two export trees whose contents differ,
+    see 06_audit_preparation/YAZAN_DATASET_VERIFICATION.md); loading both double-counts the
+    scenario. This function does not choose a canonical file - that is an open Y1/Y2 decision.
+
     Returns:
         Tuple of (train_list, test_list) where each element is a dict:
         {'scenario_id': ..., 'target_class': ..., 'topology': ..., 'data': pd.DataFrame}
@@ -187,25 +227,34 @@ def load_fold(
         
     train_records = []
     test_records = []
-    
+    missing = []
+
     for _, row in fold_df.iterrows():
         try:
             df_scen = load_scenario(row["file"])
-            item = {
-                "Scenario_ID": row["Scenario_ID"],
-                "Scenario_Family_ID": row["Scenario_Family_ID"],
-                "target_class": row["target_class"],
-                "topology": row["topology"],
-                "file": row["file"],
-                "data": df_scen,
-            }
-            if row["split_role"] == "train":
-                train_records.append(item)
-            else:
-                test_records.append(item)
         except FileNotFoundError:
+            missing.append(row["file"])
             continue
-            
+        item = {
+            "Scenario_ID": row["Scenario_ID"],
+            "Scenario_Family_ID": row["Scenario_Family_ID"],
+            "target_class": row["target_class"],
+            "topology": row["topology"],
+            "file": row["file"],
+            "data": df_scen,
+        }
+        if row["split_role"] == "train":
+            train_records.append(item)
+        else:
+            test_records.append(item)
+
+    if missing:
+        msg = (f"fold {fold_id}: {len(missing)} of {len(fold_df)} fold files are not available locally "
+               f"(first: {missing[0]}). Install the raw dataset or pass skip_missing=True.")
+        if not skip_missing:
+            raise FileNotFoundError(msg)
+        warnings.warn(msg, RuntimeWarning, stacklevel=2)
+
     return train_records, test_records
 
 
