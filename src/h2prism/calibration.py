@@ -99,3 +99,25 @@ def select_calibration(P_dev, y_dev_idx, groups_dev, n_classes: int, n_splits: i
     best = table.sort_values([criterion, "method"]).iloc[0]
     choice = best["method"] if float(best[criterion]) < base else "none"
     return {"selected_method": choice, "criterion": criterion, "table": table, "warnings": warns}
+
+
+def calibration_feasibility(y_dev_idx, groups_dev, n_classes: int, min_groups_per_class: int = 2,
+                            allow_isotonic: bool = False) -> Dict[str, object]:
+    """Pre-registered fallback rule (Phase 6, F-D09): which calibration methods may even be compared.
+
+    Cross-fitted calibration needs every class to occur in at least ``min_groups_per_class``
+    independent groups (runs/families) of the development data; otherwise a calibrator is fitted
+    on one run and evaluated on none. If any class falls short, only "none" is allowed (fallback =
+    uncalibrated probabilities, reported as such). Isotonic is excluded unless explicitly allowed.
+    """
+    y = np.asarray(y_dev_idx, dtype=int)
+    g = np.asarray(groups_dev)
+    per_class = {k: int(len(set(g[y == k].tolist()))) for k in range(n_classes)}
+    short = sorted(k for k, v in per_class.items() if v < min_groups_per_class)
+    if short:
+        allowed = ["none"]
+        reason = f"classes {short} have fewer than {min_groups_per_class} independent groups: calibration not estimable"
+    else:
+        allowed = ["none", "sigmoid"] + (["isotonic"] if allow_isotonic else [])
+        reason = "all classes have sufficient independent groups"
+    return {"allowed_methods": allowed, "groups_per_class": per_class, "reason": reason}

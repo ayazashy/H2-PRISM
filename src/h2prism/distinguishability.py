@@ -41,9 +41,13 @@ FLAG_OUT_OF_SUPPORT = "OUT_OF_SUPPORT"
 FLAG_ZERO_DISTANCE = "ZERO_DISTANCE_NEIGHBOR"
 FLAG_INVALID = "INVALID_FEATURES"
 FLAG_NO_REFERENCE = "NO_REFERENCE"
+# Phase 6 (F-D08): the top class is supported by neighbours from too few distinct runs/families.
+# A high D(x) driven by a single run must not count as reliable evidence for one class.
+FLAG_TOP_CLASS_FEW_RUNS = "TOP_CLASS_FEW_INDEPENDENT_RUNS"
 
 ALL_FLAGS = (FLAG_SPARSE, FLAG_INSUFFICIENT_CLASS, FLAG_LOW_DIVERSITY, FLAG_LOW_SUPPORT,
-             FLAG_OUT_OF_SUPPORT, FLAG_ZERO_DISTANCE, FLAG_INVALID, FLAG_NO_REFERENCE)
+             FLAG_OUT_OF_SUPPORT, FLAG_ZERO_DISTANCE, FLAG_INVALID, FLAG_NO_REFERENCE,
+             FLAG_TOP_CLASS_FEW_RUNS)
 
 
 @dataclass(frozen=True)
@@ -63,6 +67,7 @@ class DConfig:
     min_class_reference: int = 25
     min_distinct_scenarios: int = 2
     low_support_min_top_count: int = 5
+    min_top_class_families: int = 2  # distinct reference families behind the top class (Phase 6)
     tie_tol: float = 1e-12
     zero_distance_tol: float = 1e-9
     distance_floor: float = 1e-6
@@ -131,7 +136,7 @@ class EmpiricalSupport:
         rec = {k: [None] * n for k in ("D", "top_class", "second_class", "k_effective", "n_available_reference",
                                          "n_distinct_scenarios", "n_distinct_families", "max_scenario_share",
                                          "mean_neighbor_distance", "max_neighbor_distance",
-                                         "min_neighbor_distance", "support_flags")}
+                                         "min_neighbor_distance", "top_class_n_families", "support_flags")}
         valid_rows = np.isfinite(Xq).all(axis=1)
         Zq = (np.where(np.isfinite(Xq), Xq, 0.0) - self.mu_) / self.sigma_
 
@@ -194,6 +199,10 @@ class EmpiricalSupport:
         top_count = int(np.sum(yn == order[0]))
         if top_count < cfg.low_support_min_top_count:
             flags.append(FLAG_LOW_SUPPORT)
+        top_fams = len(set(self.fam_[idx][yn == order[0]].tolist()))
+        if top_fams < cfg.min_top_class_families:
+            flags.append(FLAG_TOP_CLASS_FEW_RUNS)
+        rec["top_class_n_families"][i] = top_fams
         scen_n = pd.Series(self.scen_[idx]).value_counts()
         if len(scen_n) < cfg.min_distinct_scenarios:
             flags.append(FLAG_LOW_DIVERSITY)
