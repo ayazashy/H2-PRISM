@@ -112,3 +112,13 @@ A fifth local commit (user-approved) adds `.gitattributes` (LF for hash-pinned a
 - **Known tension (F-D11, Faisal + Ahmed):** the thin-class flag makes development thresholds LEAK-driven. Documented, not silently resolved.
 - **Tests:** full suite 171 passed, 2 skipped; compile OK; A12 33/33; manifest v0.2 reproducible.
 - **Next safe action:** Yazan signs the P0 dataset decisions on `phase5_decisions/YAZAN_SIGNOFF.md`. Primary experiments stay blocked until all P0 sign-offs, the config freeze, the gate re-record and user authorisation.
+
+## Update: Phase 7 protocol selection (recovery point)
+
+- **Branch:** `audit/preparation-integration`; base commit `26ff95f` (the Phase 7 commit follows).
+- **Protocol status:** PROTOCOL_SELECTED_PENDING_EXECUTION, selected under the project lead's delegation. Owner signatures are NOT_RECORDED.
+- **Decisions:** 32 SELECTED_BY_PROJECT_LEAD_PROTOCOL_DELEGATION; 4 RESTRICTED_DUE_TO_SOURCE_EVIDENCE (Y-D03, Y-D05a, Y-D05b, Y-D06a); 7 REQUIRES_NAMED_OWNER_SIGNOFF (Y-D10, F-D15, F-D16, F-D18, A-D09, A-D10, A-D11; governance only); 1 NOT_APPLICABLE (G-D01).
+- **Estimability:** LEAK = 78.3% of eligible windows, so the 0.80 and 0.90 targets are expected NOT_ESTIMABLE under the primary (safeguarded) policy; 0.60 is expected estimable. Warning-only policy registered as secondary only.
+- **Changed files:** `06_audit_preparation/FINAL_PROTOCOL_DECISION.md`, `FINAL_EXPERIMENT_CONFIG.yaml` (sha256 `b9f44ad7…`), `FINAL_READINESS_CHECK.md`; `tests/test_final_config.py`; this file.
+- **Validation:** 23 targeted tests passed; final-config tests 4 passed; full suite not rerun (no library code changed).
+- **Next entry point (not run):** write `tools/experiments/run_primary_protocol.py --config 06_audit_preparation/FINAL_EXPERIMENT_CONFIG.yaml` after explicit user authorisation for experiment execution.
