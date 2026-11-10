@@ -1,0 +1,13 @@
+# Hash-pinned provenance artifacts must have identical bytes on every platform.
+# Their SHA-256 values are recorded in 06_audit_preparation/pre_experiment_review/OUTPUT_HASHES.json
+# and the candidate freeze specs. With core.autocrlf=true (Git for Windows default) a fresh checkout
+# would otherwise write CRLF and break those hashes. Scope is deliberately narrow; nothing else changes.
+06_audit_preparation/**/*.csv text eol=lf
+06_audit_preparation/**/*.json text eol=lf
+06_audit_preparation/**/*.yaml text eol=lf
+02_methodology/*.csv text eol=lf
+src/h2prism/dataset_manifest.py text eol=lf
+tools/dataset/*.py text eol=lf
+
+# Checksum-verified sample data: never convert
+data/sample/*.parquet binary

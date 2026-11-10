@@ -21,10 +21,13 @@ This is **not** a freeze. It becomes one only when Yazan (Y-D01…Y-D08) and Ahm
 | CANDIDATE_LABEL_MAPPING.yaml | `61a3182b04e0fd7c9728945f07ab7eee13fe8fb75a8f4b55a999244cb49c1f18` |
 | CANDIDATE_OUTER_FOLDS.csv | `3b21d8231a40245140f32aa6cb5193e3f45b05bd57cbb079ccccd69aafa8b1dd` |
 | CANDIDATE_INNER_FOLDS.csv | `ebff65da38a5e70e45e1f1e0c4303b518ba13f9874aed06a3a191bf9c0963c5b` |
-| Generator `tools/dataset/build_pre_experiment_package.py` | `5ac8bac2d759c5836955fbfa111ec3ee9b95b9622e5d14576cc5b98321108470` |
+| Generator `tools/dataset/build_pre_experiment_package.py` | `7cbf422998431aba4e1f6d39e566f82354bae14138396b93978237c5d1c149df` (was `5ac8bac2…` before the LF portability fix; only the JSON writing changed) |
 | Module `src/h2prism/dataset_manifest.py` | `4f315b7435cef9bc8e4e262f665a543a33716ba7c7f2901d9bfd448114329f74` |
+| BUILD_SUMMARY.json | `07fd071ca9a01d4a3965d09f02da7be77c005b8ad2908c4e0dcea611343e774a` (canonical LF bytes; the earlier `511576b5…` was a CRLF-written, platform-dependent file) |
 
 Regenerate with `python tools/dataset/build_pre_experiment_package.py --raw-parent data/raw --out <dir>`. The result must reproduce `OUTPUT_HASHES.json` (verified twice, including the reverse-order / Windows-separator run).
+
+All hashes are of **canonical LF bytes**. `.gitattributes` forces `eol=lf` for these artifacts, so a fresh checkout on any platform (including Windows with `core.autocrlf=true`) reproduces them; this was verified in an isolated clone.
 
 ## Field mapping to the Y8 / F12 manifest contract
 

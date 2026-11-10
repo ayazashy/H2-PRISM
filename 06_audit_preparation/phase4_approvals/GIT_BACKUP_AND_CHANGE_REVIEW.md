@@ -48,3 +48,27 @@ Every commit would end with the attribution line `Co-Authored-By: Claude Opus 5.
 ## Final backup (end of Phase 4)
 
 `<home>\Documents\H2-PRISM_backups\phase4_20261110_214102\`: 152 files, SHA-256 re-verified with 0 mismatches. It includes every Phase 4 deliverable written up to this section (this closing note was appended afterwards). The earlier backup `phase4_20261110_213044` is kept unchanged.
+
+## Executed local commits (G-D01 approved by the user; no push, no merge)
+
+| # | Hash | Message | Files |
+| --- | --- | --- | ---: |
+| 1 | `1fda183` | fix(results): quarantine illustrative demo outputs and fix loader/dashboard defects | 16 (5 renames + quarantine README + 5 tracked edits, counted as add/delete pairs) |
+| 2 | `db6876a` | feat(prep): leakage-safe preparation modules for F3-F9 and A12-A16 | 45 |
+| 3 | `5926a6c` | feat(dataset): deterministic candidate manifest, families and folds | 7 |
+| 4 | `78618db` | docs(audit): audit, raw-data verification, pre-experiment review and phase-4 approval packages | 89 |
+
+- Author: repository-local Git identity set at the user's instruction (`git config user.name/user.email`, this repository only; global config untouched).
+- Before commit 4, the local Windows username in the backup paths was redacted (`<home>\Documents\H2-PRISM_backups\…`).
+- Each commit's staged list was reviewed: no raw data, archives, caches, `.env` files or credentials.
+- `main` is unchanged at `13c5512`. The branch is 4 commits ahead locally and has no upstream.
+
+**Line-ending note:** this machine uses `core.autocrlf=true`. Committed blobs are LF, identical to the files the hashes were computed on. A fresh checkout on Windows would write CRLF working copies, so the SHA-256 values pinned in `CANDIDATE_DATASET_FREEZE_SPEC.md` and `OUTPUT_HASHES.json` (and `test_output_hashes_match_files`) would differ on such a checkout. Recommended follow-up (not done; needs approval): add a `.gitattributes` entry marking `06_audit_preparation/**/*.csv`, `*.json` and `*.yaml` as `eol=lf`, or hash the Git blob content instead of the working file.
+
+## Line-ending portability fix (user-approved; fifth local commit `fix(provenance): enforce portable LF line endings for hashed artifacts`)
+
+- **Reproduced:** in a fresh isolated clone with `core.autocrlf=true` (set in the system Git for Windows config), 16 of 17 pinned SHA-256 values failed. All of them match again after CRLF→LF.
+- **Second cause found:** the builder wrote `BUILD_SUMMARY.json` and `OUTPUT_HASHES.json` with `Path.write_text`, which emits CRLF on Windows, so their bytes depended on the platform. The builder now writes LF bytes explicitly. Regeneration changed only `BUILD_SUMMARY.json` (CRLF→LF; hash `511576b5…` → `07fd071c…`); every CSV hash is unchanged.
+- **New `.gitattributes`:** `eol=lf` for `06_audit_preparation/**/*.{csv,json,yaml}`, `02_methodology/*.csv`, `src/h2prism/dataset_manifest.py` and `tools/dataset/*.py`; `binary` for `data/sample/*.parquet`. No repository-wide renormalisation; no raw data or scientific definition touched.
+- **Updated pins:** generator hash and the `BUILD_SUMMARY.json` hash in `CANDIDATE_DATASET_FREEZE_SPEC.md`.
+- The recommended follow-up in the previous section is resolved by this commit.

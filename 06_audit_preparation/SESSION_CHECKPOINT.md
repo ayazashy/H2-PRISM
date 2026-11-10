@@ -56,3 +56,19 @@
 1. `.venv/Scripts/python tools/dataset/build_pre_experiment_package.py --raw-parent data/raw --out <scratch> --order reversed` (must equal `pre_experiment_review/OUTPUT_HASHES.json`).
 2. `MPLBACKEND=Agg .venv/Scripts/python -m pytest -q -p no:cacheprovider`, then `git checkout -- 03_results/figures/fig1_family_distribution.png 03_results/figures/fig2_pipeline_telemetry.png`.
 3. `.venv/Scripts/python 06_audit_preparation/phase4_approvals/build_decision_matrix.py`. Regenerating the matrix resets nothing, because approvals belong in the sign-off checklist.
+
+## Update: local commits created (user-approved G-D01)
+
+`1fda183` (quarantine and defect fixes) → `db6876a` (preparation modules) → `5926a6c` (dataset candidate tooling) → `78618db` (audit documentation), on `audit/preparation-integration`. Nothing was pushed or merged; `main` is still `13c5512`.
+
+Post-commit validation:
+- compile OK;
+- 158 passed, 2 skipped;
+- candidate package rebuild byte-identical to the committed version;
+- A12 33/33 PASS.
+
+Working tree after the commits: clean, except this checkpoint update and the commit section appended to `phase4_approvals/GIT_BACKUP_AND_CHANGE_REVIEW.md` (deliberately left uncommitted, as instructed). Open follow-up: line-ending handling for hash-pinned artifacts (`.gitattributes`), pending approval.
+
+## Update: line-ending portability fix
+
+A fifth local commit (user-approved) adds `.gitattributes` (LF for hash-pinned artifacts, binary for sample Parquet) and makes the builder write JSON as LF bytes. Pinned hashes now hold in a fresh isolated Windows clone (17/17). Validation after the fix: 158 passed, 2 skipped; A12 33/33; reverse-order rebuild byte-identical. Nothing was pushed or merged. **Next step:** await user instructions.

@@ -281,9 +281,11 @@ def main(argv=None) -> int:
             "cross_topology_pairs": int(cross_total), "cross_topology_pairs_with_shared_rows": int(cross_shared),
             "dependent_edges": len(dep_edges), "short_segment_edges": len(ext_edges), "min_dependent_rows": MIN_DEPENDENT_ROWS,
             "validation_issue_rows": int(len(V)), "order": "deterministic"}
-    (out / "BUILD_SUMMARY.json").write_text(json.dumps(meta, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    # write bytes, not text: Path.write_text translates "\n" to the platform line separator
+    # (CRLF on Windows), which made BUILD_SUMMARY.json/OUTPUT_HASHES.json platform-dependent
+    (out / "BUILD_SUMMARY.json").write_bytes((json.dumps(meta, indent=2, sort_keys=True) + "\n").encode("utf-8"))
     hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(out.glob("*")) if p.suffix in (".csv", ".json") and p.name != "OUTPUT_HASHES.json"}
-    (out / "OUTPUT_HASHES.json").write_text(json.dumps(hashes, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    (out / "OUTPUT_HASHES.json").write_bytes((json.dumps(hashes, indent=2, sort_keys=True) + "\n").encode("utf-8"))
     print(json.dumps(meta, indent=2))
     print(counts.to_string())
     print(per_topo.to_string())
