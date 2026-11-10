@@ -1,0 +1,30 @@
+# A12 artifact validation spec (Ahmed). Read-only; schema interpretations require
+# Faisal acceptance. Run:
+#   python tools/research_audit/validate_artifacts.py --spec configs/artifact_validation.yaml --out-dir 06_audit_preparation/artifact_validation
+contracts: configs/interface_contracts.yaml
+artifacts:
+  - path: 01_dataset_audit/DATASET_SCENARIO_MAP.csv
+    required_columns: [file, Scenario_ID, Scenario_Family_ID, duplicate_class_id, formats_present, event_label_raw, phase, topology, variant_type, relationship_confidence, evidence_reference, notes]
+    unique_key: file
+    non_null: [file, Scenario_ID, Scenario_Family_ID]
+  - path: 01_dataset_audit/provisional/PROVISIONAL_DATA_FREEZE_MANIFEST.csv
+    schema: manifest_schema
+    unique_key: file
+    non_null: [file, Scenario_ID, Scenario_Family_ID]
+  - path: 01_dataset_audit/folds.csv
+    required_columns: [outer_fold_id, split_role, Scenario_ID, Scenario_Family_ID, file, target_class]
+    unique_key: [outer_fold_id, file]
+    non_null: [Scenario_ID, Scenario_Family_ID]
+  - path: 01_dataset_audit/FILE_LEVEL_AUDIT.csv
+    unique_key: file_path
+    non_null: [file_path, sha256]
+  - path: 00_governance/MASTER_TASK_REGISTER.csv
+    required_columns: [task_id, owner, status]
+    status_column: status
+    unique_key: task_id
+  - path: 03_results/BASELINE_PREDICTIONS.parquet
+    schema: prediction_table_schema
+  - path: 05_documentation/PROVENANCE_REGISTER.csv
+checksum_reconciliation:
+  - manifest: 01_dataset_audit/raw_checksums.sha256
+    files_glob: data/sample/*.parquet

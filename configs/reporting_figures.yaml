@@ -1,0 +1,27 @@
+# A13 reporting configuration (Ahmed). Inputs are F10/F6 outputs that DO NOT EXIST yet;
+# the builders therefore fail clearly with NOT_BUILT_MISSING_EVIDENCE. evidence_status
+# must be raised to VALIDATED/FROZEN by the owners before outputs route to final/.
+dpi: 300
+fail_on_missing: true
+figures:
+  - id: fig_rq1_risk_coverage
+    kind: risk_coverage
+    input: 03_results/MATCHED_COVERAGE_CURVES.csv        # PENDING F10 (column contract: method, coverage, selective_risk)
+    source_experiment: F10_PRIMARY
+    evidence_status: PENDING
+    research_question: RQ1
+    title: Selective risk vs coverage (methods B, C-D, C)
+    caption: Risk is always paired with coverage; outer-test folds only; family counts in table T_RQ1.
+  - id: fig_f6_reliability
+    kind: reliability
+    input: 03_results/CALIBRATION_RELIABILITY_BINS.csv   # PENDING F6
+    source_experiment: F6_CALIBRATION
+    evidence_status: PENDING
+    research_question: supporting (calibration)
+    caption: Top-label reliability, 10 equal-width bins; counts annotated.
+tables:
+  - id: T_RQ1_matched_coverage
+    input: 03_results/MATCHED_COVERAGE_RESULTS.csv        # PENDING F10
+    columns: [method, target_coverage, coverage, selective_risk, n_specific, n_eligible, n_families]
+    source_experiment: F10_PRIMARY
+    evidence_status: PENDING

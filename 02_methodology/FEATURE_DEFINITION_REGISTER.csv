@@ -1,0 +1,129 @@
+feature_name,source_channel,statistic,definition,unit,unit_status,dtype,missing_convention,offset_invariant,status
+PS1__mean,PS1,mean,arithmetic mean of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS1__std,PS1,std,population standard deviation (ddof=0) of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS1__min,PS1,min,minimum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS1__max,PS1,max,maximum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS1__range,PS1,range,max - min within window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS1__last_minus_first,PS1,last_minus_first,last sample minus first sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS1__slope,PS1,slope,ordinary least-squares slope of value on time (seconds) within window,MPa/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS1__mean_abs_diff,PS1,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",MPa per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS2__mean,PS2,mean,arithmetic mean of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS2__std,PS2,std,population standard deviation (ddof=0) of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS2__min,PS2,min,minimum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS2__max,PS2,max,maximum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS2__range,PS2,range,max - min within window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS2__last_minus_first,PS2,last_minus_first,last sample minus first sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS2__slope,PS2,slope,ordinary least-squares slope of value on time (seconds) within window,MPa/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS2__mean_abs_diff,PS2,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",MPa per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS3__mean,PS3,mean,arithmetic mean of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS3__std,PS3,std,population standard deviation (ddof=0) of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS3__min,PS3,min,minimum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS3__max,PS3,max,maximum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS3__range,PS3,range,max - min within window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS3__last_minus_first,PS3,last_minus_first,last sample minus first sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS3__slope,PS3,slope,ordinary least-squares slope of value on time (seconds) within window,MPa/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS3__mean_abs_diff,PS3,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",MPa per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS4__mean,PS4,mean,arithmetic mean of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS4__std,PS4,std,population standard deviation (ddof=0) of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS4__min,PS4,min,minimum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS4__max,PS4,max,maximum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS4__range,PS4,range,max - min within window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS4__last_minus_first,PS4,last_minus_first,last sample minus first sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS4__slope,PS4,slope,ordinary least-squares slope of value on time (seconds) within window,MPa/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS4__mean_abs_diff,PS4,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",MPa per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS5__mean,PS5,mean,arithmetic mean of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS5__std,PS5,std,population standard deviation (ddof=0) of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS5__min,PS5,min,minimum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS5__max,PS5,max,maximum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS5__range,PS5,range,max - min within window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS5__last_minus_first,PS5,last_minus_first,last sample minus first sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS5__slope,PS5,slope,ordinary least-squares slope of value on time (seconds) within window,MPa/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS5__mean_abs_diff,PS5,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",MPa per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS6__mean,PS6,mean,arithmetic mean of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS6__std,PS6,std,population standard deviation (ddof=0) of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS6__min,PS6,min,minimum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS6__max,PS6,max,maximum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS6__range,PS6,range,max - min within window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS6__last_minus_first,PS6,last_minus_first,last sample minus first sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS6__slope,PS6,slope,ordinary least-squares slope of value on time (seconds) within window,MPa/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS6__mean_abs_diff,PS6,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",MPa per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS7__mean,PS7,mean,arithmetic mean of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS7__std,PS7,std,population standard deviation (ddof=0) of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS7__min,PS7,min,minimum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS7__max,PS7,max,maximum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS7__range,PS7,range,max - min within window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS7__last_minus_first,PS7,last_minus_first,last sample minus first sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS7__slope,PS7,slope,ordinary least-squares slope of value on time (seconds) within window,MPa/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS7__mean_abs_diff,PS7,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",MPa per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS8__mean,PS8,mean,arithmetic mean of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS8__std,PS8,std,population standard deviation (ddof=0) of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS8__min,PS8,min,minimum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS8__max,PS8,max,maximum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS8__range,PS8,range,max - min within window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS8__last_minus_first,PS8,last_minus_first,last sample minus first sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS8__slope,PS8,slope,ordinary least-squares slope of value on time (seconds) within window,MPa/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS8__mean_abs_diff,PS8,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",MPa per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS9__mean,PS9,mean,arithmetic mean of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS9__std,PS9,std,population standard deviation (ddof=0) of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS9__min,PS9,min,minimum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS9__max,PS9,max,maximum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS9__range,PS9,range,max - min within window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS9__last_minus_first,PS9,last_minus_first,last sample minus first sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS9__slope,PS9,slope,ordinary least-squares slope of value on time (seconds) within window,MPa/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS9__mean_abs_diff,PS9,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",MPa per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS10__mean,PS10,mean,arithmetic mean of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS10__std,PS10,std,population standard deviation (ddof=0) of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS10__min,PS10,min,minimum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS10__max,PS10,max,maximum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS10__range,PS10,range,max - min within window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS10__last_minus_first,PS10,last_minus_first,last sample minus first sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS10__slope,PS10,slope,ordinary least-squares slope of value on time (seconds) within window,MPa/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS10__mean_abs_diff,PS10,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",MPa per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS11__mean,PS11,mean,arithmetic mean of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS11__std,PS11,std,population standard deviation (ddof=0) of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS11__min,PS11,min,minimum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS11__max,PS11,max,maximum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS11__range,PS11,range,max - min within window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS11__last_minus_first,PS11,last_minus_first,last sample minus first sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS11__slope,PS11,slope,ordinary least-squares slope of value on time (seconds) within window,MPa/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS11__mean_abs_diff,PS11,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",MPa per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS12__mean,PS12,mean,arithmetic mean of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS12__std,PS12,std,population standard deviation (ddof=0) of samples in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS12__min,PS12,min,minimum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS12__max,PS12,max,maximum sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+PS12__range,PS12,range,max - min within window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS12__last_minus_first,PS12,last_minus_first,last sample minus first sample in window,MPa,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS12__slope,PS12,slope,ordinary least-squares slope of value on time (seconds) within window,MPa/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+PS12__mean_abs_diff,PS12,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",MPa per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS1__mean,MFS1,mean,arithmetic mean of samples in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+MFS1__std,MFS1,std,population standard deviation (ddof=0) of samples in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS1__min,MFS1,min,minimum sample in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+MFS1__max,MFS1,max,maximum sample in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+MFS1__range,MFS1,range,max - min within window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS1__last_minus_first,MFS1,last_minus_first,last sample minus first sample in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS1__slope,MFS1,slope,ordinary least-squares slope of value on time (seconds) within window,kg/s/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS1__mean_abs_diff,MFS1,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",kg/s per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS2__mean,MFS2,mean,arithmetic mean of samples in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+MFS2__std,MFS2,std,population standard deviation (ddof=0) of samples in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS2__min,MFS2,min,minimum sample in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+MFS2__max,MFS2,max,maximum sample in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+MFS2__range,MFS2,range,max - min within window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS2__last_minus_first,MFS2,last_minus_first,last sample minus first sample in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS2__slope,MFS2,slope,ordinary least-squares slope of value on time (seconds) within window,kg/s/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS2__mean_abs_diff,MFS2,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",kg/s per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS3__mean,MFS3,mean,arithmetic mean of samples in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+MFS3__std,MFS3,std,population standard deviation (ddof=0) of samples in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS3__min,MFS3,min,minimum sample in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+MFS3__max,MFS3,max,maximum sample in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+MFS3__range,MFS3,range,max - min within window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS3__last_minus_first,MFS3,last_minus_first,last sample minus first sample in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS3__slope,MFS3,slope,ordinary least-squares slope of value on time (seconds) within window,kg/s/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS3__mean_abs_diff,MFS3,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",kg/s per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS4__mean,MFS4,mean,arithmetic mean of samples in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+MFS4__std,MFS4,std,population standard deviation (ddof=0) of samples in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS4__min,MFS4,min,minimum sample in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+MFS4__max,MFS4,max,maximum sample in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,False,SPECIFIED_CANDIDATE
+MFS4__range,MFS4,range,max - min within window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS4__last_minus_first,MFS4,last_minus_first,last sample minus first sample in window,kg/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS4__slope,MFS4,slope,ordinary least-squares slope of value on time (seconds) within window,kg/s/s,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
+MFS4__mean_abs_diff,MFS4,mean_abs_diff,"mean of |x[i+1]-x[i]| over consecutive samples in window (per sample, not per second)",kg/s per sample,REPORTED_IN_DATASET_DOCS,float64,window excluded upstream if any source sample is non-finite,True,SPECIFIED_CANDIDATE
