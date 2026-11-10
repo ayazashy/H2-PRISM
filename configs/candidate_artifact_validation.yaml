@@ -1,0 +1,24 @@
+# A12 read-only validation of the CANDIDATE_NOT_APPROVED pre-experiment package.
+artifacts:
+  - path: 06_audit_preparation/pre_experiment_review/CANDIDATE_FILE_INVENTORY.csv
+    required_columns: [file, sha256, candidate_Scenario_ID, realization_type, scenario_resolution_evidence, status]
+    unique_key: file
+    non_null: [file, sha256, candidate_Scenario_ID, realization_type]
+  - path: 06_audit_preparation/pre_experiment_review/CANDIDATE_SCENARIO_MANIFEST.csv
+    required_columns: [Scenario_ID, topology, canonical_clean_file, canonical_noise_added_file, candidate_primary_class, eligible_primary_candidate, family_primary, family_extended, family_conservative, status]
+    unique_key: Scenario_ID
+    non_null: [Scenario_ID, topology, family_primary, candidate_primary_class]
+  - path: 06_audit_preparation/pre_experiment_review/CANDIDATE_FAMILY_MAP.csv
+    unique_key: Scenario_ID
+    non_null: [family_primary, family_extended, family_conservative]
+  - path: 06_audit_preparation/pre_experiment_review/FAMILY_RELATIONSHIP_EVIDENCE.csv
+    unique_key: edge_id
+    non_null: [relationship, method, evidence]
+  - path: 06_audit_preparation/pre_experiment_review/CANDIDATE_OUTER_FOLDS.csv
+    required_columns: [outer_fold_id, split_role, Scenario_ID, target_class, family_primary, family_conservative]
+    unique_key: [outer_fold_id, Scenario_ID]
+  - path: 06_audit_preparation/pre_experiment_review/CANDIDATE_INNER_FOLDS.csv
+    unique_key: [outer_fold_id, scheme, inner_split]
+checksum_reconciliation:
+  - manifest: 01_dataset_audit/raw_checksums.sha256
+    files_glob: data/sample/*.parquet
