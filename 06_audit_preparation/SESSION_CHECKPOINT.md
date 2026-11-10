@@ -135,3 +135,29 @@ A fifth local commit (user-approved) adds `.gitattributes` (LF for hash-pinned a
   - F-D15, F-D16, A-D10 neither done nor waived.
 - **Evidence:** `06_audit_preparation/phase8_execution_readiness/`.
 - **Next safe action:** Faisal picks the tie rule; owners close or the project lead waives F-D15/F-D16/A-D10; then the project lead writes the authorization file. No real-data primary training has been run.
+
+## Update: Phase 9 final pre-experiment completion (recovery point)
+
+- **Branch:** `audit/preparation-integration`; base `9806827`; Phase 9 commits follow. Not pushed or merged.
+- **Plans used:**
+  - `assets/Yazan new plan.pdf` (sha256 `6f0a7868…`);
+  - `assets/Faisal New Plan 2.pdf`;
+  - `assets/Ahmed New Plan 2.pdf`.
+- **Protocol amendment PA-1:**
+  - exact-count matched coverage with a salted SHA-256 window_id tie key;
+  - config is now `final-protocol-1.1`, sha256 `f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae`.
+- **Code fixes (D1–D8):**
+  - tie rule;
+  - all RQ1 comparators (C vs B added);
+  - no silent RQ1 omission;
+  - code hash in the resume key;
+  - foreign output directories refused;
+  - fail closed on non-finite features and duplicate window_id;
+  - RQ2 labels read from config;
+  - tests no longer write into `03_results/`;
+  - input hashes recorded in the run manifest.
+- **Contract:** `configs/interface_contracts.yaml` v2.0.0 plus `tests/test_interface_contract.py`. Change log: `00_governance/CHANGE_CONTROL_LOG.csv`.
+- **Gates:** re-verified from evidence and appended to `00_governance/GATE_DECISIONS.md` (Gate 1 PASS; Gates 2–3 CONDITIONAL). Attestations PENDING.
+- **Package:** `06_audit_preparation/final_acceptance/` (7 artifacts).
+- **Verdict:** `PRE_EXPERIMENT_ACCEPTANCE_BLOCKED`. Blockers are only the human attestations or waivers for F-D15, F-D16, A-D10 and PA-1.
+- **Next safe action:** owners attest, or the project lead waives; then the project lead writes the authorization file (`NEXT_PHASE_EXECUTION_HANDOFF.md`). No real-data model fitting has been done.
