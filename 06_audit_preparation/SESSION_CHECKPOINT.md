@@ -72,3 +72,43 @@ Working tree after the commits: clean, except this checkpoint update and the com
 ## Update: line-ending portability fix
 
 A fifth local commit (user-approved) adds `.gitattributes` (LF for hash-pinned artifacts, binary for sample Parquet) and makes the builder write JSON as LF bytes. Pinned hashes now hold in a fresh isolated Windows clone (17/17). Validation after the fix: 158 passed, 2 skipped; A12 33/33; reverse-order rebuild byte-identical. Nothing was pushed or merged. **Next step:** await user instructions.
+
+## Update: Phase 5 decision review (no approvals recorded)
+
+- **Branch / commit:** `audit/preparation-integration` @ `df4c539`.
+- **New, uncommitted files:** `06_audit_preparation/phase5_decisions/`
+  - `build_phase5_review.py` (generator over the Phase-4 matrix)
+  - `DECISION_REVIEW_P5.csv`
+  - `CRITICAL_PATH_DECISIONS.md`
+  - `YAZAN_SIGNOFF.md`, `FAISAL_SIGNOFF.md`, `AHMED_SIGNOFF.md`
+  - `TEAM_DECISION_BRIEF.md`
+- **Decisions analysed:** 44 (IDs preserved), all `PENDING_HUMAN_APPROVAL`.
+  - By priority: P0 22, P1 13, P2 5, P3 4.
+  - Phase-5 classes: VERIFIED_FACT 4, TECHNICAL_RECOMMENDATION 19, SCIENTIFIC_CHOICE 17, UNRESOLVED 4.
+- **INSUFFICIENT_EVIDENCE:** Y-D03 (ancestry), Y-D05a, Y-D05b, Y-D06a. Each has a recommended interim restriction.
+- **Key refinements:**
+  - Family-map decisions do not affect LOTO splits (moved to P1).
+  - F-D13: bootstrap stratified within topology.
+  - F-D09: isotonic not recommended.
+  - F-D12: the 0.80 coverage target is prespecified by the Faisal plan.
+- **Not done:** no tests rerun (documentation only), no commit, no push.
+- **Next safe action:** the team fills in the three sign-off sheets, starting with the P0 items; Faisal may implement F-D10 in parallel once the user authorises implementation work.
+
+## Update: Phase 6 decision resolution and controlled preparation
+
+- **Branch:** `audit/preparation-integration`. Pre-phase backup: `<home>\Documents\H2-PRISM_backups\phase6_start_20261110_221155` (8 files, 0 mismatches).
+- **Implemented and tested (no real-data training):**
+  - D(x) flag `TOP_CLASS_FEW_INDEPENDENT_RUNS`;
+  - `calibration_feasibility` fallback;
+  - `combined_score.py`, `uncertainty.py`, `feature_table.py`;
+  - `tools/dataset/build_manifest_v02.py`.
+  - Tests: `test_phase6_components.py` (9), `test_candidate_config.py` (4).
+- **Candidate artifacts in `06_audit_preparation/phase6_resolution/`:**
+  - `CANDIDATE_MANIFEST_V02.csv` (sha256 `36bcbaf9…`, PROVISIONALLY_SELECTED_PENDING_YAZAN_SIGNOFF);
+  - `CANDIDATE_EVALUATION_CONFIG.yaml` (no open values; all blocks PENDING_HUMAN_SIGNOFF);
+  - the 12 required reports;
+  - `UPDATED_DECISION_MATRIX.csv`.
+- **Decisions (44):** VERIFIED 5, IMPLEMENTED 2, TESTED 6, PROVISIONALLY_SELECTED 16, RECOMMENDED_FOR_APPROVAL 10, BLOCKED_BY_EVIDENCE 4 (restrictions implemented), APPROVED_BY_HUMAN 1 (G-D01). 43 pending sign-off.
+- **Known tension (F-D11, Faisal + Ahmed):** the thin-class flag makes development thresholds LEAK-driven. Documented, not silently resolved.
+- **Tests:** full suite 171 passed, 2 skipped; compile OK; A12 33/33; manifest v0.2 reproducible.
+- **Next safe action:** Yazan signs the P0 dataset decisions on `phase5_decisions/YAZAN_SIGNOFF.md`. Primary experiments stay blocked until all P0 sign-offs, the config freeze, the gate re-record and user authorisation.
