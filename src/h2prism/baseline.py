@@ -82,6 +82,38 @@ def _aligned_proba(est, X, classes: Sequence[str]) -> np.ndarray:
     return out
 
 
+def select_on_development(Xtr: np.ndarray, ytr: np.ndarray, gtr: np.ndarray, factory: EstimatorFactory,
+                          config: "GroupedRunConfig"):
+    """Development-only grid selection (shared by run_grouped_evaluation and the primary runner).
+
+    Inner grouped K-fold over ``gtr``; each setting gets out-of-fold probabilities; selection by
+    macro-F1 over present classes, tie -> lower log loss -> grid order. Uses training rows only.
+    Returns (best_index, best_params, best_oof_probabilities, selection_rows).
+    """
+    splits, warns = inner_group_splits(gtr, ytr, config.inner_n_splits, required_classes=config.classes)
+    rows, best = [], None
+    yidx = np.array([config.classes.index(v) for v in ytr])
+    present = sorted(set(ytr.tolist()))
+    for pi, params in enumerate(config.param_grid):
+        oof = np.zeros((len(ytr), len(config.classes)))
+        for itr, ite in splits:
+            est = factory(params, config.seed)
+            est.fit(Xtr[itr], ytr[itr])
+            oof[ite] = _aligned_proba(est, Xtr[ite], config.classes)
+        ypred = np.array(config.classes, dtype=object)[oof.argmax(axis=1)]
+        mf1 = float(f1_score(ytr, ypred, labels=present, average="macro", zero_division=0))
+        ll = log_loss(oof, yidx)
+        rows.append({"param_index": pi, "params": json.dumps(params, sort_keys=True), "inner_macro_f1": mf1,
+                     "inner_log_loss": ll, "inner_warnings": " | ".join(warns)})
+        key = (-mf1, ll, pi)
+        if best is None or key < best[0]:
+            best = (key, pi, params, oof)
+    _, best_pi, best_params, best_oof = best
+    for r in rows:
+        r["selected"] = r["param_index"] == best_pi
+    return best_pi, best_params, best_oof, rows
+
+
 def outer_folds_from_table(folds: pd.DataFrame, fold_col: str = "outer_fold_id",
                            role_col: str = "split_role") -> List[OuterFold]:
     """Build OuterFold objects from a folds.csv-style table (roles train/test)."""
@@ -124,29 +156,10 @@ def run_grouped_evaluation(
         te = table[te_mask]
         Xtr, ytr, gtr = X_all[tr_mask], tr[label_col].to_numpy(), tr[config.independence_col].to_numpy()
         missing_train = sorted(set(config.classes) - set(ytr.tolist()))
-        splits, warns = inner_group_splits(gtr, ytr, config.inner_n_splits, required_classes=config.classes)
-
-        best = None
-        for pi, params in enumerate(config.param_grid):
-            oof = np.zeros((len(tr), len(config.classes)))
-            for itr, ite in splits:
-                est = factory(params, config.seed)
-                est.fit(Xtr[itr], ytr[itr])
-                oof[ite] = _aligned_proba(est, Xtr[ite], config.classes)
-            ypred = np.array(config.classes, dtype=object)[oof.argmax(axis=1)]
-            present = sorted(set(ytr.tolist()))
-            mf1 = float(f1_score(ytr, ypred, labels=present, average="macro", zero_division=0))
-            yidx = np.array([config.classes.index(v) for v in ytr])
-            ll = log_loss(oof, yidx)
-            sel_rows.append({"outer_fold": fold.fold_id, "param_index": pi, "params": json.dumps(params, sort_keys=True),
-                             "inner_macro_f1": mf1, "inner_log_loss": ll, "inner_warnings": " | ".join(warns)})
-            key = (-mf1, ll, pi)
-            if best is None or key < best[0]:
-                best = (key, pi, params, oof)
-        _, best_pi, best_params, best_oof = best
-        for r in sel_rows:
-            if r["outer_fold"] == fold.fold_id:
-                r["selected"] = r["param_index"] == best_pi
+        best_pi, best_params, best_oof, rows = select_on_development(Xtr, ytr, gtr, factory, config)
+        for r in rows:
+            r["outer_fold"] = fold.fold_id
+        sel_rows += rows
 
         inner = tr[["window_id", "Scenario_ID", config.independence_col]].copy()
         inner["outer_fold"] = fold.fold_id

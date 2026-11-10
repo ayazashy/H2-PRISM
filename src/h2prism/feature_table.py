@@ -21,10 +21,25 @@ from .windows import WindowConfig, check_window_manifest, generate_windows
 
 REALIZATION_COLUMNS = {"clean": "canonical_clean_file", "noise_added": "canonical_noise_added_file"}
 
+# Phase 8 fix: manifest v0.2 (tools/dataset/build_manifest_v02.py) uses different column names than the
+# Phase-3 candidate manifest this builder was first written against. Map v0.2 names explicitly.
+V02_TO_INTERNAL = {"label_mapped": "candidate_primary_class", "eligible_primary": "eligible_primary_candidate",
+                   "file_noise_added": "canonical_noise_added_file", "file_clean": "canonical_clean_file",
+                   "raw_label_columns": "raw_active_label_columns"}
+
+
+def normalize_manifest_columns(manifest: pd.DataFrame) -> pd.DataFrame:
+    """Accept both manifest schemas; refuse an ambiguous mix of old and new names."""
+    clash = [new for old, new in V02_TO_INTERNAL.items() if old in manifest.columns and new in manifest.columns]
+    if clash:
+        raise ValueError(f"manifest has both v0.2 and Phase-3 names for {clash}")
+    return manifest.rename(columns={k: v for k, v in V02_TO_INTERNAL.items() if k in manifest.columns})
+
 
 def build_feature_table(manifest: pd.DataFrame, raw_parent: Path, realization: str, family_column: str,
                         window_config: WindowConfig, statistics: Sequence[str],
                         channels: Sequence[str] = SENSOR_CHANNELS) -> Dict[str, object]:
+    manifest = normalize_manifest_columns(manifest)
     if realization not in REALIZATION_COLUMNS:
         raise ValueError(f"realization must be one of {sorted(REALIZATION_COLUMNS)}")
     col = REALIZATION_COLUMNS[realization]

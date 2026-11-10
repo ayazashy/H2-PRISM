@@ -30,7 +30,7 @@ METADATA_COLUMNS = (
     "window_id", "file_id", "Scenario_ID", "Scenario_Family_ID", "label_raw", "label_mapped",
     "phase", "topology", "boundary_status", "eligible_primary", "exclusion_reason", "outer_fold",
     "start_time", "end_time", "start_row", "end_row_exclusive", "n_samples", "label_mode",
-    "time_source", "y_true",
+    "time_source", "y_true", "realization", "feature_version",
 )
 
 # Features invariant to a constant per-channel offset (used by A15 delta/trend arm).
