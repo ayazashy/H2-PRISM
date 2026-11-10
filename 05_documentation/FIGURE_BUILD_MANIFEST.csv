@@ -1,0 +1,5 @@
+figure_id,status,reason
+fig_rq1_risk_coverage,NOT_BUILT_MISSING_EVIDENCE,[fig_rq1_risk_coverage] mandatory input missing: 03_results/primary_protocol/PRIMARY/coverage_risk.csv
+fig_f6_reliability,NOT_BUILT_MISSING_EVIDENCE,[fig_f6_reliability] mandatory input missing: 03_results/primary_protocol/PRIMARY/calibration_reliability.csv
+fig_rq1_effects,NOT_BUILT_MISSING_EVIDENCE,[fig_rq1_effects] mandatory input missing: 03_results/primary_protocol/PRIMARY/rq1.csv
+fig_rq2_outcomes,NOT_BUILT_MISSING_EVIDENCE,[fig_rq2_outcomes] mandatory input missing: 03_results/primary_protocol/PRIMARY/rq2.csv

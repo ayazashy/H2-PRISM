@@ -39,3 +39,5 @@
 2. **Pre-event rows of fault scenarios.** Under the row-level reading of `class_mapping.yaml`, these rows are NORMAL. `pre_event_policy ∈ {exclude, label_normal}` is a required argument. The choice changes how many families count as NORMAL (from 1 up to roughly all of them), so it directly affects the Y5 feasibility argument.
 3. **Ambiguity in the NORMAL rule.** The YAML rule "label_anomaly == 0 **or** all fault columns == 0" overlaps the fault rules. The implementation applies fault-precedence and marks label_anomaly=1 rows with no fault as `ANOMALY_WITHOUT_TYPE`. Yazan must confirm this reading.
 4. Window length and stride (60 s / 30 s is only a candidate), k, flag thresholds, `singleton_handling`, `max_set_size`, and the calibration criterion.
+
+> **Cross-reference (2026-11-11, A4 item M4):** matched coverage is defined by protocol amendment PA-1 (exact-count selection with a salted SHA-256 window_id tie key, denominator = all eligible windows of the outer-test fold). The authoritative definition is `02_methodology/POLICY_THRESHOLD_SELECTION.md`.

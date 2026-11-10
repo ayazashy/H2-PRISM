@@ -1,27 +1,28 @@
-# H2-PRISM Research Figure & Table Specifications (Task A5)
-**Governance Owner**: Ahmed (Research Lead), Collaborator: Faisal (ML Lead), Yazan (Readiness Lead)  
-**Date**: 2026-10-30  
-**Status**: APPROVED SPECIFICATION
+# Research Figure Specification (A5), v2, 2026-11-11
 
----
+- **Replaces:** the 2026-10-30 version, which is in Git history. It listed figures 3–6 and a KPI dashboard built from invented numbers as "approved".
+- **Status:** SPECIFICATION ONLY. **No research figure exists yet.** Ahmed's approval NOT_RECORDED.
 
-## 1. Research Figure Register
+## Quarantined illustrative files (not results)
 
-All research figures are generated deterministically via [`scripts/visualize.py`](../scripts/visualize.py) using publication-grade styling defined in [`src/h2prism/visualization/`](../src/h2prism/visualization/).
+`03_results/ILLUSTRATIVE_DEMO_NOT_RESULTS/` holds fig3–fig6 and `dashboard_ILLUSTRATIVE.html`. They come from hard-coded or random values via `scripts/visualize.py --demo`, must never be cited, and carry the label "ILLUSTRATIVE ONLY".
 
-| Figure ID | File Path | Primary Research Question / Component | Description & Required Data Inputs |
-| :--- | :--- | :---: | :--- |
-| **Figure 1** | `03_results/figures/fig1_family_distribution.png` | **Data Audit & Feasibility** (Yazan Y5) | Bar chart comparing independent family counts per class under conservative pooling vs. topology-stratified grouping. Proves necessity of 3-fold CV. |
-| **Figure 2** | `03_results/figures/fig2_pipeline_telemetry.png` | **SCADA Telemetry Dynamics** (Yazan Y3) | 2-panel synchronized pressure (PS1..PS12) and mass flow (MFS1..MFS4) timeseries with shaded event duration window. |
-| **Figure 3** | `03_results/figures/fig3_confusion_matrix.png` | **Baseline Attribution** (Faisal F5) | Normalized confusion matrix across the 4 primary classes (`NORMAL`, `LEAK`, `COMPRESSOR_FAULT`, `COMPRESSOR_DELAY`) with cell sample counts. |
-| **Figure 4** | `03_results/figures/fig4_risk_coverage_curve.png` | **Primary Experimental Comparison** (**RQ1**) | Risk-Coverage curves comparing Method C (Combined with $D(x)$) vs. Method C$-$D (Combined without $D(x)$) vs. Method B (Confidence-only) at matched coverage. |
-| **Figure 5** | `03_results/figures/fig5_calibration_reliability.png` | **Probability Calibration** (Faisal F6) | 10-bin reliability diagram with empirical accuracy bars, mean confidence diamonds, sample count histogram, ECE, and Brier score. |
-| **Figure 6** | `03_results/figures/fig6_distinguishability_separation.png` | **Empirical Distinguishability** (**RQ1**) | Empirical density histogram of $D(x) = q_{(1)}(x) - q_{(2)}(x)$ stratified by correct vs. incorrect predictions among difficult samples. |
+`03_results/figures/fig1_family_distribution.png` and `fig2_pipeline_telemetry.png` are historical descriptive plots built from the superseded family map. They are not evidence for the current folds.
 
----
+## Planned figures (built only by `tools/reporting/build_research_figures.py` from authorized runner outputs)
 
-## 2. Interactive Executive Dashboard
+| ID | Question | Content | Input (runner output) | Units / symbols | Status |
+| --- | --- | --- | --- | --- | --- |
+| fig_rq1_risk_coverage | RQ1 | selective risk vs coverage for s_C, s_C−D and confidence at the rank-matched targets (primary policy) | `03_results/primary_protocol/PRIMARY/coverage_risk.csv` | coverage, risk ∈ [0, 1] | PENDING |
+| fig_f6_reliability | supporting (F6) | top-label reliability of calibrated outer-test probabilities, 10 bins with counts | `.../calibration_reliability.csv` | confidence, accuracy | PENDING |
+| fig_rq1_effects | RQ1 | Δ risk with 95% family-bootstrap interval per comparison and target | `.../rq1.csv` | Δ (risk units) | PENDING |
+| fig_rq2_outcomes | RQ2 | stacked SPECIFIC / AMBIGUITY / UNRESOLVED shares per class | `.../rq2.csv` | shares | PENDING |
+| fig_data_composition (optional) | data | runs and families per class and topology | manifest v0.2 | counts | SPECIFIED (table T0 provides the same counts) |
 
-In addition to static publication figures, the visualization suite generates a standalone single-page HTML report:
-- **Location**: [`03_results/dashboard.html`](../03_results/dashboard.html)
-- **Features**: Embedded base64 high-resolution plots, executive KPI cards (coverage, selective risk, calibration error), and responsive layout viewable in any browser without external server requirements.
+## Rules
+
+- Every figure carries its source file, experiment ID and config hash (FIGURE_BUILD_MANIFEST).
+- Inputs with `artifact_class` SYNTHETIC_TEST or PREFLIGHT_ONLY are routed to `illustrative/` with a watermark.
+- Only owner-raised `evidence_status` VALIDATED/FROZEN routes to `final/`.
+- Risk is never plotted without coverage. NOT_ESTIMABLE targets are omitted from curves, and the caption names them.
+- No decorative figures; each figure maps to RQ1, RQ2 or a method-validation item. Register: `FIGURE_PROVENANCE_REGISTER.csv`.

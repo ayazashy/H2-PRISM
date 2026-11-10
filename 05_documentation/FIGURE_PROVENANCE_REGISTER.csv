@@ -1,0 +1,11 @@
+figure_or_table_id,kind,research_question,input_file,generating_experiment,config_reference,manifest_version,builder,evidence_status,provenance_status,notes
+fig_rq1_risk_coverage,figure,RQ1,03_results/primary_protocol/PRIMARY/coverage_risk.csv,F10_PRIMARY (PRIMARY_EXPERIMENT),FINAL_EXPERIMENT_CONFIG.yaml f788b6d8,v0.2 36bcbaf9,tools/reporting/build_research_figures.py,PENDING,NOT_BUILT_NO_RESULTS,filter variant=primary mode=rank_matched
+fig_f6_reliability,figure,supporting (F6),03_results/primary_protocol/PRIMARY/calibration_reliability.csv,F10_PRIMARY,FINAL_EXPERIMENT_CONFIG.yaml f788b6d8,v0.2 36bcbaf9,tools/reporting/build_research_figures.py,PENDING,NOT_BUILT_NO_RESULTS,calibrated probabilities
+fig_rq1_effects,figure,RQ1,03_results/primary_protocol/PRIMARY/rq1.csv,F10_PRIMARY,FINAL_EXPERIMENT_CONFIG.yaml f788b6d8,v0.2 36bcbaf9,tools/reporting/build_research_figures.py,PENDING,NOT_BUILT_NO_RESULTS,
+fig_rq2_outcomes,figure,RQ2,03_results/primary_protocol/PRIMARY/rq2.csv,F10_PRIMARY,FINAL_EXPERIMENT_CONFIG.yaml f788b6d8,v0.2 36bcbaf9,tools/reporting/build_research_figures.py,PENDING,NOT_BUILT_NO_RESULTS,
+T_RQ1_matched_coverage,table,RQ1,03_results/primary_protocol/PRIMARY/coverage_risk.csv,F10_PRIMARY,FINAL_EXPERIMENT_CONFIG.yaml f788b6d8,v0.2 36bcbaf9,tools/reporting/build_research_tables.py,PENDING,NOT_BUILT_NO_RESULTS,
+T_RQ1_paired_effects,table,RQ1,03_results/primary_protocol/PRIMARY/rq1.csv,F10_PRIMARY,FINAL_EXPERIMENT_CONFIG.yaml f788b6d8,v0.2 36bcbaf9,tools/reporting/build_research_tables.py,PENDING,NOT_BUILT_NO_RESULTS,
+T_RQ2_outcomes,table,RQ2,03_results/primary_protocol/PRIMARY/rq2.csv,F10_PRIMARY,FINAL_EXPERIMENT_CONFIG.yaml f788b6d8,v0.2 36bcbaf9,tools/reporting/build_research_tables.py,PENDING,NOT_BUILT_NO_RESULTS,
+illustrative_fig3_to_fig6_and_dashboard,figure,none,hard-coded or random values,none (ILLUSTRATIVE),scripts/visualize.py --demo,none,scripts/visualize.py,ILLUSTRATIVE,QUARANTINED,03_results/ILLUSTRATIVE_DEMO_NOT_RESULTS; never cite
+fig1_family_distribution,figure,none (historical),superseded 2026-10-30 family map,none,scripts/visualize.py,superseded,scripts/visualize.py,HISTORICAL,NOT_CURRENT_EVIDENCE,03_results/figures
+fig2_pipeline_telemetry,figure,descriptive,raw sample data,none,scripts/visualize.py,n/a,scripts/visualize.py,HISTORICAL,DESCRIPTIVE_ONLY,03_results/figures
