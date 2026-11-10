@@ -56,3 +56,22 @@ LEAK is 78.3% of the eligible 60 s/30 s windows in every topology (`phase4_appro
 | A-D11 | Ahmed | P3 | REQUIRES_NAMED_OWNER_SIGNOFF | Plan 2 PDFs exist outside repo; adding them is Ahmed's action |
 | G-D01 | User | P3 | NOT_APPLICABLE | User explicitly approved the 4-commit plan (executed) and the LF fix commit |
 | Y-D05a | Yazan | P3 | RESTRICTED_DUE_TO_SOURCE_EVIDENCE | no location analysis for leakG5G6 |
+
+## Amendment PA-1: matched-coverage tie rule (Phase 9, before any outer-test evaluation)
+
+- **Config:** `FINAL_EXPERIMENT_CONFIG.yaml` is now `final-protocol-1.1`, sha256 `f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae`. The only change from 1.0 (`b9f44ad7…`) is the new `thresholds.matched_coverage` block.
+- **Problem:** Random Forest probabilities often saturate (many outer-test windows share one score). The 1.0 implementation accepted ties together, so in rank-matched mode s_C and s_C−D could be compared at different realized coverages. In the synthetic run they were 0.45 and 0.55 at target 0.30. That breaks the matched-coverage estimand of RQ1.
+- **Alternatives evaluated (on design grounds and synthetic evidence only; no real outer-test data exists):**
+  - A. Exact-count selection with a deterministic, label-free tie key: coverage is identical by construction, which matches plan F10 step 86 ("select target fraction without labels").
+  - B. Tie-group inclusion with realized-coverage reporting and NOT_ESTIMABLE when coverages differ: with saturated scores, B would make RQ1 non-estimable or unmatched in most folds, and it does not realize the stated estimand.
+- **Selected: A for rank-matched mode** (primary RQ1).
+  - Unit: window.
+  - Denominator n: all eligible windows of the outer-test fold.
+  - Requested count: m = ceil(target·n).
+  - Eligible for selection: finite score, valid probabilities, and no unresolved or specific-blocking flag under the evaluated policy variant.
+  - Order: score descending, then SHA-256(`h2prism-pa1-v1|window_id`) ascending. A salted hash is used because raw identifiers encode run, class and topology order (a lexicographic key would be biased; see `tests/test_tie_policy.py::test_hash_key_avoids_identifier_order_bias`).
+  - The same key is used for every method.
+  - If m exceeds the eligible count, the result is NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL. Coverage is never forced.
+- **Threshold-transfer mode is unchanged.** A deployable threshold cannot split ties; realized coverage is reported.
+- **Tie-order sensitivity (secondary, reported, never used for selection):** 20 alternative salts. The pooled risk difference is reported per salt in `tie_sensitivity.csv`.
+- **Status:** RECORDED_PENDING_OWNER_ACCEPTANCE (Faisal, F10). This does not change the research questions, data, folds, models, safeguards or targets.

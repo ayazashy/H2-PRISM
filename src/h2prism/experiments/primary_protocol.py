@@ -52,9 +52,14 @@ from ..uncertainty import paired_stratified_bootstrap
 from ..windows import WindowConfig
 
 METHODS = ("s_C", "s_C_minus_D", "confidence", "margin", "neg_entropy", "D_only")
+# RQ1 paired comparisons (plan F10): C vs C-D is primary; C vs B (confidence) and the other indicators secondary
+COMPARISONS = (("s_C_minus_D", "PRIMARY"), ("confidence", "SECONDARY_C_VS_B"), ("margin", "SECONDARY"),
+               ("neg_entropy", "SECONDARY"), ("D_only", "SECONDARY"))
 MODES = {"preflight": "PREFLIGHT_ONLY", "synthetic": "SYNTHETIC_TEST"}
 EXECUTE_CLASSES = {"PRIMARY_EXPERIMENT": "noise_added", "ROBUSTNESS_EXPERIMENT": "clean"}
 REAL_STATUS = "PROTOCOL_SELECTED_PENDING_EXECUTION"
+# Execution-blocking governance items (FINAL_GOVERNANCE_AND_GATE_RECORD.md): each must be attested or waived
+REQUIRED_CLEARANCES = ("F-D15", "F-D16", "A-D10", "PA-1")
 SYNTH_STATUS = "SYNTHETIC_TEST_CONFIG"
 MANIFEST_COLS = ["Scenario_ID", "Scenario_Family_ID", "topology", "label_mapped", "eligible_primary",
                  "file_noise_added", "sha256_noise_added", "file_clean", "sha256_clean"]
@@ -88,6 +93,16 @@ def write_csv(df: pd.DataFrame, p: Path) -> None:
 def write_json(obj, p: Path) -> None:
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_bytes((json.dumps(obj, indent=2, sort_keys=True, default=str) + "\n").encode("utf-8"))
+
+
+def _code_sha256() -> str:
+    """Hash of the runner and the library modules it orchestrates (resume keys change when code changes)."""
+    pkg = Path(__file__).resolve().parents[1]
+    h = hashlib.sha256()
+    for f in sorted(pkg.rglob("*.py")):
+        h.update(f.relative_to(pkg).as_posix().encode())
+        h.update(f.read_bytes().replace(b"\r\n", b"\n"))
+    return h.hexdigest()
 
 
 def _git_commit(root: Path) -> str:
@@ -144,6 +159,9 @@ def preflight(cfg: Dict, root: Path, raw_parent: Path, realization: str, expecte
     flags = set(cfg["policy_primary"]["unresolved_flags"]) | set(cfg["policy_primary"]["specific_blocking_flags"])
     chk("policy_flags_known", flags <= set(ALL_FLAGS), sorted(flags - set(ALL_FLAGS)))
     chk("thresholds_from_development", cfg["thresholds"]["source"] == "development")
+    mc = cfg["thresholds"].get("matched_coverage") or {}
+    chk("matched_coverage_rule_prespecified", mc.get("selection") == "exact_count" and bool(mc.get("tie_break_salt"))
+        and mc.get("tie_break_key") == "sha256(salt|window_id)", mc)
     if not all(c["ok"] for c in checks):
         raise PreflightError(_fmt(checks))
     return {"checks": checks, "eligible_runs": len(el), "folds": int(folds.outer_fold_id.nunique())}
@@ -222,14 +240,73 @@ def _available(scores, flags, pol) -> np.ndarray:
     return np.isfinite(scores) & np.array([not (f & blocked) for f in fl])
 
 
+def _required_count(target: float, n: int) -> int:
+    """Number of SPECIFIC decisions a target coverage requires; denominator = all eligible windows of the evaluated set."""
+    return 0 if n == 0 else int(math.ceil(float(target) * n - 1e-9))
+
+
 def _rank_threshold(scores, avail, target) -> Tuple[Optional[float], float]:
-    """Label-free threshold reaching ``target`` coverage of ALL rows using available rows only."""
+    """Development threshold (threshold-transfer rule): the score of the m-th best available row.
+
+    Ties at this value are all accepted when the threshold is transferred (a deployable threshold
+    cannot split ties); realized coverage is reported separately. Returns (None, max_cov) if unattainable.
+    """
     n = len(scores)
     max_cov = float(avail.mean()) if n else 0.0
-    if n == 0 or target > max_cov + 1e-12:
+    m = _required_count(target, n)
+    if n == 0 or m > int(avail.sum()) or m == 0:
         return None, max_cov
-    m = int(math.ceil(target * n))
     return float(np.sort(scores[avail])[::-1][m - 1]), max_cov
+
+
+def tie_keys(window_ids, salt: str) -> np.ndarray:
+    """Label-free, platform-independent tie-break keys: SHA-256 of '<salt>|<window_id>' (UTF-8).
+
+    A salted hash is used instead of the raw window_id so that the tie order is not aligned with run,
+    topology or class ordering that may be encoded in identifiers.
+    """
+    return np.array([hashlib.sha256(f"{salt}|{w}".encode("utf-8")).hexdigest() for w in window_ids], dtype=object)
+
+
+def exact_count_selection(scores, avail, window_ids, target: float, salt: str) -> Tuple[Optional[np.ndarray], Dict]:
+    """Primary matched-coverage rule (protocol amendment PA-1).
+
+    Select exactly m = ceil(target * n) rows, n = all rows of the evaluated set, from the eligible rows
+    (``avail``: finite score and no unresolved/specific-blocking flag), ordered by score (descending)
+    then by ``tie_keys`` (ascending). Never uses labels. If fewer than m rows are eligible the target is
+    not attainable and ``None`` is returned (never forced).
+    """
+    scores = np.asarray(scores, dtype=float)
+    avail = np.asarray(avail, dtype=bool) & np.isfinite(scores)
+    window_ids = np.asarray(window_ids).astype(str)
+    if len(set(window_ids)) != len(window_ids):
+        raise ValueError("window_id must be unique for deterministic tie resolution")
+    n, n_av = len(scores), int(avail.sum())
+    m = _required_count(target, n)
+    info = {"denominator_n": n, "requested_count": m, "n_eligible_for_specific": n_av,
+            "max_attainable_coverage": (n_av / n) if n else 0.0}
+    if n == 0 or m > n_av:
+        return None, {**info, "realized_count": None, "realized_coverage": None}
+    idx = np.flatnonzero(avail)
+    order = np.lexsort((tie_keys(window_ids[idx], salt), -scores[idx]))
+    sel = idx[order[:m]]
+    mask = np.zeros(n, dtype=bool)
+    mask[sel] = True
+    if m:
+        boundary = scores[idx[order[m - 1]]]
+        tied = scores[idx] == boundary
+        info.update(boundary_score=float(boundary), n_tied_at_boundary=int(tied.sum()),
+                    n_tied_selected=int((scores[sel] == boundary).sum()))
+    else:
+        info.update(boundary_score=None, n_tied_at_boundary=0, n_tied_selected=0)
+    return mask, {**info, "realized_count": m, "realized_coverage": m / n}
+
+
+def _matched_cfg(cfg) -> Dict:
+    mc = cfg["thresholds"].get("matched_coverage")
+    if not mc:
+        raise PreflightError("thresholds.matched_coverage (tie rule) must be prespecified in the config")
+    return mc
 
 
 def _scores_frame(P, D, sC, sCmD) -> pd.DataFrame:
@@ -273,8 +350,10 @@ def development_stage(cfg, dev: pd.DataFrame, feats: List[str]) -> Dict:
         for meth in METHODS:
             avm = av & np.isfinite(S[meth].to_numpy())
             for tg in _targets(cfg):
-                tau, max_cov = _rank_threshold(S[meth].to_numpy(), avm, tg)
+                sc = S[meth].to_numpy()
+                tau, max_cov = _rank_threshold(sc, avm, tg)
                 thr.append({"variant": vname, "method": meth, "target": tg, "tau": tau, "dev_max_attainable_coverage": max_cov,
+                            "dev_realized_coverage_at_tau": float((avm & (sc >= tau)).mean()) if tau is not None else None,
                             "dev_status": "ESTIMABLE" if tau is not None else "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL"})
     return {"params": params, "selection": pd.DataFrame(sel_rows), "cal_method": cal_method,
             "cal_feasibility": feas, "cal_table": cal_table, "P_oof": P_oof, "y_idx": yidx,
@@ -306,29 +385,59 @@ def outer_stage(cfg, dev: pd.DataFrame, test: pd.DataFrame, feats: List[str], de
         pred[c] = sup[c].to_numpy()
     for c in S.columns:
         pred[f"score_{c}"] = S[c].to_numpy()
-    rows = []
+    rows, tie_rows = [], []
     th = devres["thresholds"]
+    mc = _matched_cfg(cfg)
+    salt = str(mc["tie_break_salt"])
+    n_sens = int(mc.get("tie_sensitivity", {}).get("n_alternative_salts", 0))
+    wid = pred.window_id.to_numpy()
+    flags = pred.support_flags.fillna("")
+    y_hat = np.array(classes, dtype=object)[np.argmax(P, axis=1)]  # same argmax/lowest-index rule as the policy
     for vname, pol in _policies(cfg).items():
-        av = _available(np.zeros(len(S)), pred.support_flags.fillna(""), pol)  # flags only; method finiteness below
+        av = _available(np.zeros(len(S)), flags, pol)  # flags only; method finiteness below
+        av &= np.isfinite(P).all(axis=1)
         for meth in METHODS:
             sc = S[meth].to_numpy()
             avm = av & np.isfinite(sc)
             for tg in _targets(cfg):
                 tau_dev = th[(th.variant == vname) & (th.method == meth) & (th.target == tg)].tau.iloc[0]
-                tau_rm, max_cov = _rank_threshold(sc, avm, tg)
-                for mode, tau in (("threshold_transfer", tau_dev), ("rank_matched", tau_rm)):
-                    base = {"variant": vname, "method": meth, "target": tg, "mode": mode, "test_max_attainable_coverage": max_cov}
-                    if tau is None or (isinstance(tau, float) and not np.isfinite(tau)):
-                        rows.append({**base, "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL"})
-                        continue
-                    d = _decide(P, np.where(np.isfinite(sc), sc, np.nan), pred.support_flags.fillna(""), classes, pol, float(tau))
-                    rows.append({**base, "status": "ESTIMABLE", "tau": float(tau),
-                                 "decisions": d.assign(window_id=pred.window_id.to_numpy())})
-    return pred, rows
+                # threshold transfer: development threshold applied unchanged (ties at tau all accepted)
+                base = {"variant": vname, "method": meth, "target": tg, "mode": "threshold_transfer",
+                        "test_max_attainable_coverage": float(avm.mean()) if len(avm) else 0.0}
+                if tau_dev is None or (isinstance(tau_dev, float) and not np.isfinite(tau_dev)):
+                    rows.append({**base, "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL"})
+                else:
+                    d = _decide(P, np.where(np.isfinite(sc), sc, np.nan), flags, classes, pol, float(tau_dev))
+                    rows.append({**base, "status": "ESTIMABLE", "tau": float(tau_dev), "decisions": d.assign(window_id=wid)})
+                # rank matched (primary RQ1 rule, PA-1): exact count, deterministic label-free tie key
+                mask, info = exact_count_selection(sc, avm, wid, tg, salt)
+                base = {"variant": vname, "method": meth, "target": tg, "mode": "rank_matched",
+                        "test_max_attainable_coverage": info["max_attainable_coverage"],
+                        **{k: info.get(k) for k in ("denominator_n", "requested_count", "realized_count", "realized_coverage",
+                                                   "n_tied_at_boundary", "n_tied_selected", "boundary_score")}}
+                if mask is None:
+                    rows.append({**base, "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL"})
+                    continue
+                eff = np.where(mask, 1.0, np.where(np.isfinite(sc), -1.0, np.nan))  # selected <=> SPECIFIC-eligible
+                d = _decide(P, eff, flags, classes, pol, 0.0)
+                n_spec = int((d.policy_outcome == SPECIFIC).sum())
+                if n_spec != info["realized_count"]:
+                    raise AssertionError(f"rank_matched selected {info['realized_count']} but policy issued {n_spec} SPECIFIC")
+                rows.append({**base, "status": "ESTIMABLE", "tau": info["boundary_score"], "decisions": d.assign(window_id=wid)})
+                if vname == "primary" and meth in ("s_C", "s_C_minus_D"):
+                    for j in range(n_sens):  # tie-order sensitivity: alternative salts (secondary, labelled)
+                        mj, _ = exact_count_selection(sc, avm, wid, tg, f"{salt}|sensitivity|{j}")
+                        for fam, idx in pred.groupby("Scenario_Family_ID").indices.items():
+                            s = mj[idx]
+                            tie_rows.append({"target": tg, "salt_index": j, "method": meth, "Scenario_Family_ID": fam,
+                                             "topology": pred.topology.iloc[idx[0]], "n_selected": int(s.sum()),
+                                             "n_errors": int((y_hat[idx][s] != pred.y_true.to_numpy()[idx][s]).sum())})
+    return pred, rows, pd.DataFrame(tie_rows)
 
 
 # ----------------------------------------------------------------------------- aggregation
-def aggregate(cfg, preds: pd.DataFrame, dec_rows: List[Dict], artifact_class: str) -> Dict[str, object]:
+def aggregate(cfg, preds: pd.DataFrame, dec_rows: List[Dict], artifact_class: str,
+              tie_counts: Optional[pd.DataFrame] = None) -> Dict[str, object]:
     classes = list(cfg["dataset"]["classes"])
     y_of = dict(zip(preds.window_id, preds.y_true))
     fam_of = dict(zip(preds.window_id, preds.Scenario_Family_ID))
@@ -336,7 +445,9 @@ def aggregate(cfg, preds: pd.DataFrame, dec_rows: List[Dict], artifact_class: st
     cov, est, longd = [], [], []
     for r in dec_rows:
         key = {k: r[k] for k in ("fold", "variant", "method", "target", "mode")}
-        est.append({**key, "status": r["status"], "test_max_attainable_coverage": r["test_max_attainable_coverage"]})
+        est.append({**key, "status": r["status"], "test_max_attainable_coverage": r["test_max_attainable_coverage"],
+                    **{k: r.get(k) for k in ("requested_count", "realized_count", "realized_coverage", "n_tied_at_boundary",
+                                            "n_tied_selected", "tau")}})
         if r["status"] != "ESTIMABLE":
             continue
         d = r["decisions"].copy()
@@ -364,41 +475,69 @@ def aggregate(cfg, preds: pd.DataFrame, dec_rows: List[Dict], artifact_class: st
     n_folds = preds.fold.nunique() if "fold" in preds else 0
     est_df = pd.DataFrame(est)
     rq1 = []
-    if len(D):
-        for (v, t, mo), g in D[D.method.isin(["s_C", "s_C_minus_D"])].groupby(["variant", "target", "mode"]):
-            ok = est_df[(est_df.variant == v) & (est_df.target == t) & (est_df["mode"] == mo) & est_df.method.isin(["s_C", "s_C_minus_D"])]
-            if (ok.status != "ESTIMABLE").any() or g.fold.nunique() < n_folds:
-                rq1.append({"variant": v, "target": t, "mode": mo, "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL"})
-                continue
-            units = []
-            for fam, gf in g.groupby("Scenario_Family_ID"):
-                a, b = gf[gf.method == "s_C"], gf[gf.method == "s_C_minus_D"]
-                assert set(a.window_id) == set(b.window_id)  # aligned evaluation units
-                spec = lambda x: x[x.policy_outcome == SPECIFIC]
-                units.append({"unit": fam, "stratum": gf.topology.iloc[0],
-                              "num_a": int((spec(a).y_pred_specific != spec(a).y_true).sum()), "den_a": len(spec(a)),
-                              "num_b": int((spec(b).y_pred_specific != spec(b).y_true).sum()), "den_b": len(spec(b))})
-            U = pd.DataFrame(units)
-            u = cfg.get("evaluation", {}).get("uncertainty", {})
-            bs = paired_stratified_bootstrap(U, int(u.get("n_boot", 2000)), int(u.get("seed", 0)))
-            cov_a = float((g[g.method == "s_C"].policy_outcome == SPECIFIC).mean())
-            cov_b = float((g[g.method == "s_C_minus_D"].policy_outcome == SPECIFIC).mean())
-            rq1.append({"variant": v, "target": t, "mode": mo, "status": "ESTIMABLE",
-                        "realized_coverage_a": cov_a, "realized_coverage_b": cov_b,
-                        "coverage_gap_a_minus_b": cov_a - cov_b,  # ties in scores are accepted together (protocol)
-                        **{k: bs[k] for k in ("estimate_a", "estimate_b", "difference", "ci_low", "ci_high", "n_units", "n_boot_undefined")},
-                        "comparison": "selective risk s_C minus s_C_minus_D (negative = lower risk with D)",
-                        "interpretation": bs["interpretation"]})
+    for mb, role in COMPARISONS:
+        pair = est_df[est_df.method.isin(["s_C", mb])] if len(est_df) else est_df
+        if not len(pair) or pair.method.nunique() < 2:
+            continue  # comparator not part of this run (only possible in unit tests; real runs score all METHODS)
+        combos = sorted({(r.variant, r.target, r.mode) for r in pair.itertuples()})
+        Dp = D[D.method.isin(["s_C", mb])] if len(D) else D
+        for v, t, mo in combos:  # every registered comparison gets a row; nothing is silently omitted
+          key = {"comparison_a": "s_C", "comparison_b": mb, "comparison_role": role, "variant": v, "target": t, "mode": mo}
+          ok = pair[(pair.variant == v) & (pair.target == t) & (pair["mode"] == mo)]
+          g = Dp[(Dp.variant == v) & (Dp.target == t) & (Dp["mode"] == mo)] if len(Dp) else Dp
+          if (ok.status != "ESTIMABLE").any() or not len(g) or g.fold.nunique() < n_folds:
+              rq1.append({**key, "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+                          "folds_estimable": int((ok[ok.status == "ESTIMABLE"].groupby("fold").method.nunique() == 2).sum()),
+                          "n_folds": n_folds})
+              continue
+          units = []
+          for fam, gf in g.groupby("Scenario_Family_ID"):
+              a, b = gf[gf.method == "s_C"], gf[gf.method == mb]
+              assert set(a.window_id) == set(b.window_id)  # aligned evaluation units
+              spec = lambda x: x[x.policy_outcome == SPECIFIC]
+              units.append({"unit": fam, "stratum": gf.topology.iloc[0],
+                            "num_a": int((spec(a).y_pred_specific != spec(a).y_true).sum()), "den_a": len(spec(a)),
+                            "num_b": int((spec(b).y_pred_specific != spec(b).y_true).sum()), "den_b": len(spec(b))})
+          U = pd.DataFrame(units)
+          u = cfg.get("evaluation", {}).get("uncertainty", {})
+          bs = paired_stratified_bootstrap(U, int(u.get("n_boot", 2000)), int(u.get("seed", 0)))
+          cov_a = float((g[g.method == "s_C"].policy_outcome == SPECIFIC).mean())
+          cov_b = float((g[g.method == mb].policy_outcome == SPECIFIC).mean())
+          if mo == "rank_matched":  # PA-1: exact-count matching must give identical coverage per fold
+              for _, gk in g.groupby("fold"):
+                  na = int((gk[gk.method == "s_C"].policy_outcome == SPECIFIC).sum())
+                  nb = int((gk[gk.method == mb].policy_outcome == SPECIFIC).sum())
+                  if na != nb:
+                      raise AssertionError(f"rank_matched coverage not matched ({na} vs {nb})")
+          rq1.append({**key, "status": "ESTIMABLE",
+                      "realized_coverage_a": cov_a, "realized_coverage_b": cov_b,
+                      "coverage_gap_a_minus_b": cov_a - cov_b,  # 0 by construction in rank_matched; reported for threshold_transfer
+                      **{k: bs[k] for k in ("estimate_a", "estimate_b", "difference", "ci_low", "ci_high", "n_units", "n_boot_undefined")},
+                      "comparison": f"selective risk s_C minus {mb} (negative = lower risk for s_C)",
+                      "interpretation": bs["interpretation"]})
     rq2 = []
+    per_class = cfg.get("evaluation", {}).get("per_class_reporting", {})
     if len(D):
         for (v, m, t, mo), g in D[D.method == "s_C"].groupby(["variant", "method", "target", "mode"]):
             for c, gc in g.groupby("y_true"):
                 rq2.append({"variant": v, "target": t, "mode": mo, "class": c, "n": len(gc),
                             **{o.lower(): float((gc.policy_outcome == o).mean()) for o in (SPECIFIC, AMBIGUITY_SET, UNRESOLVED)},
-                            "reporting": "descriptive" if c != "LEAK" else "restricted"})
+                            "reporting": per_class.get(c, "UNSPECIFIED")})
+    tie = []
+    if tie_counts is not None and len(tie_counts):
+        prim = {(r["target"]): r for r in rq1 if r["variant"] == "primary" and r["mode"] == "rank_matched"
+                and r["comparison_b"] == "s_C_minus_D" and r["status"] == "ESTIMABLE"}
+        for (t, j), g in tie_counts.groupby(["target", "salt_index"]):
+            if t not in prim:
+                continue  # sensitivity only where the primary comparison is estimable in every fold
+            a, b = g[g.method == "s_C"], g[g.method == "s_C_minus_D"]
+            ra = a.n_errors.sum() / a.n_selected.sum() if a.n_selected.sum() else float("nan")
+            rb = b.n_errors.sum() / b.n_selected.sum() if b.n_selected.sum() else float("nan")
+            tie.append({"target": t, "salt_index": int(j), "pooled_risk_a": ra, "pooled_risk_b": rb, "difference": ra - rb,
+                        "primary_difference": prim[t]["difference"], "role": "TIE_ORDER_SENSITIVITY_SECONDARY"})
     tag = lambda df: df.assign(artifact_class=artifact_class) if len(df) else df
     return {"coverage_risk": tag(pd.DataFrame(cov)), "estimability": tag(est_df), "rq1": tag(pd.DataFrame(rq1)),
-            "rq2": tag(pd.DataFrame(rq2)), "decisions": tag(D)}
+            "rq2": tag(pd.DataFrame(rq2)), "tie_sensitivity": tag(pd.DataFrame(tie)), "decisions": tag(D)}
 
 
 # ----------------------------------------------------------------------------- orchestration
@@ -416,6 +555,13 @@ def check_authorization(path: Optional[Path], config_sha: str, artifact_class: s
     for k in ("authorized_by", "date"):
         if not a.get(k):
             problems.append(f"{k} missing")
+    gc = a.get("governance_clearance") or {}
+    if not isinstance(gc, dict):
+        gc = {}
+    for item in REQUIRED_CLEARANCES:  # human attestations or written waivers; the runner never infers them
+        v = str(gc.get(item, "")).strip()
+        if not (v.startswith("ATTESTED") or v.startswith("WAIVED")):
+            problems.append(f"governance_clearance.{item} must start with ATTESTED or WAIVED")
     if problems:
         raise AuthorizationError("; ".join(problems))
     return a
@@ -450,11 +596,27 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
     expected = [f"{ch}__{s}" for ch in SENSOR_CHANNELS for s in cfg["features"]["statistics"]]
     if sorted(feats) != sorted(expected):  # only registered sensor statistics may be model inputs
         raise PreflightError(f"feature set mismatch: unexpected {sorted(set(feats) - set(expected))[:5]}, missing {sorted(set(expected) - set(feats))[:5]}")
+    n_nonfinite = int((~np.isfinite(ft[feats].to_numpy(float))).sum())
+    if n_nonfinite:  # D(x) standardisation and RF inputs require finite features; no silent imputation
+        raise PreflightError(f"{n_nonfinite} non-finite feature values in the eligible feature table")
+    fsum["n_nonfinite_feature_values"] = 0
+    if not ft.window_id.is_unique:
+        raise PreflightError("window_id is not unique (required for deterministic tie resolution)")
     folds = pd.read_csv(root / cfg["splits"]["outer"]["file"])
-    run_key = hashlib.sha256(f"{cfg_sha}|{fsum['feature_table_sha256']}|{realization}|{mode}".encode()).hexdigest()
+    code_sha = _code_sha256()
+    run_key = hashlib.sha256(f"{cfg_sha}|{fsum['feature_table_sha256']}|{realization}|{mode}|{code_sha}".encode()).hexdigest()
+    prev = out_dir / "run_manifest.json"
+    if prev.exists():  # never mix outputs of different runs in one directory (fail closed)
+        old = json.loads(prev.read_text(encoding="utf-8"))
+        if old.get("run_key") != run_key:
+            raise PreflightError(f"output directory holds a different run (run_key {str(old.get('run_key'))[:12]}...); use a new --out")
     manifest = {"artifact_class": artifact_class, "mode": mode, "status": "RUNNING", "run_key": run_key,
-                "config_sha256": cfg_sha, "config_file": config_path.name, "realization": realization,
+                "config_sha256": cfg_sha, "config_file": config_path.name, "realization": realization, "code_sha256": code_sha,
                 "git_commit": _git_commit(root), "seed": cfg["seeds"]["global"], "preflight": pre, "features": fsum,
+                "input_sha256": {k: cfg[a][b]["sha256"] for k, (a, b) in
+                                 {"manifest": ("dataset", "manifest"), "outer_folds": ("splits", "outer"), "inner_folds": ("splits", "inner"),
+                                  "label_mapping": ("dataset", "label_mapping"), "feature_register": ("features", "register")}.items()
+                                 if isinstance(cfg.get(a, {}).get(b), dict) and "sha256" in cfg[a][b]},
                 "prohibited_claims": PROHIBITED_CLAIMS}
     write_json(manifest, out_dir / "run_manifest.json")
     if mode == "preflight":
@@ -465,7 +627,7 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
         write_json(manifest, out_dir / "run_manifest.json")
         return manifest
 
-    preds, dec_rows, cal_records = [], [], []
+    preds, dec_rows, cal_records, ties = [], [], [], []
     for k, d in folds.groupby("outer_fold_id", sort=True):
         fdir = out_dir / "folds" / f"fold_{k}"
         done = fdir / "DONE.json"
@@ -483,9 +645,13 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
             preds.append(p)
             dec_rows += rows
             cal_records.append(json.loads((fdir / "calibration.json").read_text(encoding="utf-8")))
+            tp = fdir / "tie_sensitivity_counts.csv"
+            ties.append(pd.read_csv(tp) if tp.stat().st_size > 1 else pd.DataFrame())
             continue
         devres = development_stage(cfg, dev, feats)
-        pred, rows = outer_stage(cfg, dev, test, feats, devres)
+        pred, rows, tie_df = outer_stage(cfg, dev, test, feats, devres)
+        write_csv(tie_df.assign(fold=k), fdir / "tie_sensitivity_counts.csv")
+        ties.append(tie_df.assign(fold=k))
         pred["fold"] = k
         cal = {"fold": int(k), "method": devres["cal_method"], "feasibility": devres["cal_feasibility"],
                "params": devres["params"], "dev_support_flags": devres["dev_flags"]}
@@ -509,8 +675,9 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
         if stop_after_fold is not None and int(k) == int(stop_after_fold):
             raise InterruptedError(f"stopped after fold {k} (simulated interruption)")
     P = pd.concat(preds, ignore_index=True)
-    agg = aggregate(cfg, P, dec_rows, artifact_class)
-    for name in ("coverage_risk", "estimability", "rq1", "rq2"):
+    T = pd.concat([t for t in ties if len(t)], ignore_index=True) if any(len(t) for t in ties) else pd.DataFrame()
+    agg = aggregate(cfg, P, dec_rows, artifact_class, T)
+    for name in ("coverage_risk", "estimability", "rq1", "rq2", "tie_sensitivity"):
         write_csv(agg[name], out_dir / f"{name}.csv")
     write_json(cal_records, out_dir / "calibration_records.json")
     manifest["status"] = "COMPLETED"

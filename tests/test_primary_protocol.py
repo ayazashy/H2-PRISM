@@ -140,14 +140,16 @@ def test_outer_test_labels_do_not_influence_decisions(base):
     feats = [c for c in ft.columns if "__" in c]
     dev, test = ft[ft.topology != "TA"], ft[ft.topology == "TA"]
     devres = pp.development_stage(cfg, dev, feats)
-    a, ra = pp.outer_stage(cfg, dev, test, feats, devres)
+    a, ra, ta = pp.outer_stage(cfg, dev, test, feats, devres)
     test2 = test.copy()
     test2["label_mapped"] = np.random.default_rng(0).permutation(test2.label_mapped.to_numpy())
-    b, rb = pp.outer_stage(cfg, dev, test2, feats, devres)
+    b, rb, tb = pp.outer_stage(cfg, dev, test2, feats, devres)
     for x, y in zip(ra, rb):
         assert x["status"] == y["status"]
         if x["status"] == "ESTIMABLE":
             pd.testing.assert_frame_equal(x["decisions"], y["decisions"])
+    # tie-sensitivity selections are label-free too (only the error counts may differ)
+    pd.testing.assert_series_equal(ta.n_selected, tb.n_selected)
 
 
 def test_calibration_fallback_recorded(fx, tmp_path):
@@ -225,3 +227,139 @@ def test_cli_dry_run_never_fits_or_enters_outer_stage(fx, tmp_path):
                          "--root", str(fx["root"]), "--raw-parent", str(fx["raw"]), "--out", str(tmp_path / "o2"),
                          "--execute-primary"], capture_output=True, text=True)
     assert r2.returncode == 2 and "AuthorizationError" in r2.stderr
+
+
+# Phase 9: PA-1 matched coverage, resume safety, adversarial inputs, reordering -----------------
+def test_rank_matched_coverage_is_exactly_matched(base):
+    fx, d, res = base
+    rq1 = res["rq1"]
+    rm = rq1[(rq1["mode"] == "rank_matched") & (rq1.status == "ESTIMABLE")]
+    assert len(rm) > 0
+    assert (rm.realized_coverage_a == rm.realized_coverage_b).all() and (rm.coverage_gap_a_minus_b == 0).all()
+    est = res["estimability"]
+    e = est[(est["mode"] == "rank_matched") & (est.status == "ESTIMABLE")]
+    assert (e.requested_count == e.realized_count).all()
+    ne = est[(est["mode"] == "rank_matched") & (est.status != "ESTIMABLE")]
+    assert ne.realized_count.isna().all()  # unattainable targets are never forced
+    ts = pd.read_csv(d / "out" / "tie_sensitivity.csv")
+    assert len(ts) and set(ts.role) == {"TIE_ORDER_SENSITIVITY_SECONDARY"} and set(ts.artifact_class) == {"SYNTHETIC_TEST"}
+
+
+def test_rq2_reporting_labels_come_from_config(base):
+    fx, d, res = base
+    rq2 = res["rq2"]
+    assert set(rq2[rq2["class"] == "LEAK"].reporting) == {"restricted"}
+    assert set(rq2[rq2["class"] != "LEAK"].reporting) <= {"descriptive_only"}
+
+
+def test_missing_tie_rule_fails_closed(fx, tmp_path):
+    cfg = yaml.safe_load(fx["config"].read_text())
+    del cfg["thresholds"]["matched_coverage"]
+    fx["config"].write_bytes(yaml.safe_dump(cfg, sort_keys=True).encode())
+    with pytest.raises(pp.PreflightError, match="matched_coverage_rule_prespecified"):
+        _run(fx, tmp_path / "o")
+
+
+def test_output_dir_of_a_different_run_is_refused(base, tmp_path):
+    fx, d, _ = base
+    out = tmp_path / "o"
+    out.mkdir()
+    (out / "run_manifest.json").write_text('{"run_key": "deadbeef", "status": "COMPLETED"}')
+    with pytest.raises(pp.PreflightError, match="different run"):
+        _run(fx, out)
+    assert not (out / "folds").exists()
+
+
+def test_missing_raw_file(fx, tmp_path):
+    m = pd.read_csv(fx["manifest"])
+    (fx["raw"] / m.file_noise_added.iloc[0]).unlink()
+    with pytest.raises(pp.PreflightError, match="raw_files_present_and_unmodified"):
+        _run(fx, tmp_path / "o")
+
+
+def test_modified_raw_file(fx, tmp_path):
+    m = pd.read_csv(fx["manifest"])
+    f = fx["raw"] / m.file_noise_added.iloc[0]
+    f.write_bytes(f.read_bytes() + b"x")
+    with pytest.raises(pp.PreflightError, match="raw_files_present_and_unmodified"):
+        _run(fx, tmp_path / "o")
+
+
+def test_wrong_manifest_schema(fx, tmp_path):
+    m = pd.read_csv(fx["manifest"]).drop(columns=["Scenario_Family_ID"])
+    fx["manifest"].write_bytes(m.to_csv(index=False, lineterminator="\n").encode())
+    _rehash(fx)
+    with pytest.raises(pp.PreflightError, match="manifest_columns"):
+        _run(fx, tmp_path / "o")
+
+
+def test_inconsistent_fold_ids(fx, tmp_path):
+    f = pd.read_csv(fx["folds"])
+    f.loc[f.index[0], "Scenario_ID"] = "SYN_UNKNOWN_RUN"
+    fx["folds"].write_bytes(f.to_csv(index=False, lineterminator="\n").encode())
+    _rehash(fx)
+    with pytest.raises(pp.PreflightError, match="folds_cover_eligible_runs_exactly"):
+        _run(fx, tmp_path / "o")
+
+
+def test_reordered_inputs_give_identical_results(base, tmp_path):
+    fx0, d, _ = base
+    fx = make_fixture(tmp_path / "fx")
+    m = pd.read_csv(fx["manifest"]).iloc[::-1]
+    fx["manifest"].write_bytes(m.to_csv(index=False, lineterminator="\n").encode())
+    f = pd.read_csv(fx["folds"]).sample(frac=1.0, random_state=3)
+    fx["folds"].write_bytes(f.to_csv(index=False, lineterminator="\n").encode())
+    _rehash(fx)
+    _run(fx, tmp_path / "o")
+    for name in ("coverage_risk.csv", "estimability.csv", "rq1.csv", "rq2.csv", "tie_sensitivity.csv"):
+        assert (tmp_path / "o" / name).read_bytes() == (d / "out" / name).read_bytes(), name
+
+
+def test_rq1_reports_every_registered_comparison_without_omission(base):
+    fx, d, res = base
+    rq1 = res["rq1"]
+    combos = rq1.groupby(["comparison_b", "variant", "target", "mode"]).size()
+    assert (combos == 1).all() and len(combos) == 5 * 2 * 3 * 2
+    assert set(rq1.comparison_b) == {"s_C_minus_D", "confidence", "margin", "neg_entropy", "D_only"}
+    assert set(rq1[rq1.comparison_b == "s_C_minus_D"].comparison_role) == {"PRIMARY"}
+    ne = rq1[rq1.status != "ESTIMABLE"]
+    assert ne.difference.isna().all() and ne.realized_coverage_a.isna().all()  # never reported as zero
+
+
+# Governance clearance in the execution gate ----------------------------------------------------
+def _auth(tmp_path, cfg_sha, **over):
+    a = {"authorized": True, "scope": "PRIMARY_EXPERIMENT", "config_sha256": cfg_sha, "authorized_by": "x", "date": "2026-01-01",
+         "governance_clearance": {k: "ATTESTED test" for k in pp.REQUIRED_CLEARANCES}}
+    a.update(over)
+    p = tmp_path / "auth.yaml"
+    p.write_text(yaml.safe_dump(a))
+    return p
+
+
+@pytest.mark.parametrize("gc", [None, {}, {"F-D15": "ATTESTED", "F-D16": "ATTESTED", "A-D10": "ATTESTED"},
+                                {"F-D15": "pending", "F-D16": "ATTESTED", "A-D10": "WAIVED", "PA-1": "ATTESTED"}])
+def test_missing_or_invalid_governance_clearance_refused(fx, tmp_path, gc):
+    sha = pp.sha256_file(fx["config"])
+    with pytest.raises(pp.AuthorizationError, match="governance_clearance"):
+        pp.run(fx["config"], fx["root"], fx["raw"], tmp_path / "o", "execute", artifact_class="PRIMARY_EXPERIMENT",
+               authorization=_auth(tmp_path, sha, governance_clearance=gc))
+    assert not (tmp_path / "o").exists()
+
+
+def test_valid_clearance_passes_gate_but_not_status_check(fx, tmp_path):
+    """A complete authorization only passes the gate; the synthetic config still fails the real-status preflight."""
+    sha = pp.sha256_file(fx["config"])
+    a = pp.check_authorization(_auth(tmp_path, sha), sha, "PRIMARY_EXPERIMENT")
+    assert set(a["governance_clearance"]) == set(pp.REQUIRED_CLEARANCES)
+    with pytest.raises(pp.PreflightError, match="config_status"):
+        pp.run(fx["config"], fx["root"], fx["raw"], tmp_path / "o", "execute", artifact_class="PRIMARY_EXPERIMENT",
+               authorization=_auth(tmp_path, sha))
+    assert not (tmp_path / "o" / "folds").exists()
+
+
+def test_clearance_gate_does_not_alter_protocol():
+    cfg = yaml.safe_load((ROOT / "06_audit_preparation" / "FINAL_EXPERIMENT_CONFIG.yaml").read_text(encoding="utf-8"))
+    assert pp.sha256_file(ROOT / "06_audit_preparation" / "FINAL_EXPERIMENT_CONFIG.yaml") == \
+        "f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae"
+    assert cfg["thresholds"]["matched_coverage"]["selection"] == "exact_count"
+    assert cfg["evaluation"]["primary_comparison"] == "s_C_vs_s_C_minus_D"

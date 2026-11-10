@@ -8,7 +8,7 @@
 status: PROTOCOL_SELECTED_PENDING_EXECUTION
 selection_basis: SELECTED_BY_PROJECT_LEAD_PROTOCOL_DELEGATION
 owner_signoffs: {yazan: NOT_RECORDED, faisal: NOT_RECORDED, ahmed: NOT_RECORDED}
-version: final-protocol-1.0
+version: final-protocol-1.1   # 1.1 = 1.0 + protocol amendment PA-1 (matched-coverage tie rule, thresholds.matched_coverage)
 derived_from: {file: 06_audit_preparation/phase6_resolution/CANDIDATE_EVALUATION_CONFIG.yaml, sha256: e4be96df29bf99c7e37a32695d83e763e5ee41765f673f79f0265f574023e208}
 dataset:
   manifest: {file: 06_audit_preparation/phase6_resolution/CANDIDATE_MANIFEST_V02.csv, sha256: 36bcbaf97bb17659995f393884d1dcde3bbca9236c3dcdcc6e7651e61538fb59}
@@ -56,6 +56,19 @@ thresholds:
   rule: rank_match_target_coverage
   target_coverage_primary: 0.80
   target_coverage_secondary: [0.60, 0.90]
+  matched_coverage:   # protocol amendment PA-1 (phase 9; fixed before any outer-test evaluation; decided without outer-test data)
+    applies_to: rank_matched   # primary RQ1 comparison mode; threshold_transfer keeps tie-inclusive development thresholds and reports realized coverage
+    selection: exact_count
+    unit: window
+    denominator: all_eligible_windows_of_the_outer_test_fold
+    requested_count: ceil(target * denominator)
+    eligibility: finite score, valid probabilities, no unresolved or specific-blocking flag under the evaluated policy variant
+    order: score_descending_then_tie_key_ascending
+    tie_break_key: sha256(salt|window_id)
+    tie_break_salt: h2prism-pa1-v1
+    attainability: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL if requested_count exceeds the eligible count; never forced
+    shared_across_methods: true
+    tie_sensitivity: {n_alternative_salts: 20, role: secondary_reported_not_selected}
   estimability_rule:   # phase7
     definition: "a target coverage is ESTIMABLE in a fold only if the development data can reach it under the primary policy without relaxing any safeguard"
     if_not_estimable: "report NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL for that target and fold, report realized coverage; never force coverage; never substitute a less conservative primary policy"

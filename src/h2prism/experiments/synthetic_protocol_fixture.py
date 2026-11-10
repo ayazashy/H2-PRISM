@@ -112,8 +112,12 @@ def make_fixture(root: Path, seed: int = 0) -> Dict[str, Path]:
                            "unresolved_flags": ["OUT_OF_SUPPORT", "INVALID_FEATURES", "NO_REFERENCE"],
                            "specific_blocking_flags": ["LOW_SCENARIO_DIVERSITY", "TOP_CLASS_FEW_INDEPENDENT_RUNS"]},
         "policy_sensitivity_warning_only": {"same_as_primary_except": {"specific_blocking_flags": ["LOW_SCENARIO_DIVERSITY"]}},
-        "thresholds": {"source": "development", "target_coverage_primary": 0.80, "target_coverage_secondary": [0.30, 0.90]},
-        "evaluation": {"uncertainty": {"n_boot": 200, "seed": 7}},
+        "thresholds": {"source": "development", "target_coverage_primary": 0.80, "target_coverage_secondary": [0.30, 0.90],
+                       "matched_coverage": {"selection": "exact_count", "tie_break_key": "sha256(salt|window_id)",
+                                            "tie_break_salt": "h2prism-pa1-v1", "tie_sensitivity": {"n_alternative_salts": 5}}},
+        "evaluation": {"uncertainty": {"n_boot": 200, "seed": 7},
+                       "per_class_reporting": {"NORMAL": "descriptive_only", "COMPRESSOR_FAULT": "descriptive_only",
+                                               "COMPRESSOR_DELAY": "descriptive_only", "LEAK": "restricted"}},
         "seeds": {"global": 11},
     }
     cfg_p = root / "config.yaml"

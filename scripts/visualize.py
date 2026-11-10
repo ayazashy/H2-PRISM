@@ -7,6 +7,7 @@ Usage:
 """
 
 import argparse
+import os
 import sys
 import webbrowser
 from pathlib import Path
@@ -29,13 +30,15 @@ from h2prism.visualization import (
     generate_html_report,
 )
 
-FIG_DIR = Path("03_results/figures")
+# Output root can be redirected (tests use a temporary directory so tracked 03_results/ is never touched).
+OUT_ROOT = Path(os.environ.get("H2PRISM_VISUALIZE_OUT", "03_results"))
+FIG_DIR = OUT_ROOT / "figures"
 FIG_DIR.mkdir(parents=True, exist_ok=True)
 AUDIT_DIR = Path("01_dataset_audit")
 # AUDIT FIX (audit/preparation-integration): figures 3-6 below are drawn from hard-coded
 # or randomly generated numbers, NOT from any experiment. They are written only to this
 # quarantine directory with an explicit ILLUSTRATIVE label and must never be cited as results.
-DEMO_DIR = Path("03_results/ILLUSTRATIVE_DEMO_NOT_RESULTS")
+DEMO_DIR = OUT_ROOT / "ILLUSTRATIVE_DEMO_NOT_RESULTS"
 DEMO_DIR.mkdir(parents=True, exist_ok=True)
 ILLUSTRATIVE = "ILLUSTRATIVE ONLY - NOT A RESULT: "
 
