@@ -1,0 +1,3 @@
+figure_id,status,reason
+fig_rq1_risk_coverage,NOT_BUILT_MISSING_EVIDENCE,[fig_rq1_risk_coverage] mandatory input missing: 03_results/MATCHED_COVERAGE_CURVES.csv
+fig_f6_reliability,NOT_BUILT_MISSING_EVIDENCE,[fig_f6_reliability] mandatory input missing: 03_results/CALIBRATION_RELIABILITY_BINS.csv

@@ -1,0 +1,21 @@
+quantity,count,source_or_rule
+tabular files (CSV + Parquet),242,CANDIDATE_FILE_INVENTORY.csv
+  files of realization CLEAN_SIMULATION,114,realization_type
+  files of realization MISFILED_COPY,2,realization_type
+  files of realization NOISE_ADDED_RELEASE,114,realization_type
+  files of realization NOISE_ADDED_VARIANT,6,realization_type
+  files of realization RAW_SOLVER_EXPORT,6,realization_type
+distinct simulated runs (candidate Scenario_IDs),57,candidate_Scenario_ID
+  runs with candidate class COMPRESSOR_DELAY,3,CANDIDATE_SCENARIO_MANIFEST.csv
+  runs with candidate class COMPRESSOR_FAULT,6,CANDIDATE_SCENARIO_MANIFEST.csv
+  runs with candidate class EXCLUDED_COMPOUND,3,CANDIDATE_SCENARIO_MANIFEST.csv
+  runs with candidate class EXCLUDED_PENDING_REVIEW,3,CANDIDATE_SCENARIO_MANIFEST.csv
+  runs with candidate class LEAK,39,CANDIDATE_SCENARIO_MANIFEST.csv
+  runs with candidate class NORMAL,3,CANDIDATE_SCENARIO_MANIFEST.csv
+eligible runs for the primary 4-class task,51,57 - 3 compound - 3 annotation conflict
+families (family_primary) over all 57 runs,45,CANDIDATE_FAMILY_MAP.csv
+families (family_primary) over the 51 eligible runs,39,
+families (family_extended) over all 57 runs,35,CANDIDATE_FAMILY_MAP.csv
+families (family_extended) over the 51 eligible runs,32,
+families (family_conservative) over all 57 runs,3,CANDIDATE_FAMILY_MAP.csv
+families (family_conservative) over the 51 eligible runs,3,
