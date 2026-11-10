@@ -1,0 +1,14 @@
+# F4 plan path: configs/frozen_evaluation_config.yaml
+# This is a POINTER, not a copy. The single frozen evaluation configuration is the file below;
+# duplicating its values here would create two sources of truth. tests/test_plan_deliverables.py
+# checks that the hash below matches the file.
+frozen_config:
+  file: 06_audit_preparation/FINAL_EXPERIMENT_CONFIG.yaml
+  version: final-protocol-1.1
+  sha256: f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae
+  status: PROTOCOL_SELECTED_PENDING_EXECUTION
+  selection_basis: SELECTED_BY_PROJECT_LEAD_PROTOCOL_DELEGATION
+  owner_freeze_attestation: NOT_RECORDED   # Faisal (F4)
+candidate_predecessor:   # plan name "evaluation_config.yaml"
+  file: 06_audit_preparation/phase6_resolution/CANDIDATE_EVALUATION_CONFIG.yaml
+  sha256: e4be96df29bf99c7e37a32695d83e763e5ee41765f673f79f0265f574023e208

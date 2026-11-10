@@ -75,8 +75,46 @@ def plot_reliability(df: pd.DataFrame, spec: Dict):
     return fig
 
 
+def plot_effects(df: pd.DataFrame, spec: Dict):
+    """RQ1 paired effects: difference with interval per comparison x target; NOT_ESTIMABLE rows are listed, not plotted."""
+    d = df[df["status"] == "ESTIMABLE"].sort_values(["comparison_b", "target"], kind="mergesort").reset_index(drop=True)
+    fig, ax = plt.subplots(figsize=(6.4, 0.45 * max(len(d), 1) + 1.2))
+    y = list(range(len(d)))
+    ax.errorbar(d["difference"], y, xerr=[d["difference"] - d["ci_low"], d["ci_high"] - d["difference"]], fmt="o", capsize=3)
+    ax.axvline(0, color="grey", lw=1, ls="--")
+    ax.set_yticks(y)
+    ax.set_yticklabels([f"s_C vs {b} @ {t:.2f}" for b, t in zip(d["comparison_b"], d["target"])], fontsize=7)
+    ax.set_xlabel("Selective-risk difference (s_C minus comparator; 95% family-bootstrap interval)")
+    ne = df[df["status"] != "ESTIMABLE"]
+    if len(ne):
+        ax.set_title((spec.get("title", "") + f"  [{len(ne)} comparisons NOT_ESTIMABLE]").strip(), fontsize=8)
+    else:
+        ax.set_title(spec.get("title", ""))
+    return fig
+
+
+def plot_outcome_shares(df: pd.DataFrame, spec: Dict):
+    """RQ2 stacked SPECIFIC / AMBIGUITY_SET / UNRESOLVED shares per class (one panel row per target)."""
+    d = df.sort_values(["target", "class"], kind="mergesort").reset_index(drop=True)
+    fig, ax = plt.subplots(figsize=(6.4, 0.45 * max(len(d), 1) + 1.2))
+    y = list(range(len(d)))
+    left = [0.0] * len(d)
+    for col in ("specific", "ambiguity_set", "unresolved"):
+        ax.barh(y, d[col], left=left, label=col)
+        left = [a + b for a, b in zip(left, d[col])]
+    ax.set_yticks(y)
+    ax.set_yticklabels([f"{c} @ {t:.2f} (n={n})" for c, t, n in zip(d["class"], d["target"], d["n"])], fontsize=7)
+    ax.set_xlim(0, 1)
+    ax.set_xlabel("Share of eligible windows")
+    ax.legend(frameon=False, fontsize=7)
+    ax.set_title(spec.get("title", ""))
+    return fig
+
+
 KINDS = {"risk_coverage": (plot_risk_coverage, ["method", "coverage", "selective_risk"]),
-         "reliability": (plot_reliability, ["mean_confidence", "accuracy", "n"])}
+         "reliability": (plot_reliability, ["mean_confidence", "accuracy", "n"]),
+         "effects": (plot_effects, ["comparison_b", "target", "status", "difference", "ci_low", "ci_high"]),
+         "outcome_shares": (plot_outcome_shares, ["class", "target", "n", "specific", "ambiguity_set", "unresolved"])}
 
 
 def build(config_path: Path, out_dir: Path, root: Path) -> pd.DataFrame:

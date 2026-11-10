@@ -1,27 +1,63 @@
-# A13 reporting configuration (Ahmed). Inputs are F10/F6 outputs that DO NOT EXIST yet;
-# the builders therefore fail clearly with NOT_BUILT_MISSING_EVIDENCE. evidence_status
-# must be raised to VALIDATED/FROZEN by the owners before outputs route to final/.
+# A13 reporting configuration (Ahmed). Inputs are the PRIMARY runner outputs, which DO NOT EXIST yet.
+# The builders therefore fail clearly with NOT_BUILT_MISSING_EVIDENCE until an authorized run writes
+# 03_results/primary_protocol/PRIMARY/ (fixed --out, see NEXT_PHASE_EXECUTION_HANDOFF.md).
+# evidence_status must be raised to VALIDATED/FROZEN by the owners before outputs route to final/.
+# Runner tables carry artifact_class; SYNTHETIC_TEST/PREFLIGHT_ONLY inputs are always routed to illustrative/.
 dpi: 300
 fail_on_missing: true
 figures:
   - id: fig_rq1_risk_coverage
     kind: risk_coverage
-    input: 03_results/MATCHED_COVERAGE_CURVES.csv        # PENDING F10 (column contract: method, coverage, selective_risk)
+    input: 03_results/primary_protocol/PRIMARY/coverage_risk.csv
+    filter: {variant: primary, mode: rank_matched, method: [s_C, s_C_minus_D, confidence]}
     source_experiment: F10_PRIMARY
     evidence_status: PENDING
     research_question: RQ1
-    title: Selective risk vs coverage (methods B, C-D, C)
-    caption: Risk is always paired with coverage; outer-test folds only; family counts in table T_RQ1.
+    title: Selective risk vs coverage at matched coverage (s_C, s_C-D, confidence)
+    caption: Rank-matched (PA-1) outer-test coverage targets 0.60/0.80/0.90; risk always paired with coverage; NOT_ESTIMABLE targets have no point.
   - id: fig_f6_reliability
     kind: reliability
-    input: 03_results/CALIBRATION_RELIABILITY_BINS.csv   # PENDING F6
+    input: 03_results/primary_protocol/PRIMARY/calibration_reliability.csv
+    filter: {probability: cal}
     source_experiment: F6_CALIBRATION
     evidence_status: PENDING
     research_question: supporting (calibration)
-    caption: Top-label reliability, 10 equal-width bins; counts annotated.
+    caption: Top-label reliability of calibrated outer-test probabilities, 10 equal-width bins; counts annotated.
+  - id: fig_rq1_effects
+    kind: effects
+    input: 03_results/primary_protocol/PRIMARY/rq1.csv
+    filter: {variant: primary, mode: rank_matched}
+    source_experiment: F10_PRIMARY
+    evidence_status: PENDING
+    research_question: RQ1
+    title: Paired selective-risk differences at matched coverage
+    caption: s_C minus each comparator (primary s_C-D); 95% topology-stratified family bootstrap; conditional on 3 simulated topologies.
+  - id: fig_rq2_outcomes
+    kind: outcome_shares
+    input: 03_results/primary_protocol/PRIMARY/rq2.csv
+    filter: {variant: primary, mode: rank_matched}
+    source_experiment: F10_PRIMARY
+    evidence_status: PENDING
+    research_question: RQ2
+    title: Decision outcomes per class
+    caption: LEAK restricted; NORMAL/FAULT/DELAY descriptive only; DELAY confounded with start-up.
 tables:
   - id: T_RQ1_matched_coverage
-    input: 03_results/MATCHED_COVERAGE_RESULTS.csv        # PENDING F10
-    columns: [method, target_coverage, coverage, selective_risk, n_specific, n_eligible, n_families]
+    input: 03_results/primary_protocol/PRIMARY/coverage_risk.csv
+    filter: {variant: primary, mode: rank_matched}
+    columns: [method, target, coverage, selective_risk, n_specific, n_eligible, n_families, folds_estimable]
+    rename: {target: target_coverage}
+    source_experiment: F10_PRIMARY
+    evidence_status: PENDING
+  - id: T_RQ1_paired_effects
+    input: 03_results/primary_protocol/PRIMARY/rq1.csv
+    filter: {variant: primary}
+    columns: [comparison_b, comparison_role, target, mode, status, realized_coverage_a, realized_coverage_b, difference, ci_low, ci_high, n_units]
+    source_experiment: F10_PRIMARY
+    evidence_status: PENDING
+  - id: T_RQ2_outcomes
+    input: 03_results/primary_protocol/PRIMARY/rq2.csv
+    filter: {variant: primary, mode: rank_matched}
+    columns: [target, class, n, specific, ambiguity_set, unresolved, reporting]
     source_experiment: F10_PRIMARY
     evidence_status: PENDING

@@ -11,8 +11,12 @@ matching authorization file are given):
                                   --make-synthetic-fixture); output may not be under 03_results/.
   --execute-primary               full pipeline on the real noise-added realization (PRIMARY_EXPERIMENT)
   --execute-robustness            full pipeline on the clean realization (ROBUSTNESS_EXPERIMENT)
-                                  Both require --authorization <yaml> with: authorized: true,
-                                  scope: <class>, config_sha256: <sha of --config>, authorized_by, date.
+  --execute-sensitivity --sensitivity NAME
+                                  one registered sensitivity analysis (SENSITIVITY_EXPERIMENT); scope
+                                  SENSITIVITY_EXPERIMENT:NAME. --sensitivity NAME also works with --synthetic.
+                                  All execute modes require --authorization <yaml> with: authorized: true,
+                                  scope: <class>, config_sha256: <sha of --config>, authorized_by, date,
+                                  governance_clearance {F-D15, F-D16, A-D10, PA-1: ATTESTED.../WAIVED...}.
 
 Examples
   python tools/experiments/run_primary_protocol.py --config 06_audit_preparation/FINAL_EXPERIMENT_CONFIG.yaml --out <dir> --dry-run
@@ -44,8 +48,10 @@ def main(argv=None) -> int:
     g.add_argument("--synthetic", action="store_true")
     g.add_argument("--execute-primary", action="store_true")
     g.add_argument("--execute-robustness", action="store_true")
+    g.add_argument("--execute-sensitivity", action="store_true", help="registered sensitivity analysis (needs --sensitivity)")
     g.add_argument("--make-synthetic-fixture", type=Path)
     ap.add_argument("--authorization", type=Path)
+    ap.add_argument("--sensitivity", choices=sorted(pp.SENSITIVITY_OVERRIDES), help="registered sensitivity analysis name")
     a = ap.parse_args(argv)
     if a.make_synthetic_fixture:
         print(json.dumps({k: str(v) for k, v in make_fixture(a.make_synthetic_fixture).items()}, indent=2))
@@ -54,12 +60,14 @@ def main(argv=None) -> int:
         ap.error("--config and --out are required")
     try:
         if a.synthetic:
-            res = pp.run(a.config, a.root, a.raw_parent, a.out, "synthetic")
-        elif a.execute_primary or a.execute_robustness:
-            cls = "PRIMARY_EXPERIMENT" if a.execute_primary else "ROBUSTNESS_EXPERIMENT"
-            res = pp.run(a.config, a.root, a.raw_parent, a.out, "execute", artifact_class=cls, authorization=a.authorization)
+            res = pp.run(a.config, a.root, a.raw_parent, a.out, "synthetic", sensitivity=a.sensitivity)
+        elif a.execute_primary or a.execute_robustness or a.execute_sensitivity:
+            cls = ("PRIMARY_EXPERIMENT" if a.execute_primary else "ROBUSTNESS_EXPERIMENT" if a.execute_robustness
+                   else "SENSITIVITY_EXPERIMENT")
+            res = pp.run(a.config, a.root, a.raw_parent, a.out, "execute", artifact_class=cls, authorization=a.authorization,
+                         sensitivity=a.sensitivity)
         else:
-            res = pp.run(a.config, a.root, a.raw_parent, a.out, "preflight")
+            res = pp.run(a.config, a.root, a.raw_parent, a.out, "preflight", sensitivity=a.sensitivity)
     except (pp.PreflightError, pp.AuthorizationError) as exc:
         print(f"REFUSED: {type(exc).__name__}: {exc}", file=sys.stderr)
         return 2

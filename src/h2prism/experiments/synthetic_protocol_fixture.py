@@ -29,7 +29,7 @@ SHIFT = {"NORMAL": 0.0, "LEAK": -0.6, "COMPRESSOR_FAULT": 0.5, "COMPRESSOR_DELAY
 N_ROWS = 300
 
 
-def _run(cls: str, topo_i: int, run_seed: int, family_offset: float, noisy: bool) -> pd.DataFrame:
+def _run(cls: str, topo_i: int, run_seed: int, family_offset: float, noisy: bool, pre_event_rows: int = 0) -> pd.DataFrame:
     base_rng = np.random.default_rng(run_seed)
     t = np.arange(N_ROWS, dtype=float)
     X = 5.0 + 0.3 * topo_i + family_offset + 0.02 * base_rng.standard_normal((N_ROWS, len(SENS)))
@@ -37,7 +37,7 @@ def _run(cls: str, topo_i: int, run_seed: int, family_offset: float, noisy: bool
     for c in LAB:
         df[c] = 0
     if cls != "NORMAL":
-        active = t < 120 if cls == "COMPRESSOR_DELAY" else np.ones(N_ROWS, bool)
+        active = t < 120 if cls == "COMPRESSOR_DELAY" else t >= pre_event_rows  # optional pre-event segment
         col = {"LEAK": "Leak", "COMPRESSOR_FAULT": "CompressorFault", "COMPRESSOR_DELAY": "CompressorDelay"}[cls]
         df.loc[active, [col, "label_anomaly"]] = 1
         if cls == "LEAK":
@@ -53,7 +53,7 @@ def _sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
-def make_fixture(root: Path, seed: int = 0) -> Dict[str, Path]:
+def make_fixture(root: Path, seed: int = 0, pre_event_rows: int = 0) -> Dict[str, Path]:
     root = Path(root)
     raw = root / "raw"
     rows, k = [], 0
@@ -68,7 +68,7 @@ def make_fixture(root: Path, seed: int = 0) -> Dict[str, Path]:
             for real, noisy in (("clean", False), ("noise_added", True)):
                 p = raw / real / f"{sid}.parquet"
                 p.parent.mkdir(parents=True, exist_ok=True)
-                _run(cls, ti, seed * 1000 + k, off, noisy).to_parquet(p)
+                _run(cls, ti, seed * 1000 + k, off, noisy, pre_event_rows).to_parquet(p)
                 files[real] = p
             rows.append({"Scenario_ID": sid, "Scenario_Family_ID": f"SYN_FAM_{topo}_{fam}", "topology": topo,
                          "run_stem": sid, "raw_label_columns": "", "label_mapped": cls, "eligible_primary": True,
@@ -119,6 +119,8 @@ def make_fixture(root: Path, seed: int = 0) -> Dict[str, Path]:
                        "per_class_reporting": {"NORMAL": "descriptive_only", "COMPRESSOR_FAULT": "descriptive_only",
                                                "COMPRESSOR_DELAY": "descriptive_only", "LEAK": "restricted"}},
         "seeds": {"global": 11},
+        "sensitivity_analyses": ["clean_realization", "windows_60_60", "pre_event_label_normal", "offset_invariant_features",
+                                 "k_10", "k_50", "prior_correction", "extended_family_map", "policy_warning_only"],
     }
     cfg_p = root / "config.yaml"
     cfg_p.write_bytes(yaml.safe_dump(cfg, sort_keys=True).encode("utf-8"))

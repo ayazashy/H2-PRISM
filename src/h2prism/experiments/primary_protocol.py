@@ -56,7 +56,42 @@ METHODS = ("s_C", "s_C_minus_D", "confidence", "margin", "neg_entropy", "D_only"
 COMPARISONS = (("s_C_minus_D", "PRIMARY"), ("confidence", "SECONDARY_C_VS_B"), ("margin", "SECONDARY"),
                ("neg_entropy", "SECONDARY"), ("D_only", "SECONDARY"))
 MODES = {"preflight": "PREFLIGHT_ONLY", "synthetic": "SYNTHETIC_TEST"}
-EXECUTE_CLASSES = {"PRIMARY_EXPERIMENT": "noise_added", "ROBUSTNESS_EXPERIMENT": "clean"}
+EXECUTE_CLASSES = {"PRIMARY_EXPERIMENT": "noise_added", "ROBUSTNESS_EXPERIMENT": "clean", "SENSITIVITY_EXPERIMENT": None}
+# Registered sensitivity analyses (config `sensitivity_analyses`). Each is ONE pre-specified deviation from the
+# primary protocol, read off its registered name; nothing else changes. Values are fixed here, not tuned.
+SENSITIVITY_OVERRIDES: Dict[str, Dict[str, object]] = {
+    "clean_realization": {"dataset.realization_primary": "clean"},
+    "windows_60_60": {"windows.stride_s": 60},
+    "pre_event_label_normal": {"windows.pre_event_policy": "label_normal"},
+    "offset_invariant_features": {"features.statistics": ["std", "range", "last_minus_first", "slope", "mean_abs_diff"]},
+    "k_10": {"distinguishability.k": 10},
+    "k_50": {"distinguishability.k": 50},
+    "prior_correction": {"distinguishability.prior_correction": True},
+    "extended_family_map": {"dataset.family_column": "family_extended_sensitivity"},
+    "policy_warning_only": {},  # produced inside EVERY run as policy variant "warning_only"; no separate run
+}
+EMBEDDED_SENSITIVITIES = {"policy_warning_only"}
+
+
+def apply_sensitivity(cfg: Dict, name: Optional[str]) -> Dict:
+    """Return a deep copy of ``cfg`` with the registered override for ``name`` applied (fail closed otherwise)."""
+    import copy
+    if name is None:
+        return cfg
+    if name not in (cfg.get("sensitivity_analyses") or []):
+        raise PreflightError(f"sensitivity '{name}' is not registered in config sensitivity_analyses")
+    if name not in SENSITIVITY_OVERRIDES:
+        raise PreflightError(f"sensitivity '{name}' has no implemented override")
+    if name in EMBEDDED_SENSITIVITIES:
+        raise PreflightError(f"sensitivity '{name}' is produced by every run (variant column); no separate run")
+    out = copy.deepcopy(cfg)
+    for path, val in SENSITIVITY_OVERRIDES[name].items():
+        a, b = path.split(".")
+        if b not in out.get(a, {}) and a != "dataset":
+            raise PreflightError(f"override target {path} missing in config")
+        out[a][b] = copy.deepcopy(val)
+    out["sensitivity_applied"] = {"name": name, "override": SENSITIVITY_OVERRIDES[name]}
+    return out
 REAL_STATUS = "PROTOCOL_SELECTED_PENDING_EXECUTION"
 # Execution-blocking governance items (FINAL_GOVERNANCE_AND_GATE_RECORD.md): each must be attested or waived
 REQUIRED_CLEARANCES = ("F-D15", "F-D16", "A-D10", "PA-1")
@@ -139,6 +174,10 @@ def preflight(cfg: Dict, root: Path, raw_parent: Path, realization: str, expecte
     chk("unique_scenarios", el.Scenario_ID.is_unique)
     chk("classes", set(el.label_mapped) == set(cfg["dataset"]["classes"]), sorted(set(el.label_mapped)))
     chk("exclusions_have_reasons", (man.loc[~man.eligible_primary.astype(bool), "exclusion_reason"].fillna("").str.len() > 0).all())
+    famcol = cfg["dataset"].get("family_column", "Scenario_Family_ID")
+    if not chk("family_column_present", famcol in el.columns, famcol):
+        raise PreflightError(_fmt(checks))
+    el = el.assign(Scenario_Family_ID=el[famcol])  # the family map in force (primary or registered sensitivity map)
     chk("families_nest_in_topology", el.groupby("Scenario_Family_ID").topology.nunique().max() == 1)
     folds = pd.read_csv(root / cfg["splits"]["outer"]["file"])
     topo_of = dict(zip(el.Scenario_ID, el.topology))
@@ -152,6 +191,17 @@ def preflight(cfg: Dict, root: Path, raw_parent: Path, realization: str, expecte
     topo_disjoint = all(not (set(d[d.split_role == "test"].topology) & set(d[d.split_role == "train"].topology))
                         for _, d in f2.groupby("outer_fold_id"))
     chk("fold_topology_isolation", one_topo and topo_disjoint)
+    inner = cfg.get("splits", {}).get("inner")
+    if isinstance(inner, dict) and "file" in inner:  # pinned inner record must equal the splits the runner derives
+        ins = pd.read_csv(root / inner["file"])
+        ins = ins[ins.scheme == "LOTO_within_train"]
+        same = True
+        for k, d in f2.groupby("outer_fold_id"):
+            tr = d[d.split_role == "train"]
+            derived = {frozenset(g.Scenario_ID) for _, g in tr.groupby("topology")}
+            pinned = {frozenset(str(v).split(";")) for v in ins[ins.outer_fold_id == k].val_scenarios}
+            same &= derived == pinned
+        chk("inner_folds_match_runner", same and len(ins) > 0)
     fcol, hcol = ("file_noise_added", "sha256_noise_added") if realization == "noise_added" else ("file_clean", "sha256_clean")
     bad = [r.Scenario_ID for r in el.itertuples() if not (raw_parent / getattr(r, fcol)).exists()
            or sha256_file(raw_parent / getattr(r, fcol)) != getattr(r, hcol)]
@@ -187,12 +237,25 @@ def build_features(cfg: Dict, root: Path, raw_parent: Path, realization: str) ->
     if (per_run == 0).any():  # no silent drops: a run without eligible windows is a hard failure
         raise PreflightError(f"runs without eligible windows: {per_run[per_run == 0].index.tolist()}")
     cls_of = dict(zip(el.Scenario_ID, el.candidate_primary_class))
-    wrong = ft[ft.label_mapped != ft.Scenario_ID.map(cls_of)]
+    n_post_dropped = 0
+    if w["pre_event_policy"] == "label_normal":
+        # registered sensitivity relabels only PRE-event rows; windows.py would also keep post-event NORMAL rows,
+        # which the protocol excludes (post-delay rows) -> drop them so exactly one choice differs from primary
+        post = ft.window_id.map(wm["boundary_status"]) == "POST_EVENT"
+        n_post_dropped = int(post.sum())
+        ft = ft[~post].reset_index(drop=True)
+        out["feature_table_sha256"] = table_sha256(ft.drop(columns=["start_time", "end_time", "file_id", "realization",
+                                                                    "feature_version"]))
+    run_cls = ft.Scenario_ID.map(cls_of)
+    ok = ft.label_mapped == run_cls
+    if w["pre_event_policy"] == "label_normal":
+        ok |= (ft.label_mapped == "NORMAL") & (ft.window_id.map(wm["boundary_status"]) == "PRE_EVENT")
+    wrong = ft[~ok]
     if len(wrong):  # windows must carry the run's class (pre/post-event and boundary windows were excluded)
         raise PreflightError(f"{len(wrong)} eligible windows carry a label different from their run class")
     if set(ft.label_mapped) - set(cfg["dataset"]["classes"]):
         raise PreflightError(f"invalid event labels {sorted(set(ft.label_mapped) - set(cfg['dataset']['classes']))}")
-    summary = {"n_windows": len(ft), "feature_table_sha256": out["feature_table_sha256"],
+    summary = {"n_windows": len(ft), "n_post_event_windows_dropped": n_post_dropped, "feature_table_sha256": out["feature_table_sha256"],
                "window_manifest_sha256": out["window_manifest_sha256"], "n_features": len(model_feature_columns(ft)),
                "windows_per_class": ft.label_mapped.value_counts().sort_index().to_dict(),
                "windows_per_topology_class": {f"{a}|{b}": int(v) for (a, b), v in ft.groupby(["topology", "label_mapped"]).size().items()}}
@@ -436,8 +499,27 @@ def outer_stage(cfg, dev: pd.DataFrame, test: pd.DataFrame, feats: List[str], de
 
 
 # ----------------------------------------------------------------------------- aggregation
+def reliability_bins(preds: pd.DataFrame, classes: List[str], n_bins: int = 10) -> pd.DataFrame:
+    """Top-label reliability on outer-test windows (raw and calibrated), 10 equal-width bins; empty bins omitted."""
+    rows = []
+    if not all(f"p_{k}_{c}" in preds.columns for k in ("raw", "cal") for c in classes):
+        return pd.DataFrame(rows)  # unit-test inputs without probabilities
+    y = preds.y_true.to_numpy()
+    for kind in ("raw", "cal"):
+        P = preds[[f"p_{kind}_{c}" for c in classes]].to_numpy(float)
+        conf = P.max(axis=1)
+        correct = np.array(classes, dtype=object)[P.argmax(axis=1)] == y
+        b = np.minimum((conf * n_bins).astype(int), n_bins - 1)
+        for i in range(n_bins):
+            m = b == i
+            if m.any():
+                rows.append({"probability": kind, "bin": i, "bin_low": i / n_bins, "bin_high": (i + 1) / n_bins,
+                             "mean_confidence": float(conf[m].mean()), "accuracy": float(correct[m].mean()), "n": int(m.sum())})
+    return pd.DataFrame(rows)
+
+
 def aggregate(cfg, preds: pd.DataFrame, dec_rows: List[Dict], artifact_class: str,
-              tie_counts: Optional[pd.DataFrame] = None) -> Dict[str, object]:
+              tie_counts: Optional[pd.DataFrame] = None, analysis: str = "primary") -> Dict[str, object]:
     classes = list(cfg["dataset"]["classes"])
     y_of = dict(zip(preds.window_id, preds.y_true))
     fam_of = dict(zip(preds.window_id, preds.Scenario_Family_ID))
@@ -470,7 +552,8 @@ def aggregate(cfg, preds: pd.DataFrame, dec_rows: List[Dict], artifact_class: st
             r = coverage_and_risk(g.policy_outcome, g.y_pred_specific, g.y_true)
             a = ambiguity_summary(g.policy_outcome, g.ambiguity_set.fillna(""), g.y_true, len(classes))
             assert r["n_specific"] + r["n_ambiguity"] + r["n_unresolved"] == r["n_eligible"]
-            cov.append({"variant": v, "method": m, "target": t, "mode": mo, "folds_estimable": g.fold.nunique(), **r,
+            cov.append({"variant": v, "method": m, "target": t, "mode": mo, "folds_estimable": g.fold.nunique(),
+                        "n_families": int(g.Scenario_Family_ID.nunique()), **r,
                         **{f"ambiguity_{k}": val for k, val in a.items()}})
     n_folds = preds.fold.nunique() if "fold" in preds else 0
     est_df = pd.DataFrame(est)
@@ -535,9 +618,10 @@ def aggregate(cfg, preds: pd.DataFrame, dec_rows: List[Dict], artifact_class: st
             rb = b.n_errors.sum() / b.n_selected.sum() if b.n_selected.sum() else float("nan")
             tie.append({"target": t, "salt_index": int(j), "pooled_risk_a": ra, "pooled_risk_b": rb, "difference": ra - rb,
                         "primary_difference": prim[t]["difference"], "role": "TIE_ORDER_SENSITIVITY_SECONDARY"})
-    tag = lambda df: df.assign(artifact_class=artifact_class) if len(df) else df
+    tag = lambda df: df.assign(analysis=analysis, artifact_class=artifact_class) if len(df) else df
     return {"coverage_risk": tag(pd.DataFrame(cov)), "estimability": tag(est_df), "rq1": tag(pd.DataFrame(rq1)),
-            "rq2": tag(pd.DataFrame(rq2)), "tie_sensitivity": tag(pd.DataFrame(tie)), "decisions": tag(D)}
+            "rq2": tag(pd.DataFrame(rq2)), "tie_sensitivity": tag(pd.DataFrame(tie)),
+            "calibration_reliability": tag(reliability_bins(preds, classes)), "decisions": tag(D)}
 
 
 # ----------------------------------------------------------------------------- orchestration
@@ -569,10 +653,14 @@ def check_authorization(path: Optional[Path], config_sha: str, artifact_class: s
 
 def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: str,
         artifact_class: Optional[str] = None, authorization: Optional[Path] = None,
-        stop_after_fold: Optional[int] = None) -> Dict:
+        stop_after_fold: Optional[int] = None, sensitivity: Optional[str] = None) -> Dict:
     config_path, root, raw_parent, out_dir = map(lambda p: Path(p).resolve(), (config_path, root, raw_parent, out_dir))
     cfg = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     cfg_sha = sha256_file(config_path)
+    if mode == "execute" and (artifact_class == "SENSITIVITY_EXPERIMENT") != (sensitivity is not None):
+        raise AuthorizationError("SENSITIVITY_EXPERIMENT requires --sensitivity NAME and vice versa")
+    cfg = apply_sensitivity(cfg, sensitivity)
+    derived_sha = hashlib.sha256(json.dumps(cfg, sort_keys=True, default=str).encode()).hexdigest() if sensitivity else cfg_sha
     if mode == "preflight":
         artifact_class, status = "PREFLIGHT_ONLY", (SYNTH_STATUS if cfg.get("status") == SYNTH_STATUS else REAL_STATUS)
         realization = cfg["dataset"]["realization_primary"]
@@ -585,8 +673,9 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
         if artifact_class not in EXECUTE_CLASSES:
             raise AuthorizationError(f"artifact_class must be one of {sorted(EXECUTE_CLASSES)}")
         status = REAL_STATUS
-        check_authorization(authorization, cfg_sha, artifact_class)
-        realization = EXECUTE_CLASSES[artifact_class]
+        scope = f"SENSITIVITY_EXPERIMENT:{sensitivity}" if sensitivity else artifact_class
+        check_authorization(authorization, cfg_sha, scope)
+        realization = EXECUTE_CLASSES[artifact_class] or cfg["dataset"]["realization_primary"]
     else:
         raise ValueError(f"unknown mode {mode}")
 
@@ -604,7 +693,7 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
         raise PreflightError("window_id is not unique (required for deterministic tie resolution)")
     folds = pd.read_csv(root / cfg["splits"]["outer"]["file"])
     code_sha = _code_sha256()
-    run_key = hashlib.sha256(f"{cfg_sha}|{fsum['feature_table_sha256']}|{realization}|{mode}|{code_sha}".encode()).hexdigest()
+    run_key = hashlib.sha256(f"{derived_sha}|{fsum['feature_table_sha256']}|{realization}|{mode}|{code_sha}".encode()).hexdigest()
     prev = out_dir / "run_manifest.json"
     if prev.exists():  # never mix outputs of different runs in one directory (fail closed)
         old = json.loads(prev.read_text(encoding="utf-8"))
@@ -617,7 +706,8 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
                                  {"manifest": ("dataset", "manifest"), "outer_folds": ("splits", "outer"), "inner_folds": ("splits", "inner"),
                                   "label_mapping": ("dataset", "label_mapping"), "feature_register": ("features", "register")}.items()
                                  if isinstance(cfg.get(a, {}).get(b), dict) and "sha256" in cfg[a][b]},
-                "prohibited_claims": PROHIBITED_CLAIMS}
+                "prohibited_claims": PROHIBITED_CLAIMS,
+                "sensitivity": cfg.get("sensitivity_applied"), "effective_config_sha256": derived_sha}
     write_json(manifest, out_dir / "run_manifest.json")
     if mode == "preflight":
         classes = cfg["dataset"]["classes"]
@@ -658,6 +748,8 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
         write_csv(pred.assign(artifact_class=artifact_class), fdir / "predictions.csv")
         write_csv(devres["thresholds"].assign(fold=k, artifact_class=artifact_class), fdir / "thresholds.csv")
         write_csv(devres["selection"].assign(fold=k), fdir / "selection.csv")
+        if devres["cal_table"] is not None:  # F6 CALIBRATION_RESULTS: development comparison of candidate methods
+            write_csv(devres["cal_table"].assign(fold=k, selected=devres["cal_method"]), fdir / "calibration_selection.csv")
         write_json(cal, fdir / "calibration.json")
         index = []
         for i, r in enumerate(rows):
@@ -676,8 +768,8 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
             raise InterruptedError(f"stopped after fold {k} (simulated interruption)")
     P = pd.concat(preds, ignore_index=True)
     T = pd.concat([t for t in ties if len(t)], ignore_index=True) if any(len(t) for t in ties) else pd.DataFrame()
-    agg = aggregate(cfg, P, dec_rows, artifact_class, T)
-    for name in ("coverage_risk", "estimability", "rq1", "rq2", "tie_sensitivity"):
+    agg = aggregate(cfg, P, dec_rows, artifact_class, T, analysis=sensitivity or "primary")
+    for name in ("coverage_risk", "estimability", "rq1", "rq2", "tie_sensitivity", "calibration_reliability"):
         write_csv(agg[name], out_dir / f"{name}.csv")
     write_json(cal_records, out_dir / "calibration_records.json")
     manifest["status"] = "COMPLETED"

@@ -7,10 +7,14 @@ artifacts:
     required_columns: [file, Scenario_ID, Scenario_Family_ID, duplicate_class_id, formats_present, event_label_raw, phase, topology, variant_type, relationship_confidence, evidence_reference, notes]
     unique_key: file
     non_null: [file, Scenario_ID, Scenario_Family_ID]
-  - path: 01_dataset_audit/provisional/PROVISIONAL_DATA_FREEZE_MANIFEST.csv
-    schema: manifest_schema
+  - path: 01_dataset_audit/provisional/PROVISIONAL_DATA_FREEZE_MANIFEST.csv   # v0.1, SUPERSEDED by manifest v0.2 (CC-001); own schema
+    required_columns: [file, Scenario_ID, Scenario_Family_ID]
     unique_key: file
     non_null: [file, Scenario_ID, Scenario_Family_ID]
+  - path: 06_audit_preparation/phase6_resolution/CANDIDATE_MANIFEST_V02.csv   # manifest in force (contract v2 manifest_schema)
+    schema: manifest_schema
+    unique_key: Scenario_ID
+    non_null: [Scenario_ID, Scenario_Family_ID, topology]
   - path: 01_dataset_audit/folds.csv
     required_columns: [outer_fold_id, split_role, Scenario_ID, Scenario_Family_ID, file, target_class]
     unique_key: [outer_fold_id, file]
