@@ -84,7 +84,7 @@ def test_runner_outputs_match_contract(run):
     dec = pd.read_csv(out / "folds" / "fold_1" / f)
     assert list(dec.columns) == C["decision_table_schema"]["required_columns"]
     agg = C["aggregate_outputs"]
-    for name in ("coverage_risk.csv", "estimability.csv", "rq1.csv", "rq2.csv", "tie_sensitivity.csv", "calibration_reliability.csv"):
+    for name in ("coverage_risk.csv", "estimability.csv", "rq1.csv", "rq2.csv", "tie_sensitivity.csv", "calibration_reliability.csv", "risk_coverage_curve.csv", "confusion_matrix.csv", "class_metrics.csv", "rq1_by_topology.csv", "decision_reasons.csv", "ambiguity_sizes.csv", "support_flags_summary.csv"):
         assert set(pd.read_csv(out / name).columns) == set(agg[name]), name
     th = pd.read_csv(out / "folds" / "fold_1" / "thresholds.csv")
     assert set(th.columns) == set(agg["thresholds.csv (per fold)"])

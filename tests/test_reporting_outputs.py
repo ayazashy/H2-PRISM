@@ -79,7 +79,7 @@ def test_figure_determinism_and_manifest_provenance(tmp_path):
     m2 = brf.build(_cfg(tmp_path, "FROZEN"), tmp_path / "o2", tmp_path)
     assert m1["output_sha256"].tolist() == m2["output_sha256"].tolist()
     assert m1["input_sha256"].notna().all() and m1["config_sha256"].notna().all()
-    assert set(m1["output_file"].str[-4:]) == {".png", ".svg"}
+    assert set(m1["output_file"].str[-4:]) == {".png", ".pdf", ".svg"}
 
 
 def test_builders_consume_real_runner_outputs_and_quarantine_synthetic(tmp_path):
@@ -91,15 +91,19 @@ def test_builders_consume_real_runner_outputs_and_quarantine_synthetic(tmp_path)
     pp.run(fx["config"], fx["root"], fx["raw"], tmp_path / "run", "synthetic")
     dst = tmp_path / "03_results" / "primary_protocol" / "PRIMARY"
     dst.mkdir(parents=True)
-    for f in ("coverage_risk.csv", "rq1.csv", "rq2.csv", "calibration_reliability.csv"):
-        shutil.copy(tmp_path / "run" / f, dst / f)
+    for f in list((tmp_path / "run").glob("*.csv")) + [tmp_path / "run" / "run_manifest.json"]:
+        shutil.copy(f, dst / f.name)
+    pp.run(fx["config"], fx["root"], fx["raw"], tmp_path / "03_results" / "primary_protocol" / "SENSITIVITY_k_10", "synthetic", sensitivity="k_10")
+    import build_sensitivity_summary as bss
+    runs = tmp_path / "03_results" / "primary_protocol"
+    assert bss.main(["--runs", str(runs), "--out", str(runs / "SENSITIVITY_SUMMARY"), "--allow-synthetic"]) == 0
     cfg = ROOT / "configs" / "reporting_figures.yaml"
     fm = brf.build(cfg, tmp_path / "out_fig", tmp_path)
     tm = brt.build(cfg, tmp_path / "out_tab", tmp_path)
     assert set(fm.status) == {"BUILT_ILLUSTRATIVE"} and set(tm.status) == {"BUILT_ILLUSTRATIVE"}
-    assert set(fm.figure_id) == {"fig_rq1_risk_coverage", "fig_f6_reliability", "fig_rq1_effects", "fig_rq2_outcomes"}
+    assert set(fm.figure_id) == {f["id"] for f in yaml.safe_load(cfg.read_text(encoding="utf-8"))["figures"]}
     assert not (tmp_path / "out_fig" / "final").exists() and not (tmp_path / "out_tab" / "final").exists()
-    t = pd.read_csv(tmp_path / "out_tab" / "illustrative" / "T_RQ1_matched_coverage.csv")
+    t = pd.read_csv(tmp_path / "out_tab" / "illustrative" / "T4_matched_coverage.csv")
     assert "target_coverage" in t.columns and set(t.method) >= {"s_C", "s_C_minus_D"}
 
 

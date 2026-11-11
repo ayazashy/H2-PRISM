@@ -121,9 +121,17 @@ contracts:
     coverage_risk.csv: [variant, method, target, mode, folds_estimable, n_families, n_eligible, n_specific, n_ambiguity, n_unresolved, coverage, selective_risk, selective_risk_defined, ambiguity_n_ambiguity, ambiguity_inclusion_rate, ambiguity_mean_size, ambiguity_median_size, ambiguity_broad_rate, analysis, artifact_class]
     estimability.csv: [fold, variant, method, target, mode, status, test_max_attainable_coverage, requested_count, realized_count, realized_coverage, n_tied_at_boundary, n_tied_selected, tau, analysis, artifact_class]
     rq1.csv: [comparison_a, comparison_b, comparison_role, variant, target, mode, status, folds_estimable, n_folds, realized_coverage_a, realized_coverage_b, coverage_gap_a_minus_b, estimate_a, estimate_b, difference, ci_low, ci_high, n_units, n_boot_undefined, comparison, interpretation, analysis, artifact_class]
-    rq2.csv: [variant, target, mode, class, n, specific, ambiguity_set, unresolved, reporting, analysis, artifact_class]
+    rq2.csv: [variant, target, mode, class, n, n_families, specific, ambiguity_set, unresolved, specific_correct, ambiguity_inclusion, reporting, analysis, artifact_class]
     calibration_reliability.csv: [probability, bin, bin_low, bin_high, mean_confidence, accuracy, n, analysis, artifact_class]
     calibration_selection.csv (per fold, when calibration is feasible): [method, log_loss, brier, fold, selected]
+    risk_coverage_curve.csv: [scope, variant, method, mode, coverage_requested, folds, status, n_total, n_specific, n_errors, coverage, selective_risk, analysis, artifact_class]   # descriptive grid 0.05..1.00, PA-1 selection
+    confusion_matrix.csv: [scope, true_class, predicted_class, n, analysis, artifact_class]   # window counts, calibrated top label; scope pooled or topology
+    class_metrics.csv: [class, n_windows, n_runs, n_families, n_topologies, precision, recall, f1, support_note, analysis, artifact_class]
+    rq1_by_topology.csv: [comparison_a, comparison_b, comparison_role, variant, target, mode, topology, n_eligible, n_specific_a, n_specific_b, risk_a, risk_b, difference, reporting, analysis, artifact_class]
+    decision_reasons.csv: [variant, method, target, mode, class, policy_outcome, reason, n, analysis, artifact_class]
+    ambiguity_sizes.csv: [variant, method, target, mode, class, set_size, n, n_true_class_included, analysis, artifact_class]
+    support_flags_summary.csv: [topology, class, n_windows, flag, n_flagged, analysis, artifact_class]
+    predictions.parquet / decisions.parquet: pooled window-level predictions and decisions (local, not committed)
     tie_sensitivity.csv: [target, salt_index, pooled_risk_a, pooled_risk_b, difference, primary_difference, role, analysis, artifact_class]
     thresholds.csv (per fold): [variant, method, target, tau, dev_max_attainable_coverage, dev_realized_coverage_at_tau, dev_status, fold, artifact_class]
     run_manifest.json: [artifact_class, mode, status, run_key, config_sha256, config_file, code_sha256, realization, git_commit, seed, input_sha256, preflight, features, prohibited_claims, sensitivity, effective_config_sha256]

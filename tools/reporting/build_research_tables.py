@@ -21,16 +21,29 @@ from typing import Dict, List
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import build_research_figures as brf  # noqa: E402  (shared provenance helpers; one manifest mechanism)
 from _common import ReportingInputError, classify, load_config, load_input, sha256_path  # noqa: E402
 
 
-def to_markdown(df: pd.DataFrame, watermark: str) -> str:
+def to_markdown(df: pd.DataFrame, watermark: str, caption: str = "") -> str:
+    """Display rendering only (the CSV keeps every value unchanged). Empty cells are distinguished:
+    'n.e.' = row NOT_ESTIMABLE (no value exists), '—' = value undefined (e.g. risk with no SPECIFIC decision)."""
     head = [f"> **{watermark}**", ""] if watermark else []
+    if caption:
+        head += [f"*{caption}*", ""]
     cols = list(df.columns)
     lines = ["| " + " | ".join(cols) + " |", "| " + " | ".join("---" for _ in cols) + " |"]
     for _, r in df.iterrows():
-        lines.append("| " + " | ".join("" if pd.isna(v) else (f"{v:.4g}" if isinstance(v, float) else str(v))
-                                       for v in r.tolist()) + " |")
+        ne = "status" in df.columns and str(r.get("status")) not in ("ESTIMABLE", "nan", "None")
+        cells = []
+        for v in r.tolist():
+            if pd.isna(v):
+                cells.append("n.e." if ne else "—")
+            elif isinstance(v, float):
+                cells.append(f"{v:.3f}" if abs(v) < 1000 else f"{v:.0f}")
+            else:
+                cells.append(str(v))
+        lines.append("| " + " | ".join(cells) + " |")
     return "\n".join(head + lines) + "\n"
 
 
@@ -38,6 +51,8 @@ def build(config_path: Path, out_dir: Path, root: Path) -> pd.DataFrame:
     cfg, cfg_hash = load_config(config_path)
     rows: List[Dict] = []
     errors: List[str] = []
+    commit = brf._git_commit(root)
+    cmd = f"python tools/reporting/build_research_tables.py --config {brf._rel(config_path, root)} --out-dir {brf._rel(out_dir, root)}"
     for spec in cfg.get("tables", []):
         try:
             df = load_input(root, spec)
@@ -54,21 +69,31 @@ def build(config_path: Path, out_dir: Path, root: Path) -> pd.DataFrame:
             errors.append(f"[{spec['id']}] selective_risk selected without coverage (prohibited)")
             continue
         out = df[cols].rename(columns=spec.get("rename", {}))
+        prov = brf._run_provenance(root / spec["input"])
+        if "artifact_class" not in df.columns and prov["artifact_class"] != "UNKNOWN":
+            df = df.assign(artifact_class=prov["artifact_class"])
         dest, wm = classify(spec, df)
+        if brf._is_official(out_dir) and dest == "illustrative":
+            errors.append(f"[{spec['id']}] synthetic/illustrative input refused for official output directory")
+            rows.append({"table_id": spec["id"], "status": "REFUSED_SYNTHETIC_IN_OFFICIAL_RESULTS"})
+            continue
         d = out_dir / dest
         d.mkdir(parents=True, exist_ok=True)
         csv_p, md_p = d / f"{spec['id']}.csv", d / f"{spec['id']}.md"
         out.to_csv(csv_p, index=False, lineterminator="\n", float_format=None)
-        md_p.write_text(to_markdown(out, wm), encoding="utf-8")
+        md_p.write_bytes(to_markdown(out, wm, spec.get("caption", "")).encode("utf-8"))
         for p in (csv_p, md_p):
             rows.append({"table_id": spec["id"], "status": f"BUILT_{dest.upper()}", "reason": wm,
                          "output_file": p.as_posix(), "output_sha256": sha256_path(p),
                          "input_file": spec["input"], "input_sha256": sha256_path(root / spec["input"]),
                          "config_sha256": cfg_hash, "source_experiment": spec.get("source_experiment", "UNSPECIFIED"),
-                         "evidence_status": spec.get("evidence_status", "UNDECLARED")})
+                         "evidence_status": spec.get("evidence_status", "UNDECLARED"), "caption": spec.get("caption", ""),
+                         "n_rows": len(out), "n_rows_not_estimable": int((df["status"] != "ESTIMABLE").sum()) if "status" in df.columns else 0,
+                         "script": "tools/reporting/build_research_tables.py", "command": cmd, "build_git_commit": commit, **prov})
     man = pd.DataFrame(rows)
     out_dir.mkdir(parents=True, exist_ok=True)
-    man.to_csv(out_dir / "TABLE_BUILD_MANIFEST.csv", index=False, lineterminator="\n")
+    for name in ("TABLE_BUILD_MANIFEST.csv", "TABLE_MANIFEST.csv"):
+        man.to_csv(out_dir / name, index=False, lineterminator="\n")
     if errors and cfg.get("fail_on_missing", True):
         raise ReportingInputError("; ".join(errors))
     return man

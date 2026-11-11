@@ -9,7 +9,7 @@ from typing import Dict, Tuple
 import pandas as pd
 import yaml
 
-FINAL_STATUSES = {"VALIDATED", "FROZEN"}
+FINAL_STATUSES = {"VALIDATED", "FROZEN", "VERIFIED"}  # VERIFIED: structural dataset descriptions only (no model outputs)
 NON_RESULT_DATA_STATUSES = {"ILLUSTRATIVE", "FIXTURE", "SYNTHETIC", "DEMO"}
 
 
@@ -34,7 +34,12 @@ def load_input(root: Path, spec: Dict) -> pd.DataFrame:
     p = root / spec["input"]
     if not p.exists():
         raise ReportingInputError(f"[{spec.get('id')}] mandatory input missing: {spec['input']}")
-    df = pd.read_csv(p) if p.suffix == ".csv" else pd.read_parquet(p)
+    try:
+        df = pd.read_csv(p) if p.suffix == ".csv" else pd.read_parquet(p)
+    except pd.errors.EmptyDataError:
+        raise ReportingInputError(f"[{spec.get('id')}] no rows: input {spec['input']} is an empty table") from None
+    if not len(df):
+        raise ReportingInputError(f"[{spec.get('id')}] no rows: input {spec['input']} is an empty table")
     req = spec.get("required_columns", [])
     miss = [c for c in req if c not in df.columns]
     if miss:
@@ -47,7 +52,7 @@ def load_input(root: Path, spec: Dict) -> pd.DataFrame:
         vals = val if isinstance(val, list) else [val]
         df = df[df[col].astype(str).isin([str(v) for v in vals])]
     if spec.get("filter") and df.empty:
-        raise ReportingInputError(f"[{spec.get('id')}] no rows match filter {spec['filter']} in {spec['input']}")
+        raise ReportingInputError(f"[{spec.get('id')}] no rows: filter {spec['filter']} matches nothing in {spec['input']}")
     return df.reset_index(drop=True)
 
 

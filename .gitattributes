@@ -11,3 +11,11 @@ tools/dataset/*.py text eol=lf
 
 # Checksum-verified sample data: never convert
 data/sample/*.parquet binary
+
+# Phase 11/12: hash-recorded scientific outputs (FIGURE_MANIFEST / TABLE_MANIFEST record their SHA-256)
+03_results/**/*.csv text eol=lf
+03_results/**/*.json text eol=lf
+03_results/**/*.md text eol=lf
+03_results/**/*.svg text eol=lf
+03_results/**/*.png binary
+03_results/**/*.pdf binary

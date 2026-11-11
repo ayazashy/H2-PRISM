@@ -52,6 +52,7 @@ from ..uncertainty import paired_stratified_bootstrap
 from ..windows import WindowConfig
 
 METHODS = ("s_C", "s_C_minus_D", "confidence", "margin", "neg_entropy", "D_only")
+CURVE_GRID = tuple(round(0.05 * i, 2) for i in range(1, 21))  # descriptive risk-coverage grid (figures only)
 # RQ1 paired comparisons (plan F10): C vs C-D is primary; C vs B (confidence) and the other indicators secondary
 COMPARISONS = (("s_C_minus_D", "PRIMARY"), ("confidence", "SECONDARY_C_VS_B"), ("margin", "SECONDARY"),
                ("neg_entropy", "SECONDARY"), ("D_only", "SECONDARY"))
@@ -448,7 +449,7 @@ def outer_stage(cfg, dev: pd.DataFrame, test: pd.DataFrame, feats: List[str], de
         pred[c] = sup[c].to_numpy()
     for c in S.columns:
         pred[f"score_{c}"] = S[c].to_numpy()
-    rows, tie_rows = [], []
+    rows, tie_rows, curve_rows = [], [], []
     th = devres["thresholds"]
     mc = _matched_cfg(cfg)
     salt = str(mc["tie_break_salt"])
@@ -462,6 +463,14 @@ def outer_stage(cfg, dev: pd.DataFrame, test: pd.DataFrame, feats: List[str], de
         for meth in METHODS:
             sc = S[meth].to_numpy()
             avm = av & np.isfinite(sc)
+            ytrue = pred.y_true.to_numpy()
+            for cg in CURVE_GRID:  # descriptive risk-coverage curve (PA-1 selection, label-free); not a registered estimand
+                mc_, inf_ = exact_count_selection(sc, avm, wid, float(cg), salt)
+                curve_rows.append({"variant": vname, "method": meth, "coverage_requested": float(cg),
+                                   "n_total": inf_["denominator_n"], "n_eligible_for_specific": inf_["n_eligible_for_specific"],
+                                   "n_selected": int(mc_.sum()) if mc_ is not None else None,
+                                   "n_errors": int((y_hat[mc_] != ytrue[mc_]).sum()) if mc_ is not None else None,
+                                   "status": "ESTIMABLE" if mc_ is not None else "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL"})
             for tg in _targets(cfg):
                 tau_dev = th[(th.variant == vname) & (th.method == meth) & (th.target == tg)].tau.iloc[0]
                 # threshold transfer: development threshold applied unchanged (ties at tau all accepted)
@@ -495,10 +504,140 @@ def outer_stage(cfg, dev: pd.DataFrame, test: pd.DataFrame, feats: List[str], de
                             tie_rows.append({"target": tg, "salt_index": j, "method": meth, "Scenario_Family_ID": fam,
                                              "topology": pred.topology.iloc[idx[0]], "n_selected": int(s.sum()),
                                              "n_errors": int((y_hat[idx][s] != pred.y_true.to_numpy()[idx][s]).sum())})
-    return pred, rows, pd.DataFrame(tie_rows)
+    return pred, rows, pd.DataFrame(tie_rows), pd.DataFrame(curve_rows)
 
 
 # ----------------------------------------------------------------------------- aggregation
+AGGREGATE_TABLES = ("coverage_risk", "estimability", "rq1", "rq2", "tie_sensitivity", "calibration_reliability",
+                    "risk_coverage_curve", "confusion_matrix", "class_metrics", "rq1_by_topology", "decision_reasons",
+                    "ambiguity_sizes", "support_flags_summary")
+
+
+def _yhat(preds: pd.DataFrame, classes: List[str]) -> Optional[np.ndarray]:
+    cols = [f"p_cal_{c}" for c in classes]
+    if not all(c in preds.columns for c in cols):
+        return None
+    return np.array(classes, dtype=object)[preds[cols].to_numpy(float).argmax(axis=1)]
+
+
+def _curve(cc: Optional[pd.DataFrame], preds: Optional[pd.DataFrame] = None) -> pd.DataFrame:
+    """Descriptive risk-coverage curve (PA-1 selection on a fixed grid).
+
+    scope = pooled: a grid point is pooled only if attainable in EVERY held-out topology (otherwise NOT_ESTIMABLE);
+    scope = <topology>: the single held-out fold for that topology. Values are counts, never extrapolated.
+    """
+    if cc is None or not len(cc):
+        return pd.DataFrame()
+    topo_of = (dict(zip(preds.fold, preds.topology)) if preds is not None and {"fold", "topology"} <= set(preds.columns) else {})
+    rows = []
+    nf = cc.fold.nunique()
+
+    def _row(scope, v, m, c, g, ok):
+        base = {"scope": scope, "variant": v, "method": m, "mode": "rank_matched", "coverage_requested": c,
+                "folds": int(g.fold.nunique())}
+        if not ok:
+            return {**base, "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL"}
+        ns, ne, nt = int(g.n_selected.sum()), int(g.n_errors.sum()), int(g.n_total.sum())
+        return {**base, "status": "ESTIMABLE", "n_total": nt, "n_specific": ns, "n_errors": ne,
+                "coverage": ns / nt if nt else float("nan"), "selective_risk": ne / ns if ns else float("nan")}
+
+    for (v, m, c), g in cc.groupby(["variant", "method", "coverage_requested"]):
+        rows.append(_row("pooled", v, m, c, g, bool((g.status == "ESTIMABLE").all()) and g.fold.nunique() == nf))
+        for f, gf in g.groupby("fold"):
+            rows.append(_row(str(topo_of.get(f, f"fold_{f}")), v, m, c, gf, bool((gf.status == "ESTIMABLE").all())))
+    return pd.DataFrame(rows)
+
+
+def _confusion(preds: pd.DataFrame, classes: List[str]) -> pd.DataFrame:
+    """Window-level confusion counts of the calibrated top-label prediction (pooled and per held-out topology)."""
+    yh = _yhat(preds, classes)
+    if yh is None:
+        return pd.DataFrame()
+    y = preds.y_true.to_numpy()
+    rows = []
+    scopes = [("pooled", np.ones(len(preds), bool))] + [(t, (preds.topology == t).to_numpy()) for t in sorted(preds.topology.unique())]
+    for scope, m in scopes:
+        for yt in classes:
+            for yp in classes:
+                rows.append({"scope": scope, "true_class": yt, "predicted_class": yp, "n": int(((y == yt) & (yh == yp) & m).sum())})
+    return pd.DataFrame(rows)
+
+
+def _class_metrics(preds: pd.DataFrame, classes: List[str]) -> pd.DataFrame:
+    yh = _yhat(preds, classes)
+    if yh is None:
+        return pd.DataFrame()
+    y = preds.y_true.to_numpy()
+    rows = []
+    for c in classes:
+        tp = int(((y == c) & (yh == c)).sum())
+        fp = int(((y != c) & (yh == c)).sum())
+        fn = int(((y == c) & (yh != c)).sum())
+        prec = tp / (tp + fp) if tp + fp else float("nan")
+        rec = tp / (tp + fn) if tp + fn else float("nan")
+        f1 = 2 * prec * rec / (prec + rec) if (tp + fp) and (tp + fn) and (prec + rec) else float("nan")
+        sel = preds[y == c]
+        rows.append({"class": c, "n_windows": int((y == c).sum()), "n_runs": int(sel.Scenario_ID.nunique()),
+                     "n_families": int(sel.Scenario_Family_ID.nunique()), "n_topologies": int(sel.topology.nunique()),
+                     "precision": prec, "recall": rec, "f1": f1,
+                     "support_note": "windows are not independent units; families are"})
+    return pd.DataFrame(rows)
+
+
+def _rq1_by_topology(D: pd.DataFrame) -> pd.DataFrame:
+    """Per held-out topology point estimates (one fold = one topology; no interval); descriptive only."""
+    if not len(D):
+        return pd.DataFrame()
+    rows = []
+    for mb, role in COMPARISONS:
+        sub = D[D.method.isin(["s_C", mb])]
+        for (v, t, mo, top), g in sub.groupby(["variant", "target", "mode", "topology"]):
+            a, b = g[g.method == "s_C"], g[g.method == mb]
+            if not len(a) or not len(b):
+                continue
+            sa, sb = a[a.policy_outcome == SPECIFIC], b[b.policy_outcome == SPECIFIC]
+            ra = float((sa.y_pred_specific != sa.y_true).mean()) if len(sa) else float("nan")
+            rb = float((sb.y_pred_specific != sb.y_true).mean()) if len(sb) else float("nan")
+            rows.append({"comparison_a": "s_C", "comparison_b": mb, "comparison_role": role, "variant": v, "target": t, "mode": mo,
+                         "topology": top, "n_eligible": len(a), "n_specific_a": len(sa), "n_specific_b": len(sb),
+                         "risk_a": ra, "risk_b": rb, "difference": ra - rb, "reporting": "descriptive_per_topology"})
+    return pd.DataFrame(rows)
+
+
+def _decision_reasons(D: pd.DataFrame) -> pd.DataFrame:
+    if not len(D):
+        return pd.DataFrame()
+    r = D.assign(reason=D.reason_code.fillna("").astype(str).str.split(";").str[0].str.split(":").str[0])
+    return (r.groupby(["variant", "method", "target", "mode", "y_true", "policy_outcome", "reason"]).size()
+            .rename("n").reset_index().rename(columns={"y_true": "class"}))
+
+
+def _ambiguity_sizes(D: pd.DataFrame) -> pd.DataFrame:
+    cols = ["variant", "method", "target", "mode", "class", "set_size", "n", "n_true_class_included"]
+    if not len(D):
+        return pd.DataFrame(columns=cols)
+    a = D[D.policy_outcome == AMBIGUITY_SET].copy()
+    if not len(a):
+        return pd.DataFrame(columns=cols)
+    a["included"] = [str(y) in str(s).split("|") for y, s in zip(a.y_true, a.ambiguity_set)]
+    return (a.groupby(["variant", "method", "target", "mode", "y_true", "set_size"])
+            .agg(n=("included", "size"), n_true_class_included=("included", "sum")).reset_index()
+            .rename(columns={"y_true": "class"}))
+
+
+def _flag_summary(preds: pd.DataFrame) -> pd.DataFrame:
+    if "support_flags" not in preds:
+        return pd.DataFrame()
+    fl = preds.support_flags.fillna("").astype(str).str.split("|")
+    rows = []
+    for (top, c), idx in preds.groupby(["topology", "y_true"]).groups.items():
+        sub = fl.loc[idx]
+        for f in ALL_FLAGS:
+            rows.append({"topology": top, "class": c, "n_windows": len(sub), "flag": f,
+                         "n_flagged": int(sub.apply(lambda xs: f in xs).sum())})
+    return pd.DataFrame(rows)
+
+
 def reliability_bins(preds: pd.DataFrame, classes: List[str], n_bins: int = 10) -> pd.DataFrame:
     """Top-label reliability on outer-test windows (raw and calibrated), 10 equal-width bins; empty bins omitted."""
     rows = []
@@ -519,7 +658,8 @@ def reliability_bins(preds: pd.DataFrame, classes: List[str], n_bins: int = 10) 
 
 
 def aggregate(cfg, preds: pd.DataFrame, dec_rows: List[Dict], artifact_class: str,
-              tie_counts: Optional[pd.DataFrame] = None, analysis: str = "primary") -> Dict[str, object]:
+              tie_counts: Optional[pd.DataFrame] = None, analysis: str = "primary",
+              curve_counts: Optional[pd.DataFrame] = None) -> Dict[str, object]:
     classes = list(cfg["dataset"]["classes"])
     y_of = dict(zip(preds.window_id, preds.y_true))
     fam_of = dict(zip(preds.window_id, preds.Scenario_Family_ID))
@@ -603,8 +743,15 @@ def aggregate(cfg, preds: pd.DataFrame, dec_rows: List[Dict], artifact_class: st
     if len(D):
         for (v, m, t, mo), g in D[D.method == "s_C"].groupby(["variant", "method", "target", "mode"]):
             for c, gc in g.groupby("y_true"):
+                sp = gc[gc.policy_outcome == SPECIFIC]
+                am = gc[gc.policy_outcome == AMBIGUITY_SET]
                 rq2.append({"variant": v, "target": t, "mode": mo, "class": c, "n": len(gc),
+                            "n_families": int(gc.Scenario_Family_ID.nunique()),
                             **{o.lower(): float((gc.policy_outcome == o).mean()) for o in (SPECIFIC, AMBIGUITY_SET, UNRESOLVED)},
+                            # correctness of SPECIFIC decisions and true-class inclusion of AMBIGUITY sets (undefined if none)
+                            "specific_correct": float((sp.y_pred_specific == sp.y_true).mean()) if len(sp) else float("nan"),
+                            "ambiguity_inclusion": float(np.mean([str(y) in str(a).split("|") for y, a in zip(am.y_true, am.ambiguity_set)]))
+                            if len(am) else float("nan"),
                             "reporting": per_class.get(c, "UNSPECIFIED")})
     tie = []
     if tie_counts is not None and len(tie_counts):
@@ -621,7 +768,11 @@ def aggregate(cfg, preds: pd.DataFrame, dec_rows: List[Dict], artifact_class: st
     tag = lambda df: df.assign(analysis=analysis, artifact_class=artifact_class) if len(df) else df
     return {"coverage_risk": tag(pd.DataFrame(cov)), "estimability": tag(est_df), "rq1": tag(pd.DataFrame(rq1)),
             "rq2": tag(pd.DataFrame(rq2)), "tie_sensitivity": tag(pd.DataFrame(tie)),
-            "calibration_reliability": tag(reliability_bins(preds, classes)), "decisions": tag(D)}
+            "calibration_reliability": tag(reliability_bins(preds, classes)),
+            "risk_coverage_curve": tag(_curve(curve_counts, preds)), "confusion_matrix": tag(_confusion(preds, classes)),
+            "class_metrics": tag(_class_metrics(preds, classes)), "rq1_by_topology": tag(_rq1_by_topology(D)),
+            "decision_reasons": tag(_decision_reasons(D)), "ambiguity_sizes": tag(_ambiguity_sizes(D)),
+            "support_flags_summary": tag(_flag_summary(preds)), "decisions": tag(D)}
 
 
 # ----------------------------------------------------------------------------- orchestration
@@ -717,7 +868,7 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
         write_json(manifest, out_dir / "run_manifest.json")
         return manifest
 
-    preds, dec_rows, cal_records, ties = [], [], [], []
+    preds, dec_rows, cal_records, ties, curves = [], [], [], [], []
     for k, d in folds.groupby("outer_fold_id", sort=True):
         fdir = out_dir / "folds" / f"fold_{k}"
         done = fdir / "DONE.json"
@@ -737,11 +888,14 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
             cal_records.append(json.loads((fdir / "calibration.json").read_text(encoding="utf-8")))
             tp = fdir / "tie_sensitivity_counts.csv"
             ties.append(pd.read_csv(tp) if tp.stat().st_size > 1 else pd.DataFrame())
+            curves.append(pd.read_csv(fdir / "risk_coverage_counts.csv"))
             continue
         devres = development_stage(cfg, dev, feats)
-        pred, rows, tie_df = outer_stage(cfg, dev, test, feats, devres)
+        pred, rows, tie_df, curve_df = outer_stage(cfg, dev, test, feats, devres)
         write_csv(tie_df.assign(fold=k), fdir / "tie_sensitivity_counts.csv")
         ties.append(tie_df.assign(fold=k))
+        write_csv(curve_df.assign(fold=k), fdir / "risk_coverage_counts.csv")
+        curves.append(curve_df.assign(fold=k))
         pred["fold"] = k
         cal = {"fold": int(k), "method": devres["cal_method"], "feasibility": devres["cal_feasibility"],
                "params": devres["params"], "dev_support_flags": devres["dev_flags"]}
@@ -768,10 +922,14 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
             raise InterruptedError(f"stopped after fold {k} (simulated interruption)")
     P = pd.concat(preds, ignore_index=True)
     T = pd.concat([t for t in ties if len(t)], ignore_index=True) if any(len(t) for t in ties) else pd.DataFrame()
-    agg = aggregate(cfg, P, dec_rows, artifact_class, T, analysis=sensitivity or "primary")
-    for name in ("coverage_risk", "estimability", "rq1", "rq2", "tie_sensitivity", "calibration_reliability"):
+    agg = aggregate(cfg, P, dec_rows, artifact_class, T, analysis=sensitivity or "primary",
+                    curve_counts=pd.concat(curves, ignore_index=True))
+    for name in AGGREGATE_TABLES:
         write_csv(agg[name], out_dir / f"{name}.csv")
     write_json(cal_records, out_dir / "calibration_records.json")
+    P.assign(artifact_class=artifact_class, analysis=sensitivity or "primary").to_parquet(out_dir / "predictions.parquet", index=False)
+    if len(agg["decisions"]):
+        agg["decisions"].to_parquet(out_dir / "decisions.parquet", index=False)
     manifest["status"] = "COMPLETED"
     manifest["n_test_windows"] = len(P)
     write_json(manifest, out_dir / "run_manifest.json")

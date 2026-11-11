@@ -140,16 +140,17 @@ def test_outer_test_labels_do_not_influence_decisions(base):
     feats = [c for c in ft.columns if "__" in c]
     dev, test = ft[ft.topology != "TA"], ft[ft.topology == "TA"]
     devres = pp.development_stage(cfg, dev, feats)
-    a, ra, ta = pp.outer_stage(cfg, dev, test, feats, devres)
+    a, ra, ta, ca = pp.outer_stage(cfg, dev, test, feats, devres)
     test2 = test.copy()
     test2["label_mapped"] = np.random.default_rng(0).permutation(test2.label_mapped.to_numpy())
-    b, rb, tb = pp.outer_stage(cfg, dev, test2, feats, devres)
+    b, rb, tb, cb = pp.outer_stage(cfg, dev, test2, feats, devres)
     for x, y in zip(ra, rb):
         assert x["status"] == y["status"]
         if x["status"] == "ESTIMABLE":
             pd.testing.assert_frame_equal(x["decisions"], y["decisions"])
     # tie-sensitivity selections are label-free too (only the error counts may differ)
     pd.testing.assert_series_equal(ta.n_selected, tb.n_selected)
+    pd.testing.assert_series_equal(ca.n_selected, cb.n_selected)  # curve selections are label-free
 
 
 def test_calibration_fallback_recorded(fx, tmp_path):
