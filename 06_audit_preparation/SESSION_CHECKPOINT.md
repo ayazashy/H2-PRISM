@@ -189,3 +189,21 @@ A fifth local commit (user-approved) adds `.gitattributes` (LF for hash-pinned a
   - human attestations F-D15, F-D16, A-D10, PA-1 (runner-enforced), then the project lead's authorization file;
   - non-blocking owner approvals (Y4 reviews, Y7 decision, Yazan adoption, F-D18 with the A14 inner-scheme freeze, Ahmed's document approval).
 - **Continue with:** `06_audit_preparation/final_acceptance/NEXT_PHASE_EXECUTION_HANDOFF.md`.
+
+## Update: Phases 11–12 results infrastructure (recovery point)
+
+- **Branch:** `audit/preparation-integration`; base `588fc27`; commits follow. Not pushed or merged.
+- **Gate:** NOT authorized. No authorization file exists; F-D15, F-D16, A-D10 and PA-1 are unrecorded. `--execute-primary` → `REFUSED`. **No real-data training; no research results.**
+- **Built:**
+  - runner result tables for figures: `risk_coverage_curve` (pooled and topology scopes), `rq1_by_topology`, `confusion_matrix`, `class_metrics`, `decision_reasons`, `ambiguity_sizes`, `support_flags_summary`, `rq2` correctness/inclusion, parquet archives;
+  - six multi-panel figure kinds in the A13 builder, styled from `h2prism.visualization.theme`;
+  - dataset-design and sensitivity-summary builders;
+  - table provenance;
+  - LF rules for `03_results`.
+- **Genuine outputs** (structural, verified data):
+  - Fig. 1 in `03_results/figures/dataset_design/final/`;
+  - tables T1–T3 in `03_results/tables/dataset_design/final/`;
+  - source tables in `03_results/dataset_design/`.
+- **Pending:** Figs. 2–6 and T4–T8 build automatically after an authorized run. Commands: `06_audit_preparation/final_acceptance/RESULTS_INFRASTRUCTURE_REPORT.md` §5.
+- **Validation:** 305 passed, 2 skipped (expected), 0 failed; A12 33/33 and 36 PASS + 1 expected post-experiment missing artifact; config `f788b6d8…` unchanged.
+- **Next:** record the four clearances or written waivers, then the project lead's authorization file, then `--execute-primary --out 03_results/primary_protocol/PRIMARY`.

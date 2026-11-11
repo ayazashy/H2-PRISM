@@ -1,0 +1,19 @@
+{
+  "artifact_class": "DATASET_DESCRIPTIVE",
+  "config_sha256": "f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae",
+  "feature_table_sha256": "4d1310a6509ff5eb381792c0886afcda1209017361390bf395c805b5c3955280",
+  "generated_at_utc": "2026-11-11T00:05:39Z",
+  "git_commit": "588fc27cb48cc15252b0b9d4ef36f8586c6aca31",
+  "input_sha256": {
+    "manifest": "36bcbaf97bb17659995f393884d1dcde3bbca9236c3dcdcc6e7651e61538fb59",
+    "outer_folds": "3b21d8231a40245140f32aa6cb5193e3f45b05bd57cbb079ccccd69aafa8b1dd"
+  },
+  "n_windows": 27993,
+  "note": "structural description only; no model fitting, no outer-test scoring",
+  "preflight_checks": 28,
+  "preflight_checks_passed": 28,
+  "realization": "noise_added",
+  "run_id": "dataset_design_4d1310a6509f",
+  "script": "tools/reporting/build_dataset_design_tables.py",
+  "status": "COMPLETED"
+}

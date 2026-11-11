@@ -8,7 +8,7 @@
 
 ## 2. Data actually used
 
-⟨T0: runs, families, windows per class and topology⟩, with the restrictions from `DATASET_LIMITATIONS.md` L1–L11.
+⟨T1: runs, families, windows per class and topology⟩, with the restrictions from `DATASET_LIMITATIONS.md` L1–L11.
 
 ## 3. RQ1: incremental value of D(x) at matched coverage
 
@@ -22,7 +22,7 @@
 
 ## 4. RQ2: selective outcomes
 
-⟨T_RQ2⟩ and ⟨T_ambiguity⟩. LEAK is restricted; the other classes are descriptive only. DELAY is not interpretable as the delay event (start-up confounding).
+⟨T6_rq2_outcomes⟩ and ⟨Fig. 4/T6⟩. LEAK is restricted; the other classes are descriptive only. DELAY is not interpretable as the delay event (start-up confounding).
 
 ## 5. Limitations (mandatory paragraph)
 
