@@ -51,6 +51,7 @@ def collect(runs: Path, allow_synthetic: bool = False, include=None) -> pd.DataF
     """include: optional set of run directory names (e.g. the runs that passed validation); others are skipped."""
     rows = []
     found = {}
+    attempted = {}  # analysis -> run_key of a recorded run that did not complete or did not pass validation
     for d in sorted(p for p in runs.iterdir() if p.is_dir()):
         if d.name == "PRIMARY":
             names = [("primary", "primary"), ("policy_warning_only", "warning_only")]
@@ -60,14 +61,13 @@ def collect(runs: Path, allow_synthetic: bool = False, include=None) -> pd.DataF
             names = [(d.name[len("SENSITIVITY_"):], "primary")]
         else:
             continue
-        if include is not None and d.name not in include:
-            continue
         man = d / "run_manifest.json"
         rq1 = d / "rq1.csv"
-        if not man.exists() or not rq1.exists():
-            continue
-        m = json.loads(man.read_text(encoding="utf-8"))
-        if m.get("status") != "COMPLETED":
+        m = json.loads(man.read_text(encoding="utf-8")) if man.exists() else {}
+        if (include is not None and d.name not in include) or not rq1.exists() or m.get("status") != "COMPLETED":
+            if m:  # executed but incomplete / invalid: never reported as NOT_RUN
+                for analysis, _ in names:
+                    attempted[analysis] = m.get("run_key")
             continue
         if m.get("artifact_class") not in REAL and not allow_synthetic:
             raise ValueError(f"{d.name}: artifact_class {m.get('artifact_class')} is not a real execution class")
@@ -82,7 +82,8 @@ def collect(runs: Path, allow_synthetic: bool = False, include=None) -> pd.DataF
             found[analysis] = True
     for a in ["primary"] + REGISTERED:
         if a not in found:
-            rows.append({"analysis": a, "status": "NOT_RUN"})
+            rows.append({"analysis": a, "status": "RUN_INCOMPLETE" if a in attempted else "NOT_RUN",
+                         "run_id": attempted.get(a)})
     out = pd.DataFrame(rows)
     out["population_note"] = out["analysis"].map(POPULATION)
     return out.reindex(columns=COLS)

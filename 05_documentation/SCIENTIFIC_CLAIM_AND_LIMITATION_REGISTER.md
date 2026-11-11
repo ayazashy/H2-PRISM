@@ -30,3 +30,14 @@
 - L2: simulation only.
 
 See `DATASET_LIMITATIONS.md`.
+
+## Post-execution outcome of the conditional claims (2026-11-11; R2 `a10530f1fcf2` and registered sensitivity runs)
+
+| # | Condition met? | Outcome |
+| --- | --- | --- |
+| C3 | No: the registered RQ1 is NOT_ESTIMABLE at every target and mode, and exploratory intervals vs s_C−D include 0 | **NOT SUPPORTED.** No incremental value of D(x) is established |
+| C4 | Partly: inclusion 31/31 for Downstream DELAY at 0.60. Center LEAK at exploratory 0.25: 3,820 sets, all including LEAK, but 989 wrong SPECIFIC | Ambiguity sets include the true class where issued. The policy does not flag the systematic Center error |
+| C10 | No: the offset-invariant arm degrades transfer (Center 0.035) | **NOT SUPPORTED** |
+| new: L12 | Source-dataset NORMAL configuration swap (Center/Downstream) | Mandatory limitation in any report |
+
+See `RESEARCH_FINDINGS_REPORT.md` sections 4–9.

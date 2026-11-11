@@ -337,3 +337,45 @@ def test_all_not_estimable_rq1_keeps_full_schema_and_builds_ne_panels(tmp_path):
                                                          "evidence_status": "PENDING", "title": "t"}]}))
     man = brf.build(cfg, tmp_path / "o", tmp_path)
     assert man.non_estimable.all() and (man.n_rows_plotted == 0).all()
+
+
+def test_lifecycle_versions_secondary_runs_and_writes_results_provenance(tree, tmp_path):
+    """Validated secondary runs give a new version key (PRIMARY key + hash of the run set); F13 RESULTS_PROVENANCE
+    lists every run file with hashes taken from that run's manifest (never UNKNOWN for config/manifest/folds)."""
+    r = bres.run(tree, tmp_path / "qa", allow_synthetic=True)
+    idx = pd.read_csv(tmp_path / "qa" / "RESULTS_INDEX.csv")
+    assert (idx.run_dir != "PRIMARY").any() and "_s" in r["version"]
+    prov = pd.read_csv(tmp_path / "qa" / "RESULTS_PROVENANCE.csv")
+    runs = tree / "03_results" / "primary_protocol"
+    files = {p.relative_to(tree).as_posix() for d in ("PRIMARY", "SENSITIVITY_k_10") for p in (runs / d).rglob("*") if p.is_file()}
+    assert files <= set(prov.output_file)
+    assert prov.config_hash.notna().all() and (prov.config_hash != "UNKNOWN").all() and prov.folds_hash.notna().all()
+
+
+def test_risk_coverage_topology_panels_never_crop_values():
+    """Regression (real run 2026-11-11): the shared y-axis took the LAST panel's 0-0.05 limit and cropped Center."""
+    rows = []
+    for scope, risk in (("pooled", 0.15), ("Center", 0.44), ("Downstream", 0.0), ("Upstream", 0.0)):
+        for m in ("s_C", "s_C_minus_D", "confidence"):
+            for c in (0.05, 0.25):
+                rows.append({"scope": scope, "variant": "primary", "method": m, "mode": "rank_matched", "coverage_requested": c,
+                             "status": "ESTIMABLE", "n_total": 100, "n_specific": int(c * 100), "n_errors": 0,
+                             "coverage": c, "selective_risk": risk})
+    fig, _, _ = brf.plot_risk_coverage_panels({"curve": pd.DataFrame(rows), "targets": None}, {"title": "t"})
+    for ax in fig.axes[1:]:
+        assert ax.get_ylim()[1] >= 0.44
+    plt.close(fig)
+
+
+def test_sensitivity_summary_marks_executed_incomplete_runs(tree, tmp_path):
+    """Regression (real batch 2026-11-11): an executed run that stopped (manifest not COMPLETED) was listed as NOT_RUN."""
+    import json
+    import shutil
+    runs = tmp_path / "primary_protocol"
+    shutil.copytree(tree / "03_results" / "primary_protocol" / "PRIMARY", runs / "PRIMARY")
+    inc = runs / "SENSITIVITY_k_50"
+    inc.mkdir(parents=True)
+    (inc / "run_manifest.json").write_text(json.dumps({"status": "RUNNING", "run_key": "abc", "artifact_class": "SYNTHETIC_TEST"}))
+    s = bss.collect(runs, allow_synthetic=True)
+    assert set(s[s.analysis == "k_50"].status) == {"RUN_INCOMPLETE"}
+    assert set(s[s.analysis == "k_10"].status) == {"NOT_RUN"}

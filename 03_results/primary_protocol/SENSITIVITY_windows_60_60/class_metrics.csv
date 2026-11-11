@@ -1,0 +1,5 @@
+class,n_windows,n_runs,n_families,n_topologies,precision,recall,f1,support_note,analysis,artifact_class
+NORMAL,999,3,3,3,0.1539172637,0.6666666667,0.2500938791,windows are not independent units; families are,windows_60_60,SENSITIVITY_EXPERIMENT
+LEAK,10977,39,30,3,0.9567263695,0.6666666667,0.7857833136,windows are not independent units; families are,windows_60_60,SENSITIVITY_EXPERIMENT
+COMPRESSOR_FAULT,1992,6,3,3,0.9920239282,0.9989959839,0.9954977489,windows are not independent units; families are,windows_60_60,SENSITIVITY_EXPERIMENT
+COMPRESSOR_DELAY,45,3,3,3,0.9677419355,0.6666666667,0.7894736842,windows are not independent units; families are,windows_60_60,SENSITIVITY_EXPERIMENT

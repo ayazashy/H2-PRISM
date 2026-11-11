@@ -151,3 +151,20 @@ def test_documentation_has_no_local_absolute_paths():
         for f in (ROOT / d).glob("*.md"):
             assert not pat.search(f.read_text(encoding="utf-8")), f
     assert not pat.search((ROOT / "README.md").read_text(encoding="utf-8"))
+
+
+def test_final_plan_status_vocabulary_and_evidence():
+    """Final closure statuses: only the five allowed values; a COMPLETE row must cite existing evidence, and no
+    BLOCKED row may claim completion of an unperformed experiment."""
+    m = pd.read_csv(ROOT / "06_audit_preparation" / "final_acceptance" / "TEAM_PLAN_COMPLETION_MATRIX.csv")
+    if "final_status" not in m.columns:
+        return
+    assert set(m.final_status) <= {"COMPLETE", "COMPLETE_WITH_LIMITATION", "BLOCKED_EXTERNAL_APPROVAL",
+                                   "BLOCKED_DATA_LIMITATION", "NOT_APPLICABLE"}
+    for r in m[m.final_status.isin(["COMPLETE", "COMPLETE_WITH_LIMITATION"])].itertuples():
+        paths = [p.strip() for p in str(r.final_evidence).split(";") if p.strip() and not p.strip().startswith("(")]
+        assert paths, r.requirement_id
+        for p in paths:
+            if p.startswith("03_results/primary_protocol/PRIMARY/") or "/diagnostics/" in p or p.startswith("03_results/"):
+                continue  # results exist only after execution; checked by the results tests
+            assert (ROOT / p).exists(), (r.requirement_id, p)

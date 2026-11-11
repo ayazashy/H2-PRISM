@@ -1,0 +1,13 @@
+variant,target,mode,class,n,n_families,specific,ambiguity_set,unresolved,specific_correct,ambiguity_inclusion,reporting,analysis,artifact_class
+primary,0.6,rank_matched,COMPRESSOR_DELAY,62,2,0,0.5161290323,0.4838709677,,1,descriptive_only,pre_event_label_normal,SENSITIVITY_EXPERIMENT
+primary,0.6,rank_matched,COMPRESSOR_FAULT,2656,2,0.0007530120482,0,0.999246988,1,,descriptive_only,pre_event_label_normal,SENSITIVITY_EXPERIMENT
+primary,0.6,rank_matched,LEAK,14614,20,0.7267004243,0.04721499932,0.2260845764,0.9995291902,1,restricted,pre_event_label_normal,SENSITIVITY_EXPERIMENT
+primary,0.6,rank_matched,NORMAL,3954,22,0.5437531614,0.3290338897,0.1272129489,0.6841860465,1,descriptive_only,pre_event_label_normal,SENSITIVITY_EXPERIMENT
+warning_only,0.6,rank_matched,COMPRESSOR_DELAY,62,2,0.8548387097,0.04838709677,0.09677419355,1,1,descriptive_only,pre_event_label_normal,SENSITIVITY_EXPERIMENT
+warning_only,0.6,rank_matched,COMPRESSOR_FAULT,2656,2,0.001129518072,0,0.9988704819,1,,descriptive_only,pre_event_label_normal,SENSITIVITY_EXPERIMENT
+warning_only,0.6,rank_matched,LEAK,14614,20,0.7247844533,0.04714657178,0.228068975,0.9995279456,1,restricted,pre_event_label_normal,SENSITIVITY_EXPERIMENT
+warning_only,0.6,rank_matched,NORMAL,3954,22,0.5371775417,0.3356095094,0.1272129489,0.6812617702,1,descriptive_only,pre_event_label_normal,SENSITIVITY_EXPERIMENT
+warning_only,0.6,threshold_transfer,COMPRESSOR_DELAY,31,1,0.9677419355,0,0.03225806452,0,,descriptive_only,pre_event_label_normal,SENSITIVITY_EXPERIMENT
+warning_only,0.6,threshold_transfer,COMPRESSOR_FAULT,1328,1,0.4954819277,0,0.5045180723,1,,descriptive_only,pre_event_label_normal,SENSITIVITY_EXPERIMENT
+warning_only,0.6,threshold_transfer,LEAK,7307,10,0.1450663747,0.5372930067,0.3176406186,0,1,restricted,pre_event_label_normal,SENSITIVITY_EXPERIMENT
+warning_only,0.6,threshold_transfer,NORMAL,1977,11,0.3363682347,0,0.6636317653,1,,descriptive_only,pre_event_label_normal,SENSITIVITY_EXPERIMENT

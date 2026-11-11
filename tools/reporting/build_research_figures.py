@@ -266,6 +266,11 @@ def plot_risk_coverage_panels(d, spec):
             ax.set_ylabel("Selective risk")
         st.panel_label(ax, "bcdefg"[j])
         axs.append(ax)
+    if axs:  # shared y-axis: one limit that shows EVERY panel's values (the last panel must not crop the others)
+        e = _est(curve[curve.scope.isin(tops)])
+        e = e[e.method.isin(methods)]
+        if len(e):
+            axs[0].set_ylim(0, max(0.05, float(e.selective_risk.max()) * 1.25))
     fig.suptitle(spec.get("title", ""), fontsize=11, fontweight="bold", y=1.0)
     return fig, n, _ne_count(curve)
 
@@ -482,7 +487,8 @@ def plot_robustness(d, spec):
                             mfc=(st.COLORS["primary"] if an == "primary" else st.COLORS["secondary"]) if same else "white")
                 n_plot += 1
             else:
-                lab = "not run" if r is None or r.get("status") == "NOT_RUN" else "not estimable"
+                lab = ("not run" if r is None or r.get("status") == "NOT_RUN" else
+                       "run incomplete" if r.get("status") == "RUN_INCOMPLETE" else "not estimable")
                 ax.text(0.5, i, lab, transform=ax.get_yaxis_transform(), fontsize=6, color=st.MUTED, ha="center", va="center")
         ax.axvline(0, color=st.MUTED, lw=0.9, ls="--")
         ax.set_title(f"Target coverage {t:.2f}", fontsize=9)

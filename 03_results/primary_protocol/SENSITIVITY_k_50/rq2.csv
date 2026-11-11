@@ -1,0 +1,17 @@
+variant,target,mode,class,n,n_families,specific,ambiguity_set,unresolved,specific_correct,ambiguity_inclusion,reporting,analysis,artifact_class
+primary,0.6,rank_matched,COMPRESSOR_DELAY,62,2,0,0.5,0.5,,1,descriptive_only,k_50,SENSITIVITY_EXPERIMENT
+primary,0.6,rank_matched,COMPRESSOR_FAULT,2656,2,0,0,1,,,descriptive_only,k_50,SENSITIVITY_EXPERIMENT
+primary,0.6,rank_matched,LEAK,14614,20,0.7345695908,0,0.2654304092,1,,restricted,k_50,SENSITIVITY_EXPERIMENT
+primary,0.6,rank_matched,NORMAL,1330,2,0.3481203008,0,0.6518796992,1,,descriptive_only,k_50,SENSITIVITY_EXPERIMENT
+primary,0.6,threshold_transfer,COMPRESSOR_DELAY,31,1,0.8709677419,0,0.1290322581,0,,descriptive_only,k_50,SENSITIVITY_EXPERIMENT
+primary,0.6,threshold_transfer,COMPRESSOR_FAULT,1328,1,0.4954819277,0,0.5045180723,1,,descriptive_only,k_50,SENSITIVITY_EXPERIMENT
+primary,0.6,threshold_transfer,LEAK,7307,10,0.07622827426,0.524291775,0.3994799507,0,1,restricted,k_50,SENSITIVITY_EXPERIMENT
+primary,0.6,threshold_transfer,NORMAL,665,1,0.9639097744,0.01954887218,0.01654135338,1,1,descriptive_only,k_50,SENSITIVITY_EXPERIMENT
+warning_only,0.6,rank_matched,COMPRESSOR_DELAY,62,2,0.6935483871,0.1451612903,0.1612903226,1,1,descriptive_only,k_50,SENSITIVITY_EXPERIMENT
+warning_only,0.6,rank_matched,COMPRESSOR_FAULT,2656,2,0.08998493976,0,0.9100150602,1,,descriptive_only,k_50,SENSITIVITY_EXPERIMENT
+warning_only,0.6,rank_matched,LEAK,14614,20,0.7207472287,0,0.2792527713,1,,restricted,k_50,SENSITIVITY_EXPERIMENT
+warning_only,0.6,rank_matched,NORMAL,1330,2,0.2879699248,0,0.7120300752,1,,descriptive_only,k_50,SENSITIVITY_EXPERIMENT
+warning_only,0.6,threshold_transfer,COMPRESSOR_DELAY,31,1,0.5161290323,0,0.4838709677,0,,descriptive_only,k_50,SENSITIVITY_EXPERIMENT
+warning_only,0.6,threshold_transfer,COMPRESSOR_FAULT,1328,1,0.4954819277,0,0.5045180723,1,,descriptive_only,k_50,SENSITIVITY_EXPERIMENT
+warning_only,0.6,threshold_transfer,LEAK,7307,10,0.0180648693,0.5247023402,0.4572327905,0,1,restricted,k_50,SENSITIVITY_EXPERIMENT
+warning_only,0.6,threshold_transfer,NORMAL,665,1,0.8330827068,0.1503759398,0.01654135338,1,1,descriptive_only,k_50,SENSITIVITY_EXPERIMENT

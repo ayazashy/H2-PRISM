@@ -223,3 +223,22 @@ A fifth local commit (user-approved) adds `.gitattributes` (LF for hash-pinned a
 - **Window-level outputs** (`*.parquet`, `folds/*/predictions.csv`, `folds/*/decisions_*.csv`) are not in Git. They are listed with SHA-256 in `03_results/primary_protocol/logs/*_OUTPUT_HASHES.sha256` and copied to the external backup.
 - **Next human step:** PRIMARY_RESULTS_VALIDATION by the named owners, then decide the evidence status. No robustness or sensitivity runs have been started.
 - **Resume:** `python tools/reporting/build_results.py` is idempotent. An existing version directory is never overwritten.
+
+## Update: scientific remediation and registered analyses (2026-11-11, recovery point)
+
+- **Center root cause:** source-dataset NORMAL configuration swap between Center and Downstream (L12 / R-18, Yazan decision pending). It explains 99.5% of R2 errors. R2 and the manifest are unchanged.
+- **RQ1:** NOT_ESTIMABLE in R2 and in every completed registered analysis. Binding constraint: support flags (`03_results/diagnostics/PRIMARY_a10530f1fcf2/rq1_pooled_reasons.csv`). Exploratory shared-coverage comparisons are inconclusive.
+- **Registered runs:** 8 executed under per-run authorizations (`06_audit_preparation/sensitivity_authorizations/`).
+  - 7 are COMPLETED and VALID.
+  - `offset_invariant_features` stopped in fold 3: the combined-score meta-model is not estimable. This is documented and not patched.
+- **Outputs:**
+  - `03_results/{figures,tables}/primary/a10530f1fcf2_s4228b6c8/` (the earlier version `a10530f1fcf2` is kept)
+  - `03_results/RESULTS_INDEX.csv`, `03_results/RESULTS_PROVENANCE.csv`
+  - `03_results/diagnostics/`
+- **Report:** `05_documentation/RESEARCH_FINDINGS_REPORT.md`.
+- **Team-plan matrix:** `final_status` column (37 COMPLETE, 13 COMPLETE_WITH_LIMITATION, 7 BLOCKED_EXTERNAL_APPROVAL, 1 NOT_APPLICABLE).
+- **Next human steps:**
+  - R-18 dataset decision (Yazan)
+  - PRIMARY_RESULTS_VALIDATION (named owners)
+  - F-D18 (Faisal)
+  - outstanding approvals (Y4-b, Y7-b, Y-APPROVE, A-APPROVE)

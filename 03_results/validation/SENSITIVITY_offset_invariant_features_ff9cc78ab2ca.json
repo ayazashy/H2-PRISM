@@ -1,0 +1,104 @@
+{
+  "run_dir": "SENSITIVITY_offset_invariant_features",
+  "run_key": "ff9cc78ab2cad58ce69af37b304a3535a28f78a9ac8298ec84baf6dfce37d284",
+  "artifact_class": "SENSITIVITY_EXPERIMENT",
+  "analysis": "offset_invariant_features",
+  "config_sha256": "f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae",
+  "effective_config_sha256": "4c15d9dc55b8654ee4fa55dd3d896557fa53b399f55f4cb5331f5c43a76fb695",
+  "git_commit": "ddb91aecbafe3d7211902749a3a2365239c11582",
+  "status": "INVALID",
+  "n_checks": 18,
+  "n_failed": 14,
+  "checks": [
+    {
+      "check": "run_manifest_present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "status_completed",
+      "ok": false,
+      "detail": "RUNNING"
+    },
+    {
+      "check": "execution_class",
+      "ok": true,
+      "detail": "SENSITIVITY_EXPERIMENT"
+    },
+    {
+      "check": "authorization_recorded",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "protocol_config_is_pinned",
+      "ok": true,
+      "detail": "f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae"
+    },
+    {
+      "check": "present:coverage_risk.csv",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "check": "present:estimability.csv",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "check": "present:rq1.csv",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "check": "present:rq2.csv",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "check": "present:calibration_reliability.csv",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "check": "present:risk_coverage_curve.csv",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "check": "present:confusion_matrix.csv",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "check": "present:class_metrics.csv",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "check": "present:rq1_by_topology.csv",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "check": "present:decision_reasons.csv",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "check": "present:ambiguity_sizes.csv",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "check": "present:support_flags_summary.csv",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "check": "present:tie_sensitivity.csv",
+      "ok": false,
+      "detail": ""
+    }
+  ]
+}

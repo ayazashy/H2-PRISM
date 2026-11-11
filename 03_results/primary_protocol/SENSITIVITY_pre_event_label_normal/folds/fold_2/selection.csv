@@ -1,0 +1,9 @@
+param_index,params,inner_macro_f1,inner_log_loss,inner_warnings,selected,fold
+0,"{""max_features"": ""sqrt"", ""min_samples_leaf"": 1, ""n_estimators"": 300}",0.574174581,1.318256819,,False,2
+1,"{""max_features"": 0.3, ""min_samples_leaf"": 1, ""n_estimators"": 300}",0.4424140512,2.771639368,,False,2
+2,"{""max_features"": ""sqrt"", ""min_samples_leaf"": 5, ""n_estimators"": 300}",0.6096622288,1.3366277,,False,2
+3,"{""max_features"": 0.3, ""min_samples_leaf"": 5, ""n_estimators"": 300}",0.4668725329,2.690226562,,False,2
+4,"{""max_features"": ""sqrt"", ""min_samples_leaf"": 1, ""n_estimators"": 500}",0.6248155253,1.318922455,,True,2
+5,"{""max_features"": 0.3, ""min_samples_leaf"": 1, ""n_estimators"": 500}",0.4588068148,2.780920387,,False,2
+6,"{""max_features"": ""sqrt"", ""min_samples_leaf"": 5, ""n_estimators"": 500}",0.61108397,1.350832494,,False,2
+7,"{""max_features"": 0.3, ""min_samples_leaf"": 5, ""n_estimators"": 500}",0.5016327966,2.141346002,,False,2

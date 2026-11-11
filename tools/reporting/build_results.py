@@ -101,6 +101,38 @@ def validate_run(d: Path, allow_synthetic: bool, pinned_sha: str) -> Dict:
             "n_checks": len(checks), "n_failed": sum(not c["ok"] for c in checks), "checks": checks}
 
 
+def results_provenance(runs: Path, root: Path, vals: List[Dict]) -> pd.DataFrame:
+    """F13 RESULTS_PROVENANCE: one row per file of every recorded run (validated runs and archived invalid runs),
+    with the F13 provenance columns filled from that run's manifest (never inferred)."""
+    sys.path.insert(0, str(REPO / "tools" / "research_audit"))
+    from build_provenance_index import COLUMNS  # noqa: E402
+    status = {v["run_dir"]: v["status"] for v in vals}
+    try:
+        import subprocess
+        tracked = set(subprocess.run(["git", "ls-files", "03_results"], cwd=root, capture_output=True, text=True).stdout.split())
+    except Exception:  # noqa: BLE001
+        tracked = set()
+    rows = []
+    for man_p in sorted(runs.rglob("run_manifest.json")):
+        d = man_p.parent
+        if d.name == "SENSITIVITY_SUMMARY" or "folds" in d.parts:
+            continue
+        m = json.loads(man_p.read_text(encoding="utf-8"))
+        ins = m.get("input_sha256") or {}
+        archived = "archive" in d.relative_to(runs).parts
+        ex = (f"{m.get('status')}|ARCHIVED_INVALID" if archived else f"{m.get('status')}|{status.get(d.name, 'NOT_VALIDATED')}")
+        for f in sorted(p for p in d.rglob("*") if p.is_file()):
+            rel = f.relative_to(root).as_posix()
+            rows.append({"output_file": rel, "sha256": _sha(f), "git_commit": m.get("git_commit"),
+                         "config_hash": m.get("config_sha256"), "manifest_hash": ins.get("manifest"),
+                         "folds_hash": ins.get("outer_folds"), "seed": m.get("seed"), "timestamp": "UNKNOWN",
+                         "script": "tools/experiments/run_primary_protocol.py", "execution_status": ex,
+                         "notes": f"{m.get('artifact_class')}|{(m.get('sensitivity') or {}).get('name', 'primary')}|run_key {str(m.get('run_key'))[:12]}"
+                                  f"|code {str(m.get('code_sha256'))[:12]}|effective_config {str(m.get('effective_config_sha256'))[:12]}",
+                         "git_tracked": rel in tracked, "git_modified": False})
+    return pd.DataFrame(rows, columns=COLUMNS)
+
+
 def run(root: Path, out_root: Path, allow_synthetic: bool = False, evidence_status: str = None) -> Dict:
     runs = root / "03_results" / "primary_protocol"
     if not runs.exists():
@@ -119,6 +151,7 @@ def run(root: Path, out_root: Path, allow_synthetic: bool = False, evidence_stat
                                                    "config_sha256", "effective_config_sha256", "git_commit")} for v in vals])
     index["validation_file"] = [f"validation/{v['run_dir']}_{str(v.get('run_key'))[:12]}.json" for v in vals]
     index.to_csv(out_root / "RESULTS_INDEX.csv", index=False, lineterminator="\n")
+    results_provenance(runs, root, vals).to_csv(out_root / "RESULTS_PROVENANCE.csv", index=False, lineterminator="\n")
     primary = next((v for v in vals if v["run_dir"] == "PRIMARY"), None)
     if primary is None or primary["status"] != "VALID":
         raise SystemExit("REFUSED: PRIMARY run missing or INVALID; see RESULTS_INDEX.csv / validation/")
@@ -132,6 +165,9 @@ def run(root: Path, out_root: Path, allow_synthetic: bool = False, evidence_stat
                                                           "config_sha256": "see source run manifests", "sources": sorted(ok_dirs)},
                                                          indent=2) + "\n", encoding="utf-8")
     key = str(primary["run_key"])[:12]
+    others = sorted(str(v["run_key"]) for v in vals if v["status"] == "VALID" and v["run_dir"] != "PRIMARY")
+    if others:  # a new set of validated secondary runs is a new version (earlier versions are kept unchanged)
+        key += "_s" + hashlib.sha256("|".join(others).encode()).hexdigest()[:8]
     fig_dir, tab_dir = out_root / "figures" / "primary" / key, out_root / "tables" / "primary" / key
     if fig_dir.exists() or tab_dir.exists():  # history preserved: an existing version is never overwritten
         return {"status": "UNCHANGED", "version": key, "index": index}

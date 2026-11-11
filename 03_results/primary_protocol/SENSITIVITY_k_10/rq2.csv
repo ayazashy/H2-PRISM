@@ -1,0 +1,9 @@
+variant,target,mode,class,n,n_families,specific,ambiguity_set,unresolved,specific_correct,ambiguity_inclusion,reporting,analysis,artifact_class
+primary,0.6,rank_matched,COMPRESSOR_DELAY,62,2,0,0.5,0.5,,1,descriptive_only,k_10,SENSITIVITY_EXPERIMENT
+primary,0.6,rank_matched,COMPRESSOR_FAULT,2656,2,0.0003765060241,0,0.999623494,1,,descriptive_only,k_10,SENSITIVITY_EXPERIMENT
+primary,0.6,rank_matched,LEAK,14614,20,0.7251265909,0.002258108663,0.2726153004,1,1,restricted,k_10,SENSITIVITY_EXPERIMENT
+primary,0.6,rank_matched,NORMAL,1330,2,0.4511278195,0,0.5488721805,1,,descriptive_only,k_10,SENSITIVITY_EXPERIMENT
+warning_only,0.6,rank_matched,COMPRESSOR_DELAY,62,2,0.6451612903,0.03225806452,0.3225806452,1,1,descriptive_only,k_10,SENSITIVITY_EXPERIMENT
+warning_only,0.6,rank_matched,COMPRESSOR_FAULT,2656,2,0.008659638554,0,0.9913403614,1,,descriptive_only,k_10,SENSITIVITY_EXPERIMENT
+warning_only,0.6,rank_matched,LEAK,14614,20,0.7228684823,0,0.2771315177,1,,restricted,k_10,SENSITIVITY_EXPERIMENT
+warning_only,0.6,rank_matched,NORMAL,1330,2,0.4293233083,0,0.5706766917,1,,descriptive_only,k_10,SENSITIVITY_EXPERIMENT

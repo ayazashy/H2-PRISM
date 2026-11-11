@@ -41,3 +41,19 @@ Raw files are verified per file by the runner preflight (manifest SHA-256 per re
 - **Run 1 (`db9acd23ef58`):** invalid for conclusions because an order-reversing sigmoid calibration was selected in fold 3. It is archived with `INVALIDATION_NOTE.md`.
 - **Fix:** `calibration.Calibrator.monotone`. `select_calibration` never selects a non-monotone map; regression test added. No protocol value changed.
 - **Authorization:** the project lead explicitly authorized ONE corrected rerun under the same waivers and approval: `EXECUTION_AUTHORIZATION_PRIMARY_R2.yaml`.
+
+## Registered sensitivity and robustness runs (2026-11-11)
+
+- **Authorization:** the project lead explicitly authorized, in-session, ONE run of each of the 8 runnable registered analyses under the same project-lead waivers and PA-1 approval:
+  - clean_realization (as ROBUSTNESS_EXPERIMENT)
+  - windows_60_60
+  - pre_event_label_normal
+  - offset_invariant_features
+  - k_10
+  - k_50
+  - prior_correction
+  - extended_family_map
+
+  `policy_warning_only` is embedded in every run.
+- **Files:** one file per run in `sensitivity_authorizations/`, each passing the unchanged gate. Each sensitivity file is scope-bound to `SENSITIVITY_EXPERIMENT:<name>`. The primary authorization files were not reused or altered.
+- **Not authorized:** the A14 secondary baseline (needs F-D18) and any corrected-topology-map run (dataset-owner decision R-18).

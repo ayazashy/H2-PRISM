@@ -164,3 +164,11 @@ No training was run.
   - the validator accepts both forms.
   A regression test was added. R2 outputs are unchanged.
 - **Known display limitation (cosmetic, not fixed):** in Fig. 2(b), the Center curves leave the fixed 0–0.05 risk axis.
+
+## 11. Registered analyses and remediation (2026-11-11)
+
+- **Versioning:** a new set of validated secondary runs produces a new version (`<primary key12>_s<hash of the run set>`). Earlier versions are never overwritten.
+- **Provenance:** `RESULTS_PROVENANCE.csv` (F13) is built from run manifests. Archived and incomplete runs are included with their status.
+- **Fig. 2:** the per-topology panels now share a y-limit covering every panel. Previously the last panel's 0–0.05 limit cropped the Center values and the Downstream confidence-only curve.
+- **Sensitivity summary:** executed-but-incomplete runs are `RUN_INCOMPLETE`, never `NOT_RUN`.
+- **Regression tests** exist for each of these.
