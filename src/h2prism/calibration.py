@@ -36,6 +36,15 @@ class Calibrator:
     raw_classes: List[int] = field(default_factory=list)
     n_fallback_rows: int = 0
 
+    @property
+    def monotone(self) -> bool:
+        """A calibration map must preserve the ordering of each class probability (non-decreasing).
+        Platt scaling fitted on adversarial development predictions can learn a NEGATIVE slope, which inverts
+        the ranking (it is then not a calibration). Isotonic maps are non-decreasing by construction."""
+        if self.method != "sigmoid":
+            return True
+        return all(m is None or float(m.coef_.ravel()[0]) > 0 for m in self.models)
+
     def transform(self, P) -> np.ndarray:
         P = np.asarray(P, dtype=float)
         if self.method == "none":
@@ -91,13 +100,18 @@ def select_calibration(P_dev, y_dev_idx, groups_dev, n_classes: int, n_splits: i
     rows = []
     for meth in methods:
         Q = np.zeros_like(P)
+        mono = True
         for tr, te in splits:
-            Q[te] = fit_calibrator(meth, P[tr], y[tr], n_classes).transform(P[te])
-        rows.append({"method": meth, "log_loss": log_loss(Q, y), "brier": multiclass_brier(Q, y)})
+            cal = fit_calibrator(meth, P[tr], y[tr], n_classes)
+            mono &= cal.monotone
+            Q[te] = cal.transform(P[te])
+        mono &= fit_calibrator(meth, P, y, n_classes).monotone  # the calibrator actually applied to the outer test
+        rows.append({"method": meth, "log_loss": log_loss(Q, y), "brier": multiclass_brier(Q, y), "monotone": bool(mono)})
     table = pd.DataFrame(rows)
     base = float(table.loc[table["method"] == "none", criterion].iloc[0]) if "none" in methods else np.inf
-    best = table.sort_values([criterion, "method"]).iloc[0]
-    choice = best["method"] if float(best[criterion]) < base else "none"
+    eligible = table[table["monotone"]]  # an order-reversing map is not a calibration: never selectable
+    best = eligible.sort_values([criterion, "method"]).iloc[0] if len(eligible) else None
+    choice = best["method"] if best is not None and float(best[criterion]) < base else "none"
     return {"selected_method": choice, "criterion": criterion, "table": table, "warnings": warns}
 
 

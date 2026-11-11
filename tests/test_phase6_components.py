@@ -163,3 +163,21 @@ def test_regression_provenance_columns_are_never_features():
     df = pd.DataFrame({"window_id": ["w"], "Scenario_ID": ["s"], "realization": ["noise_added"], "feature_version": ["v"],
                        "start_time": [0.0], "end_time": [60.0], "file_id": ["f"], "PS1__mean": [1.0]})
     assert model_feature_columns(df) == ["PS1__mean"]
+
+
+def test_regression_order_reversing_sigmoid_is_never_selected():
+    """Primary run 2026-11-11, fold 3: development OOF probabilities were confidently WRONG, Platt scaling learned a
+    negative slope and inverted correct outer-test probabilities. An order-reversing map is not a calibration."""
+    import numpy as np
+    from h2prism.calibration import fit_calibrator, select_calibration
+    rng = np.random.default_rng(0)
+    y = np.repeat([0, 1], 200)
+    groups = np.repeat(["A", "B", "A", "B"], 100)
+    wrong = np.where(y == 0, 0.02, 0.98)[:, None] * np.array([0.0, 1.0]) + np.where(y == 0, 0.98, 0.02)[:, None] * np.array([1.0, 0.0])
+    P = np.clip(wrong[:, ::-1] + rng.normal(0, 0.01, wrong.shape), 1e-4, 1)  # predicted class is the wrong one
+    P = P / P.sum(1, keepdims=True)
+    assert not fit_calibrator("sigmoid", P, y, 2).monotone  # the fitted map reverses the ordering
+    sel = select_calibration(P, y, groups, 2, n_splits=2, methods=("none", "sigmoid"))
+    assert sel["selected_method"] == "none" and not bool(sel["table"].set_index("method").loc["sigmoid", "monotone"])
+    good = np.where(y[:, None] == np.arange(2), 0.7, 0.3)
+    assert fit_calibrator("sigmoid", good, y, 2).monotone

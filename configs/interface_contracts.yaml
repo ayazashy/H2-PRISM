@@ -123,7 +123,7 @@ contracts:
     rq1.csv: [comparison_a, comparison_b, comparison_role, variant, target, mode, status, folds_estimable, n_folds, realized_coverage_a, realized_coverage_b, coverage_gap_a_minus_b, estimate_a, estimate_b, difference, ci_low, ci_high, n_units, n_boot_undefined, comparison, interpretation, analysis, artifact_class]
     rq2.csv: [variant, target, mode, class, n, n_families, specific, ambiguity_set, unresolved, specific_correct, ambiguity_inclusion, reporting, analysis, artifact_class]
     calibration_reliability.csv: [probability, bin, bin_low, bin_high, mean_confidence, accuracy, n, analysis, artifact_class]
-    calibration_selection.csv (per fold, when calibration is feasible): [method, log_loss, brier, fold, selected]
+    calibration_selection.csv (per fold, when calibration is feasible): [method, log_loss, brier, monotone, fold, selected]
     risk_coverage_curve.csv: [scope, variant, method, mode, coverage_requested, folds, status, n_total, n_specific, n_errors, coverage, selective_risk, analysis, artifact_class]   # descriptive grid 0.05..1.00, PA-1 selection
     confusion_matrix.csv: [scope, true_class, predicted_class, n, analysis, artifact_class]   # window counts, calibrated top label; scope pooled or topology
     class_metrics.csv: [class, n_windows, n_runs, n_families, n_topologies, precision, recall, f1, support_note, analysis, artifact_class]
