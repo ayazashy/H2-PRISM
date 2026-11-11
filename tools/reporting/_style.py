@@ -38,7 +38,9 @@ OUTCOMES = {  # decision outcome -> (colour, hatch, label)
 TOPOLOGY_MARKERS = ("o", "s", "^", "D")
 INK, MUTED, LIGHT = COLORS["gray_dark"], COLORS["gray_medium"], COLORS["gray_light"]
 
-EXPORT_RC = {"svg.hashsalt": "h2prism-a13", "pdf.fonttype": 42, "ps.fonttype": 42, "savefig.pad_inches": 0.05,
+EXPORT_RC = {"axes.edgecolor": COLORS["gray_medium"], "xtick.color": COLORS["gray_dark"], "ytick.color": COLORS["gray_dark"],
+             "axes.labelcolor": COLORS["gray_dark"], "grid.linestyle": "-", "grid.linewidth": 0.45, "grid.color": "#E5E7EB",
+             "axes.linewidth": 0.8, "svg.hashsalt": "h2prism-a13", "pdf.fonttype": 42, "ps.fonttype": 42, "savefig.pad_inches": 0.05,
              "axes.titleweight": "bold", "axes.titlesize": 10, "axes.labelsize": 9, "xtick.labelsize": 8,
              "ytick.labelsize": 8, "legend.fontsize": 8, "font.size": 9, "axes.spines.top": False, "axes.spines.right": False}
 PNG_META = {"Software": None}

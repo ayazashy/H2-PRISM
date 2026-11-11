@@ -134,7 +134,7 @@ contracts:
     predictions.parquet / decisions.parquet: pooled window-level predictions and decisions (local, not committed)
     tie_sensitivity.csv: [target, salt_index, pooled_risk_a, pooled_risk_b, difference, primary_difference, role, analysis, artifact_class]
     thresholds.csv (per fold): [variant, method, target, tau, dev_max_attainable_coverage, dev_realized_coverage_at_tau, dev_status, fold, artifact_class]
-    run_manifest.json: [artifact_class, mode, status, run_key, config_sha256, config_file, code_sha256, realization, git_commit, seed, input_sha256, preflight, features, prohibited_claims, sensitivity, effective_config_sha256]
+    run_manifest.json: [artifact_class, mode, status, run_key, config_sha256, config_file, code_sha256, realization, git_commit, seed, input_sha256, preflight, features, prohibited_claims, sensitivity, effective_config_sha256, authorization]
     status_enum: [ESTIMABLE, NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL]
     artifact_class_enum: [SYNTHETIC_TEST, PREFLIGHT_ONLY, PRIMARY_EXPERIMENT, ROBUSTNESS_EXPERIMENT, SENSITIVITY_EXPERIMENT]
     analysis_values: "primary, or the registered sensitivity name (h2prism.experiments.primary_protocol.SENSITIVITY_OVERRIDES)"

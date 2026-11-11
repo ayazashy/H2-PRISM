@@ -77,6 +77,11 @@ def build(config_path: Path, out_dir: Path, root: Path) -> pd.DataFrame:
             errors.append(f"[{spec['id']}] synthetic/illustrative input refused for official output directory")
             rows.append({"table_id": spec["id"], "status": "REFUSED_SYNTHETIC_IN_OFFICIAL_RESULTS"})
             continue
+        if brf._is_official(out_dir) and (prov.get("run_status") != "COMPLETED" or
+                                         (prov.get("artifact_class") in brf.EXPERIMENT_CLASSES and not prov.get("run_authorized"))):
+            errors.append(f"[{spec['id']}] incomplete or unauthorized source run refused for official output directory")
+            rows.append({"table_id": spec["id"], "status": "REFUSED_INCOMPLETE_OR_UNAUTHORIZED_RUN"})
+            continue
         d = out_dir / dest
         d.mkdir(parents=True, exist_ok=True)
         csv_p, md_p = d / f"{spec['id']}.csv", d / f"{spec['id']}.md"

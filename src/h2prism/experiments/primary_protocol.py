@@ -811,6 +811,7 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
     if mode == "execute" and (artifact_class == "SENSITIVITY_EXPERIMENT") != (sensitivity is not None):
         raise AuthorizationError("SENSITIVITY_EXPERIMENT requires --sensitivity NAME and vice versa")
     cfg = apply_sensitivity(cfg, sensitivity)
+    auth_record = None
     derived_sha = hashlib.sha256(json.dumps(cfg, sort_keys=True, default=str).encode()).hexdigest() if sensitivity else cfg_sha
     if mode == "preflight":
         artifact_class, status = "PREFLIGHT_ONLY", (SYNTH_STATUS if cfg.get("status") == SYNTH_STATUS else REAL_STATUS)
@@ -825,7 +826,9 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
             raise AuthorizationError(f"artifact_class must be one of {sorted(EXECUTE_CLASSES)}")
         status = REAL_STATUS
         scope = f"SENSITIVITY_EXPERIMENT:{sensitivity}" if sensitivity else artifact_class
-        check_authorization(authorization, cfg_sha, scope)
+        auth = check_authorization(authorization, cfg_sha, scope)
+        auth_record = {"scope": auth.get("scope"), "authorized_by": auth.get("authorized_by"), "date": str(auth.get("date")),
+                       "governance_clearance": auth.get("governance_clearance"), "file_sha256": sha256_file(Path(authorization))}
         realization = EXECUTE_CLASSES[artifact_class] or cfg["dataset"]["realization_primary"]
     else:
         raise ValueError(f"unknown mode {mode}")
@@ -858,7 +861,8 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
                                   "label_mapping": ("dataset", "label_mapping"), "feature_register": ("features", "register")}.items()
                                  if isinstance(cfg.get(a, {}).get(b), dict) and "sha256" in cfg[a][b]},
                 "prohibited_claims": PROHIBITED_CLAIMS,
-                "sensitivity": cfg.get("sensitivity_applied"), "effective_config_sha256": derived_sha}
+                "sensitivity": cfg.get("sensitivity_applied"), "effective_config_sha256": derived_sha,
+                "authorization": auth_record}  # None unless an execute-mode run passed the gate
     write_json(manifest, out_dir / "run_manifest.json")
     if mode == "preflight":
         classes = cfg["dataset"]["classes"]

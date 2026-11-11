@@ -47,7 +47,8 @@ def _sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
-def collect(runs: Path, allow_synthetic: bool = False) -> pd.DataFrame:
+def collect(runs: Path, allow_synthetic: bool = False, include=None) -> pd.DataFrame:
+    """include: optional set of run directory names (e.g. the runs that passed validation); others are skipped."""
     rows = []
     found = {}
     for d in sorted(p for p in runs.iterdir() if p.is_dir()):
@@ -58,6 +59,8 @@ def collect(runs: Path, allow_synthetic: bool = False) -> pd.DataFrame:
         elif d.name.startswith("SENSITIVITY_") and d.name != "SENSITIVITY_SUMMARY":
             names = [(d.name[len("SENSITIVITY_"):], "primary")]
         else:
+            continue
+        if include is not None and d.name not in include:
             continue
         man = d / "run_manifest.json"
         rq1 = d / "rq1.csv"

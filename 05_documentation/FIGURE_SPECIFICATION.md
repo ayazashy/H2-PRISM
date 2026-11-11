@@ -44,7 +44,8 @@
 | Item | Path / command |
 | --- | --- |
 | Fig. 1 (built) | `03_results/figures/dataset_design/final/` ← `python tools/reporting/build_dataset_design_tables.py` then `python tools/reporting/build_research_figures.py --config configs/reporting_dataset_figures.yaml --out-dir 03_results/figures/dataset_design` |
-| Figs. 2–6 (after an authorized run in `03_results/primary_protocol/PRIMARY/`) | `python tools/reporting/build_sensitivity_summary.py` then `python tools/reporting/build_research_figures.py --config configs/reporting_figures.yaml --out-dir 03_results/figures/primary` |
+| Figs. 2–6 + T4–T8 (after an authorized run; validates runs, versioned outputs) | `python tools/reporting/build_results.py` → `03_results/{figures,tables}/primary/<run_key12>/`, run registry `03_results/RESULTS_INDEX.csv` |
+| Figs. 2–6 (manual equivalent) | `python tools/reporting/build_sensitivity_summary.py` then `python tools/reporting/build_research_figures.py --config configs/reporting_figures.yaml --out-dir 03_results/figures/primary` |
 | Tables T1–T3 (built) / T4–T8 (pending) | `python tools/reporting/build_research_tables.py --config <same config> --out-dir 03_results/tables/<dataset_design or primary>` |
 | Quarantined demo (never cite) | `03_results/ILLUSTRATIVE_DEMO_NOT_RESULTS/` (`scripts/visualize.py --demo`) |
 | Historical | `03_results/figures/fig1_family_distribution.png`, `fig2_pipeline_telemetry.png` (superseded family map; not current evidence) |

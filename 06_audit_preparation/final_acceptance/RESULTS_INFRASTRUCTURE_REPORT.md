@@ -107,3 +107,46 @@ Numerical values are exactly reproducible. Export bytes are deterministic for th
 - The project lead's authorization file (`NEXT_PHASE_EXECUTION_HANDOFF.md`).
 
 **Next action:** record those clearances or written waivers. Then run `--execute-primary --out 03_results/primary_protocol/PRIMARY`, validate the run (`PRIMARY_RESULTS_VALIDATION`), raise `evidence_status` and run the commands in §5.
+
+## 9. Refinement and engineering-phase closure (2026-11-11, follow-up)
+
+**Visual refinements.** Every refined figure was re-rendered on synthetic QA fixtures in scratch, outside `03_results/`, and inspected. Plotted values are unchanged: all correspondence tests pass.
+
+| Fig. | Weakness found | Refinement |
+| --- | --- | --- |
+| all | Light spines and dashed grid were weak in print | Theme tokens: gray-medium spines, dark ticks and labels, quiet solid grid (palette unchanged, from `h2prism.visualization.theme`) |
+| 2 | Target lines came from a hard-coded list (an estimable target could be unlabelled); a legend covered the curves; per-panel text collided with the target lines | Targets taken from the run's recorded table, each labelled "target t" or "target t / not estimable". Pooled markers only where estimable in every held-out fold (true fold count). Legend below, with explicit "registered target" and "not attainable" keys. Per-panel n eligible windows |
+| 3 | Comparator rows hard to separate; primary contrast not distinguished | Alternating bands per comparator; bold primary-contrast labels; key for filled (primary) vs open (secondary) markers |
+| 4 | Display-target note inside the title; the reason colour duplicated the AMBIGUITY_SET colour and hatch | Separate subtitle; reason colours exclude the three outcome colours |
+| 5 | Confusion matrix left white space; colour bar crowded panel (b) | Matrix fills its panel; wider spacing; colour bar labelled "row share of windows" |
+| 6 | Populations stated only in a footnote | Every row now states "same windows", "different population" or "different units" in-panel |
+| 1 | — (already strong) | Re-rendered with the refined tokens; source tables byte-identical |
+
+**Lifecycle completed with one small command.** `tools/reporting/build_results.py`:
+- discovers runs and validates each one: COMPLETED; execution class with a recorded authorization; pinned config hash; contracted columns; RQ2 shares sum to 1; matched coverage; unique window ids;
+- writes `03_results/validation/` and a run registry `03_results/RESULTS_INDEX.csv`;
+- builds the sensitivity summary from validated runs only;
+- writes tables and figures into versioned directories `03_results/{tables,figures}/primary/<run_key12>/`, never overwriting an existing version.
+
+**Related changes:**
+- The runner now records the authorization (scope, authorizer, date, clearances, file hash) in `run_manifest.json`.
+- Both builders refuse incomplete or unauthorized runs for official outputs.
+
+**Regeneration after an authorized run (one command):**
+
+```
+python tools/reporting/build_results.py
+```
+
+**Synthetic QA (never in `03_results/`):**
+
+```
+python tools/reporting/build_results.py --root <scratch tree> --out-root <scratch>/qa --allow-synthetic
+```
+
+**Execution gate (re-checked):**
+- no authorization file exists;
+- F-D15, F-D16, A-D10 and PA-1 are unrecorded;
+- `--execute-primary` → `REFUSED: AuthorizationError`.
+
+No training was run.

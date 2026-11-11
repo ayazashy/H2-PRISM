@@ -257,3 +257,61 @@ def test_official_tree_has_no_synthetic_or_unauthorized_results():
         man = pd.read_csv(m)
         assert not man.status.astype(str).str.contains("ILLUSTRATIVE").any(), m
         assert "SYNTHETIC_TEST" not in set(man.artifact_class.dropna()), m
+
+
+# ---------------------------------------------------------------- results lifecycle (build_results.py)
+import build_results as bres  # noqa: E402
+
+
+def test_lifecycle_builds_versioned_outputs_and_preserves_history(tree, tmp_path):
+    qa = tmp_path / "qa"
+    r1 = bres.run(tree, qa, allow_synthetic=True)
+    assert r1["status"] == "BUILT"
+    idx = pd.read_csv(qa / "RESULTS_INDEX.csv")
+    assert set(idx[idx.run_dir == "PRIMARY"].status) == {"VALID"} and (idx.n_failed == 0).all()
+    ver = qa / "figures" / "primary" / r1["version"]
+    assert (ver / "reporting_config_used.yaml").exists() and (ver / "FIGURE_MANIFEST.csv").exists()
+    before = {p: p.read_bytes() for p in ver.rglob("*.png")}
+    r2 = bres.run(tree, qa, allow_synthetic=True)  # same run again: never overwritten
+    assert r2["status"] == "UNCHANGED" and all(p.read_bytes() == b for p, b in before.items())
+
+
+def test_lifecycle_rejects_synthetic_and_unauthorized_runs_for_official_tree(tree, monkeypatch):
+    monkeypatch.setattr(brf, "REPO", tree)
+    with pytest.raises(SystemExit, match="cannot write into the official"):
+        bres.run(tree, tree / "03_results", allow_synthetic=True)
+    with pytest.raises(SystemExit, match="PRIMARY run missing or INVALID"):
+        bres.run(tree, tree / "03_results", allow_synthetic=False)
+    v = json.loads(next((tree / "03_results" / "validation").glob("PRIMARY_*.json")).read_text())
+    assert {c["check"] for c in v["checks"] if not c["ok"]} == {"execution_class"}
+
+
+def test_incomplete_run_is_invalid_and_refused_by_official_builders(tree, tmp_path, monkeypatch):
+    import shutil
+    root = tmp_path / "r"
+    shutil.copytree(tree / "03_results" / "primary_protocol" / "PRIMARY", root / "03_results" / "primary_protocol" / "PRIMARY")
+    mp = root / "03_results" / "primary_protocol" / "PRIMARY" / "run_manifest.json"
+    m = json.loads(mp.read_text())
+    m.update(status="RUNNING", artifact_class="PRIMARY_EXPERIMENT")
+    mp.write_text(json.dumps(m))
+    for c in mp.parent.glob("*.csv"):  # isolate the status guard from the synthetic guard
+        if c.stat().st_size > 1:
+            df = pd.read_csv(c)
+            if "artifact_class" in df.columns:
+                df.assign(artifact_class="PRIMARY_EXPERIMENT").to_csv(c, index=False)
+    v = bres.validate_run(mp.parent, False, bres._sha(bres.PINNED_CONFIG))
+    failed = {c["check"] for c in v["checks"] if not c["ok"]}
+    assert v["status"] == "INVALID" and {"status_completed", "authorization_recorded", "protocol_config_is_pinned"} <= failed
+    monkeypatch.setattr(brf, "REPO", root)
+    with pytest.raises(ReportingInputError, match="COMPLETED required"):
+        brf.build(RES_CFG, root / "03_results" / "figures" / "primary", root)
+
+
+def test_lifecycle_refuses_when_no_run_exists(tmp_path):
+    with pytest.raises(SystemExit, match="no recorded runs"):
+        bres.run(tmp_path, tmp_path / "qa", allow_synthetic=True)
+
+
+def test_runner_records_authorization_only_for_authorized_execution(tree):
+    m = json.loads((tree / "03_results" / "primary_protocol" / "PRIMARY" / "run_manifest.json").read_text())
+    assert "authorization" in m and m["authorization"] is None  # synthetic run: no authorization recorded

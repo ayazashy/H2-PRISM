@@ -207,3 +207,9 @@ A fifth local commit (user-approved) adds `.gitattributes` (LF for hash-pinned a
 - **Pending:** Figs. 2–6 and T4–T8 build automatically after an authorized run. Commands: `06_audit_preparation/final_acceptance/RESULTS_INFRASTRUCTURE_REPORT.md` §5.
 - **Validation:** 305 passed, 2 skipped (expected), 0 failed; A12 33/33 and 36 PASS + 1 expected post-experiment missing artifact; config `f788b6d8…` unchanged.
 - **Next:** record the four clearances or written waivers, then the project lead's authorization file, then `--execute-primary --out 03_results/primary_protocol/PRIMARY`.
+
+## Update: Phase 13 refinement and lifecycle closure (recovery point)
+
+- **Refinements:** figure design (theme tokens, Figs. 2–6). The runner records the authorization in `run_manifest.json`. Builders refuse incomplete or unauthorized runs for official outputs. `tools/reporting/build_results.py` provides the lifecycle: discover, validate, register, versioned build.
+- **Validation:** 310 passed, 2 skipped (expected), 0 failed; A12 33/33 and 36 PASS + 1 expected post-experiment missing artifact; gate refuses without authorization.
+- **Next:** project-lead-authorized primary run (see the following entry).

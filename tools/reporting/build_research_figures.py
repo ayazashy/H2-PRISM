@@ -57,6 +57,7 @@ from _common import ReportingInputError, classify, load_input, load_config, sha2
 
 REPO = Path(__file__).resolve().parents[2]
 NE = "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL"
+EXPERIMENT_CLASSES = ("PRIMARY_EXPERIMENT", "ROBUSTNESS_EXPERIMENT", "SENSITIVITY_EXPERIMENT")
 
 
 # ----------------------------------------------------------------------------- helpers
@@ -196,7 +197,7 @@ def plot_dataset_design(d, spec):
     return fig, len(cls) + len(tim) + len(fol), 0
 
 
-def _rc_panel(ax, curve, targets, scope, methods):
+def _rc_panel(ax, curve, targets, scope, methods, n_folds=None, tgt_list=None):
     e = _est(curve[curve.scope == scope])
     e = e[e.method.isin(methods)]
     if not len(e):
@@ -207,23 +208,32 @@ def _rc_panel(ax, curve, targets, scope, methods):
         if not len(g):
             continue
         s = st.method_style(m)
-        ax.plot(g["coverage"], g["selective_risk"], color=s["color"], ls=s["linestyle"], marker=s["marker"], ms=3.5, label=s["label"])
+        ax.plot(g["coverage"], g["selective_risk"], color=s["color"], ls=s["linestyle"], marker=s["marker"], ms=3.2, lw=1.4,
+                label=s["label"])
     attain = float(e.coverage.max())
-    ax.axvspan(attain, 1.0, color=st.LIGHT, zorder=0)
-    ax.text(min(attain + 0.02, 0.97), 0.97, "not attainable\n(safeguards)", transform=ax.get_xaxis_transform(), fontsize=6,
-            va="top", color=st.MUTED)
-    for t in REGISTERED_TARGETS:
-        ax.axvline(t, color=st.MUTED, lw=0.7, ls=(0, (2, 2)))
+    ax.axvspan(attain, 1.0, color=st.LIGHT, zorder=0, lw=0)
+    ymax = max(0.05, float(e.selective_risk.max()) * 1.25)
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, ymax)
+    est_targets = set()
     if targets is not None and scope == "pooled":
         tp = targets[targets.method.isin(methods)]
         if "folds_estimable" in tp.columns and len(tp):  # pooled operating point only if estimable in EVERY held-out fold
-            tp = tp[tp.folds_estimable == tp.folds_estimable.max()]
+            tp = tp[tp.folds_estimable == (n_folds or tp.folds_estimable.max())]
+        est_targets = set(round(float(t), 2) for t in tp.target)
         for m in tp.method.unique():
             s = st.method_style(m)
             g = tp[tp.method == m]
             ax.plot(g["coverage"], g["selective_risk"], ls="none", marker=s["marker"], ms=7, mfc="white", mec=s["color"], mew=1.4)
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0, max(0.05, float(e.selective_risk.max()) * 1.2))
+    for t in (tgt_list or REGISTERED_TARGETS):  # the targets recorded by the run (passed in), else the registered ones
+        ax.axvline(t, color=st.MUTED, lw=0.7, ls=(0, (2, 2)), zorder=1)
+        if scope == "pooled":  # every registered target is labelled; unattainable ones say so instead of disappearing
+            ax.text(t + 0.006, 0.985, f"target {t:.2f}" + ("" if round(t, 2) in est_targets else "\nnot estimable"),
+                    transform=ax.get_xaxis_transform(),
+                    ha="left", va="top", fontsize=6, color=st.INK if round(t, 2) in est_targets else st.MUTED)
+    nt = curve[(curve.scope == scope) & curve.n_total.notna()].n_total if "n_total" in curve.columns else []
+    if len(nt):
+        ax.text(0.98, 0.02, f"n = {int(nt.max()):,} eligible windows", transform=ax.transAxes, fontsize=6.5, va="bottom", ha="right", color=st.MUTED)
     return len(e)
 
 
@@ -232,18 +242,24 @@ def plot_risk_coverage_panels(d, spec):
     methods = spec.get("methods", ["s_C", "s_C_minus_D", "confidence"])
     tops = sorted(s for s in curve.scope.unique() if s != "pooled")
     fig = plt.figure(figsize=(7.4, 5.4))
-    gs = fig.add_gridspec(2, max(len(tops), 1), height_ratios=[1.35, 1], hspace=0.45, wspace=0.3)
+    gs = fig.add_gridspec(2, max(len(tops), 1), height_ratios=[1.35, 1], hspace=0.75, wspace=0.3)
     a = fig.add_subplot(gs[0, :])
-    n = _rc_panel(a, curve, targets, "pooled", methods)
+    n_folds = len(tops) or None
+    tgt_list = sorted(set(round(float(x), 2) for x in targets.target)) if targets is not None and len(targets) else None
+    n = _rc_panel(a, curve, targets, "pooled", methods, n_folds, tgt_list)
     a.set_xlabel("Coverage (fraction of eligible windows issued SPECIFIC)")
     a.set_ylabel("Selective risk")
-    a.set_title("Pooled over held-out topologies (open markers: registered targets, realized coverage)")
-    _legend(a, loc="upper left", fontsize=7)
+    a.set_title("Pooled over held-out topologies")
+    h, l = a.get_legend_handles_labels()
+    h += [plt.Line2D([], [], ls="none", marker="o", mfc="white", mec=st.INK, ms=6),
+          plt.Rectangle((0, 0), 1, 1, facecolor=st.LIGHT, edgecolor="none")]
+    l += ["registered target, realized coverage", "not attainable (safeguards)"]
+    a.legend(h, l, loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=3, fontsize=6.5, frameon=False)
     st.panel_label(a, "a")
     axs = []
     for j, t in enumerate(tops):
         ax = fig.add_subplot(gs[1, j], sharey=axs[0] if axs else None)
-        n += _rc_panel(ax, curve, None, t, methods)
+        n += _rc_panel(ax, curve, None, t, methods, tgt_list=tgt_list)
         ax.set_title(f"Held-out {t}", fontsize=9)
         ax.set_xlabel("Coverage")
         if j == 0:
@@ -272,10 +288,20 @@ def plot_incremental_value(d, spec):
         else:
             a.text(0.5, i, "not estimable", fontsize=6, color=st.MUTED, va="center", ha="center", transform=a.get_yaxis_transform())
     a.axvline(0, color=st.MUTED, lw=0.9, ls="--")
+    for k, (comp, g) in enumerate(rows.groupby("comparison_b", sort=False)):  # alternate bands group each comparator
+        if k % 2 == 0:
+            a.axhspan(g.index.min() - 0.5, g.index.max() + 0.5, color=st.LIGHT, zorder=0, lw=0)
     a.set_yticks(range(len(rows)), [f"vs {st.method_style(b)['label'].split(' — ')[0]} @ {t:.2f}" for b, t in zip(rows.comparison_b, rows.target)],
                  fontsize=6.5)
-    a.invert_yaxis()
-    a.set_xlabel("Δ selective risk (s_C − comparator)\n95% topology-stratified family bootstrap")
+    for lab, b_ in zip(a.get_yticklabels(), rows.comparison_b):
+        if b_ == "s_C_minus_D":
+            lab.set_fontweight("bold")
+    a.set_ylim(len(rows) - 0.5, -0.5)
+    a.legend([plt.Line2D([], [], ls="none", marker="s", color=st.method_style("s_C_minus_D")["color"]),
+              plt.Line2D([], [], ls="none", marker="o", mfc="white", color=st.INK)],
+             ["primary contrast (vs no-D ablation)", "secondary comparators"], loc="upper center", bbox_to_anchor=(0.5, -0.16),
+             ncol=1, fontsize=6.5, frameon=False)
+    a.set_xlabel("Δ selective risk (s_C − comparator); bars: 95% family bootstrap")
     a.set_title("Paired effects at matched coverage")
     st.panel_label(a, "a")
     b = fig.add_subplot(gs[0, 1])
@@ -345,7 +371,8 @@ def plot_three_outcome(d, spec):
         p = p.reindex([k for k in st.CLASS_ORDER if k in p.index])
         share = p.div(p.sum(axis=1).replace(0, np.nan), axis=0).fillna(0)
         left = np.zeros(len(share))
-        pal = [st.COLORS[k] for k in ("gray_medium", "accent_warm", "secondary", "purple", "accent_danger", "primary")]
+        # reasons use colours NOT used for the three outcomes in panel (a) (primary / accent_warm / gray_medium)
+        pal = [st.COLORS[k] for k in ("secondary", "purple", "gray_dark", "secondary", "purple", "gray_dark")]
         for i, col in enumerate(share.columns):
             c.barh(np.arange(len(share)), share[col], left=left, color=pal[i % len(pal)], hatch=("", "//", "..", "xx", "\\\\", "++")[i % 6],
                    edgecolor="white", label=col)
@@ -377,19 +404,20 @@ def plot_three_outcome(d, spec):
         _note(e, "no support-flag summary")
     e.set_title("D(x) support flags", fontsize=9)
     st.panel_label(e, "d")
-    fig.suptitle(spec.get("title", "") + f"  [{why}]", fontsize=10.5, fontweight="bold", y=1.0)
+    fig.suptitle(spec.get("title", ""), fontsize=11, fontweight="bold", y=1.045)
+    fig.text(0.5, 1.0, f"Displayed coverage target {t:.2f} ({why}; label-free display rule)", ha="center", va="bottom", fontsize=7.5, color=st.MUTED)
     return fig, len(g), 0
 
 
 def plot_error_structure(d, spec):
     cm, cmet, rel = d["confusion"], d["class_metrics"], d.get("reliability")
     fig = plt.figure(figsize=(7.4, 5.4))
-    gs = fig.add_gridspec(2, 2, width_ratios=[1.15, 1], hspace=0.55, wspace=0.45)
+    gs = fig.add_gridspec(2, 2, width_ratios=[1.15, 1], hspace=0.55, wspace=0.62)
     a = fig.add_subplot(gs[:, 0])
     classes = [k for k in st.CLASS_ORDER if k in set(cm.true_class)]
     m = cm.pivot_table(index="true_class", columns="predicted_class", values="n", aggfunc="sum").reindex(index=classes, columns=classes).fillna(0)
     share = m.div(m.sum(axis=1).replace(0, np.nan), axis=0)
-    im = a.imshow(share.to_numpy(float), cmap="Blues", vmin=0, vmax=1)
+    im = a.imshow(share.to_numpy(float), cmap="Blues", vmin=0, vmax=1, aspect="auto")
     for i in range(len(classes)):
         for j in range(len(classes)):
             v = share.iat[i, j]
@@ -400,7 +428,7 @@ def plot_error_structure(d, spec):
     a.set_xlabel("Predicted (calibrated top label)")
     a.set_ylabel("True class")
     a.grid(False)
-    fig.colorbar(im, ax=a, fraction=0.046, pad=0.03, label="Row share")
+    fig.colorbar(im, ax=a, fraction=0.05, pad=0.03, label="Row share of windows", shrink=0.8)
     a.set_title("Classifier confusion (pooled)")
     st.panel_label(a, "a")
     b = fig.add_subplot(gs[0, 1])
@@ -462,6 +490,12 @@ def plot_robustness(d, spec):
         st.panel_label(ax, l)
     axs[0].set_yticks(range(len(order)), order, fontsize=7)
     axs[0].invert_yaxis()
+    pop = dict(zip(s.analysis, s.population_note)) if "population_note" in s.columns else {}
+    for i, an in enumerate(order):  # which population each row evaluates (prevents invalid direct comparison)
+        note = str(pop.get(an, ""))
+        short = "different population" if note.startswith("different") else ("different units" if "units" in note else "same windows")
+        axs[-1].text(1.02, i, short, transform=axs[-1].get_yaxis_transform(), fontsize=6, va="center",
+                     color=st.INK if short == "same windows" else st.COLORS["accent_warm"])
     fig.suptitle(spec.get("title", ""), fontsize=11, fontweight="bold", y=1.02)
     fig.text(0.0, -0.02, "Open markers: analysis evaluates a different window population or independence units; compare direction, "
                          "not magnitude.", fontsize=6, color=st.MUTED, transform=fig.transFigure, va="top")
@@ -507,7 +541,8 @@ def _run_provenance(input_path: Path) -> Dict[str, object]:
                     "protocol_config_sha256": m.get("config_sha256", "UNKNOWN"),
                     "effective_config_sha256": m.get("effective_config_sha256", m.get("config_sha256", "UNKNOWN")),
                     "manifest_sha256": (m.get("input_sha256") or {}).get("manifest", "UNKNOWN"),
-                    "run_git_commit": m.get("git_commit", "UNKNOWN"), "run_status": m.get("status", "UNKNOWN")}
+                    "run_git_commit": m.get("git_commit", "UNKNOWN"), "run_status": m.get("status", "UNKNOWN"),
+                    "run_authorized": bool(m.get("authorization"))}
     return {k: "UNKNOWN" for k in ("run_id", "artifact_class", "protocol_config_sha256", "effective_config_sha256", "manifest_sha256",
                                    "run_git_commit", "run_status")}
 
@@ -592,6 +627,16 @@ def build(config_path: Path, out_dir: Path, root: Path) -> pd.DataFrame:
             msg = f"[{spec['id']}] synthetic/illustrative input refused for official output directory {_rel(out_dir, root)}"
             errors.append(msg)
             rows.append({**base, **prov, "status": "REFUSED_SYNTHETIC_IN_OFFICIAL_RESULTS", "reason": msg})
+            continue
+        if official and prov.get("run_status") not in ("COMPLETED",):  # partial / unknown runs never reach official outputs
+            msg = f"[{spec['id']}] source run status {prov.get('run_status')} refused for official output (COMPLETED required)"
+            errors.append(msg)
+            rows.append({**base, **prov, "status": "REFUSED_INCOMPLETE_RUN", "reason": msg})
+            continue
+        if official and prov.get("artifact_class") in EXPERIMENT_CLASSES and not prov.get("run_authorized"):
+            msg = f"[{spec['id']}] experiment run without a recorded authorization refused for official output"
+            errors.append(msg)
+            rows.append({**base, **prov, "status": "REFUSED_UNAUTHORIZED_RUN", "reason": msg})
             continue
         all_ne = "status" in main.columns and len(main) > 0 and (main["status"] != "ESTIMABLE").all() and kind not in ("robustness",)
         if all_ne:
