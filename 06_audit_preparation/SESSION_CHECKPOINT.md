@@ -242,3 +242,12 @@ A fifth local commit (user-approved) adds `.gitattributes` (LF for hash-pinned a
   - PRIMARY_RESULTS_VALIDATION (named owners)
   - F-D18 (Faisal)
   - outstanding approvals (Y4-b, Y7-b, Y-APPROVE, A-APPROVE)
+
+## Update: forensic audit (2026-11-11, recovery point)
+
+- **Topology defect, corrected attribution:** the release event folders `anom_gestcent`/`anom_gestdown` are exchanged (36 runs); the NORMAL files are consistent. Absent sensors are released as zero-variance constants (24 features). R2 numbers are unchanged.
+- **Key evidence:** `03_results/diagnostics/forensics/` (D(x)/flags reproduced exactly).
+- **Register:** `06_audit_preparation/forensics/ROOT_CAUSE_REGISTER.csv` and `REMEDIATION_MATRIX.csv` (FA-01..FA-15).
+- **Decision package:** `01_dataset_audit/YAZAN_TOPOLOGY_DECISION_PACKAGE.md`.
+- **Proposal:** `02_methodology/PROSPECTIVE_VALIDATION_PROTOCOL_PROPOSAL.md` (P2-A..P2-H, acceptance tests AT-1..AT-8).
+- **Next:** R-18 decision (Yazan); Faisal approvals for FA-08/10/11 and F-D18; protocol-2.0 decision; thin-class simulation request.

@@ -2,7 +2,7 @@
   "run_dir": "ROBUSTNESS_clean",
   "run_key": "220f49ad35f985667b3be78d2ffdc6d1b1891f314aa32db6be15108ab7745808",
   "artifact_class": "ROBUSTNESS_EXPERIMENT",
-  "analysis": "primary",
+  "analysis": "clean_realization",
   "config_sha256": "f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae",
   "effective_config_sha256": "f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae",
   "git_commit": "ddb91aecbafe3d7211902749a3a2365239c11582",

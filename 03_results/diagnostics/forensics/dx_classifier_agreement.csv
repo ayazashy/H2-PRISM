@@ -1,0 +1,10 @@
+held_out,dx_agrees_with_classifier,classifier_correct,n,dx_top_correct
+Center,False,False,1061,1061
+Center,False,True,656,0
+Center,True,False,30,0
+Center,True,True,658,658
+Downstream,False,True,573,0
+Downstream,True,False,650,0
+Downstream,True,True,5510,5510
+Upstream,False,True,648,0
+Upstream,True,True,6223,6223

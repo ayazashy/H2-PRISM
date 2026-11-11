@@ -6,7 +6,7 @@
   "config_sha256": "f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae",
   "effective_config_sha256": "4c15d9dc55b8654ee4fa55dd3d896557fa53b399f55f4cb5331f5c43a76fb695",
   "git_commit": "ddb91aecbafe3d7211902749a3a2365239c11582",
-  "status": "INVALID",
+  "status": "INCOMPLETE",
   "n_checks": 18,
   "n_failed": 14,
   "checks": [

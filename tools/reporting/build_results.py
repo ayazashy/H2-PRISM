@@ -95,9 +95,16 @@ def validate_run(d: Path, allow_synthetic: bool, pinned_sha: str) -> Dict:
     if (d / "predictions.parquet").exists():
         chk("unique_window_ids", pd.read_parquet(d / "predictions.parquet", columns=["window_id"]).window_id.is_unique)
     ok = all(c["ok"] for c in checks)
-    return {"run_dir": d.name, "run_key": m.get("run_key"), "artifact_class": cls, "analysis": (m.get("sensitivity") or {}).get("name", "primary"),
+    # analysis name: the registered sensitivity name; a ROBUSTNESS_<realization> run is the clean_realization analysis
+    analysis = (m.get("sensitivity") or {}).get("name") or (
+        f"{d.name.split('_', 1)[1]}_realization" if d.name.startswith("ROBUSTNESS_") else "primary")
+    # an executed run that stopped (manifest not COMPLETED) is INCOMPLETE, not a run whose outputs failed validation
+    integrity = [c for c in checks if c["check"] in ("execution_class", "authorization_recorded", "protocol_config_is_pinned")]
+    legit_stop = m.get("status") != "COMPLETED" and all(c["ok"] for c in integrity)
+    status = "VALID" if ok else ("INCOMPLETE" if legit_stop else "INVALID")
+    return {"run_dir": d.name, "run_key": m.get("run_key"), "artifact_class": cls, "analysis": analysis,
             "config_sha256": m.get("config_sha256"), "effective_config_sha256": m.get("effective_config_sha256"),
-            "git_commit": m.get("git_commit"), "status": "VALID" if ok else "INVALID",
+            "git_commit": m.get("git_commit"), "status": status,
             "n_checks": len(checks), "n_failed": sum(not c["ok"] for c in checks), "checks": checks}
 
 

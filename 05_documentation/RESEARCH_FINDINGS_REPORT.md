@@ -11,7 +11,7 @@
    - The binding constraint is the registered support safeguards, not a comparator or an implementation error.
    - An exploratory post-hoc comparison over the coverage range attainable in all three topologies (0.05–0.25) gives s_C the lowest point risk. Its paired interval against s_C−D includes 0 at every point.
    - **No incremental value of D(x) is established.**
-3. **Center transfer failure (accuracy 0.213).** Confirmed root cause: a **source-dataset inconsistency**. The NORMAL files named `center` and `down` carry each other's sensor configuration, already in the original MATLAB simulation outputs.
+3. **Center transfer failure (accuracy 0.213).** Confirmed root cause: a **source-dataset inconsistency**. *Corrected by the forensic audit (`FORENSIC_FINDINGS_REPORT.md`):* the released **event folders** `anom_gestcent` and `anom_gestdown` carry each other's simulation model. The first version of this report said the two NORMAL files were swapped; the grouping of runs, and therefore every number below, is the same under both readings.
    - This explains 99.5% of all misclassified windows in R2.
    - It is not a pipeline defect. R2 and the manifest are unchanged, and the issue is referred to the dataset owner (R-18).
 4. **RQ2 (three-outcome policy).** Wherever SPECIFIC was issued at the registered 0.60 operating point, it was correct (10,701 LEAK and 497 NORMAL windows). However:
@@ -61,6 +61,8 @@
 **Calibration disclosure:** the monotonicity rule was introduced after seeing R1's outer-test outputs. The rule does not depend on any outcome; it excludes maps that invert rankings. In R2 it selected "none" in every fold. Readers should still weigh R2 as a second, informed execution.
 
 ## 4. Center topology failure: root cause
+
+> **Correction (forensic audit, 2026-11-11).** The table below reads the evidence as "two NORMAL runs carry the other topology's configuration". The source simulation models (`simulation_model_sensors.csv`) and export scripts show instead that the 36 event runs in `anom_gestcent`/`anom_gestdown` are exchanged; the NORMAL files match their models. The mechanism, the error counts and the consequences are unchanged. See `FORENSIC_FINDINGS_REPORT.md` section 2.
 
 The hypotheses were tested in this order:
 

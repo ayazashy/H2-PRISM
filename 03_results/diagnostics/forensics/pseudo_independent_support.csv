@@ -1,0 +1,9 @@
+held_out,y_true,n_unflagged,n_pseudo_independent,share,classifier_correct
+Center,COMPRESSOR_DELAY,30,25,0.833333,0
+Center,COMPRESSOR_FAULT,658,658,1,1
+Center,LEAK,1061,0,0,0
+Center,NORMAL,656,4,0.00609756,1
+Downstream,LEAK,6083,573,0.0941969,1
+Downstream,NORMAL,650,0,0,0
+Upstream,LEAK,6223,0,0,1
+Upstream,NORMAL,648,0,0,1

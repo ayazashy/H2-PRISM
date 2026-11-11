@@ -379,3 +379,22 @@ def test_sensitivity_summary_marks_executed_incomplete_runs(tree, tmp_path):
     s = bss.collect(runs, allow_synthetic=True)
     assert set(s[s.analysis == "k_50"].status) == {"RUN_INCOMPLETE"}
     assert set(s[s.analysis == "k_10"].status) == {"NOT_RUN"}
+
+
+def test_results_index_labels_robustness_analysis_and_incomplete_runs(tree, tmp_path):
+    """Regression (real index 2026-11-11): ROBUSTNESS_clean was registered as analysis 'primary', and an executed run
+    that stopped (manifest RUNNING) was registered as INVALID instead of INCOMPLETE."""
+    import json
+    import shutil
+    root = tmp_path / "r"
+    runs = root / "03_results" / "primary_protocol"
+    shutil.copytree(tree / "03_results" / "primary_protocol" / "PRIMARY", runs / "PRIMARY")
+    shutil.copytree(tree / "03_results" / "primary_protocol" / "PRIMARY", runs / "ROBUSTNESS_clean")
+    inc = runs / "SENSITIVITY_k_50"
+    inc.mkdir()
+    (inc / "run_manifest.json").write_text(json.dumps({"status": "RUNNING", "run_key": "x", "artifact_class": "SYNTHETIC_TEST",
+                                                       "sensitivity": {"name": "k_50"}}))
+    pinned = bres._sha(bres.PINNED_CONFIG)
+    assert bres.validate_run(runs / "ROBUSTNESS_clean", True, pinned)["analysis"] == "clean_realization"
+    assert bres.validate_run(inc, True, pinned)["status"] == "INCOMPLETE"
+    assert bres.validate_run(runs / "PRIMARY", True, pinned)["analysis"] == "primary"

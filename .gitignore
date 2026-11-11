@@ -68,3 +68,4 @@ video-general/out/
 03_results/primary_protocol/**/*.parquet
 03_results/primary_protocol/**/folds/*/predictions.csv
 03_results/primary_protocol/**/folds/*/decisions_*.csv
+03_results/diagnostics/**/*.parquet

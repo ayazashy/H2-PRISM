@@ -1,0 +1,22 @@
+{
+  "source_run_key": "a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb",
+  "config_sha256": "f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae",
+  "manifest_sha256": "36bcbaf97bb17659995f393884d1dcde3bbca9236c3dcdcc6e7651e61538fb59",
+  "feature_table_sha256": "4d1310a6509ff5eb381792c0886afcda1209017361390bf395c805b5c3955280",
+  "dx_and_flags_reproduced_exactly": true,
+  "command": "python tools/experiments/forensic_audit.py --raw-parent data/raw",
+  "status": "DIAGNOSTIC - not a registered estimand",
+  "outputs": {
+    "decision_root_causes.csv": "8466c469ecfb5bbda9c095ffeadcd8db11dd889692debc632d9d54b3fab0f466",
+    "dx_classifier_agreement.csv": "3825b415342ca53f62fdf532c01a56b1b4706e190fc304332de584858ae9fd4a",
+    "independence_units.csv": "66e5c9a18eda6ac888570cfd8c36d54381efc4ee1b92e0557089899bd00bb9e7",
+    "neighbour_trace_summary.csv": "e7104d8b2099957f50c23083ce8ba4e8bfa569595f10a57dfb58b7feffee8245",
+    "offset_fold3_development_reproduction.csv": "1670cce1400159d20940bc7e5f2a58ed27d13a3b903b65ca2fcd058900021e01",
+    "padded_channel_evidence.csv": "1d899a7dd4ec0a6c8a3c7ec09a9772933eece6a3b652ff7f8eb53dbff2d99f01",
+    "pseudo_independent_support.csv": "8df2960d52737352b7653e3515ccbc99c767cbc013a12bfebf6a2fd7a246d911",
+    "rq2_error_anatomy.csv": "c968d6baa0ee0212141ff37241c82d5022880675a5c16bdfa0ee7fadd12d1dfb",
+    "simulation_model_sensors.csv": "be707aff8e20866046de9516dce3ccb58f50b6c2e2a24c8d9856014b2f13c269",
+    "source_model_attribution.csv": "8ae38caf0de31cbc73aa0302f90a804cd8dea9e0236bddf1676704e25c85f6f9",
+    "tie_structure.csv": "f03ad047468ee3db616e0f2cb6814a55c0dd54597336ec78e67c34e3f9110095"
+  }
+}
