@@ -124,9 +124,25 @@ def test_completion_matrix_covers_all_37_plan_tasks():
                     assert (ROOT / p).exists(), (r.requirement_id, p)
 
 
-def test_no_research_results_or_authorization_exist():
-    assert not (ROOT / "03_results" / "primary_protocol").exists()
-    assert not list((ROOT / "06_audit_preparation").glob("EXECUTION_AUTHORIZATION*"))
+def test_results_and_authorization_only_with_a_valid_gate():
+    """Before execution neither exists; afterwards the authorization must pass the unchanged gate and every
+    recorded run must be a real execution class carrying a recorded authorization."""
+    import json
+    from h2prism.experiments import primary_protocol as pp
+    auths = list((ROOT / "06_audit_preparation").glob("EXECUTION_AUTHORIZATION*.yaml"))
+    cfg_sha = pp.sha256_file(ROOT / "06_audit_preparation" / "FINAL_EXPERIMENT_CONFIG.yaml")
+    for a in auths:
+        scope = yaml.safe_load(a.read_text(encoding="utf-8"))["scope"]
+        pp.check_authorization(a, cfg_sha, scope)  # raises if invalid
+    runs = ROOT / "03_results" / "primary_protocol"
+    if runs.exists():
+        assert auths, "results exist without an authorization file"
+        for m in runs.glob("*/run_manifest.json"):
+            man = json.loads(m.read_text(encoding="utf-8"))
+            if man.get("run_key") == "sensitivity_summary":
+                continue
+            assert man["artifact_class"] in ("PRIMARY_EXPERIMENT", "ROBUSTNESS_EXPERIMENT", "SENSITIVITY_EXPERIMENT"), m
+            assert man.get("authorization"), m
 
 
 def test_documentation_has_no_local_absolute_paths():

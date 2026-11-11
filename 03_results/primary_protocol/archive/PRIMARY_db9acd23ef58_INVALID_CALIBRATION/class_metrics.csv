@@ -1,0 +1,5 @@
+class,n_windows,n_runs,n_families,n_topologies,precision,recall,f1,support_note,analysis,artifact_class
+NORMAL,1995,3,3,3,0.03995913953,0.3333333333,0.07136341686,windows are not independent units; families are,primary,PRIMARY_EXPERIMENT
+LEAK,21921,39,30,3,0.8460113465,0.3333333333,0.4782381046,windows are not independent units; families are,primary,PRIMARY_EXPERIMENT
+COMPRESSOR_FAULT,3984,6,3,3,0.9869549012,0.6646586345,0.794360282,windows are not independent units; families are,primary,PRIMARY_EXPERIMENT
+COMPRESSOR_DELAY,93,3,3,3,1,0.3333333333,0.5,windows are not independent units; families are,primary,PRIMARY_EXPERIMENT

@@ -213,3 +213,13 @@ A fifth local commit (user-approved) adds `.gitattributes` (LF for hash-pinned a
 - **Refinements:** figure design (theme tokens, Figs. 2–6). The runner records the authorization in `run_manifest.json`. Builders refuse incomplete or unauthorized runs for official outputs. `tools/reporting/build_results.py` provides the lifecycle: discover, validate, register, versioned build.
 - **Validation:** 310 passed, 2 skipped (expected), 0 failed; A12 33/33 and 36 PASS + 1 expected post-experiment missing artifact; gate refuses without authorization.
 - **Next:** project-lead-authorized primary run (see the following entry).
+
+## Update: primary execution (2026-11-11, recovery point)
+
+- **Governance:** project-lead waivers for F-D15, F-D16 and A-D10, and approval of PA-1, by Ahmed Zayed (project lead). These are recorded as waivers, not as named-owner signatures (`EXECUTION_CLEARANCE_RECORD.md`). Both authorization files pass `check_authorization`.
+- **Run 1 (`db9acd23ef58`):** INVALID because an order-reversing calibration was selected. It is archived under `03_results/primary_protocol/archive/` with `INVALIDATION_NOTE.md`.
+- **R2 (`a10530f1fcf2`):** COMPLETED, class PRIMARY_EXPERIMENT. Code sha `4c3edfe4` equals the tree of execution commit 1. Lifecycle validation is VALID (33/33 checks).
+- **Results:** pooled RQ1 is NOT_ESTIMABLE at 0.60, 0.80 and 0.90, in both modes and both variants. Center max attainable coverage is 0.258. Per-fold estimates, RQ2, classifier metrics and figures are preliminary (evidence status PENDING).
+- **Window-level outputs** (`*.parquet`, `folds/*/predictions.csv`, `folds/*/decisions_*.csv`) are not in Git. They are listed with SHA-256 in `03_results/primary_protocol/logs/*_OUTPUT_HASHES.sha256` and copied to the external backup.
+- **Next human step:** PRIMARY_RESULTS_VALIDATION by the named owners, then decide the evidence status. No robustness or sensitivity runs have been started.
+- **Resume:** `python tools/reporting/build_results.py` is idempotent. An existing version directory is never overwritten.

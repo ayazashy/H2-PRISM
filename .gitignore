@@ -62,3 +62,9 @@ video-general/node_modules/
 video-general/out/
 .remotion/
 
+
+# Primary-protocol window-level outputs: preserved locally (and in backups) with SHA-256 lists in
+# 03_results/primary_protocol/logs/*_OUTPUT_HASHES.sha256; summaries and fold-level tables are tracked.
+03_results/primary_protocol/**/*.parquet
+03_results/primary_protocol/**/folds/*/predictions.csv
+03_results/primary_protocol/**/folds/*/decisions_*.csv

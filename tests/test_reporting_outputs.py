@@ -109,6 +109,5 @@ def test_builders_consume_real_runner_outputs_and_quarantine_synthetic(tmp_path)
 
 def test_reporting_config_inputs_missing_before_execution(tmp_path):
     cfg = ROOT / "configs" / "reporting_figures.yaml"
-    with pytest.raises(ReportingInputError, match="mandatory input missing"):
-        brt.build(cfg, tmp_path / "o", ROOT)
-    assert not (ROOT / "03_results" / "primary_protocol").exists()
+    with pytest.raises(ReportingInputError, match="mandatory input missing"):  # a root without any recorded run
+        brt.build(cfg, tmp_path / "o", tmp_path)

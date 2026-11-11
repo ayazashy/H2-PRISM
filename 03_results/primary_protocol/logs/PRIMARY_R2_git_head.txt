@@ -1,0 +1,2 @@
+38d7dfae7f8362d6b949dedf28054bea222d713a
+(working tree carries the uncommitted calibration fix; code hash recorded in run_manifest.code_sha256)

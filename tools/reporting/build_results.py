@@ -80,14 +80,18 @@ def validate_run(d: Path, allow_synthetic: bool, pinned_sha: str) -> Dict:
             except pd.errors.EmptyDataError:
                 df = pd.DataFrame()
             if len(df):  # an empty table (e.g. tie_sensitivity with nothing estimable) is valid
-                chk(f"columns:{name}", set(cols) <= set(df.columns), sorted(set(cols) - set(df.columns))[:5])
+                need = set(cols)
+                if "status" in df.columns and (df["status"] != "ESTIMABLE").all():  # numeric columns cannot exist
+                    need = {c for c in cols if c in df.columns or c in ("variant", "target", "mode", "status")}
+                chk(f"columns:{name}", need <= set(df.columns), sorted(need - set(df.columns))[:5])
     if (d / "rq2.csv").exists() and (d / "rq2.csv").stat().st_size > 1:
         r = pd.read_csv(d / "rq2.csv")
         chk("rq2_shares_sum_to_one", ((r.specific + r.ambiguity_set + r.unresolved - 1).abs() < 1e-9).all())
     if (d / "rq1.csv").exists():
         r = pd.read_csv(d / "rq1.csv")
         rm = r[(r["mode"] == "rank_matched") & (r.status == "ESTIMABLE")]
-        chk("rank_matched_coverage_matched", (rm.realized_coverage_a == rm.realized_coverage_b).all())
+        chk("rank_matched_coverage_matched", rm.empty or (rm.realized_coverage_a == rm.realized_coverage_b).all(),
+            f"{len(rm)} estimable rank-matched comparisons")
     if (d / "predictions.parquet").exists():
         chk("unique_window_ids", pd.read_parquet(d / "predictions.parquet", columns=["window_id"]).window_id.is_unique)
     ok = all(c["ok"] for c in checks)

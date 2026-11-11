@@ -252,7 +252,11 @@ def test_official_dataset_outputs_trace_to_current_sources():
 
 
 def test_official_tree_has_no_synthetic_or_unauthorized_results():
-    assert not (ROOT / "03_results" / "primary_protocol").exists()  # no real model results exist without authorization
+    runs = ROOT / "03_results" / "primary_protocol"  # real model results only from authorized runs
+    for m in (runs.glob("*/run_manifest.json") if runs.exists() else []):
+        man = json.loads(m.read_text(encoding="utf-8"))
+        assert man.get("artifact_class") != "SYNTHETIC_TEST", m
+        assert man.get("run_key") == "sensitivity_summary" or man.get("authorization"), m
     for m in list((ROOT / "03_results").rglob("FIGURE_MANIFEST.csv")) + list((ROOT / "03_results").rglob("TABLE_MANIFEST.csv")):
         man = pd.read_csv(m)
         assert not man.status.astype(str).str.contains("ILLUSTRATIVE").any(), m
@@ -315,3 +319,21 @@ def test_lifecycle_refuses_when_no_run_exists(tmp_path):
 def test_runner_records_authorization_only_for_authorized_execution(tree):
     m = json.loads((tree / "03_results" / "primary_protocol" / "PRIMARY" / "run_manifest.json").read_text())
     assert "authorization" in m and m["authorization"] is None  # synthetic run: no authorization recorded
+
+
+def test_all_not_estimable_rq1_keeps_full_schema_and_builds_ne_panels(tmp_path):
+    """Real primary run 2026-11-11: every pooled RQ1 comparison was NOT_ESTIMABLE, and rq1.csv lacked numeric columns."""
+    rows = [{"fold": 1, "variant": "primary", "method": m, "target": 0.8, "mode": "rank_matched",
+             "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL", "test_max_attainable_coverage": 0.2} for m in ("s_C", "s_C_minus_D")]
+    preds = pd.DataFrame({"window_id": ["w0"], "y_true": ["LEAK"], "Scenario_Family_ID": ["f"], "topology": ["T"], "fold": [1]})
+    agg = pp.aggregate({"dataset": {"classes": ["NORMAL", "LEAK", "COMPRESSOR_FAULT", "COMPRESSOR_DELAY"]}}, preds, rows, "SYNTHETIC_TEST")
+    assert set(pp.RQ1_COLUMNS) <= set(agg["rq1"].columns) and agg["rq1"].difference.isna().all()
+    legacy = pd.DataFrame({"comparison_b": ["s_C_minus_D"], "variant": ["primary"], "target": [0.8], "mode": ["rank_matched"],
+                           "status": ["NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL"]})  # schema written before the fix
+    (tmp_path / "r").mkdir()
+    legacy.to_csv(tmp_path / "r" / "rq1.csv", index=False)
+    cfg = tmp_path / "c.yaml"
+    cfg.write_text(yaml.safe_dump({"dpi": 60, "figures": [{"id": "x", "kind": "incremental_value", "inputs": {"rq1": {"input": "r/rq1.csv"}},
+                                                         "evidence_status": "PENDING", "title": "t"}]}))
+    man = brf.build(cfg, tmp_path / "o", tmp_path)
+    assert man.non_estimable.all() and (man.n_rows_plotted == 0).all()

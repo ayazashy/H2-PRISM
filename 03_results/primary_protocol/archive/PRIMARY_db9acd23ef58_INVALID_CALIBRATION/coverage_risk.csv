@@ -1,0 +1,13 @@
+variant,method,target,mode,folds_estimable,n_families,n_eligible,n_specific,n_ambiguity,n_unresolved,coverage,selective_risk,selective_risk_defined,ambiguity_n_ambiguity,ambiguity_inclusion_rate,ambiguity_mean_size,ambiguity_median_size,ambiguity_broad_rate,analysis,artifact_class
+primary,D_only,0.6,rank_matched,2,26,18662,11198,1042,6422,0.6000428679,0.5580460797,True,1042,0.4184261036,2,2,0,primary,PRIMARY_EXPERIMENT
+primary,confidence,0.6,rank_matched,2,26,18662,11198,1936,5528,0.6000428679,0.5580460797,True,1936,0.4065082645,2,2,0,primary,PRIMARY_EXPERIMENT
+primary,margin,0.6,rank_matched,2,26,18662,11198,1936,5528,0.6000428679,0.5580460797,True,1936,0.4065082645,2,2,0,primary,PRIMARY_EXPERIMENT
+primary,neg_entropy,0.6,rank_matched,2,26,18662,11198,1936,5528,0.6000428679,0.5580460797,True,1936,0.4065082645,2,2,0,primary,PRIMARY_EXPERIMENT
+primary,s_C,0.6,rank_matched,2,26,18662,11198,702,6762,0.6000428679,0.5,True,702,0.04415954416,2,2,0,primary,PRIMARY_EXPERIMENT
+primary,s_C_minus_D,0.6,rank_matched,2,26,18662,11198,1180,6284,0.6000428679,0.5,True,1180,0.02627118644,2,2,0,primary,PRIMARY_EXPERIMENT
+warning_only,D_only,0.6,rank_matched,2,26,18662,11198,1024,6440,0.6000428679,0.5580460797,True,1024,0.4130859375,2,2,0,primary,PRIMARY_EXPERIMENT
+warning_only,confidence,0.6,rank_matched,2,26,18662,11198,1936,5528,0.6000428679,0.5580460797,True,1936,0.4065082645,2,2,0,primary,PRIMARY_EXPERIMENT
+warning_only,margin,0.6,rank_matched,2,26,18662,11198,1936,5528,0.6000428679,0.5580460797,True,1936,0.4065082645,2,2,0,primary,PRIMARY_EXPERIMENT
+warning_only,neg_entropy,0.6,rank_matched,2,26,18662,11198,1936,5528,0.6000428679,0.5580460797,True,1936,0.4065082645,2,2,0,primary,PRIMARY_EXPERIMENT
+warning_only,s_C,0.6,rank_matched,2,26,18662,11198,674,6790,0.6000428679,0.5,True,674,0.004451038576,2,2,0,primary,PRIMARY_EXPERIMENT
+warning_only,s_C_minus_D,0.6,rank_matched,2,26,18662,11198,1150,6314,0.6000428679,0.5,True,1150,0.0008695652174,2,2,0,primary,PRIMARY_EXPERIMENT

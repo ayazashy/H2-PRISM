@@ -42,6 +42,12 @@ def load_input(root: Path, spec: Dict) -> pd.DataFrame:
         raise ReportingInputError(f"[{spec.get('id')}] no rows: input {spec['input']} is an empty table")
     req = spec.get("required_columns", [])
     miss = [c for c in req if c not in df.columns]
+    absent = [c for c in (spec.get("columns") or []) if c not in df.columns and c not in miss]
+    if absent and "status" in df.columns and (df["status"] != "ESTIMABLE").all():
+        df = df.assign(**{c: float("nan") for c in absent})  # selected table columns of all-NOT_ESTIMABLE rows
+    if miss and "status" in df.columns and len(df) and (df["status"] != "ESTIMABLE").all():
+        df = df.assign(**{c: float("nan") for c in miss})  # all rows NOT_ESTIMABLE: the values do not exist (empty, never 0)
+        miss = []
     if miss:
         raise ReportingInputError(f"[{spec.get('id')}] input {spec['input']} missing columns {miss}")
     if "selective_risk" in df.columns and "coverage" not in df.columns:

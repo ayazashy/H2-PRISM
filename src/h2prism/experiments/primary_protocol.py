@@ -52,6 +52,9 @@ from ..uncertainty import paired_stratified_bootstrap
 from ..windows import WindowConfig
 
 METHODS = ("s_C", "s_C_minus_D", "confidence", "margin", "neg_entropy", "D_only")
+RQ1_COLUMNS = ("comparison_a", "comparison_b", "comparison_role", "variant", "target", "mode", "status", "folds_estimable",
+               "n_folds", "realized_coverage_a", "realized_coverage_b", "coverage_gap_a_minus_b", "estimate_a", "estimate_b",
+               "difference", "ci_low", "ci_high", "n_units", "n_boot_undefined", "comparison", "interpretation")
 CURVE_GRID = tuple(round(0.05 * i, 2) for i in range(1, 21))  # descriptive risk-coverage grid (figures only)
 # RQ1 paired comparisons (plan F10): C vs C-D is primary; C vs B (confidence) and the other indicators secondary
 COMPARISONS = (("s_C_minus_D", "PRIMARY"), ("confidence", "SECONDARY_C_VS_B"), ("margin", "SECONDARY"),
@@ -766,7 +769,10 @@ def aggregate(cfg, preds: pd.DataFrame, dec_rows: List[Dict], artifact_class: st
             tie.append({"target": t, "salt_index": int(j), "pooled_risk_a": ra, "pooled_risk_b": rb, "difference": ra - rb,
                         "primary_difference": prim[t]["difference"], "role": "TIE_ORDER_SENSITIVITY_SECONDARY"})
     tag = lambda df: df.assign(analysis=analysis, artifact_class=artifact_class) if len(df) else df
-    return {"coverage_risk": tag(pd.DataFrame(cov)), "estimability": tag(est_df), "rq1": tag(pd.DataFrame(rq1)),
+    rq1_df = pd.DataFrame(rq1)
+    if len(rq1_df):  # full contracted schema even when no comparison is estimable (values stay empty, never 0)
+        rq1_df = rq1_df.reindex(columns=list(dict.fromkeys(list(rq1_df.columns) + list(RQ1_COLUMNS))))
+    return {"coverage_risk": tag(pd.DataFrame(cov)), "estimability": tag(est_df), "rq1": tag(rq1_df),
             "rq2": tag(pd.DataFrame(rq2)), "tie_sensitivity": tag(pd.DataFrame(tie)),
             "calibration_reliability": tag(reliability_bins(preds, classes)),
             "risk_coverage_curve": tag(_curve(curve_counts, preds)), "confusion_matrix": tag(_confusion(preds, classes)),

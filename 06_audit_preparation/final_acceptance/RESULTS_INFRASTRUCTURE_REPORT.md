@@ -150,3 +150,17 @@ python tools/reporting/build_results.py --root <scratch tree> --out-root <scratc
 - `--execute-primary` → `REFUSED: AuthorizationError`.
 
 No training was run.
+
+## 10. First real use: primary run R2 (2026-11-11)
+
+- **Validation:** `build_results.py` validated `PRIMARY` (run_key `a10530f1fcf2`): VALID, 33 checks, 0 failed. Output: `03_results/validation/PRIMARY_a10530f1fcf2.json` and `03_results/RESULTS_INDEX.csv`.
+- **Tables:** T4 to T8 were built into `03_results/tables/primary/a10530f1fcf2/preliminary/`.
+- **Figures:** Fig. 2 to Fig. 6 were built into `03_results/figures/primary/a10530f1fcf2/preliminary/`, with a PENDING watermark.
+  - Fig. 3 is fully non-estimable: no pooled RQ1 contrast exists.
+  - Fig. 6 shows "not estimable" for the primary analysis and "not run" for every robustness analysis.
+- **Defect found by real data:** an all-NOT_ESTIMABLE `rq1.csv` had no numeric columns, which crashed the validator and table builder. Three fixes:
+  - the runner now writes the full schema;
+  - the loaders fill absent columns as empty, never 0;
+  - the validator accepts both forms.
+  A regression test was added. R2 outputs are unchanged.
+- **Known display limitation (cosmetic, not fixed):** in Fig. 2(b), the Center curves leave the fixed 0–0.05 risk axis.

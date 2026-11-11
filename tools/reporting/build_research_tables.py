@@ -89,7 +89,7 @@ def build(config_path: Path, out_dir: Path, root: Path) -> pd.DataFrame:
         md_p.write_bytes(to_markdown(out, wm, spec.get("caption", "")).encode("utf-8"))
         for p in (csv_p, md_p):
             rows.append({"table_id": spec["id"], "status": f"BUILT_{dest.upper()}", "reason": wm,
-                         "output_file": p.as_posix(), "output_sha256": sha256_path(p),
+                         "output_file": brf._rel(p, root), "output_sha256": sha256_path(p),
                          "input_file": spec["input"], "input_sha256": sha256_path(root / spec["input"]),
                          "config_sha256": cfg_hash, "source_experiment": spec.get("source_experiment", "UNSPECIFIED"),
                          "evidence_status": spec.get("evidence_status", "UNDECLARED"), "caption": spec.get("caption", ""),

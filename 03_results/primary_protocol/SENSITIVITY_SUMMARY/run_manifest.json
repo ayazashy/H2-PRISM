@@ -1,0 +1,9 @@
+{
+  "artifact_class": "SENSITIVITY_SUMMARY",
+  "status": "COMPLETED",
+  "run_key": "sensitivity_summary",
+  "config_sha256": "see source run manifests",
+  "sources": [
+    "PRIMARY"
+  ]
+}
