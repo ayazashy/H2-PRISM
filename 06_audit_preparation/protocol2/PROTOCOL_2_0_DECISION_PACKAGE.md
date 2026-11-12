@@ -34,3 +34,5 @@
 - **D1:** the v0.3 attribution raises development group-balanced accuracy from 0.47 to 0.88.
 - **D2:** is now **blocking**, because the down model stays out of support even on the 13 shared sensors.
 - **D3:** recommendations are in report section 4. E_h is not recommended for inclusion now.
+
+> Owner decision record for freezing: `PROTOCOL_2_0_OWNER_DECISIONS.md` (2026-11-13, consolidated from the eight ablation arms).
