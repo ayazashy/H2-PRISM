@@ -100,6 +100,7 @@ REAL_STATUS = "PROTOCOL_SELECTED_PENDING_EXECUTION"
 # Execution-blocking governance items (FINAL_GOVERNANCE_AND_GATE_RECORD.md): each must be attested or waived
 REQUIRED_CLEARANCES = ("F-D15", "F-D16", "A-D10", "PA-1")
 SYNTH_STATUS = "SYNTHETIC_TEST_CONFIG"
+DEV_ARM_STATUS = "DEVELOPMENT_ARM_REGISTERED"  # protocol 2.0 ablation arm: development-only, never outer-test scoring
 MANIFEST_COLS = ["Scenario_ID", "Scenario_Family_ID", "topology", "label_mapped", "eligible_primary",
                  "file_noise_added", "sha256_noise_added", "file_clean", "sha256_clean"]
 PROHIBITED_CLAIMS = ["industrial deployment readiness", "field validation", "generalisation beyond the evaluated simulated topologies",
@@ -439,6 +440,17 @@ def development_stage(cfg, dev: pd.DataFrame, feats: List[str]) -> Dict:
     sup = sup.loc[dev.index]
     D = sup.D.to_numpy(float)
     correct = (P_cal.argmax(1) == yidx).astype(int)
+    E_dev = None
+    # distinguishability.statistic (CANDIDATE, arm F): "D" (protocol 1.1) or "evidence_margin" (signed, independence-group
+    # balanced E_h with h = the classifier label; h2prism.evidence_margin). The chosen statistic enters s_C in place of D.
+    stat = cfg["distinguishability"].get("statistic", "D")
+    if stat not in ("D", "evidence_margin"):
+        raise PreflightError(f"unknown distinguishability.statistic {stat!r}")
+    if stat == "evidence_margin":
+        E_dev = _evidence_margin(cfg, dev, feats, classes, np.array(classes, dtype=object)[P_cal.argmax(1)])
+        # E in [-1, 1] enters the meta-model through the comparator layer, which validates [0, 1]; the affine map
+        # (E + 1) / 2 is monotone and the meta-model standardises its inputs, so the fitted score is unchanged by it.
+        D = (E_dev.E.to_numpy(float) + 1.0) / 2.0
     csc = dict(n_splits=n_t, seed=seed, C=float(cfg.get("combined_scores", {}).get("fit", {}).get("C", 1.0)))
     # combined_scores.on_undefined (CANDIDATE protocol 2.0, P2-F): "raise" (protocol 1.1 default) stops the run when
     # development correctness is constant; "not_estimable" records s_C / s_C-D as undefined (NaN scores -> never
@@ -470,7 +482,31 @@ def development_stage(cfg, dev: pd.DataFrame, feats: List[str]) -> Dict:
     return {"params": params, "selection": pd.DataFrame(sel_rows), "cal_method": cal_method,
             "cal_feasibility": feas, "cal_table": cal_table, "P_oof": P_oof, "y_idx": yidx,
             "fitC": fitC, "fitCmD": fitCmD, "meta_model_status": meta_status, "thresholds": pd.DataFrame(thr),
-            "dev_flags": sup.support_flags.fillna("").value_counts().to_dict()}
+            "dev_flags": sup.support_flags.fillna("").value_counts().to_dict(),
+            # development out-of-fold quantities (used only by the development-only mode; never outer-test data)
+            "dev_oof": {"P_cal": P_cal, "y_hat": y_hat_dev, "correct": correct, "sup": sup, "S": S, "E": E_dev}}
+
+
+def _evidence_margin(cfg, dev: pd.DataFrame, feats, classes, hypotheses) -> pd.DataFrame:
+    """Cross-fitted E_h on development data: each development topology is scored against the OTHER development
+    topologies (reference), hypothesis = the classifier's development out-of-fold label, units = independence groups."""
+    from ..evidence_margin import EvidenceConfig, EvidenceMargin
+    from ..independence import independence_groups
+    d = cfg["distinguishability"]
+    ec = EvidenceConfig(k=int(d.get("k", 25)), min_units=int(d.get("evidence_min_units", 2)),
+                        out_of_support_quantile=float(d.get("out_of_support_quantile", 0.99)))
+    groups = dev.Scenario_ID.map(independence_groups(dev.Scenario_ID, dev.Scenario_Family_ID)).to_numpy()
+    topo = dev.topology.to_numpy()
+    out = pd.DataFrame(index=dev.index, columns=["E", "evidence_top_class", "n_units", "flag"], dtype=object)
+    hyp = np.asarray(hypotheses, dtype=object)
+    for t in sorted(set(topo)):
+        r, q = topo != t, topo == t
+        em = EvidenceMargin(ec).fit(dev[feats].to_numpy(float)[r], dev.label_mapped.to_numpy()[r], groups[r], classes)
+        res = em.compute(dev[feats].to_numpy(float)[q], list(hyp[q]), groups[q])
+        res.index = dev.index[q]
+        out.loc[res.index, ["E", "evidence_top_class", "n_units", "flag"]] = res[["E", "evidence_top_class", "n_units", "flag"]]
+    out["E"] = out.E.astype(float)
+    return out
 
 
 def _decide(P, scores, flags, classes, pol, tau, evidence_top=None):
@@ -485,6 +521,9 @@ def _decide(P, scores, flags, classes, pol, tau, evidence_top=None):
 
 def outer_stage(cfg, dev: pd.DataFrame, test: pd.DataFrame, feats: List[str], devres: Dict) -> Tuple[pd.DataFrame, pd.DataFrame]:
     classes = list(cfg["dataset"]["classes"])
+    if cfg["distinguishability"].get("statistic", "D") != "D":  # a meta-model fitted on E must never be applied to D
+        raise NotImplementedError("outer-stage scoring with distinguishability.statistic != 'D' is not implemented "
+                                  "(candidate E_h is development-only until approved)")
     est = make_random_forest(devres["params"], int(cfg["seeds"]["global"])).fit(dev[feats].to_numpy(float), dev.label_mapped.to_numpy())
     P_raw = _aligned_proba(est, test[feats].to_numpy(float), classes)
     cal = fit_calibrator(devres["cal_method"], devres["P_oof"], devres["y_idx"], len(classes))
@@ -832,6 +871,96 @@ def aggregate(cfg, preds: pd.DataFrame, dec_rows: List[Dict], artifact_class: st
 
 
 # ----------------------------------------------------------------------------- orchestration
+def _group_balanced_risk(dec: pd.DataFrame, groups: np.ndarray) -> float:
+    """Mean over independence groups (with >= 1 SPECIFIC decision) of their selective risk: each scenario weighs 1."""
+    sp = dec.policy_outcome.to_numpy() == SPECIFIC
+    if not sp.any():
+        return float("nan")
+    wrong = (dec.y_pred_specific.to_numpy(dtype=object) != dec.y_true.to_numpy(dtype=object)) & sp
+    s = pd.DataFrame({"g": groups[sp], "w": wrong[sp]}).groupby("g").w.mean()
+    return float(s.mean())
+
+
+def _develop(cfg, ft: pd.DataFrame, feats: List[str], folds: pd.DataFrame, out_dir: Path, manifest: Dict, run_key: str) -> Dict:
+    """Development-only evaluation of an ablation arm (see run(mode='develop')). Writes DEV_METRICS.csv and
+    DEV_DECISION_METRICS.csv; window-level development predictions go to folds/fold_k/dev_oof.parquet."""
+    from .. import evaluation_metrics as em
+    from ..independence import independence_groups
+    from ..protocol2 import development_target
+    classes = list(cfg["dataset"]["classes"])
+    salt = str(_matched_cfg(cfg)["tie_break_salt"])
+    rule = cfg.get("thresholds", {}).get("target_rule") or {}
+    pol = _policies(cfg)["primary"]
+    metric_rows, dec_rows = [], []
+    for k, d in folds.groupby("outer_fold_id", sort=True):
+        fdir = out_dir / "folds" / f"fold_{k}"
+        tr_ids = set(d[d.split_role == "train"].Scenario_ID)
+        dev = ft[ft.Scenario_ID.isin(tr_ids)].copy()  # the fold's held-out topology is never touched
+        devres = development_stage(cfg, dev, feats)
+        o = devres["dev_oof"]
+        y = dev.label_mapped.to_numpy(dtype=object)
+        grp = dev.Scenario_ID.map(independence_groups(dev.Scenario_ID, dev.Scenario_Family_ID)).to_numpy()
+        topo = dev.topology.to_numpy()
+        ok = o["correct"].astype(bool)
+        yidx = np.array([classes.index(v) for v in y])
+        S = o["S"].reset_index(drop=True)
+        scores = {c: S[c].to_numpy(float) for c in S.columns}
+        if o["E"] is not None:
+            scores["E_evidence_margin"] = o["E"].E.to_numpy(float)
+        for scope, m in [("DEV_POOLED", np.ones(len(dev), bool))] + [(f"DEV_{t}", topo == t) for t in sorted(set(topo))]:
+            row = {"fold": int(k), "scope": scope, **em.classifier_metrics(y[m], o["y_hat"][m], classes),
+                   **em.group_level_accuracy(ok[m], grp[m]), "ece_10": em.ece(o["P_cal"][m], yidx[m]),
+                   "brier": em.brier(o["P_cal"][m], yidx[m]), "meta_model_status": devres["meta_model_status"],
+                   "calibration": devres["cal_method"],
+                   "share_flag_free": float((o["sup"].support_flags.fillna("").to_numpy()[m] == "").mean())}
+            for sname, v in scores.items():
+                row[f"auroc_{sname}"] = em.auroc(v[m], ok[m])
+                row[f"saturation_{sname}"] = em.saturation(v[m])
+            if o["E"] is not None:
+                row["share_E_undefined"] = float(np.isnan(scores["E_evidence_margin"][m]).mean())
+            metric_rows.append(row)
+        th = devres["thresholds"]
+        att = th[(th.variant == "primary") & (th.method == "s_C")].dev_max_attainable_coverage
+        tgt = development_target([float(att.iloc[0])], **{k_: rule[k_] for k_ in ("grid", "margin", "min_target") if k_ in rule}) \
+            if len(att) else {"status": "NOT_ESTIMABLE_BY_DESIGN", "target": None}
+        flags = o["sup"].support_flags.fillna("").to_numpy()
+        ev = o["sup"].top_class.to_numpy()
+        for meth in ("s_C", "s_C_minus_D", "confidence"):
+            base = {"fold": int(k), "method": meth, "target_rule_status": tgt["status"], "target": tgt["target"]}
+            if tgt["target"] is None:
+                dec_rows.append({**base, "status": "NOT_ESTIMABLE_BY_DESIGN"})
+                continue
+            for t in sorted(set(topo)):  # matched selection within each development topology (inner held-out)
+                m = topo == t
+                sc = scores[meth][m]
+                av = _available(np.zeros(int(m.sum())), flags[m], pol, o["y_hat"][m], ev[m]) & np.isfinite(sc)
+                mask, info = exact_count_selection(sc, av, dev.window_id.to_numpy()[m], float(tgt["target"]), salt)
+                if mask is None:
+                    dec_rows.append({**base, "dev_topology": t, "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+                                     "max_attainable": info["max_attainable_coverage"]})
+                    continue
+                eff = np.where(mask, 1.0, np.where(np.isfinite(sc), -1.0, np.nan))
+                dd = _decide(o["P_cal"][m], eff, flags[m], classes, pol, 0.0, ev[m]).assign(y_true=y[m])
+                dec_rows.append({**base, "dev_topology": t, "status": "ESTIMABLE",
+                                 **em.decision_metrics(dd.policy_outcome, dd.y_pred_specific, dd.ambiguity_set, dd.y_true),
+                                 "group_balanced_selective_risk": _group_balanced_risk(dd, grp[m]),
+                                 "share_selected_by_tie_key": (info["n_tied_selected"] or 0) / info["realized_count"]})
+        oof = dev[["window_id", "Scenario_ID", "topology", "label_mapped"]].reset_index(drop=True).assign(
+            y_hat=o["y_hat"], correct=ok, support_flags=flags, fold=int(k))
+        for c, v in scores.items():
+            oof[f"score_{c}"] = v
+        fdir.mkdir(parents=True, exist_ok=True)
+        oof.to_parquet(fdir / "dev_oof.parquet", index=False)
+        write_json({"run_key": run_key, "fold": int(k), "target_rule": tgt, "meta_model_status": devres["meta_model_status"],
+                    "calibration": devres["cal_method"], "params": devres["params"]}, fdir / "DONE.json")
+    write_csv(pd.DataFrame(metric_rows).assign(artifact_class=manifest["artifact_class"]), out_dir / "DEV_METRICS.csv")
+    write_csv(pd.DataFrame(dec_rows).assign(artifact_class=manifest["artifact_class"]), out_dir / "DEV_DECISION_METRICS.csv")
+    manifest["status"] = "COMPLETED"
+    manifest["scope_note"] = "development-only: inner topology-held-out predictions; no outer-test scoring"
+    write_json(manifest, out_dir / "run_manifest.json")
+    return manifest
+
+
 def check_authorization(path: Optional[Path], config_sha: str, artifact_class: str) -> Dict:
     if path is None or not Path(path).exists():
         raise AuthorizationError("outer-test execution requires an authorization file (none given)")
@@ -886,6 +1015,24 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
         auth_record = {"scope": auth.get("scope"), "authorized_by": auth.get("authorized_by"), "date": str(auth.get("date")),
                        "governance_clearance": auth.get("governance_clearance"), "file_sha256": sha256_file(Path(authorization))}
         realization = EXECUTE_CLASSES[artifact_class] or cfg["dataset"]["realization_primary"]
+    elif mode == "develop":
+        # DEVELOPMENT-ONLY arm (protocol 2.0 ablation program): development_stage per outer fold, evaluated by the inner
+        # topology-held-out predictions; the fold's held-out topology is never scored. Real data requires an
+        # authorization scoped DEVELOPMENT_EXPERIMENT:<arm_id> bound to this exact config; synthetic configs need none.
+        realization = cfg["dataset"]["realization_primary"]
+        if cfg.get("status") == SYNTH_STATUS:
+            artifact_class, status = "SYNTHETIC_TEST", SYNTH_STATUS
+            results_dir = (Path(__file__).resolve().parents[3] / "03_results").resolve()
+            if str(out_dir).startswith(str(results_dir)):
+                raise PreflightError("synthetic outputs may not be written under 03_results/ (genuine results directory)")
+        else:
+            arm_id = cfg.get("arm_id")
+            if cfg.get("status") != DEV_ARM_STATUS or not arm_id:
+                raise AuthorizationError(f"develop mode needs a registered arm config (status {DEV_ARM_STATUS} and arm_id)")
+            artifact_class, status = "DEVELOPMENT_EXPERIMENT", DEV_ARM_STATUS
+            auth = check_authorization(authorization, cfg_sha, f"DEVELOPMENT_EXPERIMENT:{arm_id}")
+            auth_record = {"scope": auth.get("scope"), "authorized_by": auth.get("authorized_by"), "date": str(auth.get("date")),
+                           "governance_clearance": auth.get("governance_clearance"), "file_sha256": sha256_file(Path(authorization))}
     else:
         raise ValueError(f"unknown mode {mode}")
 
@@ -938,6 +1085,8 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
         manifest["status"] = "PREFLIGHT_PASSED"
         write_json(manifest, out_dir / "run_manifest.json")
         return manifest
+    if mode == "develop":
+        return _develop(cfg, ft, feats, folds, out_dir, manifest, run_key)
 
     preds, dec_rows, cal_records, ties, curves = [], [], [], [], []
     for k, d in folds.groupby("outer_fold_id", sort=True):

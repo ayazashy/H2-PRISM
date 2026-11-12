@@ -1,0 +1,19 @@
+{
+  "arm_id": "A_P11_REFERENCE",
+  "source_run_key": "a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb",
+  "source_status": "COMPLETED",
+  "evidence_status": "EXPLORATORY_REFERENCE_R2_OUTER_TEST_ALREADY_INSPECTED",
+  "source_sha256": {
+    "predictions.parquet": "4338c8c9ececc477212043ba890812b3163e0f7ef16d10c567fb4161c0103098",
+    "decisions.parquet": "1f4579271b8fa5ec11d4950cf1e19c4f5eb73c552e7f831cbb1d418b70862c86"
+  },
+  "code_sha256": {
+    "tools/experiments/arm_metrics.py": "17302bfa91206457f385df7ebcde375ee97de2c3511586d4aa62174f52b04b7e",
+    "src/h2prism/evaluation_metrics.py": "b57d5c458e3d3107315102f03af37234d4a0e435021b38b0b6b1227022c28303"
+  },
+  "outputs": {
+    "classifier_metrics.csv": "6631bb1cd2f4d67239b42922099fb04b82f71f61655c6f6ed6de1828cd3ba945",
+    "decision_metrics.csv": "8e04ad04785aeacd13ccb5ff6e23dcca5826aa5cd5869ce58b0ebdb0b0d3e00a",
+    "score_metrics.csv": "b373c35956ca0617f45660eda5cc9d9a088d392deaafbcbf0afba306dca64c15"
+  }
+}

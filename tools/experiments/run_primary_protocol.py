@@ -50,6 +50,8 @@ def main(argv=None) -> int:
     g.add_argument("--execute-robustness", action="store_true")
     g.add_argument("--execute-sensitivity", action="store_true", help="registered sensitivity analysis (needs --sensitivity)")
     g.add_argument("--make-synthetic-fixture", type=Path)
+    g.add_argument("--develop", action="store_true",
+                   help="development-only ablation arm (needs an authorization scoped DEVELOPMENT_EXPERIMENT:<arm_id>)")
     ap.add_argument("--authorization", type=Path)
     ap.add_argument("--sensitivity", choices=sorted(pp.SENSITIVITY_OVERRIDES), help="registered sensitivity analysis name")
     a = ap.parse_args(argv)
@@ -61,6 +63,8 @@ def main(argv=None) -> int:
     try:
         if a.synthetic:
             res = pp.run(a.config, a.root, a.raw_parent, a.out, "synthetic", sensitivity=a.sensitivity)
+        elif a.develop:
+            res = pp.run(a.config, a.root, a.raw_parent, a.out, "develop", authorization=a.authorization)
         elif a.execute_primary or a.execute_robustness or a.execute_sensitivity:
             cls = ("PRIMARY_EXPERIMENT" if a.execute_primary else "ROBUSTNESS_EXPERIMENT" if a.execute_robustness
                    else "SENSITIVITY_EXPERIMENT")
