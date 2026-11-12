@@ -86,3 +86,26 @@ def test_outer_stage_refuses_evidence_margin_meta_model():
     cfg = {"dataset": {"classes": ["A", "B"]}, "distinguishability": {"statistic": "evidence_margin"}}
     with pytest.raises(NotImplementedError):
         pp.outer_stage(cfg, None, None, [], {})
+
+
+def _summ(**kw):
+    base = {"min_auroc_confidence_over_dev_topologies": 0.3, "share_errors_conf_ge_0_9": 0.5, "n_features": 128,
+            "dev_group_balanced_accuracy_mean": 0.6, "s_C_group_balanced_risk_mean": 0.10, "s_C_ambiguity_inclusion_mean": float("nan"),
+            "min_auroc_D_only_over_dev_topologies": 0.4, "min_auroc_E_over_dev_topologies": float("nan"),
+            "auroc_s_C_minus_auroc_s_C_minus_D_mean": float("nan"), "dev_targets_by_fold": "1:0.5;2:None;3:None"}
+    base.update(kw)
+    return base
+
+
+def test_acceptance_is_literal_and_never_forces_unmatched_comparisons():
+    sys.path.insert(0, str(ROOT / "tools" / "experiments"))
+    import evaluate_ablation as ea
+    a = _summ()
+    e_same = ea.acceptance("E_EVIDENCE_CONFLICT", _summ(s_C_group_balanced_risk_mean=0.05, s_C_ambiguity_inclusion_mean=0.95), a)
+    assert {r["result"] for r in e_same} == {"PASS"}
+    e_diff = ea.acceptance("E_EVIDENCE_CONFLICT", _summ(s_C_group_balanced_risk_mean=0.05, dev_targets_by_fold="1:0.4;2:None;3:None"), a)
+    assert e_diff[0]["result"] == "NOT_EVALUABLE"  # different operating points are never compared
+    b = ea.acceptance("B_TOPOLOGY", _summ(min_auroc_confidence_over_dev_topologies=0.49, share_errors_conf_ge_0_9=0.1), a)
+    assert [r["result"] for r in b] == ["FAIL", "PASS"]  # 0.49 < 0.5 fails even though the other criterion passes
+    f = ea.acceptance("F_EVIDENCE_MARGIN", _summ(min_auroc_E_over_dev_topologies=0.44, auroc_s_C_minus_auroc_s_C_minus_D_mean=0.01), a)
+    assert [r["result"] for r in f] == ["FAIL", "PASS"]  # +0.04 is below the registered +0.05 margin

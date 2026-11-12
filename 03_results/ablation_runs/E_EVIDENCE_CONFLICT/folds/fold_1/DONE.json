@@ -1,0 +1,17 @@
+{
+  "calibration": "none",
+  "fold": 1,
+  "meta_model_status": "FITTED",
+  "params": {
+    "max_features": "sqrt",
+    "min_samples_leaf": 1,
+    "n_estimators": 500
+  },
+  "run_key": "68845db226b75c5e8803576d2cb693d5ef96bcb3ccd4228ce18522c49f4320b0",
+  "target_rule": {
+    "min_dev_attainable": 0.5692315936126889,
+    "reason": "",
+    "status": "REGISTERABLE",
+    "target": 0.5
+  }
+}

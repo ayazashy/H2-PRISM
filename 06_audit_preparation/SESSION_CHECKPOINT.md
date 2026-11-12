@@ -261,3 +261,10 @@ A fifth local commit (user-approved) adds `.gitattributes` (LF for hash-pinned a
 - **Builds:** published `03_results/{figures,tables}/primary/a10530f1fcf2_s4228b6c8_b200fcdac/`; preliminary original `…_b5ddfbcfa`.
 - **Protocol 2.0:** candidate prepared and refused by preflight (`06_audit_preparation/protocol2/`); not approved.
 - **Remediation status:** `06_audit_preparation/forensics/REMEDIATION_STATUS_20261112.csv`.
+
+## Update: protocol 2.0 ablation program (2026-11-13, recovery point)
+
+- **Runs:** 8 development-only arms completed, all exploratory (`03_results/ablation_runs/`).
+- **Results:** `05_documentation/PROTOCOL_2_ABLATION_REPORT.md` and `03_results/ablation/{ARM_SUMMARY,ABLATION_ACCEPTANCE}.csv`.
+- **Main finding:** the topology correction raises development group-balanced accuracy from 0.47 to 0.88–0.90. The down model is out of support even on the common sensors (decision D2). No decision-layer component, including D(x) and E_h, shows measurable value.
+- **Next:** Yazan D1/D2; Faisal D3/D4; then independent confirmation data (`02_methodology/INDEPENDENT_CONFIRMATION_DATA_SPEC.md`).
