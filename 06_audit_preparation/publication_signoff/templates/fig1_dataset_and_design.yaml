@@ -1,0 +1,29 @@
+# UNSIGNED TEMPLATE - not an approval. See SIGNOFF_PACKAGE.md.
+approval_id: fig1_dataset_and_design__4e665d5b__REVIEWER
+artifact_id: fig1_dataset_and_design
+claim_scope: DATASET
+decision: TO_BE_DECIDED_BY_REVIEWER
+approved_claims:
+- 'Data support and evaluation design. (a) Eligible simulation runs per class in each simulated topology (label: runs/families);
+  thin classes have one independent family per topology. (b) Eligible 60 s windows per class (log scale; share of all windows);
+  windows overlap within runs and are not independent observations. (c) Start-time range, interquartile range and median of
+  eligible windows: COMPRESSOR_DELAY occurs only in the start-up segment and is therefore confounded with operating phase.
+  (d) Leave-one-topology-out evaluation: every model-development step uses the two training topologies only.'
+limitations_acknowledged:
+- three simulated topologies; 1 NORMAL, 1 DELAY and 1 FAULT family per topology (one independence group each across topologies);
+  windows overlap and are not independent; DELAY windows only in the start-up segment; topology labels follow the release
+  folders, whose Center/Downstream event attribution is disputed by the source simulation models (L12 / R-18, decision pending)
+reviewer:
+  name: TO_BE_FILLED_BY_REVIEWER
+  role: TO_BE_FILLED_BY_REVIEWER
+date: YYYY-MM-DD
+statement: ''
+binding:
+  input_sha256:
+    03_results/dataset_design/class_distribution.csv: d815067c5cbd383d29178a01204e012143269e6854f92ca728d2fb4ee6ff4043
+    03_results/dataset_design/loto_folds.csv: 3003aa32e8421fa44946c7730f41d83f4e1da824897f0286344badc5d4371791
+    03_results/dataset_design/window_timing.csv: 3c267a6365090c696d6e4fec5795ea541b846bed56523684921f5876f02816f6
+  spec_sha256: 4e665d5b1f00d7f668643913cc467f51d6dba58738eea56a7bfed11bcd249a8d
+  renderer_sha256: 44f76ac544c696d58fad5aa5016b138c694645c3d512732dbc1fad5388bf9607
+  source_run_keys:
+  - dataset_design_4d1310a6509f

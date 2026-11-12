@@ -46,6 +46,8 @@ def tree(tmp_path_factory):
     pp.run(fx["config"], fx["root"], fx["raw"], runs / "SENSITIVITY_windows_60_60", "synthetic", sensitivity="windows_60_60")
     assert bss.main(["--runs", str(runs), "--out", str(runs / "SENSITIVITY_SUMMARY"), "--allow-synthetic"]) == 0
     bdd.build(fx["config"], fx["root"], fx["raw"], root / "03_results" / "dataset_design")
+    import derive_decision_tables as ddt
+    ddt.write(runs / "PRIMARY", root / "03_results" / "derived" / "PRIMARY")
     return root
 
 
@@ -166,17 +168,54 @@ def test_three_outcome_shares_match_rq2_and_sum_to_one(tree):
     spec = _spec(RES_CFG, "fig4_rq2_three_outcome")
     d = _dfs(tree, spec)
     fig, _, _ = brf.plot_three_outcome(d, spec)
-    t, _ = brf._display_target(d["rq2"].target.unique(), brf.REGISTERED_TARGETS)
-    g = d["rq2"][d["rq2"].target == t].set_index("class")
+    pooled = d["rq2"][d["rq2"].scope == "POOLED_ESTIMABLE"]
+    t, _ = brf._display_target(pooled.target.unique(), brf.REGISTERED_TARGETS)
+    g = pooled[pooled.target == t].set_index("class")
     widths = {}
     for p in fig.axes[0].patches:
         widths.setdefault(round(p.get_y() + p.get_height() / 2, 6), []).append(p.get_width())
     order = [c for c in brf.st.CLASS_ORDER if c in g.index]
     for i, c in enumerate(order):
         w = widths[round(float(i), 6)]
-        np.testing.assert_allclose(w, g.loc[c, ["specific", "ambiguity_set", "unresolved"]].astype(float).to_numpy())
+        np.testing.assert_allclose(w, g.loc[c, ["share_specific", "share_ambiguity_set", "share_unresolved"]].astype(float).to_numpy())
         assert abs(sum(w) - 1) < 1e-9
+    texts = " ".join(t_.get_text() for t_ in fig.texts)
+    assert "Evaluated topologies:" in texts  # the evaluated population is always stated
     plt.close(fig)
+
+
+def test_fig4_reasons_are_exclusive_and_undefined_is_explicit(tree):
+    """Regression (forensic FA-11 / FA-10): panel (c) uses the precedence-assigned primary reason (shares per class sum
+    to 1 over all non-SPECIFIC decisions); panel (b) never draws a marker for an undefined proportion."""
+    spec = _spec(RES_CFG, "fig4_rq2_three_outcome")
+    d = _dfs(tree, spec)
+    fig, _, _ = brf.plot_three_outcome(d, spec)
+    c_ax = fig.axes[2]
+    widths = {}
+    for p in c_ax.patches:
+        widths.setdefault(round(p.get_y() + p.get_height() / 2, 6), 0.0)
+        widths[round(p.get_y() + p.get_height() / 2, 6)] += p.get_width()
+    assert widths and all(abs(v - 1) < 1e-9 for v in widths.values())
+    pooled = d["rq2"][d["rq2"].scope == "POOLED_ESTIMABLE"]
+    t, _ = brf._display_target(pooled.target.unique(), brf.REGISTERED_TARGETS)
+    g = pooled[pooled.target == t]
+    n_undef = int((g.n_specific == 0).sum() + (g.n_ambiguity_set == 0).sum())
+    b_texts = [x.get_text() for x in fig.axes[1].texts]
+    assert sum("undefined" in x for x in b_texts) == n_undef
+    n_markers = sum(len(l_.get_xdata()) for l_ in fig.axes[1].lines)
+    assert n_markers == 2 * len(g) - n_undef
+    plt.close(fig)
+
+
+def test_derived_decision_tables_reproduce_registered_rq2_and_precedence(tree):
+    import derive_decision_tables as ddt
+    rec = json.loads((tree / "03_results" / "derived" / "PRIMARY" / "DERIVED_MANIFEST.json").read_text())
+    assert rec["cross_checks"] and all(c["ok"] for c in rec["cross_checks"])
+    code = "SPECIFIC_REJECTED_SINGLE_CANDIDATE;SCORE_BELOW_THRESHOLD;FLAG_BLOCKS_SPECIFIC:TOP_CLASS_FEW_INDEPENDENT_RUNS"
+    assert ddt.primary_reason(code) == "SPECIFIC_BLOCKED_BY_SUPPORT_FLAG"  # the cause, not the first token
+    assert set(ddt.contributing_reasons(code)) == {"SINGLE_CANDIDATE_REJECTED", "BELOW_MATCHED_COVERAGE_CUT",
+                                                    "SPECIFIC_BLOCKED_BY_SUPPORT_FLAG"}
+    assert ddt.primary_reason("FLAG:OUT_OF_SUPPORT") == "UNRESOLVED_BY_SUPPORT_FLAG"
 
 
 def test_error_structure_counts_match_confusion_table(tree):
@@ -242,7 +281,9 @@ def test_official_dataset_outputs_trace_to_current_sources():
     for d, f in ((ROOT / "03_results" / "figures" / "dataset_design", "FIGURE_MANIFEST.csv"),
                  (ROOT / "03_results" / "tables" / "dataset_design", "TABLE_MANIFEST.csv")):
         man = pd.read_csv(d / f)
-        assert set(man.status) == {"BUILT_FINAL"} and set(man.artifact_class) == {"DATASET_DESCRIPTIVE"}
+        assert set(man.status) <= {"BUILT_FINAL", "BUILT_PRELIMINARY"} and set(man.artifact_class) == {"DATASET_DESCRIPTIVE"}
+        fin = man[man.status == "BUILT_FINAL"]  # final only through DATASET-scope approval (dataset + science owner)
+        assert (fin.lifecycle_status == "APPROVED_FOR_PUBLICATION").all() and fin.approval_ids.notna().all()
         for r in man.itertuples():
             for inp, h in zip(r.input_file.split(";"), str(r.input_sha256).split(";")):
                 assert brf.sha256_path(ROOT / inp) == h, inp
@@ -398,3 +439,27 @@ def test_results_index_labels_robustness_analysis_and_incomplete_runs(tree, tmp_
     assert bres.validate_run(runs / "ROBUSTNESS_clean", True, pinned)["analysis"] == "clean_realization"
     assert bres.validate_run(inc, True, pinned)["status"] == "INCOMPLETE"
     assert bres.validate_run(runs / "PRIMARY", True, pinned)["analysis"] == "primary"
+
+
+def test_official_final_outputs_are_all_approved_and_current():
+    """No bypass on the real tree: every artifact in a current official final/ directory is APPROVED_FOR_PUBLICATION with
+    approval ids, its output file exists with the recorded hash, and the publication manifest lists exactly those files."""
+    res = ROOT / "03_results"
+    finals = []
+    for m in list(res.rglob("FIGURE_MANIFEST.csv")) + list(res.rglob("TABLE_MANIFEST.csv")):
+        if "superseded" in str(m):
+            continue
+        man = pd.read_csv(m)
+        if "status" not in man.columns:
+            continue
+        fin = man[man.status == "BUILT_FINAL"]
+        if len(fin):
+            assert "lifecycle_status" in man.columns, m  # a final output without lifecycle record would be a bypass
+            assert (fin.lifecycle_status == "APPROVED_FOR_PUBLICATION").all() and fin.approval_ids.notna().all(), m
+            for r in fin.itertuples():
+                assert brf.sha256_path(ROOT / r.output_file) == r.output_sha256, r.output_file
+            finals += fin.output_file.tolist()
+    pm = res / "PUBLICATION_MANIFEST.csv"
+    if pm.exists():
+        listed = set(pd.read_csv(pm).output_file)
+        assert listed <= set(finals)

@@ -2,140 +2,328 @@
 # Built ONLY from runner outputs of an authorized PRIMARY run (03_results/primary_protocol/PRIMARY/, fixed --out)
 # and the sensitivity summary. Before such a run exists every input is missing -> NOT_BUILT_MISSING_EVIDENCE.
 # Synthetic/preflight inputs are routed to illustrative/ and REFUSED for any output inside 03_results/.
-# evidence_status must be raised to VALIDATED/FROZEN by the owners after PRIMARY_RESULTS_VALIDATION before final/.
+# Publication (final/, no watermark) only via scoped, hash-bound approvals (configs/publication_policy.yaml,
+# tools/reporting/publication.py); evidence_status below is informational and grants nothing.
 dpi: 300
 fail_on_missing: true
 figures:
-  - id: fig2_rq1_risk_coverage
-    group: RQ1
-    kind: risk_coverage_panels
-    inputs:
-      curve: {input: 03_results/primary_protocol/PRIMARY/risk_coverage_curve.csv, filter: {variant: primary}}
-      targets: {input: 03_results/primary_protocol/PRIMARY/coverage_risk.csv, filter: {variant: primary, mode: rank_matched}}
-    methods: [s_C, s_C_minus_D, confidence]
-    empty_means_not_estimable: true
-    title: "Fig. 2  Selective risk versus coverage (primary safeguarded policy)"
-    units: "coverage and selective risk (fractions)"
-    metric_definition: "PA-1 exact-count selection on a 0.05 grid; pooled points exist only where attainable in every held-out topology; open markers: registered targets (0.60/0.80/0.90) at realized coverage"
-    limitations: "descriptive curve; registered estimands are the matched-coverage targets; three held-out topologies"
-    evidence_status: PENDING
-    source_experiment: F10_PRIMARY
-    research_question: RQ1
-    caption: >-
-      Selective risk versus coverage for the combined score with D(x) (s_C), its no-D ablation (s_C−D) and the
-      confidence-only baseline under the primary safeguarded policy. (a) Pooled over the three held-out topologies;
-      dotted lines mark the registered coverage targets and open markers their realized operating points; the shaded
-      region is not attainable because D(x) support safeguards withhold SPECIFIC decisions. (b–d) Each held-out
-      topology. Curves are not extrapolated beyond attainable coverage.
-  - id: fig3_rq1_incremental_value
-    group: RQ1
-    kind: incremental_value
-    inputs:
-      rq1: {input: 03_results/primary_protocol/PRIMARY/rq1.csv, filter: {variant: primary, mode: rank_matched}}
-      by_topology: {input: 03_results/primary_protocol/PRIMARY/rq1_by_topology.csv, filter: {variant: primary, mode: rank_matched, comparison_b: s_C_minus_D}}
-      tie: {input: 03_results/primary_protocol/PRIMARY/tie_sensitivity.csv}
-    title: "Fig. 3  Incremental decision value of D(x) at matched coverage"
-    units: "selective-risk difference (fraction)"
-    metric_definition: "pooled risk(s_C) − risk(comparator) at identical PA-1 coverage; 95% percentile interval of 2000 topology-stratified family-bootstrap replicates; per-topology points are single-fold estimates; tie panel: 20 alternative tie salts"
-    limitations: "conditional on three simulated topologies; not a generalisation interval; effect sizes only; non-estimable comparisons are listed, not imputed"
-    evidence_status: PENDING
-    source_experiment: F10_PRIMARY
-    research_question: RQ1
-    caption: >-
-      Incremental decision value of D(x). (a) Paired differences in selective risk between s_C and each comparator at
-      matched coverage (negative favours s_C; filled squares: the primary contrast against the no-D ablation s_C−D);
-      bars are 95% topology-stratified family-bootstrap intervals conditional on the three simulated topologies.
-      (b) The primary contrast in each held-out topology (single-fold point estimates). (c) Sensitivity of the
-      primary contrast to the deterministic tie-breaking order (protocol amendment PA-1).
-  - id: fig4_rq2_three_outcome
-    group: RQ2
-    kind: three_outcome
-    inputs:
-      rq2: {input: 03_results/primary_protocol/PRIMARY/rq2.csv, filter: {variant: primary, mode: rank_matched}}
-      reasons: {input: 03_results/primary_protocol/PRIMARY/decision_reasons.csv, filter: {variant: primary, method: s_C, mode: rank_matched}}
-      flags: {input: 03_results/primary_protocol/PRIMARY/support_flags_summary.csv}
-    empty_means_not_estimable: true
-    title: "Fig. 4  Three-outcome decisions of H$_2$-PRISM (s_C, primary policy)"
-    units: "shares of eligible windows"
-    metric_definition: "per true class: SPECIFIC / AMBIGUITY_SET / UNRESOLVED shares, SPECIFIC correctness, true-class inclusion of ambiguity sets, first reason of non-SPECIFIC decisions, D(x) flag rates; displayed target = 0.80 if estimable, else the highest estimable registered target (label-free rule)"
-    limitations: "LEAK restricted; NORMAL/FAULT/DELAY descriptive (one family per topology); DELAY confounded with start-up; inclusion is not specific accuracy"
-    evidence_status: PENDING
-    source_experiment: F10_PRIMARY
-    research_question: RQ2
-    caption: >-
-      Three-outcome decision behaviour of s_C under the primary policy. (a) Shares of SPECIFIC, AMBIGUITY_SET and
-      UNRESOLVED decisions per true class (windows and independent families annotated). (b) Correctness of SPECIFIC
-      decisions and inclusion of the true class in two-class ambiguity sets, reported separately. (c) First recorded
-      reason for non-SPECIFIC decisions. (d) Frequency of D(x) independent-support flags; TOP_CLASS_FEW_INDEPENDENT_RUNS
-      and LOW_SCENARIO_DIVERSITY withhold SPECIFIC decisions.
-  - id: fig5_error_structure
-    group: model_validation
-    kind: error_structure
-    inputs:
-      confusion: {input: 03_results/primary_protocol/PRIMARY/confusion_matrix.csv, filter: {scope: pooled}}
-      class_metrics: {input: 03_results/primary_protocol/PRIMARY/class_metrics.csv}
-      reliability: {input: 03_results/primary_protocol/PRIMARY/calibration_reliability.csv}
-    title: "Fig. 5  Classifier error structure and calibration (held-out topologies)"
-    units: "window counts and row shares; window-level scores; probability"
-    metric_definition: "calibrated top-label confusion pooled over held-out topologies; per-class precision/recall/F1 with runs and families; 10-bin top-label reliability of uncalibrated and calibrated probabilities"
-    limitations: "classifier output, not the selective decision; window-level scores overstate independent evidence; thin classes descriptive"
-    evidence_status: PENDING
-    source_experiment: F10_PRIMARY
-    research_question: "supporting (F5/F6)"
-    caption: >-
-      Error structure of the underlying Random Forest on held-out topologies. (a) Confusion matrix of the calibrated
-      top label (row shares and window counts). (b) Window-level precision, recall and F1 per class with the number of
-      independent runs and families behind each class. (c) Top-label reliability before and after development-only
-      calibration. These panels describe the classifier, not the selective H$_2$-PRISM decision.
-  - id: fig6_robustness
-    group: robustness
-    kind: robustness
-    inputs:
-      summary: {input: 03_results/primary_protocol/SENSITIVITY_SUMMARY/sensitivity_summary.csv}
-    title: "Fig. 6  Robustness of the primary contrast across registered analyses"
-    units: "selective-risk difference (fraction)"
-    metric_definition: "s_C − s_C−D at matched coverage (PA-1) with 95% family-bootstrap interval in each authorized analysis; values copied from each run's rq1.csv"
-    limitations: "analyses with a different window population or independence units are open markers and are compared by direction only; sensitivity results never replace the primary result"
-    evidence_status: PENDING
-    source_experiment: SENSITIVITY_SUMMARY
-    research_question: "RQ1 robustness"
-    caption: >-
-      The primary contrast (s_C minus s_C−D) at matched coverage 0.80 (a) and 0.60 (b) in the primary analysis and in
-      each registered robustness and sensitivity analysis. Open markers denote analyses that evaluate a different
-      window population or different independence units; analyses that were not run or are not estimable are labelled.
+- id: fig2_rq1_risk_coverage
+  group: RQ1
+  kind: risk_coverage_panels
+  inputs:
+    curve:
+      input: 03_results/primary_protocol/PRIMARY/risk_coverage_curve.csv
+      filter:
+        variant: primary
+    targets:
+      input: 03_results/primary_protocol/PRIMARY/coverage_risk.csv
+      filter:
+        variant: primary
+        mode: rank_matched
+  methods:
+  - s_C
+  - s_C_minus_D
+  - confidence
+  empty_means_not_estimable: true
+  title: Fig. 2  Selective risk versus coverage (primary safeguarded policy)
+  units: coverage and selective risk (fractions)
+  metric_definition: 'PA-1 exact-count selection on a 0.05 grid; pooled points exist only where attainable in every held-out
+    topology; open markers: registered targets (0.60/0.80/0.90) at realized coverage'
+  limitations: descriptive curve; registered estimands are the matched-coverage targets; three held-out topologies; Center
+    and Downstream reflect the disputed release topology attribution (L12 / R-18)
+  evidence_status: PENDING
+  source_experiment: F10_PRIMARY
+  research_question: RQ1
+  caption: Selective risk versus coverage for the combined score with D(x) (s_C), its no-D ablation (s_C−D) and the confidence-only
+    baseline under the primary safeguarded policy. (a) Pooled over the three held-out topologies; dotted lines mark the registered
+    coverage targets and open markers their realized operating points; the shaded region is not attainable because D(x) support
+    safeguards withhold SPECIFIC decisions. (b–d) Each held-out topology. Curves are not extrapolated beyond attainable coverage.
+- id: fig3_rq1_incremental_value
+  group: RQ1
+  kind: incremental_value
+  inputs:
+    rq1:
+      input: 03_results/primary_protocol/PRIMARY/rq1.csv
+      filter:
+        variant: primary
+        mode: rank_matched
+    by_topology:
+      input: 03_results/primary_protocol/PRIMARY/rq1_by_topology.csv
+      filter:
+        variant: primary
+        mode: rank_matched
+        comparison_b: s_C_minus_D
+    tie:
+      input: 03_results/primary_protocol/PRIMARY/tie_sensitivity.csv
+  title: Fig. 3  Incremental decision value of D(x) at matched coverage
+  units: selective-risk difference (fraction)
+  metric_definition: 'pooled risk(s_C) − risk(comparator) at identical PA-1 coverage; 95% percentile interval of 2000 topology-stratified
+    family-bootstrap replicates; per-topology points are single-fold estimates; tie panel: 20 alternative tie salts'
+  limitations: conditional on three simulated topologies; not a generalisation interval; effect sizes only; non-estimable
+    comparisons are listed, not imputed
+  evidence_status: PENDING
+  source_experiment: F10_PRIMARY
+  research_question: RQ1
+  caption: 'Incremental decision value of D(x). (a) Paired differences in selective risk between s_C and each comparator at
+    matched coverage (negative favours s_C; filled squares: the primary contrast against the no-D ablation s_C−D); bars are
+    95% topology-stratified family-bootstrap intervals conditional on the three simulated topologies. (b) The primary contrast
+    in each held-out topology (single-fold point estimates). (c) Sensitivity of the primary contrast to the deterministic
+    tie-breaking order (protocol amendment PA-1). Comparisons that are not estimable under the registered protocol are labelled
+    and no value is drawn; in R2 this applies to every registered comparison (pooled estimates require every fold, and Center''s
+    flag-free coverage ceiling is 0.258; see T7).'
+- id: fig4_rq2_three_outcome
+  group: RQ2
+  kind: three_outcome
+  inputs:
+    rq2:
+      input: 03_results/derived/PRIMARY/rq2_scoped.csv
+      filter:
+        variant: primary
+        method: s_C
+        mode: rank_matched
+    reasons:
+      input: 03_results/derived/PRIMARY/decision_reasons_primary.csv
+      filter:
+        variant: primary
+        method: s_C
+        mode: rank_matched
+    flags:
+      input: 03_results/derived/PRIMARY/support_flags_scoped.csv
+  empty_means_not_estimable: true
+  title: Fig. 4  Three-outcome decisions of H$_2$-PRISM (s_C, primary policy)
+  units: shares and counts of evaluated windows
+  metric_definition: 'per true class, over the held-out topologies where the displayed target is attainable (POOLED_ESTIMABLE
+    scope): SPECIFIC / AMBIGUITY_SET / UNRESOLVED shares and counts; SPECIFIC correctness k/n and true-class inclusion of
+    ambiguity sets k/n (undefined if n = 0); mutually exclusive primary reason of non-SPECIFIC decisions (documented precedence,
+    tools/reporting/derive_decision_tables.py REASON_PRECEDENCE); non-exclusive D(x) support-flag rates over the same windows.
+    Displayed target = 0.80 if estimable, else the highest estimable registered target (label-free rule)'
+  limitations: 'Evaluated population excludes topologies where the target is unattainable (named in the figure). Independent
+    support is thin: NORMAL, C-DELAY and C-FAULT rest on ONE independence group each (forensic FA-03). Topology attribution
+    of 36 event runs is disputed (L12 / R-18). Correctness of SPECIFIC decisions is not classifier accuracy; inclusion is
+    not specific accuracy; flag-free is not correct.'
+  evidence_status: PENDING
+  source_experiment: F10_PRIMARY
+  research_question: RQ2
+  caption: Three-outcome decision behaviour of s_C under the primary policy at the displayed coverage target, over the held-out
+    topologies where that target is attainable (named above the panels; Center is excluded at 0.60 because its maximum attainable
+    coverage is 0.258). (a) Shares and counts of SPECIFIC, AMBIGUITY_SET and UNRESOLVED decisions per true class, with windows,
+    runs and independence groups (family or scenario-replica links). (b) Correctness of issued SPECIFIC decisions and inclusion
+    of the true class in issued ambiguity sets, as k/n; undefined where no such decision exists; neither is classifier accuracy.
+    (c) Primary reason for non-SPECIFIC decisions, assigned by a documented precedence rule (support-flag block before matched-coverage
+    cut before set construction); contributing, non-exclusive reasons are tabulated in T6c. (d) Rates of D(x) support flags
+    over the same windows; flags overlap, and flag-free windows are not necessarily correct.
+- id: fig5_error_structure
+  group: model_validation
+  kind: error_structure
+  inputs:
+    confusion:
+      input: 03_results/primary_protocol/PRIMARY/confusion_matrix.csv
+      filter:
+        scope: pooled
+    class_metrics:
+      input: 03_results/primary_protocol/PRIMARY/class_metrics.csv
+    reliability:
+      input: 03_results/primary_protocol/PRIMARY/calibration_reliability.csv
+  title: Fig. 5  Classifier error structure and calibration (held-out topologies)
+  units: window counts and row shares; window-level scores; probability
+  metric_definition: calibrated top-label confusion pooled over held-out topologies; per-class precision/recall/F1 with runs
+    and families; 10-bin top-label reliability of uncalibrated and calibrated probabilities
+  limitations: classifier output, not the selective decision; window-level scores overstate independent evidence; thin classes
+    descriptive; pooled over topologies whose release attribution is disputed (L12 / R-18)
+  evidence_status: PENDING
+  source_experiment: F10_PRIMARY
+  research_question: supporting (F5/F6)
+  caption: Error structure of the underlying Random Forest on held-out topologies. (a) Confusion matrix of the calibrated
+    top label, pooled over the three held-out topologies (row shares and window counts); 7,972 of the 8,012 errors (Center
+    LEAK to NORMAL, Downstream NORMAL to LEAK or FAULT) follow the disputed Center/Downstream topology attribution of the
+    release (L12 / R-18). (b) Window-level precision, recall and F1 per class with the runs and topology-scoped families behind
+    each class; families are not independent across topologies (NORMAL, C-DELAY and C-FAULT each rest on one scenario independence
+    group). (c) Top-label reliability; development-only calibration selected 'none' in every fold, so the two curves coincide.
+    These panels describe the classifier, not the selective H$_2$-PRISM decision.
+- id: fig6_robustness
+  group: robustness
+  kind: robustness
+  inputs:
+    summary:
+      input: 03_results/primary_protocol/SENSITIVITY_SUMMARY/sensitivity_summary.csv
+  title: Fig. 6  Robustness of the primary contrast across registered analyses
+  units: selective-risk difference (fraction)
+  metric_definition: s_C − s_C−D at matched coverage (PA-1) with 95% family-bootstrap interval in each authorized analysis;
+    values copied from each run's rq1.csv
+  limitations: analyses with a different window population or independence units are open markers and are compared by direction
+    only; sensitivity results never replace the primary result
+  evidence_status: PENDING
+  source_experiment: SENSITIVITY_SUMMARY
+  research_question: RQ1 robustness
+  caption: The primary contrast (s_C minus s_C−D) at matched coverage 0.80 (a) and 0.60 (b) in the primary analysis and in
+    each registered robustness and sensitivity analysis. Open markers denote analyses that evaluate a different window population
+    or different independence units; analyses that were not run or are not estimable are labelled. Comparisons that are not
+    estimable under the registered protocol are labelled and no value is drawn; this applies to every registered comparison
+    in every completed analysis (pooled estimates require every fold, and Center's flag-free coverage ceiling is 0.258; see
+    T7).
 tables:
-  - id: T4_matched_coverage
-    input: 03_results/primary_protocol/PRIMARY/coverage_risk.csv
-    filter: {variant: primary, mode: rank_matched}
-    columns: [method, target, coverage, selective_risk, n_specific, n_eligible, n_families, folds_estimable]
-    rename: {target: target_coverage}
-    source_experiment: F10_PRIMARY
-    evidence_status: PENDING
-    caption: "Matched-coverage operating points (PA-1) of every method under the primary policy; selective risk is undefined when no SPECIFIC decision exists."
-  - id: T5_rq1_effects
-    input: 03_results/primary_protocol/PRIMARY/rq1.csv
-    filter: {variant: primary}
-    columns: [comparison_b, comparison_role, target, mode, status, folds_estimable, realized_coverage_a, realized_coverage_b, difference, ci_low, ci_high, n_units]
-    source_experiment: F10_PRIMARY
-    evidence_status: PENDING
-    caption: "RQ1 paired effects: risk(s_C) − risk(comparator), 95% topology-stratified family bootstrap; rank-matched (primary rule) and threshold-transfer (secondary) modes."
-  - id: T6_rq2_outcomes
-    input: 03_results/primary_protocol/PRIMARY/rq2.csv
-    filter: {variant: primary, mode: rank_matched}
-    columns: [target, class, n, n_families, specific, ambiguity_set, unresolved, specific_correct, ambiguity_inclusion, reporting]
-    source_experiment: F10_PRIMARY
-    evidence_status: PENDING
-    caption: "RQ2 decision outcomes per true class for s_C under the primary policy."
-  - id: T7_estimability
-    input: 03_results/primary_protocol/PRIMARY/estimability.csv
-    filter: {variant: primary, mode: rank_matched}
-    columns: [fold, method, target, status, test_max_attainable_coverage, requested_count, realized_count, n_tied_at_boundary, n_tied_selected]
-    source_experiment: F10_PRIMARY
-    evidence_status: PENDING
-    caption: "Estimability of every registered target per held-out fold and method (PA-1 requested and realized counts, ties at the boundary)."
-  - id: T8_robustness
-    input: 03_results/primary_protocol/SENSITIVITY_SUMMARY/sensitivity_summary.csv
-    columns: [analysis, population_note, target, status, realized_coverage_a, difference, ci_low, ci_high, n_units, run_id]
-    source_experiment: SENSITIVITY_SUMMARY
-    evidence_status: PENDING
-    caption: "Primary contrast across registered analyses, with the evaluated population of each analysis."
+- id: T4_matched_coverage
+  input: 03_results/primary_protocol/PRIMARY/coverage_risk.csv
+  filter:
+    variant: primary
+    mode: rank_matched
+  columns:
+  - method
+  - target
+  - coverage
+  - selective_risk
+  - n_specific
+  - n_eligible
+  - n_families
+  - folds_estimable
+  rename:
+    target: target_coverage
+  source_experiment: F10_PRIMARY
+  evidence_status: PENDING
+  caption: Matched-coverage operating points (PA-1) of every method under the primary policy; selective risk is undefined
+    when no SPECIFIC decision exists.
+  limitations: descriptive; registered estimands only where estimable in every fold
+- id: T5_rq1_effects
+  input: 03_results/primary_protocol/PRIMARY/rq1.csv
+  filter:
+    variant: primary
+  columns:
+  - comparison_b
+  - comparison_role
+  - target
+  - mode
+  - status
+  - folds_estimable
+  - realized_coverage_a
+  - realized_coverage_b
+  - difference
+  - ci_low
+  - ci_high
+  - n_units
+  source_experiment: F10_PRIMARY
+  evidence_status: PENDING
+  caption: 'RQ1 paired effects: risk(s_C) − risk(comparator), 95% topology-stratified family bootstrap; rank-matched (primary
+    rule) and threshold-transfer (secondary) modes. Every registered comparison of R2 is NOT_ESTIMABLE (values empty, never
+    imputed).'
+  limitations: effect sizes only; conditional on three simulated topologies
+- id: T6_rq2_outcomes
+  input: 03_results/derived/PRIMARY/rq2_scoped.csv
+  filter:
+    variant: primary
+    method: s_C
+    mode: rank_matched
+  columns:
+  - target
+  - class
+  - scope
+  - topologies_included
+  - exclusion_reason
+  - n_windows
+  - n_runs
+  - n_families
+  - n_independence_groups
+  - n_specific
+  - n_specific_correct
+  - specific_correct
+  - n_ambiguity_set
+  - n_ambiguity_includes_true
+  - ambiguity_inclusion
+  - n_unresolved
+  source_experiment: F10_PRIMARY
+  evidence_status: PENDING
+  caption: RQ2 decision outcomes per true class for s_C under the primary policy, pooled over the topologies where the target
+    is attainable (POOLED_ESTIMABLE) and per topology; denominators and independence groups stated; correctness and inclusion
+    are undefined (empty) where no such decision exists.
+  limitations: thin classes rest on one independence group each; L12 / R-18
+- id: T6b_rq2_primary_reasons
+  input: 03_results/derived/PRIMARY/decision_reasons_primary.csv
+  filter:
+    variant: primary
+    method: s_C
+    mode: rank_matched
+  columns:
+  - target
+  - class
+  - policy_outcome
+  - primary_reason
+  - n
+  - n_non_specific_in_class
+  - topologies_included
+  source_experiment: F10_PRIMARY
+  evidence_status: PENDING
+  caption: 'Mutually exclusive primary reason of every non-SPECIFIC decision (precedence: unresolved-by-flag, SPECIFIC blocked
+    by support flag, invalid score, below matched-coverage cut, ambiguity set too broad, single candidate rejected).'
+  limitations: precedence rule documented in tools/reporting/derive_decision_tables.py
+- id: T6c_rq2_contributing_reasons
+  input: 03_results/derived/PRIMARY/decision_reasons_contributing.csv
+  filter:
+    variant: primary
+    method: s_C
+    mode: rank_matched
+  columns:
+  - target
+  - class
+  - contributing_reason
+  - n_decisions_with_reason
+  - n_non_specific_in_class
+  - topologies_included
+  source_experiment: F10_PRIMARY
+  evidence_status: PENDING
+  caption: 'Non-exclusive contributing reasons: a non-SPECIFIC decision counts once for every reason recorded in its reason
+    code; counts do not sum to the number of decisions.'
+  limitations: non-exclusive counts
+- id: T7_estimability
+  input: 03_results/primary_protocol/PRIMARY/estimability.csv
+  filter:
+    variant: primary
+    mode: rank_matched
+  columns:
+  - fold
+  - method
+  - target
+  - status
+  - test_max_attainable_coverage
+  - requested_count
+  - realized_count
+  - n_tied_at_boundary
+  - n_tied_selected
+  source_experiment: F10_PRIMARY
+  evidence_status: PENDING
+  caption: Estimability of every registered target per held-out fold and method (PA-1 requested and realized counts, ties
+    at the boundary).
+  limitations: per fold; pooled estimability requires every fold
+- id: T8_robustness
+  input: 03_results/primary_protocol/SENSITIVITY_SUMMARY/sensitivity_summary.csv
+  columns:
+  - analysis
+  - population_note
+  - target
+  - status
+  - realized_coverage_a
+  - difference
+  - ci_low
+  - ci_high
+  - n_units
+  - run_id
+  source_experiment: SENSITIVITY_SUMMARY
+  evidence_status: PENDING
+  caption: Primary contrast across registered analyses, with the evaluated population of each analysis.
+  limitations: different populations compared by direction only
+- id: T9_matched_selection_ties
+  input: 03_results/derived/PRIMARY/matched_selection_ties.csv
+  filter:
+    variant: primary
+    mode: rank_matched
+  columns:
+  - topology
+  - method
+  - target
+  - requested_count
+  - n_tied_at_boundary
+  - n_tied_selected
+  - share_selected_by_tie_key
+  source_experiment: F10_PRIMARY
+  evidence_status: PENDING
+  caption: Share of each estimable matched selection decided by the label-free PA-1 tie key rather than by score (coarse scores;
+    forensic FA-09).
+  limitations: reporting of selection arbitrariness; risk unchanged across 20 alternative salts in R2

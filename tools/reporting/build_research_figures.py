@@ -343,75 +343,130 @@ def plot_incremental_value(d, spec):
 
 
 def plot_three_outcome(d, spec):
+    """Fig. 4 from the authoritative decision-level tables (tools/reporting/derive_decision_tables.py).
+
+    (a) outcome shares per true class for the POOLED_ESTIMABLE scope, with the evaluated topologies, denominators and
+        independent support stated; (b) SPECIFIC correctness k/n and true-class inclusion of ambiguity sets k/n, each
+        'undefined' when no such decision exists; (c) the mutually exclusive PRIMARY reason (documented precedence) for
+        non-SPECIFIC decisions; (d) non-exclusive support-flag rates over the SAME evaluated windows.
+    """
     rq2, reasons, flags = d["rq2"], d.get("reasons"), d.get("flags")
-    t, why = _display_target(rq2.target.unique(), REGISTERED_TARGETS)
-    fig, axs = plt.subplots(2, 2, figsize=(7.4, 5.8), gridspec_kw={"hspace": 0.6, "wspace": 0.45})
+    pooled = rq2[rq2.scope == "POOLED_ESTIMABLE"]
+    t, why = _display_target(pooled.target.unique(), REGISTERED_TARGETS)
+    fig, axs = plt.subplots(2, 2, figsize=(7.6, 6.4), gridspec_kw={"hspace": 0.95, "wspace": 0.55})
     a, b, c, e = axs.ravel()
-    g = rq2[rq2.target == t].set_index("class").reindex([k for k in st.CLASS_ORDER if k in set(rq2["class"])]).dropna(subset=["n"])
+    if t is None:
+        for ax in axs.ravel():
+            _note(ax, "no registered coverage target is estimable")
+        fig.suptitle(spec.get("title", ""), fontsize=11, fontweight="bold")
+        return fig, 0, 0
+    g = pooled[pooled.target == t].set_index("class")
+    g = g.reindex([k for k in st.CLASS_ORDER if k in g.index])
+    inc = str(g.topologies_included.iloc[0]).split("|")
+    exc_reason = str(g.exclusion_reason.iloc[0]) if "exclusion_reason" in g.columns and pd.notna(g.exclusion_reason.iloc[0]) else ""
+    y = np.arange(len(g))
     left = np.zeros(len(g))
     for col, (colr, hatch, lab) in st.OUTCOMES.items():
-        a.barh(np.arange(len(g)), g[col], left=left, color=colr, hatch=hatch, edgecolor="white", label=lab)
-        left += g[col].to_numpy(float)
-    a.set_yticks(np.arange(len(g)), [f"{st.CLASS_SHORT[k]}\n{int(n)} w · {int(f)} fam" for k, n, f in zip(g.index, g["n"], g["n_families"])],
-                 fontsize=6.5)
+        a.barh(y, g[f"share_{col}"], left=left, color=colr, hatch=hatch, edgecolor="white", label=lab)
+        left += g[f"share_{col}"].to_numpy(float)
+    a.set_yticks(y, [f"{st.CLASS_SHORT[k]}\n{int(r.n_windows):,} windows\n{int(r.n_runs)} runs · {int(r.n_independence_groups)} indep. group"
+                     f"{'s' if int(r.n_independence_groups) != 1 else ''}" for k, r in g.iterrows()], fontsize=6)
+    for i, (_, r) in enumerate(g.iterrows()):
+        a.text(1.02, i, f"{int(r.n_specific):,} / {int(r.n_ambiguity_set):,} / {int(r.n_unresolved):,}", va="center", ha="left",
+               fontsize=5.5, color=st.INK, transform=a.get_yaxis_transform())
+    a.text(1.02, len(g) - 0.35, "SPEC / AMB / UNRES", va="bottom", ha="left", fontsize=5.2, color=st.MUTED, transform=a.get_yaxis_transform())
     a.set_xlim(0, 1)
-    a.set_xlabel("Share of eligible windows")
-    a.legend(fontsize=6, loc="lower center", bbox_to_anchor=(0.5, 1.12), ncol=3, frameon=False)
-    a.set_title(f"Decision outcomes @ coverage {t:.2f}", fontsize=9, pad=18)
+    a.set_xlabel("Share of evaluated windows of the class")
+    a.legend(fontsize=6, loc="lower center", bbox_to_anchor=(0.5, 1.13), ncol=3, frameon=False)
+    a.set_title(f"Decision outcomes @ coverage {t:.2f}", fontsize=9, pad=20)
     st.panel_label(a, "a")
-    y = np.arange(len(g))
-    b.plot(g["specific_correct"], y + 0.1, ls="none", marker="o", color=st.COLORS["primary"], label="SPECIFIC correct")
-    b.plot(g["ambiguity_inclusion"], y - 0.1, ls="none", marker="s", mfc="white", color=st.COLORS["accent_warm"],
-           label="true class in AMBIGUITY_SET")
+    # (b) correctness of SPECIFIC vs inclusion of the true class: separate quantities, explicit k/n, undefined if n = 0
+    for i, (_, r) in enumerate(g.iterrows()):
+        for off, n_key, k_key, val_key, mk, colr, mfc in (
+                (0.15, "n_specific", "n_specific_correct", "specific_correct", "o", st.COLORS["primary"], st.COLORS["primary"]),
+                (-0.15, "n_ambiguity_set", "n_ambiguity_includes_true", "ambiguity_inclusion", "s", st.COLORS["accent_warm"], st.COLORS["accent_warm"])):
+            n, k = int(r[n_key]), int(r[k_key])
+            if n == 0:
+                what = "no SPECIFIC issued" if n_key == "n_specific" else "no ambiguity set issued"
+                b.text(0.02, i + off, f"{what}: undefined", va="center", ha="left", fontsize=5.5, color=st.MUTED)
+            else:
+                b.plot(k / n, i + off, ls="none", marker=mk, ms=5, color=colr, mfc=mfc)
+                b.text(k / n - 0.03, i + off, f"{k:,}/{n:,}", va="center", ha="right", fontsize=5.5, color=st.INK)
+    b.plot([], [], ls="none", marker="o", color=st.COLORS["primary"], label="SPECIFIC correct (of SPECIFIC)")
+    b.plot([], [], ls="none", marker="s", color=st.COLORS["accent_warm"], label="true class in AMBIGUITY_SET (of sets)")
     b.set_yticks(y, [st.CLASS_SHORT[k] for k in g.index], fontsize=7)
-    b.set_xlim(-0.02, 1.02)
-    b.set_xlabel("Share (undefined if no such decision)")
-    b.legend(fontsize=6, loc="upper center", bbox_to_anchor=(0.5, -0.32), ncol=2, frameon=False)
+    b.set_ylim(-0.6, len(g) - 0.4)
+    b.set_xlim(-0.02, 1.05)
+    b.set_xlabel("Share among issued decisions of that kind\n(not classifier accuracy)")
+    b.legend(fontsize=5.8, loc="upper center", bbox_to_anchor=(0.5, -0.32), ncol=1, frameon=False)
     b.set_title("Correctness vs inclusion", fontsize=9)
     st.panel_label(b, "b")
+    # (c) PRIMARY reason: mutually exclusive (precedence rule), shares of non-SPECIFIC decisions of the class
     if reasons is not None and len(reasons):
         r = reasons[reasons.target == t]
-        r = r[r.policy_outcome != "SPECIFIC"]
-        p = r.groupby(["class", "reason"])["n"].sum().unstack("reason").fillna(0)
+        p = r.groupby(["class", "primary_reason"])["n"].sum().unstack("primary_reason").fillna(0)
         p = p.reindex([k for k in st.CLASS_ORDER if k in p.index])
-        share = p.div(p.sum(axis=1).replace(0, np.nan), axis=0).fillna(0)
+        order = [x for x in REASON_ORDER if x in p.columns] + [x for x in p.columns if x not in REASON_ORDER]
+        p = p[order]
+        tot = p.sum(axis=1)
+        share = p.div(tot.replace(0, np.nan), axis=0).fillna(0)
         left = np.zeros(len(share))
-        # reasons use colours NOT used for the three outcomes in panel (a) (primary / accent_warm / gray_medium)
-        pal = [st.COLORS[k] for k in ("secondary", "purple", "gray_dark", "secondary", "purple", "gray_dark")]
         for i, col in enumerate(share.columns):
-            c.barh(np.arange(len(share)), share[col], left=left, color=pal[i % len(pal)], hatch=("", "//", "..", "xx", "\\\\", "++")[i % 6],
-                   edgecolor="white", label=col)
+            colr, hatch = REASON_STYLE.get(col, (st.COLORS["gray_dark"], ""))
+            c.barh(np.arange(len(share)), share[col], left=left, color=colr, hatch=hatch, edgecolor="white",
+                   label=col.replace("_", " ").lower())
             left += share[col].to_numpy(float)
-        c.set_yticks(np.arange(len(share)), [st.CLASS_SHORT[k] for k in share.index], fontsize=7)
+        c.set_yticks(np.arange(len(share)), [f"{st.CLASS_SHORT[k]}\nn={int(n):,}" for k, n in zip(share.index, tot)], fontsize=6.5)
         c.set_xlim(0, 1)
-        c.set_xlabel("Share of non-SPECIFIC decisions")
-        c.legend(fontsize=5.5, loc="upper center", bbox_to_anchor=(0.5, -0.3), ncol=2, frameon=False)
+        c.set_xlabel("Share of non-SPECIFIC decisions (exclusive)")
+        c.legend(fontsize=5.5, loc="upper center", bbox_to_anchor=(0.5, -0.32), ncol=1, frameon=False)
     else:
         _note(c, "no recorded reasons")
-    c.set_title("Why not SPECIFIC (first reason)", fontsize=9)
+    c.set_title("Why not SPECIFIC: primary reason", fontsize=9)
     st.panel_label(c, "c")
+    # (d) non-exclusive flag rates over the SAME evaluated topologies as (a)
     if flags is not None and len(flags):
-        fg = flags.groupby(["flag", "class"])[["n_flagged", "n_windows"]].sum()
-        rate = (fg.n_flagged / fg.n_windows.replace(0, np.nan)).unstack("class").fillna(0)
-        rate = rate.loc[(rate > 0).any(axis=1)] if (rate > 0).any().any() else rate
+        f = flags[(flags.kind == "NON_EXCLUSIVE_FLAG") & flags.topology.isin(inc)]
+        den = flags[flags.topology.isin(inc)].drop_duplicates(["topology", "class"]).groupby("class").n_windows.sum()
+        anyf = flags[flags.topology.isin(inc)].drop_duplicates(["topology", "class"]).groupby("class").n_any_flag.sum()
+        cnt = f.groupby(["flag_or_combination", "class"]).n.sum().unstack("class").fillna(0)
+        cnt.loc["ANY FLAG"] = anyf
+        cnt = cnt.loc[(cnt > 0).any(axis=1)]
+        rate = cnt.div(den, axis=1).fillna(0)
         cl = [k for k in st.CLASS_ORDER if k in rate.columns]
         w = 0.8 / max(len(cl), 1)
         for i, k in enumerate(cl):
             sty = st.class_style(k)
             e.barh(np.arange(len(rate)) + (i - (len(cl) - 1) / 2) * w, rate[k], w, color=sty["color"], hatch=sty["hatch"],
-                   edgecolor="white", label=sty["label"])
+                   edgecolor="white", label=f"{sty['label']} (n={int(den.get(k, 0)):,})")
         import textwrap
-        e.set_yticks(np.arange(len(rate)), [textwrap.fill(f.replace("_", " ").lower(), 16) for f in rate.index], fontsize=6)
+        e.set_yticks(np.arange(len(rate)), [textwrap.fill(x.replace("_", " ").lower(), 18) for x in rate.index], fontsize=5.8)
         e.set_xlim(0, 1)
-        e.set_xlabel("Share of held-out windows flagged")
-        _legend(e, fontsize=5.5, loc="lower right")
+        e.set_xlabel("Share of evaluated windows flagged\n(a window can carry several flags)")
+        e.legend(fontsize=5.5, loc="upper center", bbox_to_anchor=(0.5, -0.32), ncol=2, frameon=False)
     else:
-        _note(e, "no support-flag summary")
-    e.set_title("D(x) support flags", fontsize=9)
+        _note(e, "no support-flag table")
+    e.set_title("D(x) support flags (flag-free ≠ correct)", fontsize=8.5)
     st.panel_label(e, "d")
-    fig.suptitle(spec.get("title", ""), fontsize=11, fontweight="bold", y=1.045)
-    fig.text(0.5, 1.0, f"Displayed coverage target {t:.2f} ({why}; label-free display rule)", ha="center", va="bottom", fontsize=7.5, color=st.MUTED)
+    fig.suptitle(spec.get("title", ""), fontsize=11, fontweight="bold", y=1.09)
+    scope = f"Evaluated topologies: {', '.join(inc)}"
+    if exc_reason:
+        import re as _re
+        exc_txt = "; ".join(f"{m.group(1)} (target unattainable; max attainable coverage {m.group(2)})"
+                            for m in _re.finditer(r"(\w+): \w+ \(max attainable ([0-9.]+)\)", exc_reason)) or exc_reason
+        scope += f"  |  excluded: {exc_txt}"
+    fig.text(0.5, 1.025, f"Displayed coverage target {t:.2f} ({why}; label-free display rule)", ha="center", va="bottom", fontsize=7.2,
+             color=st.MUTED)
+    fig.text(0.5, 1.0, scope, ha="center", va="bottom", fontsize=7.2, color=st.INK)
     return fig, len(g), 0
+
+
+REASON_ORDER = ("UNRESOLVED_BY_SUPPORT_FLAG", "SPECIFIC_BLOCKED_BY_SUPPORT_FLAG", "INVALID_SCORE", "BELOW_MATCHED_COVERAGE_CUT",
+                "AMBIGUITY_SET_TOO_BROAD", "SINGLE_CANDIDATE_REJECTED", "OTHER")
+REASON_STYLE = {"UNRESOLVED_BY_SUPPORT_FLAG": (st.COLORS["gray_dark"], ""), "SPECIFIC_BLOCKED_BY_SUPPORT_FLAG": (st.COLORS["secondary"], "//"),
+                "INVALID_SCORE": (st.COLORS["accent_danger"], "xx"), "BELOW_MATCHED_COVERAGE_CUT": (st.COLORS["purple"], ".."),
+                "AMBIGUITY_SET_TOO_BROAD": (st.COLORS["gray_medium"], "\\\\"), "SINGLE_CANDIDATE_REJECTED": (st.COLORS["gray_light"], "++"),
+                "OTHER": (st.COLORS["gray_medium"], "")}
 
 
 def plot_error_structure(d, spec):
@@ -446,7 +501,7 @@ def plot_error_structure(d, spec):
     b.set_xlim(-0.02, 1.02)
     b.set_xlabel("Window-level score")
     b.legend(fontsize=6, loc="upper center", bbox_to_anchor=(0.5, -0.3), ncol=3, frameon=False)
-    b.set_title("Per-class scores (independent support)", fontsize=9)
+    b.set_title("Per-class scores (runs · topology-scoped families)", fontsize=9)
     st.panel_label(b, "b")
     c = fig.add_subplot(gs[1, 1])
     if rel is not None and len(rel):
@@ -462,6 +517,13 @@ def plot_error_structure(d, spec):
         _legend(c, fontsize=6, loc="upper left")
     else:
         _note(c, "no reliability bins")
+    if rel is not None and len(rel):
+        rr = rel.dropna(subset=["mean_confidence", "accuracy"])
+        raw_ = rr[rr.probability == "raw"][["bin", "mean_confidence", "accuracy"]].reset_index(drop=True)
+        cal_ = rr[rr.probability == "cal"][["bin", "mean_confidence", "accuracy"]].reset_index(drop=True)
+        if len(raw_) and raw_.equals(cal_):  # say so instead of silently drawing two identical curves
+            c.text(0.03, 0.80, "curves coincide: calibration 'none'\nselected in every fold", transform=c.transAxes,
+                   ha="left", va="top", fontsize=5.5, color=st.MUTED)
     c.set_title("Reliability (10 bins)", fontsize=9)
     st.panel_label(c, "c")
     fig.suptitle(spec.get("title", ""), fontsize=11, fontweight="bold", y=1.0)
@@ -519,10 +581,12 @@ KINDS = {  # kind -> (function, {input key: required columns})
     "incremental_value": (plot_incremental_value, {"rq1": ["comparison_b", "target", "status", "difference", "ci_low", "ci_high"],
                                                    "by_topology": ["topology", "target", "difference"],
                                                    "tie": ["target", "difference", "primary_difference"]}),
-    "three_outcome": (plot_three_outcome, {"rq2": ["class", "target", "n", "n_families", "specific", "ambiguity_set", "unresolved",
-                                                   "specific_correct", "ambiguity_inclusion"],
-                                           "reasons": ["class", "target", "policy_outcome", "reason", "n"],
-                                           "flags": ["flag", "class", "n_flagged", "n_windows"]}),
+    "three_outcome": (plot_three_outcome, {"rq2": ["class", "target", "scope", "topologies_included", "n_windows", "n_runs",
+                                                   "n_independence_groups", "share_specific", "share_ambiguity_set",
+                                                   "share_unresolved", "n_specific", "n_specific_correct", "n_ambiguity_set",
+                                                   "n_ambiguity_includes_true", "n_unresolved"],
+                                           "reasons": ["class", "target", "policy_outcome", "primary_reason", "n"],
+                                           "flags": ["topology", "class", "kind", "flag_or_combination", "n", "n_windows", "n_any_flag"]}),
     "error_structure": (plot_error_structure, {"confusion": ["true_class", "predicted_class", "n"],
                                                "class_metrics": ["class", "precision", "recall", "f1", "n_runs", "n_families"],
                                                "reliability": ["probability", "mean_confidence", "accuracy", "n"]}),
@@ -553,6 +617,52 @@ def _run_provenance(input_path: Path) -> Dict[str, object]:
                                    "run_git_commit", "run_status")}
 
 
+def figure_binding(root: Path, spec: Dict):
+    """(Binding, tech_ok, tech_reason, run_invalid) for a figure spec: the single definition used by the builder, the
+    tests and owner sign-off packages."""
+    import publication as pub
+    fn = KINDS[spec["kind"]][0]
+    ins = _inputs(spec)
+    tech_ok, tech_why, run_invalid, run_keys = source_technical_status(root, [root / v["input"] for v in ins.values()])
+    b = pub.Binding(spec["id"], {v["input"]: sha256_path(root / v["input"]) for v in ins.values() if (root / v["input"]).exists()},
+                    pub.spec_sha256(spec), pub.renderer_sha256(fn, Path(st.__file__)), run_keys)
+    return b, tech_ok, tech_why, run_invalid
+
+
+def source_technical_status(root: Path, input_paths) -> tuple:
+    """(technically_validated, reason, run_invalid, run_keys) for the runs behind an artifact's inputs.
+
+    run_manifest.json next to an input identifies the run; a derived table carries 'derived_from' (the run directory);
+    the sensitivity summary is validated through every source run it lists; dataset tables through their preflight."""
+    import publication as pub
+    oks, reasons, keys, invalid = [], [], [], False
+    for ip in input_paths:
+        ip = Path(ip)
+        man = ip.parent / "run_manifest.json"
+        if not man.exists() and (ip.parent / "provenance.json").exists():
+            prov = json.loads((ip.parent / "provenance.json").read_text(encoding="utf-8"))
+            ok, why = pub.technical_validation(root, None, prov.get("run_id"), prov.get("artifact_class"), prov)
+            oks.append(ok), reasons.append(why), keys.append(str(prov.get("run_id")))
+            continue
+        if not man.exists():
+            oks.append(False), reasons.append(f"no run manifest for {ip.name}")
+            continue
+        m = json.loads(man.read_text(encoding="utf-8"))
+        if m.get("status") == "INVALID" or "INVALID" in ip.parent.name.upper():
+            invalid = True
+        if ip.parent.name == "SENSITIVITY_SUMMARY":
+            for src in m.get("sources", []):
+                sm = ip.parent.parent / src / "run_manifest.json"
+                sk = json.loads(sm.read_text(encoding="utf-8")).get("run_key") if sm.exists() else None
+                ok, why = pub.technical_validation(root, src, sk, None)
+                oks.append(ok), reasons.append(why), keys.append(str(sk))
+            continue
+        run_dir = m.get("derived_from") or ip.parent.name
+        ok, why = pub.technical_validation(root, run_dir, m.get("run_key"), m.get("artifact_class"))
+        oks.append(ok), reasons.append(why), keys.append(str(m.get("run_key")))
+    return (bool(oks) and all(oks)), "; ".join(sorted({r for r in reasons if r})), invalid, sorted(set(keys))
+
+
 def _rel(p: Path, root: Path) -> str:
     try:
         return Path(p).resolve().relative_to(Path(root).resolve()).as_posix()
@@ -577,7 +687,7 @@ MANIFEST_FIELDS = ["figure_id", "title", "group", "kind", "status", "reason", "r
                    "effective_config_sha256", "manifest_sha256", "run_git_commit", "build_git_commit", "config_file", "config_sha256",
                    "script", "function", "command", "units", "metric_definition", "limitations", "non_estimable", "n_rows_input",
                    "n_rows_plotted", "n_rows_not_estimable", "source_experiment", "evidence_status", "caption", "environment",
-                   "generated_at_utc"]
+                   "generated_at_utc", "lifecycle_status", "claim_scope", "approval_ids", "publication_blockers"]
 
 
 def build(config_path: Path, out_dir: Path, root: Path) -> pd.DataFrame:
@@ -644,6 +754,18 @@ def build(config_path: Path, out_dir: Path, root: Path) -> pd.DataFrame:
             errors.append(msg)
             rows.append({**base, **prov, "status": "REFUSED_UNAUTHORIZED_RUN", "reason": msg})
             continue
+        pubst = None
+        if dest != "illustrative":  # research data: the watermark follows the claim-level lifecycle, never the YAML string
+            import publication as pub
+            binding, tech_ok, tech_why, run_invalid = figure_binding(root, spec)
+            pubst = pub.evaluate(root, binding, tech_ok, tech_why, run_invalid)
+            if pubst.dest == "refused":
+                msg = f"[{spec['id']}] {pubst.lifecycle}: {'; '.join(pubst.blockers)}"
+                errors.append(msg)
+                rows.append({**base, **prov, "status": f"REFUSED_{pubst.lifecycle}", "reason": msg, "lifecycle_status": pubst.lifecycle,
+                             "publication_blockers": " | ".join(pubst.blockers)})
+                continue
+            dest, wm = pubst.dest, pubst.watermark
         all_ne = "status" in main.columns and len(main) > 0 and (main["status"] != "ESTIMABLE").all() and kind not in ("robustness",)
         if all_ne:
             fig, ax = plt.subplots(figsize=(6.4, 2.4))
@@ -675,7 +797,10 @@ def build(config_path: Path, out_dir: Path, root: Path) -> pd.DataFrame:
             rows.append({**base, **prov, "status": f"BUILT_{dest.upper()}", "reason": wm,
                          "output_file": _rel(stem.with_suffix(ext), root), "output_sha256": sha256_path(stem.with_suffix(ext)),
                          "input_sha256": in_hash, "non_estimable": bool(all_ne), "n_rows_input": n_in,
-                         "n_rows_plotted": int(n_plot), "n_rows_not_estimable": int(n_ne) + n_ne_sel})
+                         "n_rows_plotted": int(n_plot), "n_rows_not_estimable": int(n_ne) + n_ne_sel,
+                         "lifecycle_status": pubst.lifecycle if pubst else "ILLUSTRATIVE",
+                         "claim_scope": pubst.claim_scope if pubst else "", "approval_ids": ";".join(pubst.approval_ids) if pubst else "",
+                         "publication_blockers": " | ".join(pubst.blockers) if pubst else "not research data"})
     man = pd.DataFrame(rows).reindex(columns=MANIFEST_FIELDS)
     out_dir.mkdir(parents=True, exist_ok=True)
     for name in ("FIGURE_MANIFEST.csv", "FIGURE_BUILD_MANIFEST.csv"):

@@ -55,7 +55,9 @@ def test_unvalidated_inputs_go_to_preliminary(tmp_path):
 def test_values_preserved_in_tables(tmp_path):
     df = _fixture(tmp_path, status_col=False)
     brt.build(_cfg(tmp_path, "FROZEN"), tmp_path / "tab", tmp_path)
-    out = pd.read_csv(tmp_path / "tab" / "final" / "t1.csv")
+    # a YAML evidence_status never publishes: without a scoped approval record the table stays preliminary
+    assert not (tmp_path / "tab" / "final").exists()
+    out = pd.read_csv(tmp_path / "tab" / "preliminary" / "t1.csv")
     pd.testing.assert_frame_equal(out, df[["method", "coverage", "selective_risk"]])
 
 
@@ -91,8 +93,10 @@ def test_builders_consume_real_runner_outputs_and_quarantine_synthetic(tmp_path)
     pp.run(fx["config"], fx["root"], fx["raw"], tmp_path / "run", "synthetic")
     dst = tmp_path / "03_results" / "primary_protocol" / "PRIMARY"
     dst.mkdir(parents=True)
-    for f in list((tmp_path / "run").glob("*.csv")) + [tmp_path / "run" / "run_manifest.json"]:
+    for f in list((tmp_path / "run").glob("*.csv")) + list((tmp_path / "run").glob("*.parquet")) + [tmp_path / "run" / "run_manifest.json"]:
         shutil.copy(f, dst / f.name)
+    import derive_decision_tables as ddt
+    ddt.write(dst, tmp_path / "03_results" / "derived" / "PRIMARY")
     pp.run(fx["config"], fx["root"], fx["raw"], tmp_path / "03_results" / "primary_protocol" / "SENSITIVITY_k_10", "synthetic", sensitivity="k_10")
     import build_sensitivity_summary as bss
     runs = tmp_path / "03_results" / "primary_protocol"

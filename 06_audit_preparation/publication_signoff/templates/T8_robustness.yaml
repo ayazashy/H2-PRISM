@@ -1,0 +1,28 @@
+# UNSIGNED TEMPLATE - not an approval. See SIGNOFF_PACKAGE.md.
+approval_id: T8_robustness__6e8cd9bf__REVIEWER
+artifact_id: T8_robustness
+claim_scope: DESCRIPTIVE
+decision: TO_BE_DECIDED_BY_REVIEWER
+approved_claims:
+- Primary contrast across registered analyses, with the evaluated population of each analysis.
+limitations_acknowledged:
+- different populations compared by direction only
+reviewer:
+  name: TO_BE_FILLED_BY_REVIEWER
+  role: TO_BE_FILLED_BY_REVIEWER
+date: YYYY-MM-DD
+statement: ''
+binding:
+  input_sha256:
+    03_results/primary_protocol/SENSITIVITY_SUMMARY/sensitivity_summary.csv: 9ef26340c444403ee61a76388f5a11f91058a5c6b402c68e1ee509f3f4e4e20e
+  spec_sha256: 6e8cd9bf9dc2a21d01e34beec227391e525bdbe1b0a6c85450fdd91271288353
+  renderer_sha256: 12ba184bfc5f603546a75e47764b8f3569dffc44810423add4bc024b4cdfdd66
+  source_run_keys:
+  - 105fde53d265c838b7571a66c62eaced0430ac8dd32a34d28a68e4ab938693d5
+  - 220f49ad35f985667b3be78d2ffdc6d1b1891f314aa32db6be15108ab7745808
+  - 4d13822c55212e2185fae756332447d1bf21618fe9920fe4aa9336218acd8325
+  - 72075f284d5044f8d8ac45c440d3bdacc8d710e93f040304a3e7369b52385060
+  - 7565497cc7dde2ce4b74ff09ee3f625db852c901ad4aeb0ebe14bbd8d889a994
+  - 821642d2201e0f9fc200f790d6533a2216a541c3bdde65021144526231a35b50
+  - a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb
+  - faf07c82b10895c91bb82df9969d4bb3b71aeabcb22a088b9ebe928d6dfb1ce0

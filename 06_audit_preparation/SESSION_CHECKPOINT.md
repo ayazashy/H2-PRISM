@@ -251,3 +251,13 @@ A fifth local commit (user-approved) adds `.gitattributes` (LF for hash-pinned a
 - **Decision package:** `01_dataset_audit/YAZAN_TOPOLOGY_DECISION_PACKAGE.md`.
 - **Proposal:** `02_methodology/PROSPECTIVE_VALIDATION_PROTOCOL_PROPOSAL.md` (P2-A..P2-H, acceptance tests AT-1..AT-8).
 - **Next:** R-18 decision (Yazan); Faisal approvals for FA-08/10/11 and F-D18; protocol-2.0 decision; thin-class simulation request.
+
+## Update: remediation, publication lifecycle, protocol 2.0 candidate (2026-11-12, recovery point)
+
+- **Publication:** claim-level, hash-bound approvals (`tools/reporting/publication.py`, `configs/publication_policy.yaml`).
+  - Approved by Ahmed Zayed, DESCRIPTIVE: Fig. 2/4/5 and T4–T9 (`03_results/PUBLICATION_MANIFEST.csv`).
+  - Pending: Fig. 1/T1–T3 (need Yazan).
+  - Not recommended: Fig. 3/6.
+- **Builds:** published `03_results/{figures,tables}/primary/a10530f1fcf2_s4228b6c8_b200fcdac/`; preliminary original `…_b5ddfbcfa`.
+- **Protocol 2.0:** candidate prepared and refused by preflight (`06_audit_preparation/protocol2/`); not approved.
+- **Remediation status:** `06_audit_preparation/forensics/REMEDIATION_STATUS_20261112.csv`.

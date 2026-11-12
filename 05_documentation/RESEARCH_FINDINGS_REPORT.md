@@ -26,7 +26,7 @@
 
 - **Data:**
   - Manifest v0.2 (`36bcbaf9…`), 51 eligible runs, noise-added realization.
-  - 27,993 windows of 300 s with 50% overlap.
+  - 27,993 windows of 60 s with a 30 s stride (50% overlap). *(Corrected 2026-11-12: an earlier version said 300 s.)*
   - 128 features (16 channels × 8 statistics), feature table `4d1310a6…`.
 - **Evaluation:**
   - Leave-one-topology-out over 3 folds (`3b21d823…`).

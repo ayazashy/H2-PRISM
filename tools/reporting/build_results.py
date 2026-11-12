@@ -13,8 +13,8 @@ One explicit command (no background jobs). It reuses the existing builders and a
   4. BUILD      sensitivity summary from VALIDATED runs only, then the registered tables and figures into
                 versioned directories <out-root>/{tables,figures}/primary/<run_key12>/. An existing version is
                 never overwritten (history preserved); a new PRIMARY run gets a new directory.
-Evidence status stays as configured (PENDING -> preliminary/ with watermark) unless a person passes
---evidence-status VALIDATED after PRIMARY_RESULTS_VALIDATION; the config actually used is saved next to the outputs.
+Every artifact stays in preliminary/ with a lifecycle watermark until scoped, hash-bound approval records satisfy
+configs/publication_policy.yaml (tools/reporting/publication.py); the config actually used is saved next to the outputs.
 
 Usage:
   python tools/reporting/build_results.py                       # official tree (refuses synthetic / unauthorized runs)
@@ -140,7 +140,21 @@ def results_provenance(runs: Path, root: Path, vals: List[Dict]) -> pd.DataFrame
     return pd.DataFrame(rows, columns=COLUMNS)
 
 
-def run(root: Path, out_root: Path, allow_synthetic: bool = False, evidence_status: str = None) -> Dict:
+def build_fingerprint(root: Path) -> str:
+    """Hash of everything that decides an artifact's content or publication state other than run outputs:
+    reporting code, reporting config, publication policy and every approval record."""
+    h = hashlib.sha256()
+    files = sorted(Path(__file__).resolve().parent.glob("*.py")) + [RESULTS_CFG, REPO / "configs" / "publication_policy.yaml"]
+    appr = Path(root) / "06_audit_preparation" / "publication_approvals"
+    files += sorted(appr.rglob("*.y*ml")) if appr.exists() else []
+    for f in files:
+        if Path(f).exists():
+            h.update(Path(f).name.encode())
+            h.update(Path(f).read_bytes().replace(b"\r\n", b"\n"))
+    return h.hexdigest()
+
+
+def run(root: Path, out_root: Path, allow_synthetic: bool = False) -> Dict:
     runs = root / "03_results" / "primary_protocol"
     if not runs.exists():
         raise SystemExit(f"REFUSED: no recorded runs under {brf._rel(runs, root)} (no authorized experiment has been executed)")
@@ -171,24 +185,51 @@ def run(root: Path, out_root: Path, allow_synthetic: bool = False, evidence_stat
                                                           "status": "COMPLETED", "run_key": "sensitivity_summary",
                                                           "config_sha256": "see source run manifests", "sources": sorted(ok_dirs)},
                                                          indent=2) + "\n", encoding="utf-8")
+    # authoritative decision-level tables (reasons with precedence, RQ2 scope, flags, ties) for every validated run
+    import derive_decision_tables as ddt
+    for v in vals:
+        d = runs / v["run_dir"]
+        if v["status"] == "VALID" and (d / "decisions.parquet").exists() and (d / "predictions.parquet").exists():
+            ddt.write(d, root / "03_results" / "derived" / v["run_dir"])
     key = str(primary["run_key"])[:12]
     others = sorted(str(v["run_key"]) for v in vals if v["status"] == "VALID" and v["run_dir"] != "PRIMARY")
     if others:  # a new set of validated secondary runs is a new version (earlier versions are kept unchanged)
         key += "_s" + hashlib.sha256("|".join(others).encode()).hexdigest()[:8]
+    key += "_b" + build_fingerprint(root)[:8]  # reporting code, configs, policy and approvals: a change is a new version
     fig_dir, tab_dir = out_root / "figures" / "primary" / key, out_root / "tables" / "primary" / key
     if fig_dir.exists() or tab_dir.exists():  # history preserved: an existing version is never overwritten
         return {"status": "UNCHANGED", "version": key, "index": index}
     cfg_used = yaml.safe_load(RESULTS_CFG.read_text(encoding="utf-8"))
-    if evidence_status:
-        for sec in ("figures", "tables"):
-            for spec in cfg_used.get(sec, []):
-                spec["evidence_status"] = evidence_status
     fig_dir.mkdir(parents=True)
     cfg_p = fig_dir / "reporting_config_used.yaml"
     cfg_p.write_text(yaml.safe_dump(cfg_used, sort_keys=False), encoding="utf-8")
     fm = brf.build(cfg_p, fig_dir, root)
     tm = brt.build(cfg_p, tab_dir, root)
+    publication_manifest(out_root, key).to_csv(out_root / "PUBLICATION_MANIFEST.csv", index=False, lineterminator="\n")
     return {"status": "BUILT", "version": key, "index": index, "figures": fm, "tables": tm}
+
+
+def publication_manifest(out_root: Path, version: str) -> pd.DataFrame:
+    """Every artifact currently APPROVED_FOR_PUBLICATION (result version `version` and the dataset-design artifacts),
+    with output hashes, approval ids, claim scope and source runs. Only the lifecycle decides membership."""
+    rows = []
+    srcs = [(out_root / "figures" / "primary" / version / "FIGURE_MANIFEST.csv", "figure_id"),
+            (out_root / "tables" / "primary" / version / "TABLE_MANIFEST.csv", "table_id"),
+            (out_root / "figures" / "dataset_design" / "FIGURE_MANIFEST.csv", "figure_id"),
+            (out_root / "tables" / "dataset_design" / "TABLE_MANIFEST.csv", "table_id")]
+    for p, idcol in srcs:
+        if not p.exists():
+            continue
+        m = pd.read_csv(p)
+        if "lifecycle_status" not in m.columns:
+            continue
+        m = m[m.lifecycle_status == "APPROVED_FOR_PUBLICATION"]
+        for r in m.itertuples():
+            rows.append({"artifact_id": getattr(r, idcol), "output_file": r.output_file, "output_sha256": r.output_sha256,
+                         "claim_scope": r.claim_scope, "approval_ids": r.approval_ids, "source_run": getattr(r, "run_id", ""),
+                         "input_sha256": getattr(r, "input_sha256", ""), "version": version if "primary" in str(p) else "dataset_design"})
+    return pd.DataFrame(rows, columns=["artifact_id", "output_file", "output_sha256", "claim_scope", "approval_ids", "source_run",
+                                       "input_sha256", "version"])
 
 
 def main(argv=None) -> int:
@@ -196,10 +237,10 @@ def main(argv=None) -> int:
     ap.add_argument("--root", type=Path, default=REPO)
     ap.add_argument("--out-root", type=Path, default=None, help="default <root>/03_results")
     ap.add_argument("--allow-synthetic", action="store_true", help="QA only; refused for the official tree")
-    ap.add_argument("--evidence-status", choices=["VALIDATED", "FROZEN"], default=None,
-                    help="set only by a person after PRIMARY_RESULTS_VALIDATION; otherwise outputs stay preliminary")
+    # Publication state is NOT a command-line option: it follows approval records in
+    # 06_audit_preparation/publication_approvals/ under configs/publication_policy.yaml (tools/reporting/publication.py).
     a = ap.parse_args(argv)
-    res = run(a.root, a.out_root or a.root / "03_results", a.allow_synthetic, a.evidence_status)
+    res = run(a.root, a.out_root or a.root / "03_results", a.allow_synthetic)
     print(json.dumps({"status": res["status"], "version": res["version"],
                       "runs": res["index"][["run_dir", "status"]].to_dict("records")}, indent=2))
     return 0

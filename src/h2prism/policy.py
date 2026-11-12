@@ -46,8 +46,15 @@ class PolicyConfig:
     tau_D: Optional[float] = None
     unresolved_flags: Tuple[str, ...] = ("OUT_OF_SUPPORT", "INVALID_FEATURES", "NO_REFERENCE")
     specific_blocking_flags: Tuple[str, ...] = ()
+    # CANDIDATE protocol 2.0 (P2-D; off in protocol 1.1): when the classifier label differs from the evidence-supported
+    # hypothesis (D(x) top class), the policy does NOT assume either source is wrong. "ambiguity_pair" returns the two
+    # competing hypotheses as an AMBIGUITY_SET (the true class is included whenever either source is right);
+    # "unresolved" withholds a decision. Reason code: EVIDENCE_CONFLICT:<classifier>|<evidence>.
+    evidence_conflict: Optional[str] = None
 
     def __post_init__(self) -> None:
+        if self.evidence_conflict not in (None, "ambiguity_pair", "unresolved"):
+            raise ValueError("evidence_conflict must be None, 'ambiguity_pair' or 'unresolved'")
         if self.threshold_source != "development":
             raise ValueError("threshold_source must be 'development'; outer-test thresholds are prohibited")
         if not 0 < self.ambiguity_mass <= 1:
@@ -69,8 +76,11 @@ def apply_policy(
     config: PolicyConfig,
     D: Optional[Sequence[float]] = None,
     flags: Optional[Sequence[str]] = None,
+    evidence_top_class: Optional[Sequence[Optional[str]]] = None,
 ) -> pd.DataFrame:
     K = len(classes)
+    if config.evidence_conflict is not None and evidence_top_class is None:
+        raise ValueError("evidence_conflict is set but evidence_top_class was not supplied")
     if K < 2:
         raise ValueError("at least two classes required")
     if config.max_set_size > K - 1 and K > 2:
@@ -115,6 +125,16 @@ def apply_policy(
             continue
         p = P[i]
         order = sorted(range(K), key=lambda c: (-p[c], c))
+        if config.evidence_conflict is not None:
+            ev = evidence_top_class[i]
+            pred = classes[order[0]]
+            if ev is not None and isinstance(ev, str) and ev in classes and ev != pred:
+                code = f"EVIDENCE_CONFLICT:{pred}|{ev}"
+                if config.evidence_conflict == "ambiguity_pair":
+                    _emit(out_outcome, out_pred, out_set, out_size, out_reason, AMBIGUITY_SET, None, [pred, ev], code)
+                else:
+                    _emit(out_outcome, out_pred, out_set, out_size, out_reason, UNRESOLVED, None, [], code)
+                continue
         why = []
         if score[i] < config.tau_accept:
             why.append("SCORE_BELOW_THRESHOLD")

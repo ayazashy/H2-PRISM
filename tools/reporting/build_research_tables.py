@@ -47,6 +47,15 @@ def to_markdown(df: pd.DataFrame, watermark: str, caption: str = "") -> str:
     return "\n".join(head + lines) + "\n"
 
 
+def table_binding(root: Path, spec: Dict):
+    """(Binding, tech_ok, tech_reason, run_invalid) for a table spec (builder, tests and sign-off packages)."""
+    import publication as pub
+    tech_ok, tech_why, run_invalid, run_keys = brf.source_technical_status(root, [root / spec["input"]])
+    b = pub.Binding(spec["id"], {spec["input"]: sha256_path(root / spec["input"])}, pub.spec_sha256(spec),
+                    pub.renderer_sha256(to_markdown), run_keys)
+    return b, tech_ok, tech_why, run_invalid
+
+
 def build(config_path: Path, out_dir: Path, root: Path) -> pd.DataFrame:
     cfg, cfg_hash = load_config(config_path)
     rows: List[Dict] = []
@@ -82,6 +91,17 @@ def build(config_path: Path, out_dir: Path, root: Path) -> pd.DataFrame:
             errors.append(f"[{spec['id']}] incomplete or unauthorized source run refused for official output directory")
             rows.append({"table_id": spec["id"], "status": "REFUSED_INCOMPLETE_OR_UNAUTHORIZED_RUN"})
             continue
+        pubst = None
+        if dest != "illustrative":  # research data: the watermark follows the claim-level lifecycle (tools/reporting/publication.py)
+            import publication as pub
+            binding, tech_ok, tech_why, run_invalid = table_binding(root, spec)
+            pubst = pub.evaluate(root, binding, tech_ok, tech_why, run_invalid)
+            if pubst.dest == "refused":
+                errors.append(f"[{spec['id']}] {pubst.lifecycle}: {'; '.join(pubst.blockers)}")
+                rows.append({"table_id": spec["id"], "status": f"REFUSED_{pubst.lifecycle}", "lifecycle_status": pubst.lifecycle,
+                             "publication_blockers": " | ".join(pubst.blockers)})
+                continue
+            dest, wm = pubst.dest, pubst.watermark
         d = out_dir / dest
         d.mkdir(parents=True, exist_ok=True)
         csv_p, md_p = d / f"{spec['id']}.csv", d / f"{spec['id']}.md"
@@ -94,7 +114,10 @@ def build(config_path: Path, out_dir: Path, root: Path) -> pd.DataFrame:
                          "config_sha256": cfg_hash, "source_experiment": spec.get("source_experiment", "UNSPECIFIED"),
                          "evidence_status": spec.get("evidence_status", "UNDECLARED"), "caption": spec.get("caption", ""),
                          "n_rows": len(out), "n_rows_not_estimable": int((df["status"] != "ESTIMABLE").sum()) if "status" in df.columns else 0,
-                         "script": "tools/reporting/build_research_tables.py", "command": cmd, "build_git_commit": commit, **prov})
+                         "script": "tools/reporting/build_research_tables.py", "command": cmd, "build_git_commit": commit, **prov,
+                         "lifecycle_status": pubst.lifecycle if pubst else "ILLUSTRATIVE",
+                         "claim_scope": pubst.claim_scope if pubst else "", "approval_ids": ";".join(pubst.approval_ids) if pubst else "",
+                         "publication_blockers": " | ".join(pubst.blockers) if pubst else "not research data"})
     man = pd.DataFrame(rows)
     out_dir.mkdir(parents=True, exist_ok=True)
     for name in ("TABLE_BUILD_MANIFEST.csv", "TABLE_MANIFEST.csv"):

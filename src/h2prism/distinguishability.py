@@ -88,7 +88,10 @@ class EmpiricalSupport:
         self.config = config
         self._fitted = False
 
-    def fit(self, X_ref, y_ref, families_ref, scenarios_ref, classes: Sequence) -> "EmpiricalSupport":
+    def fit(self, X_ref, y_ref, families_ref, scenarios_ref, classes: Sequence, support_units=None) -> "EmpiricalSupport":
+        """support_units (CANDIDATE protocol 2.0, P2-C): optional unit per reference row used to COUNT independent
+        support behind the top class (e.g. scenario independence groups). Default None = families (protocol 1.1);
+        query-family exclusion always uses families_ref."""
         X = np.asarray(X_ref, dtype=float)
         if X.ndim != 2 or len(X) == 0:
             raise ValueError("X_ref must be a non-empty 2-D array")
@@ -110,6 +113,9 @@ class EmpiricalSupport:
         self.Z_ = (X - self.mu_) / self.sigma_
         self.y_idx_ = np.array([self.classes_.index(v) for v in y.tolist()], dtype=int)
         self.fam_ = fam
+        if support_units is not None and len(support_units) != len(fam):
+            raise ValueError("support_units length mismatch")
+        self.unit_ = fam if support_units is None else np.asarray(support_units)
         self.scen_ = scen
         self._fitted = True
         return self
@@ -199,7 +205,7 @@ class EmpiricalSupport:
         top_count = int(np.sum(yn == order[0]))
         if top_count < cfg.low_support_min_top_count:
             flags.append(FLAG_LOW_SUPPORT)
-        top_fams = len(set(self.fam_[idx][yn == order[0]].tolist()))
+        top_fams = len(set(self.unit_[idx][yn == order[0]].tolist()))
         if top_fams < cfg.min_top_class_families:
             flags.append(FLAG_TOP_CLASS_FEW_RUNS)
         rec["top_class_n_families"][i] = top_fams

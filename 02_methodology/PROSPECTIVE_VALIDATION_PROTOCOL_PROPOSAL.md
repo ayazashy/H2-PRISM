@@ -55,3 +55,27 @@ Each component is independent; owners may accept or reject each one separately.
 | AT-6 Degeneracy | unit test: constant development correctness gives the fold's s_C rows `NOT_ESTIMABLE` with reason `META_MODEL_UNDEFINED`; comparators complete |
 | AT-7 Reporting | matched-contrast tables include `share_selected_by_tie_key`; RQ2 tables include `topologies_included` and `root_cause` |
 | AT-8 Separation | R2 artifacts and hashes are unchanged; new runs have new run keys and protocol version 2.0 |
+
+## 5. Implementation status (2026-11-12): candidate prepared, not approved, not executable
+
+| Component | Implemented as (opt-in; protocol 1.1 default unchanged) | Tested | Active |
+| --- | --- | --- | --- |
+| P2-A | candidate manifest v0.3 (`06_audit_preparation/protocol2/`) + runner `dataset.topology_column` | integrity checks; unknown column rejected | no (R-18) |
+| P2-B | runner `features.channels` (13 common sensors; manifest records the model feature count) | synthetic end-to-end | no |
+| P2-C | `h2prism.independence` + D(x) `support_units` + runner `distinguishability.support_unit` | replicas counted once; D unchanged | no |
+| P2-D | `PolicyConfig.evidence_conflict` (`ambiguity_pair` / `unresolved`) | conflicts give the two-hypothesis set, never SPECIFIC; default identical | no |
+| P2-E | `h2prism.protocol2.development_target` (development attainability only) | rule tests | no |
+| P2-F | `combined_scores.on_undefined: not_estimable` (no fallback score) | degenerate development, other comparators complete | no |
+| P2-G/H | reporting: tie share (T9), RQ2 scope and root causes (derived tables) | Fig. 4 and derivation tests | yes (reporting only) |
+
+**Regression proof.** With protocol 1.1 defaults, the modified code reproduces R2's stored D(x) and flags exactly for 27,993/27,993 windows (`03_results/diagnostics/protocol2_impact/regression_check.json`).
+
+**Candidate config.** `06_audit_preparation/protocol2/CANDIDATE_PROTOCOL_2_0.yaml`, with every change and its forensic justification in `CANDIDATE_PROTOCOL_2_0_DIFF.json`. Its status `CANDIDATE_PROTOCOL_2_0_NOT_APPROVED` is refused by the runner's preflight (test).
+
+**Readiness:** `PROTOCOL_2_READY_FOR_AUTHORIZATION` is **not** reached. Activation requires:
+
+1. Yazan's R-18 decision (option B);
+2. owner approval of the components (Faisal F3/F7/F9/F10/F11; Ahmed A15);
+3. a pinned inner-fold record for v0.3;
+4. new independent thin-class simulations before any confirmatory claim (Section 2);
+5. project-lead authorization of the development pilot.

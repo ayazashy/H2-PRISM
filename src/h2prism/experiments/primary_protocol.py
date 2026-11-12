@@ -152,6 +152,19 @@ def _git_commit(root: Path) -> str:
 
 
 # ----------------------------------------------------------------------------- preflight
+def load_manifest(cfg: Dict, root: Path) -> pd.DataFrame:
+    """The pinned manifest. dataset.topology_column (CANDIDATE protocol 2.0, P2-A) selects which attribution is used as
+    `topology` (e.g. topology_source_model of manifest v0.3); the release attribution stays in its own column.
+    Absent = the manifest's `topology` column (protocol 1.1)."""
+    man = pd.read_csv(root / cfg["dataset"]["manifest"]["file"])
+    col = cfg["dataset"].get("topology_column")
+    if col:
+        if col not in man.columns:
+            raise PreflightError(f"dataset.topology_column {col!r} not in manifest")
+        man = man.assign(topology=man[col])
+    return man
+
+
 def preflight(cfg: Dict, root: Path, raw_parent: Path, realization: str, expected_status: str) -> Dict:
     checks: List[Dict] = []
 
@@ -169,7 +182,7 @@ def preflight(cfg: Dict, root: Path, raw_parent: Path, realization: str, expecte
         chk(f"config_section:{key}", key in cfg)
     if not all(c["ok"] for c in checks):
         raise PreflightError(_fmt(checks))
-    man = pd.read_csv(root / cfg["dataset"]["manifest"]["file"])
+    man = load_manifest(cfg, root)
     miss = [c for c in MANIFEST_COLS if c not in man.columns]
     if not chk("manifest_columns", not miss, f"missing {miss}"):
         raise PreflightError(_fmt(checks))
@@ -227,7 +240,7 @@ def _fmt(checks):
 
 # ----------------------------------------------------------------------------- features
 def build_features(cfg: Dict, root: Path, raw_parent: Path, realization: str) -> Tuple[pd.DataFrame, Dict]:
-    man = normalize_manifest_columns(pd.read_csv(root / cfg["dataset"]["manifest"]["file"]))
+    man = normalize_manifest_columns(load_manifest(cfg, root))
     w = cfg["windows"]
     wc = WindowConfig(w["window_s"], w["stride_s"], w["min_samples"], w["label_mode"], w["pre_event_policy"])
     out = build_feature_table(man, raw_parent, realization, cfg["dataset"]["family_column"], wc, cfg["features"]["statistics"])
@@ -278,12 +291,23 @@ def _dconfig(cfg, oos=None) -> DConfig:
 
 
 def _support(cfg, ref: pd.DataFrame, query: pd.DataFrame, feats, classes) -> pd.DataFrame:
-    """D(x) for query rows with a reference built only from ``ref`` (OOS threshold fitted on ref)."""
+    """D(x) for query rows with a reference built only from ``ref`` (OOS threshold fitted on ref).
+
+    distinguishability.support_unit (CANDIDATE protocol 2.0, P2-C): "family" (protocol 1.1 default) counts independent
+    support by Scenario_Family_ID; "independence_group" counts scenario independence groups (family OR replica links)."""
+    unit = cfg["distinguishability"].get("support_unit", "family")
+    if unit not in ("family", "independence_group"):
+        raise PreflightError(f"unknown distinguishability.support_unit {unit!r}")
+    units = None
+    if unit == "independence_group":
+        from ..independence import independence_groups
+        g = independence_groups(ref.Scenario_ID, ref.Scenario_Family_ID)
+        units = ref.Scenario_ID.map(g).to_numpy()
     es = EmpiricalSupport(_dconfig(cfg)).fit(ref[feats].to_numpy(float), ref.label_mapped, ref.Scenario_Family_ID,
-                                             ref.Scenario_ID, classes)
+                                             ref.Scenario_ID, classes, support_units=units)
     thr = es.fit_out_of_support_threshold(cfg["distinguishability"]["out_of_support_quantile"])
     es2 = EmpiricalSupport(_dconfig(cfg, thr)).fit(ref[feats].to_numpy(float), ref.label_mapped, ref.Scenario_Family_ID,
-                                                   ref.Scenario_ID, classes)
+                                                   ref.Scenario_ID, classes, support_units=units)
     out = es2.compute(query[feats].to_numpy(float), query_families=query.Scenario_Family_ID.to_numpy())
     out.index = query.index
     return out
@@ -301,10 +325,18 @@ def _targets(cfg) -> List[float]:
     return [float(t["target_coverage_primary"])] + [float(x) for x in t.get("target_coverage_secondary", [])]
 
 
-def _available(scores, flags, pol) -> np.ndarray:
+def _available(scores, flags, pol, y_hat=None, evidence_top=None) -> np.ndarray:
+    """Rows eligible for SPECIFIC. With the CANDIDATE evidence_conflict policy (P2-D) a row whose classifier label
+    differs from the evidence top class is never SPECIFIC-eligible, so matched selection counts only issuable rows."""
     blocked = set(pol["unresolved_flags"]) | set(pol["specific_blocking_flags"])
     fl = [set(str(f).split("|")) - {""} for f in flags]
-    return np.isfinite(scores) & np.array([not (f & blocked) for f in fl])
+    ok = np.isfinite(scores) & np.array([not (f & blocked) for f in fl])
+    if pol.get("evidence_conflict"):
+        if y_hat is None or evidence_top is None:
+            raise ValueError("evidence_conflict policy needs classifier labels and evidence top classes")
+        ev = np.asarray(evidence_top, dtype=object)
+        ok &= ~np.array([isinstance(e, str) and e != y for e, y in zip(ev, y_hat)])
+    return ok
 
 
 def _required_count(target: float, n: int) -> int:
@@ -408,12 +440,25 @@ def development_stage(cfg, dev: pd.DataFrame, feats: List[str]) -> Dict:
     D = sup.D.to_numpy(float)
     correct = (P_cal.argmax(1) == yidx).astype(int)
     csc = dict(n_splits=n_t, seed=seed, C=float(cfg.get("combined_scores", {}).get("fit", {}).get("C", 1.0)))
-    fitC = fit_combined_score(P_cal, correct, topo, CombinedScoreConfig(include_D=True, **csc), D)
-    fitCmD = fit_combined_score(P_cal, correct, topo, CombinedScoreConfig(include_D=False, **csc), D)
-    S = _scores_frame(P_cal, D, fitC["oof_scores"], fitCmD["oof_scores"])
+    # combined_scores.on_undefined (CANDIDATE protocol 2.0, P2-F): "raise" (protocol 1.1 default) stops the run when
+    # development correctness is constant; "not_estimable" records s_C / s_C-D as undefined (NaN scores -> never
+    # selected, NOT_ESTIMABLE) and lets every other comparator complete. No fallback score is ever substituted.
+    on_undef = cfg.get("combined_scores", {}).get("on_undefined", "raise")
+    meta_status = "FITTED"
+    try:
+        fitC = fit_combined_score(P_cal, correct, topo, CombinedScoreConfig(include_D=True, **csc), D)
+        fitCmD = fit_combined_score(P_cal, correct, topo, CombinedScoreConfig(include_D=False, **csc), D)
+    except ValueError as exc:
+        if on_undef != "not_estimable" or "single correctness outcome" not in str(exc):
+            raise
+        fitC = fitCmD = None
+        meta_status = "NOT_ESTIMABLE_META_MODEL_UNDEFINED"
+    nan = np.full(len(P_cal), np.nan)
+    S = _scores_frame(P_cal, D, fitC["oof_scores"] if fitC else nan, fitCmD["oof_scores"] if fitCmD else nan)
     thr = []
+    y_hat_dev = np.array(classes, dtype=object)[P_cal.argmax(1)]
     for vname, pol in _policies(cfg).items():
-        av = _available(np.zeros(len(S)), sup.support_flags.fillna(""), pol)  # flags only; method finiteness below
+        av = _available(np.zeros(len(S)), sup.support_flags.fillna(""), pol, y_hat_dev, sup.top_class.to_numpy())  # flags only
         for meth in METHODS:
             avm = av & np.isfinite(S[meth].to_numpy())
             for tg in _targets(cfg):
@@ -424,16 +469,18 @@ def development_stage(cfg, dev: pd.DataFrame, feats: List[str]) -> Dict:
                             "dev_status": "ESTIMABLE" if tau is not None else "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL"})
     return {"params": params, "selection": pd.DataFrame(sel_rows), "cal_method": cal_method,
             "cal_feasibility": feas, "cal_table": cal_table, "P_oof": P_oof, "y_idx": yidx,
-            "fitC": fitC, "fitCmD": fitCmD, "thresholds": pd.DataFrame(thr),
+            "fitC": fitC, "fitCmD": fitCmD, "meta_model_status": meta_status, "thresholds": pd.DataFrame(thr),
             "dev_flags": sup.support_flags.fillna("").value_counts().to_dict()}
 
 
-def _decide(P, scores, flags, classes, pol, tau):
+def _decide(P, scores, flags, classes, pol, tau, evidence_top=None):
     pc = PolicyConfig(config_id="protocol", tau_accept=tau, ambiguity_mass=float(pol["ambiguity_mass"]),
                       max_set_size=int(pol["max_set_size"]), singleton_handling=pol["singleton_handling"],
                       threshold_source="development", unresolved_flags=tuple(pol["unresolved_flags"]),
-                      specific_blocking_flags=tuple(pol["specific_blocking_flags"]))
-    return apply_policy(P, scores, classes, pc, flags=list(flags))
+                      specific_blocking_flags=tuple(pol["specific_blocking_flags"]),
+                      evidence_conflict=pol.get("evidence_conflict"))
+    return apply_policy(P, scores, classes, pc, flags=list(flags),
+                        evidence_top_class=list(evidence_top) if pol.get("evidence_conflict") else None)
 
 
 def outer_stage(cfg, dev: pd.DataFrame, test: pd.DataFrame, feats: List[str], devres: Dict) -> Tuple[pd.DataFrame, pd.DataFrame]:
@@ -444,7 +491,9 @@ def outer_stage(cfg, dev: pd.DataFrame, test: pd.DataFrame, feats: List[str], de
     P = cal.transform(P_raw)
     sup = _support(cfg, dev, test, feats, classes)
     D = sup.D.to_numpy(float)
-    S = _scores_frame(P, D, apply_combined_score(devres["fitC"], P, D, True), apply_combined_score(devres["fitCmD"], P, D, False))
+    nan = np.full(len(P), np.nan)  # meta-model undefined (CANDIDATE on_undefined: not_estimable): scores stay undefined
+    S = _scores_frame(P, D, apply_combined_score(devres["fitC"], P, D, True) if devres.get("fitC") else nan,
+                      apply_combined_score(devres["fitCmD"], P, D, False) if devres.get("fitCmD") else nan)
     pred = test[["window_id", "Scenario_ID", "Scenario_Family_ID", "topology", "label_mapped"]].rename(columns={"label_mapped": "y_true"}).reset_index(drop=True)
     for j, c in enumerate(classes):
         pred[f"p_raw_{c}"], pred[f"p_cal_{c}"] = P_raw[:, j], P[:, j]
@@ -461,7 +510,8 @@ def outer_stage(cfg, dev: pd.DataFrame, test: pd.DataFrame, feats: List[str], de
     flags = pred.support_flags.fillna("")
     y_hat = np.array(classes, dtype=object)[np.argmax(P, axis=1)]  # same argmax/lowest-index rule as the policy
     for vname, pol in _policies(cfg).items():
-        av = _available(np.zeros(len(S)), flags, pol)  # flags only; method finiteness below
+        ev_top = sup.top_class.to_numpy()
+        av = _available(np.zeros(len(S)), flags, pol, y_hat, ev_top)  # flags (and evidence conflict, candidate only)
         av &= np.isfinite(P).all(axis=1)
         for meth in METHODS:
             sc = S[meth].to_numpy()
@@ -482,7 +532,7 @@ def outer_stage(cfg, dev: pd.DataFrame, test: pd.DataFrame, feats: List[str], de
                 if tau_dev is None or (isinstance(tau_dev, float) and not np.isfinite(tau_dev)):
                     rows.append({**base, "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL"})
                 else:
-                    d = _decide(P, np.where(np.isfinite(sc), sc, np.nan), flags, classes, pol, float(tau_dev))
+                    d = _decide(P, np.where(np.isfinite(sc), sc, np.nan), flags, classes, pol, float(tau_dev), ev_top)
                     rows.append({**base, "status": "ESTIMABLE", "tau": float(tau_dev), "decisions": d.assign(window_id=wid)})
                 # rank matched (primary RQ1 rule, PA-1): exact count, deterministic label-free tie key
                 mask, info = exact_count_selection(sc, avm, wid, tg, salt)
@@ -494,7 +544,7 @@ def outer_stage(cfg, dev: pd.DataFrame, test: pd.DataFrame, feats: List[str], de
                     rows.append({**base, "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL"})
                     continue
                 eff = np.where(mask, 1.0, np.where(np.isfinite(sc), -1.0, np.nan))  # selected <=> SPECIFIC-eligible
-                d = _decide(P, eff, flags, classes, pol, 0.0)
+                d = _decide(P, eff, flags, classes, pol, 0.0, ev_top)
                 n_spec = int((d.policy_outcome == SPECIFIC).sum())
                 if n_spec != info["realized_count"]:
                     raise AssertionError(f"rank_matched selected {info['realized_count']} but policy issued {n_spec} SPECIFIC")
@@ -842,7 +892,18 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
     pre = preflight(cfg, root, raw_parent, realization, status)
     ft, fsum = build_features(cfg, root, raw_parent, realization)
     feats = [c for c in model_feature_columns(ft) if "__" in c]
-    expected = [f"{ch}__{s}" for ch in SENSOR_CHANNELS for s in cfg["features"]["statistics"]]
+    # features.channels (CANDIDATE protocol 2.0, P2-B): restrict model and D(x) inputs to sensors present in every
+    # simulation model (padded constant channels never enter). Absent = all SENSOR_CHANNELS (protocol 1.1).
+    channels = list(cfg["features"].get("channels") or SENSOR_CHANNELS)
+    unknown_ch = sorted(set(channels) - set(SENSOR_CHANNELS))
+    if unknown_ch:
+        raise PreflightError(f"features.channels lists unknown sensors {unknown_ch}")
+    feats = [c for c in feats if c.split("__")[0] in channels]
+    if len(channels) != len(SENSOR_CHANNELS):  # record what the MODEL uses, not what was extracted (P2-B)
+        fsum["n_features_extracted"] = fsum["n_features"]
+        fsum["n_features"] = len(feats)
+        fsum["channels"] = channels
+    expected = [f"{ch}__{s}" for ch in channels for s in cfg["features"]["statistics"]]
     if sorted(feats) != sorted(expected):  # only registered sensor statistics may be model inputs
         raise PreflightError(f"feature set mismatch: unexpected {sorted(set(feats) - set(expected))[:5]}, missing {sorted(set(expected) - set(feats))[:5]}")
     n_nonfinite = int((~np.isfinite(ft[feats].to_numpy(float))).sum())

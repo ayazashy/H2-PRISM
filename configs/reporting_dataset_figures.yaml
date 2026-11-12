@@ -1,7 +1,8 @@
 # Dataset and experimental-design figure/tables (A5/A13; selection register: 05_documentation/FIGURE_SPECIFICATION.md).
 # Inputs are STRUCTURAL tables written by tools/reporting/build_dataset_design_tables.py from the pinned manifest v0.2,
 # the pinned LOTO folds and the runner's eligible window table (no model fitting, no outer-test scoring).
-# evidence_status VERIFIED is reserved for structural descriptions; model outputs require VALIDATED/FROZEN.
+# Publication requires DATASET-scope approval by the dataset owner and the science owner (configs/publication_policy.yaml);
+# evidence_status is informational only and grants nothing.
 dpi: 300
 fail_on_missing: true
 figures:
@@ -15,8 +16,8 @@ figures:
     title: "Fig. 1  Data support and evaluation design (H$_2$-SimNet V2, manifest v0.2)"
     units: "runs, families (counts); windows (count, log scale); seconds"
     metric_definition: "eligible runs and Scenario_Family_ID counts per class and topology; eligible 60 s / 30 s windows; window-start quantiles; pinned LOTO folds"
-    limitations: "three simulated topologies; 1 NORMAL, 1 DELAY and 1 FAULT family per topology; windows overlap and are not independent; DELAY windows only in the start-up segment"
-    evidence_status: VERIFIED
+    limitations: "three simulated topologies; 1 NORMAL, 1 DELAY and 1 FAULT family per topology (one independence group each across topologies); windows overlap and are not independent; DELAY windows only in the start-up segment; topology labels follow the release folders, whose Center/Downstream event attribution is disputed by the source simulation models (L12 / R-18, decision pending)"
+    evidence_status: PENDING
     source_experiment: DATASET_DESIGN
     research_question: "data support for RQ1/RQ2"
     caption: >-
@@ -30,18 +31,18 @@ tables:
   - id: T1_dataset_support
     input: 03_results/dataset_design/class_distribution.csv
     columns: [class, topology, n_runs, n_families, n_windows]
-    evidence_status: VERIFIED
+    evidence_status: PENDING
     source_experiment: DATASET_DESIGN
-    caption: "Eligible runs, independent families and 60 s windows per class and topology (topology = ALL: totals)."
+    caption: "Eligible runs, topology-scoped families and 60 s windows per class and topology (topology = ALL: totals). Topology labels follow the release folders (Center/Downstream event attribution disputed, L12 / R-18); families are not independent across topologies."
   - id: T2_eligibility_and_exclusions
     input: 03_results/dataset_design/inclusion_exclusion.csv
     columns: [category, n_runs]
-    evidence_status: VERIFIED
+    evidence_status: PENDING
     source_experiment: DATASET_DESIGN
     caption: "Inclusion of the 57 underlying runs in the primary four-class task, with recorded exclusion reasons."
   - id: T3_outer_folds
     input: 03_results/dataset_design/loto_folds.csv
     columns: [outer_fold_id, topology, split_role, n_runs, n_families]
-    evidence_status: VERIFIED
+    evidence_status: PENDING
     source_experiment: DATASET_DESIGN
-    caption: "Leave-one-topology-out outer folds: runs and independent families per role."
+    caption: "Leave-one-topology-out outer folds: runs and topology-scoped families per role, under the release topology attribution (disputed for Center/Downstream event runs, L12 / R-18)."

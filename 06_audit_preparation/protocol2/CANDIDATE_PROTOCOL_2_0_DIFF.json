@@ -1,0 +1,70 @@
+{
+  "status": "CANDIDATE_PROTOCOL_2_0_NOT_APPROVED",
+  "base_config_sha256": "f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae",
+  "candidate_sha256": "5cd651064b94dab3e6415f1fbba6461d81592eaea45a60ee9e13ad597d768137",
+  "changes": {
+    "status": "CANDIDATE_PROTOCOL_2_0_NOT_APPROVED",
+    "version": "candidate-protocol-2.0",
+    "derived_from": {
+      "file": "06_audit_preparation/FINAL_EXPERIMENT_CONFIG.yaml",
+      "sha256": "f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae"
+    },
+    "dataset.manifest": {
+      "file": "06_audit_preparation/protocol2/CANDIDATE_MANIFEST_V03.csv",
+      "sha256": "f8ce526159b1b9239c7a2c329b0a61c3283239a4ed381295c6011da541b7e3b0"
+    },
+    "dataset.topology_column": "topology_source_model",
+    "splits.outer": {
+      "file": "06_audit_preparation/protocol2/CANDIDATE_OUTER_FOLDS_V03.csv",
+      "sha256": "e08b3773fca1b0eea55bfa6757823d273679023d1f029a1830ee005f33ff7887",
+      "design": "leave_one_topology_out"
+    },
+    "splits.inner": {
+      "scheme": "LOTO_within_train",
+      "note": "derived by the runner; pinned record generated at activation"
+    },
+    "features.channels": [
+      "PS1",
+      "PS2",
+      "PS3",
+      "PS4",
+      "PS5",
+      "PS6",
+      "PS7",
+      "PS8",
+      "PS9",
+      "PS10",
+      "MFS1",
+      "MFS2",
+      "MFS3"
+    ],
+    "distinguishability.support_unit": "independence_group",
+    "distinguishability.weighting": "inverse_distance",
+    "policy_primary.evidence_conflict": "ambiguity_pair",
+    "combined_scores.on_undefined": "not_estimable",
+    "thresholds.target_rule": {
+      "rule": "h2prism.protocol2.development_target",
+      "margin": 0.05,
+      "min_target": 0.3,
+      "grid": [
+        0.9,
+        0.8,
+        0.7,
+        0.6,
+        0.5,
+        0.4,
+        0.3
+      ],
+      "note": "operating targets fixed from DEVELOPMENT attainability before any outer evaluation (P2-E)"
+    }
+  },
+  "justification": {
+    "dataset.topology_column": "FA-01",
+    "features.channels": "FA-02",
+    "distinguishability.support_unit": "FA-03",
+    "distinguishability.weighting": "FA-09",
+    "policy_primary.evidence_conflict": "FA-05",
+    "combined_scores.on_undefined": "FA-08",
+    "thresholds.target_rule": "FA-07"
+  }
+}
