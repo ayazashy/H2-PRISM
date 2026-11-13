@@ -2,7 +2,7 @@
 
 - **Scope:** `SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION`.
 - **Executor:** Yazan, or a person he designates.
-- **Status:** not executed. The package v1 authorization is **void**; package v2 is **requested, not authorized** (`AUTHORIZATION_HISTORY.csv`).
+- **Status:** not executed. The package v1 authorization is **void**. Package v2 is **authorized by the project lead (2026-11-13) for one execution attempt** (`AUTH_SIMULATION_GENERATION_V2_REQUEST.yaml`, `AUTHORIZATION_HISTORY.csv`). Executor acceptance is not recorded.
 
 Every command below runs from the repository root. Nothing in this package modifies the released models or data.
 
@@ -67,7 +67,7 @@ Every command below runs from the repository root. Nothing in this package modif
    sha256sum data/raw/H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/normality_scenarios/normality_datasets/Normal_HNetwork_gest_*.slx
    ```
 
-4. The project lead activates `AUTH_SIMULATION_GENERATION_V2_REQUEST.yaml` by setting `authorized: true`, `authorized_by` and `date` **without changing any bound hash**. Then:
+4. The project lead's authorization is recorded in `AUTH_SIMULATION_GENERATION_V2_REQUEST.yaml` (done 2026-11-13). Confirm it is still active, i.e. no bound file has changed since:
 
    ```bash
    python tools/simulation/v2_normal_authorization.py

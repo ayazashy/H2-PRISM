@@ -57,17 +57,20 @@ def test_static_operating_range_within_gas_property_limits():
 
 
 # ------------------------------------------------------------------------------------------------ authorization
-def test_v1_authorization_is_void_and_v2_request_is_bound_but_not_active():
+def test_v1_void_and_v2_active_for_the_current_files():
     v1 = yaml.safe_load((PKG / "AUTH_SIMULATION_GENERATION.yaml").read_text(encoding="utf-8"))
     assert auth.evaluate(v1)                                      # void (hashes/package changed)
-    assert auth.evaluate(REQ) == ["authorized is not true"]       # bound to the current files, only the grant missing
-    with pytest.raises(auth.NotAuthorized):
-        auth.require_active()
+    assert auth.evaluate(REQ) == []                               # active: granted and bound to the current files
+    assert REQ["authorized_by"] == "Ahmed Zayed (project lead)" and REQ["status"] == "ACTIVE_NOT_YET_EXECUTED"
+    assert auth.require_active()["package_version"] == "v2"
     hist = pd.read_csv(PKG / "AUTHORIZATION_HISTORY.csv")
-    assert set(hist.status) == {"VOID_SUPERSEDED", "PENDING_PROJECT_LEAD_AUTHORIZATION"}
+    assert set(hist.status) == {"VOID_SUPERSEDED", "ACTIVE_NOT_YET_EXECUTED"}
+    assert "acceptance not recorded" in hist[hist.package_version == "v2"].reason.iloc[0]
 
 
-def test_tools_refuse_without_active_authorization(tmp_path):
+def test_tools_refuse_without_active_authorization(tmp_path, monkeypatch):
+    monkeypatch.setattr(auth, "PKG", tmp_path / "no_records")   # no authorization record available
+    (tmp_path / "no_records").mkdir()
     with pytest.raises(auth.NotAuthorized):
         post.main([str(tmp_path)])
     with pytest.raises(auth.NotAuthorized):

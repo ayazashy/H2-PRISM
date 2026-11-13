@@ -1,12 +1,12 @@
-# REQUEST (package v2) - NOT AUTHORIZED. Supersedes AUTH_SIMULATION_GENERATION.yaml (package v1), which is void:
-# its bound generator, noise tool and validator changed before any execution (EXECUTION_CHECKLIST.md, section 7).
-# Becomes active only when the project lead sets authorized: true, authorized_by and date, with every hash unchanged.
-authorized: false
-status: PENDING_PROJECT_LEAD_AUTHORIZATION
+# AUTHORIZATION (package v2). Project-lead authorization given explicitly in-session on 2026-11-13 (next-step answer:
+# 'Authorize package v2'). Supersedes AUTH_SIMULATION_GENERATION.yaml (package v1, void). Covers ONE execution attempt.
+# Bound hashes unchanged from the request; any change to a bound file voids this record.
+authorized: true
+status: ACTIVE_NOT_YET_EXECUTED
 scope: SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION
 package_version: v2
-authorized_by: null
-date: null
+authorized_by: Ahmed Zayed (project lead)
+date: '2026-11-13'
 bound_to:
   design: {file: 06_audit_preparation/simulation/v2_normal_support/DESIGN.csv, sha256: c59caa77fba33a9e604feed681f649ef753f12cfd42da7a6bcdf3c65e829788c}
   generator: {file: 06_audit_preparation/simulation/v2_normal_support/generate_v2_normal_support.m, sha256: 1d864d54e368c7ba3b0a961224c131136efbab0d9b82faf473c22a977c40ccba}
