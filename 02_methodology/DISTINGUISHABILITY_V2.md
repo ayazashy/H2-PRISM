@@ -292,3 +292,15 @@ No further real-data execution on the current dataset is scientifically useful: 
 > - **Recording:** the §6 provenance per run.
 > - **Partition:** the confirmation partition is hashed at creation and not opened.
 > - **Excludes:** any training, any evaluation, any event scenario, and any change to existing data, R2, arms or RC1.
+
+**Status (2026-11-13): AUTHORIZED by the project lead. Not yet executed.**
+
+- MATLAB/Simulink is not available in this environment, so nothing has been generated.
+- The package is in `06_audit_preparation/simulation/v2_normal_support/`:
+  - fixed `DESIGN.csv`: 9 operating points × 3 models, 6 development and 3 confirmation;
+  - the generator `generate_v2_normal_support.m`;
+  - `tools/simulation/add_measurement_noise.py`;
+  - `tools/simulation/validate_v2_normal_outputs.py`, which seals the confirmation partition by hash without reading it;
+  - the authorization record bound to all four files' hashes.
+- The package was validated by an end-to-end dry run on fabricated outputs (`tests/test_v2_simulation_package.py`).
+- Execution acceptance by Yazan (or his designee) is not recorded.
