@@ -1,0 +1,82 @@
+{
+  "evidence_status": "EXPLORATORY_DIAGNOSTIC",
+  "classifier_fitted": false,
+  "performance_scored": false,
+  "position_mapping_source": "SENSOR_CORRESPONDENCE.csv (diagram identity only)",
+  "blocks_in_all_models": {
+    "50": {
+      "center": "PS1",
+      "down": "PS1",
+      "up": "PS1"
+    },
+    "51": {
+      "center": "PS2",
+      "down": "PS2",
+      "up": "PS2"
+    },
+    "52": {
+      "center": "PS3",
+      "down": "PS3",
+      "up": "PS3"
+    },
+    "109": {
+      "center": "PS4",
+      "down": "PS4",
+      "up": "PS4"
+    },
+    "187": {
+      "center": "PS5",
+      "up": "PS5",
+      "down": "PS6"
+    },
+    "210": {
+      "center": "MFS2",
+      "down": "MFS2",
+      "up": "MFS2"
+    },
+    "218": {
+      "center": "MFS3",
+      "down": "MFS3",
+      "up": "MFS3"
+    },
+    "311": {
+      "center": "MFS1",
+      "down": "MFS1",
+      "up": "MFS1"
+    },
+    "318": {
+      "center": "PS6",
+      "up": "PS6",
+      "down": "PS7"
+    },
+    "392": {
+      "center": "PS7",
+      "up": "PS7",
+      "down": "PS8"
+    },
+    "428": {
+      "center": "PS9",
+      "up": "PS9",
+      "down": "PS11"
+    },
+    "431": {
+      "center": "PS10",
+      "up": "PS10",
+      "down": "PS12"
+    }
+  },
+  "blocks_with_identical_node": [
+    50,
+    51,
+    52,
+    187,
+    210,
+    218,
+    311,
+    318,
+    392,
+    428,
+    431
+  ],
+  "n_windows": 27993
+}

@@ -115,3 +115,18 @@ Nothing in this package changes recorded outputs.
 | Seven registered sensitivity runs and the incomplete offset run | unchanged |
 | Eight ablation runs | hash lists in `03_results/ablation_runs/logs/`; external backup verified |
 | Commits | `0a0a9e2` (R2 code), `ddb91ae`, `6f768a2`, `6301e62`, `dd5def7`, `d3b6cde`, `81baba4` |
+
+## 6. Update, 2026-11-13: D2 traced from the model diagrams; release candidate RC1
+
+- **D2 traced.** The `.slx` trace shows that the down model logs **different sensor blocks** under PS5–PS10:
+  - down PS6 = center/up PS5;
+  - down PS7 = PS6;
+  - down PS8 = PS7;
+  - down PS11 = PS9;
+  - down PS12 = PS10.
+
+  So the 13 name-matched sensors of arms C and G1 are **not** common sensors. A 12-block position map is proposed for your acceptance: `CANDIDATE_SENSOR_POSITION_MAP_V01.csv`.
+- **The D2 question changes.** It is no longer "are the names the same positions?" (no, diagram-verified). It is now: **accept the position map v0.1?**
+- **Release candidate RC1:**
+  - files: `release_candidate/P2_0_RC1.yaml` and `05_documentation/PROTOCOL_2_0_RC1_RESOLUTION.md`;
+  - status: not approved; confirmatory execution blocked.

@@ -806,7 +806,21 @@ def aggregate(cfg, preds: pd.DataFrame, dec_rows: List[Dict], artifact_class: st
                           "n_folds": n_folds})
               continue
           units = []
-          for fam, gf in g.groupby("Scenario_Family_ID"):
+          # evaluation.uncertainty.unit (CANDIDATE protocol 2.0, D4): "independence_group" resamples scenario
+          # independence groups (families linked by replicas/stems); default = Scenario_Family_ID (protocol 1.1)
+          ukind = cfg.get("evaluation", {}).get("uncertainty", {}).get("unit", "Scenario_Family_ID")
+          if ukind not in ("Scenario_Family_ID", "independence_group"):
+              raise PreflightError(f"unknown evaluation.uncertainty.unit {ukind!r}")
+          if ukind == "independence_group":
+              from ..independence import independence_groups
+              sg = independence_groups(preds.Scenario_ID, preds.Scenario_Family_ID)
+              fam2g = dict(zip(preds.Scenario_Family_ID, preds.Scenario_ID.map(sg)))
+              g = g.assign(_unit=g.Scenario_Family_ID.map(fam2g))
+              if g._unit.isna().any():
+                  raise PreflightError("a family has no independence group")
+          else:
+              g = g.assign(_unit=g.Scenario_Family_ID)
+          for fam, gf in g.groupby("_unit"):
               a, b = gf[gf.method == "s_C"], gf[gf.method == mb]
               assert set(a.window_id) == set(b.window_id)  # aligned evaluation units
               spec = lambda x: x[x.policy_outcome == SPECIFIC]
@@ -1038,6 +1052,19 @@ def run(config_path: Path, root: Path, raw_parent: Path, out_dir: Path, mode: st
 
     pre = preflight(cfg, root, raw_parent, realization, status)
     ft, fsum = build_features(cfg, root, raw_parent, realization)
+    # features.position_map (CANDIDATE protocol 2.0, D2): canonical physical sensors read from each source model's own
+    # release column (diagram-derived; pinned by hash). Absent = release column names are used as they are.
+    pm_cfg = cfg["features"].get("position_map")
+    if pm_cfg:
+        from ..position_map import PositionMapError, apply_position_map, canonical_channels, load_position_map
+        try:
+            pmap = load_position_map(root / pm_cfg["file"], pm_cfg.get("sha256"))
+            ft = apply_position_map(ft, pmap, cfg["features"]["statistics"])
+        except (PositionMapError, KeyError) as e:
+            raise PreflightError(f"features.position_map: {e}") from e
+        if list(cfg["features"].get("channels") or []) != canonical_channels(pmap):
+            raise PreflightError("features.channels must list exactly the position map's canonical channels, in order")
+        fsum["position_map"] = {"file": pm_cfg["file"], "sha256": pm_cfg.get("sha256")}
     feats = [c for c in model_feature_columns(ft) if "__" in c]
     # features.channels (CANDIDATE protocol 2.0, P2-B): restrict model and D(x) inputs to sensors present in every
     # simulation model (padded constant channels never enter). Absent = all SENSOR_CHANNELS (protocol 1.1).

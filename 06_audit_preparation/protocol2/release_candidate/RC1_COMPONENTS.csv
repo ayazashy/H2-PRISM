@@ -1,0 +1,12 @@
+component,description,decision,requires,development_evidence
+B,source-model topology attribution (manifest v0.3),INCLUDED_CONDITIONAL,D1 = option B (Yazan),dev group-balanced accuracy 0.47 -> 0.88; confident predictions outside the Center+Upstream fold almost absent
+C,"13 name-matched sensors PS1-PS10, MFS1-MFS3",EXCLUDED,refuted by the diagram trace: down model logs other blocks as PS5-PS10,"arm C/G1 results describe a mixed representation, not common sensors"
+C_prime,12 position-matched sensor blocks (map v0.1),INCLUDED_CONDITIONAL,D2 acceptance of the position map (Yazan) AND authorized development arm H run and reviewed (project lead / Faisal),support diagnostic only (no classifier fitted); no development performance yet
+D,independence-group support counting,INCLUDED,Faisal acceptance as integrity rule,no classifier change; pseudo-independent support = 0
+E,evidence-conflict policy,OPTIONAL_DEFAULT_OFF,Faisal design choice,no estimable operating point with errors in development
+F,E_h evidence margin,EXCLUDED,re-evaluate only on independent data,undefined for ~80% of windows; AUROC not above D(x)
+Dx,D(x) inside s_C,RETAINED_AS_COMPARATOR,registered contrast s_C vs s_C_minus_D,neighbourhood class agreement only; no increment at the single matched development point
+CAL,calibration selection none/sigmoid,INCLUDED,"development-only selection, fallback none",none selected in every fold
+TGT,development-only target rule,INCLUDED,Faisal,targets fixed before any outer evaluation
+META,fail-closed meta-model,INCLUDED,Faisal,"undefined -> NOT_ESTIMABLE, never a substitute score"
+UNIT,bootstrap unit = independence group,INCLUDED,Faisal (D4),13 groups on current data
