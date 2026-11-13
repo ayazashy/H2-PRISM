@@ -242,3 +242,55 @@ Source: `03_results/consolidated/CONSOLIDATED_COMPARISON.csv`, built by `tools/e
 - D2 is technically resolved from the diagrams, but not accepted.
 - The B vs G1 conflict is explained, but undecidable on current data.
 - RC1 is blocked for confirmation.
+
+## 9. Development arm H_POSITION_MATCHED (authorized 2026-11-13, run once)
+
+**Run details:**
+
+- Arm H = B plus the 12 position-matched sensor blocks (map v0.1, 96 inputs).
+- Authorized by the project lead (`arm_authorizations/AUTH_H_POSITION_MATCHED.yaml`, bound to the config hash). The grant covers no confirmatory or outer-test use.
+- Run key `65f05249dd12`. Output hashes are in `03_results/ablation_runs/logs/` and an external backup was verified.
+- Criteria were registered before the run (`ABLATION_MATRIX_ADDENDUM_H.csv`) and are applied literally (`03_results/ablation/ARM_H_ACCEPTANCE.csv`).
+- **Status: EXPLORATORY_DEVELOPMENT.**
+
+| Registered criterion (vs G1) | Result |
+| --- | --- |
+| No unmapped or padded channel among inputs | **PASS** (96 features, map hash recorded) |
+| Dev OUT_OF_SUPPORT share in folds with the down model lower than G1 | **PASS**: 0.007 vs 0.956 |
+| Dev group-balanced accuracy not lower than G1 by more than 0.05 | **PASS**: 0.900 vs 0.902 |
+
+| Development metric | G1 (name-matched 13) | H (position-matched 12) |
+| --- | --- | --- |
+| Accuracy / macro-F1 / balanced accuracy | 0.913 / 0.720 / 0.722 | 0.914 / 0.720 / 0.715 |
+| Group-balanced accuracy / worst group (NORMAL) | 0.902 / 0.003 | 0.900 / 0.003 |
+| ECE / Brier | 0.046 / 0.157 | 0.059 / 0.160 |
+| Flag-free share | 0.244 | **0.708** |
+| Development-fixed targets (estimable dev topologies) | fold 2 only (2) | **0.6 in all three folds (6)** |
+| s_C / s_C−D / confidence group-balanced selective risk at 0.6 | 0.091 / 0.091 / 0.091 | 0.109 / 0.109 / **0.099** |
+| Window-level selective risk (s_C / s_C−D / confidence) | 0.086 / 0.108 / 0.080 | 0.117 / 0.133 / 0.102 |
+| Min AUROC confidence → correct / D_only → correct | 0.615 / 0.341 | **0.476** / **0.641** |
+| Errors with conf ≥ 0.9: share of errors / rate among confident / independence groups | 0.612 / 0.068 / 1 | 0.674 / 0.067 / 2 |
+
+**What H shows:**
+
+1. **The out-of-support failure was a representation error, and position matching removes it.**
+   - Support becomes usable in every fold (flag-free 0.24 → 0.71).
+   - The development target rule now fixes 0.6 in all three folds, so the registered decision comparison is estimable everywhere in development for the first time.
+2. **Classifier accuracy does not change** (the remaining errors are the thin-class problem):
+   - NORMAL recall stays at 0.003–0.03, because the single NORMAL scenario is predicted as LEAK;
+   - 3,151 of H's 3,252 confident errors are NORMAL→LEAK, from one independence group;
+   - the other 101 are LEAK→NORMAL in the overlapped G5/G6 leak scenario.
+3. **New weakness:** the confidence AUROC falls below 0.5 in one development topology (fold 3 Center, 0.476). ECE rises slightly.
+4. **D(x):**
+   - As a standalone signal it becomes informative: min AUROC 0.64, from 0.34.
+   - Inside s_C it adds nothing at group level (0.109 vs 0.109).
+   - Confidence alone has the lowest group-balanced risk (0.099).
+   - The window-level gain of s_C over s_C−D (0.117 vs 0.133) is not on independent units.
+   - The registered contrast stays as specified, and any confirmatory null result is reported as null.
+
+**Consequence for RC1.**
+
+- RC1 is unchanged and stays pinned.
+- The C′ condition "development arm H run" is now met.
+- Its review (Faisal) and D2 acceptance of the map (Yazan) are still required.
+- The H run is development evidence only and confirms nothing.

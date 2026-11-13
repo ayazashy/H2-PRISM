@@ -29,7 +29,7 @@ from h2prism.independence import ancestor, independence_groups  # noqa: E402
 RUNS = REPO / "03_results" / "ablation_runs"
 MAN = REPO / "06_audit_preparation" / "protocol2" / "CANDIDATE_MANIFEST_V03.csv"
 OUT = REPO / "03_results" / "diagnostics" / "high_confidence"
-ARMS = ("A_P11_DEV", "B_TOPOLOGY", "C_COMMON_SENSORS", "G1_DATA_CORRECTIONS")
+ARMS = ("A_P11_DEV", "B_TOPOLOGY", "C_COMMON_SENSORS", "G1_DATA_CORRECTIONS", "H_POSITION_MATCHED")
 TAU = 0.9
 
 

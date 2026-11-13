@@ -132,16 +132,20 @@ def test_rc1_refused_for_execution_even_with_well_formed_authorization(tmp_path)
         pp.run(RC, REPO, tmp_path, tmp_path / "out3", "execute", artifact_class="PRIMARY_EXPERIMENT")
 
 
-def test_arm_h_registered_but_not_authorized(tmp_path):
+def test_arm_h_registered_and_authorization_bound_to_config(tmp_path):
     h = yaml.safe_load(ARM_H.read_text(encoding="utf-8"))
     assert h["status"] == pp.DEV_ARM_STATUS and h["arm_id"] == "H_POSITION_MATCHED"
     assert h["features"]["position_map"]["sha256"] == _sha(PMAP)
-    assert not list((P2 / "arm_authorizations").glob("*H_POSITION*"))
     add = pd.read_csv(P2 / "ABLATION_MATRIX_ADDENDUM_H.csv").iloc[0]
-    assert add.config_sha256 == _sha(ARM_H) and add.authorization_status == "NOT_AUTHORIZED"
-    with pytest.raises(pp.AuthorizationError):
+    assert add.config_sha256 == _sha(ARM_H)  # registered config is the one that was authorized and run
+    auth = yaml.safe_load((P2 / "arm_authorizations" / "AUTH_H_POSITION_MATCHED.yaml").read_text(encoding="utf-8"))
+    assert auth["scope"] == "DEVELOPMENT_EXPERIMENT:H_POSITION_MATCHED" and auth["config_sha256"] == _sha(ARM_H)
+    assert "confirmatory" in auth["not_covered"] and "RC1 freeze" in auth["not_covered"]
+    with pytest.raises(pp.AuthorizationError):  # no authorization given -> refused
         pp.run(ARM_H, REPO, tmp_path, tmp_path / "o", "develop")
-    assert not (REPO / "03_results" / "ablation_runs" / "H_POSITION_MATCHED").exists()
+    with pytest.raises(pp.AuthorizationError):  # the arm-H grant does not authorize RC1 or any outer-test execution
+        pp.run(RC, REPO, tmp_path, tmp_path / "o2", "execute", artifact_class="PRIMARY_EXPERIMENT",
+               authorization=P2 / "arm_authorizations" / "AUTH_H_POSITION_MATCHED.yaml")
 
 
 # ---------------------------------------------------------------- high-confidence calculation
@@ -182,3 +186,25 @@ def test_r2_outputs_match_frozen_hash_list():
             assert _sha(f) == h, name
             n += 1
     assert n > 0
+
+
+# ---------------------------------------------------------------- arm H results
+def test_arm_h_outputs_match_hash_list_and_criteria():
+    run = REPO / "03_results" / "ablation_runs" / "H_POSITION_MATCHED"
+    import json
+    man = json.loads((run / "run_manifest.json").read_text(encoding="utf-8"))
+    assert man["status"] == "COMPLETED" and man["config_sha256"] == _sha(ARM_H)
+    assert man["features"]["n_features"] == 96 and man["features"]["position_map"]["sha256"] == _sha(PMAP)
+    lst = REPO / "03_results" / "ablation_runs" / "logs" / f"H_POSITION_MATCHED_{man['run_key'][:12]}_OUTPUT_HASHES.sha256"
+    for line in lst.read_text(encoding="utf-8").splitlines():
+        h, name = line.split(maxsplit=1)
+        f = run / name.lstrip("*")
+        if f.exists():
+            assert _sha(f) == h, name
+    acc = pd.read_csv(REPO / "03_results" / "ablation" / "ARM_H_ACCEPTANCE.csv")
+    assert len(acc) == 3 and set(acc.evidence_status) == {"EXPLORATORY_DEVELOPMENT"}
+    s = pd.read_csv(REPO / "03_results" / "ablation" / "ARM_H_SUMMARY.csv").set_index("arm_id")
+    h_, g_ = s.loc["H_POSITION_MATCHED"], s.loc["G1_DATA_CORRECTIONS"]
+    expect = [h_.n_features == 96, h_.oos_share_folds_with_down < g_.oos_share_folds_with_down,
+              h_.dev_group_balanced_accuracy_mean >= g_.dev_group_balanced_accuracy_mean - 0.05]
+    assert acc.result.tolist() == ["PASS" if e else "FAIL" for e in expect]

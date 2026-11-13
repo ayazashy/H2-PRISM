@@ -130,3 +130,11 @@ Nothing in this package changes recorded outputs.
 - **Release candidate RC1:**
   - files: `release_candidate/P2_0_RC1.yaml` and `05_documentation/PROTOCOL_2_0_RC1_RESOLUTION.md`;
   - status: not approved; confirmatory execution blocked.
+
+**Arm H (2026-11-13).** Arm H (B plus position-matched sensors) was authorized and run once. All three registered criteria pass:
+
+- out-of-support share in folds with the down model 0.956 → 0.007;
+- group-balanced accuracy 0.900 vs 0.902;
+- development targets now estimable in all folds.
+
+The single NORMAL scenario is still misclassified as LEAK. Confidence AUROC is 0.476 in one topology. Details: `05_documentation/PROTOCOL_2_0_RC1_RESOLUTION.md` section 9. **Pending: Faisal's review of C′ and Yazan's acceptance of map v0.1.**

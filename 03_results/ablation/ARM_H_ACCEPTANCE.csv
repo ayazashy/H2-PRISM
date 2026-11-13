@@ -1,0 +1,4 @@
+criterion,result,detail,arm_id,evidence_status
+no unmapped or padded channel among model inputs,PASS,96 model features; position map sha 7b3b8cf1a539,H_POSITION_MATCHED,EXPLORATORY_DEVELOPMENT
+dev OUT_OF_SUPPORT share (folds with the down model) lower than G1,PASS,0.007 vs G1 0.956,H_POSITION_MATCHED,EXPLORATORY_DEVELOPMENT
+dev group-balanced accuracy not lower than G1 by more than 0.05,PASS,0.900 vs G1 0.902,H_POSITION_MATCHED,EXPLORATORY_DEVELOPMENT

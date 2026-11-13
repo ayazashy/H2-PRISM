@@ -33,7 +33,8 @@ MAN = REPO / "06_audit_preparation" / "protocol2" / "CANDIDATE_MANIFEST_V03.csv"
 OUT = REPO / "03_results" / "consolidated"
 CLS = ["NORMAL", "LEAK", "COMPRESSOR_FAULT", "COMPRESSOR_DELAY"]
 CLASSIFIER_ARMS = {"A_P11_DEV": "A protocol 1.1", "B_TOPOLOGY": "B source-model topology (v0.3)",
-                   "C_COMMON_SENSORS": "C 13 name-matched sensors", "G1_DATA_CORRECTIONS": "G1 = B + C"}
+                   "C_COMMON_SENSORS": "C 13 name-matched sensors", "G1_DATA_CORRECTIONS": "G1 = B + C",
+                   "H_POSITION_MATCHED": "H = B + 12 position-matched sensors (map v0.1)"}
 ALL_ARMS = list(CLASSIFIER_ARMS) + ["D_GROUP_SUPPORT", "E_EVIDENCE_CONFLICT", "F_EVIDENCE_MARGIN", "G2_FULL_CANDIDATE"]
 
 
