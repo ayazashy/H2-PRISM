@@ -96,3 +96,25 @@ def decision_metrics(outcome: Sequence[str], y_pred_specific: Sequence[Optional[
             "ambiguity_rate": float(am.mean()) if len(o) else np.nan,
             "ambiguity_inclusion": float(np.mean(inc)) if inc else np.nan,
             "unresolved_rate": float((o == "UNRESOLVED").mean()) if len(o) else np.nan}
+
+
+def selective_risk_report(specific, wrong, groups) -> Dict:
+    """Window-level and per-independence-group selective risk side by side (action X10 / issue D-05).
+
+    The registered endpoint (group-balanced risk = mean over groups with >= 1 SPECIFIC of their window risk) can be
+    pinned at k / n_groups when k groups are wrong on every selected window, hiding window-level differences between
+    methods. This report adds the window-level risk, every group's risk and a saturation flag. It does not change the
+    registered endpoint (that requires the methods owner)."""
+    sp = np.asarray(specific, bool)
+    wr = np.asarray(wrong, bool) & sp
+    g = np.asarray(groups, dtype=object)
+    if not sp.any():
+        return {"n_specific": 0, "window_risk": np.nan, "group_balanced_risk": np.nan, "per_group_risk": {},
+                "n_groups_selected": 0, "n_all_wrong_groups": 0, "saturated_by_all_wrong_groups": False}
+    s = pd.DataFrame({"g": g[sp], "w": wr[sp]}).groupby("g").w.mean()
+    all_wrong = int((s == 1.0).sum())
+    partial = int(((s > 0) & (s < 1)).sum())
+    return {"n_specific": int(sp.sum()), "window_risk": float(wr[sp].mean()), "group_balanced_risk": float(s.mean()),
+            "per_group_risk": {str(k): float(v) for k, v in s.items()}, "n_groups_selected": int(len(s)),
+            "n_all_wrong_groups": all_wrong,
+            "saturated_by_all_wrong_groups": bool(all_wrong > 0 and partial == 0)}

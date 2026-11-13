@@ -11,6 +11,7 @@ import sys
 import numpy as np
 import pandas as pd
 import pytest
+pytestmark = pytest.mark.slow   # X22: > ~10 s per test (durations profile 2026-11-13); runs in the full CI job
 
 from h2prism.visualization import (
     apply_publication_theme,

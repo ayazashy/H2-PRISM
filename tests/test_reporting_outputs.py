@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 import pytest
+pytestmark = pytest.mark.slow   # X22: > ~10 s per test (durations profile 2026-11-13); runs in the full CI job
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]

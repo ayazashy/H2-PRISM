@@ -18,6 +18,8 @@ import pandas as pd
 import pytest
 import yaml
 
+
+pytestmark = pytest.mark.slow
 REPO = Path(__file__).resolve().parents[1]
 PKG = REPO / "06_audit_preparation" / "simulation" / "v2_normal_support"
 TOOLS = REPO / "tools" / "simulation"

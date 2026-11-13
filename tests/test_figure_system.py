@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 import pytest  # noqa: E402
+pytestmark = pytest.mark.slow   # X22: > ~10 s per test (durations profile 2026-11-13); runs in the full CI job
 import yaml  # noqa: E402
 
 from h2prism.experiments import primary_protocol as pp  # noqa: E402

@@ -11,6 +11,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+
+pytestmark = pytest.mark.slow
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "tools" / "simulation"))
 PROPS = REPO / "06_audit_preparation" / "simulation" / "h2net_v1" / "properties"

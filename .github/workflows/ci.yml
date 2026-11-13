@@ -1,0 +1,29 @@
+# H2-PRISM continuous integration (action X22). Fast tier on every push/PR; full suite on every PR and on demand.
+# Raw data are not in the repository, so tests that need them skip; frozen-hash verification checks only files
+# present in the checkout (git-ignored large outputs are reported as missing, not as failures).
+name: ci
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  fast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.1"
+      - run: pip install -r requirements-lock.txt
+      - run: python tools/governance/verify_frozen_hashes.py
+      - run: python -m pytest -q -m "not slow"
+  full:
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.1"
+      - run: pip install -r requirements-lock.txt
+      - run: python -m pytest -q

@@ -40,6 +40,26 @@ def test_develop_mode_never_scores_the_held_out_topology(dev_run):
     assert not (d / "o" / "rq1.csv").exists() and not (d / "o" / "predictions.parquet").exists()
 
 
+def test_develop_outputs_are_instrumented_for_failure_analysis(dev_run):
+    """X14 / C-12: calibrated class probabilities per window and meta-model coefficients are stored; probabilities
+    reproduce the stored labels and confidence exactly, so later analyses need no refitting."""
+    import numpy as np
+    fx, d, _ = dev_run
+    cfg = yaml.safe_load(fx["config"].read_text(encoding="utf-8"))
+    classes = list(cfg["dataset"]["classes"])
+    for k in pd.read_csv(fx["folds"]).outer_fold_id.unique():
+        oof = pd.read_parquet(d / "o" / "folds" / f"fold_{k}" / "dev_oof.parquet")
+        P = oof[[f"p_cal_{c}" for c in classes]].to_numpy()
+        assert np.allclose(P.sum(1), 1.0, atol=1e-6)
+        assert (np.array(classes, dtype=object)[P.argmax(1)] == oof.y_hat.to_numpy()).all()
+        assert np.allclose(P.max(1), oof.score_confidence.to_numpy(), atol=1e-9)
+        done = json.loads((d / "o" / "folds" / f"fold_{k}" / "DONE.json").read_text(encoding="utf-8"))
+        for name, rec in done["meta_models"].items():
+            if rec is not None:
+                assert len(rec["coef"]) == len(rec["features"]) == len(rec["scaler_mean"])
+                assert ("D" in rec["features"]) == (name == "s_C")
+
+
 def test_develop_metrics_include_prespecified_columns(dev_run):
     _, d, _ = dev_run
     m = pd.read_csv(d / "o" / "DEV_METRICS.csv")

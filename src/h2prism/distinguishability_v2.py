@@ -61,6 +61,10 @@ class V2Config:
     oos_quantile: float = 0.99
     normal_class: str = "NORMAL"
     untestable_outcome: str = UNRESOLVED
+    # Calibration cost (action X26 / issue F-06): None = exact (every reference window is a leave-one-group-out query);
+    # an integer n = at most n evenly spaced query windows per group for the resolution and the LOO quantiles. Distances
+    # to other groups stay exact; only the query sample shrinks. Opt-in; equivalence is tested, not assumed.
+    calibration_max_per_group: Optional[int] = None
 
     def __post_init__(self):
         if self.min_groups < 1:
@@ -71,6 +75,8 @@ class V2Config:
             raise ValueError("quantiles must be in (0, 1)")
         if self.untestable_outcome not in (UNRESOLVED, AMBIGUITY_SET):
             raise ValueError("untestable_outcome must be UNRESOLVED or AMBIGUITY_SET")
+        if self.calibration_max_per_group is not None and self.calibration_max_per_group < 2:
+            raise ValueError("calibration_max_per_group must be None or >= 2")
 
 
 class DistinguishabilityV2:
@@ -109,12 +115,25 @@ class DistinguishabilityV2:
                 raise ValueError(f"independence group {gg!r} mixes classes {sorted(labs)}")
             self.group_class_[gg] = labs.pop()
         self.groups_ = list(self.group_class_)
+        self._cal_idx = self._calibration_index()
+        self._D_cal = None
         self.s_ = self._resolution()
         self.theta_oos_ = self._loo_quantile(None, self.config.oos_quantile)
         normal_groups = [gg for gg, c in self.group_class_.items() if c == self.config.normal_class]
         self.theta_det_ = (self._loo_quantile(self.config.normal_class, self.config.detect_quantile)
                            if len(normal_groups) >= self.config.min_groups + 1 else None)
+        self._D_cal = None                           # calibration cache not kept after fit
         return self
+
+    def _calibration_index(self) -> np.ndarray:
+        n = self.config.calibration_max_per_group
+        idx = []
+        for gg in self.groups_:
+            rows = np.flatnonzero(self.g_ == gg)
+            if n is not None and len(rows) > n:
+                rows = rows[np.unique(np.linspace(0, len(rows) - 1, n).round().astype(int))]
+            idx.extend(rows.tolist())
+        return np.array(sorted(idx), dtype=int)
 
     def _raw_group_dist(self, Zq) -> np.ndarray:
         """(n_query, n_groups) RMS-per-feature distance to the nearest window of each group (not yet scaled by s)."""
@@ -131,8 +150,9 @@ class DistinguishabilityV2:
             Zg, tg = self.Z_[m], self.t_[m]
             if len(Zg) < 2:
                 continue
-            d = cdist(Zg, Zg) / np.sqrt(self.p_)
-            d[np.abs(tg[:, None] - tg[None, :]) < self.config.window_s] = np.inf   # same or overlapping windows
+            qi = np.isin(np.flatnonzero(m), self._cal_idx)                          # query windows (all if exact)
+            d = cdist(Zg[qi], Zg) / np.sqrt(self.p_)
+            d[np.abs(tg[qi][:, None] - tg[None, :]) < self.config.window_s] = np.inf   # same or overlapping windows
             v = d.min(1)
             vals.extend(v[np.isfinite(v)].tolist())
         if not vals:
@@ -145,9 +165,11 @@ class DistinguishabilityV2:
         the m-th nearest OTHER group of class cls (cls given) or the nearest other group of any class (cls None)."""
         if self.s_ is None:
             return None
-        D = self._raw_group_dist(self.Z_) / self.s_
+        if self._D_cal is None:                      # computed once for both quantiles
+            self._D_cal = self._raw_group_dist(self.Z_[self._cal_idx]) / self.s_
+        D = self._D_cal
         vals = []
-        for i, gg in enumerate(self.g_):
+        for i, gg in enumerate(self.g_[self._cal_idx]):
             if cls is not None and self.group_class_[gg] != cls:
                 continue
             cols = [j for j, h in enumerate(self.groups_) if h != gg and (cls is None or self.group_class_[h] == cls)]

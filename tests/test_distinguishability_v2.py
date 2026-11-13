@@ -321,3 +321,32 @@ def test_16_supported_state_requires_m_groups():
                                    np.concatenate([t, np.arange(len(reps)) * 30.0]), NL)
     r = m.compute(q(0.0), ["NEW"]).iloc[0]
     assert r.state_NORMAL == INSUFFICIENT and r.state_LEAK == SUPPORTED
+
+
+def _scaling_reference(seed=0, n_groups=24, wpg=240):
+    rng = np.random.default_rng(seed)
+    cls = ["NORMAL", "LEAK", "COMPRESSOR_FAULT", "COMPRESSOR_DELAY"]
+    X, y, g, t = [], [], [], []
+    for i in range(n_groups):
+        ctr = rng.normal((i % 4) * 3.0, 1.0, 24)
+        X.append(ctr + np.cumsum(rng.normal(0, 0.05, (wpg, 24)), 0) + rng.normal(0, 0.3, (wpg, 24)))
+        y += [cls[i % 4]] * wpg
+        g += [f"G{i}"] * wpg
+        t += list(np.arange(wpg) * 30.0)
+    return np.vstack(X), y, g, t, cls
+
+
+def test_17_sampled_calibration_default_is_exact_and_partial_equivalence_is_honest():
+    """X26 / F-06. Default (None) is the exact computation. With 60 query windows per group the resolution and the
+    out-of-support threshold stay within the registered 1 % of exact; the detectability threshold (a 0.99 tail quantile
+    over NORMAL groups only) does NOT meet 1 % at any tested size (measured 1.2-1.5 %), so subsampling is not approved
+    for detectability and the default stays exact. This test records that boundary instead of loosening it."""
+    X, y, g, t, cls = _scaling_reference()
+    exact = DistinguishabilityV2(V2Config()).fit(X, y, g, t, cls)
+    huge = DistinguishabilityV2(V2Config(calibration_max_per_group=10_000)).fit(X, y, g, t, cls)
+    assert (exact.s_, exact.theta_oos_, exact.theta_det_) == (huge.s_, huge.theta_oos_, huge.theta_det_)
+    samp = DistinguishabilityV2(V2Config(calibration_max_per_group=60)).fit(X, y, g, t, cls)
+    assert abs(samp.s_ / exact.s_ - 1) <= 0.01 and abs(samp.theta_oos_ / exact.theta_oos_ - 1) <= 0.01
+    assert abs(samp.theta_det_ / exact.theta_det_ - 1) > 0.01            # known failure of the 1 % criterion
+    with pytest.raises(ValueError):
+        V2Config(calibration_max_per_group=1)

@@ -895,6 +895,17 @@ def _group_balanced_risk(dec: pd.DataFrame, groups: np.ndarray) -> float:
     return float(s.mean())
 
 
+def _meta_model_record(fit: Optional[Dict]) -> Optional[Dict]:
+    """Coefficients of a fitted combined-score meta-model (standardised logistic regression), or None if undefined."""
+    if not fit:
+        return None
+    pipe = fit["model"]
+    sc, lr = pipe.named_steps["scale"], pipe.named_steps["lr"]
+    return {"features": list(fit["features"]), "scaler_mean": [float(v) for v in sc.mean_],
+            "scaler_scale": [float(v) for v in sc.scale_], "coef": [float(v) for v in lr.coef_.ravel()],
+            "intercept": float(lr.intercept_.ravel()[0]), "n_excluded_undefined": int(fit["n_excluded_undefined"])}
+
+
 def _develop(cfg, ft: pd.DataFrame, feats: List[str], folds: pd.DataFrame, out_dir: Path, manifest: Dict, run_key: str) -> Dict:
     """Development-only evaluation of an ablation arm (see run(mode='develop')). Writes DEV_METRICS.csv and
     DEV_DECISION_METRICS.csv; window-level development predictions go to folds/fold_k/dev_oof.parquet."""
@@ -963,10 +974,16 @@ def _develop(cfg, ft: pd.DataFrame, feats: List[str], folds: pd.DataFrame, out_d
             y_hat=o["y_hat"], correct=ok, support_flags=flags, fold=int(k))
         for c, v in scores.items():
             oof[f"score_{c}"] = v
+        # instrumentation (action X14 / issue C-12): calibrated class probabilities per window, so classifier failures can
+        # be analysed without refitting; added columns only, existing columns and semantics unchanged
+        for j, c in enumerate(classes):
+            oof[f"p_cal_{c}"] = np.asarray(o["P_cal"])[:, j]
         fdir.mkdir(parents=True, exist_ok=True)
         oof.to_parquet(fdir / "dev_oof.parquet", index=False)
         write_json({"run_key": run_key, "fold": int(k), "target_rule": tgt, "meta_model_status": devres["meta_model_status"],
-                    "calibration": devres["cal_method"], "params": devres["params"]}, fdir / "DONE.json")
+                    "calibration": devres["cal_method"], "params": devres["params"],
+                    "meta_models": {name: _meta_model_record(devres.get(key))
+                                    for name, key in (("s_C", "fitC"), ("s_C_minus_D", "fitCmD"))}}, fdir / "DONE.json")
     write_csv(pd.DataFrame(metric_rows).assign(artifact_class=manifest["artifact_class"]), out_dir / "DEV_METRICS.csv")
     write_csv(pd.DataFrame(dec_rows).assign(artifact_class=manifest["artifact_class"]), out_dir / "DEV_DECISION_METRICS.csv")
     manifest["status"] = "COMPLETED"

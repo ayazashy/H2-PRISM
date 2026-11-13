@@ -8,6 +8,8 @@ import pytest
 
 from h2prism import gas_physics as gp
 
+
+pytestmark = pytest.mark.slow
 # released H2-SimNet Gas Properties (G) active perfect-gas constants (all six models, block SID 4), SI units
 RELEASED = gp.PerfectGas(R=287.0, Z=0.998386, cp=346.9, mu=10.98e-6, k=48.2e-3, name="released_h2simnet")
 AIR = gp.PerfectGas(R=287.0, Z=1.0, cp=1005.0, mu=18.2e-6, k=25.9e-3, name="air_textbook")
