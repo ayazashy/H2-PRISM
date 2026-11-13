@@ -33,3 +33,18 @@ def test_reference_calcs_are_current_and_support_the_recorded_findings():
     assert max(abs(r["relative_error_vs_distributed"]) for r in d["D_lumping_vs_segments"]["rows"]) < 1e-5
     b = {r["case"]: r["dp_kPa_16km_1p2m_10m_s"] for r in d["B_roughness_sensitivity"]["rows"]}
     assert b["Pipe (G)4/7 (50 mm)"] > 5 * b["proposed 0.045 mm"]
+
+
+@pytest.mark.slow
+def test_envelope_consistency_findings_quoted_in_the_decision_package():
+    d = json.loads((CAND / "REFERENCE_CALCS.json").read_text(encoding="utf-8"))
+    e = d["E_leak_consistency_over_envelope"]["rows"]
+    assert all(r["choked"] for r in e)
+    assert not any(r["fixed_nominal_feasible_at_20m_s"] for r in e if r["p_MPa"] == 2.0)
+    scal = [r["fraction_if_demand_scales_with_capacity"] / r["design_fraction"] for r in e]
+    fixed = [r["fraction_if_demand_fixed_at_nominal"] / r["design_fraction"] for r in e]
+    assert 0.93 < min(scal) and max(scal) < 1.06 and min(fixed) < 0.45 and max(fixed) > 1.6
+    g = [r["T_discharge_isentropic_K"] for r in d["G_compressor_discharge_temperature"]["rows"]]
+    assert min(g) >= 329 and max(g) < 500
+    pkg = (CAND.parent / "H2NET_V1_DECISION_PACKAGE.md").read_text(encoding="utf-8")
+    assert "Not sent, not approved" in pkg and "OWNER_DECISIONS_REQUIRED" in pkg

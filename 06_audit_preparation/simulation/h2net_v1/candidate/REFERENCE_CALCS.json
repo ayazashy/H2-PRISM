@@ -390,5 +390,537 @@
     "relative_change_on_halving": 3.3993460364565535e-09
    }
   ]
+ },
+ "E_leak_consistency_over_envelope": {
+  "nominal_kg_s": 42.56018895732655,
+  "leak_areas_m2": {
+   "0.005": 0.00011153755885093509,
+   "0.02": 0.00044615023540374037,
+   "0.1": 0.0022307511770187013
+  },
+  "rows": [
+   {
+    "T_K": 283.15,
+    "p_MPa": 2.0,
+    "design_fraction": 0.005,
+    "leak_kg_s": 0.0901841847260829,
+    "fraction_if_demand_scales_with_capacity": 0.004712770336685849,
+    "fraction_if_demand_fixed_at_nominal": 0.00211897989495552,
+    "fixed_nominal_feasible_at_20m_s": false,
+    "choked": true
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 2.0,
+    "design_fraction": 0.02,
+    "leak_kg_s": 0.3607367389043316,
+    "fraction_if_demand_scales_with_capacity": 0.018851081346743397,
+    "fraction_if_demand_fixed_at_nominal": 0.00847591957982208,
+    "fixed_nominal_feasible_at_20m_s": false,
+    "choked": true
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 2.0,
+    "design_fraction": 0.1,
+    "leak_kg_s": 1.8036836945216577,
+    "fraction_if_demand_scales_with_capacity": 0.09425540673371696,
+    "fraction_if_demand_fixed_at_nominal": 0.042379597899110395,
+    "fixed_nominal_feasible_at_20m_s": false,
+    "choked": true
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 3.0,
+    "design_fraction": 0.005,
+    "leak_kg_s": 0.13494524937523844,
+    "fraction_if_demand_scales_with_capacity": 0.004729685314110682,
+    "fraction_if_demand_fixed_at_nominal": 0.0031706919701541456,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 3.0,
+    "design_fraction": 0.02,
+    "leak_kg_s": 0.5397809975009538,
+    "fraction_if_demand_scales_with_capacity": 0.018918741256442727,
+    "fraction_if_demand_fixed_at_nominal": 0.012682767880616582,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 3.0,
+    "design_fraction": 0.1,
+    "leak_kg_s": 2.698904987504769,
+    "fraction_if_demand_scales_with_capacity": 0.09459370628221363,
+    "fraction_if_demand_fixed_at_nominal": 0.06341383940308291,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 5.0,
+    "design_fraction": 0.005,
+    "leak_kg_s": 0.22381769989096595,
+    "fraction_if_demand_scales_with_capacity": 0.00476390090307937,
+    "fraction_if_demand_fixed_at_nominal": 0.005258851179335206,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 5.0,
+    "design_fraction": 0.02,
+    "leak_kg_s": 0.8952707995638638,
+    "fraction_if_demand_scales_with_capacity": 0.01905560361231748,
+    "fraction_if_demand_fixed_at_nominal": 0.021035404717340823,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 5.0,
+    "design_fraction": 0.1,
+    "leak_kg_s": 4.476353997819318,
+    "fraction_if_demand_scales_with_capacity": 0.09527801806158737,
+    "fraction_if_demand_fixed_at_nominal": 0.1051770235867041,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 8.0,
+    "design_fraction": 0.005,
+    "leak_kg_s": 0.35553919936659983,
+    "fraction_if_demand_scales_with_capacity": 0.004816245699510984,
+    "fraction_if_demand_fixed_at_nominal": 0.008353797482503783,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 8.0,
+    "design_fraction": 0.02,
+    "leak_kg_s": 1.4221567974663993,
+    "fraction_if_demand_scales_with_capacity": 0.019264982798043936,
+    "fraction_if_demand_fixed_at_nominal": 0.03341518993001513,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 8.0,
+    "design_fraction": 0.1,
+    "leak_kg_s": 7.110783987331995,
+    "fraction_if_demand_scales_with_capacity": 0.09632491399021967,
+    "fraction_if_demand_fixed_at_nominal": 0.1670759496500756,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 2.0,
+    "design_fraction": 0.005,
+    "leak_kg_s": 0.08569651719657528,
+    "fraction_if_demand_scales_with_capacity": 0.004949195906756767,
+    "fraction_if_demand_fixed_at_nominal": 0.0020135370470864182,
+    "fixed_nominal_feasible_at_20m_s": false,
+    "choked": true
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 2.0,
+    "design_fraction": 0.02,
+    "leak_kg_s": 0.34278606878630113,
+    "fraction_if_demand_scales_with_capacity": 0.019796783627027068,
+    "fraction_if_demand_fixed_at_nominal": 0.008054148188345673,
+    "fixed_nominal_feasible_at_20m_s": false,
+    "choked": true
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 2.0,
+    "design_fraction": 0.1,
+    "leak_kg_s": 1.7139303439315055,
+    "fraction_if_demand_scales_with_capacity": 0.09898391813513532,
+    "fraction_if_demand_fixed_at_nominal": 0.040270740941728354,
+    "fixed_nominal_feasible_at_20m_s": false,
+    "choked": true
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 3.0,
+    "design_fraction": 0.005,
+    "leak_kg_s": 0.12825436351901634,
+    "fraction_if_demand_scales_with_capacity": 0.004966049476286884,
+    "fraction_if_demand_fixed_at_nominal": 0.0030134820042178856,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 3.0,
+    "design_fraction": 0.02,
+    "leak_kg_s": 0.5130174540760654,
+    "fraction_if_demand_scales_with_capacity": 0.019864197905147537,
+    "fraction_if_demand_fixed_at_nominal": 0.012053928016871543,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 3.0,
+    "design_fraction": 0.1,
+    "leak_kg_s": 2.5650872703803267,
+    "fraction_if_demand_scales_with_capacity": 0.09932098952573767,
+    "fraction_if_demand_fixed_at_nominal": 0.06026964008435771,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 5.0,
+    "design_fraction": 0.005,
+    "leak_kg_s": 0.21280094478663278,
+    "fraction_if_demand_scales_with_capacity": 0.005,
+    "fraction_if_demand_fixed_at_nominal": 0.005,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 5.0,
+    "design_fraction": 0.02,
+    "leak_kg_s": 0.8512037791465311,
+    "fraction_if_demand_scales_with_capacity": 0.02,
+    "fraction_if_demand_fixed_at_nominal": 0.02,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 5.0,
+    "design_fraction": 0.1,
+    "leak_kg_s": 4.256018895732655,
+    "fraction_if_demand_scales_with_capacity": 0.1,
+    "fraction_if_demand_fixed_at_nominal": 0.1,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 8.0,
+    "design_fraction": 0.005,
+    "leak_kg_s": 0.33823245062591084,
+    "fraction_if_demand_scales_with_capacity": 0.005051584948232527,
+    "fraction_if_demand_fixed_at_nominal": 0.007947155755465358,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 8.0,
+    "design_fraction": 0.02,
+    "leak_kg_s": 1.3529298025036434,
+    "fraction_if_demand_scales_with_capacity": 0.020206339792930107,
+    "fraction_if_demand_fixed_at_nominal": 0.03178862302186143,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 8.0,
+    "design_fraction": 0.1,
+    "leak_kg_s": 6.764649012518215,
+    "fraction_if_demand_scales_with_capacity": 0.10103169896465052,
+    "fraction_if_demand_fixed_at_nominal": 0.15894311510930711,
+    "fixed_nominal_feasible_at_20m_s": true,
+    "choked": true
+   }
+  ]
+ },
+ "F_capacity_over_envelope": {
+  "rows": [
+   {
+    "T_K": 283.15,
+    "p_MPa": 2.0,
+    "pipe": "1.2 m (Pipe 1, 2, 3, 8)",
+    "capacity_20m_s_kg_s": 38.2722595345068
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 2.0,
+    "pipe": "1.0 m (Pipe 4, 7)",
+    "capacity_20m_s_kg_s": 26.57795801007417
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 2.0,
+    "pipe": "0.4 m (Pipe 6, down)",
+    "capacity_20m_s_kg_s": 4.252473281611868
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 2.0,
+    "pipe": "0.355 m (Pipe 5)",
+    "capacity_20m_s_kg_s": 3.3494871582195973
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 3.0,
+    "pipe": "1.2 m (Pipe 1, 2, 3, 8)",
+    "capacity_20m_s_kg_s": 57.063098457159015
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 3.0,
+    "pipe": "1.0 m (Pipe 4, 7)",
+    "capacity_20m_s_kg_s": 39.627151706360436
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 3.0,
+    "pipe": "0.4 m (Pipe 6, down)",
+    "capacity_20m_s_kg_s": 6.340344273017671
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 3.0,
+    "pipe": "0.355 m (Pipe 5)",
+    "capacity_20m_s_kg_s": 4.994011793794074
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 5.0,
+    "pipe": "1.2 m (Pipe 1, 2, 3, 8)",
+    "capacity_20m_s_kg_s": 93.96404519929915
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 5.0,
+    "pipe": "1.0 m (Pipe 4, 7)",
+    "capacity_20m_s_kg_s": 65.25280916617997
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 5.0,
+    "pipe": "0.4 m (Pipe 6, down)",
+    "capacity_20m_s_kg_s": 10.440449466588797
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 5.0,
+    "pipe": "0.355 m (Pipe 5)",
+    "capacity_20m_s_kg_s": 8.223485275167832
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 8.0,
+    "pipe": "1.2 m (Pipe 1, 2, 3, 8)",
+    "capacity_20m_s_kg_s": 147.64163688854137
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 8.0,
+    "pipe": "1.0 m (Pipe 4, 7)",
+    "capacity_20m_s_kg_s": 102.52891450593152
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 8.0,
+    "pipe": "0.4 m (Pipe 6, down)",
+    "capacity_20m_s_kg_s": 16.40462632094905
+   },
+   {
+    "T_K": 283.15,
+    "p_MPa": 8.0,
+    "pipe": "0.355 m (Pipe 5)",
+    "capacity_20m_s_kg_s": 12.921206450610018
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 2.0,
+    "pipe": "1.2 m (Pipe 1, 2, 3, 8)",
+    "capacity_20m_s_kg_s": 34.63048091492205
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 2.0,
+    "pipe": "1.0 m (Pipe 4, 7)",
+    "capacity_20m_s_kg_s": 24.04894507980698
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 2.0,
+    "pipe": "0.4 m (Pipe 6, down)",
+    "capacity_20m_s_kg_s": 3.8478312127691177
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 2.0,
+    "pipe": "0.355 m (Pipe 5)",
+    "capacity_20m_s_kg_s": 3.0307683036826747
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 3.0,
+    "pipe": "1.2 m (Pipe 1, 2, 3, 8)",
+    "capacity_20m_s_kg_s": 51.652471096567545
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 3.0,
+    "pipe": "1.0 m (Pipe 4, 7)",
+    "capacity_20m_s_kg_s": 35.869771594838575
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 3.0,
+    "pipe": "0.4 m (Pipe 6, down)",
+    "capacity_20m_s_kg_s": 5.7391634551741735
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 3.0,
+    "pipe": "0.355 m (Pipe 5)",
+    "capacity_20m_s_kg_s": 4.520487965239531
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 5.0,
+    "pipe": "1.2 m (Pipe 1, 2, 3, 8)",
+    "capacity_20m_s_kg_s": 85.1203779146531
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 5.0,
+    "pipe": "1.0 m (Pipe 4, 7)",
+    "capacity_20m_s_kg_s": 59.11137355184243
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 5.0,
+    "pipe": "0.4 m (Pipe 6, down)",
+    "capacity_20m_s_kg_s": 9.45781976829479
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 5.0,
+    "pipe": "0.355 m (Pipe 5)",
+    "capacity_20m_s_kg_s": 7.449510851870942
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 8.0,
+    "pipe": "1.2 m (Pipe 1, 2, 3, 8)",
+    "capacity_20m_s_kg_s": 133.91141754203431
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 8.0,
+    "pipe": "1.0 m (Pipe 4, 7)",
+    "capacity_20m_s_kg_s": 92.99403995974606
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 8.0,
+    "pipe": "0.4 m (Pipe 6, down)",
+    "capacity_20m_s_kg_s": 14.879046393559372
+   },
+   {
+    "T_K": 313.15,
+    "p_MPa": 8.0,
+    "pipe": "0.355 m (Pipe 5)",
+    "capacity_20m_s_kg_s": 11.719573885926998
+   }
+  ],
+  "max_nominal_feasible_at_2MPa_313K_in_1p2m_kg_s": 34.63048091492205
+ },
+ "G_compressor_discharge_temperature": {
+  "note": "ideal-gas isentropic relation with mean local gamma; real-gas isentropic path not computed",
+  "rows": [
+   {
+    "T_suction_K": 283.15,
+    "p_suction_MPa": 2.0,
+    "p_discharge_MPa": 6.0,
+    "pressure_ratio": 3.0,
+    "gamma_mean": 1.411954169297296,
+    "T_discharge_isentropic_K": 390.1416184828685,
+    "above_330K": true,
+    "outside_table_500K": false
+   },
+   {
+    "T_suction_K": 283.15,
+    "p_suction_MPa": 3.0,
+    "p_discharge_MPa": 7.0,
+    "pressure_ratio": 2.3333333333333335,
+    "gamma_mean": 1.4149852258219213,
+    "T_discharge_isentropic_K": 363.02486345800327,
+    "above_330K": true,
+    "outside_table_500K": false
+   },
+   {
+    "T_suction_K": 283.15,
+    "p_suction_MPa": 4.0,
+    "p_discharge_MPa": 8.0,
+    "pressure_ratio": 2.0,
+    "gamma_mean": 1.4179402223957789,
+    "T_discharge_isentropic_K": 347.3326856177408,
+    "above_330K": true,
+    "outside_table_500K": false
+   },
+   {
+    "T_suction_K": 283.15,
+    "p_suction_MPa": 6.0,
+    "p_discharge_MPa": 10.0,
+    "pressure_ratio": 1.6666666666666667,
+    "gamma_mean": 1.4237561125436475,
+    "T_discharge_isentropic_K": 329.64460108128884,
+    "above_330K": false,
+    "outside_table_500K": false
+   },
+   {
+    "T_suction_K": 313.15,
+    "p_suction_MPa": 2.0,
+    "p_discharge_MPa": 6.0,
+    "pressure_ratio": 3.0,
+    "gamma_mean": 1.4090942980539243,
+    "T_discharge_isentropic_K": 430.7966370148782,
+    "above_330K": true,
+    "outside_table_500K": false
+   },
+   {
+    "T_suction_K": 313.15,
+    "p_suction_MPa": 3.0,
+    "p_discharge_MPa": 7.0,
+    "pressure_ratio": 2.3333333333333335,
+    "gamma_mean": 1.4118773624739867,
+    "T_discharge_isentropic_K": 400.9588246347727,
+    "above_330K": true,
+    "outside_table_500K": false
+   },
+   {
+    "T_suction_K": 313.15,
+    "p_suction_MPa": 4.0,
+    "p_discharge_MPa": 8.0,
+    "pressure_ratio": 2.0,
+    "gamma_mean": 1.4146082838112597,
+    "T_discharge_isentropic_K": 383.69086129515233,
+    "above_330K": true,
+    "outside_table_500K": false
+   },
+   {
+    "T_suction_K": 313.15,
+    "p_suction_MPa": 6.0,
+    "p_discharge_MPa": 10.0,
+    "pressure_ratio": 1.6666666666666667,
+    "gamma_mean": 1.4200276205832805,
+    "T_discharge_isentropic_K": 364.2274645621763,
+    "above_330K": true,
+    "outside_table_500K": false
+   }
+  ]
  }
 }

@@ -8,6 +8,11 @@ grant-bound reference code src/h2prism/gas_physics.py UNCHANGED (only its public
      0.0989 m^2) with hydrogen, versus the velocity-limited capacity of the 1.2 m line -> S4 (demands / vents)
   B  roughness sensitivity of the pressure drop: proposed 0.02 / 0.045 / 0.1 mm versus the released values -> S6
   C  candidate leak orifice areas for 0.5 / 2 / 10 % of a candidate nominal throughput -> S4
+  E  envelope consistency of the candidate leak areas (sized once at 5 MPa, 313 K) over 2-8 MPa x 283-313 K, for demand
+     that scales with line capacity and for a FIXED nominal demand (kg/s) -> S4 / V8
+  F  20 m/s capacity of every released pipe diameter over the envelope; largest nominal that is feasible at the lowest
+     pressure -> S4 nominal, V8
+  G  isentropic discharge temperature of the released compressor (dp = 4 MPa) over suction 2-6 MPa, 283-313 K -> S3, V3
   D  Simscape Pipe (G) lumping (one internal node per block, density at that node; installed pipe.ssc) versus the
      distributed RK4 solution, as a function of the number of segments -> S5 discretisation
 Perfect-gas orifice formula evaluated with LOCAL hydrogen Z and cp (gamma = cp / (cp - Z R)); this is an approximation
@@ -128,11 +133,62 @@ def part_d(gas, T=313.15, p_in=5e6, v=20.0):
     return {"state": {"T_K": T, "p_in_MPa": p_in / 1e6, "v_in_m_s": v}, "rows": rows}
 
 
+def part_e(gas, leak_cd=0.64):
+    c = part_c(gas)
+    nominal = c["nominal_throughput_kg_s"]
+    areas = {r["fraction_of_nominal"]: r["area_m2"] for r in c["rows"] if r["Cd"] == leak_cd}
+    rows = []
+    for T in (283.15, 313.15):
+        for p_mpa in (2.0, 3.0, 5.0, 8.0):
+            p = p_mpa * 1e6
+            g = local_perfect(gas, p, T)
+            cap = capacity(gas, p, T)
+            for frac, a in areas.items():
+                m_leak = orifice_mass_flow(p, P_ATM, T, a, g, leak_cd)
+                rows.append({"T_K": T, "p_MPa": p_mpa, "design_fraction": frac, "leak_kg_s": m_leak,
+                             "fraction_if_demand_scales_with_capacity": m_leak / (0.5 * cap),
+                             "fraction_if_demand_fixed_at_nominal": m_leak / nominal,
+                             "fixed_nominal_feasible_at_20m_s": bool(nominal <= cap),
+                             "choked": bool(p / P_ATM > (2 / (g.gamma() + 1)) ** (-g.gamma() / (g.gamma() - 1)))})
+    return {"nominal_kg_s": nominal, "leak_areas_m2": areas, "rows": rows}
+
+
+def part_f(gas):
+    diam = {"1.2 m (Pipe 1, 2, 3, 8)": 1.2, "1.0 m (Pipe 4, 7)": 1.0, "0.4 m (Pipe 6, down)": 0.4, "0.355 m (Pipe 5)": 0.355}
+    rows = []
+    for T in (283.15, 313.15):
+        for p_mpa in (2.0, 3.0, 5.0, 8.0):
+            for label, D in diam.items():
+                rows.append({"T_K": T, "p_MPa": p_mpa, "pipe": label, "capacity_20m_s_kg_s": capacity(gas, p_mpa * 1e6, T, D)})
+    worst = min(r["capacity_20m_s_kg_s"] for r in rows if r["pipe"].startswith("1.2") and r["p_MPa"] == 2.0)
+    return {"rows": rows, "max_nominal_feasible_at_2MPa_313K_in_1p2m_kg_s": worst}
+
+
+def part_g(gas, dp=4e6):
+    rows = []
+    for T1 in (283.15, 313.15):
+        for p1_mpa in (2.0, 3.0, 4.0, 6.0):
+            p1 = p1_mpa * 1e6
+            p2 = p1 + dp
+            # isentropic exponent from the local gamma at suction and discharge pressure (ideal-gas-like estimate)
+            g1 = local_perfect(gas, p1, T1).gamma()
+            T2 = T1 * (p2 / p1) ** ((g1 - 1) / g1)
+            g2 = local_perfect(gas, p2, min(T2, 500.0)).gamma()
+            gm = 0.5 * (g1 + g2)
+            T2 = T1 * (p2 / p1) ** ((gm - 1) / gm)
+            rows.append({"T_suction_K": T1, "p_suction_MPa": p1_mpa, "p_discharge_MPa": p2 / 1e6, "pressure_ratio": p2 / p1,
+                         "gamma_mean": gm, "T_discharge_isentropic_K": T2, "above_330K": bool(T2 > 330.0),
+                         "outside_table_500K": bool(T2 > 500.0)})
+    return {"note": "ideal-gas isentropic relation with mean local gamma; real-gas isentropic path not computed", "rows": rows}
+
+
 def build():
     gas = load_h2_tables()
     return {"status": "CANDIDATE_ENGINEERING_EVIDENCE (not decisions; not X06 targets)", "gas": gas.source,
             "A_released_orifices_and_vent": part_a(gas), "B_roughness_sensitivity": part_b(gas),
-            "C_candidate_leak_areas": part_c(gas), "D_lumping_vs_segments": part_d(gas)}
+            "C_candidate_leak_areas": part_c(gas), "D_lumping_vs_segments": part_d(gas),
+            "E_leak_consistency_over_envelope": part_e(gas), "F_capacity_over_envelope": part_f(gas),
+            "G_compressor_discharge_temperature": part_g(gas)}
 
 
 def main(argv) -> int:
@@ -152,6 +208,11 @@ def main(argv) -> int:
     c = doc["C_candidate_leak_areas"]
     print("C  nominal", round(c["nominal_throughput_kg_s"], 1), [(r["fraction_of_nominal"], r["Cd"], round(r["equivalent_diameter_mm"], 1)) for r in c["rows"] if r["Cd"] == 0.64])
     print("D ", [(r["length_m"], r["segments"], f"{r['relative_error_vs_distributed']:.2e}", None if r["relative_change_on_halving"] is None else f"{r['relative_change_on_halving']:.2e}") for r in doc["D_lumping_vs_segments"]["rows"]])
+    e = doc["E_leak_consistency_over_envelope"]
+    print("E ", [(r["T_K"], r["p_MPa"], r["design_fraction"], round(r["fraction_if_demand_scales_with_capacity"], 4), round(r["fraction_if_demand_fixed_at_nominal"], 4), r["fixed_nominal_feasible_at_20m_s"]) for r in e["rows"] if r["T_K"] == 313.15])
+    f = doc["F_capacity_over_envelope"]
+    print("F  max nominal at 2 MPa", round(f["max_nominal_feasible_at_2MPa_313K_in_1p2m_kg_s"], 1), [(r["p_MPa"], r["pipe"][:6], round(r["capacity_20m_s_kg_s"], 1)) for r in f["rows"] if r["T_K"] == 313.15])
+    print("G ", [(r["T_suction_K"], r["p_suction_MPa"], round(r["pressure_ratio"], 2), round(r["T_discharge_isentropic_K"], 0)) for r in doc["G_compressor_discharge_temperature"]["rows"]])
     return 0
 
 
