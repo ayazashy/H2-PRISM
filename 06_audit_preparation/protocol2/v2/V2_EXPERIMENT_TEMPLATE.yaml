@@ -1,0 +1,43 @@
+# Distinguishability v2 development-experiment TEMPLATE. NOT REGISTERED, NOT AUTHORIZED, NOT RUNNABLE.
+# The runner refuses this status. Registration requires new independent data (02_methodology/DISTINGUISHABILITY_V2.md
+# section 6), the methods owner's acceptance, a frozen copy with a pinned hash and a scoped authorization.
+status: V2_TEMPLATE_NOT_REGISTERED
+version: distinguishability-v2-template-0.1
+base_arm:
+  file: 06_audit_preparation/protocol2/arms/H_POSITION_MATCHED.yaml
+  sha256: f0c6434ae4a4c1ba477a46637de93dafeae19bcc9d9f66fb7065c792e55ec8af
+  note: classifier, representation, windows, splits and calibration are inherited unchanged from arm H
+data:
+  development_partition: REQUIRED_NEW_DATA (manifest file + sha256 to be pinned before any run)
+  confirmation_partition: REQUIRED_NEW_DATA (hashed at creation; never opened before the confirmatory run)
+  units: independence_group
+  minimum_groups_development: {NORMAL: 4, LEAK: 9, COMPRESSOR_FAULT: 3, COMPRESSOR_DELAY: 3}
+  minimum_groups_confirmation: {NORMAL: 3, LEAK: 4, COMPRESSOR_FAULT: 2, COMPRESSOR_DELAY: 2}
+distinguishability_v2:
+  module: h2prism.distinguishability_v2
+  min_groups: 2
+  tau: 1.0
+  window_s: 60
+  detect_quantile: 0.99
+  oos_quantile: 0.99
+  untestable_outcome: UNRESOLVED
+  scaling: reference_only_median_mad
+  exclude_query_independence_group: true
+representation:
+  families_preregistered: [ABS]          # H-R2 variants (ABS+CRC+SLOPE) require their own registered arm
+  position_map: 06_audit_preparation/protocol2/CANDIDATE_SENSOR_POSITION_MAP_V01.csv
+arms:
+  A: {ranking: confidence, specific_eligible: current_safeguards}
+  B: {ranking: s_C_minus_D, specific_eligible: current_safeguards}
+  C: {ranking: s_C, specific_eligible: current_safeguards}
+  D: {ranking: confidence, specific_eligible: "A and y_hat SUPPORTED and not OUT_OF_SUPPORT"}
+  F: {ranking: confidence, specific_eligible: "D and margin(y_hat) > -tau (no CONFLICT)"}
+  E: {ranking: confidence, specific_eligible: "D and SEPARATED and no detectability contradiction"}
+matched_coverage:
+  rule: exact_count (PA-1), tie_break_salt h2prism-pa1-v1
+  target: fixed_from_development_attainability (h2prism.protocol2.development_target)
+  not_estimable: when eligible rows < required count; never forced
+endpoints:
+  confirmatory: {contrast: E_vs_A, metric: scenario_balanced_selective_risk, inference: independence_group_bootstrap_stratified_by_topology, n_boot: 2000}
+  secondary_exploratory: [B_vs_A, C_vs_A, D_vs_A, F_vs_D, E_vs_D, coverage, ambiguity_inclusion, per_class_wrong_specific]
+approvals_required: [dataset owner (new data, position map D2), methods owner (v2 definition, matrix, endpoint), project lead (authorization)]
