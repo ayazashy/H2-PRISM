@@ -1,0 +1,27 @@
+{
+  "started": "2026-11-13T23:42:39+03:00",
+  "cwd": "C:\\Users\\<user>\\Documents\\H2-PRISM",
+  "matlab_version": "26.2.0.3433840 (R2026b) Update 1",
+  "memory_at_start": {
+    "total_mb": 7413.24609375,
+    "available_mb": 730.484375,
+    "matlab_used_mb": 2321.88671875,
+    "source": "memory()"
+  },
+  "phases": [
+    {
+      "phase": "ENVIRONMENT",
+      "overall": "FAIL",
+      "at": "2026-11-13T23:43:50+03:00",
+      "available_mb": 666.15234375,
+      "matlab_used_mb": 4631.7734375
+    }
+  ],
+  "stopped_at": "ENVIRONMENT",
+  "error": {
+    "identifier": "",
+    "message": "",
+    "stack": ""
+  },
+  "finished": "2026-11-13T23:43:50+03:00"
+}

@@ -1,6 +1,6 @@
 {
   "kind": "ENVIRONMENT",
-  "created": "2026-11-13T23:04:28+03:00",
+  "created": "2026-11-13T23:43:50+03:00",
   "matlab_version": "26.2.0.3433840 (R2026b) Update 1",
   "computer": "PCWIN64",
   "overall": "FAIL",
@@ -61,7 +61,7 @@
       "id": "E4",
       "name": "physical memory",
       "status": "FAIL",
-      "detail": "total 7413 MB, available 771 MB, MATLAB 1642 MB (need >= 2500 MB available to start; close other applications if this fails)"
+      "detail": "total 7413 MB, available 712 MB, MATLAB 2335 MB (need >= 2500 MB available to start; close other applications if this fails)"
     },
     {
       "id": "E5",
@@ -175,8 +175,8 @@
   "extra": {
     "memory": {
       "total_mb": 7413.24609375,
-      "available_mb": 771.33203125,
-      "matlab_used_mb": 1642.3046875,
+      "available_mb": 711.984375,
+      "matlab_used_mb": 2334.9296875,
       "source": "memory()"
     },
     "products": [

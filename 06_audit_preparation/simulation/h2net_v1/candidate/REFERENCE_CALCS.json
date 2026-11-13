@@ -1,0 +1,394 @@
+{
+ "status": "CANDIDATE_ENGINEERING_EVIDENCE (not decisions; not X06 targets)",
+ "gas": "CoolProp 7.2.0 {'BibTeX-EOS': 'Leachman-JPCRD-2009', 'BibTeX-VISCOSITY': 'Muzny-JCED-2013', 'BibTeX-CONDUCTIVITY': 'Assael-JPCRD-2011-Hydrogen'}",
+ "A_released_orifices_and_vent": [
+  {
+   "T_K": 283.15,
+   "p_MPa": 2.0,
+   "gamma_local": 1.412138138445903,
+   "withdrawal_kg_s": 0.8085544067412306,
+   "four_withdrawals_kg_s": 3.2342176269649223,
+   "terminal_vent_upper_bound_kg_s": 124.94692316673077,
+   "capacity_1p2m_at_20m_s_kg_s": 38.2722595345068,
+   "withdrawal_share_of_capacity": 0.02112638283120511,
+   "vent_over_capacity": 3.2646863468846643
+  },
+  {
+   "T_K": 283.15,
+   "p_MPa": 5.0,
+   "gamma_local": 1.4192891269796781,
+   "withdrawal_kg_s": 2.0066576873005464,
+   "four_withdrawals_kg_s": 8.026630749202186,
+   "terminal_vent_upper_bound_kg_s": 310.0913207406625,
+   "capacity_1p2m_at_20m_s_kg_s": 93.96404519929915,
+   "withdrawal_share_of_capacity": 0.021355590673479363,
+   "vent_over_capacity": 3.300106121261108
+  },
+  {
+   "T_K": 283.15,
+   "p_MPa": 8.0,
+   "gamma_local": 1.4270050183872844,
+   "withdrawal_kg_s": 3.1876186194980467,
+   "four_withdrawals_kg_s": 12.750474477992187,
+   "terminal_vent_upper_bound_kg_s": 492.5866897943075,
+   "capacity_1p2m_at_20m_s_kg_s": 147.64163688854137,
+   "withdrawal_share_of_capacity": 0.021590241659976077,
+   "vent_over_capacity": 3.336367031518178
+  },
+  {
+   "T_K": 313.15,
+   "p_MPa": 2.0,
+   "gamma_local": 1.4078574860431414,
+   "withdrawal_kg_s": 0.7683198205109081,
+   "four_withdrawals_kg_s": 3.0732792820436323,
+   "terminal_vent_upper_bound_kg_s": 118.72942226332626,
+   "capacity_1p2m_at_20m_s_kg_s": 34.63048091492205,
+   "withdrawal_share_of_capacity": 0.022186230171000715,
+   "vent_over_capacity": 3.4284658811124538
+  },
+  {
+   "T_K": 313.15,
+   "p_MPa": 5.0,
+   "gamma_local": 1.4149584750214979,
+   "withdrawal_kg_s": 1.9078859801031833,
+   "four_withdrawals_kg_s": 7.631543920412733,
+   "terminal_vent_upper_bound_kg_s": 294.82800536282,
+   "capacity_1p2m_at_20m_s_kg_s": 85.1203779146531,
+   "withdrawal_share_of_capacity": 0.0224139745011018,
+   "vent_over_capacity": 3.4636594971233867
+  },
+  {
+   "T_K": 313.15,
+   "p_MPa": 8.0,
+   "gamma_local": 1.422455812465553,
+   "withdrawal_kg_s": 3.0324534095097353,
+   "four_withdrawals_kg_s": 12.129813638038941,
+   "terminal_vent_upper_bound_kg_s": 468.60881593830123,
+   "capacity_1p2m_at_20m_s_kg_s": 133.91141754203431,
+   "withdrawal_share_of_capacity": 0.0226452192439667,
+   "vent_over_capacity": 3.4993940362942286
+  }
+ ],
+ "B_roughness_sensitivity": {
+  "state": {
+   "T_K": 313.15,
+   "p_in_MPa": 5.0,
+   "v_in_m_s": 10.0,
+   "mdot_kg_s": 42.56018895732655
+  },
+  "rows": [
+   {
+    "case": "proposed 0.02 mm",
+    "roughness_m": 2e-05,
+    "Re": 4883913.8799765045,
+    "f_haaland": 0.009880318381657002,
+    "dp_kPa_16km_1p2m_10m_s": 24.84737081422284
+   },
+   {
+    "case": "proposed 0.045 mm",
+    "roughness_m": 4.5e-05,
+    "Re": 4883913.8799765045,
+    "f_haaland": 0.010706143203233374,
+    "dp_kPa_16km_1p2m_10m_s": 26.929658222716302
+   },
+   {
+    "case": "proposed 0.1 mm",
+    "roughness_m": 0.0001,
+    "Re": 4883913.8799765045,
+    "f_haaland": 0.01196870998019116,
+    "dp_kPa_16km_1p2m_10m_s": 30.114809105900115
+   },
+   {
+    "case": "Pipe (G)5 (0.0045 mm)",
+    "roughness_m": 4.5e-06,
+    "Re": 4883913.8799765045,
+    "f_haaland": 0.009217650138694185,
+    "dp_kPa_16km_1p2m_10m_s": 23.17708586390782
+   },
+   {
+    "case": "Pipe (G)1 (0.045 mm)",
+    "roughness_m": 4.5e-05,
+    "Re": 4883913.8799765045,
+    "f_haaland": 0.010706143203233374,
+    "dp_kPa_16km_1p2m_10m_s": 26.929658222716302
+   },
+   {
+    "case": "Pipe (G)3/8 (0.45 mm)",
+    "roughness_m": 0.00045,
+    "Re": 4883913.8799765045,
+    "f_haaland": 0.01581840169892744,
+    "dp_kPa_16km_1p2m_10m_s": 39.83891004402097
+   },
+   {
+    "case": "Pipe (G)2 (4.5 mm)",
+    "roughness_m": 0.0045,
+    "Re": 4883913.8799765045,
+    "f_haaland": 0.027963615079112072,
+    "dp_kPa_16km_1p2m_10m_s": 70.63920044125896
+   },
+   {
+    "case": "Pipe (G)6 down (45 mm)",
+    "roughness_m": 0.045,
+    "Re": 4883913.8799765045,
+    "f_haaland": 0.0629975759808214,
+    "dp_kPa_16km_1p2m_10m_s": 160.55277010014095
+   },
+   {
+    "case": "Pipe (G)4/7 (50 mm)",
+    "roughness_m": 0.05,
+    "Re": 4883913.8799765045,
+    "f_haaland": 0.06599071762924935,
+    "dp_kPa_16km_1p2m_10m_s": 168.31001484644693
+   }
+  ]
+ },
+ "C_candidate_leak_areas": {
+  "nominal_throughput_kg_s": 42.56018895732655,
+  "nominal_definition": "candidate: 50 % of the 20 m/s capacity of the 1.2 m line at 5 MPa, 313.15 K",
+  "rows": [
+   {
+    "fraction_of_nominal": 0.005,
+    "Cd": 0.61,
+    "area_m2": 0.0001170230125649155,
+    "equivalent_diameter_mm": 12.20648709669126
+   },
+   {
+    "fraction_of_nominal": 0.005,
+    "Cd": 0.64,
+    "area_m2": 0.00011153755885093509,
+    "equivalent_diameter_mm": 11.916963986361461
+   },
+   {
+    "fraction_of_nominal": 0.005,
+    "Cd": 1.0,
+    "area_m2": 7.138403766459846e-05,
+    "equivalent_diameter_mm": 9.533571189089168
+   },
+   {
+    "fraction_of_nominal": 0.02,
+    "Cd": 0.61,
+    "area_m2": 0.000468092050259662,
+    "equivalent_diameter_mm": 24.41297419338252
+   },
+   {
+    "fraction_of_nominal": 0.02,
+    "Cd": 0.64,
+    "area_m2": 0.00044615023540374037,
+    "equivalent_diameter_mm": 23.833927972722922
+   },
+   {
+    "fraction_of_nominal": 0.02,
+    "Cd": 1.0,
+    "area_m2": 0.0002855361506583938,
+    "equivalent_diameter_mm": 19.067142378178335
+   },
+   {
+    "fraction_of_nominal": 0.1,
+    "Cd": 0.61,
+    "area_m2": 0.00234046025129831,
+    "equivalent_diameter_mm": 54.58906982935141
+   },
+   {
+    "fraction_of_nominal": 0.1,
+    "Cd": 0.64,
+    "area_m2": 0.0022307511770187013,
+    "equivalent_diameter_mm": 53.2942831178422
+   },
+   {
+    "fraction_of_nominal": 0.1,
+    "Cd": 1.0,
+    "area_m2": 0.0014276807532919691,
+    "equivalent_diameter_mm": 42.63542649427376
+   }
+  ]
+ },
+ "D_lumping_vs_segments": {
+  "state": {
+   "T_K": 313.15,
+   "p_in_MPa": 5.0,
+   "v_in_m_s": 20.0
+  },
+  "rows": [
+   {
+    "length_m": 30000.0,
+    "Dh_m": 1.2,
+    "segments": 1,
+    "segment_km": 30.0,
+    "dp_kPa_distributed": 199.55488251858017,
+    "dp_kPa_lumped": 199.55412270585262,
+    "relative_error_vs_distributed": -3.80753764568897e-06,
+    "relative_change_on_halving": null
+   },
+   {
+    "length_m": 30000.0,
+    "Dh_m": 1.2,
+    "segments": 2,
+    "segment_km": 15.0,
+    "dp_kPa_distributed": 199.55488251858017,
+    "dp_kPa_lumped": 199.55469250464532,
+    "relative_error_vs_distributed": -9.521888538129428e-07,
+    "relative_change_on_halving": 2.855359663765439e-06
+   },
+   {
+    "length_m": 30000.0,
+    "Dh_m": 1.2,
+    "segments": 4,
+    "segment_km": 7.5,
+    "dp_kPa_distributed": 199.55488251858017,
+    "dp_kPa_lumped": 199.55483501102123,
+    "relative_error_vs_distributed": -2.3806763507712403e-07,
+    "relative_change_on_halving": 7.141218987147311e-07
+   },
+   {
+    "length_m": 30000.0,
+    "Dh_m": 1.2,
+    "segments": 8,
+    "segment_km": 3.75,
+    "dp_kPa_distributed": 199.55488251858017,
+    "dp_kPa_lumped": 199.55487063771113,
+    "relative_error_vs_distributed": -5.9536849692201387e-08,
+    "relative_change_on_halving": 1.7853082788733462e-07
+   },
+   {
+    "length_m": 30000.0,
+    "Dh_m": 1.2,
+    "segments": 16,
+    "segment_km": 1.875,
+    "dp_kPa_distributed": 199.55488251858017,
+    "dp_kPa_lumped": 199.55487954906934,
+    "relative_error_vs_distributed": -1.4880672503786382e-08,
+    "relative_change_on_halving": 4.465617984710327e-08
+   },
+   {
+    "length_m": 30000.0,
+    "Dh_m": 1.2,
+    "segments": 32,
+    "segment_km": 0.9375,
+    "dp_kPa_distributed": 199.55488251858017,
+    "dp_kPa_lumped": 199.5548817521315,
+    "relative_error_vs_distributed": -3.840791399903676e-09,
+    "relative_change_on_halving": 1.1039881268163564e-08
+   },
+   {
+    "length_m": 16000.0,
+    "Dh_m": 1.2,
+    "segments": 1,
+    "segment_km": 16.0,
+    "dp_kPa_distributed": 105.4448183072228,
+    "dp_kPa_lumped": 105.44470839305409,
+    "relative_error_vs_distributed": -1.0423856807760087e-06,
+    "relative_change_on_halving": null
+   },
+   {
+    "length_m": 16000.0,
+    "Dh_m": 1.2,
+    "segments": 2,
+    "segment_km": 8.0,
+    "dp_kPa_distributed": 105.4448183072228,
+    "dp_kPa_lumped": 105.4447908260962,
+    "relative_error_vs_distributed": -2.606209298871862e-07,
+    "relative_change_on_halving": 7.81765565790054e-07
+   },
+   {
+    "length_m": 16000.0,
+    "Dh_m": 1.2,
+    "segments": 4,
+    "segment_km": 4.0,
+    "dp_kPa_distributed": 105.4448183072228,
+    "dp_kPa_lumped": 105.44481143445056,
+    "relative_error_vs_distributed": -6.51788523085524e-08,
+    "relative_change_on_halving": 1.9544212851494312e-07
+   },
+   {
+    "length_m": 16000.0,
+    "Dh_m": 1.2,
+    "segments": 8,
+    "segment_km": 2.0,
+    "dp_kPa_distributed": 105.4448183072228,
+    "dp_kPa_lumped": 105.44481658947002,
+    "relative_error_vs_distributed": -1.6290537596974943e-08,
+    "relative_change_on_halving": 4.8888317898061904e-08
+   },
+   {
+    "length_m": 16000.0,
+    "Dh_m": 1.2,
+    "segments": 16,
+    "segment_km": 1.0,
+    "dp_kPa_distributed": 105.4448183072228,
+    "dp_kPa_lumped": 105.44481786336843,
+    "relative_error_vs_distributed": -4.209352117520928e-09,
+    "relative_change_on_halving": 1.2081185676263024e-08
+   },
+   {
+    "length_m": 16000.0,
+    "Dh_m": 1.2,
+    "segments": 32,
+    "segment_km": 0.5,
+    "dp_kPa_distributed": 105.4448183072228,
+    "dp_kPa_lumped": 105.44481819806806,
+    "relative_error_vs_distributed": -1.035183452231864e-09,
+    "relative_change_on_halving": 3.174168678650258e-09
+   },
+   {
+    "length_m": 4000.0,
+    "Dh_m": 0.355,
+    "segments": 1,
+    "segment_km": 4.0,
+    "dp_kPa_distributed": 111.50158090644702,
+    "dp_kPa_lumped": 111.50145077739936,
+    "relative_error_vs_distributed": -1.1670601135122223e-06,
+    "relative_change_on_halving": null
+   },
+   {
+    "length_m": 4000.0,
+    "Dh_m": 0.355,
+    "segments": 2,
+    "segment_km": 2.0,
+    "dp_kPa_distributed": 111.50158090644702,
+    "dp_kPa_lumped": 111.50154837073758,
+    "relative_error_vs_distributed": -2.9179594743151254e-07,
+    "relative_change_on_halving": 8.752651875677989e-07
+   },
+   {
+    "length_m": 4000.0,
+    "Dh_m": 0.355,
+    "segments": 4,
+    "segment_km": 1.0,
+    "dp_kPa_distributed": 111.50158090644702,
+    "dp_kPa_lumped": 111.50157276921067,
+    "relative_error_vs_distributed": -7.297866346946256e-08,
+    "relative_change_on_halving": 2.1881734781206532e-07
+   },
+   {
+    "length_m": 4000.0,
+    "Dh_m": 0.355,
+    "segments": 8,
+    "segment_km": 0.5,
+    "dp_kPa_distributed": 111.50158090644702,
+    "dp_kPa_lumped": 111.50157887271419,
+    "relative_error_vs_distributed": -1.823949772680334e-08,
+    "relative_change_on_halving": 5.473916973745066e-08
+   },
+   {
+    "length_m": 4000.0,
+    "Dh_m": 0.355,
+    "segments": 16,
+    "segment_km": 0.25,
+    "dp_kPa_distributed": 111.50158090644702,
+    "dp_kPa_lumped": 111.50158039804361,
+    "relative_error_vs_distributed": -4.559607150087916e-09,
+    "relative_change_on_halving": 1.367989082622976e-08
+   },
+   {
+    "length_m": 4000.0,
+    "Dh_m": 0.355,
+    "segments": 32,
+    "segment_km": 0.125,
+    "dp_kPa_distributed": 111.50158090644702,
+    "dp_kPa_lumped": 111.50158077707607,
+    "relative_error_vs_distributed": -1.1602611291310444e-09,
+    "relative_change_on_halving": 3.3993460364565535e-09
+   }
+  ]
+ }
+}

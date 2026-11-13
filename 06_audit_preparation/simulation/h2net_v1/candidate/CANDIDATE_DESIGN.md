@@ -42,3 +42,16 @@ Date: 2026-11-13. Screening tool: `tools/simulation/h2net_v1_envelope_screening.
 
 - It does not compute X06 V2 reference targets. `--targets` refuses until every item in `PARAMETER_DECISIONS.yaml` is decided; tested by hand on 2026-11-13, exit code 2.
 - It does not change the released models or the authorized H2Net v1 scope.
+
+## 4. Evidence update 2026-11-14 (see `SIMSCAPE_SOURCE_EVIDENCE.md`, `REFERENCE_CALCS.json`)
+
+Everything below is still **PROPOSED**. Owner decision: Yazan with the modeller; Faisal reviews.
+
+| Item | Revised candidate | Basis |
+|---|---|---|
+| S4 demands | **Replace the open terminal vent** and the four atmospheric withdrawal orifices with controlled mass-flow sinks at G3–G6 and at the network end. | With hydrogen, the released vent would pass 3.3–3.5× the velocity-limited capacity, and the orifices give pressure-dictated, uncontrollable demand (A-06). |
+| S4 leaks | Separate orifice branches with equivalent diameters of about 12 / 24 / 53 mm, giving 0.5 / 2 / 10 % of a 42.6 kg/s nominal at 5 MPa (Cd 0.64; recompute at the decided nominal). | Reference calcs C |
+| S5 discretisation | Segment length is to be chosen for **transients only** (V7 wave arrival, inertia). A single block per pipe is accurate to < 10⁻⁵ in steady state. | Reference calcs D. The earlier rationale is corrected. |
+| S6 roughness | One value for all pipes in 0.02–0.1 mm. The pressure-drop effect is about ±10 % within that range; a literature source must still be cited. | Reference calcs B; A-08 |
+| S3 compressors | Released `power_spec = isentropic` without efficiency or cooling. Keep the proposal: an explicit aftercooler to 313.15 K, and decide the efficiency treatment. | installed pipe/pressure-source source; A-05 |
+| V2 comparison | Include `length_add` in the effective length. The friction correlation is confirmed identical (Haaland). | `pipe_friction.ssc` |
