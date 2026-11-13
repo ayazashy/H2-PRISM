@@ -16,7 +16,8 @@ import check_matlab_reports as cmr  # noqa: E402
 
 READ_ONLY = ["h2prism_verify_environment.m", "h2prism_smoke_test_models.m", "h2prism_check_h2_integration.m",
              "h2prism_run_readiness.m", "h2prism_sha256file.m", "h2prism_memory_status.m", "h2prism_memory_guard.m",
-             "h2prism_add_check.m", "h2prism_write_report.m", "h2prism_load_expectations.m"]
+             "h2prism_add_check.m", "h2prism_write_report.m", "h2prism_load_expectations.m", "h2prism_sha256bytes.m",
+             "h2prism_sha256_selftest.m"]
 FORBIDDEN = [r"\bsave_system\b", r"\bsim\s*\(", r"\bparsim\b", r"\bbatchsim\b", r"\bparpool\b", r"\bsave\s*\(",
              r"\bSimulink\.BlockDiagram\.\w*save", r"'claim'", r"\bdelete\s*\("]
 
@@ -104,3 +105,13 @@ def test_checker_fails_on_any_required_failure(tmp_path, mutate):
 def test_checker_refuses_missing_reports(tmp_path):
     r = cmr.evaluate(tmp_path)
     assert r["verdict"] == "NOT_READY" and len(r["problems"]) == 3
+
+
+def test_matlab_sha256_selftest_vectors_are_the_fips_values():
+    import hashlib
+    code = (ML / "h2prism_sha256_selftest.m").read_text(encoding="utf-8")
+    msgs = ["", "abc", "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq"]
+    digests = re.findall(r"'([0-9a-f]{64})'", code)
+    assert len(digests) == 3 and all(f"'{m}'" in code for m in msgs)
+    assert [hashlib.sha256(m.encode()).hexdigest() for m in msgs] == digests
+    assert "java." not in _code(ML / "h2prism_sha256file.m") + _code(ML / "h2prism_sha256bytes.m")

@@ -10,6 +10,10 @@ function report = h2prism_verify_environment(outDir)
     C = struct('id', {}, 'name', {}, 'status', {}, 'detail', {});
     root = pwd;
 
+    % E0 hashing self-test (pure-MATLAB SHA-256; no Java runtime is assumed)
+    C = h2prism_add_check(C, 'E0', 'SHA-256 known-answer test', pass(h2prism_sha256_selftest()), ...
+        sprintf('FIPS 180-4 vectors; Java runtime available: %d', usejava('jvm')));
+
     % E1 release
     old = isMATLABReleaseOlderThan(E.matlab.minimum_release);
     C = h2prism_add_check(C, 'E1', 'MATLAB release', pass(~old), sprintf('%s; minimum %s; models saved in %s', ...
