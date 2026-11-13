@@ -293,7 +293,19 @@ No further real-data execution on the current dataset is scientifically useful: 
 > - **Partition:** the confirmation partition is hashed at creation and not opened.
 > - **Excludes:** any training, any evaluation, any event scenario, and any change to existing data, R2, arms or RC1.
 
-**Status (2026-11-13): AUTHORIZED by the project lead. Not yet executed.**
+**Update (handoff review, 2026-11-13): the package v1 authorization below is VOID; package v2 is REQUESTED, not authorized.**
+
+- The pre-execution review changed the generator, the noise tool and the validator:
+  - R2025a requirement;
+  - loading each model copy by explicit path;
+  - preflight mode and failure records;
+  - resampling to the release grid;
+  - physical validity checks P1–P6;
+  - fail-closed authorization.
+- That voided the v1 hashes before any execution.
+- The current state, commands, checks and failure procedure are in `06_audit_preparation/simulation/v2_normal_support/EXECUTION_CHECKLIST.md`.
+
+**Status (2026-11-13, package v1, now void): AUTHORIZED by the project lead. Not yet executed.**
 
 - MATLAB/Simulink is not available in this environment, so nothing has been generated.
 - The package is in `06_audit_preparation/simulation/v2_normal_support/`:

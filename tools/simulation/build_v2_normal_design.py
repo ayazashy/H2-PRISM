@@ -3,8 +3,10 @@
 Fixed design for SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION (H-R1, 02_methodology/DISTINGUISHABILITY_V2.md).
 
 Factors (released Normal_HNetwork_gest_*.slx, identical block SIDs in all three models):
-  F1 supply set-point   PS Step (SID 59) final_value      levels 6.1 / 6.4 / 6.7 MPa   (released: 6.4)
-  F2 operating ramp     PS Ramp (SID 241) slope            levels 0 / -1e-5 / -2e-5 MPa/s (released: -1e-5)
+  F1 compressor lift    PS Step (SID 59) final_value -> Pressure Source (G)3 pressure-rise set-point after 25 s
+                                                           levels 6.1 / 6.4 / 6.7 MPa   (released: 6.4)
+  F2 let-down ramp      PS Ramp (SID 241) slope -> Pressure Source (G)1 differential (initial -0.3 MPa)
+                                                           levels 0 / -1e-5 / -2e-5 MPa/s (released: -1e-5)
   F3 withdrawal load    restrictions G3-G6 (SIDs 213, 222, 312, 215) restriction_area, jointly
                                                            levels 0.75e-3 / 1.0e-3 / 1.25e-3 m^2 (released: 1e-3)
 Design: the 3^(3-1) fraction {(a, b, c): c = (a + b) mod 3} (9 points, each level of each factor three times). It does

@@ -1,0 +1,3 @@
+record,package_version,status,date,reason
+AUTH_SIMULATION_GENERATION.yaml,v1,VOID_SUPERSEDED,2026-11-13,"authorized by project lead; never executed; void because the generator, noise tool and validator were revised during the pre-execution handoff review (R2025a requirement, explicit model-copy loading, preflight mode, failure records, resampling to the release grid, physical validity checks, fail-closed authorization)"
+AUTH_SIMULATION_GENERATION_V2_REQUEST.yaml,v2,PENDING_PROJECT_LEAD_AUTHORIZATION,2026-11-13,"request for the revised package; not authorized"
