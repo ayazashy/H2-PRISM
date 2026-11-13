@@ -1,0 +1,11 @@
+{
+  "arm": "H_POSITION_MATCHED",
+  "run_key": "65f05249dd12",
+  "evidence_status": "EXPLORATORY_DIAGNOSTIC",
+  "inputs_verified_against_hash_list": true,
+  "model_fitted": false,
+  "tuned": false,
+  "decision_reproduction_all_match": true,
+  "per_class_probabilities_stored": false,
+  "note": "per-class probabilities are not stored in dev_oof; probability analyses use stored confidence/margin only"
+}
