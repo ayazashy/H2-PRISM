@@ -63,6 +63,8 @@ def _write(d, env_checks, smoke_checks, integ_checks, stopped=""):
     (d / "ENVIRONMENT_REPORT.json").write_text(json.dumps({"checks": env_checks}))
     (d / "SMOKE_REPORT.json").write_text(json.dumps({"checks": smoke_checks, "extra": {"stopped": stopped}}))
     (d / "H2_INTEGRATION_REPORT.json").write_text(json.dumps({"checks": integ_checks, "extra": {"build_gate": "CLOSED"}}))
+    (d / "RUN_LOG.json").write_text(json.dumps({"started": "2026-11-14T00:00:00+03:00", "finished": "2026-11-14T00:10:00+03:00",
+                                                "cwd": "repo", "stopped_at": "", "error": {"message": ""}}))
 
 
 def _ok_reports():
@@ -104,7 +106,22 @@ def test_checker_fails_on_any_required_failure(tmp_path, mutate):
 
 def test_checker_refuses_missing_reports(tmp_path):
     r = cmr.evaluate(tmp_path)
-    assert r["verdict"] == "NOT_READY" and len(r["problems"]) == 3
+    assert r["verdict"] == "NOT_READY" and len(r["problems"]) == 4      # three reports + RUN_LOG
+
+
+def test_checker_rejects_stale_reports_from_an_earlier_run(tmp_path):
+    _write(tmp_path, *_ok_reports())
+    env = json.loads((tmp_path / "ENVIRONMENT_REPORT.json").read_text())
+    env["created"] = "2026-11-13T23:04:28+03:00"                      # older than RUN_LOG.started
+    (tmp_path / "ENVIRONMENT_REPORT.json").write_text(json.dumps(env))
+    r = cmr.evaluate(tmp_path)
+    assert r["verdict"] == "NOT_READY" and any("stale" in p for p in r["problems"])
+
+
+def test_checker_surfaces_run_errors(tmp_path):
+    _write(tmp_path, *_ok_reports())
+    (tmp_path / "RUN_LOG.json").write_text(json.dumps({"started": "x", "error": {"identifier": "h2prism:root", "message": "run from the repository root"}}))
+    assert any("repository root" in p for p in cmr.evaluate(tmp_path)["problems"])
 
 
 def test_matlab_sha256_selftest_vectors_are_the_fips_values():

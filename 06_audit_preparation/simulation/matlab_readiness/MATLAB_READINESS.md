@@ -80,6 +80,16 @@ Then, from a terminal in the repository root:
 .venv/Scripts/python.exe tools/governance/verify_frozen_hashes.py
 ```
 
+**Standalone run (recommended on this 8 GB laptop).** Close Claude and other applications, open a terminal **in the repository root**, and run the command below. `RUN_LOG.json` in the run folder records how far the run got and any error; `matlab_run.log` captures the console output. Both must be present for the validator to tie the reports to one run.
+
+```bash
+cd /c/Users/<user>/Documents/H2-PRISM
+```
+
+```bash
+"/c/Program Files/MATLAB/R2026b/bin/matlab" -logfile 06_audit_preparation/simulation/matlab_readiness/run_2026-11-13/matlab_run.log -batch "addpath tools/matlab; exit(~h2prism_run_readiness('06_audit_preparation/simulation/matlab_readiness/run_2026-11-13'))"
+```
+
 Equivalent non-interactive run, once MATLAB has been activated:
 
 ```bash
@@ -127,3 +137,16 @@ Hydrogen properties are never substituted into the released models.
 | H2Net v1 engineering parameters S2–S6, S8 and V8 decided with sources | Yazan + modeller (Faisal reviews) | X03, which opens the build gate and X06 |
 | V2 reference targets computed before simulation | Ahmed (X06, after X03) | X07 acceptance basis |
 | Executor named in the grant: "Yazan or a designated modeller" | project lead / Yazan | executing X05 and X07 on this laptop requires the project lead to be designated, or Yazan to run them |
+
+## 7. Execution record
+
+| When (2026-11-13) | What | Result |
+|---|---|---|
+| 21:42, 21:45 | `matlab -batch` probes during installation | exit 1, no log (installer still running) |
+| 22:59 | version probe after installation | R2026b Update 1 (26.2.0.3433840); Simulink 26.2, Simscape 26.2; licences test = 1 |
+| 23:01 | first readiness run | aborted in `h2prism_sha256file`: **no Java runtime in R2026b** (tooling defect; fixed in `f0bfddd` with pure-MATLAB SHA-256) |
+| 23:04 | Phase 1 rerun (`ENVIRONMENT_REPORT.json`) | **FAIL**, 26 PASS / 1 FAIL. All six released models and four hydrogen files reproduce their Python-pinned hashes; licences check out; libraries load; **E4: 771 MB available < 2500 MB** (MATLAB 1642 MB of 7413 MB) |
+| after 23:13 restart | RAM remeasured before launch | 657–694 MB available (non-paged kernel pool about 840 MB; Claude about 1.6 GB, Chrome, Edge WebView2, Discord running). MATLAB not launched |
+| about 23:17–23:20 | standalone run by the project lead | **no report written** (no file newer than 23:04 in the run folder; MATLAB debug logs empty). Cause not recoverable. The runner now writes `RUN_LOG.json` at start, after each phase and on any error, and the validator rejects reports without a run log or older than the run |
+
+Status: **Phases 1, 3 and 4 not verified.** Validator verdict: NOT_READY.

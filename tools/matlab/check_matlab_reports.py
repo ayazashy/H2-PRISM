@@ -85,6 +85,23 @@ def evaluate(d: Path) -> dict:
             if c is None or c["status"] != "PASS":
                 problems.append(f"integration {i}: {'absent' if c is None else c['status'] + ' (' + c['detail'] + ')'}")
         notes.append(f"H2Net v1 build gate: {(it.get('extra') or {}).get('build_gate', 'UNKNOWN')}")
+    # provenance: every report must come from the run recorded in RUN_LOG.json (no stale reports mixed in)
+    log = _load(d, "RUN_LOG.json")
+    created = {n: r.get("created") for n, r in (("ENVIRONMENT_REPORT.json", env), ("SMOKE_REPORT.json", sm),
+                                               ("H2_INTEGRATION_REPORT.json", it)) if r is not None}
+    for n, c in created.items():
+        notes.append(f"{n} created {c}")
+    if log is None:
+        problems.append("RUN_LOG.json missing: reports cannot be tied to one run")
+    else:
+        notes.append(f"run started {log.get('started')} in {log.get('cwd')}; finished {log.get('finished')}; "
+                     f"stopped_at {log.get('stopped_at') or '-'}")
+        err = (log.get("error") or {}).get("message")
+        if err:
+            problems.append(f"run error: {(log['error'].get('identifier') or '')} {err}")
+        for n, c in created.items():
+            if c and log.get("started") and c < log["started"]:
+                problems.append(f"{n} ({c}) predates this run ({log['started']}): stale report")
     return {"verdict": "READY_FOR_AUTHORIZED_STEPS" if not problems else "NOT_READY", "problems": problems, "notes": notes}
 
 
