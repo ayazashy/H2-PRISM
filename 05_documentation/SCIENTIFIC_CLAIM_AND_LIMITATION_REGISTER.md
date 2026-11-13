@@ -20,6 +20,9 @@
 | C13 | Ambiguity inclusion = specific-diagnosis accuracy | UNSUPPORTED | reported separately |
 | C14 | Point estimates without intervals as conclusions | UNSUPPORTED | intervals mandatory |
 | C15 | The legacy dashboard values (96% accuracy, 8.1% risk) | UNSUPPORTED | invented (ISS-03) |
+| C16 | Any result from the released simulator reflects hydrogen or blend physics | UNSUPPORTED (added 2026-11-13) | The released gas definition is air-like (R = 0.287 kJ/kg/K) with physically inconsistent constants (`GAS_MODEL_LIMITATION.md`). This applies to every R2, arm and descriptive artifact, including the 11 approved on 2026-11-12, which may be used only with this disclosure (`00_governance/MASTER_ISSUE_REGISTER.csv` E-07). |
+
+> **C8 update (2026-11-13).** The 10% H₂ / 90% CH₄ blend is **REFUTED**, not merely unverified: the released models' gas constant is that of air (`MASTER_ISSUE_REGISTER.csv` B-14).
 
 **Mandatory limitations in any report:**
 - L1: three topologies.

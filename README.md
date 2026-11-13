@@ -222,7 +222,11 @@ The compiler in [`src/h2prism/visualization/dashboard.py`](src/h2prism/visualiza
 
 ## 7. Verified Dataset Truth & Scientific Boundaries
 
-1. **Fluid Composition**: the dataset documentation reports a 10% H₂ / 90% CH₄ blend simulated in Simscape Gas Fluids. This is **REPORTED_UNVERIFIED** (not in the data columns); no blend-percentage or pure-hydrogen claim is made.
+1. **Fluid Composition**: the dataset documentation reports a 10% H₂ / 90% CH₄ blend simulated in Simscape Gas Fluids. This is **REFUTED by the released models** (2026-11-13).
+   - All six released `.slx` files define an air-like gas: R = 0.287 kJ/kg/K, molar mass ≈ 29 g/mol. A 10% blend would have R ≈ 0.57 kJ/kg/K.
+   - The models' active perfect-gas constants are physically inconsistent (γ ≈ 5.75); see `05_documentation/GAS_MODEL_LIMITATION.md`.
+   - No hydrogen, blend or physical-validation claim may be made from the released data.
+   - The hydrogen-specific path is `02_methodology/HYDROGEN_MODEL_SPECIFICATION.md`. Open issues are tracked in `00_governance/MASTER_ISSUE_REGISTER.csv`.
 2. **Sensor Channels**: Pressure transmitters `PS1` through `PS12` (MPa) and mass flow meters `MFS1` through `MFS4` (kg/s) are verified. **Zero localized temperature channels exist**.
 3. **No Continuous Metric Localization Over-claiming**: Categorical valve restriction labels (`leak_G3` through `leak_G6`) represent discrete valve zones, not continuous metric coordinates.
 4. **Primary Evaluation Strategy**: leave-one-topology-out over 57 underlying runs (51 eligible, 39 families nested in topology; manifest v0.2). Folds are family-, topology- and duplicate-disjoint and every class appears in every fold, but NORMAL/FAULT/DELAY have only 1–2 runs per topology, so their per-class results are descriptive only. The original `01_dataset_audit/folds.csv` leaks (every family on both sides) and must not be used. See `02_methodology/GROUPED_EVALUATION_PROTOCOL.md`.
