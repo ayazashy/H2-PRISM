@@ -149,4 +149,11 @@ Hydrogen properties are never substituted into the released models.
 | after 23:13 restart | RAM remeasured before launch | 657–694 MB available (non-paged kernel pool about 840 MB; Claude about 1.6 GB, Chrome, Edge WebView2, Discord running). MATLAB not launched |
 | about 23:17–23:20 | standalone run by the project lead | **no report written** (no file newer than 23:04 in the run folder; MATLAB debug logs empty). Cause not recoverable. The runner now writes `RUN_LOG.json` at start, after each phase and on any error, and the validator rejects reports without a run log or older than the run |
 
+| 23:42–23:43 | standalone run by the project lead with the run log (cwd = repository root) | **Phase 1 FAIL**, 26 PASS / 1 FAIL (E4: 712 MB available). `RUN_LOG.json`: MATLAB process **2.3 GB at start, 4.6 GB after Phase 1**, because loading the Simscape libraries in E10 adds about 2.3 GB; 666 MB available at the end. The run stopped correctly before Phase 3. `matlab_run.log` is empty (0 bytes, created 23:32). |
+
 Status: **Phases 1, 3 and 4 not verified.** Validator verdict: NOT_READY.
+
+**Memory finding (2026-11-14).** On this laptop (7.4 GB visible, about 2.2 GB taken by Windows, drivers and the graphics reserve), MATLAB with the Simscape libraries loaded needs about 4.6 GB before any model is loaded or compiled. The E4 gate (2.5 GB available at start) and the 1.5 GB between-model guard cannot both be met while other applications run. Options that keep the gates unchanged:
+
+- run with only MATLAB open (no browser, no Claude, no Discord), after a fresh sign-in, so that roughly 4.5–5 GB is free before MATLAB starts;
+- run on a machine with ≥ 16 GB RAM (the X27 executor).
