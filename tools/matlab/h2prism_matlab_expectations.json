@@ -1,0 +1,652 @@
+{
+ "schema": "h2prism_matlab_expectations/0.1",
+ "matlab": {
+  "minimum_release": "R2025a",
+  "models_saved_in": "R2025a (25.1.0.2943329)",
+  "required_products": [
+   "MATLAB",
+   "Simulink",
+   "Simscape"
+  ],
+  "required_licenses": [
+   "MATLAB",
+   "Simulink",
+   "Simscape"
+  ],
+  "required_libraries": [
+   "fl_lib",
+   "nesl_utility",
+   "simulink"
+  ]
+ },
+ "memory_mb": {
+  "minimum_total": 7000,
+  "minimum_available_to_start": 2500,
+  "minimum_available_between_models": 1500
+ },
+ "released_gas": {
+  "block_sid": "4",
+  "block": "Gas Properties (G)",
+  "gas_spec_raw": "1",
+  "expected_R_kJ_per_kgK": 0.287,
+  "source": "05_documentation/GAS_MODEL_LIMITATION.md"
+ },
+ "pipe_sids": [
+  "47",
+  "48",
+  "49",
+  "106",
+  "107",
+  "108",
+  "221",
+  "309"
+ ],
+ "models": [
+  {
+   "kind": "anomalous",
+   "position": "center",
+   "file": "data/raw/H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/anomalous_scenarios/Anomalous_HNetwork_gest_center.slx",
+   "sha256": "e6caa8cf6558f7a524fd2a4e53ecb0530cf84479cbdf06c7dde4a02ef29acf33",
+   "name": "Anomalous_HNetwork_gest_center",
+   "sensors": [
+    {
+     "variable": "flow_sensor1",
+     "sensor_id": "MFS1",
+     "sid": "311"
+    },
+    {
+     "variable": "flow_sensor2",
+     "sensor_id": "MFS2",
+     "sid": "210"
+    },
+    {
+     "variable": "flow_sensor3",
+     "sensor_id": "MFS3",
+     "sid": "218"
+    },
+    {
+     "variable": "pressure_sensor1",
+     "sensor_id": "PS1",
+     "sid": "50"
+    },
+    {
+     "variable": "pressure_sensor2",
+     "sensor_id": "PS2",
+     "sid": "51"
+    },
+    {
+     "variable": "pressure_sensor3",
+     "sensor_id": "PS3",
+     "sid": "52"
+    },
+    {
+     "variable": "pressure_sensor4",
+     "sensor_id": "PS4",
+     "sid": "109"
+    },
+    {
+     "variable": "pressure_sensor5",
+     "sensor_id": "PS5",
+     "sid": "187"
+    },
+    {
+     "variable": "pressure_sensor6",
+     "sensor_id": "PS6",
+     "sid": "318"
+    },
+    {
+     "variable": "pressure_sensor7",
+     "sensor_id": "PS7",
+     "sid": "392"
+    },
+    {
+     "variable": "pressure_sensor8",
+     "sensor_id": "PS8",
+     "sid": "418"
+    },
+    {
+     "variable": "pressure_sensor9",
+     "sensor_id": "PS9",
+     "sid": "428"
+    },
+    {
+     "variable": "pressure_sensor10",
+     "sensor_id": "PS10",
+     "sid": "431"
+    }
+   ],
+   "parameter_interface": []
+  },
+  {
+   "kind": "anomalous",
+   "position": "down",
+   "file": "data/raw/H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/anomalous_scenarios/Anomalous_HNetwork_gest_down.slx",
+   "sha256": "b1c0b93579d104127b163d60a49d7163e5afb4776bafb8ddd4b133777349191c",
+   "name": "Anomalous_HNetwork_gest_down",
+   "sensors": [
+    {
+     "variable": "flow_sensor1",
+     "sensor_id": "MFS1",
+     "sid": "311"
+    },
+    {
+     "variable": "flow_sensor2",
+     "sensor_id": "MFS2",
+     "sid": "210"
+    },
+    {
+     "variable": "flow_sensor3",
+     "sensor_id": "MFS3",
+     "sid": "218"
+    },
+    {
+     "variable": "flow_sensor4",
+     "sensor_id": "MFS4",
+     "sid": "196"
+    },
+    {
+     "variable": "pressure_sensor1",
+     "sensor_id": "PS1",
+     "sid": "50"
+    },
+    {
+     "variable": "pressure_sensor2",
+     "sensor_id": "PS2",
+     "sid": "51"
+    },
+    {
+     "variable": "pressure_sensor3",
+     "sensor_id": "PS3",
+     "sid": "52"
+    },
+    {
+     "variable": "pressure_sensor4",
+     "sensor_id": "PS4",
+     "sid": "109"
+    },
+    {
+     "variable": "pressure_sensor5",
+     "sensor_id": "PS5",
+     "sid": "134"
+    },
+    {
+     "variable": "pressure_sensor6",
+     "sensor_id": "PS6",
+     "sid": "187"
+    },
+    {
+     "variable": "pressure_sensor7",
+     "sensor_id": "PS7",
+     "sid": "318"
+    },
+    {
+     "variable": "pressure_sensor8",
+     "sensor_id": "PS8",
+     "sid": "392"
+    },
+    {
+     "variable": "pressure_sensor9",
+     "sensor_id": "PS9",
+     "sid": "402"
+    },
+    {
+     "variable": "pressure_sensor10",
+     "sensor_id": "PS10",
+     "sid": "403"
+    },
+    {
+     "variable": "pressure_sensor11",
+     "sensor_id": "PS11",
+     "sid": "428"
+    },
+    {
+     "variable": "pressure_sensor12",
+     "sensor_id": "PS12",
+     "sid": "431"
+    }
+   ],
+   "parameter_interface": []
+  },
+  {
+   "kind": "anomalous",
+   "position": "up",
+   "file": "data/raw/H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/anomalous_scenarios/Anomalous_HNetwork_gest_up.slx",
+   "sha256": "35376a208c133789c27b29a4639dedde73845e7c16a6c034e8ab29a36bc60352",
+   "name": "Anomalous_HNetwork_gest_up",
+   "sensors": [
+    {
+     "variable": "flow_sensor1",
+     "sensor_id": "MFS1",
+     "sid": "311"
+    },
+    {
+     "variable": "flow_sensor2",
+     "sensor_id": "MFS2",
+     "sid": "210"
+    },
+    {
+     "variable": "flow_sensor3",
+     "sensor_id": "MFS3",
+     "sid": "218"
+    },
+    {
+     "variable": "pressure_sensor1",
+     "sensor_id": "PS1",
+     "sid": "50"
+    },
+    {
+     "variable": "pressure_sensor2",
+     "sensor_id": "PS2",
+     "sid": "51"
+    },
+    {
+     "variable": "pressure_sensor3",
+     "sensor_id": "PS3",
+     "sid": "52"
+    },
+    {
+     "variable": "pressure_sensor4",
+     "sensor_id": "PS4",
+     "sid": "109"
+    },
+    {
+     "variable": "pressure_sensor5",
+     "sensor_id": "PS5",
+     "sid": "187"
+    },
+    {
+     "variable": "pressure_sensor6",
+     "sensor_id": "PS6",
+     "sid": "318"
+    },
+    {
+     "variable": "pressure_sensor7",
+     "sensor_id": "PS7",
+     "sid": "392"
+    },
+    {
+     "variable": "pressure_sensor8",
+     "sensor_id": "PS8",
+     "sid": "418"
+    },
+    {
+     "variable": "pressure_sensor9",
+     "sensor_id": "PS9",
+     "sid": "428"
+    },
+    {
+     "variable": "pressure_sensor10",
+     "sensor_id": "PS10",
+     "sid": "431"
+    }
+   ],
+   "parameter_interface": []
+  },
+  {
+   "kind": "normal",
+   "position": "center",
+   "file": "data/raw/H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/normality_scenarios/normality_datasets/Normal_HNetwork_gest_center.slx",
+   "sha256": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+   "name": "Normal_HNetwork_gest_center",
+   "sensors": [
+    {
+     "variable": "flow_sensor1",
+     "sensor_id": "MFS1",
+     "sid": "311"
+    },
+    {
+     "variable": "flow_sensor2",
+     "sensor_id": "MFS2",
+     "sid": "210"
+    },
+    {
+     "variable": "flow_sensor3",
+     "sensor_id": "MFS3",
+     "sid": "218"
+    },
+    {
+     "variable": "pressure_sensor1",
+     "sensor_id": "PS1",
+     "sid": "50"
+    },
+    {
+     "variable": "pressure_sensor2",
+     "sensor_id": "PS2",
+     "sid": "51"
+    },
+    {
+     "variable": "pressure_sensor3",
+     "sensor_id": "PS3",
+     "sid": "52"
+    },
+    {
+     "variable": "pressure_sensor4",
+     "sensor_id": "PS4",
+     "sid": "109"
+    },
+    {
+     "variable": "pressure_sensor5",
+     "sensor_id": "PS5",
+     "sid": "187"
+    },
+    {
+     "variable": "pressure_sensor6",
+     "sensor_id": "PS6",
+     "sid": "318"
+    },
+    {
+     "variable": "pressure_sensor7",
+     "sensor_id": "PS7",
+     "sid": "392"
+    },
+    {
+     "variable": "pressure_sensor8",
+     "sensor_id": "PS8",
+     "sid": "418"
+    },
+    {
+     "variable": "pressure_sensor9",
+     "sensor_id": "PS9",
+     "sid": "428"
+    },
+    {
+     "variable": "pressure_sensor10",
+     "sensor_id": "PS10",
+     "sid": "431"
+    }
+   ],
+   "parameter_interface": [
+    {
+     "sid": "59",
+     "parameter": "final_value",
+     "meaning": "Pressure Source (G)3 set-point after t = 25 s [MPa]"
+    },
+    {
+     "sid": "241",
+     "parameter": "slope",
+     "meaning": "Pressure Source (G)1 differential ramp [MPa/s]"
+    },
+    {
+     "sid": "213",
+     "parameter": "restriction_area",
+     "meaning": "withdrawal G3 [m^2]"
+    },
+    {
+     "sid": "222",
+     "parameter": "restriction_area",
+     "meaning": "withdrawal G4 [m^2]"
+    },
+    {
+     "sid": "312",
+     "parameter": "restriction_area",
+     "meaning": "withdrawal G5 [m^2]"
+    },
+    {
+     "sid": "215",
+     "parameter": "restriction_area",
+     "meaning": "withdrawal G6 [m^2]"
+    }
+   ]
+  },
+  {
+   "kind": "normal",
+   "position": "down",
+   "file": "data/raw/H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/normality_scenarios/normality_datasets/Normal_HNetwork_gest_down.slx",
+   "sha256": "2fcf47dfe91adf54b758b3f2562a727755e4f0ecd8bbc8e6783aaceced14f496",
+   "name": "Normal_HNetwork_gest_down",
+   "sensors": [
+    {
+     "variable": "flow_sensor1",
+     "sensor_id": "MFS1",
+     "sid": "311"
+    },
+    {
+     "variable": "flow_sensor2",
+     "sensor_id": "MFS2",
+     "sid": "210"
+    },
+    {
+     "variable": "flow_sensor3",
+     "sensor_id": "MFS3",
+     "sid": "218"
+    },
+    {
+     "variable": "flow_sensor4",
+     "sensor_id": "MFS4",
+     "sid": "196"
+    },
+    {
+     "variable": "pressure_sensor1",
+     "sensor_id": "PS1",
+     "sid": "50"
+    },
+    {
+     "variable": "pressure_sensor2",
+     "sensor_id": "PS2",
+     "sid": "51"
+    },
+    {
+     "variable": "pressure_sensor3",
+     "sensor_id": "PS3",
+     "sid": "52"
+    },
+    {
+     "variable": "pressure_sensor4",
+     "sensor_id": "PS4",
+     "sid": "109"
+    },
+    {
+     "variable": "pressure_sensor5",
+     "sensor_id": "PS5",
+     "sid": "134"
+    },
+    {
+     "variable": "pressure_sensor6",
+     "sensor_id": "PS6",
+     "sid": "187"
+    },
+    {
+     "variable": "pressure_sensor7",
+     "sensor_id": "PS7",
+     "sid": "318"
+    },
+    {
+     "variable": "pressure_sensor8",
+     "sensor_id": "PS8",
+     "sid": "392"
+    },
+    {
+     "variable": "pressure_sensor9",
+     "sensor_id": "PS9",
+     "sid": "402"
+    },
+    {
+     "variable": "pressure_sensor10",
+     "sensor_id": "PS10",
+     "sid": "403"
+    },
+    {
+     "variable": "pressure_sensor11",
+     "sensor_id": "PS11",
+     "sid": "428"
+    },
+    {
+     "variable": "pressure_sensor12",
+     "sensor_id": "PS12",
+     "sid": "431"
+    }
+   ],
+   "parameter_interface": [
+    {
+     "sid": "59",
+     "parameter": "final_value",
+     "meaning": "Pressure Source (G)3 set-point after t = 25 s [MPa]"
+    },
+    {
+     "sid": "241",
+     "parameter": "slope",
+     "meaning": "Pressure Source (G)1 differential ramp [MPa/s]"
+    },
+    {
+     "sid": "213",
+     "parameter": "restriction_area",
+     "meaning": "withdrawal G3 [m^2]"
+    },
+    {
+     "sid": "222",
+     "parameter": "restriction_area",
+     "meaning": "withdrawal G4 [m^2]"
+    },
+    {
+     "sid": "312",
+     "parameter": "restriction_area",
+     "meaning": "withdrawal G5 [m^2]"
+    },
+    {
+     "sid": "215",
+     "parameter": "restriction_area",
+     "meaning": "withdrawal G6 [m^2]"
+    }
+   ]
+  },
+  {
+   "kind": "normal",
+   "position": "up",
+   "file": "data/raw/H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/normality_scenarios/normality_datasets/Normal_HNetwork_gest_up.slx",
+   "sha256": "5c3c76e9866dcbbe0a2ec6937d150c6ab9af3ec010ea92df19c2ff92426380d4",
+   "name": "Normal_HNetwork_gest_up",
+   "sensors": [
+    {
+     "variable": "flow_sensor1",
+     "sensor_id": "MFS1",
+     "sid": "311"
+    },
+    {
+     "variable": "flow_sensor2",
+     "sensor_id": "MFS2",
+     "sid": "210"
+    },
+    {
+     "variable": "flow_sensor3",
+     "sensor_id": "MFS3",
+     "sid": "218"
+    },
+    {
+     "variable": "pressure_sensor1",
+     "sensor_id": "PS1",
+     "sid": "50"
+    },
+    {
+     "variable": "pressure_sensor2",
+     "sensor_id": "PS2",
+     "sid": "51"
+    },
+    {
+     "variable": "pressure_sensor3",
+     "sensor_id": "PS3",
+     "sid": "52"
+    },
+    {
+     "variable": "pressure_sensor4",
+     "sensor_id": "PS4",
+     "sid": "109"
+    },
+    {
+     "variable": "pressure_sensor5",
+     "sensor_id": "PS5",
+     "sid": "187"
+    },
+    {
+     "variable": "pressure_sensor6",
+     "sensor_id": "PS6",
+     "sid": "318"
+    },
+    {
+     "variable": "pressure_sensor7",
+     "sensor_id": "PS7",
+     "sid": "392"
+    },
+    {
+     "variable": "pressure_sensor8",
+     "sensor_id": "PS8",
+     "sid": "418"
+    },
+    {
+     "variable": "pressure_sensor9",
+     "sensor_id": "PS9",
+     "sid": "428"
+    },
+    {
+     "variable": "pressure_sensor10",
+     "sensor_id": "PS10",
+     "sid": "431"
+    }
+   ],
+   "parameter_interface": [
+    {
+     "sid": "59",
+     "parameter": "final_value",
+     "meaning": "Pressure Source (G)3 set-point after t = 25 s [MPa]"
+    },
+    {
+     "sid": "241",
+     "parameter": "slope",
+     "meaning": "Pressure Source (G)1 differential ramp [MPa/s]"
+    },
+    {
+     "sid": "213",
+     "parameter": "restriction_area",
+     "meaning": "withdrawal G3 [m^2]"
+    },
+    {
+     "sid": "222",
+     "parameter": "restriction_area",
+     "meaning": "withdrawal G4 [m^2]"
+    },
+    {
+     "sid": "312",
+     "parameter": "restriction_area",
+     "meaning": "withdrawal G5 [m^2]"
+    },
+    {
+     "sid": "215",
+     "parameter": "restriction_area",
+     "meaning": "withdrawal G6 [m^2]"
+    }
+   ]
+  }
+ ],
+ "hydrogen_tables": [
+  {
+   "file": "06_audit_preparation/simulation/h2net_v1/properties/ENVIRONMENT.txt",
+   "sha256": "5deef53dd97f9f1e5fd425d0ac6ed8016c294b495a71621a5e6079fdd5758d1c"
+  },
+  {
+   "file": "06_audit_preparation/simulation/h2net_v1/properties/H2_REALGAS_TLU2.json",
+   "sha256": "962facbbcea0bd4c830fd29b2691f8e7d6f7ca10444a4dcb74742c20e3fd1e68"
+  },
+  {
+   "file": "06_audit_preparation/simulation/h2net_v1/properties/H2_REALGAS_TLU2_params.m",
+   "sha256": "d095075e44e85de71c7d51bde0772ba9236b1289414d8c3a0c7bbba6c0881227"
+  },
+  {
+   "file": "06_audit_preparation/simulation/h2net_v1/properties/V1_REPORT.json",
+   "sha256": "a35ddd17f62614498aa43048d80135493bc6215bc82a5cd841a261de1e8ea7f7"
+  }
+ ],
+ "h2net_v1_grant": {
+  "file": "06_audit_preparation/simulation/h2net_v1/AUTH_MODEL_DEVELOPMENT_H2NET_V1_REQUEST.yaml",
+  "status": "ACTIVE",
+  "scope": "MODEL_DEVELOPMENT:H2NET_V1_PROPERTIES_AND_STEADY_STATE",
+  "bound": [
+   {
+    "file": "02_methodology/HYDROGEN_MODEL_SPECIFICATION.md",
+    "sha256": "ce08ea7f414c8dd2c981328f72f12386383f72ba8fc52ffb97beda80611f87b8"
+   },
+   {
+    "file": "src/h2prism/gas_physics.py",
+    "sha256": "278769d9b643b36cb474c2cf9d9b5102954f367a4e334c8371a28a5b75795ff4"
+   }
+  ]
+ }
+}
