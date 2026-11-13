@@ -72,3 +72,6 @@ video-general/out/
 03_results/ablation_runs/**/*.parquet
 # generated simulation outputs (SIMULATION_GENERATION scopes); provenance and seals are copied into 06_audit_preparation
 data/generated/
+
+# isolated environment for hydrogen property generation (MODEL_DEVELOPMENT:H2NET_V1)
+.venv-h2props/

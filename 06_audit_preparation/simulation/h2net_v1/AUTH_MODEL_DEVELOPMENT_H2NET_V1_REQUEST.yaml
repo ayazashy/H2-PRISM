@@ -1,11 +1,12 @@
-# REQUEST - NOT AUTHORIZED. First step from preparation to execution for the hydrogen-specific model (project-lead
+# AUTHORIZED by the project lead in session on 2026-11-13 (next-step answer: 'Authorize H2Net v1'); request text and
+# bound hashes unchanged, only the grant fields below were set. First step for the hydrogen-specific model (project-lead
 # scope decision 2026-11-13: H2-PRISM targets hydrogen pipeline systems). Independent of, and does not authorize,
 # SIMULATION_GENERATION:V2_NORMAL_SUPPORT (package v3 remains unauthorized).
-authorized: false
-status: PENDING_PROJECT_LEAD_AUTHORIZATION
+authorized: true
+status: ACTIVE
 scope: MODEL_DEVELOPMENT:H2NET_V1_PROPERTIES_AND_STEADY_STATE
-authorized_by: null
-date: null
+authorized_by: Ahmed Zayed (project lead)
+date: '2026-11-13'
 specification: {file: 02_methodology/HYDROGEN_MODEL_SPECIFICATION.md, sha256: ce08ea7f414c8dd2c981328f72f12386383f72ba8fc52ffb97beda80611f87b8}
 reference_code: {file: src/h2prism/gas_physics.py, sha256: 278769d9b643b36cb474c2cf9d9b5102954f367a4e334c8371a28a5b75795ff4}
 covers:

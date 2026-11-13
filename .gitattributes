@@ -26,3 +26,6 @@ data/sample/*.parquet binary
 tools/simulation/v2_normal_authorization.py text eol=lf
 tools/simulation/postprocess_v2_normal_runs.py text eol=lf
 tools/simulation/validate_v2_normal_outputs.py text eol=lf
+
+# H2Net v1 generated property tables are hash-recorded: identical bytes on every platform
+06_audit_preparation/simulation/h2net_v1/properties/* text eol=lf
