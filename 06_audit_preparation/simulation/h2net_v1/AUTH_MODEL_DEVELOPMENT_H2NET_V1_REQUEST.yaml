@@ -1,0 +1,23 @@
+# REQUEST - NOT AUTHORIZED. First step from preparation to execution for the hydrogen-specific model (project-lead
+# scope decision 2026-11-13: H2-PRISM targets hydrogen pipeline systems). Independent of, and does not authorize,
+# SIMULATION_GENERATION:V2_NORMAL_SUPPORT (package v3 remains unauthorized).
+authorized: false
+status: PENDING_PROJECT_LEAD_AUTHORIZATION
+scope: MODEL_DEVELOPMENT:H2NET_V1_PROPERTIES_AND_STEADY_STATE
+authorized_by: null
+date: null
+specification: {file: 02_methodology/HYDROGEN_MODEL_SPECIFICATION.md, sha256: ce08ea7f414c8dd2c981328f72f12386383f72ba8fc52ffb97beda80611f87b8}
+reference_code: {file: src/h2prism/gas_physics.py, sha256: 278769d9b643b36cb474c2cf9d9b5102954f367a4e334c8371a28a5b75795ff4}
+covers:
+  - "(a) installing a pinned CoolProp release in an isolated Python environment (download; version recorded) and
+     generating normal-hydrogen property tables (Z, cp, mu, k over at least 250-400 K x 0.1-10 MPa) plus the V1
+     comparison report"
+  - "(b) building the H2Net v1 model family as NEW files copied from the released models (S1-S8 of the
+     specification), with a parameter diff against the released block SIDs"
+  - "(c) running ONLY the validation simulations V2-V6 (steady states at prespecified operating points; spatial and
+     numerical convergence) and recording them against the independent reference"
+not_covered: any dataset generation, noise, labels, windows or event scenarios; any training or evaluation; any
+  change to the released models, the released data or existing results; protocol 2.0 / RC1 activation; package v3
+executor: Yazan (dataset owner) or a designated modeller with MATLAB R2025a+ (Simulink, Simscape); acceptance NOT_RECORDED
+acceptance_before_generation: V1-V8 passed and recorded (specification section 4); thresholds fixed before running
+void_if: the specification or reference code changes without a new request
