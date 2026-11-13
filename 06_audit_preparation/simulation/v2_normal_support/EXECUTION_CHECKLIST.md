@@ -35,7 +35,14 @@ Every command below runs from the repository root. Nothing in this package modif
 
 ## 2. Operating-range validity (before execution) and what can only be checked after
 
-**Static validity (verified for all 9 points):**
+> **Erratum (final check, 2026-11-13).** The bullets below used the gas block's *table* fields (0.001–10 MPa, 150–2,000 K) and air (γ = 1.4). Those fields are inactive if `gas_spec = 1` selects the perfect-gas specification (expected; confirmed in step A of `HANDOFF_FOR_YAZAN.md`).
+>
+> - **Active limits:** pressure ≥ **0.1 MPa** (range check = error), with no upper pressure or temperature limit.
+> - **Active constants:** imply γ ≈ 5.75 and an estimated compressor outlet temperature of about **1,920–2,060 K**, the same as in the released runs.
+> - **Static validity of the 9 points:** still holds under these limits. The lowest pressures are the atmospheric withdrawal ends at p_atm = 0.1 MPa, as in the release.
+> - Details: `FINAL_PRE_EXECUTION_CHECK.md`.
+
+**Static validity (as originally written; see the erratum above):**
 
 - **Highest pressure:** about 0.684 MPa (supply reservoir) + 6.7 MPa = **7.38 MPa**, below the 10 MPa table limit. The released maximum is 7.12 MPa.
 - **Compressor outlet temperature (isentropic, air):** at most about 580 K, inside 150–2,000 K.
@@ -124,7 +131,7 @@ generate_v2_normal_support(rel, des, 'data/generated/v2_normal_support', 'run')
 1. **Stop at the first failure.** Do not re-run, post-process, validate or seal a partial set.
 2. **Preflight failure** (licence, release, missing block, parameter not settable):
    - nothing has been simulated;
-   - fix the environment and repeat the preflight;
+   - fix the environment. Repeat the preflight **only if** the project lead has confirmed that preflight does not consume the authorization; otherwise a new authorization record is needed (`FINAL_PRE_EXECUTION_CHECK.md` §1);
    - if the fix needs a change to any bound file (design, generator, post-processing, validator or authorization check), go to step 5.
 3. **Run, post-process or validation failure:**
    - rename the whole output folder to `data/generated/_quarantine_<UTC timestamp>/` and do not open anything in its `confirmation/` subfolder;

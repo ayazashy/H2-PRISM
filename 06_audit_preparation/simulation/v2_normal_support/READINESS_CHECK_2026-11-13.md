@@ -129,3 +129,11 @@ Record the printed products and `gas_spec` in the execution note (step 5).
 - No event-class generation.
 - No summary, statistic, plot or inspection of the confirmation partition.
 - No hydrogen-specific claim.
+
+## Erratum (final pre-execution check, 2026-11-13)
+
+- **Gas validity limits.** The row "Validity limits 0.001–10 MPa, 150–2,000 K" lists the **real-gas table** fields. Those are inactive if `gas_spec = 1` selects the perfect-gas specification (expected).
+  - The active limits are then p ≥ 0.1 MPa (error), with no upper pressure or temperature limit.
+  - The active constants (R = 0.287, Z = 0.998386, cp = 0.3469 kJ/kg/K, μ = 10.98 µPa·s, k = 48.2 mW/m/K) imply γ ≈ 5.75 and Pr ≈ 0.079. Both are physically impossible for a real gas.
+- **Consumption.** "Consumed after one attempt" is a procedural rule only. No code tracks consumption, and the documents did not define whether preflight counts as the attempt.
+- **Details and the minimal handoff:** `FINAL_PRE_EXECUTION_CHECK.md`, `HANDOFF_FOR_YAZAN.md`.
