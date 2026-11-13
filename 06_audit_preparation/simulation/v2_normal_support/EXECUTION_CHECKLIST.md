@@ -6,6 +6,14 @@
 
 Every command below runs from the repository root. Nothing in this package modifies the released models or data.
 
+## 0. Purpose and limits of the generated data
+
+- **Exploratory NORMAL-support generation only**, using the released H2-SimNet NORMAL models unchanged.
+- It adds independent NORMAL operating points so that support-dependent statistics (e.g. Distinguishability v2) *can* be defined later.
+- It is **not** an experiment and produces no result about any method.
+- The confirmation partition is generated and sealed for possible future use under a frozen protocol and a separate authorization. Generating it does not authorize any confirmatory analysis.
+- **Gas:** the released models define an air-like gas (R = 0.287 kJ/kg/K; `READINESS_CHECK_2026-11-13.md`). Generated data must not be described as hydrogen-specific.
+
 ## 1. Verified dependencies and compatibility (from the `.slx` files themselves)
 
 | Item | Verified value | Source |
@@ -14,7 +22,7 @@ Every command below runs from the repository root. Nothing in this package modif
 | Products | **MATLAB, Simulink, Simscape.** Libraries used: `fl_lib` (Simscape foundation gas library), `nesl_utility` (Simscape), `simulink`. Simscape Fluids is **not** needed. | `SourceBlock` of every block |
 | Model configuration | StopTime 20000 s, start 0, variable-step auto in the file. The launcher overrides to **ode14x, fixed step 0.8 s (center) / 0.9 s (down, up)**, as in the released `models_launcher.m`. | `simulink/configSet0.xml`; `models_launcher.m` |
 | Logging | To Workspace blocks, SaveFormat **Timeseries**, sample time −1 (inherited), returned in the `SimulationOutput` object | logging subsystem |
-| Gas model | Gas Properties block: R = 0.287 kJ/kg/K (**air, not hydrogen**); pressure table 0.001–10 MPa; `properties_range_check = error` (out-of-range pressure stops the simulation); temperature table 150–2,000 K | block parameters |
+| Gas model | Gas Properties block (identical in all six released models): R = 0.287 kJ/kg/K (**air-like, not hydrogen**; reference cp/μ/k inconsistent with either gas, see readiness check); pressure table 0.001–10 MPa; `properties_range_check = error` (out-of-range pressure stops the simulation); temperature table 150–2,000 K | block parameters |
 | Released model SHA-256 (must match before and after) | center `710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e`<br>down `2fcf47dfe91adf54b758b3f2562a727755e4f0ecd8bbc8e6783aaceced14f496`<br>up `5c3c76e9866dcbbe0a2ec6937d150c6ab9af3ec010ea92df19c2ff92426380d4` | `03_results/diagnostics/sensor_correspondence/MODEL_FILES.csv` |
 
 **Parameter targets.** They are set by block SID through `Simulink.ID.getHandle`, which avoids block names containing line breaks. The SIDs are identical in all three models, and every value is read back and asserted.
