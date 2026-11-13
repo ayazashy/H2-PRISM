@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Acceptance checks and confirmation sealing for SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION (package v2).
+Acceptance checks and confirmation sealing for SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION (package v3).
+Every provenance must carry the attempt_id of the authorization claim for this out_dir (one attempt per record).
 Run after generate_v2_normal_support.m ('run') and postprocess_v2_normal_runs.py.
 
 Integrity (every run): provenance fields (scenario, group, partition, model, solver ode14x, fixed step, scope,
@@ -43,7 +44,7 @@ MODEL_FILES = REPO / "03_results" / "diagnostics" / "sensor_correspondence" / "M
 TRACE = REPO / "03_results" / "diagnostics" / "sensor_correspondence" / "SENSOR_TRACE.csv"
 MANIFEST = REPO / "06_audit_preparation" / "protocol2" / "CANDIDATE_MANIFEST_V03.csv"
 SCOPE = "SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION"
-PACKAGE = "v2"
+PACKAGE = "v3"
 SIGMA = {"PS": 0.0005, "MFS": 0.25}
 LIMITS = {"p_min": 0.09, "p_max": 9.5, "drift_ps": 7.5e-4, "drift_mfs": 2.75e-3, "osc_ps": 0.053, "osc_mfs": 0.163,
           "steady": (1000, 19000), "noise_rel_tol": 0.05}
@@ -97,7 +98,7 @@ def physical_checks(df: pd.DataFrame) -> dict:
     return checks, vals
 
 
-def check(out_dir: Path, design: Path) -> dict:
+def check(out_dir: Path, design: Path, attempt_id: str | None = None) -> dict:
     D = pd.read_csv(design)
     rel, logged = released_hashes(), expected_logged()
     existing_groups = set(pd.read_csv(MANIFEST).independence_group)
@@ -119,7 +120,7 @@ def check(out_dir: Path, design: Path) -> dict:
         pv = json.loads(files["provenance.json"].read_text(encoding="utf-8"))
         exp = {"scenario_id": r.scenario_id, "independence_group": r.independence_group, "partition": r.partition,
                "model": r.model, "model_name": r.model_name, "authorization_scope": SCOPE, "solver": "ode14x",
-               "package_version": PACKAGE}
+               "package_version": PACKAGE, "attempt_id": attempt_id}
         for k, v in exp.items():
             if str(pv.get(k)) != str(v):
                 problems.append(f"{tag}: provenance {k}={pv.get(k)!r}, expected {v!r}")
@@ -176,11 +177,12 @@ def main(argv=None) -> int:
     ap.add_argument("out_dir", type=Path)
     ap.add_argument("--design", type=Path, default=DESIGN)
     a = ap.parse_args(argv)
-    from v2_normal_authorization import require_active
-    require_active()                     # fail closed: no active, hash-bound authorization -> nothing is accepted
-    res = check(a.out_dir, a.design)
+    from v2_normal_authorization import require_claimed
+    claim = require_claimed(a.out_dir)   # fail closed: only the claimed attempt's folder, unchanged bound files
+    res = check(a.out_dir, a.design, claim["attempt_id"])
     ok = not res["problems"]
-    report = {"scope": SCOPE, "package_version": PACKAGE, "design_sha256": _sha(a.design), "limits": LIMITS,
+    report = {"scope": SCOPE, "package_version": PACKAGE, "attempt_id": claim["attempt_id"],
+              "design_sha256": _sha(a.design), "limits": LIMITS,
               "status": "ACCEPTED_AND_SEALED" if ok else "REJECTED_NOT_SEALED", "n_problems": len(res["problems"]),
               "problems": res["problems"], "runs": res["runs"], "n_development_runs": len(res["dev_rows"]),
               "n_confirmation_files_sealed": len(res["seal"]) if ok else 0}

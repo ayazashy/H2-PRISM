@@ -1,5 +1,10 @@
 function generate_v2_normal_support(releaseNormalDir, designCsv, outDir, mode)
-% GENERATE_V2_NORMAL_SUPPORT  Scope SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION (package v2).
+% GENERATE_V2_NORMAL_SUPPORT  Scope SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION (package v3).
+%   Run from the repository root. Authorization gate: tools/simulation/v2_normal_authorization.py (Python from the
+%   environment variable H2PRISM_PYTHON, default 'python').
+%     'preflight' calls the gate's non-consuming status check (must not be NOT_AUTHORIZED) and never simulates.
+%     'run' ATOMICALLY CLAIMS the single authorized attempt through the gate before any output folder is populated
+%           or any simulation starts. The claim is never released: success, failure or interruption all consume it.
 %   NORMAL operating scenarios only (DESIGN.csv: 9 operating points x 3 released models). No events, no training,
 %   no evaluation. Requires MATLAB R2025a or later (the released models were saved in R2025a, 25.1.0.2943329),
 %   Simulink and Simscape (libraries used: fl_lib, nesl_utility, simulink). Simscape Fluids is not needed.
@@ -26,6 +31,20 @@ function generate_v2_normal_support(releaseNormalDir, designCsv, outDir, mode)
     out = char(java.io.File(outDir).getAbsolutePath());
     assert(~startsWith(out, rel), 'outDir must not be inside the release folder');
     if exist(outDir, 'dir'), d = dir(outDir); assert(numel(d) <= 2, 'outDir must be new or empty'); end
+    py = getenv('H2PRISM_PYTHON'); if isempty(py), py = 'python'; end
+    gate = fullfile(pwd, 'tools', 'simulation', 'v2_normal_authorization.py');
+    assert(isfile(gate), 'run from the repository root: authorization gate not found');
+    attemptId = '';
+    if strcmp(mode, 'preflight')
+        [st, txt] = system(sprintf('"%s" "%s" status', py, gate));
+        assert(st == 0 && ~contains(txt, 'NOT_AUTHORIZED'), 'authorization gate: %s', strtrim(txt));
+    else
+        % atomic one-attempt claim BEFORE any simulation; refused if already claimed (consumed) or not active
+        [st, txt] = system(sprintf('"%s" "%s" claim --out-dir "%s"', py, gate, out));
+        assert(st == 0, 'authorization claim refused: %s', strtrim(txt));
+        lines = splitlines(strtrim(txt)); claimRec = jsondecode(lines{end});
+        attemptId = claimRec.attempt_id;
+    end
     mkdir(outDir); mkdir(fullfile(outDir, 'development')); mkdir(fullfile(outDir, 'confirmation'));
     work = tempname; mkdir(work);
     D = readtable(designCsv, 'TextType', 'string');
@@ -76,7 +95,7 @@ function generate_v2_normal_support(releaseNormalDir, designCsv, outDir, mode)
                 'generated_utc', char(datetime('now', 'TimeZone', 'UTC', 'Format', 'yyyy-MM-dd''T''HH:mm:ss''Z''')), ...
                 'clean_solver_grid_csv_sha256', sha256file([base '_clean_solver_grid.csv']), ...
                 'authorization_scope', 'SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION', ...
-                'package_version', 'v2');
+                'package_version', 'v3', 'attempt_id', attemptId);
             writeJson([base '_provenance.json'], prov);
             close_system(mdl, 0);                 % never save
         catch err

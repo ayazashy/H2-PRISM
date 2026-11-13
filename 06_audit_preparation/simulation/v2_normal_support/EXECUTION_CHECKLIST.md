@@ -1,4 +1,11 @@
-# V2 NORMAL-support simulation: execution and validation checklist (package v2)
+# V2 NORMAL-support simulation: execution and validation checklist (written for package v2)
+
+> **Superseded parts (2026-11-13).** Package v3 replaces v2. The parts below about authorization and attempt consumption are replaced by:
+> - `POLICY_CLARIFICATION_2026-11-13.yaml`;
+> - the enforced gate (`check` / `claim`);
+> - `HANDOFF_FOR_YAZAN.md`, which holds the current commands.
+>
+> The dependency, operating-range, correlated-evidence, physical-check and confirmation rules below remain valid. Read `05_documentation/GAS_MODEL_LIMITATION.md` first.
 
 - **Scope:** `SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION`.
 - **Executor:** Yazan, or a person he designates.

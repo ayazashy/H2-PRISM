@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Post-processing for SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION (package v2). Run after
+Post-processing for SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION (package v3). Run after
 generate_v2_normal_support(..., 'run') and before validate_v2_normal_outputs.py.
 
 1. Resample the clean solver-grid output (fixed step 0.8 s centre, 0.9 s down/up) onto the RELEASE grid,
@@ -70,8 +70,8 @@ def main(argv=None) -> int:
     ap.add_argument("out_dir", type=Path)
     ap.add_argument("--design", type=Path, default=DESIGN)
     a = ap.parse_args(argv)
-    from v2_normal_authorization import require_active
-    require_active()                     # fail closed: no active, hash-bound authorization -> no processing
+    from v2_normal_authorization import require_claimed
+    require_claimed(a.out_dir)           # fail closed: only the claimed attempt's folder, unchanged bound files
     failed = sorted(a.out_dir.rglob("*_FAILED.json"))
     if failed:
         raise SystemExit(f"failed runs present ({len(failed)}); follow the failure procedure, do not post-process")
