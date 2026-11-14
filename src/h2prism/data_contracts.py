@@ -152,4 +152,15 @@ def check_partition_integrity(runs: Iterable[RunRecord], partition: Mapping[str,
     for g, parts in sorted(by_group.items()):
         if len(parts) > 1:
             v.append(f"group {g} spans partitions {sorted(parts)}")
+    # shared ancestry that is not itself a run (e.g. a deterministic initial state "IS:<hash>", a shared load-profile
+    # realization or warm-up prefix): every run listing the same ancestor must lie in one partition
+    by_anc = {}
+    for r in runs:
+        if r.run_id in partition:
+            for a in r.ancestry:
+                if a not in partition:
+                    by_anc.setdefault(a, set()).add(partition[r.run_id])
+    for a, parts in sorted(by_anc.items()):
+        if len(parts) > 1:
+            v.append(f"shared ancestor {a} spans partitions {sorted(parts)}")
     return v

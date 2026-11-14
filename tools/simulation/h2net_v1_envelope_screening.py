@@ -61,13 +61,9 @@ def screen() -> pd.DataFrame:
 
 
 def main(argv) -> int:
-    if "--targets" in argv:
-        dec = yaml.safe_load((H2 / "PARAMETER_DECISIONS.yaml").read_text(encoding="utf-8"))
-        open_items = [k for k, v in dec.items() if isinstance(v, dict) and not v.get("decided")]
-        if dec.get("status") != "DECIDED" or open_items:
-            print(f"REFUSED: V2 reference targets need decided operating points; open: {open_items}")
-            return 2
-        raise NotImplementedError("target computation is written once the decided operating points exist")
+    if "--targets" in argv:                       # X06: delegated; fail-closed on the owner decision record
+        import h2net_v1_v2_targets as v2t
+        return v2t.main([])
     df = screen()
     out = H2 / "candidate" / "ENVELOPE_SCREENING.csv"
     df.to_csv(out, index=False, float_format="%.6g", lineterminator="\n")

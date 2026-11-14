@@ -146,6 +146,7 @@ S4_demand_and_leaks:             # M2, M3
   value:
     demand_outlets: "Flow Rate Source (G), mass, controlled, power_spec none, to atmospheric Reservoir (G); replaces SID 213/222/312/215 and the end vent"
     nominal_demand_kg_s: {G3: 4.0, G5: 4.0, G4: 5.0, G6: 5.0, END: 2.0}
+    demand_levels: <>= 5 multipliers, e.g. [0.6, 0.8, 1.0, 1.2, 1.4]>   # required by X06 (V2: >= 5 operating points)
     load_profiles: <owner specification: range (e.g. 0.5-1.5 x nominal) and rate of change>
     leaks: {branches: 6, positions: "mid-length of Pipe (G) 47, 48, 49, 309, 106, 221", block: "Local Restriction (G), variable", Cd: 0.64,
             classes_percent: [0.5, 2.0, 10.0], severity_definition: <A | B>, area_confirmation: V4}
@@ -162,13 +163,13 @@ operating_envelope_V8:           # M5
   value:
     isothermal_reference_temperature_K: 313.15
     normal: {pressure_MPa: [3.0, 8.0], temperature_K: [270.0, 330.0], velocity_limit_m_s: 20.0, applies_at: pipe outlet}
-    fault_and_delay: {min_pressure_MPa: 2.5, max_discharge_temperature_K: 450.0}
+    fault_and_delay: {min_pressure_MPa: 2.5, max_discharge_temperature_K: 450.0}   # 2.5 MPa = LOWER bound: no pipe below it
   source: <citations for the limits>
   decided_by: <owner>
 
 S7_sensors_and_units:            # amendment of the decided S7
   decided: true
-  value: {base: position map v0.1, add: [MFS0 supply flow after SID 55, MFS2s in series at the Pipe (G)8 / Pipe (G)4 junction],
+  value: {base: position map v0.1, add: "H2NET_V1_DESIGN_FREEZE_SPEC.md section 2.1 (MFS0, MFS2s, MFS5, MFS6, MFS7, PS_N6, PS_END)",
           released_MFS2: <keep as MFS2_chamber | drop>, units: {pressure: MPa absolute, mass_flow: kg/s}}
   decided_by: <owner>
 

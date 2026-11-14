@@ -12,6 +12,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 CAND = ROOT / "06_audit_preparation" / "simulation" / "h2net_v1" / "candidate"
 TOOLS = ROOT / "tools" / "simulation"
+sys.path.insert(0, str(TOOLS))
 
 
 def test_proposed_record_is_not_a_decision_and_the_real_record_is_untouched():
@@ -77,3 +78,28 @@ def test_design_freeze_calcs_are_current_and_support_the_spec():
         s = m["D_signatures"]
         assert s["normal_load_x0.5_to_x1.5_max_abs_node_dp_kPa"] > 5 * s["leak_0.100_at_G4"]["max_abs_node_dp_kPa"]
         assert m["E_line_pack"]["control_volumes"]["CV_A"]["dM_dp_kg_per_kPa"] > 40
+
+
+def test_v2_targets_refuse_today_and_run_only_from_a_complete_decision_record(tmp_path):
+    import h2net_v1_v2_targets as v2t
+    out = tmp_path / "t.json"
+    assert v2t.main(["--out", str(out)]) == 2 and not out.exists()          # real record: OWNER_DECISIONS_REQUIRED
+    dec = {"status": "DECIDED_WITH_DEFERRALS",
+           "S2_thermal_boundary": {"decided": False, "deferred": True},
+           "S3_compressor_stations": {"decided": True, "decided_by": "TEST-FIXTURE", "value": {
+               "supply_reservoir_pressure_MPa": 3.2, "C1_pressure_source_sid_55": {"discharge_setpoint_MPa": 5.0},
+               "C2_pressure_source_sid_239": {"discharge_setpoint_MPa": 6.5}, "down_model_letdown_sid_111": "DEFERRED"}},
+           "S4_demand_and_leaks": {"decided": True, "decided_by": "TEST-FIXTURE", "value": {
+               "nominal_demand_kg_s": {"G3": 4.0, "G5": 4.0, "G4": 5.0, "G6": 5.0, "END": 2.0}, "demand_levels": [0.6, 0.8, 1.0, 1.2, 1.4]}},
+           "S6_roughness_and_initial_state": {"decided": True, "decided_by": "TEST-FIXTURE", "value": {"roughness_m": 4.5e-5}},
+           "operating_envelope_V8": {"decided": True, "decided_by": "TEST-FIXTURE", "value": {
+               "isothermal_reference_temperature_K": 313.15, "normal": {"pressure_MPa": [3.0, 8.0], "velocity_limit_m_s": 20.0}}}}
+    bad = dict(dec, S5_discretisation={"decided": False})                    # undecided and not deferred -> refused
+    pb = tmp_path / "bad.yaml"; pb.write_text(yaml.safe_dump(bad))
+    assert v2t.main(["--decisions", str(pb), "--out", str(out)]) == 2 and not out.exists()
+    pg = tmp_path / "ok.yaml"; pg.write_text(yaml.safe_dump(dec))
+    assert v2t.main(["--decisions", str(pg), "--out", str(out)]) == 0
+    r = json.loads(out.read_text(encoding="utf-8"))
+    assert r["targets"]["Normal_HNetwork_gest_down"].startswith("NOT_COMPUTED")
+    assert all(len(r["targets"][m]) == 5 and all(p["checks"]["feasible"] for p in r["targets"][m])
+               for m in ("Normal_HNetwork_gest_center", "Normal_HNetwork_gest_up"))

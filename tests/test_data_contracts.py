@@ -49,3 +49,12 @@ def test_partition_integrity_detects_group_and_ancestry_leakage():
     assert any("g1 spans" in m for m in v) and any("ancestor a" in m for m in v) and any("d: not assigned" in m for m in v)
     ok = {"a": "TRAIN", "b": "TRAIN", "c": "TRAIN", "d": "TEST"}
     assert dc.check_partition_integrity(runs, ok) == []
+
+
+def test_shared_non_run_ancestry_cannot_cross_partitions():
+    """Two scenario families with the same deterministic initial state (ancestor 'IS:abc', not itself a run) must not be
+    split across partitions even when their independence groups differ."""
+    runs = [_run("a", "fam1", ancestry=["IS:abc"]), _run("b", "fam2", ancestry=["IS:abc"]), _run("c", "fam3", ancestry=["IS:def"])]
+    bad = dc.check_partition_integrity(runs, {"a": "TRAIN", "b": "CONFIRMATION", "c": "TRAIN"})
+    assert any("shared ancestor IS:abc" in m for m in bad)
+    assert dc.check_partition_integrity(runs, {"a": "TRAIN", "b": "TRAIN", "c": "CONFIRMATION"}) == []

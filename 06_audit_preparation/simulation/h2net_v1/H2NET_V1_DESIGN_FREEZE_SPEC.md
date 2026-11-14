@@ -144,7 +144,11 @@ Computed per class, position, size and OC from the X06 steady states plus the MA
 **Requirements:**
 - 2 % and 10 % leaks, every compressor fault and DELAY τ ≥ 120 s must be DETECTABLE.
 - The 0.5 % leak class is kept and labelled with its class (expected LOW_SIGNATURE or SUB_NOISE). It is the test set for INSUFFICIENT_EVIDENCE.
-- If a required class is not DETECTABLE, the sensor or noise design changes. The threshold is not lowered.
+- If a required class is not DETECTABLE, the threshold is not lowered and the event is **not** made detectable artificially:
+  - The noise model is fixed from a cited source **before** any SNR is computed, and is never reduced to reach SNR ≥ 3.
+  - The only admissible design change is adding physically real instrumentation, at its sourced accuracy.
+  - Otherwise the class is reported and labelled LOW_SIGNATURE or SUB_NOISE. That is a valid scientific outcome, and it is exactly what the INSUFFICIENT_EVIDENCE path is for.
+  - The "must be DETECTABLE" list is a design target, not a label rule.
 
 **Existing steady-state evidence:**
 - Compressor faults: 0.76–1.8 MPa, DETECTABLE under any plausible σ_p.
@@ -154,8 +158,8 @@ Computed per class, position, size and OC from the X06 steady states plus the MA
 
 | Requirement | Value |
 |---|---|
-| Independence group | one OC (all its siblings) |
-| Groups per topology | ≥ 10 development + ≥ 5 sealed confirmation |
+| Independence group | one **initial-state family**: all OCs that share a deterministic initial state (topology, demand level, allocation, C2 set-point), with all their siblings. OCs differing only in seeds or profile share their pre-load prefix and are NOT independent. Each run records `ancestry = ["IS:<initial-state hash>", "LP:<load-profile seed>"]`; `data_contracts.check_partition_integrity` rejects any shared ancestor that spans partitions. |
+| Groups per topology | ≥ 10 development + ≥ 5 sealed confirmation **initial-state families** (the design offers 5 × 2 × 3 = 30 per topology) |
 | Groups per class | ≥ 45 (3 topologies × 15). Group-balanced risk then has a resolution of ≤ 1/45 ≈ 2.2 %, against the saturation at 1/11 seen in arm H. |
 | Partitioning | by OC; siblings never split (`data_contracts.check_partition_integrity`) |
 | Topology hold-out | leave-one-topology-out remains available because every class exists in every topology |
@@ -172,7 +176,7 @@ Indicative size with the balanced 6-leak rotation: per OC, 1 + 6 + 4 + 3 = 14 ru
 | M2 demand + OC factor levels | yes (feasible ×0.5–1.5) | V8 per run | — | Yazan |
 | M3 controlled sinks | yes | V2 | — | Yazan |
 | M4 roughness 0.045 mm | yes (sensitivity) | — | roughness value | modeller |
-| M5 envelope (NORMAL 3–8 MPa, FAULT ≥ 2.5 MPa, ≤ 450 K) | yes | V8 | velocity and temperature limits | Yazan + modeller |
+| M5 envelope (NORMAL 3–8 MPa; FAULT/DELAY **minimum** pipe pressure 2.5 MPa, i.e. no pipe may fall below it, and maximum discharge temperature 450 K) | yes | V8 | velocity and temperature limits | Yazan + modeller |
 | Sensors §2.1 + MFS2 handling | yes (topology, line-pack) | V2 sensor readings | — | Yazan (+ Faisal) |
 | Leak branches, sizes, severity definition A/B | sizes: estimate | V4 final areas | — | Yazan + Faisal |
 | Scenario design §3 (onset, siblings, DELAY definition) | yes (design) | transients (MATLAB) | — | Yazan + Faisal |
