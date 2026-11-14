@@ -55,7 +55,7 @@ Date: 2026-11-13. Machine: the project lead's Acer Aspire (AMD Ryzen 5, 8 GB RAM
 Run in **one** MATLAB session, started from the repository root. Use the interactive desktop first, so that activation completes.
 
 ```matlab
-cd('C:\Users\<user>\Documents\H2-PRISM')
+cd('<path to your H2-PRISM checkout>')   % the repository root
 addpath tools/matlab
 out = fullfile('06_audit_preparation','simulation','matlab_readiness','run_2026-11-13');
 r1 = h2prism_verify_environment(out);          % Phase 1  -> ENVIRONMENT_REPORT.json
@@ -83,7 +83,7 @@ Then, from a terminal in the repository root:
 **Standalone run (recommended on this 8 GB laptop).** Close Claude and other applications, open a terminal **in the repository root**, and run the command below. `RUN_LOG.json` in the run folder records how far the run got and any error; `matlab_run.log` captures the console output. Both must be present for the validator to tie the reports to one run.
 
 ```bash
-cd /c/Users/<user>/Documents/H2-PRISM
+cd <path to your H2-PRISM checkout>
 ```
 
 ```bash

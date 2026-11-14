@@ -6,6 +6,10 @@ Each script stops with `FAILED: <reason>` when a prerequisite is missing. Fix th
 
 ## 0. One-time setup
 
+**Status of the code.** The Python tools and gates are tested. **Every MATLAB step (build, structural edits, validation, scenarios) is implemented but has never been executed**, so treat its first run as verification. Physical validation exists only once `VALIDATION_REPORT.json` says `overall: PASS`.
+
+**Released raw models (not in Git).** Download the H2-SimNet archive (Zenodo record 17871393) and extract it to `data\raw\H2-SimNet-Dataset\`, as described in `01_dataset_audit/HOW_TO_ACCESS_DATA.md`. The archive MD5 is in `01_dataset_audit/DATASET_AUDIT_AMENDMENT_2026-11.md`. Step 01 verifies the six model hashes.
+
 ```powershell
 py -3.12 -m venv .venv
 .venv\Scripts\pip install -r requirements-lock.txt
