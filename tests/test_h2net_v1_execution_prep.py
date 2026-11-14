@@ -63,3 +63,17 @@ def test_builder_is_gated_and_only_writes_copies():
     assert not re.search(r"\bsim\s*\(|parsim|batchsim", code)
     assert re.findall(r"save_system\(([^,)]*)", code) == ["copyName"]
     assert "load_system(rel" not in code and "copyfile(rel, copyFile)" in code
+
+
+@pytest.mark.slow
+def test_design_freeze_calcs_are_current_and_support_the_spec():
+    assert subprocess.run([sys.executable, str(TOOLS / "h2net_v1_design_freeze_calcs.py"), "--check"]).returncode == 0
+    d = json.loads((CAND / "DESIGN_FREEZE_CALCS.json").read_text(encoding="utf-8"))
+    for m in d["models"].values():
+        a = m["A_nominal"]
+        assert a["feasible_normal_envelope"] and a["mass_residual_kg_s"] < 1e-9
+        assert a["C2"]["dp_MPa"] > 1.0 and a["C1"]["T_discharge_isentropic_K"] < 400
+        assert all(f["within_fault_envelope_2p5MPa"] for f in m["C_faults"].values())
+        s = m["D_signatures"]
+        assert s["normal_load_x0.5_to_x1.5_max_abs_node_dp_kPa"] > 5 * s["leak_0.100_at_G4"]["max_abs_node_dp_kPa"]
+        assert m["E_line_pack"]["control_volumes"]["CV_A"]["dM_dp_kg_per_kPa"] > 40
