@@ -20,7 +20,7 @@ function h2prism_apply_h2_gas_to_copy(copyModel, realGasSpecValue)
     end
     dec = fileread(fullfile(root, '06_audit_preparation', 'simulation', 'h2net_v1', 'PARAMETER_DECISIONS.yaml'));
     tok = regexp(dec, '(?m)^status:\s*(\S+)', 'tokens', 'once');
-    assert(~isempty(tok) && strcmp(tok{1}, 'DECIDED'), 'h2prism:decisions', ...
+    assert(~isempty(tok) && any(strcmp(tok{1}, {'DECIDED', 'DECIDED_WITH_DEFERRALS'})), 'h2prism:decisions', ...
         'PARAMETER_DECISIONS.yaml is not DECIDED: H2Net v1 copies must not be built yet');
     assert(nargin >= 2 && ~isempty(realGasSpecValue), 'h2prism:args', 'realGasSpecValue must be given explicitly');
     tabs = E.hydrogen_tables; if iscell(tabs), tabs = [tabs{:}]; end

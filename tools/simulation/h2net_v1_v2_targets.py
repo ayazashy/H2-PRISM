@@ -43,7 +43,7 @@ def gate(dec: dict) -> None:
                 raise Refused(f"{k} neither decided nor explicitly deferred")
     for k in REQUIRED:
         v = dec.get(k) or {}
-        if not v.get("decided") or not v.get("decided_by") or str(v.get("decided_by")).startswith("<"):
+        if v.get("decided") is not True or not v.get("decided_by") or str(v.get("decided_by")).startswith("<"):
             raise Refused(f"{k} must be decided with a named decided_by")
 
 
@@ -90,7 +90,7 @@ def compute(decisions: Path, out: Path) -> dict:
             p = json.loads(json.dumps(base))
             p["demand"] = {k: v * s for k, v in base["demand"].items()}
             r = pn.solve(graphs[name], p, gas, thermo, n_steps=800)
-            pts.append({"demand_multiplier": s, "checks": r["checks"], "node_pressures_MPa": r["node_pressures_MPa"],
+            pts.append({"demand_multiplier": s, "demand_kg_s": p["demand"], "checks": r["checks"], "node_pressures_MPa": r["node_pressures_MPa"],
                         "pipes": r["pipes"], "compressors": r["compressors"], "letdown": r["letdown"]})
         res["targets"][name] = pts
     out.write_text(json.dumps(res, indent=1, default=float) + "\n", encoding="utf-8", newline="\n")

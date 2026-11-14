@@ -59,7 +59,9 @@ def test_build_spec_is_current_and_consistent_with_the_released_models():
 def test_builder_is_gated_and_only_writes_copies():
     raw = (ROOT / "tools/matlab/h2prism_build_h2net_v1.m").read_text(encoding="utf-8")
     code = "\n".join(l for l in raw.splitlines() if not l.lstrip().startswith("%"))      # drop comment lines only
-    for gate in ("'DECIDED'", "SPECIFICATION_DECIDED", "h2prism:grant", "check_matlab_reports.py", "/data/raw/", "h2prism_memory_guard"):
+    # gate delegated to tools/simulation/h2net_v1_gates.py ('check validate': decisions, executor, grant hashes, V2 targets,
+    # MATLAB readiness); the spec must be SPECIFICATION_DECIDED; memory-guarded; released hash verified before and after
+    for gate in ("h2net_v1_gates.py", "check validate", "SPECIFICATION_DECIDED", "h2prism_memory_guard", "released_hash_ok", "source_sha256"):
         assert gate in code
     assert not re.search(r"\bsim\s*\(|parsim|batchsim", code)
     assert re.findall(r"save_system\(([^,)]*)", code) == ["copyName"]

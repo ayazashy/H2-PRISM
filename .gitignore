@@ -75,3 +75,4 @@ data/generated/
 
 # isolated environment for hydrogen property generation (MODEL_DEVELOPMENT:H2NET_V1)
 .venv-h2props/
+h2net_v1_run/
