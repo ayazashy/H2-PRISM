@@ -209,6 +209,9 @@ def figures(suite_path: Path, output: Path):
         lo, hi = ([float(Fraction(pair[i])) for pair in intervals] for i in (0, 1))
         line, = axes[1].plot(range(samples), lo, label=name)
         axes[1].fill_between(range(samples), lo, hi, color=line.get_color(), alpha=0.14)
+    channel = unique["decision"]["certificate"]["measurement"]["channels"][1]
+    axes[1].errorbar(channel["timestamps_s"], channel["values"], yerr=channel["absolute_errors"],
+                     fmt="k.", label="Observed P_A")
     axes[1].set(xlabel="Time (s)", ylabel="P_A (Pa)", title="Certified coordinate enclosures")
     axes[1].legend()
     group = {"EXCLUDED": 0, "INDETERMINATE": 1, "FEASIBLE": 2}
@@ -217,11 +220,12 @@ def figures(suite_path: Path, output: Path):
                    vmin=0, vmax=2, cmap=matplotlib.colors.ListedColormap(["#b6bac0", "#edbd55", "#239a88"]))
     axes[2].set_xticks(range(4), [r["hypothesis"] for r in status[0]])
     axes[2].set_yticks(range(len(status)), [c["case"] for c in suite["cases"]])
-    axes[2].set_title("Grey: excluded ? gold: indeterminate ? teal: feasible", fontsize=10)
+    axes[2].set_xlabel("Declared NORMAL and region hypotheses")
+    axes[2].set_title("Grey = excluded, gold = indeterminate, teal = feasible", fontsize=10)
     scaling = suite["window_scaling"]
     for key, label in (("certified_seconds", "Certified"), ("baseline_seconds", "Outer membership")):
         axes[3].plot([r["samples"] for r in scaling], [1000 * r[key] for r in scaling], "o-", label=label)
-    axes[3].set(xlabel="Samples per channel", ylabel="Wall time (ms)", title="Window scaling ? single runs")
+    axes[3].set(xlabel="Samples per channel", ylabel="Wall time (ms)", title="Window scaling (single runs)")
     axes[3].legend()
     fig.suptitle(f"CONTROLLED DISCRETE NETWORK · {unique['sha256'][:12]}")
     with output.open("xb") as f:
