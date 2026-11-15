@@ -146,6 +146,43 @@ class AffineModelRecord(Record):
     bounds: tuple[tuple[str, str], ...]
 
 
+@dataclass(frozen=True)
+class PolynomialCell(Record):
+    lower: str
+    upper: str
+    violated: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class PolynomialExclusion(Record):
+    domain: tuple[str, str]
+    cells: tuple[PolynomialCell, ...]
+
+    def covers(self) -> bool:
+        """Check exact coverage and strict positivity of each violated constraint."""
+        try:
+            cursor, upper = map(Fraction, self.domain)
+            if not self.cells or not 0 <= cursor <= upper:
+                return False
+            for cell in self.cells:
+                lo, hi = Fraction(cell.lower), Fraction(cell.upper)
+                if lo != cursor or not lo <= hi <= upper:
+                    return False
+                coefficients = tuple(map(Fraction, cell.violated))
+                if sum(c * (lo if c >= 0 else hi) ** i for i, c in enumerate(coefficients)) <= 0:
+                    return False
+                cursor = hi
+            return cursor == upper
+        except (ValueError, TypeError, ArithmeticError):
+            return False
+
+
+@dataclass(frozen=True)
+class PolynomialResult(ConsistencyResult):
+    # Adapter binds these inequalities to the declared model and observations.
+    joint_proof: Optional[PolynomialExclusion] = None
+
+
 class PhysicsAdapter(Protocol):
     """Trusted verifier for a declared model and admissible domain.
 
@@ -252,6 +289,9 @@ class AffineBoxAdapter:
 
 
 def _valid_evidence(result: ConsistencyResult, measurement: MeasurementContract) -> bool:
+    if isinstance(result, PolynomialResult) and result.joint_proof is not None:
+        return (result.status is ConsistencyStatus.EXCLUDED and result.witness is None and
+                result.separation is None and result.joint_proof.covers())
     if result.status is ConsistencyStatus.FEASIBLE:
         return result.witness is not None and result.separation is None
     if result.status is ConsistencyStatus.INDETERMINATE:
