@@ -9,15 +9,13 @@ import json
 from pathlib import Path
 import subprocess
 from time import perf_counter
-from xml.etree import ElementTree
-from zipfile import ZipFile
 
 from .certified_evidence import Channel, HypothesisModel, MeasurementContract, diagnose
 from .data.loader import RAW_DATASET_DIR, WORKSPACE_ROOT
 from .data_contracts import NetworkRecord, SensorRecord
 from .gas_physics import PerfectGas
 from .network_reference import NetworkHypothesis, NetworkReference, Region, Storage, Transfer, localize
-from .phase2 import MODEL, MODEL_DIR, source_case
+from .phase2 import MODEL, MODEL_HASH, source_case
 from .physical_reference import Bound, BoundStatus
 
 REGIONS = ("LEAK_A", "LEAK_B", "LEAK_C")
@@ -233,27 +231,17 @@ def figures(suite_path: Path, output: Path):
 
 def source_report(probe_log: Path | None) -> dict:
     _, inventory = source_case(RAW_DATASET_DIR)
-    model_path = RAW_DATASET_DIR / MODEL_DIR / f"{MODEL}.slx"
-    with ZipFile(model_path) as archive:
-        root = ElementTree.fromstring(archive.read("simulink/systems/system_root.xml"))
-    # Physical connection lines can include signal ports and do not establish material-flow direction.
-    groups = []
-    for line in root.findall("Line"):
-        ports = {p.text for p in line.iter("P")
-                 if p.get("Name") in {"Src", "Dst", "SrcConnect", "DstConnect"}
-                 and p.text and "conn:" in p.text}
-        if len(ports) > 1:
-            touching = [g for g in groups if g & ports]
-            if touching:
-                ports.update(*touching)
-                groups = [g for g in groups if g not in touching]
-            groups.append(ports)
-    components = {b.get("SID"): {"name": b.get("Name"), "library": b.findtext("P[@Name='SourceBlock']"),
-                                 "source_reference": f"system_root.xml SID {b.get('SID')}",
-                                 "status": "STATIC_XML_TRACE",
-                                 "reference_mass_flow_direction": "UNKNOWN"}
-                  for b in root.findall("Block")
-                  if any(port.split("#")[0] == b.get("SID") for g in groups for port in g)}
+    graph_path = "06_audit_preparation/simulation/h2net_v1/candidate/RELEASED_NETWORK_GRAPH.json"
+    graph_bytes = (WORKSPACE_ROOT / graph_path).read_bytes()
+    graph = json.loads(graph_bytes)["models"][MODEL]
+    if graph["sha256"] != MODEL_HASH:
+        raise ValueError("released network graph was extracted from different source bytes")
+    for component in graph["components"]:
+        component.update({"source_reference": f"system_root.xml SID {component['sid']}",
+                          "validation": "STATIC_XML_TRACE",
+                          "reference_mass_flow_direction": "UNKNOWN"})
+    graph["provenance"] = {"record": graph_path, "record_sha256": hashlib.sha256(graph_bytes).hexdigest(),
+                           "extractor": "tools/simulation/extract_released_network.py"}
     probe = {"isolated_copy": True, "solver": "ode14x", "step_s": 0.8, "stop_s": 1.6,
              "outcome": "NOT_RECORDED", "simulation_outputs": None}
     if probe_log is not None:
@@ -269,8 +257,7 @@ def source_report(probe_log: Path | None) -> dict:
         "boundary_flow_orientation": "UNKNOWN_EFFECTIVE_SIGN_AND_CONTROL_VOLUME_ROLE",
         "compressor": "Controlled pressure-source blocks; validated fault map unavailable",
         "region_mapping": "UNKNOWN_NO_VALIDATED_SOURCE_FAULT_REGION_ASSIGNMENT",
-        "source_port_graph": {"components": components, "nets": [sorted(g) for g in groups],
-                              "scope": "Serialized top-level physical-port nets, including signal ports; domains and variants uncompiled"},
+        "source_port_graph": graph,
         "matlab_probe": probe,
     })
     return inventory
