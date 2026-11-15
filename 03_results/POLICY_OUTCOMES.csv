@@ -1,0 +1,9 @@
+outer_fold,policy_outcome,windows,fraction_of_test_windows,evaluation_estimand
+1,AMBIGUITY_SET,1747,0.4282912478548664,cross_topology_transfer
+1,SPECIFIC,2331,0.5714635940181417,cross_topology_transfer
+1,UNRESOLVED,1,0.00024515812699190976,cross_topology_transfer
+2,AMBIGUITY_SET,1599,0.39200784506006375,cross_topology_transfer
+2,SPECIFIC,2480,0.6079921549399363,cross_topology_transfer
+3,AMBIGUITY_SET,3675,0.9009561166952684,cross_topology_transfer
+3,SPECIFIC,402,0.09855356705074773,cross_topology_transfer
+3,UNRESOLVED,2,0.0004903162539838195,cross_topology_transfer
