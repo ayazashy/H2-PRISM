@@ -122,3 +122,81 @@ def test_source_lineage_and_candidate_gate():
     options = qualification()
     assert options["candidate_register"][0]["decision"] == "ACCESS_REQUIRED"
     assert options["eligible_physical_families"] == 0 and options["independent_metrics"] is None
+
+@pytest.fixture
+def intake_case(case, tmp_path):
+    from h2prism.validation_activation import EvidenceReference, FATAL, PHYSICS, RECOVERABLE, RigMapping
+
+    path, manifest, approval = case
+    model = tmp_path / "model-fixture.txt"
+    model.write_text("synthetic model identifier for software tests", encoding="utf-8")
+    rig = RigMapping(
+        approval, manifest.network, tuple(item.sensor for item in manifest.sensors),
+        (("A", "A"), ("B", "B")), (("P01", "P01"),), (("P", "P"), ("F", "F")),
+        tuple(EvidenceReference(name, "fixture review", "ORIGINAL") for name in PHYSICS),
+        hashlib.sha256(model.read_bytes()).hexdigest(),
+    )
+    acquisition = tuple(EvidenceReference(name, "fixture record", "ORIGINAL") for name in (*FATAL, *RECOVERABLE))
+    return path, manifest, rig, model, acquisition
+
+
+def test_phase8_full_preflight_keeps_software_fixture_out_of_evaluation(intake_case):
+    from h2prism.validation_activation import accept, protocol_preflight
+
+    path, manifest, rig, model, evidence = intake_case
+    intake = accept(path, manifest, evidence, rig, model)
+    assert intake.run.measurement.issues() == ()
+    assert intake.run.eligibility.physics_compatible
+    assert "NOT_AN_INDEPENDENT_PHYSICAL_EXPERIMENT" in intake.reasons
+    assert intake.configuration_sha256 is None
+    preflight = protocol_preflight((intake,), {"run-1": "HELD_OUT"}, analysis_plan_sha256="a" * 64)
+    assert preflight["status"] == "BLOCKED"
+    assert preflight["independent_metrics"] is None
+    locked = protocol_preflight((intake,), {"run-1": "HELD_OUT"}, preflight["configuration_sha256"],
+                                analysis_plan_sha256="a" * 64)
+    assert locked["status"] == "BLOCKED"
+    assert any("ineligible held-out" in item for item in locked["reasons"])
+
+
+def test_phase8_binding_rejects_misleading_physics_and_lineage(intake_case):
+    from h2prism.validation_activation import accept
+
+    path, manifest, rig, model, evidence = intake_case
+    claims = tuple(replace(item, basis="INDEPENDENTLY_BOUNDED") if item.name == "event_truth" else item
+                   for item in evidence)
+    result = accept(path, manifest, claims, replace(rig, nodes=(("A", "B"), ("B", "A")),
+                                                   physics=rig.physics[:-1]))
+    assert "event_truth:MISSING_OR_UNSUPPORTED_EVIDENCE" in result.reasons
+    assert "model_discrepancy:MISSING_OR_UNSUPPORTED_EVIDENCE" in result.reasons
+    assert "MODEL_ARTIFACT_CHECKSUM_UNVERIFIED" in result.reasons
+    assert "RIG_TOPOLOGY_OR_ORIENTATION_MISMATCH" in result.reasons
+    assert "P:SENSOR_LOCATION_OR_UNIT_MISMATCH" in result.reasons
+    assert not result.run.eligibility.physics_compatible
+    model.write_text("different bytes", encoding="utf-8")
+    assert "MODEL_ARTIFACT_CHECKSUM_UNVERIFIED" in accept(path, manifest, evidence, rig, model).reasons
+
+
+def test_phase8_intake_reports_checksum_schema_and_clock_failures(intake_case):
+    from h2prism.validation_activation import accept
+
+    path, manifest, rig, model, evidence = intake_case
+    path.write_text("time,P_read,F_read\n0,110000,0.02\n2,105000,-0.02\n3,104000,0.03\n", encoding="utf-8")
+    result = accept(path, manifest, evidence, rig, model)
+    assert result.run is None and any("source checksum mismatch" in item for item in result.reasons)
+    manifest = replace(manifest, sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+    assert "IRREGULAR_SAMPLING" in accept(path, manifest, evidence, rig, model).reasons
+    path.write_text("wrong_clock,P_read,F_read\n0,110000,0.02\n", encoding="utf-8")
+    manifest = replace(manifest, sha256=hashlib.sha256(path.read_bytes()).hexdigest())
+    result = accept(path, manifest, evidence, rig, model)
+    assert result.run is None and any("missing source clock" in item for item in result.reasons)
+
+
+def test_phase8_empty_or_changed_lock_never_enables_metrics():
+    from h2prism.validation_activation import protocol_preflight
+
+    preflight = protocol_preflight((), {})
+    assert "NO_EXPERIMENTAL_RUNS" in preflight["reasons"]
+    assert "ANALYSIS_PLAN_NOT_PINNED" in preflight["reasons"]
+    later = protocol_preflight((), {}, preflight["configuration_sha256"], analysis_plan_sha256="b" * 64)
+    assert "PROTOCOL_NOT_LOCKED_OR_CHANGED" in later["reasons"]
+    assert later["independent_metrics"] is None
