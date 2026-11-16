@@ -57,6 +57,30 @@ def test_unsupported_mapping_is_rejected(xml, kind):
         inspect_xml(root, subsystem, plan)
 
 
+@pytest.mark.parametrize("field,value,error", [
+    ("area_A", "1.0", "Reservoir area"),
+    ("area_A_unit", "cm^2", "Reservoir area"),
+    ("SourceBlock", "fl_lib/Gas/Elements/Reservoir (G)", "Unsupported library"),
+])
+def test_archived_reservoir_identity_is_pinned(xml, field, value, error):
+    root, subsystem = xml
+    plan = json.loads(PLAN.read_text(encoding="utf-8"))
+    root.find(f"Block[@SID='1']//P[@Name='{field}']").text = value
+    with pytest.raises(ValueError, match=error):
+        inspect_xml(root, subsystem, plan)
+
+
+def test_archived_reservoir_signal_roles_are_pinned(xml):
+    root, subsystem = xml
+    plan = json.loads(PLAN.read_text(encoding="utf-8"))
+    ports = root.find("Block[@SID='1']//P[@Name='InternalSimscapePortConfiguration']")
+    configuration = json.loads(ports.text)
+    configuration["Right"][0]["label"] = "P"
+    ports.text = json.dumps(configuration)
+    with pytest.raises(ValueError, match="Unsupported reservoir physical signal role"):
+        inspect_xml(root, subsystem, plan)
+
+
 def test_changed_source_bytes_are_rejected(xml, tmp_path):
     copy = tmp_path / SLX.name
     copy.write_bytes(SLX.read_bytes() + b"changed")

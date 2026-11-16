@@ -43,7 +43,14 @@ def inspect_xml(root, subsystem, plan):
             {r["role"] for r in reservoir} != {"reservoir_temperature", "reservoir_pressure"} or
             {r["role"] for r in controls} != {"pressure_source_step", "pressure_source_ramp"}):
         raise ValueError("Required Center input roles missing or unsupported")
-    library("1", plan["reservoir_library"])
+    reservoir_spec = plan["reservoir"]
+    reservoir_sid = reservoir_spec["sid"]
+    library(reservoir_sid, plan["reservoir_library"])
+    source = block(reservoir_sid)
+    if (param(source, "area_A_unit") != reservoir_spec["native_area_unit"] or
+            float(param(source, "area_A") or "nan") != reservoir_spec["area_m2"]):
+        raise ValueError("Reservoir area or units differ from the pinned source")
+    right_ports = json.loads(param(source, "InternalSimscapePortConfiguration"))["Right"]
     if block("12").get("BlockType") != "SubSystem":
         raise ValueError("Unsupported reservoir input subsystem")
     for item in reservoir:
@@ -55,7 +62,10 @@ def inspect_xml(root, subsystem, plan):
             raise ValueError(f"Unsupported reservoir route or unit: {item['role']}")
         wire(f"{source}#out:1", f"{converter}#in:1")
         wire(f"12#out:{item['subsystem_output']}", f"{goto}#in:1")
-        wire(f"{converter}#rconn:1", f"1#rconn:{item['reservoir_port']}")
+        role_port = right_ports[item["reservoir_port"] - 1]
+        if role_port["type"] != "input" or role_port["label"] != item["reservoir_signal_name"]:
+            raise ValueError(f"Unsupported reservoir physical signal role: {item['role']}")
+        wire(f"{converter}#rconn:1", f"{reservoir_sid}#rconn:{item['reservoir_port']}")
 
     observed_controls = []
     for item in controls:

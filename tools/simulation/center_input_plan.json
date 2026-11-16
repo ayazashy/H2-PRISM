@@ -14,7 +14,8 @@
       "goto_sid": "10",
       "tag": "T1",
       "subsystem_output": 2,
-      "reservoir_port": 1
+      "reservoir_port": 1,
+      "reservoir_signal_name": "T"
     },
     {
       "role": "reservoir_pressure",
@@ -24,7 +25,8 @@
       "goto_sid": "9",
       "tag": "P1",
       "subsystem_output": 1,
-      "reservoir_port": 2
+      "reservoir_port": 2,
+      "reservoir_signal_name": "P"
     }
   ],
   "physical_inputs": [
@@ -50,5 +52,18 @@
         "initial_output"
       ]
     }
-  ]
+  ],
+  "reservoir": {
+    "sid": "1",
+    "area_m2": 1.134,
+    "native_area_unit": "m^2",
+    "migration": {
+      "library": "fl_lib/Gas/Elements/Reservoir (G)",
+      "supported_releases": [
+        "2026a",
+        "2026b"
+      ],
+      "static_spec_2026b": "foundation.enum.ReservoirSpec.StaticPressureTemperature"
+    }
+  }
 }

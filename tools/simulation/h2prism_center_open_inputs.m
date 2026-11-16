@@ -28,10 +28,29 @@ load_system('fl_lib');
 load_system(file);
 assert(strcmp(canonical(get_param(name,'FileName')),file), ...
     'Loaded Center model is not the isolated copy');
-linked(name,'1',plan.reservoir_library);
+reservoir = sid(name,plan.reservoir.sid);
+reservoirEvidence = struct('sid',plan.reservoir.sid,'library',libraryReference(reservoir), ...
+    'release',version('-release'),'linkStatus',get_param(reservoir,'LinkStatus'), ...
+    'area','','areaUnit','', ...
+    'pressureInput','','temperatureInput','','reservoirSpec','', ...
+    'pressureConnected',false,'temperatureConnected',false);
+migrated = strcmp(reservoirEvidence.library,plan.reservoir.migration.library) && ...
+    any(strcmp(reservoirEvidence.release,plan.reservoir.migration.supported_releases));
+assert(migrated || strcmp(reservoirEvidence.library,plan.reservoir_library), ...
+    'Unsupported Center reservoir library or release: %s (%s)',reservoirEvidence.library,reservoirEvidence.release);
+reservoirEvidence.area = get_param(reservoir,'area_A');
+reservoirEvidence.areaUnit = get_param(reservoir,'area_A_unit');
+if migrated
+    reservoirEvidence.pressureInput = char(string(get_param(reservoir,'pressure_input')));
+    reservoirEvidence.temperatureInput = char(string(get_param(reservoir,'temperature_input')));
+    if strcmp(reservoirEvidence.release,'2026b')
+        reservoirEvidence.reservoirSpec = get_param(reservoir,'reservoir_spec');
+    end
+end
+reservoirPorts = get_param(reservoir,'PortHandles');
 subsystem = sid(name,'12');
 outputs = get_param(subsystem,'PortHandles');
-inputMap = struct('role',{},'block',{},'sourceBlock',{},'sourcePort',{},'logName',{},'unit',{},'handle',{});
+inputMap = struct('role',{},'block',{},'sourceBlock',{},'sourcePort',{},'logName',{},'unit',{},'handle',{},'reservoirEvidence',{});
 for i = 1:numel(plan.reservoir_inputs)
     spec = plan.reservoir_inputs(i);
     converter = linked(name,spec.converter_sid,plan.converter_library);
@@ -48,8 +67,31 @@ for i = 1:numel(plan.reservoir_inputs)
         'Missing input port or unexpected converter unit for %s',spec.role);
     assert(driver(cp.Inport) == fp.Outport && driver(gp.Inport) == outputs.Outport(spec.subsystem_output), ...
         'Required reservoir input is missing or miswired: %s',spec.role);
+    assert(numel([cp.LConn, cp.RConn]) == 1, 'Unexpected converter physical port configuration');
+    if migrated
+        peers = simscape.connectedPorts(reservoir,spec.reservoir_signal_name);
+        connected = isscalar(peers) && strcmp(peers.Block,getfullname(converter));
+    else
+        assert(spec.reservoir_port <= numel(reservoirPorts.RConn) && isscalar(cp.RConn), ...
+            'Missing legacy reservoir physical input port');
+        wire = get_param(cp.RConn,'Line');
+        connected = isscalar(wire) && wire > 0 && ...
+            isequal(wire,get_param(reservoirPorts.RConn(spec.reservoir_port),'Line'));
+    end
+    if strcmp(spec.reservoir_signal_name,'P')
+        reservoirEvidence.pressureConnected = connected;
+    elseif strcmp(spec.reservoir_signal_name,'T')
+        reservoirEvidence.temperatureConnected = connected;
+    else
+        error('Unexpected Center reservoir physical port name');
+    end
     inputMap(end+1) = struct('role',spec.role,'block',getfullname(converter), ... %#ok<AGROW>
-        'sourceBlock',getfullname(from),'sourcePort',1,'logName',spec.role,'unit',spec.unit,'handle',fp.Outport);
+        'sourceBlock',getfullname(from),'sourcePort',1,'logName',spec.role,'unit',spec.unit,'handle',fp.Outport,'reservoirEvidence',[]);
+end
+
+h2prism_validate_center_reservoir(reservoirEvidence,plan);
+for i = 1:numel(inputMap)
+    inputMap(i).reservoirEvidence = reservoirEvidence;
 end
 
 % Native physical-signal wires are verified in the pinned archive by the
@@ -83,9 +125,13 @@ end
 
 function handle = linked(model, value, expected)
 handle = sid(model,value);
+normalized = libraryReference(handle);
+assert(strcmp(normalized,expected), 'Unsupported library link at Center SID %s: %s',value,normalized);
+end
+
+function normalized = libraryReference(handle)
 reference = get_param(handle,'ReferenceBlock');
 normalized = strtrim(regexprep(strrep(reference,'\n',' '),'\s+',' '));
-assert(strcmp(normalized,expected), 'Unsupported library link at Center SID %s: %s',value,normalized);
 end
 
 function source = driver(port)

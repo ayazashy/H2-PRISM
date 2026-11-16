@@ -38,6 +38,8 @@ The SLX serializes library links as Reference records. Runtime MATLAB can expose
 
 The native physical inputs have no Simulink signal port to mark for logging. Their logged time histories must be checked in the raw Simscape output; a mask expression is not a measured trajectory. The atmospheric reservoir boundaries, restriction areas and gas block values are configured fields rather than additional traced control signals. No From Workspace blocks were found in the two traced diagrams. Runtime dependency resolution, gas validity and actual boundary flows still require the isolated run.
 
+The pinned SLX identifies SID 1 as Controlled Reservoir (G) with a port A area of 1.134 m?. The preflight also accepts the exact Reservoir (G) link on R2026a and R2026b when the link resolves, both physical-signal controls are enabled, and T and P connect to the pinned converters at SIDs 5 and 6 respectively. R2026b additionally requires static pressure and temperature. The offline checker continues to require the archived legacy link. [MathWorks Reservoir (G) version history](https://www.mathworks.com/help/simscape/ref/reservoirg.html)
+
 Run the offline checker with `python tools/simulation/verify_center_input_plan.py <Center-copy.slx>`. In the authorized MATLAB session, use `[inputMap, physicalInputs, centerGuard] = h2prism_center_open_inputs(runDir)` to verify and inspect the live mapping without simulation. Display the two maps and run `clear centerGuard` before calling the capture. The guard closes the loaded copy without saving and restores the working directory. Use a copy outside the repository. [MathWorks linked blocks](https://www.mathworks.com/help/simulink/slref/libinfo.html)
 
 ## Executable evaluation gate
