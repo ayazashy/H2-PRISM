@@ -93,9 +93,10 @@ def verify_pair(root, previous):
             "saved_model_delta": delta, "configset_json_checked": True, "cases": cases}
 
 
-def audit(root, previous, reference_dir):
+def audit(root, previous, reference_dir, case="normal"):
+    require(case in CASES, "unknown Phase 12 case")
     pair = verify_pair(root, previous)
-    folder = root / "normal"
+    folder = root / case
     files = ("execution.log", "stages.log", "center_raw.mat", "center_extracted.mat",
              "sensor_checkpoint.mat", "outlet_evidence.mat", "logging_policy.mat")
     hashes = {name: sha256(folder / name) for name in files}
@@ -105,7 +106,7 @@ def audit(root, previous, reference_dir):
     require(stages == ["SIM_STARTED", "SIM_RETURNED", "NUMERIC_EXTRACTION_STARTED", "NUMERIC_CAPTURE_SAVED"],
             "execution stages are incomplete or unexpected")
     raw, extracted, check, outlet, policy = [mat(folder / name) for name in files[2:]]
-    model_hash = pair["cases"]["normal"]["input_sha256"]["Center_phase12.slx"]
+    model_hash = pair["cases"][case]["input_sha256"]["Center_phase12.slx"]
     require(extracted.pop("raw_sha256") == hashes["center_raw.mat"] and same(raw, extracted),
             "raw and extracted content differ")
     require(same(check, {k: raw[k] for k in ("execution", "sensors")}), "sensor checkpoint differs")
@@ -182,7 +183,7 @@ def audit(root, previous, reference_dir):
               "sink_pressure": ("Reservoir_G1/p_I", "Pa"), "sink_temperature": ("Reservoir_G1/T_I", "K")}
     outlet_report = {}
     values = {}
-    require(not np.size(response["first_change_s"]), "NORMAL recorded an opening event")
+
     for key, (path, unit) in routes.items():
         x = trace(response[key], clock, unit, key)
         native_unit = logs[path]["unit"]
@@ -193,8 +194,19 @@ def audit(root, previous, reference_dir):
         require(delta <= (1e-8 if unit == "Pa" else 1e-12), f"{path}: outlet evidence differs from raw")
         outlet_report[key] = {**range_record(x), "unit": unit, "max_abs_change_from_native": delta}
         values[key] = x
-    normal_area(values["area"])
-    normal_area(values["restriction_area_input"])
+    if case == "normal":
+        require(not np.size(response["first_change_s"]), "NORMAL recorded an opening event")
+        normal_area(values["area"])
+        normal_area(values["restriction_area_input"])
+        first = None
+    else:
+        expected = np.where(pre, float(AREA["initial_value"]), float(AREA["intervention_final"]))
+        for key in ("area", "restriction_area_input"):
+            require(np.allclose(values[key], expected, atol=1e-12, rtol=0),
+                    f"{key}: differs from the approved opening command")
+        first = float(clock[np.flatnonzero(abs(values["restriction_area_input"]-float(AREA["initial_value"]))>1e-12)[0]])
+        require(first == float(AREA["step_time"]) == response["first_change_s"],
+                "opening timing differs from the saved command or design")
     require(np.allclose(values["signed_outlet_flow"], values["signed_sink_flow"], atol=1e-8, rtol=0)
             and np.allclose(values["signed_outlet_flow"], raw["sensors"]["flow_sensor3"]["values"], atol=1e-8, rtol=0)
             and (values["signed_outlet_flow"] > 0).all() and (values["upstream_pressure"] > values["downstream_pressure"]).all()
@@ -220,14 +232,14 @@ def audit(root, previous, reference_dir):
         for name in storage for suffix, unit in (("rho_I", "kg/m^3"), ("p_I", "MPa"), ("T_I", "K"))
         for path in [name + "/" + suffix]), "physical initial-state samples disagree with histories")
     _, mass = conservation(raw, phase10, 0.2)
-    return {"classification": "ACCEPTED", "authorized_next": "Execute only the approved outlet_opening twin",
+    return {"classification": "ACCEPTED", "authorized_next": "Execute only the approved outlet_opening twin" if case == "normal" else "Analyze completed pair",
             "runtime_model": execution, "stages": stages, "capture_hashes": hashes, "pair": pair,
             "logging_policy": dict(zip(POLICY, zip(policy["before"], policy["after"]))),
             "policy_hash_basis": "Computed from the completed file. Its payload is bound by the approved model hash; no independently recorded pre-run file digest exists.",
             "reference_extraction_sha256": ref_hash, "max_clock_grid_error_s": grid_delta,
             "sensors": sensors, "residuals": residuals, "native_commands": commands,
             "outlet": {"histories": outlet_report, "sign": "Positive from upstream restriction A toward atmospheric reservoir SID 200",
-                       "pre_1000_samples": int(pre.sum()), "at_or_after_1000_samples": int((~pre).sum())},
+                       "first_received_area_change_s": first, "pre_1000_samples": int(pre.sum()), "at_or_after_1000_samples": int((~pre).sum())},
             "boundary_flows_positive_into_network_kg_s": boundaries, "storage": storage,
             "log_inventory": {"series": len(logs), "initial_samples": len(initial), "extraction_errors": 0},
             "mass_balance": mass,
