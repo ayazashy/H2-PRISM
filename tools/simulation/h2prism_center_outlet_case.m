@@ -10,10 +10,10 @@ derived = fullfile(caseDir,'Center_phase12.slx');
 assert(strcmp(h2prism_center_sha256(original),spec.source_sha256),'Source checksum mismatch');
 if strcmp(action,'preflight')
     preflight(caseDir,original,derived,spec);
-elseif strcmp(action,'execute')
-    execute(caseDir,derived,spec,designFile);
+elseif any(strcmp(action,{'execute','execute_diagnostic'}))
+    execute(caseDir,derived,spec,designFile,strcmp(action,'execute_diagnostic'));
 else
-    error('Expected preflight or execute');
+    error('Expected preflight, execute, or execute_diagnostic');
 end
 end
 
@@ -197,7 +197,7 @@ for i = 1:numel(peers)
 end
 end
 
-function execute(caseDir,derived,spec,designFile)
+function execute(caseDir,derived,spec,designFile,captureErrors)
 approval = jsondecode(fileread(fullfile(fileparts(caseDir),'approval.json')));
 record = approval.cases.(spec.case);
 hash = h2prism_center_sha256(derived);
@@ -208,7 +208,7 @@ assert(strcmp(record.derived_sha256,hash) && ...
 raw = fullfile(caseDir,'center_raw.mat');
 log = fullfile(caseDir,'execution.log');
 outputs = {'center_raw.mat','execution.log','center_extracted.mat','outlet_evidence.mat', ...
-    'sensor_checkpoint.mat','logging_policy.mat','extract_errors.mat','stages.log'};
+    'sensor_checkpoint.mat','logging_policy.mat','extract_errors.mat','stages.log','simulation_diagnostic.txt'};
 assert(~any(cellfun(@(name) isfile(fullfile(caseDir,name)),outputs)) && ~bdIsLoaded('Center_phase12'), ...
     'Use a fresh approved run directory and close Center_phase12');
 stageFile = fullfile(caseDir,'stages.log');
@@ -241,9 +241,22 @@ try
         strcmp(get_param(model,'SimscapeLogLimitData'),'off'),'Unexpected logging policy');
     save(fullfile(caseDir,'logging_policy.mat'),'keys','before','after','hash','-v7');
     writeStage(stageFile,'SIM_STARTED');
-    out = sim(model);
+    if captureErrors
+        out = sim(model,CaptureErrors="on");
+    else
+        out = sim(model);
+    end
+    assert(isa(out,'Simulink.SimulationOutput'),'sim did not return a SimulationOutput');
     writeStage(stageFile,'SIM_RETURNED');
     info = out.SimulationMetadata.ExecutionInfo;
+    if captureErrors && (~isempty(out.ErrorMessage) || ~isempty(info.ErrorDiagnostic) || ...
+            ~strcmp(info.StopEvent,'ReachedStopTime'))
+        f = fopen(fullfile(caseDir,'simulation_diagnostic.txt'),'wt');
+        assert(f>=0,'Cannot write simulation diagnostic');
+        diagnosticFile = onCleanup(@() fclose(f)); %#ok<NASGU>
+        fprintf(f,'Stop event: %s\nError message: %s\n%s',info.StopEvent,out.ErrorMessage, ...
+            evalc('disp(getReportDetails(info.ErrorDiagnostic))'));
+    end
     assert(strcmp(info.StopEvent,'ReachedStopTime') && isempty(info.ErrorDiagnostic) && isempty(out.ErrorMessage), ...
         'Simulation failed to reach stop time cleanly');
     writeStage(stageFile,'NUMERIC_EXTRACTION_STARTED');
@@ -262,6 +275,13 @@ try
 catch exception
     fprintf(2,'%s\n',getReport(exception,'extended','hyperlinks','off'));
     rethrow(exception)
+end
+end
+
+function lines = getReportDetails(diagnostic)
+lines = evalc('disp(diagnostic)');
+for i = 1:numel(diagnostic)
+    lines = [lines evalc('disp(diagnostic(i).Diagnostic)')]; %#ok<AGROW>
 end
 end
 
