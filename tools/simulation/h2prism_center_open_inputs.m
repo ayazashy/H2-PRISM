@@ -28,6 +28,8 @@ inputMap = struct('role',{},'block',{},'sourceBlock',{},'sourcePort',{},'logName
 for i = 1:numel(plan.reservoir_inputs)
     spec = plan.reservoir_inputs(i);
     converter = linked(name,spec.converter_sid,plan.converter_library);
+    assert(strcmp(get_param(converter,'LinkStatus'),'resolved'), ...
+        'Center converter link is not resolved at SID %s',spec.converter_sid);
     from = sid(name,spec.from_sid);
     goto = sid(name,spec.goto_sid);
     assert(strcmp(get_param(from,'BlockType'),'From') && strcmp(get_param(goto,'BlockType'),'Goto') && ...
@@ -44,7 +46,16 @@ for i = 1:numel(plan.reservoir_inputs)
     assert(numel([cp.LConn, cp.RConn]) == 1, 'Unexpected converter physical port configuration');
     if migrated
         peers = simscape.connectedPorts(reservoir,spec.reservoir_signal_name);
-        connected = isscalar(peers) && strcmp(peers.Block,getfullname(converter));
+        assert(spec.reservoir_port <= numel(reservoirPorts.RConn), ...
+            'Missing Center reservoir physical input port for %s',spec.role);
+        converterPort = [cp.LConn, cp.RConn];
+        reservoirPort = reservoirPorts.RConn(spec.reservoir_port);
+        wire = get_param(converterPort,'Line');
+        connected = isscalar(wire) && wire > 0 && ...
+            isequal(wire,get_param(reservoirPort,'Line')) && ...
+            h2prism_center_connection_matches(peers,[name ':' spec.converter_sid],@peerSID, ...
+                {get_param(wire,'SrcPortHandle'),get_param(wire,'DstPortHandle')}, ...
+                {converterPort,reservoirPort});
     else
         assert(spec.reservoir_port <= numel(reservoirPorts.RConn) && isscalar(cp.RConn), ...
             'Missing legacy reservoir physical input port');
@@ -113,4 +124,12 @@ line = get_param(port,'Line');
 assert(isscalar(line) && line > 0,'Required Simulink input has no line');
 source = get_param(line,'SrcPortHandle');
 assert(isscalar(source) && source > 0,'Required Simulink input has no supported driver');
+end
+
+function value = peerSID(path)
+handle = getSimulinkBlockHandle(path,false);
+value = '';
+if isscalar(handle) && handle > 0
+    value = Simulink.ID.getSID(handle);
+end
 end

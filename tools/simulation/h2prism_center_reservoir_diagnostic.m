@@ -14,10 +14,10 @@ for i = 1:numel(plan.reservoir_inputs)
     spec = plan.reservoir_inputs(i);
     converter = blockHandle(plan.model,spec.converter_sid);
     evidence.converters(i) = inspectBlock(converter,strings(1,0));
-    evidence.preflightTests(i).role = spec.role;
-    evidence.preflightTests(i).portQuery = spec.reservoir_signal_name;
-    evidence.preflightTests(i).expectedBlockPath = getfullname(converter);
-    evidence.preflightTests(i).result = probe(@() previousComparison( ...
+    evidence.legacyPathComparisons(i).role = spec.role;
+    evidence.legacyPathComparisons(i).portQuery = spec.reservoir_signal_name;
+    evidence.legacyPathComparisons(i).expectedBlockPath = getfullname(converter);
+    evidence.legacyPathComparisons(i).result = probe(@() previousComparison( ...
         reservoir,spec.reservoir_signal_name,converter));
 end
 evidence.dirtyBeforeClose = get_param(plan.model,'Dirty');
@@ -77,10 +77,14 @@ for i = 1:numel(portProperties)
     if labelMissing
         label = "";
     end
-    type = port.ConnectionType;
     rows(i) = struct('name',char(port.Name),'label',label,'labelMissing',labelMissing, ...
-        'type',strtrim(evalc('disp(type)')));
+        'type',probe(@() physicalType(port)));
 end
+end
+
+function description = physicalType(port)
+type = port.Type;
+description = strtrim(evalc('disp(type)'));
 end
 
 function result = namedPeers(handle,name)
@@ -88,7 +92,9 @@ peers = simscape.connectedPorts(handle,char(name));
 result = struct('shape',size(peers),'peers',peers, ...
     'peerIdentity',struct('reportedPath',{},'resolvedSID',{}));
 for i = 1:numel(peers)
-    result.peerIdentity(i).reportedPath = peers(i).Block;
+    result.peers(i).Block = char(peers(i).Block);
+    result.peers(i).PortName = char(peers(i).PortName);
+    result.peerIdentity(i).reportedPath = result.peers(i).Block;
     result.peerIdentity(i).resolvedSID = probe(@() sidForPath(peers(i).Block));
 end
 end

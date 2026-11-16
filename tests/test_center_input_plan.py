@@ -92,6 +92,23 @@ def test_archived_reservoir_converters_cannot_be_swapped(xml):
         inspect_xml(root, subsystem, plan)
 
 
+@pytest.mark.parametrize("converter,port", [("5", 1), ("6", 2)])
+@pytest.mark.parametrize("change", ["disconnect", "branch"])
+def test_archived_reservoir_requires_direct_converter_wires(xml, converter, port, change):
+    root, subsystem = xml
+    plan = json.loads(PLAN.read_text(encoding="utf-8"))
+    line = next(line for line in root.findall("Line")
+                if line.findtext("P[@Name='Src']") == f"{converter}#rconn:1")
+    assert line.findtext("P[@Name='Dst']") == f"1#rconn:{port}"
+    if change == "disconnect":
+        root.remove(line)
+    else:
+        branch = ET.SubElement(line, "Branch")
+        ET.SubElement(branch, "P", Name="Dst").text = "4#rconn:1"
+    with pytest.raises(ValueError, match="Required connection"):
+        inspect_xml(root, subsystem, plan)
+
+
 def test_changed_source_bytes_are_rejected(xml, tmp_path):
     copy = tmp_path / SLX.name
     copy.write_bytes(SLX.read_bytes() + b"changed")
