@@ -1,0 +1,234 @@
+{
+  "status": "BLOCKED",
+  "sha256": "e6caa8cf6558f7a524fd2a4e53ecb0530cf84479cbdf06c7dde4a02ef29acf33",
+  "lineage": "Local archived anomalous Center candidate. Generating-run ancestry is unverified.",
+  "added_blocks": {
+    "563": "PS Step1"
+  },
+  "removed_blocks": {},
+  "changed_common_blocks": {
+    "213": {
+      "InternalSimscapePortConfiguration": [
+        "{\"Bottom\":[],\"Left\":[{\"id\":\"A\",\"label\":\"A\",\"type\":\"foundation.gas.gas\"}],\"Right\":[{\"id\":\"B\",\"label\":\"B\",\"type\":\"foundation.gas.gas\"}],\"Top\":[]}",
+        "{\"Bottom\":[],\"Left\":[{\"id\":\"A\",\"label\":\"A\",\"type\":\"foundation.gas.gas\"},{\"id\":\"area_in\",\"label\":\"AR\",\"type\":\"input\"}],\"Right\":[{\"id\":\"B\",\"label\":\"B\",\"type\":\"foundation.gas.gas\"}],\"Top\":[]}"
+      ],
+      "restriction_type": [
+        "foundation.enum.restriction_type.fixed",
+        "foundation.enum.restriction_type.variable"
+      ]
+    }
+  },
+  "added_connections": [
+    [
+      "213#lconn:2",
+      "563#rconn:1"
+    ]
+  ],
+  "removed_connections": [],
+  "child_system_bytes_equal": {
+    "simulink/systems/system_12.xml": true,
+    "simulink/systems/system_462.xml": true,
+    "simulink/systems/system_487.xml": true
+  },
+  "configuration_deltas": {
+    "FixedStep": [
+      "1",
+      "0.8"
+    ],
+    "SolverName": [
+      "VariableStepAuto",
+      "ode14x"
+    ]
+  },
+  "sid_213": {
+    "normal_area_m2": 0.001,
+    "candidate_min_area_m2": 1e-10,
+    "affected_branch": "Main gas junction at PS1 to flow sensor SID 218 (MFS3) and downstream reservoir SID 200"
+  },
+  "sid_563": {
+    "step_time": "1",
+    "step_time_unit": "s",
+    "initial_value": "1e-10",
+    "initial_value_unit": "m^2",
+    "final_value": "1e-10",
+    "final_value_unit": "m^2"
+  },
+  "blocker": "The area command is identical before and after the configured step. A restricted branch has static topology evidence, but a nonzero leak opening, effective onset, label lineage, and independently verified localization truth do not.",
+  "difference_matrix": {
+    "restriction_and_actuation": {
+      "213": {
+        "name": "Local Restriction (G)3",
+        "status": "CHANGED"
+      },
+      "563": {
+        "name": "PS Step1",
+        "status": "ADDED"
+      }
+    },
+    "pressure_and_temperature_boundaries": {
+      "1": {
+        "name": "Reservoir",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "195": {
+        "name": "Reservoir (G)",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "200": {
+        "name": "Reservoir (G)1",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "217": {
+        "name": "Reservoir (G)2",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "224": {
+        "name": "Reservoir (G)3",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "316": {
+        "name": "Reservoir (G)4",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "12": {
+        "name": "Reservoir Inputs",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      }
+    },
+    "pressure_source_controls": {
+      "55": {
+        "name": "Pressure Source (G)3",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "239": {
+        "name": "Pressure Source (G)1",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "59": {
+        "name": "PS Step",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "241": {
+        "name": "PS Ramp",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      }
+    },
+    "gas_properties": {
+      "4": {
+        "name": "Gas Properties (G)",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      }
+    },
+    "solver_configuration": {
+      "7": {
+        "name": "Solver Configuration",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      }
+    },
+    "sensor_configuration": {
+      "50": {
+        "name": "Pressure & Temperature Sensor (G)",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "51": {
+        "name": "Pressure & Temperature Sensor (G)1",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "52": {
+        "name": "Pressure & Temperature Sensor (G)2",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "109": {
+        "name": "Pressure & Temperature Sensor (G)3",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "187": {
+        "name": "Pressure & Temperature Sensor (G)4",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "318": {
+        "name": "Pressure & Temperature Sensor (G)5",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "392": {
+        "name": "Pressure & Temperature Sensor (G)7",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "418": {
+        "name": "Pressure & Temperature Sensor (G)11",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "428": {
+        "name": "Pressure & Temperature Sensor (G)12",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "431": {
+        "name": "Pressure & Temperature Sensor (G)13",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "311": {
+        "name": "Flow Rate Sensor (G)3",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "210": {
+        "name": "Flow Rate Sensor (G)1",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "218": {
+        "name": "Flow Rate Sensor (G)2",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      }
+    },
+    "storage_and_initialization": {
+      "47": {
+        "name": "Pipe (G)1",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "48": {
+        "name": "Pipe (G)2",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "49": {
+        "name": "Pipe (G)3",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "106": {
+        "name": "Pipe (G)4",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "107": {
+        "name": "Pipe (G)5",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "221": {
+        "name": "Pipe (G)7",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "309": {
+        "name": "Pipe (G)8",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      },
+      "205": {
+        "name": "Constant Volume Chamber (G)",
+        "status": "UNCHANGED_ROOT_PARAMETERS"
+      }
+    }
+  },
+  "source_model_sha256": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+  "boundary_200": {
+    "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+    "reservoir_pressure": "0.101325",
+    "reservoir_pressure_unit": "MPa",
+    "reservoir_temperature": "293.15",
+    "reservoir_temperature_unit": "K"
+  },
+  "sid_213_normal": {
+    "restriction_type": "foundation.enum.restriction_type.fixed",
+    "restriction_area": "1e-3",
+    "min_area": "1e-10",
+    "max_area": "0.01",
+    "Cd": "0.64",
+    "area": "1.1304"
+  },
+  "physics": "The existing branch withdraws gas to an atmospheric reservoir. SID 213 controls that outlet; the anomalous file substitutes a static near-closed area for the nominal outlet and supplies no verified opening event."
+}
