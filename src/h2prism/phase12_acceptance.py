@@ -105,12 +105,12 @@ def audit(root, previous, reference_dir, case="normal", spec=None):
     folder = root / case
     files = ("execution.log", "stages.log", "center_raw.mat", "center_extracted.mat",
              "sensor_checkpoint.mat", "outlet_evidence.mat", "logging_policy.mat")
-    hashes = {name: sha256(folder / name) for name in files}
-    require((folder / "execution.log").read_text().strip() == "=== PHASE 12 CAPTURE COMPLETED ===",
-            "completion marker missing or unexpected execution output")
     stages = (folder / "stages.log").read_text().splitlines()
     require(stages == ["SIM_STARTED", "SIM_RETURNED", "NUMERIC_EXTRACTION_STARTED", "NUMERIC_CAPTURE_SAVED"],
             "execution stages are incomplete or unexpected")
+    require((folder / "execution.log").read_text().strip() == "=== PHASE 12 CAPTURE COMPLETED ===",
+            "completion marker missing or unexpected execution output")
+    hashes = {name: sha256(folder / name) for name in files}
     raw, extracted, check, outlet, policy = [mat(folder / name) for name in files[2:]]
     model_hash = pair["cases"][case]["input_sha256"]["Center_phase12.slx"]
     require(extracted.pop("raw_sha256") == hashes["center_raw.mat"] and same(raw, extracted),

@@ -208,7 +208,7 @@ assert(strcmp(record.derived_sha256,hash) && ...
 raw = fullfile(caseDir,'center_raw.mat');
 log = fullfile(caseDir,'execution.log');
 outputs = {'center_raw.mat','execution.log','center_extracted.mat','outlet_evidence.mat', ...
-    'sensor_checkpoint.mat','logging_policy.mat','extract_errors.mat','stages.log','simulation_diagnostic.txt'};
+    'sensor_checkpoint.mat','logging_policy.mat','extract_errors.mat','stages.log','simulation_diagnostic.txt','simulation_metadata.mat'};
 assert(~any(cellfun(@(name) isfile(fullfile(caseDir,name)),outputs)) && ~bdIsLoaded('Center_phase12'), ...
     'Use a fresh approved run directory and close Center_phase12');
 stageFile = fullfile(caseDir,'stages.log');
@@ -256,6 +256,36 @@ try
         diagnosticFile = onCleanup(@() fclose(f)); %#ok<NASGU>
         fprintf(f,'Stop event: %s\nError message: %s\n%s',info.StopEvent,out.ErrorMessage, ...
             evalc('disp(getReportDetails(info.ErrorDiagnostic))'));
+        metadata = out.SimulationMetadata;
+        fprintf(f,'Returned variables: %s\n',strjoin(string(who(out)),', '));
+        fprintf(f,'%s\n',evalc('disp(metadata)'));
+        try
+            save(fullfile(caseDir,'simulation_metadata.mat'),'metadata','-v7');
+        catch snapshotError
+            fprintf(f,'Metadata MAT export failed: %s\n',getReport(snapshotError,'extended','hyperlinks','off'));
+        end
+        for name = ["tout",compose("pressure_sensor%d",1:10),compose("flow_sensor%d",1:3)]
+            try
+                series = out.get(char(name));
+                if isa(series,'timeseries')
+                    series = series.Time;
+                end
+                if isnumeric(series) && isvector(series) && ~isempty(series)
+                    fprintf(f,'%s last timestamp: %.17g s\n',name,series(end));
+                end
+            catch
+                % An initialization failure may return no signal histories.
+            end
+        end
+        try
+            physical = out.get('center_simscape');
+            clock = time(physical.Reservoir.P.series);
+            if ~isempty(clock)
+                fprintf(f,'Reservoir.P last timestamp: %.17g s\n',clock(end));
+            end
+        catch
+            % No physical history is expected when initialization fails.
+        end
     end
     assert(strcmp(info.StopEvent,'ReachedStopTime') && isempty(info.ErrorDiagnostic) && isempty(out.ErrorMessage), ...
         'Simulation failed to reach stop time cleanly');

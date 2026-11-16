@@ -25,3 +25,17 @@ def test_normal_requires_the_constant_area_command():
 def test_trace_rejects_wrong_unit_value_or_clock(signal):
     with pytest.raises(ValueError):
         trace(signal, np.array([0., 0.2]), "MPa", "PS1")
+
+
+def test_returned_initialization_error_is_rejected_before_capture_access(tmp_path, monkeypatch):
+    from h2prism import phase12_acceptance
+
+    monkeypatch.setattr(phase12_acceptance, "verify_pair", lambda *_: {})
+    case = tmp_path / "outlet_opening"
+    case.mkdir()
+    (case / "stages.log").write_text("SIM_STARTED\nSIM_RETURNED\n")
+    (case / "simulation_diagnostic.txt").write_text(
+        "Stop event: DiagnosticError\nSimulink:Logging:DupDataLogVarName1\n"
+    )
+    with pytest.raises(ValueError, match="execution stages are incomplete"):
+        phase12_acceptance.audit(tmp_path, None, tmp_path, "outlet_opening")
