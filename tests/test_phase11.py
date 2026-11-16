@@ -1,11 +1,12 @@
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 import pytest
 
 from h2prism.data.loader import RAW_DATASET_DIR
 from h2prism.phase2 import MODEL, MODEL_DIR
-from h2prism.phase11 import mass_integrals, model_diff
+from h2prism.phase11 import mass_integrals, model_diff, shared_solver_grid
 
 
 def test_step_integral_keeps_post_step_rate_out_of_previous_interval():
@@ -35,3 +36,18 @@ def test_centre_leak_candidate_has_no_area_opening():
     assert result["sid_563"]["initial_value"] == result["sid_563"]["final_value"] == "1e-10"
     assert result["sid_213"]["normal_area_m2"] == 0.001
     assert set(result["configuration_deltas"]) == {"FixedStep", "SolverName"}
+
+def test_shared_grid_uses_all_coarse_ticks_without_interpolation():
+    coarse = pd.DataFrame({"sensor": [2, 3, 4]}, index=[0., .4, .8])
+    fine = pd.DataFrame({"sensor": [20, 99, 30, 98, 40]}, index=[0., .2, .4, .6, .8])
+    paired, time, offset = shared_solver_grid(coarse, fine, .4, .2)
+    assert paired.sensor.tolist() == [20, 30, 40]
+    np.testing.assert_array_equal(time, coarse.index)
+    assert offset == 0
+
+
+def test_shared_grid_rejects_an_unmatched_tick():
+    coarse = pd.DataFrame(index=[0., .4, .8])
+    fine = pd.DataFrame(index=[0., .2, .4001, .6, .8])
+    with pytest.raises(ValueError, match="do not correspond"):
+        shared_solver_grid(coarse, fine, .4, .2)

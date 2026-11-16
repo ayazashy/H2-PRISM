@@ -16,7 +16,7 @@ from scipy.io import loadmat
 
 from .data.loader import RAW_DATASET_DIR, WORKSPACE_ROOT
 from .phase2 import DATA_HASH, MODEL, MODEL_DIR, MODEL_HASH, PARQUET, SID, checked_file
-from .phase10 import capture_data, exact_pairs, json_value, metrics, sha256, solver_grid
+from .phase10 import CAPTURE, capture_data, exact_pairs, json_value, metrics, sha256, solver_grid, visible_unit
 
 PHASE10 = WORKSPACE_ROOT / "03_results/validation/phase10_center_normal/comparison.json"
 BOUNDARIES = dict(zip(("Reservoir", "Reservoir_G", "Reservoir_G1", "Reservoir_G2",
@@ -87,7 +87,7 @@ def conservation(extracted, reference, step):
 
     def signal(name, unit):
         row = traces[name]
-        if (row["unit"] != unit or not np.array_equal(clock, row["time"])
+        if (row["unit"] != unit or np.shape(row["values"]) != clock.shape or not np.array_equal(clock, row["time"])
                 or not np.isfinite(row["values"]).all()):
             raise ValueError(f"unsupported conservation series {name}")
         return row["values"]
@@ -100,7 +100,10 @@ def conservation(extracted, reference, step):
         through += abs(flow)
     storage = np.zeros(len(clock))
     for name, row in reference["physics"]["storage"].items():
-        storage += row["volume_m3"] * signal(f"{name}/rho_I", "kg/m^3")
+        density = signal(f"{name}/rho_I", "kg/m^3")
+        if (density <= 0).any():
+            raise ValueError(f"nonpositive density for {name}")
+        storage += row["volume_m3"] * density
     ports = np.zeros(len(clock))
     for name in reference["physics"]["storage"]:
         ports += signal(f"{name}/mdot_A", "kg/s")
@@ -189,7 +192,9 @@ def verify_extraction(run, path):
     extracted = loadmat(path, simplify_cells=True)
     if sha256(run/"center_raw.mat") != extracted["raw_sha256"]:
         raise ValueError("extraction is not bound to this raw capture")
-    if extracted["execution"]["stopEvent"] != "ReachedStopTime" or np.size(extracted["execution"]["errorDiagnostic"]):
+    execution = extracted["execution"]
+    if (execution["stopEvent"] != "ReachedStopTime" or np.size(execution["errorDiagnostic"])
+            or np.size(execution["simulationErrorMessage"])):
         raise ValueError("unsuccessful simulation")
     return extracted
 
@@ -235,76 +240,189 @@ def plot_mass(cases, output):
     plt.close(fig)
 
 
+def shared_solver_grid(coarse, fine, coarse_step, fine_step):
+    stride = round(coarse_step / fine_step)
+    if stride < 1 or coarse_step != stride * fine_step:
+        raise ValueError("non-nested solver steps")
+    t = coarse.index.to_numpy(dtype=float)
+    paired = fine.iloc[::stride]
+    other = paired.index.to_numpy(dtype=float)
+    if len(t) != len(other):
+        raise ValueError("fine solver grid has incomplete shared support")
+    offsets = abs(t - other)
+    if (offsets > 8 * np.spacing(np.maximum(1, abs(t)))).any():
+        raise ValueError("fine solver ticks do not correspond to coarse grid")
+    return paired, t, float(offsets.max())
+
+
+def validate_case(step, run, path, reference, baseline_setup):
+    """Bind an extracted run to its raw capture and archived configuration evidence."""
+    fine = step != 0.8
+    log_name = "center_convergence_execution.log" if fine else "interactive_capture_preflight_passed.log"
+    marker = "=== CONVERGENCE CAPTURE COMPLETED ===" if fine else "=== CAPTURE COMPLETED ==="
+    if marker not in (run / log_name).read_text(encoding="utf-8"):
+        raise ValueError(f"completion marker missing at {step}")
+    files = [f"{MODEL}.slx", "center_setup.mat", "center_raw.mat", log_name,
+             *(f"{name}.csv" for name in CAPTURE.values())]
+    if fine:
+        files += ["case.json", "center_solver_delta.mat"]
+    hashes = {name: sha256(run / name) for name in files}
+    if hashes[f"{MODEL}.slx"] != MODEL_HASH:
+        raise ValueError("isolated source hash differs")
+    if not fine and hashes != reference["capture_hashes"]:
+        raise ValueError("baseline capture differs from Phase 10")
+    extracted = verify_extraction(run, path)
+    execution = extracted["execution"]
+    solver = execution["solverInfo"]
+    if (solver["Type"] != "Fixed-Step" or solver["Solver"] != "ode14x"
+            or solver["FixedStepSize"] != step or execution["start_s"] != 0 or execution["stop_s"] != 20000):
+        raise ValueError(f"solver or horizon mismatch at {step}")
+    setup = loadmat(run / "center_setup.mat", simplify_cells=True)
+    if float(setup["configured"]["FixedStep"]) != step:
+        raise ValueError("saved setup step differs from runtime")
+    limits = []
+    if fine:
+        manifest = read_json(run / "case.json")
+        delta = loadmat(run / "center_solver_delta.mat", simplify_cells=True)
+        changed = np.asarray(delta["parameters"])[np.asarray(delta["changed"], dtype=bool)]
+        if (manifest["step_s"] != step or manifest["model_sha256"] != MODEL_HASH
+                or manifest["baseline_setup_sha256"] != reference["capture_hashes"]["center_setup.mat"]
+                or manifest["stop_s"] != 20000 or manifest["solver"] != "ode14x"
+                or list(changed) != ["FixedStep"] or delta["before"] != baseline_setup["configured"]
+                or delta["after"] != setup["configured"] or delta["localSolverBefore"] != "off"):
+            raise ValueError(f"invalid resolution configuration delta at {step}")
+        for key in ("original", "configured", "inputMap", "physicalInputs", "gasBlocks", "gasSettings", "release", "products"):
+            a, b = setup[key], baseline_setup[key]
+            if key == "configured":
+                a, b = ({k: v for k, v in cfg.items() if k != "FixedStep"} for cfg in (a, b))
+            if json.dumps(a, sort_keys=True, default=json_value) != json.dumps(b, sort_keys=True, default=json_value):
+                raise ValueError(f"{key} differs from baseline")
+        limits = np.atleast_1d(delta["unavailable"]).tolist()
+    frame, integrity = capture_data(run, extracted)
+    for sensor, row in integrity.items():
+        pressure = sensor.startswith("PS")
+        if (not row["csv_values_equal_mat"] or not row["csv_timestamps_equal_mat"]
+                or not row["strictly_increasing"] or row["invalid_timestamps"]
+                or row["duplicates"] or row["nan_or_missing"] or row["infinite"]
+                or row["mat_time_unit"] != "seconds" or visible_unit(row["mat_data_unit"]) != ("MPa" if pressure else "kg/s")
+                or pressure and row["min"] <= 0):
+            raise ValueError(f"sensor integrity failed for {sensor} at {step}")
+        row["mat_data_unit"] = visible_unit(row["mat_data_unit"])
+        solver_grid(extracted["sensors"][CAPTURE[sensor]]["time"], step, 20000)
+    return extracted, frame, {"execution": execution, "setup": setup["configured"],
+                               "unavailable_solver_enumeration_fields": limits, "file_hashes": hashes,
+                               "extraction_sha256": sha256(path), "sensors": integrity,
+                               "runtime": setup["release"], "products": setup["products"]}
+
+
 def analyze(baseline, extraction, cases, output, reference):
     output.mkdir(parents=True)
-    series, rows, records = {}, [], {}
-    base_frame = None
-    paired = {}
-    for step, run, path in [(0.8,baseline,extraction), *[
-        (step,cases/f"step_{step:.1f}",cases/f"step_{step:.1f}"/"center_extracted.mat") for step in (0.4,0.2)]]:
-        extracted = verify_extraction(run,path)
-        if step != 0.8:
-            manifest = read_json(run/"case.json")
-            delta = loadmat(run/"center_solver_delta.mat",simplify_cells=True)
-            changed = np.asarray(delta["parameters"])[np.asarray(delta["changed"],dtype=bool)]
-            if (manifest["step_s"] != step or list(changed) != ["FixedStep"]
-                    or extracted["execution"]["solverInfo"]["Solver"] != "ode14x"
-                    or extracted["execution"]["start_s"] != 0 or extracted["execution"]["stop_s"] != 20000
-                    or extracted["execution"]["solverInfo"]["FixedStepSize"] != step
-                    or "CONVERGENCE CAPTURE COMPLETED" not in (run/"center_convergence_execution.log").read_text(encoding="utf-8")):
-                raise ValueError(f"incomplete or invalid resolution case {step}")
-            checked_file(run/f"{MODEL}.slx",MODEL_HASH)
-        mass, record = conservation(extracted,reference,step)
-        record["execution"] = extracted["execution"]
-        record["raw_sha256"] = extracted["raw_sha256"]
-        record["extraction_sha256"] = sha256(path)
-        if step != 0.8:
-            record["configuration_delta_sha256"] = sha256(run/"center_solver_delta.mat")
-        records[str(step)] = record
+    series, records, frames, rows, event_rows, mass_rows = {}, {}, {}, [], [], []
+    baseline_setup = loadmat(baseline / "center_setup.mat", simplify_cells=True)
+    for step in (0.8, 0.4, 0.2):
+        run = baseline if step == 0.8 else cases / f"step_{step:.1f}"
+        path = extraction if step == 0.8 else run / "center_extracted.mat"
+        extracted, frame, integrity = validate_case(step, run, path, reference, baseline_setup)
+        mass, record = conservation(extracted, reference, step)
+        before, after = record["step_bracket"]
+        event = {"step_s": step, "configured_step_s": 25,
+                 "last_saved_pre_step_s": before["time_s"], "first_saved_post_step_s": after["time_s"],
+                 "pre_flow_kg_s": before["boundary_net_kg_s"], "post_flow_kg_s": after["boundary_net_kg_s"],
+                 "bracket_storage_change_kg": after["storage_kg"] - before["storage_kg"],
+                 "bracket_trapezoid_kg": after["trapezoid_kg"] - before["trapezoid_kg"],
+                 "bracket_left_hold_kg": after["step_left_trapezoid_kg"] - before["step_left_trapezoid_kg"],
+                 "bracket_trapezoid_residual_change_kg": after["trapezoid_residual_kg"] - before["trapezoid_residual_kg"],
+                 "post_step_minus_configured_s": after["time_s"] - 25,
+                 "coincident_pre_and_post_limits_logged": False}
+        event_rows.append(event)
+        end = record["final"]
+        for rule in ("trapezoid", "simpson", "step_left_trapezoid", "step_split_simpson"):
+            error = end[f"{rule}_residual_kg"]
+            mass_rows.append({"step_s": step, "method": rule, "initial_storage_kg": record["initial_storage_kg"],
+                              "final_storage_kg": end["storage_kg"], "storage_change_kg": end["storage_change_kg"],
+                              "integrated_net_kg": end[f"{rule}_kg"], "residual_kg": error,
+                              "absolute_residual_fraction_of_storage_change": abs(error / end["storage_change_kg"]),
+                              "absolute_residual_fraction_of_gross": abs(error / record["gross_boundary_kg"])})
+        records[str(step)] = {**record, **integrity, "event": event}
+        frames[step] = frame
         series[f"{step} s"] = mass
-        mass.to_csv(output/f"mass_{step}.csv",index=False)
-        frame, integrity = capture_data(run,extracted)
-        if any(not (r["csv_values_equal_mat"] and r["csv_timestamps_equal_mat"]) for r in integrity.values()):
-            raise ValueError(f"MAT to CSV export mismatch at {step}")
-        if step == 0.8:
-            base_frame = frame
-            continue
-        t = base_frame.index.to_numpy(dtype=float)
-        stride = round(0.8/step)
-        finer = frame.iloc[::stride]
-        paired_offsets = abs(t-finer.index.to_numpy(dtype=float))
-        if (paired_offsets > 8*np.spacing(np.maximum(1,abs(t)))).any():
-            raise ValueError("fine solver ticks do not correspond to baseline")
-        records[str(step)]["max_paired_clock_delta_s"] = float(paired_offsets.max())
-        paired[step] = finer
+        mass.to_csv(output / f"mass_{step}.csv.gz", index=False, compression={"method": "gzip", "mtime": 0})
+    for coarse, fine in ((0.8, 0.4), (0.4, 0.2), (0.8, 0.2)):
+        frame = frames[coarse]
+        paired, t, delta = shared_solver_grid(frame, frames[fine], coarse, fine)
         for channel in SID:
-            for stage, select in {"entire": np.ones(len(t),dtype=bool),"step_20_40": (20<=t)&(t<=40),
-                                  "later_40_1000": (40<t)&(t<=1000),"late_1000_20000": t>1000,
-                                  "final": t==20000}.items():
-                rows.append({"step_s": step, "sensor": channel, "window": stage,
-                             **metrics(finer[channel].to_numpy()[select],base_frame[channel].to_numpy()[select],t[select])})
+            for window, keep in {"entire": np.ones(len(t), dtype=bool), "step_20_40": (20 <= t) & (t <= 40),
+                                 "outside_step": (t < 20) | (t > 40),
+                                 "later_40_1000": (40 < t) & (t <= 1000), "late_1000_20000": t > 1000,
+                                 "final": t == 20000}.items():
+                rows.append({"coarse_step_s": coarse, "fine_step_s": fine, "sensor": channel, "window": window,
+                             "unit": "MPa" if channel.startswith("PS") else "kg/s",
+                             "max_paired_timestamp_delta_s": delta,
+                             **metrics(paired[channel].to_numpy()[keep], frame[channel].to_numpy()[keep], t[keep])})
+    base, t, _ = shared_solver_grid(frames[0.8], frames[0.4], 0.8, 0.4)
+    finest, _, _ = shared_solver_grid(frames[0.8], frames[0.2], 0.8, 0.2)
     empirical = {}
     for channel in SID:
-        medium, fine = (paired[step][channel].to_numpy() for step in (0.4, 0.2))
-        coarse = base_frame[channel].to_numpy()
-        coarse_medium = metrics(medium,coarse,t)
-        medium_fine = metrics(fine,medium,t)
-        ratio = medium_fine["rmse"] / coarse_medium["rmse"] if coarse_medium["rmse"] else None
-        empirical[channel] = {"coarse_medium": coarse_medium, "medium_fine": medium_fine,
-                              "successive_rmse_ratio": ratio,
+        medium, fine, coarse = (f[channel].to_numpy() for f in (base, finest, frames[0.8]))
+        previous, successive = metrics(medium, coarse, t), metrics(fine, medium, t)
+        # Values below this floor are dominated by observed near-roundoff channel variations.
+        resolved = max(previous["max_absolute"], successive["max_absolute"]) > 1e-11
+        ratio = successive["rmse"] / previous["rmse"] if resolved and previous["rmse"] else None
+        empirical[channel] = {"coarse_medium": previous, "medium_fine": successive,
+                              "successive_rmse_ratio": ratio, "ratio_floor_native_units": 1e-11,
                               "successive_rmse_decreases": ratio < 1 if ratio is not None else None}
-    residual_sensitivity = {}
-    for method in ("trapezoid", "simpson", "step_left_trapezoid", "step_split_simpson"):
-        key = f"{method}_residual_kg"
-        values = [abs(records[str(step)]["final"][key]) for step in (0.8, 0.4, 0.2)]
-        residual_sensitivity[method] = {"absolute_residual_kg_coarse_to_fine": values,
-                                        "monotonic_decrease": values[0] > values[1] > values[2]}
-    pd.DataFrame(rows).to_csv(output/"per_sensor.csv",index=False)
-    plot_mass(series,output/"convergence_mass.png")
-    write_json(output/"convergence.json",{"cases": records, "per_sensor": rows,
-                                          "successive_differences": empirical,
-                                          "mass_residual_sensitivity": residual_sensitivity,
-                                          "interpretation": "Successive differences indicate empirical behavior only; no formal order or bound."})
+    resolvable = [entry["successive_rmse_decreases"] for entry in empirical.values()
+                  if entry["successive_rmse_decreases"] is not None]
+    split_improves = all(abs(record["final"]["step_split_simpson_residual_kg"]) <
+                         abs(record["final"]["trapezoid_residual_kg"]) for record in records.values())
+    pd.DataFrame(rows).to_csv(output / "per_sensor.csv", index=False)
+    pd.DataFrame(mass_rows).to_csv(output / "mass_balance.csv", index=False)
+    pd.DataFrame(event_rows).to_csv(output / "event_window.csv", index=False)
+    plot_mass(series, output / "convergence_mass.png")
+    plot_event(series, output / "pressure_step.png")
+    write_json(output / "convergence.json", {
+        "schema": "phase11-center-convergence/2", "cases": records, "per_sensor": rows,
+        "mass_balance": mass_rows, "event_window": event_rows, "successive_differences_on_0_8_s_grid": empirical,
+        "empirical_summary": {"channels_with_resolvable_differences": len(resolvable),
+                              "channels_with_decreased_successive_rmse": sum(resolvable),
+                              "split_simpson_improves_all_cases": split_improves},
+        "scientific_status": {
+            "three_case_execution_integrity": "VERIFIED",
+            "numerical_sensor_convergence": "PARTIALLY VERIFIED" if any(resolvable) else "UNVERIFIED",
+            "integrated_mass_conservation": "PARTIALLY VERIFIED" if split_improves else "UNVERIFIED",
+            "archived_model_source_reproduction": "VERIFIED",
+            "exact_clean_release_reproduction": "CONTRADICTED",
+            "physical_hydrogen_fidelity": "UNVERIFIED",
+            "controlled_normal_leak_eligibility": "UNVERIFIED",
+        },
+        "methods": {"clock": "Decimate nested saved grids to the coarser grid of each pair; check all pairs within "
+                             "8 binary64 spacings, with no interpolation. Solver grids are independently verified.",
+                    "difference": "Fine minus coarse in native units, computed in binary64.",
+                    "event_integration": "Keep the preceding rate on the bracket ending at the first saved post-step sample. "
+                                         "Apply trapezoid or Simpson separately elsewhere. Bracket is a sensitivity estimate.",
+                    "order": "Successive ratios demonstrate empirical differences only, without an inferred formal order."},
+        "prior_evidence": {"release_28s": reference["discrepancies"]["release_at_28_s"],
+                           "leak_candidate": "BLOCKED; archived area command has identical initial and final values."}})
+
+
+def plot_event(cases, output):
+    from matplotlib import pyplot as plt
+
+    fig, axes = plt.subplots(2, 1, sharex=True, layout="constrained", figsize=(8, 6))
+    for name, case in cases.items():
+        focus = case[(case.time_s >= 23) & (case.time_s <= 29)]
+        line, = axes[0].plot(focus.time_s, focus.boundary_net_kg_s, ".-", ms=4, label=name)
+        axes[1].plot(focus.time_s, focus.trapezoid_residual_kg, ".-", ms=4, color=line.get_color())
+        axes[1].plot(focus.time_s, focus.step_left_trapezoid_residual_kg, "--", color=line.get_color())
+    for axis in axes:
+        axis.axvline(25, color="0.5", lw=1, linestyle=":")
+    axes[0].legend(title="Fixed step")
+    axes[0].set_ylabel("Net boundary flow (kg/s)")
+    axes[1].set_ylabel("Conservation residual (kg)")
+    axes[1].set_xlabel("Saved time (s), configured step at 25 s")
+    axes[1].set_title("Solid: trapezoid. Dashed: left-held event bracket.")
+    fig.savefig(output, dpi=160)
+    plt.close(fig)
 
 
 def main():
