@@ -10,13 +10,13 @@ from h2prism.phase11 import write_json
 from h2prism.phase12 import ANOMALOUS, CASES, approve, paired_xml, prepare, prepare_retry, source_evidence, specification
 
 
-def twin(path, area, unrelated="0"):
+def twin(path, area, unrelated="0", json_solver="0.2"):
     with ZipFile(path, "w") as stream:
         stream.writestr("simulink/systems/system_root.xml", f"""
         <System><Block Name="Phase12 Outlet Area"><InstanceData>
         <P Name="final_value">{area}</P></InstanceData></Block>
         <Block Name="Unrelated"><P Name="gain">{unrelated}</P></Block></System>""")
-        stream.writestr("simulink/configSet0.xml", "<Config><P Name='FixedStep'>0.2</P></Config>")
+        stream.writestr("simulink/configSet0.json", '{"FixedStep": "' + json_solver + '"}')
 
 
 def test_only_intended_twin_delta_passes(tmp_path):
@@ -24,6 +24,9 @@ def test_only_intended_twin_delta_passes(tmp_path):
     twin(a, "1e-3")
     twin(b, ".0011")
     assert paired_xml(a, b) == ["Phase12 Outlet Area.final_value"]
+    twin(b, ".0011", json_solver="0.4")
+    with pytest.raises(ValueError, match="unintended twin configuration"):
+        paired_xml(a, b)
     twin(b, ".0011", "7")
     with pytest.raises(ValueError, match="unintended"):
         paired_xml(a, b)

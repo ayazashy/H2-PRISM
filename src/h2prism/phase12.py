@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 from decimal import Decimal
 from pathlib import Path
 import shutil
@@ -99,7 +100,7 @@ def paired_xml(control, opening):
     with ZipFile(control) as a, ZipFile(opening) as b:
         def records(archive):
             return {name for name in archive.namelist() if name.startswith(("simulink/systems/", "simulink/configSet"))
-                    and name.endswith(".xml")}
+                    and name.endswith((".xml", ".json", ".rels"))}
 
         files = records(a)
         if files != records(b):
@@ -107,7 +108,14 @@ def paired_xml(control, opening):
         root_name = "simulink/systems/system_root.xml"
         if root_name not in files:
             raise ValueError("missing system-root XML")
+        require_config = any(name.startswith("simulink/configSet") for name in files)
+        if not require_config:
+            raise ValueError("missing solver configuration records")
         for name in sorted(files):
+            if name.endswith(".json"):
+                if json.loads(a.read(name)) != json.loads(b.read(name)):
+                    raise ValueError(f"unintended twin configuration difference: {name}")
+                continue
             left, right = ET.fromstring(a.read(name)), ET.fromstring(b.read(name))
             if name == root_name:
                 def command(root):
