@@ -204,6 +204,10 @@ def activate_observation(measurement: MeasurementContract, approval: SourceQuali
         if (evidence.scope != approval.source_model or evidence.category != EvidenceCategory.SOURCE or
                 evidence.status != "VERIFIED"):
             raise ValueError(f"{identifier}: verified source evidence required")
+    from .simnet_readiness import additional_physics_issues
+
+    if problems := additional_physics_issues(measurement, approval):
+        raise ValueError(f"source physics incomplete: {', '.join(problems)}")
     issues = physical_eligibility(approval.physical_bounds, approval.source_model)
     if issues:
         raise ValueError(f"physical uncertainty incomplete: {', '.join(issues)}")
@@ -294,7 +298,8 @@ def evaluate_regions(case: HeldOutCase, event: DiagnosticDecision, protocol_path
     return conditional_regions(event, decision, plan.regions), truth.value, json.loads(decision.to_json())
 
 
-def evaluate_heldout(protocol_path: Path, protocol_sha256: str, cases: tuple[HeldOutCase, ...]):
+def evaluate_heldout(protocol_path: Path, protocol_sha256: str, cases: tuple[HeldOutCase, ...],
+                     *, review_path: Path | None = None, review_sha256: str | None = None):
     """Evaluate the entire frozen held-out set, retaining abstentions in metrics.
 
     The conventional comparator uses the same checked joint result, so its
@@ -308,16 +313,22 @@ def evaluate_heldout(protocol_path: Path, protocol_sha256: str, cases: tuple[Hel
     partitions = protocol["partitions"]
     if not partitions or set(partitions.values()) != {"DEVELOPMENT", "MODEL_VALIDATION", "HELD_OUT"}:
         raise ValueError("all three partition roles are required")
-    if issues := separation_issues(manifest, partitions):
-        raise ValueError(f"invalid partitions: {issues}")
+    from .simnet_readiness import approved_partition
+
+    groups = approved_partition(protocol, protocol_sha256, manifest, review_path, review_sha256)
     held = {name for name, split in partitions.items() if split == "HELD_OUT"}
+    representatives = protocol.get("heldout_representatives", [])
     supplied = {case.measurement.run_id for case in cases}
-    if not held or supplied != held or len(cases) != len(held):
-        raise ValueError("must evaluate every held-out case exactly once")
+    if (not held or not set(representatives) <= held or len(set(representatives)) != len(representatives) or
+            supplied != set(representatives) or len(cases) != len(representatives)):
+        raise ValueError("must evaluate every predeclared held-out representative exactly once")
+    if {groups[name] for name in representatives} != {groups[name] for name in held} or len({
+            groups[name] for name in representatives}) != len(representatives):
+        raise ValueError("predeclare one representative for every held-out dependency component")
     catalog = manifest.set_index("Scenario_ID")
     if any(catalog.at[name, "eligible_primary"] != "True" for name in partitions):
         raise ValueError("partition contains excluded archive scenario")
-    if any(catalog.loc[list(held), key].duplicated().any()
+    if any(catalog.loc[representatives, key].duplicated().any()
            for key in ("Scenario_Family_ID", "family_extended_sensitivity", "independence_group")):
         raise ValueError("held-out cases are repeated within a declared family")
     spatial_ids = set(protocol.get("localization_cases", []))
@@ -357,10 +368,10 @@ def evaluate_heldout(protocol_path: Path, protocol_sha256: str, cases: tuple[Hel
             results[-1]["localization"] = {"decision": json.loads(location.to_json()), "truth": truth,
                                              "certificate": spatial_certificate}
             localized.append((location, truth))
-        evaluation.append(EvaluationCase(candidate.independence_group, "H2_SIMNET_SOURCE_SIMULATION",
+        evaluation.append(EvaluationCase(groups[name], "H2_SIMNET_SOURCE_SIMULATION",
                                          decision, candidate.label_mapped, True, True, runtime_s=elapsed))
     count = len(localized)
-    return {"protocol_sha256": protocol_sha256, "cases": results, "metrics": summarize(tuple(evaluation)),
+    return {"protocol_sha256": protocol_sha256, "claim": protocol["evaluation_claim"], "cases": results, "metrics": summarize(tuple(evaluation)),
             "location_metrics": {
                 "eligible_families": count,
                 "true_region_inclusion": sum(t in l.candidates for l, t in localized) / count if count else None,
