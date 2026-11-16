@@ -155,6 +155,42 @@ def approve(root):
                                         "allowed_saved_xml_delta": delta, "cases": hashes})
 
 
+def prepare_retry(previous, destination):
+    """Clone only approved inputs into a new pair root, preserving all prior outputs."""
+    previous, destination = previous.resolve(), destination.resolve()
+    if destination.is_relative_to(WORKSPACE_ROOT.resolve()) or destination.is_relative_to(previous):
+        raise ValueError("retry destination must be outside the repository and previous run")
+    if destination.exists():
+        raise FileExistsError(destination)
+    receipt = read_json(previous / "approval.json")
+    if receipt.get("schema") != "center-phase12-paired-preflight/1":
+        raise ValueError("unrecognized paired approval")
+    planned = {}
+    for case in CASES:
+        folder = previous / case
+        record = receipt["cases"][case]
+        expected = {f"{MODEL}.slx": MODEL_HASH, "Center_phase12.slx": record["derived_sha256"],
+                    "design.json": record["design_sha256"], "preflight.json": record["preflight_sha256"]}
+        for name, digest in expected.items():
+            checked_file(folder / name, digest)
+        planned[case] = expected
+    paired_xml(*(previous / case / "Center_phase12.slx" for case in CASES))
+    destination.mkdir(parents=True)
+    for case, expected in planned.items():
+        target = destination / case
+        target.mkdir()
+        for name, digest in expected.items():
+            with (previous / case / name).open("rb") as src, (target / name).open("xb") as dst:
+                shutil.copyfileobj(src, dst)
+            checked_file(target / name, digest)
+    write_json(destination / "approval.json", receipt)
+    write_json(destination / "retry_provenance.json", {
+        "prior_approval_sha256": sha256(previous / "approval.json"),
+        "fresh_approval_sha256": sha256(destination / "approval.json"),
+        "copied_input_sha256": planned,
+        "logging_policy": "Disable Simulink Dataset export; persist plain sensor and physical histories."})
+
+
 def analyze(root, reference_dir, output):
     """Summarize only completed approved runs and their exact-clock comparison."""
     approval = read_json(root / "approval.json")
@@ -213,7 +249,7 @@ def analyze(root, reference_dir, output):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=("audit", "prepare", "approve", "analyze"))
+    parser.add_argument("action", choices=("audit", "prepare", "approve", "retry", "analyze"))
     parser.add_argument("path", type=Path)
     parser.add_argument("--reference", type=Path)
     parser.add_argument("--output", type=Path)
@@ -223,6 +259,10 @@ def main():
         prepare(args.path, normal)
     elif args.action == "approve":
         approve(args.path)
+    elif args.action == "retry":
+        if args.output is None:
+            parser.error("retry requires --output")
+        prepare_retry(args.path, args.output)
     elif args.action == "analyze":
         if args.reference is None or args.output is None:
             parser.error("analyze requires --reference and --output")

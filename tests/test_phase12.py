@@ -7,7 +7,7 @@ from h2prism.data.loader import RAW_DATASET_DIR
 from h2prism.phase2 import MODEL, MODEL_DIR
 from h2prism.phase10 import sha256
 from h2prism.phase11 import write_json
-from h2prism.phase12 import ANOMALOUS, CASES, approve, paired_xml, prepare, source_evidence, specification
+from h2prism.phase12 import ANOMALOUS, CASES, approve, paired_xml, prepare, prepare_retry, source_evidence, specification
 
 
 def twin(path, area, unrelated="0"):
@@ -86,3 +86,19 @@ def test_receipt_rejects_drift_from_frozen_design(tmp_path):
     design.write_text(original)
     approve(pair)
     assert (pair / "approval.json").is_file()
+    crashed = pair / "normal" / "center_raw.mat"
+    crashed.write_bytes(b"interrupted output")
+    diary = pair / "normal" / "execution.log"
+    diary.write_bytes(b"crash trace")
+    with pytest.raises(ValueError, match="outside"):
+        prepare_retry(pair, pair / "nested")
+    fresh = tmp_path / "retry"
+    prepare_retry(pair, fresh)
+    assert not (fresh / "normal" / crashed.name).exists()
+    assert not (fresh / "normal" / diary.name).exists()
+    for case in CASES:
+        assert sha256(pair / case / "Center_phase12.slx") == sha256(fresh / case / "Center_phase12.slx")
+    assert crashed.read_bytes() == b"interrupted output"
+    assert diary.read_bytes() == b"crash trace"
+    with pytest.raises(FileExistsError):
+        prepare_retry(pair, fresh)

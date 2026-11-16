@@ -166,8 +166,11 @@ assert(strcmp(record.derived_sha256,hash) && ...
     'Approved artifacts differ');
 raw = fullfile(caseDir,'center_raw.mat');
 log = fullfile(caseDir,'execution.log');
-assert(~isfile(raw) && ~isfile(log) && ~bdIsLoaded('Center_phase12'), ...
+outputs = {'center_raw.mat','execution.log','center_extracted.mat','outlet_evidence.mat', ...
+    'sensor_checkpoint.mat','logging_policy.mat','extract_errors.mat','stages.log'};
+assert(~any(cellfun(@(name) isfile(fullfile(caseDir,name)),outputs)) && ~bdIsLoaded('Center_phase12'), ...
     'Use a fresh approved run directory and close Center_phase12');
+stageFile = fullfile(caseDir,'stages.log');
 previous = pwd;
 cd(caseDir);
 restore = onCleanup(@() cd(previous)); %#ok<NASGU>
@@ -183,12 +186,30 @@ try
     restriction = Simulink.ID.getHandle([model ':213']);
     assertPath(model,restriction);
     assertCommand(model,restriction,spec);
+    keys = {'SignalLogging','SaveState','SaveOutput','SaveFinalState'};
+    before = cellfun(@(key) get_param(model,key),keys,'UniformOutput',false);
+    for i = 1:numel(keys)
+        set_param(model,keys{i},'off');
+    end
+    after = cellfun(@(key) get_param(model,key),keys,'UniformOutput',false);
+    verifySolver(model,spec.solver);
+    assert(all(strcmp(after,'off')) && strcmp(get_param(model,'SimscapeLogType'),'all') && ...
+        strcmp(get_param(model,'SimscapeLogLimitData'),'off'),'Unexpected logging policy');
+    save(fullfile(caseDir,'logging_policy.mat'),'keys','before','after','hash','-v7');
+    writeStage(stageFile,'SIM_STARTED');
     out = sim(model);
-    save(raw,'out','hash','-v7.3');
+    writeStage(stageFile,'SIM_RETURNED');
     info = out.SimulationMetadata.ExecutionInfo;
     assert(strcmp(info.StopEvent,'ReachedStopTime') && isempty(info.ErrorDiagnostic) && isempty(out.ErrorMessage), ...
         'Simulation failed to reach stop time cleanly');
-    h2prism_center_extract_capture(caseDir,fullfile(caseDir,'center_extracted.mat'));
+    writeStage(stageFile,'NUMERIC_EXTRACTION_STARTED');
+    capture = h2prism_center_collect_capture(out,false,fullfile(caseDir,'sensor_checkpoint.mat'));
+    verifyCapture(capture,spec);
+    capture.approved_model_sha256 = hash;
+    save(raw,'-struct','capture','-v7');
+    capture.raw_sha256 = h2prism_center_sha256(raw);
+    save(fullfile(caseDir,'center_extracted.mat'),'-struct','capture','-v7');
+    writeStage(stageFile,'NUMERIC_CAPTURE_SAVED');
     response = runtimeEvidence(out,spec);
     assert(strcmp(hash,h2prism_center_sha256(derived)),'Approved derived model changed during simulation');
     save(fullfile(caseDir,'outlet_evidence.mat'),'response','hash','-v7');
@@ -197,6 +218,41 @@ catch exception
     fprintf(2,'%s\n',getReport(exception,'extended','hyperlinks','off'));
     rethrow(exception)
 end
+end
+
+function verifySolver(model,expected)
+keys = fieldnames(expected);
+for i = 1:numel(keys)
+    assert(strcmp(get_param(model,keys{i}),expected.(keys{i})), ...
+        'Logging override altered solver or initialization setting: %s',keys{i});
+end
+end
+
+function verifyCapture(capture,spec)
+step = str2double(spec.solver.FixedStep);
+stop = str2double(spec.solver.StopTime);
+assert(capture.execution.start_s == 0 && capture.execution.stop_s == stop && ...
+    capture.execution.solverInfo.FixedStepSize == step && ...
+    strcmp(capture.execution.solverInfo.Solver,spec.solver.Solver),'Executed solver differs');
+expected = (0:round(stop/step)).' * step;
+clock = capture.sensors.pressure_sensor1.time(:);
+assert(numel(clock)==numel(expected) && all(isfinite(clock)) && all(diff(clock)>0) && ...
+    all(abs(clock-expected)<=8*eps(max(1,abs(expected)))),'Incomplete saved clock');
+keys = fieldnames(capture.sensors);
+assert(numel(keys)==13,'Missing sensor channel');
+for i = 1:numel(keys)
+    signal = capture.sensors.(keys{i});
+    assert(isequal(signal.time(:),clock) && isvector(signal.values) && ...
+        numel(signal.values)==numel(clock) && all(isfinite(signal.values)), ...
+        'Incomplete sensor history: %s',keys{i});
+end
+end
+
+function writeStage(path,message)
+f = fopen(path,'at');
+assert(f>=0,'Cannot write stage log');
+cleanup = onCleanup(@() fclose(f)); %#ok<NASGU>
+fprintf(f,'%s\n',message);
 end
 
 function response = runtimeEvidence(out,spec)
