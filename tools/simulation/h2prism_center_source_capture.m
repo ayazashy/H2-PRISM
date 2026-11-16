@@ -1,14 +1,9 @@
 function h2prism_center_source_capture(runDir, stopTime)
 % Use a checksum-verified isolated copy. Never save the model.
-cd(runDir);
+assert(~isfile(fullfile(runDir,'center_setup.mat')) && ~isfile(fullfile(runDir,'center_raw.mat')), ...
+    'Use a fresh output directory');
+[inputMap, physicalInputs, guard] = h2prism_center_open_inputs(runDir); %#ok<NASGU>
 name = 'Normal_HNetwork_gest_center';
-file = fullfile(runDir, [name '.slx']);
-assert(isfile(file), 'Isolated Center model is missing');
-assert(~isfile('center_setup.mat') && ~isfile('center_raw.mat'), 'Use a fresh output directory');
-load_system('simulink');
-load_system('fl_lib');
-load_system(file);
-cleanup = onCleanup(@() close_system(name, 0)); %#ok<NASGU>
 keys = {'SolverType','Solver','FixedStep','StartTime','StopTime','RelTol','AbsTol', ...
         'LoadInitialState','InitialState','LoadExternalInput','ExternalInput'};
 original = cell2struct(cellfun(@(p) get_param(name,p), keys, 'UniformOutput',false), keys, 2);
@@ -24,40 +19,12 @@ set_param(name,'SaveState','on','StateSaveName','center_states', ...
     'SignalLogging','on','SignalLoggingName','center_inputs', ...
     'SimscapeLogType','all','SimscapeLogName','center_simscape','SimscapeLogLimitData','off');
 
-% Capture the actual Simulink signals driving Simulink-PS converters. Store the
-% port-to-log mapping; a source may drive more than one converter.
-blocks = find_system(name,'LookUnderMasks','none','FollowLinks','off','BlockType','Reference');
-inputMap = struct('block', {}, 'sourceBlock', {}, 'sourcePort', {}, 'logName', {});
-ports = [];
-for k = 1:numel(blocks)
-    block = blocks{k};
-    if ~contains(get_param(block,'SourceBlock'),'Simulink-PS')
-        continue
-    end
-    ph = get_param(block,'PortHandles');
-    for p = ph.Inport
-        line = get_param(p,'Line');
-        if line == -1
-            continue
-        end
-        src = get_param(line,'SrcPortHandle');
-        if src == -1
-            continue
-        end
-        idx = find(ports == src, 1);
-        if isempty(idx)
-            ports(end+1) = src; %#ok<AGROW>
-            idx = numel(ports);
-            set_param(src,'DataLogging','on','DataLoggingNameMode','Custom', ...
-                'DataLoggingName',sprintf('physical_input_%d',idx));
-        end
-        inputMap(end+1) = struct('block',block,'sourceBlock',get_param(src,'Parent'), ...
-            'sourcePort',get_param(src,'PortNumber'), ... %#ok<AGROW>
-            'logName',sprintf('physical_input_%d',idx));
-    end
+% Mark the two validated Simulink-side reservoir commands for logging.
+for k = 1:numel(inputMap)
+    set_param(inputMap(k).handle,'DataLogging','on','DataLoggingNameMode','Custom', ...
+        'DataLoggingName',inputMap(k).logName);
 end
-
-assert(~isempty(inputMap),'No controlled physical inputs were mapped for logging');
+inputMap = rmfield(inputMap,'handle');  % session-local handles are not provenance
 configured = cell2struct(cellfun(@(p) get_param(name,p), keys, 'UniformOutput',false), keys, 2);
 products = ver;
 release = version;
@@ -69,10 +36,11 @@ for k = 1:numel(gasBlocks)
     entries = cellfun(@(p) get_param(gasBlocks{k},p), fields, 'UniformOutput',false);
     gasSettings{k} = cell2struct(entries, fields);
 end
-save('center_setup.mat','original','configured','inputMap','products','release','gasBlocks','gasSettings');
+save('center_setup.mat','original','configured','inputMap','physicalInputs','products','release','gasBlocks','gasSettings');
 
 out = sim(name);
 save('center_raw.mat','out','-v7.3');
+assert(~isempty(out.get('center_simscape')), 'Expected the full Simscape log for native physical inputs');
 logged = out.get('center_inputs');
 assert(all(ismember({inputMap.logName},logged.getElementNames())), 'Some mapped inputs were not logged');
 names = [compose("pressure_sensor%d",1:10), compose("flow_sensor%d",1:3)];

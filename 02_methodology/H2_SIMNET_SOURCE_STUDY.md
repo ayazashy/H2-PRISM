@@ -25,6 +25,21 @@ if ((Get-FileHash -LiteralPath $copy).Hash -ne $expected) { throw 'Isolated copy
 
 Reconcile the reproduced source against the released Center windows. Establish the effective gas configuration and absolute pressure reference, signed physical sensor roles, boundary and inventory histories, and the generating-run lineage. Then qualify one matched leak with an independently traced mechanism, region and onset. Compressor-fault and delay require recovered actuator controls, interventions and response. Until those exist, a reduced NORMAL/LEAK study requires explicit scope approval and both source-compatible hypotheses.
 
+## Center input-discovery preflight
+
+The SLX serializes library links as Reference records. Runtime MATLAB can expose a linked masked converter as a SubSystem. The capture resolves the checksum-pinned SIDs and checks the library link, connected Simulink drivers, tags, units and pressure-source mode instead of filtering by archive block type.
+
+| Role | Pinned input route | Capture |
+| --- | --- | --- |
+| Reservoir temperature | Reservoir Inputs output 2 ? T1 Goto 10 / From 3 ? converter 5 ? controlled reservoir 1 | Simulink command, K. The subsystem uses Constant 13 with declared value 288. |
+| Reservoir pressure | Reservoir Inputs output 1 ? P1 Goto 9 / From 2 ? converter 6 ? controlled reservoir 1 | Simulink command, bar. The subsystem combines Ramp blocks 14, 15 and 439. |
+| Controlled pressure-difference input | PS Step 59 ? Pressure Source 55 | Native Simscape connection. Save mask settings and the full Simscape log. |
+| Controlled pressure-difference input | PS Ramp 241 ? Pressure Source 239 | Native Simscape connection. Save mask settings and the full Simscape log. |
+
+The native physical inputs have no Simulink signal port to mark for logging. Their logged time histories must be checked in the raw Simscape output; a mask expression is not a measured trajectory. The atmospheric reservoir boundaries, restriction areas and gas block values are configured fields rather than additional traced control signals. No From Workspace blocks were found in the two traced diagrams. Runtime dependency resolution, gas validity and actual boundary flows still require the isolated run.
+
+Run the offline checker with `python tools/simulation/verify_center_input_plan.py <Center-copy.slx>`. In the authorized MATLAB session, use `[inputMap, physicalInputs, centerGuard] = h2prism_center_open_inputs(runDir)` to verify and inspect the live mapping without simulation. Display the two maps and run `clear centerGuard` before calling the capture. The guard closes the loaded copy without saving and restores the working directory. Use a copy outside the repository. [MathWorks linked blocks](https://www.mathworks.com/help/simulink/slref/libinfo.html)
+
 ## Executable evaluation gate
 
 Generate the source requirements and actual archive preflight from the repository root.

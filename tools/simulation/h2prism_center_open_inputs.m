@@ -1,0 +1,109 @@
+function [inputMap, physicalInputs, guard] = h2prism_center_open_inputs(runDir)
+% Validate and load the isolated, pinned Center model without simulating it.
+toolsDir = fileparts(mfilename('fullpath'));
+plan = jsondecode(fileread(fullfile(toolsDir, 'center_input_plan.json')));
+name = plan.model;
+runDir = canonical(runDir);
+repo = canonical(fileparts(fileparts(toolsDir)));
+assert(~startsWith([runDir filesep],[repo filesep],'IgnoreCase',ispc), ...
+    'Use an isolated output directory outside the repository');
+file = fullfile(runDir, [name '.slx']);
+assert(isfile(file) && ~bdIsLoaded(name), 'A fresh isolated copy and unloaded Center model are required');
+assert(strcmp(file, canonical(file)), 'The model may not be a file alias');
+fid = fopen(file,'rb');
+assert(fid ~= -1, 'Cannot read isolated source');
+closeFile = onCleanup(@() fclose(fid));
+bytes = fread(fid,Inf,'*uint8');
+clear closeFile
+digest = java.security.MessageDigest.getInstance('SHA-256');
+digest.update(typecast(bytes,'int8'));
+actual = lower(reshape(dec2hex(typecast(digest.digest(),'uint8'),2).',1,[]));
+assert(strcmp(actual,plan.sha256), 'Center SLX checksum changed; review the input plan');
+
+previousDir = pwd;
+cd(runDir);
+guard = onCleanup(@() closeAndRestore(name,previousDir));
+load_system('simulink');
+load_system('fl_lib');
+load_system(file);
+assert(strcmp(canonical(get_param(name,'FileName')),file), ...
+    'Loaded Center model is not the isolated copy');
+linked(name,'1',plan.reservoir_library);
+subsystem = sid(name,'12');
+outputs = get_param(subsystem,'PortHandles');
+inputMap = struct('role',{},'block',{},'sourceBlock',{},'sourcePort',{},'logName',{},'unit',{},'handle',{});
+for i = 1:numel(plan.reservoir_inputs)
+    spec = plan.reservoir_inputs(i);
+    converter = linked(name,spec.converter_sid,plan.converter_library);
+    from = sid(name,spec.from_sid);
+    goto = sid(name,spec.goto_sid);
+    assert(strcmp(get_param(from,'BlockType'),'From') && strcmp(get_param(goto,'BlockType'),'Goto') && ...
+        strcmp(get_param(from,'GotoTag'),spec.tag) && strcmp(get_param(goto,'GotoTag'),spec.tag), ...
+        'Unexpected reservoir signal routing for %s',spec.role);
+    cp = get_param(converter,'PortHandles');
+    fp = get_param(from,'PortHandles');
+    gp = get_param(goto,'PortHandles');
+    assert(isscalar(cp.Inport) && isscalar(fp.Outport) && isscalar(gp.Inport) && ...
+        spec.subsystem_output <= numel(outputs.Outport) && strcmp(get_param(converter,'Unit'),spec.unit), ...
+        'Missing input port or unexpected converter unit for %s',spec.role);
+    assert(driver(cp.Inport) == fp.Outport && driver(gp.Inport) == outputs.Outport(spec.subsystem_output), ...
+        'Required reservoir input is missing or miswired: %s',spec.role);
+    inputMap(end+1) = struct('role',spec.role,'block',getfullname(converter), ... %#ok<AGROW>
+        'sourceBlock',getfullname(from),'sourcePort',1,'logName',spec.role,'unit',spec.unit,'handle',fp.Outport);
+end
+
+% Native physical-signal wires are verified in the pinned archive by the
+% offline check. They have no Simulink signal port to mark for logging.
+physicalInputs = struct('role',{},'sourceBlock',{},'targetBlock',{},'parameters',{},'loggingLimitation',{});
+for i = 1:numel(plan.physical_inputs)
+    spec = plan.physical_inputs(i);
+    source = linked(name,spec.source_sid,spec.library);
+    target = linked(name,spec.target_sid,plan.pressure_source_library);
+    assert(strcmp(get_param(target,'source_type'),plan.controlled_mode), ...
+        'Expected controlled pressure source for %s',spec.role);
+    parameters = struct;
+    for j = 1:numel(spec.parameters)
+        key = spec.parameters{j};
+        parameters.(key) = get_param(source,key);
+        parameters.([key '_unit']) = get_param(source,[key '_unit']);
+    end
+    physicalInputs(end+1) = struct('role',spec.role,'sourceBlock',getfullname(source), ... %#ok<AGROW>
+        'targetBlock',getfullname(target),'parameters',parameters, ...
+        'loggingLimitation','Native Simscape signal. Inspect the full Simscape log for command histories.');
+end
+assert(isequal(sort({inputMap.role}),{'reservoir_pressure','reservoir_temperature'}) && ...
+    isequal(sort({physicalInputs.role}),{'pressure_source_ramp','pressure_source_step'}), ...
+    'Incomplete or unsupported Center physical-input plan');
+end
+
+function handle = sid(model, value)
+handle = Simulink.ID.getHandle([model ':' value]);
+assert(isscalar(handle) && isnumeric(handle) && handle > 0, 'Missing required Center SID %s',value);
+end
+
+function handle = linked(model, value, expected)
+handle = sid(model,value);
+reference = get_param(handle,'ReferenceBlock');
+normalized = strtrim(regexprep(strrep(reference,'\n',' '),'\s+',' '));
+assert(strcmp(normalized,expected), 'Unsupported library link at Center SID %s: %s',value,normalized);
+end
+
+function source = driver(port)
+line = get_param(port,'Line');
+assert(isscalar(line) && line > 0,'Required Simulink input has no line');
+source = get_param(line,'SrcPortHandle');
+assert(isscalar(source) && source > 0,'Required Simulink input has no supported driver');
+end
+
+
+function closeAndRestore(name,previousDir)
+restoreDir = onCleanup(@() cd(previousDir)); %#ok<NASGU>
+if bdIsLoaded(name)
+    close_system(name,0);
+end
+end
+
+function path = canonical(value)
+entry = java.io.File(value);
+path = char(entry.getCanonicalPath());
+end
