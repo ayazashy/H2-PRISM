@@ -81,6 +81,17 @@ def test_archived_reservoir_signal_roles_are_pinned(xml):
         inspect_xml(root, subsystem, plan)
 
 
+def test_archived_reservoir_converters_cannot_be_swapped(xml):
+    root, subsystem = xml
+    plan = json.loads(PLAN.read_text(encoding="utf-8"))
+    for line in root.findall("Line"):
+        src = line.find("P[@Name='Src']")
+        if src is not None and src.text in ("5#rconn:1", "6#rconn:1"):
+            src.text = "6#rconn:1" if src.text == "5#rconn:1" else "5#rconn:1"
+    with pytest.raises(ValueError, match="Required connection"):
+        inspect_xml(root, subsystem, plan)
+
+
 def test_changed_source_bytes_are_rejected(xml, tmp_path):
     copy = tmp_path / SLX.name
     copy.write_bytes(SLX.read_bytes() + b"changed")

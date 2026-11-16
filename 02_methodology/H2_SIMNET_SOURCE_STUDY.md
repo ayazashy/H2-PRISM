@@ -42,6 +42,8 @@ The pinned SLX identifies SID 1 as Controlled Reservoir (G) with a port A area o
 
 Run the offline checker with `python tools/simulation/verify_center_input_plan.py <Center-copy.slx>`. In the authorized MATLAB session, use `[inputMap, physicalInputs, centerGuard] = h2prism_center_open_inputs(runDir)` to verify and inspect the live mapping without simulation. Display the two maps and run `clear centerGuard` before calling the capture. The guard closes the loaded copy without saving and restores the working directory. Use a copy outside the repository. [MathWorks linked blocks](https://www.mathworks.com/help/simulink/slref/libinfo.html)
 
+If the live P/T connection assertion fails, run `h2prism_center_reservoir_diagnostic(runDir)` in the same MATLAB session with the Center model closed. It prints and saves a timestamped record beside the isolated copy, then the checksum and close status can be checked in the record. Compare the exact preflight queries with the enumerated Simscape port names, the converter-side queries, and the supporting line handles. A port label can differ from its programmatic name. The archive maps SID 5 to T (internal ID `T_in`), SID 6 to P (internal ID `p_in`), and gas port A to the branch with SIDs 4, 7, 55, and 187. Use runtime evidence to establish whether those same connections survived loading. [MathWorks physical port properties](https://www.mathworks.com/help/simscape/ref/simscape.connection.connectionportproperties.html) and [MathWorks connected ports](https://www.mathworks.com/help/simscape/ref/simscape.connectedports.html)
+
 ## Executable evaluation gate
 
 Generate the source requirements and actual archive preflight from the repository root.

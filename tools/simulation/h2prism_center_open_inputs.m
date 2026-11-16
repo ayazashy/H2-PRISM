@@ -1,33 +1,7 @@
 function [inputMap, physicalInputs, guard] = h2prism_center_open_inputs(runDir)
 % Validate and load the isolated, pinned Center model without simulating it.
-toolsDir = fileparts(mfilename('fullpath'));
-plan = jsondecode(fileread(fullfile(toolsDir, 'center_input_plan.json')));
+[plan, ~, guard] = h2prism_center_load_isolated(runDir);
 name = plan.model;
-runDir = canonical(runDir);
-repo = canonical(fileparts(fileparts(toolsDir)));
-assert(~startsWith([runDir filesep],[repo filesep],'IgnoreCase',ispc), ...
-    'Use an isolated output directory outside the repository');
-file = fullfile(runDir, [name '.slx']);
-assert(isfile(file) && ~bdIsLoaded(name), 'A fresh isolated copy and unloaded Center model are required');
-assert(strcmp(file, canonical(file)), 'The model may not be a file alias');
-fid = fopen(file,'rb');
-assert(fid ~= -1, 'Cannot read isolated source');
-closeFile = onCleanup(@() fclose(fid));
-bytes = fread(fid,Inf,'*uint8');
-clear closeFile
-digest = java.security.MessageDigest.getInstance('SHA-256');
-digest.update(typecast(bytes,'int8'));
-actual = lower(reshape(dec2hex(typecast(digest.digest(),'uint8'),2).',1,[]));
-assert(strcmp(actual,plan.sha256), 'Center SLX checksum changed; review the input plan');
-
-previousDir = pwd;
-cd(runDir);
-guard = onCleanup(@() closeAndRestore(name,previousDir));
-load_system('simulink');
-load_system('fl_lib');
-load_system(file);
-assert(strcmp(canonical(get_param(name,'FileName')),file), ...
-    'Loaded Center model is not the isolated copy');
 reservoir = sid(name,plan.reservoir.sid);
 reservoirEvidence = struct('sid',plan.reservoir.sid,'library',libraryReference(reservoir), ...
     'release',version('-release'),'linkStatus',get_param(reservoir,'LinkStatus'), ...
@@ -139,17 +113,4 @@ line = get_param(port,'Line');
 assert(isscalar(line) && line > 0,'Required Simulink input has no line');
 source = get_param(line,'SrcPortHandle');
 assert(isscalar(source) && source > 0,'Required Simulink input has no supported driver');
-end
-
-
-function closeAndRestore(name,previousDir)
-restoreDir = onCleanup(@() cd(previousDir)); %#ok<NASGU>
-if bdIsLoaded(name)
-    close_system(name,0);
-end
-end
-
-function path = canonical(value)
-entry = java.io.File(value);
-path = char(entry.getCanonicalPath());
 end
