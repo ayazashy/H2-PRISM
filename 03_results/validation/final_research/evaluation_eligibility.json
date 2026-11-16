@@ -1,0 +1,116 @@
+{
+  "verdict": "CONFIRMATORY ACCURACY COMPARISON: NOT ESTABLISHED",
+  "archived_scored_scenario_candidates": 57,
+  "class_counts": [
+    {
+      "topology": "Center",
+      "label": "COMPRESSOR_DELAY",
+      "count": 1
+    },
+    {
+      "topology": "Center",
+      "label": "COMPRESSOR_FAULT",
+      "count": 2
+    },
+    {
+      "topology": "Center",
+      "label": "EXCLUDED_COMPOUND",
+      "count": 1
+    },
+    {
+      "topology": "Center",
+      "label": "EXCLUDED_PENDING_REVIEW",
+      "count": 1
+    },
+    {
+      "topology": "Center",
+      "label": "LEAK",
+      "count": 13
+    },
+    {
+      "topology": "Center",
+      "label": "NORMAL",
+      "count": 1
+    },
+    {
+      "topology": "Downstream",
+      "label": "COMPRESSOR_DELAY",
+      "count": 1
+    },
+    {
+      "topology": "Downstream",
+      "label": "COMPRESSOR_FAULT",
+      "count": 2
+    },
+    {
+      "topology": "Downstream",
+      "label": "EXCLUDED_COMPOUND",
+      "count": 1
+    },
+    {
+      "topology": "Downstream",
+      "label": "EXCLUDED_PENDING_REVIEW",
+      "count": 1
+    },
+    {
+      "topology": "Downstream",
+      "label": "LEAK",
+      "count": 13
+    },
+    {
+      "topology": "Downstream",
+      "label": "NORMAL",
+      "count": 1
+    },
+    {
+      "topology": "Upstream",
+      "label": "COMPRESSOR_DELAY",
+      "count": 1
+    },
+    {
+      "topology": "Upstream",
+      "label": "COMPRESSOR_FAULT",
+      "count": 2
+    },
+    {
+      "topology": "Upstream",
+      "label": "EXCLUDED_COMPOUND",
+      "count": 1
+    },
+    {
+      "topology": "Upstream",
+      "label": "EXCLUDED_PENDING_REVIEW",
+      "count": 1
+    },
+    {
+      "topology": "Upstream",
+      "label": "LEAK",
+      "count": 13
+    },
+    {
+      "topology": "Upstream",
+      "label": "NORMAL",
+      "count": 1
+    }
+  ],
+  "archive_dependency_components": 11,
+  "legacy_crossing_fold_group_records": 39,
+  "legacy_confirmed_crossing_records": 0,
+  "historically_inspected_candidates": 57,
+  "family_eligibility": {
+    "confirmatory_test": 0,
+    "disjoint_confirmatory_calibration": 0
+  },
+  "support": {
+    "accuracy": null,
+    "selective_risk": null,
+    "risk_coverage": null,
+    "matched_coverage_incremental_value": null
+  },
+  "blockers": [
+    "No pristine holdout established",
+    "Physical labels and producing-run ancestry remain unqualified",
+    "Controlled variants share the same Center parent family",
+    "Certified prediction and measurement enclosures are missing"
+  ]
+}

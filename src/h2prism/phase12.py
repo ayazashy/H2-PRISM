@@ -80,12 +80,12 @@ def specification():
     }
 
 
-def prepare(destination, normal):
+def prepare(destination, normal, spec=None):
     normal = checked_file(normal, MODEL_HASH)
     if destination.resolve().is_relative_to(WORKSPACE_ROOT.resolve()):
         raise ValueError("derived cases must be prepared outside the repository")
     destination.mkdir(parents=True)
-    spec = specification()
+    spec = specification() if spec is None else spec
     for case in CASES:
         folder = destination / case
         folder.mkdir()
@@ -133,7 +133,8 @@ def paired_xml(control, opening):
     return ["Phase12 Outlet Area.final_value"]
 
 
-def approve(root):
+def approve(root, spec=None):
+    spec = specification() if spec is None else spec
     hashes = {}
     files = []
     versions = []
@@ -141,7 +142,7 @@ def approve(root):
         folder = root / case
         file = folder / "Center_phase12.slx"
         record = read_json(folder / "preflight.json")
-        design = {"case": case, **specification()}
+        design = {"case": case, **spec}
         if read_json(folder / "design.json") != design:
             raise ValueError(f"unexpected prepared specification: {case}")
         expected = {"source_sha256": MODEL_HASH, "derived_sha256": sha256(file), "case": case,

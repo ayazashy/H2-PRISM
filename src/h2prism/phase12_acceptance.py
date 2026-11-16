@@ -55,12 +55,15 @@ def range_record(values):
             "initial": float(values[0]), "final": float(values[-1])}
 
 
-def verify_pair(root, previous):
-    provenance = read_json(root / "retry_provenance.json")
+def verify_pair(root, previous, spec=None):
+    spec = specification() if spec is None else spec
+    provenance_path = root / "retry_provenance.json"
+    provenance = read_json(provenance_path) if previous is not None else None
     approval = read_json(root / "approval.json")
     digest = sha256(root / "approval.json")
-    require(digest == provenance["fresh_approval_sha256"] == provenance["prior_approval_sha256"]
-            == sha256(previous / "approval.json"), "approval receipt checksum mismatch")
+    if previous is not None:
+        require(digest == provenance["fresh_approval_sha256"] == provenance["prior_approval_sha256"]
+                == sha256(previous / "approval.json"), "approval receipt checksum mismatch")
     require(approval["schema"] == "center-phase12-paired-preflight/1", "unexpected approval schema")
     cases = {}
     derived = []
@@ -68,19 +71,19 @@ def verify_pair(root, previous):
         target = root / name
         files = {f: sha256(target / f) for f in (f"{MODEL}.slx", "Center_phase12.slx", "preflight.json", "design.json")}
         expected = approval["cases"][name]
-        require(files == provenance["copied_input_sha256"][name] and
+        require((provenance is None or files == provenance["copied_input_sha256"][name]) and
                 files[f"{MODEL}.slx"] == MODEL_HASH and files["Center_phase12.slx"] == expected["derived_sha256"]
                 and files["preflight.json"] == expected["preflight_sha256"]
                 and files["design.json"] == expected["design_sha256"], f"{name}: approval input checksum mismatch")
         preflight = read_json(target / "preflight.json")
-        require(read_json(target / "design.json") == {"case": name, **specification()} and
+        require(read_json(target / "design.json") == {"case": name, **spec} and
                 preflight["case"] == name and preflight["compile_status"] == "PASSED"
                 and preflight["source_sha256"] == MODEL_HASH
                 and preflight["derived_sha256"] == files["Center_phase12.slx"]
                 and preflight["solver"] == SOLVER
-                and preflight["location"] == specification()["location"]
+                and preflight["location"] == spec["location"]
                 and preflight["existing_block_links_parameters_and_connections_unchanged"]
-                and preflight["command_final_area_m2"] == AREA["normal_final" if name == "normal" else "intervention_final"],
+                and preflight["command_final_area_m2"] == spec["area"]["normal_final" if name == "normal" else "intervention_final"],
                 f"{name}: invalid preflight")
         derived.append(target / "Center_phase12.slx")
         cases[name] = {"input_sha256": files, "preflight": preflight}
@@ -89,13 +92,16 @@ def verify_pair(root, previous):
             "preflight runtimes differ")
     delta = paired_xml(*derived)
     require(delta == approval["allowed_saved_xml_delta"], "pair diff disagrees with approval")
-    return {"approval_sha256": digest, "retry_provenance_sha256": sha256(root / "retry_provenance.json"),
+    return {"approval_sha256": digest, "retry_provenance_sha256": sha256(provenance_path) if provenance is not None else None,
             "saved_model_delta": delta, "configset_json_checked": True, "cases": cases}
 
 
-def audit(root, previous, reference_dir, case="normal"):
+def audit(root, previous, reference_dir, case="normal", spec=None):
+    spec = specification() if spec is None else spec
+    area = spec["area"]
+    location = spec["location"]
     require(case in CASES, "unknown Phase 12 case")
-    pair = verify_pair(root, previous)
+    pair = verify_pair(root, previous, spec)
     folder = root / case
     files = ("execution.log", "stages.log", "center_raw.mat", "center_extracted.mat",
              "sensor_checkpoint.mat", "outlet_evidence.mat", "logging_policy.mat")
@@ -138,7 +144,7 @@ def audit(root, previous, reference_dir, case="normal"):
     phase10 = read_json(PHASE10)
     clock = raw["sensors"]["pressure_sensor1"]["time"]
     grid_delta = solver_grid(clock, 0.2, 20000)
-    pre = clock < float(AREA["step_time"])
+    pre = clock < float(area["step_time"])
     require(set(raw["sensors"]) == set(CAPTURE.values()), "capture does not have exactly the mapped sensor channels")
     logs = {row["path"]: row for row in raw["logSeries"]}
     require(len(logs) == len(raw["logSeries"]) == 101 and not np.size(raw["logErrors"]),
@@ -175,12 +181,12 @@ def audit(root, previous, reference_dir, case="normal"):
     require(same(raw["commands"], {"reservoir_pressure": logs["Reservoir/P"],
                                    "reservoir_temperature": logs["Reservoir/T"]}), "command records disagree")
     response = outlet["response"]
-    routes = {"area": ("Phase12_Outlet_Area/O", "m^2"), "restriction_area_input": ("Local_Restriction_G3/area_in", "m^2"),
-              "signed_outlet_flow": ("Local_Restriction_G3/mdot_A", "kg/s"),
-              "signed_sink_flow": ("Reservoir_G1/mdot_A", "kg/s"),
-              "upstream_pressure": ("Local_Restriction_G3/A/p", "Pa"),
-              "downstream_pressure": ("Local_Restriction_G3/B/p", "Pa"),
-              "sink_pressure": ("Reservoir_G1/p_I", "Pa"), "sink_temperature": ("Reservoir_G1/T_I", "K")}
+    restriction = location.get("restriction_log_node", "Local_Restriction_G3")
+    sink = location.get("sink_log_node", "Reservoir_G1")
+    routes = {"area": ("Phase12_Outlet_Area/O", "m^2"), "restriction_area_input": (restriction+"/area_in", "m^2"),
+              "signed_outlet_flow": (restriction+"/mdot_A", "kg/s"), "signed_sink_flow": (sink+"/mdot_A", "kg/s"),
+              "upstream_pressure": (restriction+"/A/p", "Pa"), "downstream_pressure": (restriction+"/B/p", "Pa"),
+              "sink_pressure": (sink+"/p_I", "Pa"), "sink_temperature": (sink+"/T_I", "K")}
     outlet_report = {}
     values = {}
 
@@ -200,15 +206,18 @@ def audit(root, previous, reference_dir, case="normal"):
         normal_area(values["restriction_area_input"])
         first = None
     else:
-        expected = np.where(pre, float(AREA["initial_value"]), float(AREA["intervention_final"]))
+        expected = np.where(pre, float(area["initial_value"]), float(area["intervention_final"]))
         for key in ("area", "restriction_area_input"):
             require(np.allclose(values[key], expected, atol=1e-12, rtol=0),
                     f"{key}: differs from the approved opening command")
-        first = float(clock[np.flatnonzero(abs(values["restriction_area_input"]-float(AREA["initial_value"]))>1e-12)[0]])
-        require(first == float(AREA["step_time"]) == response["first_change_s"],
+        first = float(clock[np.flatnonzero(abs(values["restriction_area_input"]-float(area["initial_value"]))>1e-12)[0]])
+        require(first == float(area["step_time"]) == response["first_change_s"],
                 "opening timing differs from the saved command or design")
+    metered = {"218": "flow_sensor3", "311": "flow_sensor1"}.get(location["flow_sensor_sid"])
+    if metered:
+        require(np.allclose(values["signed_outlet_flow"], raw["sensors"][metered]["values"], atol=1e-8, rtol=0),
+                "metered outlet does not agree with the native sensor")
     require(np.allclose(values["signed_outlet_flow"], values["signed_sink_flow"], atol=1e-8, rtol=0)
-            and np.allclose(values["signed_outlet_flow"], raw["sensors"]["flow_sensor3"]["values"], atol=1e-8, rtol=0)
             and (values["signed_outlet_flow"] > 0).all() and (values["upstream_pressure"] > values["downstream_pressure"]).all()
             and np.allclose(values["sink_pressure"], 100000, atol=1e-4, rtol=0)
             and np.allclose(values["sink_temperature"], 293.15, atol=1e-6, rtol=0),
@@ -238,7 +247,7 @@ def audit(root, previous, reference_dir, case="normal"):
             "policy_hash_basis": "Computed from the completed file. Its payload is bound by the approved model hash; no independently recorded pre-run file digest exists.",
             "reference_extraction_sha256": ref_hash, "max_clock_grid_error_s": grid_delta,
             "sensors": sensors, "residuals": residuals, "native_commands": commands,
-            "outlet": {"histories": outlet_report, "sign": "Positive from upstream restriction A toward atmospheric reservoir SID 200",
+            "outlet": {"histories": outlet_report, "sign": "Positive from restriction A toward atmospheric reservoir SID " + location["reservoir_sid"],
                        "first_received_area_change_s": first, "pre_1000_samples": int(pre.sum()), "at_or_after_1000_samples": int((~pre).sum())},
             "boundary_flows_positive_into_network_kg_s": boundaries, "storage": storage,
             "log_inventory": {"series": len(logs), "initial_samples": len(initial), "extraction_errors": 0},

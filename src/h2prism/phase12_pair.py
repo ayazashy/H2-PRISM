@@ -71,7 +71,7 @@ def event_integral(clock, flow, brackets):
     return output
 
 
-def framework(clock, opening, event, source_id):
+def framework(clock, opening, event, source_id, restriction_sid="213", reservoir_sid="200"):
     mask = (clock>=event)&(clock<=event+5)
     times = tuple(clock[mask].tolist())
     sensors = tuple(SensorRecord(name, "Center", "node" if name.startswith("PS") else "edge", SID[name],
@@ -86,7 +86,7 @@ def framework(clock, opening, event, source_id):
                    for name in ("NORMAL",*regions))
     result = diagnose(observation, models)
     return {"diagnostic": json.loads(result.to_json()), "localization": asdict(localize(result,regions)),
-            "ground_truth": "Engineered area command on restriction SID 213 toward atmospheric reservoir SID 200",
+            "ground_truth": f"Engineered area command on restriction SID {restriction_sid} toward atmospheric reservoir SID {reservoir_sid}",
             "bounds": "Unknown measurement, model discrepancy and prediction enclosure. No numerical floor entered as a measurement bound.",
             "independence": "Both runs share a source and form one exploratory controlled pair."}
 

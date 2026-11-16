@@ -23,8 +23,8 @@ assert(~isfile(derived) && ~isfile(receipt) && ~bdIsLoaded('Center_phase12'), ..
     'Use a fresh prepared case directory and close Center_phase12');
 [inputMap,~,guard] = h2prism_center_open_inputs(caseDir); %#ok<ASGLU>
 model = 'Normal_HNetwork_gest_center';
-restriction = Simulink.ID.getHandle([model ':213']);
-boundary = Simulink.ID.getHandle([model ':200']);
+restriction = Simulink.ID.getHandle([model ':' spec.location.restriction_sid]);
+boundary = Simulink.ID.getHandle([model ':' spec.location.reservoir_sid]);
 assert(strcmp(get_param(boundary,'pressure_spec'),'foundation.enum.pressure_spec.atmospheric'), ...
     'Atmospheric pressure selection changed');
 assert(strcmp(get_param(restriction,'LinkStatus'),'resolved') && ...
@@ -35,10 +35,10 @@ assert(strcmp(get_param(restriction,'LinkStatus'),'resolved') && ...
 assert(strcmp(get_param(restriction,'min_area_unit'),'m^2') && ...
     strcmp(get_param(restriction,'max_area_unit'),'m^2') && ...
     str2double(get_param(restriction,'min_area')) == str2double(spec.area.min) && ...
-    str2double(get_param(restriction,'max_area')) == str2double(spec.area.max),'Archived area limits changed');
+    str2double(get_param(restriction,'max_area')) == str2double(archivedMaximum(spec)),'Archived area limits changed');
 assert(strcmp(get_param(Simulink.ID.getHandle([model ':7']),'UseLocalSolver'),'off'), ...
     'Unexpected local solver policy');
-assertPath(model,restriction);
+assertPath(model,restriction,spec.location);
 before = existingBlocks(model,restriction);
 fixedKeys = {'restriction_area','restriction_area_unit','min_area','max_area','area','area_unit','Cd','B_lam'};
 restrictionConstants = cellfun(@(key) get_param(restriction,key),fixedKeys,'UniformOutput',false);
@@ -48,6 +48,12 @@ assert(all(isfinite(area)) && all(area >= bounds(1) & area <= bounds(2)) && ...
     area(1) == area(2) && area(3) > area(1) && strcmp(spec.area.area_unit,'m^2') && ...
     strcmp(spec.area.time_unit,'s'),'Invalid design area or units');
 set_param(restriction,'restriction_type','foundation.enum.restriction_type.variable');
+if isfield(spec.area,'source_max')
+    set_param(restriction,'max_area',spec.area.max);
+    assert(strcmp(get_param(restriction,'max_area_unit'),'m^2') && ...
+        str2double(get_param(restriction,'max_area'))==str2double(spec.area.max),'Unexpected derived area limit');
+    restrictionConstants{strcmp(fixedKeys,'max_area')} = get_param(restriction,'max_area');
+end
 command = add_block('fl_lib/Physical Signals/Sources/PS Step',[model '/Phase12 Outlet Area']);
 finalArea = spec.area.normal_final;
 if strcmp(spec.case,'outlet_opening')
@@ -76,7 +82,7 @@ for i = 1:numel(keys)
     actualSolver.(keys{i}) = get_param(model,keys{i});
 end
 assert(isequal(actualSolver,spec.solver),'Compiled model configuration differs from design');
-assertPath(model,restriction);
+assertPath(model,restriction,spec.location);
 assertCommand(model,restriction,spec);
 assert(isequaln(restrictionConstants,cellfun(@(key) get_param(restriction,key),fixedKeys,'UniformOutput',false)), ...
     'Restriction properties beyond the intended type and command changed');
@@ -138,11 +144,34 @@ assert(str2double(get_param(cmd,'initial_value')) == str2double(spec.area.initia
     'Area command configuration differs');
 end
 
-function assertPath(model,restriction)
-sensor = Simulink.ID.getHandle([model ':218']);
-assert(isequal(sort(peerSIDs(restriction,'A')), ["47","48","50"]) && ...
-    isequal(peerSIDs(restriction,'B'),"218") && isequal(peerSIDs(sensor,'B'),"200"), ...
-    'SID 213 atmospheric branch differs from the pinned source');
+function value = archivedMaximum(spec)
+value = spec.area.max;
+if isfield(spec.area,'source_max')
+    value = spec.area.source_max;
+end
+end
+
+function assertPath(model,restriction,location)
+upstream = reshape(sort(string(location.upstream_junction_sids)),1,[]);
+assert(isequal(sort(peerSIDs(restriction,'A')),upstream),'Unexpected upstream gas junction');
+if isempty(location.flow_sensor_sid)
+    assert(isequal(peerSIDs(restriction,'B'),string(location.reservoir_sid)), ...
+        'Restriction does not connect directly to the approved atmospheric sink');
+else
+    sensor = Simulink.ID.getHandle([model ':' location.flow_sensor_sid]);
+    assert(isequal(peerSIDs(restriction,'B'),string(location.flow_sensor_sid)) && ...
+        isequal(peerSIDs(sensor,'B'),string(location.reservoir_sid)), ...
+        'Unexpected metered atmospheric outlet path');
+end
+end
+
+function [restriction,sink] = logNodes(spec)
+restriction = 'Local_Restriction_G3';
+sink = 'Reservoir_G1';
+if isfield(spec.location,'restriction_log_node')
+    restriction = spec.location.restriction_log_node;
+    sink = spec.location.sink_log_node;
+end
 end
 
 function out = peerSIDs(handle,port)
@@ -183,8 +212,8 @@ try
     loaded = java.io.File(get_param(model,'FileName'));
     assert(strcmp(char(loaded.getCanonicalPath()),derived), ...
         'Loaded twin differs from approved file');
-    restriction = Simulink.ID.getHandle([model ':213']);
-    assertPath(model,restriction);
+    restriction = Simulink.ID.getHandle([model ':' spec.location.restriction_sid]);
+    assertPath(model,restriction,spec.location);
     assertCommand(model,restriction,spec);
     keys = {'SignalLogging','SaveState','SaveOutput','SaveFinalState'};
     before = cellfun(@(key) get_param(model,key),keys,'UniformOutput',false);
@@ -203,7 +232,8 @@ try
     assert(strcmp(info.StopEvent,'ReachedStopTime') && isempty(info.ErrorDiagnostic) && isempty(out.ErrorMessage), ...
         'Simulation failed to reach stop time cleanly');
     writeStage(stageFile,'NUMERIC_EXTRACTION_STARTED');
-    capture = h2prism_center_collect_capture(out,false,fullfile(caseDir,'sensor_checkpoint.mat'));
+    [restrictionNode,~] = logNodes(spec);
+    capture = h2prism_center_collect_capture(out,false,fullfile(caseDir,'sensor_checkpoint.mat'),restrictionNode);
     verifyCapture(capture,spec);
     capture.approved_model_sha256 = hash;
     save(raw,'-struct','capture','-v7');
@@ -257,8 +287,11 @@ end
 
 function response = runtimeEvidence(out,spec)
 root = out.get('center_simscape');
+[restrictionNode,sinkNode] = logNodes(spec);
+restriction = root.(restrictionNode);
+sink = root.(sinkNode);
 area = readSeries(root.Phase12_Outlet_Area.O,'m^2');
-seen = readSeries(root.Local_Restriction_G3.area_in,'m^2');
+seen = readSeries(restriction.area_in,'m^2');
 assert(isequal(area.time,seen.time) && all(abs(area.values-seen.values) <= 1e-12), ...
     'Restriction received a different area history than the command');
 assert(all(diff(area.time)>0) && area.time(1)==0 && area.time(end)==20000 && all(isfinite(area.values)), ...
@@ -279,12 +312,12 @@ if final ~= initial
     assert(isscalar(firstChange) && firstChange >= specTime-8*eps(specTime) && ...
         firstChange <= specTime+str2double(spec.solver.FixedStep)+8*eps(specTime),'Opening timing differs');
 end
-rate = readSeries(root.Local_Restriction_G3.mdot_A,'kg/s');
-sinkRate = readSeries(root.Reservoir_G1.mdot_A,'kg/s');
-up = readSeries(root.Local_Restriction_G3.A.p,'Pa');
-down = readSeries(root.Local_Restriction_G3.B.p,'Pa');
-pressure = readSeries(root.Reservoir_G1.p_I,'Pa');
-temperature = readSeries(root.Reservoir_G1.T_I,'K');
+rate = readSeries(restriction.mdot_A,'kg/s');
+sinkRate = readSeries(sink.mdot_A,'kg/s');
+up = readSeries(restriction.A.p,'Pa');
+down = readSeries(restriction.B.p,'Pa');
+pressure = readSeries(sink.p_I,'Pa');
+temperature = readSeries(sink.T_I,'K');
 assert(isequal(rate.time,sinkRate.time,up.time,down.time,pressure.time,temperature.time,area.time), ...
     'Physical response clocks differ');
 assert(all(abs(rate.values-sinkRate.values)<=1e-8) && ...

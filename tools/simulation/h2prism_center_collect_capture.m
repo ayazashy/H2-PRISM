@@ -1,5 +1,8 @@
-function capture = h2prism_center_collect_capture(out, datasetLogging, checkpoint)
+function capture = h2prism_center_collect_capture(out, datasetLogging, checkpoint, outletNode)
 % Materialize scientific outputs as plain MATLAB arrays and structs.
+if nargin < 4
+    outletNode = 'Local_Restriction_G3';
+end
 metadata = out.SimulationMetadata;
 info = metadata.ExecutionInfo;
 execution = struct('stopEvent',char(info.StopEvent), ...
@@ -64,8 +67,7 @@ for component = ["Pressure_Temperature_Sensor_G",compose("Pressure_Temperature_S
 end
 if ~datasetLogging
     paths = paths(~ismember(paths,"Constant_Volume_Chamber_G/" + ["mdot_B","mdot_C","mdot_D"]));
-    paths = [paths,"Phase12_Outlet_Area/O","Local_Restriction_G3/area_in", ...
-        "Local_Restriction_G3/mdot_A","Local_Restriction_G3/A/p","Local_Restriction_G3/B/p"];
+    paths = [paths,"Phase12_Outlet_Area/O",string(outletNode) + ["/area_in","/mdot_A","/A/p","/B/p"]];
 end
 for path = paths
     try
