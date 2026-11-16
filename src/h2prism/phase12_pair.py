@@ -71,7 +71,7 @@ def event_integral(clock, flow, brackets):
     return output
 
 
-def framework(clock, opening, event, source_id, restriction_sid="213", reservoir_sid="200"):
+def framework(clock, opening, event, source_id, restriction_sid="213", reservoir_sid="200", ground_truth=None):
     mask = (clock>=event)&(clock<=event+5)
     times = tuple(clock[mask].tolist())
     sensors = tuple(SensorRecord(name, "Center", "node" if name.startswith("PS") else "edge", SID[name],
@@ -79,14 +79,14 @@ def framework(clock, opening, event, source_id, restriction_sid="213", reservoir
                                  "MPa" if name.startswith("PS") else "kg/s", 0.2) for name in CAPTURE)
     channels = tuple(Channel(s.sensor_id,s.unit,times,"Saved approved Phase 12 MAT clock",
                              tuple(opening[s.sensor_id][mask].tolist()), ()) for s in sensors)
-    observation = MeasurementContract(sensors,times,channels,"Phase12 outlet opening","Center source family",
+    observation = MeasurementContract(sensors,times,channels,ground_truth or "Phase12 outlet opening","Center source family",
                                       source_id,"No qualified measurement bounds or prediction enclosures",1e-9)
     regions = ("OUTLET_SID_213", "OUTLET_SID_312", "OUTLET_SID_215", "OUTLET_SID_222")
     models = tuple(HypothesisModel(name,None,("Requires a validated source-compatible prediction enclosure",))
-                   for name in ("NORMAL",*regions))
+                   for name in ("NORMAL",*regions, *(("PRESSURE_SID55",) if ground_truth else ())))
     result = diagnose(observation, models)
     return {"diagnostic": json.loads(result.to_json()), "localization": asdict(localize(result,regions)),
-            "ground_truth": f"Engineered area command on restriction SID {restriction_sid} toward atmospheric reservoir SID {reservoir_sid}",
+            "ground_truth": ground_truth or f"Engineered area command on restriction SID {restriction_sid} toward atmospheric reservoir SID {reservoir_sid}",
             "bounds": "Unknown measurement, model discrepancy and prediction enclosure. No numerical floor entered as a measurement bound.",
             "independence": "Both runs share a source and form one exploratory controlled pair."}
 

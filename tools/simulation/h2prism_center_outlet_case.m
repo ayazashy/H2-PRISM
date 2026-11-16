@@ -39,13 +39,19 @@ assert(strcmp(get_param(restriction,'min_area_unit'),'m^2') && ...
 assert(strcmp(get_param(Simulink.ID.getHandle([model ':7']),'UseLocalSolver'),'off'), ...
     'Unexpected local solver policy');
 assertPath(model,restriction,spec.location);
-before = existingBlocks(model,restriction);
+exempt = [];
+if isfield(spec,'overlay')
+    exempt = [Simulink.ID.getHandle([model ':' spec.overlay.producer_sid]), ...
+        Simulink.ID.getHandle([model ':' spec.overlay.receiver_sid])];
+end
+before = existingBlocks(model,restriction,exempt);
 fixedKeys = {'restriction_area','restriction_area_unit','min_area','max_area','area','area_unit','Cd','B_lam'};
 restrictionConstants = cellfun(@(key) get_param(restriction,key),fixedKeys,'UniformOutput',false);
 area = str2double([string(spec.area.initial_value),string(spec.area.normal_final),string(spec.area.intervention_final)]);
 bounds = str2double([string(spec.area.min),string(spec.area.max)]);
+constantArea = isfield(spec,'overlay') && strcmp(spec.overlay.role,'internal_pressure');
 assert(all(isfinite(area)) && all(area >= bounds(1) & area <= bounds(2)) && ...
-    area(1) == area(2) && area(3) > area(1) && strcmp(spec.area.area_unit,'m^2') && ...
+    area(1) == area(2) && ((constantArea && area(3) == area(1)) || (~constantArea && area(3) > area(1))) && strcmp(spec.area.area_unit,'m^2') && ...
     strcmp(spec.area.time_unit,'s'),'Invalid design area or units');
 set_param(restriction,'restriction_type','foundation.enum.restriction_type.variable');
 if isfield(spec.area,'source_max')
@@ -63,6 +69,9 @@ set_param(command,'step_time',spec.area.step_time,'step_time_unit',spec.area.tim
     'initial_value',spec.area.initial_value,'initial_value_unit',spec.area.area_unit, ...
     'final_value',finalArea,'final_value_unit',spec.area.area_unit);
 simscape.addConnection(command,'O',restriction,'area_in');
+if isfield(spec,'overlay')
+    exempt = h2prism_center_command_overlay(model,spec,true);
+end
 assertCommand(model,restriction,spec);
 keys = fieldnames(spec.solver);
 for i = 1:numel(keys)
@@ -86,7 +95,10 @@ assertPath(model,restriction,spec.location);
 assertCommand(model,restriction,spec);
 assert(isequaln(restrictionConstants,cellfun(@(key) get_param(restriction,key),fixedKeys,'UniformOutput',false)), ...
     'Restriction properties beyond the intended type and command changed');
-after = existingBlocks(model,restriction,command);
+if isfield(spec,'overlay')
+    h2prism_center_command_overlay(model,spec,false);
+end
+after = existingBlocks(model,restriction,[command,exempt]);
 assert(isequaln(before,after),'An unrelated existing block link or connection changed');
 closeDerived = onCleanup(@() closeIfLoaded('Center_phase12')); %#ok<NASGU>
 save_system(model,derived);
@@ -110,7 +122,7 @@ blocks = find_system(model,'SearchDepth',1,'Type','Block');
 state = struct;
 for i = 1:numel(blocks)
     handle = get_param(blocks{i},'Handle');
-    if handle == restriction || handle == exempt
+    if handle == restriction || any(handle == exempt)
         continue
     end
     sid = split(string(Simulink.ID.getSID(handle)),":");
@@ -215,6 +227,9 @@ try
     restriction = Simulink.ID.getHandle([model ':' spec.location.restriction_sid]);
     assertPath(model,restriction,spec.location);
     assertCommand(model,restriction,spec);
+    if isfield(spec,'overlay')
+        h2prism_center_command_overlay(model,spec,false);
+    end
     keys = {'SignalLogging','SaveState','SaveOutput','SaveFinalState'};
     before = cellfun(@(key) get_param(model,key),keys,'UniformOutput',false);
     for i = 1:numel(keys)
@@ -233,7 +248,7 @@ try
         'Simulation failed to reach stop time cleanly');
     writeStage(stageFile,'NUMERIC_EXTRACTION_STARTED');
     [restrictionNode,~] = logNodes(spec);
-    capture = h2prism_center_collect_capture(out,false,fullfile(caseDir,'sensor_checkpoint.mat'),restrictionNode);
+    capture = h2prism_center_collect_capture(out,false,fullfile(caseDir,'sensor_checkpoint.mat'),restrictionNode,isfield(spec,'overlay'));
     verifyCapture(capture,spec);
     capture.approved_model_sha256 = hash;
     save(raw,'-struct','capture','-v7');

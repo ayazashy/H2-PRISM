@@ -1,7 +1,10 @@
-function capture = h2prism_center_collect_capture(out, datasetLogging, checkpoint, outletNode)
+function capture = h2prism_center_collect_capture(out, datasetLogging, checkpoint, outletNode, commandOverlay)
 % Materialize scientific outputs as plain MATLAB arrays and structs.
 if nargin < 4
     outletNode = 'Local_Restriction_G3';
+end
+if nargin < 5
+    commandOverlay = false;
 end
 metadata = out.SimulationMetadata;
 info = metadata.ExecutionInfo;
@@ -69,6 +72,11 @@ if ~datasetLogging
     paths = paths(~ismember(paths,"Constant_Volume_Chamber_G/" + ["mdot_B","mdot_C","mdot_D"]));
     paths = [paths,"Phase12_Outlet_Area/O",string(outletNode) + ["/area_in","/mdot_A","/A/p","/B/p"]];
 end
+overlayPaths = ["Phase13_Command_Offset/O","Phase13_Command_Sum/O","Phase13_Command_Sum/I1"];
+pressurePaths = "Pressure_Source_G3/" + ["mdot_A","mdot_B","A/p","B/p"];
+if commandOverlay
+    paths = [paths,overlayPaths,pressurePaths];
+end
 for path = paths
     try
         leaf = root;
@@ -76,8 +84,15 @@ for path = paths
             leaf = leaf.(identifier);
         end
         series = leaf.series;
-        logSeries(end+1) = struct('path',char(path),'unit',char(series.unit), ... %#ok<AGROW>
-            'time',time(series),'values',values(series));
+        if commandOverlay && ismember(path,[overlayPaths,pressurePaths(3:4)])
+            unit = 'Pa';
+            v = values(series,Units=unit);
+        else
+            unit = char(series.unit);
+            v = values(series);
+        end
+        logSeries(end+1) = struct('path',char(path),'unit',unit, ... %#ok<AGROW>
+            'time',time(series),'values',v);
     catch exception
         logErrors(end+1) = struct('path',char(path),'message',exception.message); %#ok<AGROW>
     end

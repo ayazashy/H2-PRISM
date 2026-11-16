@@ -64,7 +64,7 @@ def specification():
         "classification": "NEW CONTROLLED SIMULATION",
         "status": "CONDITIONAL",
         "archived_anomalous_status": "BLOCKED",
-        "source_sha256": MODEL_HASH, "solver": SOLVER, "area": AREA,
+        "source_sha256": MODEL_HASH, "solver": SOLVER.copy(), "area": AREA.copy(),
         "location": {"restriction_sid": "213", "upstream_junction_sids": ["47", "48", "50"],
                      "flow_sensor_sid": "218", "reservoir_sid": "200"},
         "mechanism": "Increase the existing PS1-to-atmosphere outlet conductance. This is an engineered incremental atmospheric withdrawal through an existing model branch.",
@@ -95,8 +95,9 @@ def prepare(destination, normal, spec=None):
         write_json(folder / "design.json", {"case": case, **spec})
 
 
-def paired_xml(control, opening):
+def paired_xml(control, opening, command_name="Phase12 Outlet Area", final_values=None):
     """Check all saved system and configuration records except the single design delta."""
+    final_values = final_values or (AREA["normal_final"], AREA["intervention_final"])
     with ZipFile(control) as a, ZipFile(opening) as b:
         def records(archive):
             return {name for name in archive.namelist() if name.startswith(("simulink/systems/", "simulink/configSet"))
@@ -119,18 +120,26 @@ def paired_xml(control, opening):
             left, right = ET.fromstring(a.read(name)), ET.fromstring(b.read(name))
             if name == root_name:
                 def command(root):
-                    block = root.find("Block[@Name='Phase12 Outlet Area']")
+                    block = root.find(f"Block[@Name='{command_name}']")
                     if block is None:
                         raise ValueError("missing engineered command block")
                     return block.find(".//P[@Name='final_value']")
 
                 p, q = command(left), command(right)
-                if p is None or q is None or (Decimal(p.text), Decimal(q.text)) != (Decimal(AREA["normal_final"]), Decimal(AREA["intervention_final"])):
+                if p is None or q is None or (Decimal(p.text), Decimal(q.text)) != tuple(map(Decimal, final_values)):
                     raise ValueError("incorrect twin area command delta")
                 q.text = p.text
             if ET.tostring(left) != ET.tostring(right):
                 raise ValueError(f"unintended twin XML difference: {name}")
-    return ["Phase12 Outlet Area.final_value"]
+    return [f"{command_name}.final_value"]
+
+
+def paired_design_xml(files, spec):
+    overlay = spec.get("overlay")
+    if overlay and overlay["role"] == "internal_pressure":
+        return paired_xml(*files, "Phase13 Command Offset",
+                          (overlay["normal_final"], overlay["intervention_final"]))
+    return paired_xml(*files)
 
 
 def approve(root, spec=None):
@@ -148,7 +157,7 @@ def approve(root, spec=None):
         expected = {"source_sha256": MODEL_HASH, "derived_sha256": sha256(file), "case": case,
                     "compile_status": "PASSED", "solver": SOLVER, "location": design["location"],
                     "existing_block_links_parameters_and_connections_unchanged": True,
-                    "command_final_area_m2": AREA["normal_final" if case == "normal" else "intervention_final"]}
+                    "command_final_area_m2": design["area"]["normal_final" if case == "normal" else "intervention_final"]}
         if any(record.get(key) != value for key, value in expected.items()):
             raise ValueError(f"preflight evidence mismatch: {case}")
         checked_file(folder / f"{MODEL}.slx", MODEL_HASH)
@@ -159,7 +168,7 @@ def approve(root, spec=None):
                         "design_sha256": sha256(folder / "design.json")}
     if versions[0] != versions[1]:
         raise ValueError("preflight runtime versions differ")
-    delta = paired_xml(*files)
+    delta = paired_design_xml(files, spec)
     write_json(root / "approval.json", {"schema": "center-phase12-paired-preflight/1",
                                         "allowed_saved_xml_delta": delta, "cases": hashes})
 
