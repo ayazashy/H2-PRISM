@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="921.6pt" height="518.4pt" viewBox="0 0 921.6 518.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.7, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 518.4
+L 921.6 518.4
+L 921.6 0
+L 0 0
+z
+" style="fill: #f4f4e9"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 69.64992 284.54976
+L 303.41376 284.54976
+Q 311.616 284.54976 311.616 281.02464
+L 311.616 169.98336
+Q 311.616 166.45824 303.41376 166.45824
+L 69.64992 166.45824
+Q 61.44768 166.45824 61.44768 169.98336
+L 61.44768 281.02464
+Q 61.44768 284.54976 69.64992 284.54976
+z
+" clip-path="url(#p80d6246fa8)" style="fill: #fafaf3; stroke: #10263e; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 348.52608 284.54976
+L 582.28992 284.54976
+Q 590.49216 284.54976 590.49216 281.02464
+L 590.49216 169.98336
+Q 590.49216 166.45824 582.28992 166.45824
+L 348.52608 166.45824
+Q 340.32384 166.45824 340.32384 169.98336
+L 340.32384 281.02464
+Q 340.32384 284.54976 348.52608 284.54976
+z
+" clip-path="url(#p80d6246fa8)" style="fill: #fafaf3; stroke: #10263e; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 627.40224 284.54976
+L 861.16608 284.54976
+Q 869.36832 284.54976 869.36832 281.02464
+L 869.36832 169.98336
+Q 869.36832 166.45824 861.16608 166.45824
+L 627.40224 166.45824
+Q 619.2 166.45824 619.2 169.98336
+L 619.2 281.02464
+Q 619.2 284.54976 627.40224 284.54976
+z
+" clip-path="url(#p80d6246fa8)" style="fill: #fafaf3; stroke: #64748b; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 588.4416 227.26656
+L 621.25056 227.26656
+" clip-path="url(#p80d6246fa8)" style="fill: none; stroke-dasharray: 1.5,2.475; stroke-dashoffset: 0; stroke: #64748b; stroke-width: 1.5"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #10263e" x="186.53184" y="212.210289" transform="rotate(-0 186.53184 212.210289)">I · Causal signal representation</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1f2933" transform="translate(106.462777 242.134059)">Checksum-matched measurements</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1f2933" transform="translate(117.357699 253.579809)">Verified 5 s lags and segments</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1f2933" transform="translate(109.421527 265.025559)">Explicit missingness and eligibility</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #10263e" x="465.408" y="212.210289" transform="rotate(-0 465.408 212.210289)">II · Diagnostic evidence assessment</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1f2933" transform="translate(391.505344 242.134059)">Persistence and ridge references</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1f2933" transform="translate(400.353469 253.579809)">Mixed MAE and RMSE results</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1f2933" transform="translate(396.015187 265.025559)">State dependence and overlap</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #64748b" x="744.28416" y="212.210289" transform="rotate(-0 744.28416 212.210289)">III · Qualified diagnostic decision</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1f2933" transform="translate(683.034238 242.134059)">Formal D(Y): indeterminate</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1f2933" transform="translate(673.227754 253.579809)">Fault diagnosis: not established</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1f2933" transform="translate(669.258613 265.025559)">Leak localization: not established</text>
+   </g>
+   <g id="patch_5">
+    <path d="M 311.563935 227.26656
+Q 325.970611 227.26656 338.700235 227.26656
+" style="fill: none; stroke: #007f86; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 334.700235 225.26656
+L 338.700235 227.26656
+L 334.700235 229.26656
+" style="fill: none; stroke: #007f86; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #a33f43" x="604.84608" y="209.64096" transform="rotate(-0 604.84608 209.64096)">×</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #10263e" x="465.408" y="357.696" transform="rotate(-0 465.408 357.696)">Observed reference errors describe forecast behavior within this record.</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #64748b" x="465.408" y="396.47232" transform="rotate(-0 465.408 396.47232)">Mechanism-specific conclusions require qualified hypothesis predictions and observation bounds.</text>
+   </g>
+  </g>
+  <g id="text_10">
+   <text style="font-weight: 700; font-size: 21px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #10263e" x="59.904" y="31.104" transform="rotate(-0 59.904 31.104)">What the HY2RES evidence supports</text>
+  </g>
+  <g id="text_11">
+   <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #64748b" x="59.904" y="55.9872" transform="rotate(-0 59.904 55.9872)">The three-layer H₂-PRISM framework applied to Study C</text>
+  </g>
+  <g id="text_12">
+   <text style="font-size: 9.2px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #10263e" x="59.904" y="495.072" transform="rotate(-0 59.904 495.072)">Operational state comparisons are exploratory. The source provides neither qualified incident/location truth nor certified hypothesis bounds.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p80d6246fa8">
+   <rect x="55.296" y="93.312" width="820.224" height="352.512"/>
+  </clipPath>
+ </defs>
+</svg>

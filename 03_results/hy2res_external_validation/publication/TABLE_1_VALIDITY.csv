@@ -1,0 +1,6 @@
+target,unit,source_rows,test_rows,observed_targets,missing_targets,persistence_reference_available,ridge_reference_available,persistence_scorable,ridge_scorable,common_scored,common_segments,insufficient_contiguous_history,nonfinite_lagged_predictor_with_history,common_coverage
+pres_buf,bar,300768,44397,44396,1,43984,43168,43984,43168,43168,409,1228,0,0.9723398504369763
+pres_comp,bar,300768,44397,44396,1,43984,43168,43984,43168,43168,409,1228,0,0.9723398504369763
+h2_flow,NL/h,300768,44397,44396,1,43984,43168,43984,43168,43168,409,1228,0,0.9723398504369763
+pres_pila,bar,300768,44397,44397,0,43984,43168,43984,43168,43168,409,1229,0,0.9723179494109963
+h2_flow_pila,NL/h,300768,44397,44397,0,43984,43168,43984,43168,43168,409,1229,0,0.9723179494109963
