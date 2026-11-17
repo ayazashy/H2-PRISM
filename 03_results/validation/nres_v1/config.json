@@ -1,0 +1,34 @@
+{
+  "version": "NRES-1.0",
+  "core": {
+    "observation": "strictly increasing timestamp vector and row-major samples with unique sensor declarations",
+    "canonical_units": {
+      "pressure": "MPa",
+      "mass_flow": "kg/s"
+    },
+    "missing": "exclude unavailable coordinates via a mask common to all candidates and offsets",
+    "nuisance": "one shared integer-grid offset; no interpolation or amplitude fitting",
+    "bounds_s": [
+      0,
+      0.2,
+      0.5,
+      1,
+      2
+    ],
+    "grid_s": 0.2,
+    "decision": "observation deadline cut before residual evaluation; templates must be available in advance"
+  },
+  "scales": {
+    "development": "nominal SID 213 NORMAL RMS strictly before 1000 s",
+    "physical_ablation": "1 MPa and 1 kg/s"
+  },
+  "methods": {
+    "B0": "raw fixed clock",
+    "B1": "matched residual fixed clock",
+    "B2": "raw shared shift",
+    "B3": "matched residual shared shift, equal per-channel weight",
+    "B4": "B3 plus equal total weight for pressure and flow in the declared subset"
+  },
+  "set": "retain all; no calibrated narrowing",
+  "operational_reference": "BLOCKED_REFERENCE for current data"
+}
