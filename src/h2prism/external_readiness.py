@@ -60,7 +60,9 @@ class Adapter:
                 raise ValueError(f"invalid units, role or polarity for {c['id']}")
         # These are schema safeguards; trusted review must also verify channel semantics.
         forbidden={c.lower() for c in schema.get("metadata_columns",[])}|{"label","event_class","onset","location",
-            "root_id","scenario_id","partition","mechanism","event_location","truth","label_anomaly"}
+            "root_id","scenario_id","partition","mechanism","event_location","truth","label_anomaly",
+            "topology","topology_id","family_id","run_id","parent_hashes","onset_s","end_s",
+            "label_receipt","site","event_type"}
         if forbidden & ({c.lower() for c in cols}|{s.name.lower() for s in self.features}):
             raise ValueError("metadata cannot be a sensor feature")
 
@@ -144,7 +146,7 @@ def qualify(root,manifest,registry):
             issue("structure",f"{sid}: root, family, mechanism and label receipt required")
         if "parent_hashes" not in row or not isinstance(row["parent_hashes"],list):
             issue("structure",f"{sid}: explicit parent hash inventory required")
-        if not row.get("ancestry_complete"):
+        if row.get("ancestry_complete") is not True:
             issue("structure",f"{sid}: ancestry unresolved")
         try:
             obs=adapter.parse(read_bytes(root,Path(row["path"]),row["sha256"]))
@@ -196,9 +198,9 @@ def qualify(root,manifest,registry):
     for part in PARTITIONS:
         n=minima.get(part)
         ln=loc_minima.get(part)
-        if not isinstance(n,int) or n<1 or any(len(v)<n for v in families[part].values()):
+        if type(n) is not int or n<1 or any(len(v)<n for v in families[part].values()):
             covered=False
-        if not isinstance(ln,int) or ln<1 or any(len(v)<ln for v in location_families[part].values()):
+        if type(ln) is not int or ln<1 or any(len(v)<ln for v in location_families[part].values()):
             loc_covered=False
     approved=set()
     if bound_registry:
