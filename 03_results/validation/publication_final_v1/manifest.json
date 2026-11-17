@@ -1,0 +1,401 @@
+{
+  "baseline_manifest_sha256": "955cb325e4d3bec9c1051c05e67a95afed4f753b3c7b902b40057e56660ea135",
+  "frozen_files_verified": 410,
+  "accepted_captures": 12,
+  "historical_graphic_files": 58,
+  "figures": 8,
+  "tables": 14,
+  "items": [
+    {
+      "id": "FIG_01_controlled_response",
+      "title": "Controlled withdrawal under the alternate profile",
+      "files": [
+        "figures/FIG_01_controlled_response.svg",
+        "figures/FIG_01_controlled_response.pdf",
+        "figures/FIG_01_controlled_response.png",
+        "poster/FIG_01_controlled_response.png"
+      ],
+      "caption": "Both twins share the +5 kPa reservoir profile. The atmospheric outlet area steps at 1,000 s only in the intervention.",
+      "sources": {
+        "work/phase13_02/alternate_profile/normal/center_raw.mat": "51170d2b5cfaed1b1e74b7a2c910f287e98cb5c74547c920e0f2177c095efafd",
+        "work/phase13_02/alternate_profile/normal/outlet_evidence.mat": "5967efa47ccf7b491ca5c25a4bf9b66d1b76d32a5f1ba5da346b98c0221239f2",
+        "work/phase13_alternate_retry_02/outlet_opening/center_raw.mat": "664d4c1b39295d6efd93ba941a0ec9bd94dec9179082c4a884c382fa25d13113",
+        "work/phase13_alternate_retry_02/outlet_opening/outlet_evidence.mat": "cd6164416ba18c69bb7053fb59d368f7bf9d6bf74779d79fa12bf7107be8c481"
+      },
+      "exports": {
+        "figures/FIG_01_controlled_response.svg": "150d92f014d931dcc67f1a5baecb6515202ae536485db73747e3e5f0ebd03113",
+        "figures/FIG_01_controlled_response.pdf": "e376e1fffefc70ee1556effacb64cd8b903035bab755dce8f51008341c372f3c",
+        "figures/FIG_01_controlled_response.png": "6b5b9a6c49bbcdb325fbcebc076b4fd043f5620e0b7491a479a2964f2676d349",
+        "poster/FIG_01_controlled_response.png": "d2b9943321b8d01e65fe2d3eee8ca8bd5f4218031df6bf2c08e01c127c27006f"
+      }
+    },
+    {
+      "id": "FIG_02_timing_alignment",
+      "title": "One-second command shift and retrospective alignment",
+      "files": [
+        "figures/FIG_02_timing_alignment.svg",
+        "figures/FIG_02_timing_alignment.pdf",
+        "figures/FIG_02_timing_alignment.png",
+        "poster/FIG_02_timing_alignment.png"
+      ],
+      "caption": "Both commands move from 3.0 to 6.4 MPa on their recorded knots. Event alignment is retrospective and does not diagnose actuator lag.",
+      "sources": {
+        "outputs/nres_v1/provenance.json": "7b72e5179e7d090f3b0615f825017f8b42be8d2e43bac1bbacfa76fc1fcf6ca1",
+        "work/phase13_command_delay_01/normal/center_raw.mat": "15d4851f8c034ffdcfd29e81bccf062d1b820515ba6c8515051b76427f4cdef3",
+        "work/phase13_command_delay_01/outlet_opening/center_raw.mat": "370b0f92876de7e985d2e2f178a9b613acd9409aa04adb8613898fc23adf870a"
+      },
+      "exports": {
+        "figures/FIG_02_timing_alignment.svg": "89875421a03835b4e968bcfc4381ddd0ee68a147b3e89206e4c76ec028e4ed64",
+        "figures/FIG_02_timing_alignment.pdf": "dc943a4f8b5bbbcca498e42b558f5a5dd0d979cfe0e6494a9764db3edf7c1b67",
+        "figures/FIG_02_timing_alignment.png": "00e3d507cb74b6c1df71617ec78711ffe19d918ee39bb8067d5f56a22cc42f81",
+        "poster/FIG_02_timing_alignment.png": "54e6e8e70a19be900bae98c368176b2cbd423a73f9dd5de4d069f27983207997"
+      }
+    },
+    {
+      "id": "FIG_03_archive_ml",
+      "title": "Oracle-onset benchmark and class support",
+      "files": [
+        "figures/FIG_03_archive_ml.svg",
+        "figures/FIG_03_archive_ml.pdf",
+        "figures/FIG_03_archive_ml.png"
+      ],
+      "caption": "All 39 scored holdouts carry LEAK. The constant rule ties XGBoost. No multiclass accuracy is reported.",
+      "sources": {
+        "outputs/phase13_extended_benchmark/comparison.csv": "8c72c504571df34fd4b717c200cb35e535ea8eb4fc7c0e000f9cd5d5e4298180",
+        "outputs/phase13_recovered_final/ml/ml_results.json": "ce9fd236ea6cd9697df68ef5d336bf01a90e388331ffbfcb6cc2c99a1130fd18"
+      },
+      "exports": {
+        "figures/FIG_03_archive_ml.svg": "3d444649cfac7034195b0a3c2c8017d90f545174df5dfd13a6da4a1895fbd160",
+        "figures/FIG_03_archive_ml.pdf": "c459c43746a3143e4358a53d0283976e426be92bd2984663b2bf45096f9be0f4",
+        "figures/FIG_03_archive_ml.png": "19d01f8ae5249d87e703cca88d9cd469907ef241b27bd29d7949f109d7ec2aca"
+      }
+    },
+    {
+      "id": "FIG_04_detection",
+      "title": "Detection delay and false-alarm burden",
+      "files": [
+        "figures/FIG_04_detection.svg",
+        "figures/FIG_04_detection.pdf",
+        "figures/FIG_04_detection.png",
+        "poster/FIG_04_detection.png"
+      ],
+      "caption": "Cumulative clean replay uses all events in the denominator. Different decision cadences are shown in separate panels.",
+      "sources": {
+        "outputs/phase13_alarm_validation/overall.csv": "b83c040aa8fd9fed495b3ca26ea430953ddb0c061e5114e5d677f7ed92049368",
+        "outputs/phase13_decisive/comparison.csv": "b87818284a237c07fcf945643ce7e4c0b6a5c809ed030124ece9132bc8783bda",
+        "outputs/phase13_decisive/scenario.csv": "81933928e9603beb5eff7c3ceed306e8dca2ffd290f21e54fd2c235b95eeea33"
+      },
+      "exports": {
+        "figures/FIG_04_detection.svg": "5dba9555508e061ab732071b1a511149c63f90a4b802e012d583da386ff397dd",
+        "figures/FIG_04_detection.pdf": "2b2281062fcf00b6c3239b0787faa9e60a395528c642b7df15b2a28e7d8e3861",
+        "figures/FIG_04_detection.png": "5aa9905db5813e471c63a5adb64e850b7e9ac2867b2b7b2f7d5fb5fee64a6982",
+        "poster/FIG_04_detection.png": "1cdd98e792954189fd5b68644904bd3c7993789d551821540a9095053dae1485"
+      }
+    },
+    {
+      "id": "FIG_05_robustness",
+      "title": "Hypothetical sensor stresses and persistent alarms",
+      "files": [
+        "figures/FIG_05_robustness.svg",
+        "figures/FIG_05_robustness.pdf",
+        "figures/FIG_05_robustness.png",
+        "poster/FIG_05_robustness.png"
+      ],
+      "caption": "Each metric uses its own scale. Noise, bias, drift, stuck and delayed sensors are simulated perturbations without industrial calibration.",
+      "sources": {
+        "outputs/phase13_decisive/comparison.csv": "b87818284a237c07fcf945643ce7e4c0b6a5c809ed030124ece9132bc8783bda"
+      },
+      "exports": {
+        "figures/FIG_05_robustness.svg": "604227022495cfa8720adbef30726f887779b7500fc994dcbf678d0cb62c6baa",
+        "figures/FIG_05_robustness.pdf": "674db1f6b06c80e285e88a600bd06ca5c7b77eca52158b368d411fcafa8fbc31",
+        "figures/FIG_05_robustness.png": "bbd6ed9284a3ac9a47f3a96189c6ab75322e86b28ab10a81bd69705de70ceb96",
+        "poster/FIG_05_robustness.png": "c6bde769f209fa2e2c2f5a0fa95c4397bfcb6527de7ff6c46631ffe59f66452e"
+      }
+    },
+    {
+      "id": "FIG_06_location_geometry",
+      "title": "Location contrasts depend on sensor group",
+      "files": [
+        "figures/FIG_06_location_geometry.svg",
+        "figures/FIG_06_location_geometry.pdf",
+        "figures/FIG_06_location_geometry.png",
+        "poster/FIG_06_location_geometry.png"
+      ],
+      "caption": "B3 normalized RMS, 30 s prefix, assumed \u00b11 s. Panel color scales are independent. Values do not constitute formal exclusion.",
+      "sources": {
+        "outputs/nres_v1/location_geometry.csv": "35783f79492dd2d02a83c9104d8cc016c4584d73b6dc5b528c95d9bb453a0041"
+      },
+      "exports": {
+        "figures/FIG_06_location_geometry.svg": "ef0f8864f6bd2f422a04ac5e0d03f310356d635b88a1fa7486ea760756fa74e3",
+        "figures/FIG_06_location_geometry.pdf": "f44659ce534e01bd29de05d93d9d50f5b62f570d45c92e90406ca86e0287165d",
+        "figures/FIG_06_location_geometry.png": "9eec145e4465c796d55b803e41a225af7a1fbd9a934cc73363a14998d6b83ca6",
+        "poster/FIG_06_location_geometry.png": "25d1704356768c9e838d90542aba5687bb85e35252b4cec76a7f867174bbcf15"
+      }
+    },
+    {
+      "id": "FIG_07_mechanism_evidence",
+      "title": "Reference, timing and sensor ablations",
+      "files": [
+        "figures/FIG_07_mechanism_evidence.svg",
+        "figures/FIG_07_mechanism_evidence.pdf",
+        "figures/FIG_07_mechanism_evidence.png"
+      ],
+      "caption": "The alternate case is one held-template query, not a set of independent trials. NRES (B4) weighting changes units of the numerical margin, not observed decision accuracy.",
+      "sources": {
+        "outputs/nres_v1/location_geometry.csv": "35783f79492dd2d02a83c9104d8cc016c4584d73b6dc5b528c95d9bb453a0041",
+        "outputs/nres_v1/mfs3_reproduction.csv": "a46076287e1a45cb1458d4bc20ff0e28eab97187b3052b4e841139e598babf15",
+        "outputs/nres_v1/transfer.csv": "6ac3360edf0f28f24f76e1d51cb72af27ce3bfe4652098f85797e34f736a08c6"
+      },
+      "exports": {
+        "figures/FIG_07_mechanism_evidence.svg": "d4c01d8030bf777dca8fed305a06347fdaeeb468318c2b310b7a6b42a4a0782e",
+        "figures/FIG_07_mechanism_evidence.pdf": "bc075b81721e6ca3e589b706a8523c656dee756ace8f19089869c1560f99bd9c",
+        "figures/FIG_07_mechanism_evidence.png": "1f3f2fafb917d01020abc91e461918cef70f5032f3bf95deddca3862ce6a8be7"
+      }
+    },
+    {
+      "id": "FIG_08_formal_decisions",
+      "title": "Empirical evidence and qualified decisions",
+      "files": [
+        "figures/FIG_08_formal_decisions.svg",
+        "figures/FIG_08_formal_decisions.pdf",
+        "figures/FIG_08_formal_decisions.png",
+        "poster/FIG_08_formal_decisions.png"
+      ],
+      "caption": "The schematic shows an evidence gate, not an automatic promotion of template ranks. No qualified exclusions were recorded.",
+      "sources": {
+        "outputs/phase13_integrated_timing/evidence.json": "f3c83fa3b08e2fc18a0e3277b4a22000688305608c6e40f4d80765140a037f75",
+        "outputs/phase13_recovered_final/evidence.json": "30db16f5640669be1e6b40eac81ffac39acbb32704a057d3bc8697e40cf9bb64"
+      },
+      "exports": {
+        "figures/FIG_08_formal_decisions.svg": "6d705a6c54b182ce93c1570bf917c38d8d9f9d882c5148b49eb25096ae027782",
+        "figures/FIG_08_formal_decisions.pdf": "90c82a3bd9c7b112852d243de62bc85e4d6e9ef11062302f70d253792e478d8e",
+        "figures/FIG_08_formal_decisions.png": "a288f029c8677035ec1be4c2fa14303a3df38e190c72d10b59d52342ea0ac3e9",
+        "poster/FIG_08_formal_decisions.png": "65ffd9f634873b5dad409eac83ba9ddb6b75207e04fc5470cdbbee2562d6be4b"
+      }
+    },
+    {
+      "id": "TAB_01",
+      "title": "Accepted capture registry",
+      "files": [
+        "tables/TAB_01.csv",
+        "tables/TAB_01.md"
+      ],
+      "caption": "All twelve captures belong to one Center source family.",
+      "sources": {},
+      "exports": {
+        "tables/TAB_01.csv": "c97a38b462490d561cce79aeb0e508d577b303f296d5f163e02dfdc2e737400e",
+        "tables/TAB_01.md": "eba6f933929fdce85b1cc37cd4ee58228ea2cec2f8452cbecef9e853b1b944b8"
+      }
+    },
+    {
+      "id": "TAB_02",
+      "title": "Mass accounting across fixed integration steps",
+      "files": [
+        "tables/TAB_02.csv",
+        "tables/TAB_02.md"
+      ],
+      "caption": "Mass in kg; residual is storage change minus signed integrated boundary flow.",
+      "sources": {
+        "outputs/phase11-final/mass_balance.csv": "f6b742895d1aab706b5e575dc9a3b1103dff7e58b651820d960da7b88b5f7581"
+      },
+      "exports": {
+        "tables/TAB_02.csv": "271542172072415a1644827491772c3fcb2914fe1ba13b7cc0bdb0ba0083b0fe",
+        "tables/TAB_02.md": "4c66037e0b457d2563e1d8e951f09c0c01009a243a1f49163e46a0b7ef944607"
+      }
+    },
+    {
+      "id": "TAB_03",
+      "title": "Historical event-window model comparison",
+      "files": [
+        "tables/TAB_03.csv",
+        "tables/TAB_03.md"
+      ],
+      "caption": "All 39 scored scenarios carry LEAK annotations; recall denominator is fixed.",
+      "sources": {
+        "outputs/phase13_extended_benchmark/comparison.csv": "8c72c504571df34fd4b717c200cb35e535ea8eb4fc7c0e000f9cd5d5e4298180"
+      },
+      "exports": {
+        "tables/TAB_03.csv": "46831e991e259a27140cea955b6ae671d42c19c8d56a0d90e083d07f6f00669c",
+        "tables/TAB_03.md": "e54de57531f43207831d12fab19fc6c74555224a89c8d6c65e7b0ce1c6656093"
+      }
+    },
+    {
+      "id": "TAB_04",
+      "title": "Frozen 120 s decision replay",
+      "files": [
+        "tables/TAB_04.csv",
+        "tables/TAB_04.md"
+      ],
+      "caption": "Episode counts and rates use the archived observation duration.",
+      "sources": {
+        "outputs/phase13_alarm_validation/overall.csv": "b83c040aa8fd9fed495b3ca26ea430953ddb0c061e5114e5d677f7ed92049368"
+      },
+      "exports": {
+        "tables/TAB_04.csv": "700e97df940c86f85b03d5f78167aeb386cd274e1ceaefe8d56d58b3951aaacf",
+        "tables/TAB_04.md": "8ea441ba8169e30a34ceace91d17cb34defd5474fecbd0d75e377898e2737a5c"
+      }
+    },
+    {
+      "id": "TAB_05",
+      "title": "One-second causal replay and stress tests",
+      "files": [
+        "tables/TAB_05.csv",
+        "tables/TAB_05.md"
+      ],
+      "caption": "Perturbations are hypothetical; duty is a fraction, rates are per inactive archive hour.",
+      "sources": {
+        "outputs/phase13_decisive/comparison.csv": "b87818284a237c07fcf945643ce7e4c0b6a5c809ed030124ece9132bc8783bda"
+      },
+      "exports": {
+        "tables/TAB_05.csv": "21ef82600d7afd3f07f7c1a6065a4d4e0146545131ef2ee67c302bffdca8f1b1",
+        "tables/TAB_05.md": "b8b729d85571ebc2c1eb39ff3596214f87fb11dd2d8123d3a2a2808f534ff72d"
+      }
+    },
+    {
+      "id": "TAB_06",
+      "title": "Command timing sensor residuals",
+      "files": [
+        "tables/TAB_06.csv",
+        "tables/TAB_06.md"
+      ],
+      "caption": "Pressure MPa, signed mass flow kg/s. Clock and event alignment are separate.",
+      "sources": {
+        "outputs/phase13_integrated_timing/sensor_timing.csv": "5c61417ccf68e5ce61cb8ad133bee4af789d12e0278ede8e31e79aabe2b59456"
+      },
+      "exports": {
+        "tables/TAB_06.csv": "5c4141e80112549f900f536445972d225d7fa34b1353032b6118654ad08e0050",
+        "tables/TAB_06.md": "7a9fdead7def652a14638aad5f21fa6330d69801b888c786465da72ec55356fa"
+      }
+    },
+    {
+      "id": "TAB_07",
+      "title": "Location and mechanism geometry",
+      "files": [
+        "tables/TAB_07.csv",
+        "tables/TAB_07.md"
+      ],
+      "caption": "Normalized RMS on a 30 s prefix with hypothetical \u00b11 s alignment.",
+      "sources": {
+        "outputs/nres_v1/location_geometry.csv": "35783f79492dd2d02a83c9104d8cc016c4584d73b6dc5b528c95d9bb453a0041"
+      },
+      "exports": {
+        "tables/TAB_07.csv": "39876840b90d4865a97dfa6b79c155595cb2403e45796774758b7f392835d2c9",
+        "tables/TAB_07.md": "f6ab025463e21e93e0051d7358bb657d1af46167255e378ae7ea1a99df06d9f3"
+      }
+    },
+    {
+      "id": "TAB_08",
+      "title": "Matched-reference baselines on the alternate profile",
+      "files": [
+        "tables/TAB_08.csv",
+        "tables/TAB_08.md"
+      ],
+      "caption": "One alternate profile; settings are repeated views of the same observation.",
+      "sources": {
+        "outputs/nres_v1/transfer.csv": "6ac3360edf0f28f24f76e1d51cb72af27ce3bfe4652098f85797e34f736a08c6"
+      },
+      "exports": {
+        "tables/TAB_08.csv": "be09631581c9b773bdccf01324903ab4996897c4a7eb610b86964b8936078918",
+        "tables/TAB_08.md": "ce63eb1e3606bdce3493ac8c2cb1ff775052fdf290d9fe85629806a6c903d1db"
+      }
+    },
+    {
+      "id": "TAB_09",
+      "title": "Sensor-withholding sensitivity",
+      "files": [
+        "tables/TAB_09.csv",
+        "tables/TAB_09.md"
+      ],
+      "caption": "The margin is normalized RMS. Ranking establishes no exclusions.",
+      "sources": {
+        "outputs/nres_v1/mfs3_reproduction.csv": "a46076287e1a45cb1458d4bc20ff0e28eab97187b3052b4e841139e598babf15"
+      },
+      "exports": {
+        "tables/TAB_09.csv": "8fc577d9c320b4868148f581280eb6d4ade9478254909f9493cade0e0e64166a",
+        "tables/TAB_09.md": "77bad015179bcb922bd8ce7bd0748f640f3a6e44909257aa1d8edab7c3a2b049"
+      }
+    },
+    {
+      "id": "TAB_10",
+      "title": "Focal competing-mechanism routing",
+      "files": [
+        "tables/TAB_10.csv",
+        "tables/TAB_10.md"
+      ],
+      "caption": "The focal controlled queries include self-templates; only one withdrawal used a held template.",
+      "sources": {
+        "outputs/mechanism_screen_v1/thirty_second_summary.csv": "6444709efa86785333b1a5dec5ba68276480a80c7ed9a24d0fd743cd7dfd8138"
+      },
+      "exports": {
+        "tables/TAB_10.csv": "6444709efa86785333b1a5dec5ba68276480a80c7ed9a24d0fd743cd7dfd8138",
+        "tables/TAB_10.md": "ddb66b9adc75061a6375103f8b74da7ffafb245b218c30cb87f32748b1c1cbde"
+      }
+    },
+    {
+      "id": "TAB_11",
+      "title": "Full routing sweep and retained withdrawal queries",
+      "files": [
+        "tables/TAB_11.csv",
+        "tables/TAB_11.md"
+      ],
+      "caption": "Counts repeat settings across a shared family. Eligibility gate disposition is REVISE_OR_REJECT.",
+      "sources": {
+        "outputs/mechanism_screen_v1/results_register.json": "e07c03409cc7ed10c0ba0187ad172b03d9812aee02f71106835f10f6f5af1624"
+      },
+      "exports": {
+        "tables/TAB_11.csv": "4112022fd362c07781c21edbf98df75db5b78c8da29061ff559b404ef3786d78",
+        "tables/TAB_11.md": "0621768ca681297f548aa8d96f70213acab46af7cdc79a53654edd653800594b"
+      }
+    },
+    {
+      "id": "TAB_12",
+      "title": "Intervention observation windows",
+      "files": [
+        "tables/TAB_12.csv",
+        "tables/TAB_12.md"
+      ],
+      "caption": "Matched controlled simulations. The CSV retains original units and precision.",
+      "sources": {
+        "outputs/phase12-paired-results/observation_windows.csv": "385591b7de24b72a756efdaaed1f5fd2a4b38691ec55d742ac91fd7c47b285ff"
+      },
+      "exports": {
+        "tables/TAB_12.csv": "654ed00c0f62d6f42260a534a9ecb2edd7d9f780a24faf5247aa0ae87559afeb",
+        "tables/TAB_12.md": "ecf6a543315533372b669edf5183247575d99232c56fdfe451e3665d7d0c04da"
+      }
+    },
+    {
+      "id": "TAB_13",
+      "title": "Formal decisions and localization",
+      "files": [
+        "tables/TAB_13.csv",
+        "tables/TAB_13.md"
+      ],
+      "caption": "Localization L0 for all observations. Selective risk undefined at zero specific coverage.",
+      "sources": {
+        "outputs/phase13_integrated_timing/evidence.json": "f3c83fa3b08e2fc18a0e3277b4a22000688305608c6e40f4d80765140a037f75",
+        "outputs/phase13_recovered_final/evidence.json": "30db16f5640669be1e6b40eac81ffac39acbb32704a057d3bc8697e40cf9bb64"
+      },
+      "exports": {
+        "tables/TAB_13.csv": "0852754f7d955316db8e1f42bda30b6ae5e2def146f22841f3c7a1ab27e8983c",
+        "tables/TAB_13.md": "7a0b8c756cbb13dc4594d4b0b6c10c0a8841820c947b781666e5c0808ac1cf10"
+      }
+    },
+    {
+      "id": "TAB_14",
+      "title": "Signed timing-pair boundary flows",
+      "files": [
+        "tables/TAB_14.csv",
+        "tables/TAB_14.md"
+      ],
+      "caption": "Boundary accounting from the accepted timing pair; command timing is distinct from actuator response.",
+      "sources": {
+        "outputs/phase13_integrated_timing/boundary_flows.csv": "10f42f60483daa1f54310b11883c195d4a67378bc4222f7c836f3140df577245",
+        "outputs/phase13_integrated_timing/evidence.json": "f3c83fa3b08e2fc18a0e3277b4a22000688305608c6e40f4d80765140a037f75"
+      },
+      "exports": {
+        "tables/TAB_14.csv": "e4fb24ba06013d7384e3fa3a4c4a1380c3353df1d5271c1cd9fdfca34a4420b8",
+        "tables/TAB_14.md": "8207275c70fe2eee53f46a1e2947473cebf747e7493c34df2e49f6454c804292"
+      }
+    }
+  ]
+}

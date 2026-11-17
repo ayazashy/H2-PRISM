@@ -1,0 +1,56 @@
+{
+  "claims": [
+    {
+      "id": "C01",
+      "status": "verified",
+      "statement": "Twelve accepted Center controlled captures",
+      "evidence": [
+        "TAB_01"
+      ]
+    },
+    {
+      "id": "C02",
+      "status": "exploratory",
+      "statement": "39 of 48 archival events triggered a clean one-second EWMA alarm; 42 false episodes",
+      "evidence": [
+        "FIG_04_detection",
+        "TAB_05"
+      ]
+    },
+    {
+      "id": "C03",
+      "status": "exploratory",
+      "statement": "Oracle-onset model scores are LEAK recall only",
+      "evidence": [
+        "FIG_03_archive_ml",
+        "TAB_03"
+      ]
+    },
+    {
+      "id": "C04",
+      "status": "not_adopted",
+      "statement": "Additional gate changed wrong routes from 165 to 164 of 1792 settings",
+      "evidence": [
+        "TAB_11"
+      ]
+    },
+    {
+      "id": "C05",
+      "status": "unresolved",
+      "statement": "Twelve unresolved formal decisions, zero qualified exclusions, L0",
+      "evidence": [
+        "FIG_08_formal_decisions",
+        "TAB_13"
+      ]
+    },
+    {
+      "id": "C06",
+      "status": "not_established",
+      "statement": "Independent multiclass accuracy, selective risk improvement and industrial hydrogen performance",
+      "evidence": [
+        "TAB_01",
+        "TAB_13"
+      ]
+    }
+  ]
+}

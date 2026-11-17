@@ -1,0 +1,292 @@
+[
+  {
+    "scope": "repository",
+    "path": "final_research/formal_decisions.png",
+    "sha256": "55e14d818692c007e94f154d2b1e346e0622766b6258b0962a7a2cb6c76687ea"
+  },
+  {
+    "scope": "repository",
+    "path": "final_research/observed_signature_matrix.png",
+    "sha256": "35c39f7c5e673cd60dfcbab151a668a78519661ef36e9472fab97acd37e01315"
+  },
+  {
+    "scope": "repository",
+    "path": "final_research/rival_responses.png",
+    "sha256": "0884ac4be30616dc89c4360185d0bcae5444ba3951c57db28acb1151726fec17"
+  },
+  {
+    "scope": "repository",
+    "path": "final_research/subset_separability.png",
+    "sha256": "c453da7043f917a2fc179c2e70a3b4be791b1ba6ddc4766b71f7416bb9aef19d"
+  },
+  {
+    "scope": "repository",
+    "path": "phase10_center_normal/shared_knot_discrepancies.png",
+    "sha256": "4692580babda885e0cde2a1ee94ae674953c2ca959f025273ff3bb3b0ea9d67d"
+  },
+  {
+    "scope": "repository",
+    "path": "phase11_center_convergence/convergence_mass.png",
+    "sha256": "1f509c508e67dcb13c583c6943974fb0f42b85efa0e926fd31386acd5331f017"
+  },
+  {
+    "scope": "repository",
+    "path": "phase11_center_convergence/pressure_step.png",
+    "sha256": "f1ab2ee116057d2847793d89ac6d15c8723caa9ee854a485f6888e4b74a0b818"
+  },
+  {
+    "scope": "repository",
+    "path": "phase11_center_normal/baseline_mass.png",
+    "sha256": "001ef42a0ad49c95bf8b92ef9d8f19967594eaf3bff7679725b39bd0a906979c"
+  },
+  {
+    "scope": "repository",
+    "path": "phase12_center_outlet/paired_results/conservation.png",
+    "sha256": "582b708addf64f781f2cc69330ae6adb707d294e8af1027d6662ae220a398cb7"
+  },
+  {
+    "scope": "repository",
+    "path": "phase12_center_outlet/paired_results/mfs_comparison.png",
+    "sha256": "06ff22ade06fdfbea7c1962e9a09780606354672229b91dc5c4d0ff030b70a45"
+  },
+  {
+    "scope": "repository",
+    "path": "phase12_center_outlet/paired_results/outlet_response.png",
+    "sha256": "7d54286a1e5bd55feb38986b6f7bb3d48661e9aa9339b90a3925f3b8308d8a11"
+  },
+  {
+    "scope": "repository",
+    "path": "phase12_center_outlet/paired_results/ps_comparison.png",
+    "sha256": "14f82c29991c3e8f94e8124afd49a6661bb37cd1e06304d0f5bb3e7915ad8482"
+  },
+  {
+    "scope": "workspace",
+    "path": "baseline_freeze_v1/routing_and_reference.png",
+    "sha256": "491ac0e3bbd83774f1fd63760a22b038c53b34eab131bc5c217f68f6c4ae10f2"
+  },
+  {
+    "scope": "workspace",
+    "path": "baseline_freeze_v1/timing_and_baselines.png",
+    "sha256": "5aee4694d290f02cd972adae3d32e54ca030b7b7d29d297a38c4b9a8a1637589"
+  },
+  {
+    "scope": "workspace",
+    "path": "baseline_freeze_v1/tradeoffs.png",
+    "sha256": "001c4cdbe1c3ae3c267caba8b3fd471dadad9e2e03d9ec92da53883a386ab896"
+  },
+  {
+    "scope": "workspace",
+    "path": "final-research/formal_decisions.png",
+    "sha256": "55e14d818692c007e94f154d2b1e346e0622766b6258b0962a7a2cb6c76687ea"
+  },
+  {
+    "scope": "workspace",
+    "path": "final-research/observed_signature_matrix.png",
+    "sha256": "35c39f7c5e673cd60dfcbab151a668a78519661ef36e9472fab97acd37e01315"
+  },
+  {
+    "scope": "workspace",
+    "path": "final-research/phase10_shared_knots.png",
+    "sha256": "4692580babda885e0cde2a1ee94ae674953c2ca959f025273ff3bb3b0ea9d67d"
+  },
+  {
+    "scope": "workspace",
+    "path": "final-research/phase11_pressure_step.png",
+    "sha256": "f1ab2ee116057d2847793d89ac6d15c8723caa9ee854a485f6888e4b74a0b818"
+  },
+  {
+    "scope": "workspace",
+    "path": "final-research/phase12_conservation.png",
+    "sha256": "582b708addf64f781f2cc69330ae6adb707d294e8af1027d6662ae220a398cb7"
+  },
+  {
+    "scope": "workspace",
+    "path": "final-research/phase12_mfs_comparison.png",
+    "sha256": "06ff22ade06fdfbea7c1962e9a09780606354672229b91dc5c4d0ff030b70a45"
+  },
+  {
+    "scope": "workspace",
+    "path": "final-research/phase12_outlet_response.png",
+    "sha256": "7d54286a1e5bd55feb38986b6f7bb3d48661e9aa9339b90a3925f3b8308d8a11"
+  },
+  {
+    "scope": "workspace",
+    "path": "final-research/phase12_ps_comparison.png",
+    "sha256": "14f82c29991c3e8f94e8124afd49a6661bb37cd1e06304d0f5bb3e7915ad8482"
+  },
+  {
+    "scope": "workspace",
+    "path": "final-research/rival_responses.png",
+    "sha256": "0884ac4be30616dc89c4360185d0bcae5444ba3951c57db28acb1151726fec17"
+  },
+  {
+    "scope": "workspace",
+    "path": "final-research/subset_separability.png",
+    "sha256": "c453da7043f917a2fc179c2e70a3b4be791b1ba6ddc4766b71f7416bb9aef19d"
+  },
+  {
+    "scope": "workspace",
+    "path": "mechanism_screen_v1/routing_and_reference.png",
+    "sha256": "491ac0e3bbd83774f1fd63760a22b038c53b34eab131bc5c217f68f6c4ae10f2"
+  },
+  {
+    "scope": "workspace",
+    "path": "nres_v1/location_separation.png",
+    "sha256": "c178502e222651c88fa476a20ad2e8c10b33f8d37c6601b2148b5c5a94efc859"
+  },
+  {
+    "scope": "workspace",
+    "path": "nres_v1/raw_and_residual.png",
+    "sha256": "e5e4166b6c39ea569483b1c086eb618668d201f8139235d6e867b1a858dd32eb"
+  },
+  {
+    "scope": "workspace",
+    "path": "nres_v1/sensor_ablation.png",
+    "sha256": "05e1f0f6da814cf45939d7e96f2b30f47f45f58570ce8bbb98413f7ceaa476fd"
+  },
+  {
+    "scope": "workspace",
+    "path": "nres_v1/stress_comparison.png",
+    "sha256": "54341376f76da2de1f0f5243fb8358d0c2d0fc2ffceddc02042295b51b72ee9d"
+  },
+  {
+    "scope": "workspace",
+    "path": "nres_v1/timing_and_baselines.png",
+    "sha256": "5aee4694d290f02cd972adae3d32e54ca030b7b7d29d297a38c4b9a8a1637589"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase11/baseline_mass.png",
+    "sha256": "001ef42a0ad49c95bf8b92ef9d8f19967594eaf3bff7679725b39bd0a906979c"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase11-final/convergence_mass.png",
+    "sha256": "1f509c508e67dcb13c583c6943974fb0f42b85efa0e926fd31386acd5331f017"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase11-final/pressure_step.png",
+    "sha256": "f1ab2ee116057d2847793d89ac6d15c8723caa9ee854a485f6888e4b74a0b818"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase12-paired-results/conservation.png",
+    "sha256": "582b708addf64f781f2cc69330ae6adb707d294e8af1027d6662ae220a398cb7"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase12-paired-results/mfs_comparison.png",
+    "sha256": "06ff22ade06fdfbea7c1962e9a09780606354672229b91dc5c4d0ff030b70a45"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase12-paired-results/outlet_response.png",
+    "sha256": "7d54286a1e5bd55feb38986b6f7bb3d48661e9aa9339b90a3925f3b8308d8a11"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase12-paired-results/ps_comparison.png",
+    "sha256": "14f82c29991c3e8f94e8124afd49a6661bb37cd1e06304d0f5bb3e7915ad8482"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase13_causal_intelligence/deadline_recall.png",
+    "sha256": "2109c578c478d624c00c2685cb13f66097b3a0fd2fe2dc05140eea5edfa5c8d2"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase13_causal_intelligence/noise_failure.png",
+    "sha256": "ef9be24ef12a8b59de2e503e178240b684316d113f66d7e9f94e9debcf96f3b6"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase13_causal_intelligence/prefix_margin.png",
+    "sha256": "3d28953d8dd0e82abb8bdaca7126a6eeed8a46d0afd750a8f32e2b16d19a412c"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase13_causal_validation/sensor_stress.png",
+    "sha256": "c320e7dbb4367dff64d31f6654d2adeb908d5080e447db730957d4e7a4aeaa34"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase13_decisive/sensor_leverage.png",
+    "sha256": "bca45fbb4835ad9a2ad6f51e171c47dd3d93db66be0566449cb3655c56c03bbc"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase13_decisive/tradeoffs.png",
+    "sha256": "001c4cdbe1c3ae3c267caba8b3fd471dadad9e2e03d9ec92da53883a386ab896"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase13_extended_benchmark/leak_recall.png",
+    "sha256": "64b4a03cb69f2501515a56060dc1f7be32c003178d5ed8bf7ec770907f284dcf"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase13_independent_replay/leak_recall.png",
+    "sha256": "64b4a03cb69f2501515a56060dc1f7be32c003178d5ed8bf7ec770907f284dcf"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase13_integrated_final/responses.png",
+    "sha256": "e17e0d2650251aa52432898365bcdde4f8f49814b9995c4342b5f14715d193dc"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase13_integrated_timing/command_timing.png",
+    "sha256": "929b310b355be402034a8178546f3a17016d6d3fc9bc58886aea1c052998a9d8"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase13_recovered_final/responses.png",
+    "sha256": "006ece97e6845791f09ac542763b370697aaaa759db8df0f5e89e07138718ed2"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase13_sequential/cadence_tradeoff.png",
+    "sha256": "114cb3e225b428cd02c82361c0c6185a9370b48b65bbe9884c6c049cdc038a4c"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase13_sequential/location_geometry.png",
+    "sha256": "79b838b6a1330262bcce1b668e78b23a2a95514064299965b2dad54bfedf6d92"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase2-verified/overlap.png",
+    "sha256": "80f85cbc3b4f3c0777fa88d0299c0eea042c068004adb434567c3f0dc70fa6d4"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase3/network_benchmark.png",
+    "sha256": "2fdc368ff5f7fe99d8e2578af2084895a1f787c632d9c1d832e9f8aa76e2da30"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase4/phase4.png",
+    "sha256": "837b01408c835e9d14d871860ffa982c36cf214b81bfc94b8b9ccf1eb1333a42"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase5/phase5.png",
+    "sha256": "fa4ca3c77506dcdd64b39b49d063c518b12ba52e7ec26844c5c2d721ae07e8f6"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase6/phase6.png",
+    "sha256": "9b3e1b02ecbf45dc9c35cf3323bd2083c73753c3b95875a75e6043c2ab0ba00e"
+  },
+  {
+    "scope": "workspace",
+    "path": "phase9/independence.png",
+    "sha256": "eddc6f370e3dcd14e8b8bfa7656b054181717201671dd87a1f530983d36b90a7"
+  },
+  {
+    "scope": "workspace",
+    "path": "shared_knot_discrepancies.png",
+    "sha256": "4692580babda885e0cde2a1ee94ae674953c2ca959f025273ff3bb3b0ea9d67d"
+  }
+]

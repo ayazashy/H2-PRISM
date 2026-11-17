@@ -1,0 +1,3 @@
+subset,top,runner_up,candidate_set,policy,set_narrowing_calibrated,margin
+all,SID213,NORMAL,"['NORMAL', 'PRESSURE', 'SID213', 'SID215', 'SID312', 'TIMING']",EXPLORATORY_SET,False,0.0283581875819962
+omit_MFS3,SID213,NORMAL,"['NORMAL', 'PRESSURE', 'SID213', 'SID215', 'SID312', 'TIMING']",EXPLORATORY_SET,False,0.0001410427539016
