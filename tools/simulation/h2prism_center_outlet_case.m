@@ -70,6 +70,9 @@ set_param(command,'step_time',spec.area.step_time,'step_time_unit',spec.area.tim
     'final_value',finalArea,'final_value_unit',spec.area.area_unit);
 simscape.addConnection(command,'O',restriction,'area_in');
 if isfield(spec,'overlay')
+    if isfield(spec,'step_delay')
+        verifyStepSchedule(model,spec,true);
+    end
     exempt = h2prism_center_command_overlay(model,spec,true);
 end
 assertCommand(model,restriction,spec);
@@ -84,6 +87,9 @@ for i = 1:numel(inputMap)
     set_param(inputMap(i).handle,'DataLogging','on','DataLoggingNameMode','Custom', ...
         'DataLoggingName',inputMap(i).logName);
 end
+if isfield(spec,'step_delay')
+    verifySensorWriters(model);
+end
 % Diagram update compiles the model but does not simulate a trajectory.
 set_param(model,'SimulationCommand','update');
 actualSolver = struct;
@@ -97,6 +103,9 @@ assert(isequaln(restrictionConstants,cellfun(@(key) get_param(restriction,key),f
     'Restriction properties beyond the intended type and command changed');
 if isfield(spec,'overlay')
     h2prism_center_command_overlay(model,spec,false);
+    if isfield(spec,'step_delay')
+        verifyStepSchedule(model,spec,false);
+    end
 end
 after = existingBlocks(model,restriction,[command,exempt]);
 assert(isequaln(before,after),'An unrelated existing block link or connection changed');
@@ -229,6 +238,10 @@ try
     assertCommand(model,restriction,spec);
     if isfield(spec,'overlay')
         h2prism_center_command_overlay(model,spec,false);
+        if isfield(spec,'step_delay')
+            verifyStepSchedule(model,spec,false);
+            verifySensorWriters(model);
+        end
     end
     keys = {'SignalLogging','SaveState','SaveOutput','SaveFinalState'};
     before = cellfun(@(key) get_param(model,key),keys,'UniformOutput',false);
@@ -312,6 +325,35 @@ function lines = getReportDetails(diagnostic)
 lines = evalc('disp(diagnostic)');
 for i = 1:numel(diagnostic)
     lines = [lines evalc('disp(diagnostic(i).Diagnostic)')]; %#ok<AGROW>
+end
+end
+
+function verifyStepSchedule(model,spec,build)
+step = Simulink.ID.getHandle([model ':59']);
+timing = spec.step_delay;
+assert(strcmp(get_param(step,'ReferenceBlock'),'fl_lib/Physical Signals/Sources/PS Step') && ...
+    strcmp(get_param(step,'LinkStatus'),'resolved') && ...
+    strcmp(get_param(step,'step_time_unit'),'s') && ...
+    strcmp(get_param(step,'initial_value_unit'),'MPa') && ...
+    strcmp(get_param(step,'final_value_unit'),'MPa') && ...
+    str2double(get_param(step,'initial_value'))==3 && str2double(get_param(step,'final_value'))==6.4, ...
+    'Native pressure command identity or plateaus differ');
+expected = timing.control_s;
+if strcmp(spec.case,'outlet_opening')
+    expected = timing.intervention_s;
+end
+if build
+    assert(str2double(get_param(step,'step_time'))==25,'Pinned command schedule differs');
+    set_param(step,'step_time',expected);
+end
+assert(str2double(get_param(step,'step_time'))==str2double(expected),'Unexpected command onset');
+end
+
+function verifySensorWriters(model)
+blocks = find_system(model,'LookUnderMasks','all','FollowLinks','on','BlockType','ToWorkspace');
+names = string(get_param(blocks,'VariableName'));
+for name = [compose("pressure_sensor%d",1:10),compose("flow_sensor%d",1:3)]
+    assert(nnz(names==name)==1,'Expected one To Workspace writer for %s',name);
 end
 end
 

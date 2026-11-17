@@ -180,6 +180,14 @@ def audit(root, previous, reference_dir, case="normal", spec=None):
                          "max_abs_port_mass_residual_kg_s": float(np.max(np.abs(physical["mdot_A"] + physical["mdot_B"]))),
                          "max_abs_command_vs_pB_minus_pA_pa": float(np.max(np.abs(
                              physical["B/p"] - physical["A/p"] - logs["Pressure_Source_G3/P"]["values"])))}
+        if spec.get("step_delay"):
+            timing = spec["step_delay"]
+            expected_onset = float(timing["control_s" if case == "normal" else "intervention_s"])
+            scheduled = np.where(clock < expected_onset, 3e6, 6.4e6)
+            for path in ("PS_Step/O","Pressure_Source_G3/P"):
+                received = trace(logs[path], clock, "Pa", path)
+                require(np.any(clock == expected_onset) and np.allclose(received, scheduled, atol=1e-6, rtol=0),
+                        f"{path}: delayed command time or pressure plateaus differ")
         offset = float(overlay["normal_final"] if case == "normal" else overlay["intervention_final"]) * 1e6
         expected_overlay = np.where(clock < float(overlay["step_time"]), 0., offset)
         source = trace(logs["Phase13_Command_Offset/O"], clock, "Pa", "overlay step")
@@ -196,6 +204,10 @@ def audit(root, previous, reference_dir, case="normal", spec=None):
         x = trace(logs[path], clock, unit, path)
         y = trace(old_logs[path], clock, unit, f"reference {path}")
         expected_delta = expected_overlay if overlay and path == overlay["receiver_log"] else 0
+        timing = spec.get("step_delay")
+        if timing and case == "outlet_opening" and path in ("PS_Step/O", "Pressure_Source_G3/P"):
+            shifted = (clock >= float(timing["control_s"])) & (clock < float(timing["intervention_s"]))
+            expected_delta = np.where(shifted, -3.4e6, 0.)
         delta = float(abs(x - y - expected_delta).max())
         require(delta <= (1e-6 if unit == "Pa" else 1e-10), f"{path}: a native boundary or operating command changed")
         commands[path] = {**range_record(x), "unit": unit, "max_abs_change_from_reference": delta}
@@ -281,7 +293,8 @@ def audit(root, previous, reference_dir, case="normal", spec=None):
             "sensors": sensors, "residuals": residuals, "native_commands": commands,
             "overlay": {"specification": overlay, "received_range_pa": range_record(out),
                         "first_changed_sample_s": float(overlay["step_time"]) if offset else None,
-                        "signed_pressure_source": signed_source} if overlay else None,
+                        "signed_pressure_source": signed_source,
+                        "step_command_and_received_onset_s": expected_onset if spec.get("step_delay") else None} if overlay else None,
             "outlet": {"histories": outlet_report, "sign": "Positive from restriction A toward atmospheric reservoir SID " + location["reservoir_sid"],
                        "first_received_area_change_s": first, "pre_1000_samples": int(pre.sum()), "at_or_after_1000_samples": int((~pre).sum())},
             "boundary_flows_positive_into_network_kg_s": boundaries, "storage": storage,

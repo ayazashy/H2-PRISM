@@ -95,7 +95,7 @@ def prepare(destination, normal, spec=None):
         write_json(folder / "design.json", {"case": case, **spec})
 
 
-def paired_xml(control, opening, command_name="Phase12 Outlet Area", final_values=None):
+def paired_xml(control, opening, command_name="Phase12 Outlet Area", final_values=None, parameter="final_value"):
     """Check all saved system and configuration records except the single design delta."""
     final_values = final_values or (AREA["normal_final"], AREA["intervention_final"])
     with ZipFile(control) as a, ZipFile(opening) as b:
@@ -123,18 +123,23 @@ def paired_xml(control, opening, command_name="Phase12 Outlet Area", final_value
                     block = root.find(f"Block[@Name='{command_name}']")
                     if block is None:
                         raise ValueError("missing engineered command block")
-                    return block.find(".//P[@Name='final_value']")
+                    return block.find(f".//P[@Name='{parameter}']")
 
                 p, q = command(left), command(right)
                 if p is None or q is None or (Decimal(p.text), Decimal(q.text)) != tuple(map(Decimal, final_values)):
-                    raise ValueError("incorrect twin area command delta")
+                    raise ValueError("incorrect twin area command delta" if parameter == "final_value"
+                                     else f"incorrect twin {parameter} delta")
                 q.text = p.text
             if ET.tostring(left) != ET.tostring(right):
                 raise ValueError(f"unintended twin XML difference: {name}")
-    return [f"{command_name}.final_value"]
+    return [f"{command_name}.{parameter}"]
 
 
 def paired_design_xml(files, spec):
+    if "step_delay" in spec:
+        timing = spec["step_delay"]
+        return paired_xml(*files, "PS Step", (timing["control_s"], timing["intervention_s"]),
+                          parameter="step_time")
     overlay = spec.get("overlay")
     if overlay and overlay["role"] == "internal_pressure":
         return paired_xml(*files, "Phase13 Command Offset",
