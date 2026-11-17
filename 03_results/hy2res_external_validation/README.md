@@ -9,3 +9,11 @@ jupyter nbconvert --to notebook --execute notebooks/FAISAL_PIPELINE_WALKTHROUGH.
 ```
 
 Start with [`RESULTS.md`](RESULTS.md); source facts, audit, frozen protocol, machine-readable metrics, and figures are linked there.
+
+## Reviewed publication
+
+- [Scientific review](SCIENTIFIC_REVIEW.md)
+- [Final results, scientific tables and seven PNG/SVG figure pairs](publication/STUDY_C_FINAL_RESULTS.md)
+- [Evidence matrix](publication/STUDY_C_EVIDENCE_MATRIX.csv) and [acceptance](publication/STUDY_C_FINAL_ACCEPTANCE.md)
+- [Exploratory operating-state distinguishability and its two figure pairs](publication/distinguishability/TECHNICAL_REPORT.md)
+- [Official source retrieval and reproduction commands](publication/STUDY_C_REPRODUCE.md)
