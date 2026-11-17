@@ -1,8 +1,9 @@
-claim,evidence,qualification
-Causal recorded-channel representation,Eligible one-step pairs from verified same-logger channels,Valid for recorded signal timing and source units
-Cross-run operating-reference performance,Grouped held-out persistence and ridge comparison,Descriptive only on shared apparatus
-Operating-condition sensitivity,Per-run differences with overview settings,Descriptive because conditions and run histories are confounded
-Physical hydrogen mass-flow calibration,Source reports normalized volumetric flow,Insufficient for verified mass conversion or calibration
-Fault diagnosis and localization,No qualified event ground truth or physical uncertainty bounds,Blocked
-Formal D(Y) and industrial transfer,No suitable formal or external validation evidence,Blocked
-
+claim,evidence_source,evaluation_method,verified_result,support,applicable_system,limitation
+Causal reference implementation,benchmark.py and PROTOCOL.md,Code and timing audit,Both models use decision-time values with a verified next observation,Validated implementation,MHC dual-stage recorded channels,Decision-time availability assumed from logger
+Measurement handling,channel_map.json and verify_publication.py,Source workbook reconciliation,P-2 uses barg and MFC-3 uses ln/min,Validated source representation,MHC logger,Independent calibration and mass conversion unverified
+Held-out empirical performance,tables/table_2_performance.csv,Identical scored targets and equal-run summaries,Persistence MAE lower throughout and Ridge RMSE slightly lower in aggregate,Descriptive,Three held-out MHC workbooks,Observation-level Ridge predictions unavailable
+Cross-run behavior,tables/table_1_eligibility.csv and tables/table_2_performance.csv,Run-level comparisons,Errors differ across documented runs,Descriptive,Shared laboratory apparatus,Conditions and initial states confounded
+Fault diagnosis,Source scope,Ground-truth qualification,Unavailable fault labels and bounds,NOT ESTABLISHED,MHC compressor,Prediction residuals do not identify mechanisms
+Formal D(Y) exclusion,Source scope,Qualified uncertainty review,No qualified experimental hypothesis bounds,NOT ESTABLISHED,H2-PRISM Layer III,Formal decision framework outside experimental scope
+Leak localization,Source scope,Ground-truth qualification,No verified leak location,NOT ESTABLISHED,MHC compressor,No suitable location labels
+Independent industrial generalization,split_manifest.csv,Dependence review,Shared apparatus and unresolved carryover,NOT ESTABLISHED,Industrial compressors,Independent generating families and external sites unavailable
