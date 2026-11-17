@@ -1,0 +1,8 @@
+claim,evidence,qualification
+Causal recorded-channel representation,Eligible one-step pairs from verified same-logger channels,Valid for recorded signal timing and source units
+Cross-run operating-reference performance,Grouped held-out persistence and ridge comparison,Descriptive only on shared apparatus
+Operating-condition sensitivity,Per-run differences with overview settings,Descriptive because conditions and run histories are confounded
+Physical hydrogen mass-flow calibration,Source reports normalized volumetric flow,Insufficient for verified mass conversion or calibration
+Fault diagnosis and localization,No qualified event ground truth or physical uncertainty bounds,Blocked
+Formal D(Y) and industrial transfer,No suitable formal or external validation evidence,Blocked
+
