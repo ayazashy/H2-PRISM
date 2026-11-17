@@ -1,0 +1,36 @@
+{
+  "source_inventory": "COMPLETED",
+  "normal": "REFERENCE_ONLY",
+  "leak": "CONTROLLED_OUTLET_ONLY",
+  "fault": "BLOCKED",
+  "delay": "BLOCKED",
+  "independent_roots": "BLOCKED",
+  "matlab_authorized": false,
+  "family_counts": {
+    "NORMAL": 0,
+    "LEAK": 0,
+    "FAULT": 0,
+    "DELAY": 0
+  },
+  "formal": "INDETERMINATE / UNRESOLVED / L0",
+  "external": "NOT_ESTABLISHED",
+  "evaluation": {
+    "samples": 5,
+    "frequency_hz": 1,
+    "stride_s": 120,
+    "deadline": null,
+    "field_alarm_budget": null,
+    "models": [
+      "logistic",
+      "random_forest",
+      "xgboost",
+      "linear_svm",
+      "rbf_svm"
+    ],
+    "partitions": [
+      "development",
+      "calibration",
+      "untouched_test"
+    ]
+  }
+}
