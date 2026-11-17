@@ -22,12 +22,18 @@ def main(base, out):
     specs, source = designs(prior)
     accepted = {}
     captures = {}
-    pressure = {}
+    paired = {}
+    physics = {}
+    recovered = work / "phase13_alternate_retry_02"
     histories = {}
-    for pair, names in (("pressure_rival", CASES), ("alternate_profile", ("normal",))):
+    for pair, names in (("pressure_rival", CASES), ("alternate_profile", CASES)):
         for name in names:
-            report, data = validate_and_read(matrix / pair, reference, specs[pair], name)
-            assert report["capture_hashes"] == read_json(matrix / pair / name / "phase13_acceptance.json")["capture_hashes"]
+            case_root = recovered if (pair, name) == ("alternate_profile", "outlet_opening") else matrix / pair
+            report, data = validate_and_read(case_root, reference, specs[pair], name)
+            if case_root == recovered:
+                assert report["pair"]["cases"] == accepted["alternate_profile:normal"]["pair"]["cases"]
+            else:
+                assert report["capture_hashes"] == read_json(case_root / name / "phase13_acceptance.json")["capture_hashes"]
             accepted[pair + ":" + name] = report
             key = pair + ":" + name
             captures[key] = {"sensors":data["sensors"]}
@@ -36,11 +42,10 @@ def main(base, out):
             paths = ("Reservoir/P","Reservoir/A/p","Reservoir/mdot_A","Pressure_Source_G3/P",
                      "Pressure_Source_G3/A/p","Pressure_Source_G3/B/p","Pressure_Source_G3/mdot_A","Pressure_Source_G3/mdot_B")
             histories[key] = {p: {str(t):float(logs[p][np.searchsorted(clock,t)]) for t in (499.8,500,999.8,1000,1000.2,20000)} for p in paths}
-            if pair == "pressure_rival":
-                pressure[name] = data
-                if name == "outlet_opening":
-                    physics = physical_comparison(clock, pressure["normal"], data, specs[pair])
-                    pressure.clear()
+            paired[name] = data
+            if name == "outlet_opening":
+                physics[pair] = physical_comparison(clock, paired["normal"], data, specs[pair])
+                paired.clear()
             del data, logs
     registry = read_json(prior_registry())["registry"]
     for study, folder in (("A", prior), ("sid312", rivals / "sid312"), ("sid215", rivals / "sid215")):
@@ -65,7 +70,7 @@ def main(base, out):
     scale = np.array([np.sqrt(np.mean(values["A:normal"][n][~post]**2)) for n in names])
     assert np.all(np.isfinite(scale) & (scale > 0))
     traces["NORMAL"] = np.zeros((post.sum(), len(names)))
-    for study in ("A", "sid312", "sid215", "pressure_rival"):
+    for study in ("A", "sid312", "sid215", "pressure_rival", "alternate_profile"):
         a, b = (values[study + ":" + case] for case in CASES)
         records, win = sensor_comparison(clock, a, b, 1000)
         for r in records:
@@ -116,7 +121,7 @@ def main(base, out):
     view = clock[post] <= 1120
     for ax,name in zip(axes,("PS1","MFS1","MFS3")):
         j=names.index(name)
-        for k,color in zip(("pressure_rival","A","sid312","sid215"),("#143253","#078781","#3678af","#5f677d")):
+        for k,color in zip(("pressure_rival","A","sid312","sid215","alternate_profile"),("#143253","#078781","#3678af","#5f677d","#775a98")):
             ax.plot(clock[post][view]-1000,traces[k][view,j]*scale[j],label=k,color=color)
         ax.set_ylabel(name + (" (MPa)" if name.startswith("PS") else " (kg/s)"))
     axes[0].legend()
