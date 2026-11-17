@@ -1,0 +1,9 @@
+claim_or_limit,status,evidence
+Reference prediction,Evaluated,One-step pressure/flow MAE and RMSE against persistence on the fixed chronological test; see per_channel_reference_metrics.csv.
+Reference availability,Measured,"Valid prediction counts, observed-target denominators, coverage, and segment counts are reported per channel."
+Incident detection or false-alarm rate,Not evaluated,No independently qualified incident labels are present; no detection accuracy or false-alarm rate is claimed.
+"Leak/fault/delay classification, D(Y), or localization",Out of scope,No incident labels or evidence supporting these claims; this notebook does not train an incident classifier.
+Cross-plant or pipeline transfer,Not established,One residential pilot-system record; results do not establish independent-plant generalization.
+Timezone and gap interpretation,Limited,Timezone is unspecified; non-5-second intervals and OPEN/CLOSE boundaries conservatively split causal segments without interpolation.
+Units and flow interpretation,Source-bounded,"Published units are retained; h2_flow is a preceding-interval rate, pres_comp is tank pressure, and undocumented columns are excluded."
+Targets with no observed variation,No predictive evidence,pres_pila and h2_flow_pila are constant at zero across the source; their zero errors are uninformative and excluded from validation selection ratios.

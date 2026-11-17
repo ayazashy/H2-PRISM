@@ -1,0 +1,6 @@
+target,unit,validation_rows,persistence_mae,persistence_rmse,contextual_mae,contextual_rmse,contextual_to_persistence_rmse_ratio,macro_validation_rmse_ratio,selected_model
+pres_buf,bar,43134,0.004356192330875841,0.02087149331235263,0.0044799794705870965,0.016986054400506868,0.8138399177433943,0.8784286895134344,contextual_ridge
+pres_comp,bar (tank pressure; not compressor-discharge pressure),43134,0.025485695738860146,0.0505246733392085,0.025482193948197427,0.04094393919709773,0.8103751393346296,0.8784286895134344,contextual_ridge
+pres_pila,bar,43134,0.0,0.0,0.0,0.0,,0.8784286895134344,contextual_ridge
+h2_flow,NL/h (generated over the preceding sample interval),43134,0.005548755042425929,0.4280297212088684,0.025822574572316452,0.43276844315856816,1.0110710114622796,0.8784286895134344,contextual_ridge
+h2_flow_pila,NL/h (fuel-cell consumption),43134,0.0,0.0,0.0,0.0,,0.8784286895134344,contextual_ridge
