@@ -1,0 +1,177 @@
+{
+  "dataset": "synthetic-schema-portability-only",
+  "manifest_canonical_sha256": "e1f2777b040c2166e0d9862f006454f493b547dc9f8f4b635cfe6362e1ed4863",
+  "claims": {
+    "multiclass": {
+      "status": "BLOCKED",
+      "reasons": [
+        "provenance, labels or class support incomplete",
+        "required reviewed evidence missing: independence",
+        "required reviewed evidence missing: labels",
+        "required reviewed evidence missing: locked_protocol",
+        "required reviewed evidence missing: precision_design"
+      ]
+    },
+    "localization": {
+      "status": "BLOCKED",
+      "reasons": [
+        "provenance, labels or class support incomplete",
+        "location support incomplete",
+        "required reviewed evidence missing: independence",
+        "required reviewed evidence missing: labels",
+        "required reviewed evidence missing: location_truth",
+        "required reviewed evidence missing: locked_protocol",
+        "required reviewed evidence missing: precision_design"
+      ]
+    },
+    "calibration": {
+      "status": "BLOCKED",
+      "reasons": [
+        "provenance, labels or class support incomplete",
+        "required reviewed evidence missing: calibration_plan",
+        "required reviewed evidence missing: independence",
+        "required reviewed evidence missing: labels",
+        "required reviewed evidence missing: locked_protocol",
+        "required reviewed evidence missing: precision_design"
+      ]
+    },
+    "formal": {
+      "status": "BLOCKED",
+      "reasons": [
+        "provenance, labels or class support incomplete",
+        "required reviewed evidence missing: clock_bounds",
+        "required reviewed evidence missing: independence",
+        "required reviewed evidence missing: initial_boundary_bounds",
+        "required reviewed evidence missing: joint_prediction_enclosures",
+        "required reviewed evidence missing: labels",
+        "required reviewed evidence missing: locked_protocol",
+        "required reviewed evidence missing: measurement_bounds",
+        "required reviewed evidence missing: model_discrepancy",
+        "required reviewed evidence missing: numerical_enclosure",
+        "required reviewed evidence missing: parameter_bounds"
+      ]
+    },
+    "incremental_value": {
+      "status": "BLOCKED",
+      "reasons": [
+        "provenance, labels or class support incomplete",
+        "required reviewed evidence missing: calibration_plan",
+        "required reviewed evidence missing: clock_bounds",
+        "required reviewed evidence missing: independence",
+        "required reviewed evidence missing: initial_boundary_bounds",
+        "required reviewed evidence missing: joint_prediction_enclosures",
+        "required reviewed evidence missing: labels",
+        "required reviewed evidence missing: locked_protocol",
+        "required reviewed evidence missing: matched_coverage_plan",
+        "required reviewed evidence missing: measurement_bounds",
+        "required reviewed evidence missing: model_discrepancy",
+        "required reviewed evidence missing: numerical_enclosure",
+        "required reviewed evidence missing: parameter_bounds",
+        "required reviewed evidence missing: precision_design"
+      ]
+    }
+  },
+  "issues": {
+    "evidence": [
+      "no reviewed registry bound to canonical dataset manifest"
+    ],
+    "labels": [
+      "fixture-0: no externally reviewed label receipt",
+      "fixture-1: no externally reviewed label receipt",
+      "fixture-2: no externally reviewed label receipt"
+    ]
+  },
+  "scenarios": {
+    "fixture-0": {
+      "partition": "development",
+      "samples": 2,
+      "topology": {
+        "id": "toy-graph",
+        "edges": [
+          "X-Y"
+        ]
+      },
+      "missing_fraction": 0.0
+    },
+    "fixture-1": {
+      "partition": "calibration",
+      "samples": 2,
+      "topology": {
+        "id": "toy-graph",
+        "edges": [
+          "X-Y"
+        ]
+      },
+      "missing_fraction": 0.0
+    },
+    "fixture-2": {
+      "partition": "untouched_test",
+      "samples": 2,
+      "topology": {
+        "id": "toy-graph",
+        "edges": [
+          "X-Y"
+        ]
+      },
+      "missing_fraction": 0.0
+    }
+  },
+  "declared_family_counts": {
+    "development": {
+      "NORMAL": 1,
+      "FAULT": 0,
+      "DELAY": 0,
+      "LEAK": 0
+    },
+    "calibration": {
+      "NORMAL": 1,
+      "FAULT": 0,
+      "DELAY": 0,
+      "LEAK": 0
+    },
+    "untouched_test": {
+      "NORMAL": 1,
+      "FAULT": 0,
+      "DELAY": 0,
+      "LEAK": 0
+    }
+  },
+  "root_counts": {
+    "development": {
+      "NORMAL": 1,
+      "FAULT": 0,
+      "DELAY": 0,
+      "LEAK": 0
+    },
+    "calibration": {
+      "NORMAL": 1,
+      "FAULT": 0,
+      "DELAY": 0,
+      "LEAK": 0
+    },
+    "untouched_test": {
+      "NORMAL": 1,
+      "FAULT": 0,
+      "DELAY": 0,
+      "LEAK": 0
+    }
+  },
+  "location_root_counts": {
+    "development": {},
+    "calibration": {},
+    "untouched_test": {}
+  },
+  "warning": "Structural qualification and receipt integrity do not prove independence, scientific correctness or certified exclusions.",
+  "portability_example": {
+    "clock_s": [
+      0.0
+    ],
+    "canonical_values": [
+      [
+        0.21,
+        -0.02
+      ]
+    ],
+    "note": "synthetic schema fixture only, never used for independent performance"
+  }
+}
