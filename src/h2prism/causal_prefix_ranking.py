@@ -27,7 +27,7 @@ def rank_prefix(values,templates,idx,offsets):
     return sorted(scores,key=scores.get),scores
 
 
-def analyze(base,out):
+def analyze(base,out, alert_delays=(0,), offset_steps=(0,5,10)):
     work=base/"work"
     evidence=json.loads((base/"outputs/phase13_recovered_final/evidence.json").read_text(encoding="utf8"))
     timing=json.loads((base/"outputs/phase13_integrated_timing/evidence.json").read_text(encoding="utf8"))
@@ -76,21 +76,22 @@ def analyze(base,out):
             alerts.append(dict(query=query,scope=scope,start_s=begins,first_alert_s=alert))
             if alert is None:
                 continue
-            j=np.searchsorted(clock,alert)
-            for horizon in (0,1,2,5,10,30):
-                stop=j+round(horizon/.2)+1
-                if stop>len(clock):
-                    continue
-                # Paired reference readings must be contemporaneous; no future sample is used.
-                prefix=contrast[query][j:stop]
-                for subset,indices in subsets.items():
-                    for offset in (0,5,10):
-                        ordered,scores=rank_prefix(prefix,templates,indices,range(-offset,offset+1))
-                        rows.append(dict(query=query,scope=scope,alert_s=alert,deadline_s=clock[stop-1],
-                            window_s=horizon,subset=subset,hypothetical_offset_s=offset*.2,
-                            rank=" ".join(ordered),margin=scores[ordered[1]]-scores[ordered[0]],
-                            rms=json.dumps(scores),self_template=query in templates,
-                            candidate_locations="213 312 215",formal="UNRESOLVED / L0"))
+            for alert_delay in alert_delays:
+                j=np.searchsorted(clock,alert+alert_delay)
+                for horizon in (0,1,2,5,10,30):
+                    stop=j+round(horizon/.2)+1
+                    if stop>len(clock):
+                        continue
+                    # Paired reference readings must be contemporaneous; no future sample is used.
+                    prefix=contrast[query][j:stop]
+                    for subset,indices in subsets.items():
+                        for offset in offset_steps:
+                            ordered,scores=rank_prefix(prefix,templates,indices,range(-offset,offset+1))
+                            rows.append(dict(query=query,scope=scope,alert_s=alert,deadline_s=clock[stop-1],
+                                alert_delay_s=alert_delay,window_s=horizon,subset=subset,hypothetical_offset_s=offset*.2,
+                                rank=" ".join(ordered),margin=scores[ordered[1]]-scores[ordered[0]],
+                                rms=json.dumps(scores),self_template=query in templates,
+                                candidate_locations="213 312 215",formal="UNRESOLVED / L0"))
     pd.DataFrame(rows).to_csv(out/"prefix_ranks.csv",index=False)
     pd.DataFrame(alerts).to_csv(out/"rank_alerts.csv",index=False)
 
@@ -99,6 +100,10 @@ if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("base",type=Path)
     p.add_argument("out",type=Path)
+    p.add_argument("--alert-delays",type=int,nargs="+",default=[0])
+    p.add_argument("--offset-steps",type=int,nargs="+",default=[0,5,10])
     a=p.parse_args()
+    if min(a.alert_delays+a.offset_steps)<0:
+        p.error("timing limits must be nonnegative")
     a.out.mkdir(parents=True)
-    analyze(a.base,a.out)
+    analyze(a.base,a.out,a.alert_delays,a.offset_steps)
