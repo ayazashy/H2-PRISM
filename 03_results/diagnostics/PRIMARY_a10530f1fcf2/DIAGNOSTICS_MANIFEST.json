@@ -1,0 +1,28 @@
+{
+  "source_run_key": "a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb",
+  "source_artifact_class": "PRIMARY_EXPERIMENT",
+  "source_predictions_sha256": "4338c8c9ececc477212043ba890812b3163e0f7ef16d10c567fb4161c0103098",
+  "source_decisions_sha256": "1f4579271b8fa5ec11d4950cf1e19c4f5eb73c552e7f831cbb1d418b70862c86",
+  "config_sha256": "f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae",
+  "script": "tools/experiments/diagnose_primary_run.py",
+  "command": "python tools/experiments/diagnose_primary_run.py --run 03_results/primary_protocol/PRIMARY --raw-parent data/raw",
+  "verification_all_match": true,
+  "comparator_attainability_identical_across_methods": true,
+  "status": "DIAGNOSTIC / EXPLORATORY_POST_HOC - not a registered estimand; registered RQ1 remains as in rq1.csv",
+  "outputs": {
+    "dx_association.csv": "ee5b91920f634da87e194c97a83382f2628e2f0dca16848e6380909bdff61dec",
+    "dx_selection_overlap.csv": "4db47ca31ffbd3038ed9810d3014d1d76c5da7b1d19dc308f5e31e9b55216662",
+    "error_attribution.csv": "3619da7e6cb78a443e5a7d248e52d145d548ee3a3f405c64b4a24ac917c13dfe",
+    "error_confidence_and_flags.csv": "fff053ea96259e696000f2090518b03304fd124764344204a893a50ec5c86bd4",
+    "exploratory_guard_effect.csv": "d4b0ed9b0b1f4b79e3135f0d8d8ae1b507a593060df012f9eef73a970b80527c",
+    "exploratory_shared_coverage.csv": "f7fd6d949506df2e44eb7914ed4b05b9963d5bd9d20d58a98cee060b2e5a1a23",
+    "rq1_binding_constraints.csv": "b5efa925ef2e54aef3560fa1b2593c07747daa5cc90c9c287830a74890af82bd",
+    "rq1_pooled_reasons.csv": "7dccba0a8c94d8e6d493867c9f2c1429e3e6e8d296c6b30145139fd7b2490307",
+    "rq2_accounting.csv": "8789fd8c02510d505f9a009c05dd6d8cbee73a1070dd44afa88a40eaedd3b023",
+    "run_fingerprint.csv": "e71b96a335b2e497183f06e57c2b4d8ee4d6dc3af82b64ca6784a1513fe9411c",
+    "source_normal_files.csv": "4b5f8adb57c087e9e12cb797fa2045dcf38c2307bada2d4c91fdce02d8602ad3",
+    "support_flag_structure.csv": "1afbbf73a050ea15b931375bd3dc6357f385fb96662410fecdb997c4e3415d5b",
+    "training_fingerprint_by_fold.csv": "f7f5a0e9ad5c53b983db704310e6cd92a620d8eebd3e07c05648814986e0e83a",
+    "verification.csv": "1d442c8147fc38f8e393db36f3d4cef10901b7e46e999e92e11d141e41ed3d11"
+  }
+}

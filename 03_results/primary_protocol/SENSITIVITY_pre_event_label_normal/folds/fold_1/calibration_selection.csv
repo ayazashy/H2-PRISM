@@ -1,0 +1,3 @@
+method,log_loss,brier,monotone,fold,selected
+none,0.2921098515,0.1763659213,True,1,none
+sigmoid,1.108688605,0.4341521508,True,1,none

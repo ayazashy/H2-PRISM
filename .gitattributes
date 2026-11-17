@@ -1,0 +1,31 @@
+# Hash-pinned provenance artifacts must have identical bytes on every platform.
+# Their SHA-256 values are recorded in 06_audit_preparation/pre_experiment_review/OUTPUT_HASHES.json
+# and the candidate freeze specs. With core.autocrlf=true (Git for Windows default) a fresh checkout
+# would otherwise write CRLF and break those hashes. Scope is deliberately narrow; nothing else changes.
+06_audit_preparation/**/*.csv text eol=lf
+06_audit_preparation/**/*.json text eol=lf
+06_audit_preparation/**/*.yaml text eol=lf
+02_methodology/*.csv text eol=lf
+src/h2prism/dataset_manifest.py text eol=lf
+tools/dataset/*.py text eol=lf
+
+# Checksum-verified sample data: never convert
+data/sample/*.parquet binary
+
+# Phase 11/12: hash-recorded scientific outputs (FIGURE_MANIFEST / TABLE_MANIFEST record their SHA-256)
+03_results/**/*.csv text eol=lf
+03_results/**/*.json text eol=lf
+03_results/**/*.md text eol=lf
+03_results/**/*.svg text eol=lf
+03_results/**/*.png binary
+03_results/**/*.pdf binary
+
+# SIMULATION_GENERATION:V2_NORMAL_SUPPORT: hash-bound files must check out with exactly their bound bytes on every
+# platform. Package v2 bound two files as CRLF; package v3 binds all four as LF (v2 is void, see AUTHORIZATION_HISTORY.csv).
+06_audit_preparation/simulation/v2_normal_support/generate_v2_normal_support.m text eol=lf
+tools/simulation/v2_normal_authorization.py text eol=lf
+tools/simulation/postprocess_v2_normal_runs.py text eol=lf
+tools/simulation/validate_v2_normal_outputs.py text eol=lf
+
+# H2Net v1 generated property tables are hash-recorded: identical bytes on every platform
+06_audit_preparation/simulation/h2net_v1/properties/* text eol=lf

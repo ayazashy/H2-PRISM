@@ -1,0 +1,22 @@
+# UNSIGNED TEMPLATE - not an approval. See SIGNOFF_PACKAGE.md.
+approval_id: T6c_rq2_contributing_reasons__3d0a5290__REVIEWER
+artifact_id: T6c_rq2_contributing_reasons
+claim_scope: DESCRIPTIVE
+decision: TO_BE_DECIDED_BY_REVIEWER
+approved_claims:
+- 'Non-exclusive contributing reasons: a non-SPECIFIC decision counts once for every reason recorded in its reason code; counts
+  do not sum to the number of decisions.'
+limitations_acknowledged:
+- non-exclusive counts
+reviewer:
+  name: TO_BE_FILLED_BY_REVIEWER
+  role: TO_BE_FILLED_BY_REVIEWER
+date: YYYY-MM-DD
+statement: ''
+binding:
+  input_sha256:
+    03_results/derived/PRIMARY/decision_reasons_contributing.csv: 97b0bfd667105db54df307b4a9da9ce79d7e755805208dd974ee6cebf7204e8d
+  spec_sha256: 3d0a529081f7ef904f1025f7d4f14053ef82a419373c2f95f5699771d86f6fdd
+  renderer_sha256: 12ba184bfc5f603546a75e47764b8f3569dffc44810423add4bc024b4cdfdd66
+  source_run_keys:
+  - a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb

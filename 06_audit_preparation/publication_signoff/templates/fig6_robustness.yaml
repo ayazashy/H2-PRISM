@@ -1,0 +1,34 @@
+# UNSIGNED TEMPLATE - not an approval. See SIGNOFF_PACKAGE.md.
+approval_id: fig6_robustness__a6970043__REVIEWER
+artifact_id: fig6_robustness
+claim_scope: DESCRIPTIVE
+decision: TO_BE_DECIDED_BY_REVIEWER
+approved_claims:
+- "The primary contrast (s_C minus s_C\u2212D) at matched coverage 0.80 (a) and 0.60 (b) in the primary analysis and in each\
+  \ registered robustness and sensitivity analysis. Open markers denote analyses that evaluate a different window population\
+  \ or different independence units; analyses that were not run or are not estimable are labelled. Comparisons that are not\
+  \ estimable under the registered protocol are labelled and no value is drawn; this applies to every registered comparison\
+  \ in every completed analysis (pooled estimates require every fold, and Center's flag-free coverage ceiling is 0.258; see\
+  \ T7)."
+limitations_acknowledged:
+- analyses with a different window population or independence units are open markers and are compared by direction only; sensitivity
+  results never replace the primary result
+reviewer:
+  name: TO_BE_FILLED_BY_REVIEWER
+  role: TO_BE_FILLED_BY_REVIEWER
+date: YYYY-MM-DD
+statement: ''
+binding:
+  input_sha256:
+    03_results/primary_protocol/SENSITIVITY_SUMMARY/sensitivity_summary.csv: 9ef26340c444403ee61a76388f5a11f91058a5c6b402c68e1ee509f3f4e4e20e
+  spec_sha256: a6970043e60f302899887de4c94bb75c6b479b9ae7964e024729191e4a344e1b
+  renderer_sha256: 6e06bb5ba6456ab98d2604d02751609b3872dd44123f646c88699c8c940876c8
+  source_run_keys:
+  - 105fde53d265c838b7571a66c62eaced0430ac8dd32a34d28a68e4ab938693d5
+  - 220f49ad35f985667b3be78d2ffdc6d1b1891f314aa32db6be15108ab7745808
+  - 4d13822c55212e2185fae756332447d1bf21618fe9920fe4aa9336218acd8325
+  - 72075f284d5044f8d8ac45c440d3bdacc8d710e93f040304a3e7369b52385060
+  - 7565497cc7dde2ce4b74ff09ee3f625db852c901ad4aeb0ebe14bbd8d889a994
+  - 821642d2201e0f9fc200f790d6533a2216a541c3bdde65021144526231a35b50
+  - a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb
+  - faf07c82b10895c91bb82df9969d4bb3b71aeabcb22a088b9ebe928d6dfb1ce0

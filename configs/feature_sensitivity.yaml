@@ -1,0 +1,18 @@
+# A15 feature-representation sensitivity arms (Ahmed). DRAFT - NOT FROZEN.
+# Arms must be agreed with Faisal BEFORE any held-out evaluation (A15 step 8).
+# Results are EXPLORATORY_SECONDARY and may not select the primary feature set.
+status: DEVELOPMENT_ONLY
+arms:
+  - name: all_candidate_features
+    rule: all
+  - name: offset_invariant_delta_trend
+    rule: offset_invariant          # std, range, last_minus_first, slope, mean_abs_diff
+    rationale: >-
+      Tests sensitivity to absolute-level (pressure fingerprinting) shortcuts flagged in
+      PHASE_CONFOUNDING_REPORT.md and the Faisal F3 leakage notes.
+  - name: pressure_only
+    rule: explicit
+    channels: [PS1, PS2, PS3, PS4, PS5, PS6, PS7, PS8, PS9, PS10, PS11, PS12]
+model: random_forest_primary_grid   # same runner and grid as F5 (baseline.rf_param_grid)
+inner_n_splits: 3
+seed: 20261104

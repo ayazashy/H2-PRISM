@@ -1,0 +1,7 @@
+fold,heldout_topology,training_topology,normal_windows,normal_pred_LEAK,normal_pred_other,normal_recall,normal_conf_median,normal_share_conf_ge_0_9,normal_D_median,normal_flag_free,train_NORMAL_windows,train_NORMAL_runs,train_NORMAL_independence_groups,train_LEAK_windows,train_LEAK_runs,train_LEAK_independence_groups,train_COMPRESSOR_FAULT_windows,train_COMPRESSOR_FAULT_runs,train_COMPRESSOR_FAULT_independence_groups,train_COMPRESSOR_DELAY_windows,train_COMPRESSOR_DELAY_runs,train_COMPRESSOR_DELAY_independence_groups,evidence_status
+1,Downstream,Upstream,665,655,0,0.0150376,1,0.983459,0.44,0.968421,665,1,1,7307,13,10,1328,2,1,31,1,1,EXPLORATORY_DIAGNOSTIC
+1,Upstream,Downstream,665,649,0,0.0240602,0.986,0.966917,0.68,0.97594,665,1,1,7307,13,10,1328,2,1,31,1,1,EXPLORATORY_DIAGNOSTIC
+2,Center,Upstream,665,661,0,0.00601504,0.971315,0.842105,0.52,0.971429,665,1,1,7307,13,10,1328,2,1,31,1,1,EXPLORATORY_DIAGNOSTIC
+2,Upstream,Center,665,665,0,0,0.815774,0.00601504,0.52,0.977444,665,1,1,7307,13,10,1328,2,1,31,1,1,EXPLORATORY_DIAGNOSTIC
+3,Center,Downstream,665,646,0,0.0285714,1,0.971429,0.68,0.977444,665,1,1,7307,13,10,1328,2,1,31,1,1,EXPLORATORY_DIAGNOSTIC
+3,Downstream,Center,665,654,0,0.0165414,1,0.974436,0.52,0.977444,665,1,1,7307,13,10,1328,2,1,31,1,1,EXPLORATORY_DIAGNOSTIC

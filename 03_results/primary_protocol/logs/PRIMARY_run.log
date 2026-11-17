@@ -1,0 +1,11 @@
+=== RESUME 2026-11-11T13:08:34Z after external stop (fold_1 DONE preserved) ===
+{
+  "status": "COMPLETED",
+  "artifact_class": "PRIMARY_EXPERIMENT",
+  "out": "03_results\\primary_protocol\\PRIMARY"
+}
+
+real	21m54.995s
+user	0m0.031s
+sys	0m0.077s
+RUN_EXIT 0

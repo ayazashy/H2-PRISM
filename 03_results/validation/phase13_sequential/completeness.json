@@ -1,0 +1,527 @@
+[
+  {
+    "metric": "Fast detection",
+    "definition": "New episode starts within fixed deadlines",
+    "validity": "EXPLORATORY",
+    "artifact": "summary.csv",
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": [
+      {
+        "detector": "change",
+        "interval_s": 1,
+        "within_10s": 31,
+        "new_alert_detections": 39,
+        "false_episodes_per_inactive_hour": 1.4170708789394826,
+        "median_alarm_delay_s": 0.0
+      },
+      {
+        "detector": "change",
+        "interval_s": 2,
+        "within_10s": 31,
+        "new_alert_detections": 39,
+        "false_episodes_per_inactive_hour": 1.4170708789394826,
+        "median_alarm_delay_s": 0.0
+      },
+      {
+        "detector": "change",
+        "interval_s": 5,
+        "within_10s": 27,
+        "new_alert_detections": 32,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 4.0
+      },
+      {
+        "detector": "change",
+        "interval_s": 10,
+        "within_10s": 24,
+        "new_alert_detections": 29,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 4.0
+      },
+      {
+        "detector": "change",
+        "interval_s": 30,
+        "within_10s": 3,
+        "new_alert_detections": 25,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 24.0
+      },
+      {
+        "detector": "change",
+        "interval_s": 120,
+        "within_10s": 0,
+        "new_alert_detections": 21,
+        "false_episodes_per_inactive_hour": 0.0,
+        "median_alarm_delay_s": 44.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 1,
+        "within_10s": 31,
+        "new_alert_detections": 39,
+        "false_episodes_per_inactive_hour": 0.639967493714605,
+        "median_alarm_delay_s": 0.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 2,
+        "within_10s": 31,
+        "new_alert_detections": 39,
+        "false_episodes_per_inactive_hour": 0.639967493714605,
+        "median_alarm_delay_s": 0.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 5,
+        "within_10s": 30,
+        "new_alert_detections": 35,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 4.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 10,
+        "within_10s": 30,
+        "new_alert_detections": 35,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 4.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 30,
+        "within_10s": 6,
+        "new_alert_detections": 34,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 24.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 120,
+        "within_10s": 0,
+        "new_alert_detections": 21,
+        "false_episodes_per_inactive_hour": 0.0,
+        "median_alarm_delay_s": 44.0
+      }
+    ],
+    "data_source": "summary.csv",
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Detection delay",
+    "definition": "First in-event new start minus archived onset",
+    "validity": "EXPLORATORY",
+    "artifact": "delay_quantiles.csv",
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": [
+      {
+        "detector": "change",
+        "interval_s": 1,
+        "within_10s": 31,
+        "new_alert_detections": 39,
+        "false_episodes_per_inactive_hour": 1.4170708789394826,
+        "median_alarm_delay_s": 0.0
+      },
+      {
+        "detector": "change",
+        "interval_s": 2,
+        "within_10s": 31,
+        "new_alert_detections": 39,
+        "false_episodes_per_inactive_hour": 1.4170708789394826,
+        "median_alarm_delay_s": 0.0
+      },
+      {
+        "detector": "change",
+        "interval_s": 5,
+        "within_10s": 27,
+        "new_alert_detections": 32,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 4.0
+      },
+      {
+        "detector": "change",
+        "interval_s": 10,
+        "within_10s": 24,
+        "new_alert_detections": 29,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 4.0
+      },
+      {
+        "detector": "change",
+        "interval_s": 30,
+        "within_10s": 3,
+        "new_alert_detections": 25,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 24.0
+      },
+      {
+        "detector": "change",
+        "interval_s": 120,
+        "within_10s": 0,
+        "new_alert_detections": 21,
+        "false_episodes_per_inactive_hour": 0.0,
+        "median_alarm_delay_s": 44.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 1,
+        "within_10s": 31,
+        "new_alert_detections": 39,
+        "false_episodes_per_inactive_hour": 0.639967493714605,
+        "median_alarm_delay_s": 0.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 2,
+        "within_10s": 31,
+        "new_alert_detections": 39,
+        "false_episodes_per_inactive_hour": 0.639967493714605,
+        "median_alarm_delay_s": 0.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 5,
+        "within_10s": 30,
+        "new_alert_detections": 35,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 4.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 10,
+        "within_10s": 30,
+        "new_alert_detections": 35,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 4.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 30,
+        "within_10s": 6,
+        "new_alert_detections": 34,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 24.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 120,
+        "within_10s": 0,
+        "new_alert_detections": 21,
+        "false_episodes_per_inactive_hour": 0.0,
+        "median_alarm_delay_s": 44.0
+      }
+    ],
+    "data_source": "delay_quantiles.csv",
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "False-alarm burden",
+    "definition": "New inactive starts per verified common exposure hour",
+    "validity": "EXPLORATORY",
+    "artifact": "summary.csv",
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": [
+      {
+        "detector": "change",
+        "interval_s": 1,
+        "within_10s": 31,
+        "new_alert_detections": 39,
+        "false_episodes_per_inactive_hour": 1.4170708789394826,
+        "median_alarm_delay_s": 0.0
+      },
+      {
+        "detector": "change",
+        "interval_s": 2,
+        "within_10s": 31,
+        "new_alert_detections": 39,
+        "false_episodes_per_inactive_hour": 1.4170708789394826,
+        "median_alarm_delay_s": 0.0
+      },
+      {
+        "detector": "change",
+        "interval_s": 5,
+        "within_10s": 27,
+        "new_alert_detections": 32,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 4.0
+      },
+      {
+        "detector": "change",
+        "interval_s": 10,
+        "within_10s": 24,
+        "new_alert_detections": 29,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 4.0
+      },
+      {
+        "detector": "change",
+        "interval_s": 30,
+        "within_10s": 3,
+        "new_alert_detections": 25,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 24.0
+      },
+      {
+        "detector": "change",
+        "interval_s": 120,
+        "within_10s": 0,
+        "new_alert_detections": 21,
+        "false_episodes_per_inactive_hour": 0.0,
+        "median_alarm_delay_s": 44.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 1,
+        "within_10s": 31,
+        "new_alert_detections": 39,
+        "false_episodes_per_inactive_hour": 0.639967493714605,
+        "median_alarm_delay_s": 0.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 2,
+        "within_10s": 31,
+        "new_alert_detections": 39,
+        "false_episodes_per_inactive_hour": 0.639967493714605,
+        "median_alarm_delay_s": 0.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 5,
+        "within_10s": 30,
+        "new_alert_detections": 35,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 4.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 10,
+        "within_10s": 30,
+        "new_alert_detections": 35,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 4.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 30,
+        "within_10s": 6,
+        "new_alert_detections": 34,
+        "false_episodes_per_inactive_hour": 0.6856794575513625,
+        "median_alarm_delay_s": 24.0
+      },
+      {
+        "detector": "ewma",
+        "interval_s": 120,
+        "within_10s": 0,
+        "new_alert_detections": 21,
+        "false_episodes_per_inactive_hour": 0.0,
+        "median_alarm_delay_s": 44.0
+      }
+    ],
+    "data_source": "summary.csv",
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Binary classification",
+    "definition": "Frozen RF and SVM operational comparator",
+    "validity": "EXPLORATORY",
+    "artifact": "../phase13_alarm_validation/report.md",
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": {
+      "forest_events": 48,
+      "linear_svm_events": 37
+    },
+    "data_source": "../phase13_alarm_validation/report.md",
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Accuracy",
+    "definition": "Multiclass fraction correct on untouched independent roots",
+    "validity": "NOT_ESTABLISHED",
+    "artifact": null,
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": null,
+    "data_source": null,
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Balanced accuracy",
+    "definition": "Class-average recall of frozen binary replay",
+    "validity": "EXPLORATORY",
+    "artifact": "../phase13_causal_validation/metrics.csv",
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": "see linked numerical table",
+    "data_source": "../phase13_causal_validation/metrics.csv",
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Macro F1",
+    "definition": "Class-average F1 of frozen binary replay",
+    "validity": "EXPLORATORY",
+    "artifact": "../phase13_causal_validation/metrics.csv",
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": "see linked numerical table",
+    "data_source": "../phase13_causal_validation/metrics.csv",
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Multiclass diagnosis",
+    "definition": "Qualified mechanism recognition on independent roots",
+    "validity": "BLOCKED",
+    "artifact": null,
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": null,
+    "data_source": null,
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Calibration",
+    "definition": "Observed outcomes versus predicted probabilities",
+    "validity": "NOT_ESTABLISHED",
+    "artifact": null,
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": null,
+    "data_source": null,
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Selective risk",
+    "definition": "Specific-decision error at matched coverage",
+    "validity": "NOT_ESTABLISHED",
+    "artifact": null,
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": null,
+    "data_source": null,
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Decision coverage",
+    "definition": "Qualified specific decisions per accepted capture",
+    "validity": "ESTABLISHED",
+    "artifact": "../phase13_integrated_timing/evidence.json",
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": "0/12 specific",
+    "data_source": "../phase13_integrated_timing/evidence.json",
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Distinguishability",
+    "definition": "Range of residual RMS over allowed offsets",
+    "validity": "EXPLORATORY",
+    "artifact": "timing_geometry.csv",
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": "see linked numerical table",
+    "data_source": "timing_geometry.csv",
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Formal hypothesis exclusion",
+    "definition": "Qualified disjoint hypothesis sets",
+    "validity": "ESTABLISHED",
+    "artifact": "../phase13_integrated_timing/evidence.json",
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": "0 qualified exclusions",
+    "data_source": "../phase13_integrated_timing/evidence.json",
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Timing uncertainty",
+    "definition": "Hypothetical nuisance-offset set",
+    "validity": "EXPLORATORY",
+    "artifact": "timing_geometry.csv",
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": "see linked numerical table",
+    "data_source": "timing_geometry.csv",
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Localization",
+    "definition": "Conditional template ranks with all candidates retained",
+    "validity": "EXPLORATORY",
+    "artifact": "location_candidates.csv",
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": "L0; all three remain candidates",
+    "data_source": "location_candidates.csv",
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Sensor ablation",
+    "definition": "Residual geometry after sensor omission",
+    "validity": "EXPLORATORY",
+    "artifact": "timing_geometry.csv",
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": "see linked numerical table",
+    "data_source": "timing_geometry.csv",
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Noise robustness",
+    "definition": "Assumed stress effects on repeated alarm starts",
+    "validity": "EXPLORATORY",
+    "artifact": "summary.csv",
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": "see linked numerical table",
+    "data_source": "summary.csv",
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Numerical integrity",
+    "definition": "Audit of accepted controlled run clocks and physics",
+    "validity": "ESTABLISHED",
+    "artifact": "../phase13_integrated_timing/evidence.json",
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": "12 accepted Center captures",
+    "data_source": "../phase13_integrated_timing/evidence.json",
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Independence",
+    "definition": "Verified independent source roots",
+    "validity": "NOT_ESTABLISHED",
+    "artifact": null,
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": "zero verified families",
+    "data_source": null,
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Cross-topology transfer",
+    "definition": "Untouched independent topology assessment",
+    "validity": "BLOCKED",
+    "artifact": null,
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": null,
+    "data_source": null,
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  },
+  {
+    "metric": "Industrial readiness",
+    "definition": "Field-qualified detection and diagnosis",
+    "validity": "BLOCKED",
+    "artifact": null,
+    "independent_units": 0,
+    "population": "archive replay or one Center source family",
+    "result": null,
+    "data_source": null,
+    "blocker": "No verified independent roots or field-qualified uncertainty"
+  }
+]

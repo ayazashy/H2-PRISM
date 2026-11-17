@@ -1,0 +1,198 @@
+{
+  "artifact_class": "PREFLIGHT_ONLY",
+  "config_file": "FINAL_EXPERIMENT_CONFIG.yaml",
+  "config_sha256": "b9f44ad7afc0dd1ce75dbfcafcf457c6c0ef8e395b678703f9ea12e90e2162b9",
+  "features": {
+    "feature_table_sha256": "4d1310a6509ff5eb381792c0886afcda1209017361390bf395c805b5c3955280",
+    "n_features": 128,
+    "n_windows": 27993,
+    "window_manifest_sha256": "adcc2f68d54be78efcd175ad0c862d2680864eec00dd907a7ba5acdbec220f42",
+    "windows_per_class": {
+      "COMPRESSOR_DELAY": 93,
+      "COMPRESSOR_FAULT": 3984,
+      "LEAK": 21921,
+      "NORMAL": 1995
+    },
+    "windows_per_topology_class": {
+      "Center|COMPRESSOR_DELAY": 31,
+      "Center|COMPRESSOR_FAULT": 1328,
+      "Center|LEAK": 7307,
+      "Center|NORMAL": 665,
+      "Downstream|COMPRESSOR_DELAY": 31,
+      "Downstream|COMPRESSOR_FAULT": 1328,
+      "Downstream|LEAK": 7307,
+      "Downstream|NORMAL": 665,
+      "Upstream|COMPRESSOR_DELAY": 31,
+      "Upstream|COMPRESSOR_FAULT": 1328,
+      "Upstream|LEAK": 7307,
+      "Upstream|NORMAL": 665
+    }
+  },
+  "git_commit": "d9b4c3ff66bf41459b3154bc281ec4c0e0d70427",
+  "mode": "preflight",
+  "preflight": {
+    "checks": [
+      {
+        "check": "config_status",
+        "detail": "PROTOCOL_SELECTED_PENDING_EXECUTION (expected PROTOCOL_SELECTED_PENDING_EXECUTION)",
+        "ok": true
+      },
+      {
+        "check": "hash:06_audit_preparation/phase6_resolution/CANDIDATE_MANIFEST_V02.csv",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "hash:06_audit_preparation/pre_experiment_review/CANDIDATE_OUTER_FOLDS.csv",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "hash:06_audit_preparation/pre_experiment_review/CANDIDATE_LABEL_MAPPING.yaml",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "hash:06_audit_preparation/pre_experiment_review/CANDIDATE_INNER_FOLDS.csv",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "hash:02_methodology/FEATURE_DEFINITION_REGISTER.csv",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "config_section:windows",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "config_section:features",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "config_section:model",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "config_section:distinguishability",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "config_section:policy_primary",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "config_section:thresholds",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "config_section:seeds",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "manifest_columns",
+        "detail": "missing []",
+        "ok": true
+      },
+      {
+        "check": "eligible_count",
+        "detail": "51 vs 51",
+        "ok": true
+      },
+      {
+        "check": "unique_scenarios",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "classes",
+        "detail": "['COMPRESSOR_DELAY', 'COMPRESSOR_FAULT', 'LEAK', 'NORMAL']",
+        "ok": true
+      },
+      {
+        "check": "exclusions_have_reasons",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "families_nest_in_topology",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "folds_cover_eligible_runs_exactly",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "fold_family_isolation",
+        "detail": "[]",
+        "ok": true
+      },
+      {
+        "check": "fold_topology_isolation",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "raw_files_present_and_unmodified[noise_added]",
+        "detail": "[]",
+        "ok": true
+      },
+      {
+        "check": "policy_flags_known",
+        "detail": "[]",
+        "ok": true
+      },
+      {
+        "check": "thresholds_from_development",
+        "detail": "",
+        "ok": true
+      }
+    ],
+    "eligible_runs": 51,
+    "folds": 3
+  },
+  "prohibited_claims": [
+    "industrial deployment readiness",
+    "field validation",
+    "generalisation beyond the evaluated simulated topologies",
+    "physical identifiability",
+    "metric leak localisation",
+    "pure-hydrogen performance",
+    "a verified hydrogen blend percentage",
+    "superiority of D(x) beyond the reported effect sizes"
+  ],
+  "realization": "noise_added",
+  "run_key": "d6116504d68f1685299226bd84d9d6ab82876bd120d37ad01b5d7a3ffc022f55",
+  "seed": 20261104,
+  "status": "PREFLIGHT_PASSED",
+  "structural_class_share_per_topology": {
+    "Center": {
+      "COMPRESSOR_DELAY": 0.003322,
+      "COMPRESSOR_FAULT": 0.142321,
+      "LEAK": 0.783089,
+      "NORMAL": 0.071268
+    },
+    "Downstream": {
+      "COMPRESSOR_DELAY": 0.003322,
+      "COMPRESSOR_FAULT": 0.142321,
+      "LEAK": 0.783089,
+      "NORMAL": 0.071268
+    },
+    "Upstream": {
+      "COMPRESSOR_DELAY": 0.003322,
+      "COMPRESSOR_FAULT": 0.142321,
+      "LEAK": 0.783089,
+      "NORMAL": 0.071268
+    }
+  }
+}

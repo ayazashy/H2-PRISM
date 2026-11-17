@@ -1,0 +1,7 @@
+fold,role,n_rows,n_scenarios,n_families,scenarios_per_class,families_per_class,family_view
+1,train,146,34,26,"{'COMPRESSOR_DELAY': 2, 'COMPRESSOR_FAULT': 4, 'LEAK': 26, 'NORMAL': 2}","{'COMPRESSOR_DELAY': 2, 'COMPRESSOR_FAULT': 2, 'LEAK': 20, 'NORMAL': 2}",family_primary
+1,test,72,17,13,"{'COMPRESSOR_DELAY': 1, 'COMPRESSOR_FAULT': 2, 'LEAK': 13, 'NORMAL': 1}","{'COMPRESSOR_DELAY': 1, 'COMPRESSOR_FAULT': 1, 'LEAK': 10, 'NORMAL': 1}",family_primary
+2,train,146,34,26,"{'COMPRESSOR_DELAY': 2, 'COMPRESSOR_FAULT': 4, 'LEAK': 26, 'NORMAL': 2}","{'COMPRESSOR_DELAY': 2, 'COMPRESSOR_FAULT': 2, 'LEAK': 20, 'NORMAL': 2}",family_primary
+2,test,72,17,13,"{'COMPRESSOR_DELAY': 1, 'COMPRESSOR_FAULT': 2, 'LEAK': 13, 'NORMAL': 1}","{'COMPRESSOR_DELAY': 1, 'COMPRESSOR_FAULT': 1, 'LEAK': 10, 'NORMAL': 1}",family_primary
+3,train,144,34,26,"{'COMPRESSOR_DELAY': 2, 'COMPRESSOR_FAULT': 4, 'LEAK': 26, 'NORMAL': 2}","{'COMPRESSOR_DELAY': 2, 'COMPRESSOR_FAULT': 2, 'LEAK': 20, 'NORMAL': 2}",family_primary
+3,test,74,17,13,"{'COMPRESSOR_DELAY': 1, 'COMPRESSOR_FAULT': 2, 'LEAK': 13, 'NORMAL': 1}","{'COMPRESSOR_DELAY': 1, 'COMPRESSOR_FAULT': 1, 'LEAK': 10, 'NORMAL': 1}",family_primary

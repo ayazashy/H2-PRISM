@@ -1,0 +1,3208 @@
+{
+ "schema": "released_network_graph/0.1",
+ "source": "read-only XML parse of the released .slx files",
+ "models": {
+  "Anomalous_HNetwork_gest_center": {
+   "file": "data/raw/H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/anomalous_scenarios/Anomalous_HNetwork_gest_center.slx",
+   "sha256": "e6caa8cf6558f7a524fd2a4e53ecb0530cf84479cbdf06c7dde4a02ef29acf33",
+   "gas_properties": {
+    "gas_spec": "1",
+    "R": "0.287 kJ/kg/K",
+    "Z": "0.998386",
+    "T_ref": "289.65 K",
+    "h_ref": "0.175 kJ/kg",
+    "cp_ref": "0.3469 kJ/kg/K",
+    "mu_ref": "10.98 s*uPa",
+    "k_ref": "48.2 mW/m/K",
+    "p_min_perfect": "0.1 MPa",
+    "p_max_perfect": "inf MPa"
+   },
+   "components": [
+    {
+     "sid": "1",
+     "class": "controlled_reservoir",
+     "name": "Reservoir",
+     "nets": [
+      "N1"
+     ],
+     "params": {
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "47",
+     "class": "pipe",
+     "name": "Pipe (G)1",
+     "nets": [
+      "N2",
+      "N3"
+     ],
+     "params": {
+      "length": "16000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.000045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "48",
+     "class": "pipe",
+     "name": "Pipe (G)2",
+     "nets": [
+      "N3",
+      "N4"
+     ],
+     "params": {
+      "length": "30000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.0045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "49",
+     "class": "pipe",
+     "name": "Pipe (G)3",
+     "nets": [
+      "N5",
+      "N6"
+     ],
+     "params": {
+      "length": "11000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.00045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "50",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)",
+     "nets": [
+      "N3"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "51",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)1",
+     "nets": [
+      "N4"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "52",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)2",
+     "nets": [
+      "N7"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "55",
+     "class": "pressure_source",
+     "name": "Pressure Source (G)3",
+     "nets": [
+      "N1",
+      "N2"
+     ],
+     "params": {
+      "pressure_differential": "4 MPa",
+      "source_type": "foundation.enum.constant_controlled.controlled",
+      "power_spec": "foundation.enum.power_spec.isentropic",
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "106",
+     "class": "pipe",
+     "name": "Pipe (G)4",
+     "nets": [
+      "N7",
+      "N8"
+     ],
+     "params": {
+      "length": "8000 m",
+      "area": "0.7853 m^2",
+      "Dh": "1.0 m",
+      "roughness": "0.05 m",
+      "length_add": "20 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "107",
+     "class": "pipe",
+     "name": "Pipe (G)5",
+     "nets": [
+      "N9",
+      "N10"
+     ],
+     "params": {
+      "length": "4000 m",
+      "area": "0.0989 m^2",
+      "Dh": "0.355 m",
+      "roughness": "0.0045 mm",
+      "length_add": "0.1 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "109",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)3",
+     "nets": [
+      "N11"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "187",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)4",
+     "nets": [
+      "N1"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "195",
+     "class": "reservoir",
+     "name": "Reservoir (G)",
+     "nets": [
+      "N10"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "0.1256 m^2"
+     }
+    },
+    {
+     "sid": "200",
+     "class": "reservoir",
+     "name": "Reservoir (G)1",
+     "nets": [
+      "N12"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "205",
+     "class": "constant_volume_chamber",
+     "name": "Constant Volume Chamber (G)",
+     "nets": [
+      "N13",
+      "N14"
+     ],
+     "params": {
+      "volume": "1 m^3",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "210",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)1",
+     "nets": [
+      "N7",
+      "N13"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "213",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)3",
+     "nets": [
+      "N3",
+      "N15"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.variable",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "215",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)6",
+     "nets": [
+      "N11",
+      "N16"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "217",
+     "class": "reservoir",
+     "name": "Reservoir (G)2",
+     "nets": [
+      "N16"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "218",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)2",
+     "nets": [
+      "N15",
+      "N12"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "221",
+     "class": "pipe",
+     "name": "Pipe (G)7",
+     "nets": [
+      "N8",
+      "N11"
+     ],
+     "params": {
+      "length": "4000 m",
+      "area": "0.7853 m^2",
+      "Dh": "1.0 m",
+      "roughness": "0.05 m",
+      "length_add": "20 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "222",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)4",
+     "nets": [
+      "N8",
+      "N17"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "224",
+     "class": "reservoir",
+     "name": "Reservoir (G)3",
+     "nets": [
+      "N17"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "239",
+     "class": "pressure_source",
+     "name": "Pressure Source (G)1",
+     "nets": [
+      "N4",
+      "N5"
+     ],
+     "params": {
+      "pressure_differential": "4 MPa",
+      "source_type": "foundation.enum.constant_controlled.controlled",
+      "power_spec": "foundation.enum.power_spec.isentropic",
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "309",
+     "class": "pipe",
+     "name": "Pipe (G)8",
+     "nets": [
+      "N6",
+      "N7"
+     ],
+     "params": {
+      "length": "11000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.00045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "311",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)3",
+     "nets": [
+      "N18",
+      "N19"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "312",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)5",
+     "nets": [
+      "N6",
+      "N18"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "316",
+     "class": "reservoir",
+     "name": "Reservoir (G)4",
+     "nets": [
+      "N19"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "318",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)5",
+     "nets": [
+      "N5"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "392",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)7",
+     "nets": [
+      "N2"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "418",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)11",
+     "nets": [
+      "N9"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "428",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)12",
+     "nets": [
+      "N8"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "431",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)13",
+     "nets": [
+      "N7"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "453",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)2",
+     "nets": [
+      "N11",
+      "N9"
+     ],
+     "params": {
+      "area": "0.7853 m^2",
+      "restriction_area": "0.7852 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    }
+   ]
+  },
+  "Anomalous_HNetwork_gest_down": {
+   "file": "data/raw/H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/anomalous_scenarios/Anomalous_HNetwork_gest_down.slx",
+   "sha256": "b1c0b93579d104127b163d60a49d7163e5afb4776bafb8ddd4b133777349191c",
+   "gas_properties": {
+    "gas_spec": "1",
+    "R": "0.287 kJ/kg/K",
+    "Z": "0.998386",
+    "T_ref": "289.65 K",
+    "h_ref": "0.175 kJ/kg",
+    "cp_ref": "0.3469 kJ/kg/K",
+    "mu_ref": "10.98 s*uPa",
+    "k_ref": "48.2 mW/m/K",
+    "p_min_perfect": "0.1 MPa",
+    "p_max_perfect": "inf MPa"
+   },
+   "components": [
+    {
+     "sid": "1",
+     "class": "controlled_reservoir",
+     "name": "Reservoir",
+     "nets": [
+      "N1"
+     ],
+     "params": {
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "47",
+     "class": "pipe",
+     "name": "Pipe (G)1",
+     "nets": [
+      "N2",
+      "N3"
+     ],
+     "params": {
+      "length": "16000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.000045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "48",
+     "class": "pipe",
+     "name": "Pipe (G)2",
+     "nets": [
+      "N3",
+      "N4"
+     ],
+     "params": {
+      "length": "30000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.0045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "49",
+     "class": "pipe",
+     "name": "Pipe (G)3",
+     "nets": [
+      "N5",
+      "N6"
+     ],
+     "params": {
+      "length": "11000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.00045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "50",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)",
+     "nets": [
+      "N3"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "51",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)1",
+     "nets": [
+      "N4"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "52",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)2",
+     "nets": [
+      "N7"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "55",
+     "class": "pressure_source",
+     "name": "Pressure Source (G)3",
+     "nets": [
+      "N1",
+      "N2"
+     ],
+     "params": {
+      "pressure_differential": "4 MPa",
+      "source_type": "foundation.enum.constant_controlled.controlled",
+      "power_spec": "foundation.enum.power_spec.isentropic",
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "106",
+     "class": "pipe",
+     "name": "Pipe (G)4",
+     "nets": [
+      "N7",
+      "N8"
+     ],
+     "params": {
+      "length": "8000 m",
+      "area": "0.7853 m^2",
+      "Dh": "1.0 m",
+      "roughness": "0.05 m",
+      "length_add": "20 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "108",
+     "class": "pipe",
+     "name": "Pipe (G)6",
+     "nets": [
+      "N9",
+      "N10"
+     ],
+     "params": {
+      "length": "3000 m",
+      "area": "0.1256 m^2",
+      "Dh": "0.4 m",
+      "roughness": "0.045 m",
+      "length_add": "0.1 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "109",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)3",
+     "nets": [
+      "N11"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "111",
+     "class": "pressure_source",
+     "name": "Pressure Source (G)6",
+     "nets": [
+      "N12",
+      "N13"
+     ],
+     "params": {
+      "pressure_differential": "-1 MPa",
+      "source_type": "foundation.enum.constant_controlled.constant",
+      "power_spec": "foundation.enum.power_spec.isentropic",
+      "area_A": "0.7853 m^2"
+     }
+    },
+    {
+     "sid": "134",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)6",
+     "nets": [
+      "N10"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "172",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)",
+     "nets": [
+      "N11",
+      "N12"
+     ],
+     "params": {
+      "area": "0.7853 m^2",
+      "restriction_area": "0.7852 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "187",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)4",
+     "nets": [
+      "N1"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "195",
+     "class": "reservoir",
+     "name": "Reservoir (G)",
+     "nets": [
+      "N10"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "0.1256 m^2"
+     }
+    },
+    {
+     "sid": "196",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)",
+     "nets": [
+      "N13",
+      "N9"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "200",
+     "class": "reservoir",
+     "name": "Reservoir (G)1",
+     "nets": [
+      "N14"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "205",
+     "class": "constant_volume_chamber",
+     "name": "Constant Volume Chamber (G)",
+     "nets": [
+      "N15",
+      "N16"
+     ],
+     "params": {
+      "volume": "1 m^3",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "210",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)1",
+     "nets": [
+      "N7",
+      "N15"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "213",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)3",
+     "nets": [
+      "N3",
+      "N17"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.variable",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "215",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)6",
+     "nets": [
+      "N11",
+      "N18"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "217",
+     "class": "reservoir",
+     "name": "Reservoir (G)2",
+     "nets": [
+      "N18"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "218",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)2",
+     "nets": [
+      "N17",
+      "N14"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "221",
+     "class": "pipe",
+     "name": "Pipe (G)7",
+     "nets": [
+      "N8",
+      "N11"
+     ],
+     "params": {
+      "length": "4000 m",
+      "area": "0.7853 m^2",
+      "Dh": "1.0 m",
+      "roughness": "0.05 m",
+      "length_add": "20 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "222",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)4",
+     "nets": [
+      "N8",
+      "N19"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "224",
+     "class": "reservoir",
+     "name": "Reservoir (G)3",
+     "nets": [
+      "N19"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "239",
+     "class": "pressure_source",
+     "name": "Pressure Source (G)1",
+     "nets": [
+      "N4",
+      "N5"
+     ],
+     "params": {
+      "pressure_differential": "4 MPa",
+      "source_type": "foundation.enum.constant_controlled.controlled",
+      "power_spec": "foundation.enum.power_spec.isentropic",
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "309",
+     "class": "pipe",
+     "name": "Pipe (G)8",
+     "nets": [
+      "N6",
+      "N7"
+     ],
+     "params": {
+      "length": "11000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.00045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "311",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)3",
+     "nets": [
+      "N20",
+      "N21"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "312",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)5",
+     "nets": [
+      "N6",
+      "N20"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "316",
+     "class": "reservoir",
+     "name": "Reservoir (G)4",
+     "nets": [
+      "N21"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "318",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)5",
+     "nets": [
+      "N5"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "392",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)7",
+     "nets": [
+      "N2"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "402",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)8",
+     "nets": [
+      "N12"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "403",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)9",
+     "nets": [
+      "N13"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "428",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)12",
+     "nets": [
+      "N8"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "431",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)13",
+     "nets": [
+      "N7"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    }
+   ]
+  },
+  "Anomalous_HNetwork_gest_up": {
+   "file": "data/raw/H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/anomalous_scenarios/Anomalous_HNetwork_gest_up.slx",
+   "sha256": "35376a208c133789c27b29a4639dedde73845e7c16a6c034e8ab29a36bc60352",
+   "gas_properties": {
+    "gas_spec": "1",
+    "R": "0.287 kJ/kg/K",
+    "Z": "0.998386",
+    "T_ref": "289.65 K",
+    "h_ref": "0.175 kJ/kg",
+    "cp_ref": "0.3469 kJ/kg/K",
+    "mu_ref": "10.98 s*uPa",
+    "k_ref": "48.2 mW/m/K",
+    "p_min_perfect": "0.1 MPa",
+    "p_max_perfect": "inf MPa"
+   },
+   "components": [
+    {
+     "sid": "1",
+     "class": "controlled_reservoir",
+     "name": "Reservoir",
+     "nets": [
+      "N1"
+     ],
+     "params": {
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "47",
+     "class": "pipe",
+     "name": "Pipe (G)1",
+     "nets": [
+      "N2",
+      "N3"
+     ],
+     "params": {
+      "length": "16000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.000045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "48",
+     "class": "pipe",
+     "name": "Pipe (G)2",
+     "nets": [
+      "N3",
+      "N4"
+     ],
+     "params": {
+      "length": "30000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.0045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "49",
+     "class": "pipe",
+     "name": "Pipe (G)3",
+     "nets": [
+      "N5",
+      "N6"
+     ],
+     "params": {
+      "length": "11000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.00045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "50",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)",
+     "nets": [
+      "N3"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "51",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)1",
+     "nets": [
+      "N4"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "52",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)2",
+     "nets": [
+      "N7"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "55",
+     "class": "pressure_source",
+     "name": "Pressure Source (G)3",
+     "nets": [
+      "N1",
+      "N2"
+     ],
+     "params": {
+      "pressure_differential": "4 MPa",
+      "source_type": "foundation.enum.constant_controlled.controlled",
+      "power_spec": "foundation.enum.power_spec.isentropic",
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "106",
+     "class": "pipe",
+     "name": "Pipe (G)4",
+     "nets": [
+      "N7",
+      "N8"
+     ],
+     "params": {
+      "length": "8000 m",
+      "area": "0.7853 m^2",
+      "Dh": "1.0 m",
+      "roughness": "0.05 m",
+      "length_add": "20 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "107",
+     "class": "pipe",
+     "name": "Pipe (G)5",
+     "nets": [
+      "N9",
+      "N10"
+     ],
+     "params": {
+      "length": "4000 m",
+      "area": "0.0989 m^2",
+      "Dh": "0.355 m",
+      "roughness": "0.0045 mm",
+      "length_add": "0.1 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "109",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)3",
+     "nets": [
+      "N11"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "187",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)4",
+     "nets": [
+      "N1"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "195",
+     "class": "reservoir",
+     "name": "Reservoir (G)",
+     "nets": [
+      "N10"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "0.1256 m^2"
+     }
+    },
+    {
+     "sid": "200",
+     "class": "reservoir",
+     "name": "Reservoir (G)1",
+     "nets": [
+      "N12"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "205",
+     "class": "constant_volume_chamber",
+     "name": "Constant Volume Chamber (G)",
+     "nets": [
+      "N13",
+      "N14"
+     ],
+     "params": {
+      "volume": "1 m^3",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "210",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)1",
+     "nets": [
+      "N7",
+      "N13"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "213",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)3",
+     "nets": [
+      "N3",
+      "N15"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.variable",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "215",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)6",
+     "nets": [
+      "N11",
+      "N16"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "217",
+     "class": "reservoir",
+     "name": "Reservoir (G)2",
+     "nets": [
+      "N16"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "218",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)2",
+     "nets": [
+      "N15",
+      "N12"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "221",
+     "class": "pipe",
+     "name": "Pipe (G)7",
+     "nets": [
+      "N8",
+      "N11"
+     ],
+     "params": {
+      "length": "4000 m",
+      "area": "0.7853 m^2",
+      "Dh": "1.0 m",
+      "roughness": "0.05 m",
+      "length_add": "20 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "222",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)4",
+     "nets": [
+      "N8",
+      "N17"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "224",
+     "class": "reservoir",
+     "name": "Reservoir (G)3",
+     "nets": [
+      "N17"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "239",
+     "class": "pressure_source",
+     "name": "Pressure Source (G)1",
+     "nets": [
+      "N4",
+      "N5"
+     ],
+     "params": {
+      "pressure_differential": "4 MPa",
+      "source_type": "foundation.enum.constant_controlled.controlled",
+      "power_spec": "foundation.enum.power_spec.isentropic",
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "309",
+     "class": "pipe",
+     "name": "Pipe (G)8",
+     "nets": [
+      "N6",
+      "N7"
+     ],
+     "params": {
+      "length": "11000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.00045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "311",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)3",
+     "nets": [
+      "N18",
+      "N19"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "312",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)5",
+     "nets": [
+      "N6",
+      "N18"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "316",
+     "class": "reservoir",
+     "name": "Reservoir (G)4",
+     "nets": [
+      "N19"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "318",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)5",
+     "nets": [
+      "N5"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "392",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)7",
+     "nets": [
+      "N2"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "418",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)11",
+     "nets": [
+      "N9"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "428",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)12",
+     "nets": [
+      "N8"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "431",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)13",
+     "nets": [
+      "N7"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "453",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)2",
+     "nets": [
+      "N6",
+      "N9"
+     ],
+     "params": {
+      "area": "0.7853 m^2",
+      "restriction_area": "0.7852 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    }
+   ]
+  },
+  "Normal_HNetwork_gest_center": {
+   "file": "data/raw/H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/normality_scenarios/normality_datasets/Normal_HNetwork_gest_center.slx",
+   "sha256": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+   "gas_properties": {
+    "gas_spec": "1",
+    "R": "0.287 kJ/kg/K",
+    "Z": "0.998386",
+    "T_ref": "289.65 K",
+    "h_ref": "0.175 kJ/kg",
+    "cp_ref": "0.3469 kJ/kg/K",
+    "mu_ref": "10.98 s*uPa",
+    "k_ref": "48.2 mW/m/K",
+    "p_min_perfect": "0.1 MPa",
+    "p_max_perfect": "inf MPa"
+   },
+   "components": [
+    {
+     "sid": "1",
+     "class": "controlled_reservoir",
+     "name": "Reservoir",
+     "nets": [
+      "N1"
+     ],
+     "params": {
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "47",
+     "class": "pipe",
+     "name": "Pipe (G)1",
+     "nets": [
+      "N2",
+      "N3"
+     ],
+     "params": {
+      "length": "16000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.000045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "48",
+     "class": "pipe",
+     "name": "Pipe (G)2",
+     "nets": [
+      "N3",
+      "N4"
+     ],
+     "params": {
+      "length": "30000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.0045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "49",
+     "class": "pipe",
+     "name": "Pipe (G)3",
+     "nets": [
+      "N5",
+      "N6"
+     ],
+     "params": {
+      "length": "11000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.00045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "50",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)",
+     "nets": [
+      "N3"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "51",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)1",
+     "nets": [
+      "N4"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "52",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)2",
+     "nets": [
+      "N7"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "55",
+     "class": "pressure_source",
+     "name": "Pressure Source (G)3",
+     "nets": [
+      "N1",
+      "N2"
+     ],
+     "params": {
+      "pressure_differential": "4 MPa",
+      "source_type": "foundation.enum.constant_controlled.controlled",
+      "power_spec": "foundation.enum.power_spec.isentropic",
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "106",
+     "class": "pipe",
+     "name": "Pipe (G)4",
+     "nets": [
+      "N7",
+      "N8"
+     ],
+     "params": {
+      "length": "8000 m",
+      "area": "0.7853 m^2",
+      "Dh": "1.0 m",
+      "roughness": "0.05 m",
+      "length_add": "20 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "107",
+     "class": "pipe",
+     "name": "Pipe (G)5",
+     "nets": [
+      "N9",
+      "N10"
+     ],
+     "params": {
+      "length": "4000 m",
+      "area": "0.0989 m^2",
+      "Dh": "0.355 m",
+      "roughness": "0.0045 mm",
+      "length_add": "0.1 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "109",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)3",
+     "nets": [
+      "N11"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "187",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)4",
+     "nets": [
+      "N1"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "195",
+     "class": "reservoir",
+     "name": "Reservoir (G)",
+     "nets": [
+      "N10"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "0.1256 m^2"
+     }
+    },
+    {
+     "sid": "200",
+     "class": "reservoir",
+     "name": "Reservoir (G)1",
+     "nets": [
+      "N12"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "205",
+     "class": "constant_volume_chamber",
+     "name": "Constant Volume Chamber (G)",
+     "nets": [
+      "N13",
+      "N14"
+     ],
+     "params": {
+      "volume": "1 m^3",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "210",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)1",
+     "nets": [
+      "N7",
+      "N13"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "213",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)3",
+     "nets": [
+      "N3",
+      "N15"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "215",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)6",
+     "nets": [
+      "N11",
+      "N16"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "217",
+     "class": "reservoir",
+     "name": "Reservoir (G)2",
+     "nets": [
+      "N16"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "218",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)2",
+     "nets": [
+      "N15",
+      "N12"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "221",
+     "class": "pipe",
+     "name": "Pipe (G)7",
+     "nets": [
+      "N8",
+      "N11"
+     ],
+     "params": {
+      "length": "4000 m",
+      "area": "0.7853 m^2",
+      "Dh": "1.0 m",
+      "roughness": "0.05 m",
+      "length_add": "20 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "222",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)4",
+     "nets": [
+      "N8",
+      "N17"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "224",
+     "class": "reservoir",
+     "name": "Reservoir (G)3",
+     "nets": [
+      "N17"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "239",
+     "class": "pressure_source",
+     "name": "Pressure Source (G)1",
+     "nets": [
+      "N4",
+      "N5"
+     ],
+     "params": {
+      "pressure_differential": "4 MPa",
+      "source_type": "foundation.enum.constant_controlled.controlled",
+      "power_spec": "foundation.enum.power_spec.isentropic",
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "309",
+     "class": "pipe",
+     "name": "Pipe (G)8",
+     "nets": [
+      "N6",
+      "N7"
+     ],
+     "params": {
+      "length": "11000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.00045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "311",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)3",
+     "nets": [
+      "N18",
+      "N19"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "312",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)5",
+     "nets": [
+      "N6",
+      "N18"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "316",
+     "class": "reservoir",
+     "name": "Reservoir (G)4",
+     "nets": [
+      "N19"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "318",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)5",
+     "nets": [
+      "N5"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "392",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)7",
+     "nets": [
+      "N2"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "418",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)11",
+     "nets": [
+      "N9"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "428",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)12",
+     "nets": [
+      "N8"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "431",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)13",
+     "nets": [
+      "N7"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "453",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)2",
+     "nets": [
+      "N11",
+      "N9"
+     ],
+     "params": {
+      "area": "0.7853 m^2",
+      "restriction_area": "0.7852 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    }
+   ]
+  },
+  "Normal_HNetwork_gest_down": {
+   "file": "data/raw/H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/normality_scenarios/normality_datasets/Normal_HNetwork_gest_down.slx",
+   "sha256": "2fcf47dfe91adf54b758b3f2562a727755e4f0ecd8bbc8e6783aaceced14f496",
+   "gas_properties": {
+    "gas_spec": "1",
+    "R": "0.287 kJ/kg/K",
+    "Z": "0.998386",
+    "T_ref": "289.65 K",
+    "h_ref": "0.175 kJ/kg",
+    "cp_ref": "0.3469 kJ/kg/K",
+    "mu_ref": "10.98 s*uPa",
+    "k_ref": "48.2 mW/m/K",
+    "p_min_perfect": "0.1 MPa",
+    "p_max_perfect": "inf MPa"
+   },
+   "components": [
+    {
+     "sid": "1",
+     "class": "controlled_reservoir",
+     "name": "Reservoir",
+     "nets": [
+      "N1"
+     ],
+     "params": {
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "47",
+     "class": "pipe",
+     "name": "Pipe (G)1",
+     "nets": [
+      "N2",
+      "N3"
+     ],
+     "params": {
+      "length": "16000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.000045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "48",
+     "class": "pipe",
+     "name": "Pipe (G)2",
+     "nets": [
+      "N3",
+      "N4"
+     ],
+     "params": {
+      "length": "30000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.0045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "49",
+     "class": "pipe",
+     "name": "Pipe (G)3",
+     "nets": [
+      "N5",
+      "N6"
+     ],
+     "params": {
+      "length": "11000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.00045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "50",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)",
+     "nets": [
+      "N3"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "51",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)1",
+     "nets": [
+      "N4"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "52",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)2",
+     "nets": [
+      "N7"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "55",
+     "class": "pressure_source",
+     "name": "Pressure Source (G)3",
+     "nets": [
+      "N1",
+      "N2"
+     ],
+     "params": {
+      "pressure_differential": "4 MPa",
+      "source_type": "foundation.enum.constant_controlled.controlled",
+      "power_spec": "foundation.enum.power_spec.isentropic",
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "106",
+     "class": "pipe",
+     "name": "Pipe (G)4",
+     "nets": [
+      "N7",
+      "N8"
+     ],
+     "params": {
+      "length": "8000 m",
+      "area": "0.7853 m^2",
+      "Dh": "1.0 m",
+      "roughness": "0.05 m",
+      "length_add": "20 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "108",
+     "class": "pipe",
+     "name": "Pipe (G)6",
+     "nets": [
+      "N9",
+      "N10"
+     ],
+     "params": {
+      "length": "3000 m",
+      "area": "0.1256 m^2",
+      "Dh": "0.4 m",
+      "roughness": "0.045 m",
+      "length_add": "0.1 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "109",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)3",
+     "nets": [
+      "N11"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "111",
+     "class": "pressure_source",
+     "name": "Pressure Source (G)6",
+     "nets": [
+      "N12",
+      "N13"
+     ],
+     "params": {
+      "pressure_differential": "-1 MPa",
+      "source_type": "foundation.enum.constant_controlled.constant",
+      "power_spec": "foundation.enum.power_spec.isentropic",
+      "area_A": "0.7853 m^2"
+     }
+    },
+    {
+     "sid": "134",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)6",
+     "nets": [
+      "N10"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "172",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)",
+     "nets": [
+      "N11",
+      "N12"
+     ],
+     "params": {
+      "area": "0.7853 m^2",
+      "restriction_area": "0.7852 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "187",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)4",
+     "nets": [
+      "N1"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "195",
+     "class": "reservoir",
+     "name": "Reservoir (G)",
+     "nets": [
+      "N10"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "0.1256 m^2"
+     }
+    },
+    {
+     "sid": "196",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)",
+     "nets": [
+      "N13",
+      "N9"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "200",
+     "class": "reservoir",
+     "name": "Reservoir (G)1",
+     "nets": [
+      "N14"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "205",
+     "class": "constant_volume_chamber",
+     "name": "Constant Volume Chamber (G)",
+     "nets": [
+      "N15",
+      "N16"
+     ],
+     "params": {
+      "volume": "1 m^3",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "210",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)1",
+     "nets": [
+      "N7",
+      "N15"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "213",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)3",
+     "nets": [
+      "N3",
+      "N17"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "215",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)6",
+     "nets": [
+      "N11",
+      "N18"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "217",
+     "class": "reservoir",
+     "name": "Reservoir (G)2",
+     "nets": [
+      "N18"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "218",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)2",
+     "nets": [
+      "N17",
+      "N14"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "221",
+     "class": "pipe",
+     "name": "Pipe (G)7",
+     "nets": [
+      "N8",
+      "N11"
+     ],
+     "params": {
+      "length": "4000 m",
+      "area": "0.7853 m^2",
+      "Dh": "1.0 m",
+      "roughness": "0.05 m",
+      "length_add": "20 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "222",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)4",
+     "nets": [
+      "N8",
+      "N19"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "224",
+     "class": "reservoir",
+     "name": "Reservoir (G)3",
+     "nets": [
+      "N19"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "239",
+     "class": "pressure_source",
+     "name": "Pressure Source (G)1",
+     "nets": [
+      "N4",
+      "N5"
+     ],
+     "params": {
+      "pressure_differential": "4 MPa",
+      "source_type": "foundation.enum.constant_controlled.controlled",
+      "power_spec": "foundation.enum.power_spec.isentropic",
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "309",
+     "class": "pipe",
+     "name": "Pipe (G)8",
+     "nets": [
+      "N6",
+      "N7"
+     ],
+     "params": {
+      "length": "11000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.00045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "311",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)3",
+     "nets": [
+      "N20",
+      "N21"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "312",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)5",
+     "nets": [
+      "N6",
+      "N20"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "316",
+     "class": "reservoir",
+     "name": "Reservoir (G)4",
+     "nets": [
+      "N21"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "318",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)5",
+     "nets": [
+      "N5"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "392",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)7",
+     "nets": [
+      "N2"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "402",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)8",
+     "nets": [
+      "N12"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "403",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)9",
+     "nets": [
+      "N13"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "428",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)12",
+     "nets": [
+      "N8"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "431",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)13",
+     "nets": [
+      "N7"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    }
+   ]
+  },
+  "Normal_HNetwork_gest_up": {
+   "file": "data/raw/H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/normality_scenarios/normality_datasets/Normal_HNetwork_gest_up.slx",
+   "sha256": "5c3c76e9866dcbbe0a2ec6937d150c6ab9af3ec010ea92df19c2ff92426380d4",
+   "gas_properties": {
+    "gas_spec": "1",
+    "R": "0.287 kJ/kg/K",
+    "Z": "0.998386",
+    "T_ref": "289.65 K",
+    "h_ref": "0.175 kJ/kg",
+    "cp_ref": "0.3469 kJ/kg/K",
+    "mu_ref": "10.98 s*uPa",
+    "k_ref": "48.2 mW/m/K",
+    "p_min_perfect": "0.1 MPa",
+    "p_max_perfect": "inf MPa"
+   },
+   "components": [
+    {
+     "sid": "1",
+     "class": "controlled_reservoir",
+     "name": "Reservoir",
+     "nets": [
+      "N1"
+     ],
+     "params": {
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "47",
+     "class": "pipe",
+     "name": "Pipe (G)1",
+     "nets": [
+      "N2",
+      "N3"
+     ],
+     "params": {
+      "length": "16000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.000045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "48",
+     "class": "pipe",
+     "name": "Pipe (G)2",
+     "nets": [
+      "N3",
+      "N4"
+     ],
+     "params": {
+      "length": "30000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.0045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "49",
+     "class": "pipe",
+     "name": "Pipe (G)3",
+     "nets": [
+      "N5",
+      "N6"
+     ],
+     "params": {
+      "length": "11000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.00045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "50",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)",
+     "nets": [
+      "N3"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "51",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)1",
+     "nets": [
+      "N4"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "52",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)2",
+     "nets": [
+      "N7"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "55",
+     "class": "pressure_source",
+     "name": "Pressure Source (G)3",
+     "nets": [
+      "N1",
+      "N2"
+     ],
+     "params": {
+      "pressure_differential": "4 MPa",
+      "source_type": "foundation.enum.constant_controlled.controlled",
+      "power_spec": "foundation.enum.power_spec.isentropic",
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "106",
+     "class": "pipe",
+     "name": "Pipe (G)4",
+     "nets": [
+      "N7",
+      "N8"
+     ],
+     "params": {
+      "length": "8000 m",
+      "area": "0.7853 m^2",
+      "Dh": "1.0 m",
+      "roughness": "0.05 m",
+      "length_add": "20 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "107",
+     "class": "pipe",
+     "name": "Pipe (G)5",
+     "nets": [
+      "N9",
+      "N10"
+     ],
+     "params": {
+      "length": "4000 m",
+      "area": "0.0989 m^2",
+      "Dh": "0.355 m",
+      "roughness": "0.0045 mm",
+      "length_add": "0.1 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "109",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)3",
+     "nets": [
+      "N11"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "187",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)4",
+     "nets": [
+      "N1"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "195",
+     "class": "reservoir",
+     "name": "Reservoir (G)",
+     "nets": [
+      "N10"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "0.1256 m^2"
+     }
+    },
+    {
+     "sid": "200",
+     "class": "reservoir",
+     "name": "Reservoir (G)1",
+     "nets": [
+      "N12"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "205",
+     "class": "constant_volume_chamber",
+     "name": "Constant Volume Chamber (G)",
+     "nets": [
+      "N13",
+      "N14"
+     ],
+     "params": {
+      "volume": "1 m^3",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "210",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)1",
+     "nets": [
+      "N7",
+      "N13"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "213",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)3",
+     "nets": [
+      "N3",
+      "N15"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "215",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)6",
+     "nets": [
+      "N11",
+      "N16"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "217",
+     "class": "reservoir",
+     "name": "Reservoir (G)2",
+     "nets": [
+      "N16"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "218",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)2",
+     "nets": [
+      "N15",
+      "N12"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "221",
+     "class": "pipe",
+     "name": "Pipe (G)7",
+     "nets": [
+      "N8",
+      "N11"
+     ],
+     "params": {
+      "length": "4000 m",
+      "area": "0.7853 m^2",
+      "Dh": "1.0 m",
+      "roughness": "0.05 m",
+      "length_add": "20 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "222",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)4",
+     "nets": [
+      "N8",
+      "N17"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "224",
+     "class": "reservoir",
+     "name": "Reservoir (G)3",
+     "nets": [
+      "N17"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "239",
+     "class": "pressure_source",
+     "name": "Pressure Source (G)1",
+     "nets": [
+      "N4",
+      "N5"
+     ],
+     "params": {
+      "pressure_differential": "4 MPa",
+      "source_type": "foundation.enum.constant_controlled.controlled",
+      "power_spec": "foundation.enum.power_spec.isentropic",
+      "area_A": "1.1340 m^2"
+     }
+    },
+    {
+     "sid": "309",
+     "class": "pipe",
+     "name": "Pipe (G)8",
+     "nets": [
+      "N6",
+      "N7"
+     ],
+     "params": {
+      "length": "11000 m",
+      "area": "1.1304 m^2",
+      "Dh": "1.2 m",
+      "roughness": "0.00045 m",
+      "length_add": "0.004 m",
+      "Re_lam": "2000",
+      "Re_tur": "4000",
+      "inertia": "false",
+      "dynamic_compressibility": "true",
+      "Nu_lam": "3.66",
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     }
+    },
+    {
+     "sid": "311",
+     "class": "flow_sensor",
+     "name": "Flow Rate Sensor (G)3",
+     "nets": [
+      "N18",
+      "N19"
+     ],
+     "params": {}
+    },
+    {
+     "sid": "312",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)5",
+     "nets": [
+      "N6",
+      "N18"
+     ],
+     "params": {
+      "area": "1.1304 m^2",
+      "restriction_area": "1e-3 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    },
+    {
+     "sid": "316",
+     "class": "reservoir",
+     "name": "Reservoir (G)4",
+     "nets": [
+      "N19"
+     ],
+     "params": {
+      "reservoir_pressure": "0.101325 MPa",
+      "pressure_spec": "foundation.enum.pressure_spec.atmospheric",
+      "reservoir_temperature": "293.15 K",
+      "area_A": "1.1304 m^2"
+     }
+    },
+    {
+     "sid": "318",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)5",
+     "nets": [
+      "N5"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "392",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)7",
+     "nets": [
+      "N2"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "418",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)11",
+     "nets": [
+      "N9"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "428",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)12",
+     "nets": [
+      "N8"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "431",
+     "class": "pressure_temperature_sensor",
+     "name": "Pressure & Temperature Sensor (G)13",
+     "nets": [
+      "N7"
+     ],
+     "params": {
+      "pressure_spec": "foundation.enum.PressureMeasementSpec.Absolute"
+     }
+    },
+    {
+     "sid": "453",
+     "class": "local_restriction",
+     "name": "Local Restriction (G)2",
+     "nets": [
+      "N6",
+      "N9"
+     ],
+     "params": {
+      "area": "0.7853 m^2",
+      "restriction_area": "0.7852 m^2",
+      "restriction_type": "foundation.enum.restriction_type.fixed",
+      "Cd": "0.64"
+     }
+    }
+   ]
+  }
+ }
+}

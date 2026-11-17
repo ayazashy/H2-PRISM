@@ -1,0 +1,30 @@
+approval_id: fig2_rq1_risk_coverage__6725c7d1__ahmed_zayed_20261112
+artifact_id: fig2_rq1_risk_coverage
+claim_scope: DESCRIPTIVE
+decision: APPROVED_FOR_PUBLICATION
+approved_claims:
+- "Selective risk versus coverage for the combined score with D(x) (s_C), its no-D ablation (s_C\u2212D) and the confidence-only\
+  \ baseline under the primary safeguarded policy. (a) Pooled over the three held-out topologies; dotted lines mark the registered\
+  \ coverage targets and open markers their realized operating points; the shaded region is not attainable because D(x) support\
+  \ safeguards withhold SPECIFIC decisions. (b\u2013d) Each held-out topology. Curves are not extrapolated beyond attainable\
+  \ coverage."
+limitations_acknowledged:
+- descriptive curve; registered estimands are the matched-coverage targets; three held-out topologies; Center and Downstream
+  reflect the disputed release topology attribution (L12 / R-18)
+reviewer:
+  name: Ahmed Zayed
+  role: science_owner
+date: '2026-11-12'
+statement: 'Science owner decision given in-session on 2026-11-12: ''Approve for publication'' of Fig. 2, Fig. 4, Fig. 5 and
+  Tables T4, T5, T6, T6b, T6c, T7, T8, T9 as DESCRIPTIVE results of R2 (a10530f1fcf2), with the population, denominators and
+  limitations stated in each caption (RQ1 NOT_ESTIMABLE; Center excluded at 0.60; disputed topology attribution L12/R-18;
+  thin independent support; simulation only). No superiority, causal or generalisation claim.'
+binding:
+  input_sha256:
+    03_results/primary_protocol/PRIMARY/coverage_risk.csv: dee5cbbc376cea31aa3c5e1071a4469efbe26142326c45be62ab9aee8800f108
+    03_results/primary_protocol/PRIMARY/risk_coverage_curve.csv: 84e9232dfc0e5c338c7d9ae2cd383cf8f496be55f51a0230ece5e793991653b2
+  spec_sha256: 6725c7d1a72c0f497189c78bb5798ddb7d0f14c6c42b0929ccd7bbae74f0b1d3
+  renderer_sha256: f22bdc0d4265ec76c35c4b6c235dd5502439eb9c850b67e824a55f987fe53eea
+  source_run_keys:
+  - a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb
+recorded_by: Claude Code session on the science owner's explicit in-session instruction (AskUserQuestion answer)

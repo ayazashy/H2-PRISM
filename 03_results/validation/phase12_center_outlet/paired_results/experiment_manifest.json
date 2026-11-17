@@ -1,0 +1,236 @@
+{
+  "classification": "New source-derived controlled simulation",
+  "family": "Center source family",
+  "approved_pair": {
+    "approval_sha256": "7d7017202e25dbd17a3dea2e50c96ba91c861e10c18ff1a3f51539c8a49a3368",
+    "retry_provenance_sha256": "33b25e6f1e8c478eecb1bae6c3a737c4966ca881512ceef233d04eed1529c73b",
+    "saved_model_delta": [
+      "Phase12 Outlet Area.final_value"
+    ],
+    "configset_json_checked": true,
+    "cases": {
+      "normal": {
+        "input_sha256": {
+          "Normal_HNetwork_gest_center.slx": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+          "Center_phase12.slx": "291e4ecc65861bd4fe1db23591c4c7350385faad7492da9041b691409d414a22",
+          "preflight.json": "4e7dca4140826a0f795258c56d321245991e3e541c2b4b5f2c9b90defe10e2b0",
+          "design.json": "9c8e6ce99263e02a4ab9f7ed318aafee542ee0f436e9632ab760e75d83e172de"
+        },
+        "preflight": {
+          "case": "normal",
+          "source_sha256": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+          "derived_sha256": "291e4ecc65861bd4fe1db23591c4c7350385faad7492da9041b691409d414a22",
+          "compile_status": "PASSED",
+          "solver": {
+            "SolverType": "Fixed-step",
+            "Solver": "ode14x",
+            "FixedStep": "0.2",
+            "StartTime": "0.0",
+            "StopTime": "20000",
+            "RelTol": "1e-3",
+            "AbsTol": "auto",
+            "LoadInitialState": "off",
+            "LoadExternalInput": "off"
+          },
+          "existing_block_links_parameters_and_connections_unchanged": true,
+          "location": {
+            "restriction_sid": "213",
+            "upstream_junction_sids": [
+              "47",
+              "48",
+              "50"
+            ],
+            "flow_sensor_sid": "218",
+            "reservoir_sid": "200"
+          },
+          "command_final_area_m2": "0.001",
+          "version": "26.2.0.3433840 (R2026b) Update 1",
+          "products": [
+            {
+              "Name": "MATLAB",
+              "Version": "26.2",
+              "Release": "(R2026b)",
+              "Date": "22-May-2026"
+            },
+            {
+              "Name": "MATLAB Copilot",
+              "Version": "26.2",
+              "Release": "(R2026b)",
+              "Date": "22-May-2026"
+            },
+            {
+              "Name": "Simscape",
+              "Version": "26.2",
+              "Release": "(R2026b)",
+              "Date": "22-May-2026"
+            },
+            {
+              "Name": "Simulink",
+              "Version": "26.2",
+              "Release": "(R2026b)",
+              "Date": "22-May-2026"
+            }
+          ]
+        }
+      },
+      "outlet_opening": {
+        "input_sha256": {
+          "Normal_HNetwork_gest_center.slx": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+          "Center_phase12.slx": "4990dee87fb61a5471afb37c660967bcfd976959215a1b2415423e0652cf5bac",
+          "preflight.json": "a9f1ab24dd10f3b3e32f0da6a732599dd1e4d729fcb3e149a0dac33bd7e15995",
+          "design.json": "6a623f13b8daf61c455c616c38b5783f44127471f7a060a9a5081368a9fb9643"
+        },
+        "preflight": {
+          "case": "outlet_opening",
+          "source_sha256": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+          "derived_sha256": "4990dee87fb61a5471afb37c660967bcfd976959215a1b2415423e0652cf5bac",
+          "compile_status": "PASSED",
+          "solver": {
+            "SolverType": "Fixed-step",
+            "Solver": "ode14x",
+            "FixedStep": "0.2",
+            "StartTime": "0.0",
+            "StopTime": "20000",
+            "RelTol": "1e-3",
+            "AbsTol": "auto",
+            "LoadInitialState": "off",
+            "LoadExternalInput": "off"
+          },
+          "existing_block_links_parameters_and_connections_unchanged": true,
+          "location": {
+            "restriction_sid": "213",
+            "upstream_junction_sids": [
+              "47",
+              "48",
+              "50"
+            ],
+            "flow_sensor_sid": "218",
+            "reservoir_sid": "200"
+          },
+          "command_final_area_m2": "0.0011",
+          "version": "26.2.0.3433840 (R2026b) Update 1",
+          "products": [
+            {
+              "Name": "MATLAB",
+              "Version": "26.2",
+              "Release": "(R2026b)",
+              "Date": "22-May-2026"
+            },
+            {
+              "Name": "MATLAB Copilot",
+              "Version": "26.2",
+              "Release": "(R2026b)",
+              "Date": "22-May-2026"
+            },
+            {
+              "Name": "Simscape",
+              "Version": "26.2",
+              "Release": "(R2026b)",
+              "Date": "22-May-2026"
+            },
+            {
+              "Name": "Simulink",
+              "Version": "26.2",
+              "Release": "(R2026b)",
+              "Date": "22-May-2026"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "cases": {
+    "normal": {
+      "capture_sha256": {
+        "execution.log": "22e4c96a9b260914958d9cc1689acbfcf56519dd313b19976f3cf860cc030584",
+        "stages.log": "2e7fe4431dcd85fd852ce22a5fe99a4a8f83f0ac413bfc0d8aa5bdecbe3b8632",
+        "center_raw.mat": "82487367abc40f5ac4a22324eca3178c39ed95e3fad35a650a8a08d92823a5a7",
+        "center_extracted.mat": "0c9df4261dfadb405bf8f7970eecd6fd0ce25cd27698b3800d8724ef37ae2a6a",
+        "sensor_checkpoint.mat": "0d2859f0fd020f221cd4bf11a65edc9e54e79bb677457462cf9281bf8d82275d",
+        "outlet_evidence.mat": "a813c32d3401a1120e702ea04a51193d6f4b82e7767765381d9ad8f23c3fb271",
+        "logging_policy.mat": "10a3778e9a50db39b6628787f06c344b6f0f53a45b3da385ca43f189c8d38b8a"
+      },
+      "solver": {
+        "stopEvent": "ReachedStopTime",
+        "errorDiagnostic": [],
+        "warningCount": 0,
+        "warnings": [],
+        "simulationErrorMessage": [],
+        "modelName": "Center_phase12",
+        "solverInfo": {
+          "Type": "Fixed-Step",
+          "Solver": "ode14x",
+          "FixedStepSize": 0.2
+        },
+        "start_s": 0,
+        "stop_s": 20000
+      },
+      "logging_policy": {
+        "SignalLogging": [
+          "on",
+          "off"
+        ],
+        "SaveState": [
+          "on",
+          "off"
+        ],
+        "SaveOutput": [
+          "on",
+          "off"
+        ],
+        "SaveFinalState": [
+          "off",
+          "off"
+        ]
+      }
+    },
+    "outlet_opening": {
+      "capture_sha256": {
+        "execution.log": "22e4c96a9b260914958d9cc1689acbfcf56519dd313b19976f3cf860cc030584",
+        "stages.log": "2e7fe4431dcd85fd852ce22a5fe99a4a8f83f0ac413bfc0d8aa5bdecbe3b8632",
+        "center_raw.mat": "a8cb6432e8b1860805a3a2b3c90f1af1644f6757a17e403c44be831131fe5513",
+        "center_extracted.mat": "e68ed238394f825039951e82f21c417b94eca8586e17058eec84d1098e279317",
+        "sensor_checkpoint.mat": "9e5927f0424bfbc755a13bd29a2dc57343b48dcceb1acbeca47b32a267bbad99",
+        "outlet_evidence.mat": "9378454c950cbe73eeb4e30464c946d03cf2e1189cf9119dcac196dfdc06c709",
+        "logging_policy.mat": "a5b628e49fec0d69429a92ea20fb2be41d31bdc00de7543d57c57a37d5424ee8"
+      },
+      "solver": {
+        "stopEvent": "ReachedStopTime",
+        "errorDiagnostic": [],
+        "warningCount": 0,
+        "warnings": [],
+        "simulationErrorMessage": [],
+        "modelName": "Center_phase12",
+        "solverInfo": {
+          "Type": "Fixed-Step",
+          "Solver": "ode14x",
+          "FixedStepSize": 0.2
+        },
+        "start_s": 0,
+        "stop_s": 20000
+      },
+      "logging_policy": {
+        "SignalLogging": [
+          "on",
+          "off"
+        ],
+        "SaveState": [
+          "on",
+          "off"
+        ],
+        "SaveOutput": [
+          "on",
+          "off"
+        ],
+        "SaveFinalState": [
+          "off",
+          "off"
+        ]
+      }
+    }
+  },
+  "historical_reference_extraction_sha256": "67179d668850a7934c94aa5b71449e22c68797688c445469e9a842b8bcedf5ba",
+  "nominal_onset_s": 1000,
+  "actual_received_onset_s": 1000.0,
+  "location": "Engineered area command on restriction SID 213 toward atmospheric reservoir SID 200"
+}

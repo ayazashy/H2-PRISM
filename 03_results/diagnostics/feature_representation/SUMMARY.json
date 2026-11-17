@@ -1,0 +1,28 @@
+{
+  "evidence_status": "EXPLORATORY_DIAGNOSTIC",
+  "model_fitted": false,
+  "predictions_used": false,
+  "window_s": 60,
+  "stride_s": 30,
+  "baseline_s": 1800,
+  "steady_period_s": [
+    2000,
+    19000
+  ],
+  "n_pipe_pairs": 5,
+  "low_visibility_runs": [
+    "CS_CENTER_ASSESTMENT_TRANSIENT_LEAKG4",
+    "CS_CENTER_CONSTANT_SEGMENT_LEAKG4_WEAK",
+    "CS_CENTER_CONSTANT_SEGMENT_LEAKG5_WEAK",
+    "CS_DOWNSTREAM_ASSESTMENT_TRANSIENT_LEAKG4",
+    "CS_DOWNSTREAM_CONSTANT_SEGMENT_LEAKG4_WEAK",
+    "CS_DOWNSTREAM_CONSTANT_SEGMENT_LEAKG5_WEAK",
+    "CS_UPSTREAM_CONSTANT_SEGMENT_LEAKG4_WEAK",
+    "CS_UPSTREAM_CONSTANT_SEGMENT_LEAKG5_WEAK"
+  ],
+  "noise_white": true,
+  "variance_inflation_range": [
+    0.8912473757988236,
+    1.1648613526962732
+  ]
+}

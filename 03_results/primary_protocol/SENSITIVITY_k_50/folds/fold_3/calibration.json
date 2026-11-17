@@ -1,0 +1,30 @@
+{
+  "dev_support_flags": {
+    "": 1303,
+    "OUT_OF_SUPPORT": 43,
+    "TOP_CLASS_FEW_INDEPENDENT_RUNS": 745,
+    "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY": 16493,
+    "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY|OUT_OF_SUPPORT": 15,
+    "TOP_CLASS_FEW_INDEPENDENT_RUNS|OUT_OF_SUPPORT": 63
+  },
+  "feasibility": {
+    "allowed_methods": [
+      "none",
+      "sigmoid"
+    ],
+    "groups_per_class": {
+      "0": 2,
+      "1": 2,
+      "2": 2,
+      "3": 2
+    },
+    "reason": "all classes have sufficient independent groups"
+  },
+  "fold": 3,
+  "method": "none",
+  "params": {
+    "max_features": 0.3,
+    "min_samples_leaf": 1,
+    "n_estimators": 300
+  }
+}

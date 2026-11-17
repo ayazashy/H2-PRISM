@@ -1,0 +1,130 @@
+{
+  "pressure_rival": {
+    "classification": "NEW CONTROLLED SIMULATION",
+    "status": "CONDITIONAL",
+    "archived_anomalous_status": "BLOCKED",
+    "source_sha256": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+    "solver": {
+      "SolverType": "Fixed-step",
+      "Solver": "ode14x",
+      "FixedStep": "0.2",
+      "StartTime": "0.0",
+      "StopTime": "20000",
+      "RelTol": "1e-3",
+      "AbsTol": "auto",
+      "LoadInitialState": "off",
+      "LoadExternalInput": "off"
+    },
+    "area": {
+      "initial_value": "0.001",
+      "normal_final": "0.001",
+      "intervention_final": "0.001",
+      "step_time": "1000",
+      "area_unit": "m^2",
+      "time_unit": "s",
+      "min": "1e-10",
+      "max": "0.01"
+    },
+    "location": {
+      "restriction_sid": "213",
+      "upstream_junction_sids": [
+        "47",
+        "48",
+        "50"
+      ],
+      "flow_sensor_sid": "218",
+      "reservoir_sid": "200"
+    },
+    "mechanism": "Late reduction in internal pressure-source differential; constant outlet area",
+    "design_basis": "0.17 MPa is 5% of the original 3.4 MPa step span, applied downward within the observed command envelope.",
+    "downstream": "Existing SID 200 atmospheric reservoir. Source reproduction logged 0.100 MPa and 293.15 K internally; re-verify runtime.",
+    "matching": "Same pinned gas network, original initial-condition policy and logging. Identical overlays except the sole approved final step value.",
+    "solver_basis": "0.2 s is the finest completed NORMAL resolution; no certified numerical tolerance is implied.",
+    "gas": "Pinned SID 4 configured constant-property perfect-gas representation; R=0.287 kJ/(kg K), Z=0.998386; composition and hydrogen fidelity unverified.",
+    "qualification": [
+      "Verify both effective area command histories and timed change in the intervention.",
+      "Verify signed branch flow, upstream and downstream pressure, and atmospheric sink state.",
+      "Compare derived NORMAL with original 0.2 s NORMAL and both twins before the event.",
+      "Check after-event incremental outflow and all sensor histories before treating the label as a verified intervention."
+    ],
+    "pair": "pressure_rival",
+    "overlay": {
+      "role": "internal_pressure",
+      "receiver_sid": "55",
+      "producer_sid": "59",
+      "port": "P",
+      "receiver_log": "Pressure_Source_G3/P",
+      "step_time": "1000",
+      "normal_final": "0",
+      "intervention_final": "-0.17",
+      "unit": "MPa",
+      "min_pa": 2999999.9999999944,
+      "max_pa": 6400000.000000028
+    },
+    "initialization": "Start from the original solver initialization at 0 s. For the profile pair, allow 500 s of shared evolution between the boundary step and opening. Equilibrium is not presumed."
+  },
+  "alternate_profile": {
+    "classification": "NEW CONTROLLED SIMULATION",
+    "status": "CONDITIONAL",
+    "archived_anomalous_status": "BLOCKED",
+    "source_sha256": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+    "solver": {
+      "SolverType": "Fixed-step",
+      "Solver": "ode14x",
+      "FixedStep": "0.2",
+      "StartTime": "0.0",
+      "StopTime": "20000",
+      "RelTol": "1e-3",
+      "AbsTol": "auto",
+      "LoadInitialState": "off",
+      "LoadExternalInput": "off"
+    },
+    "area": {
+      "initial_value": "0.001",
+      "normal_final": "0.001",
+      "intervention_final": "0.0011",
+      "step_time": "1000",
+      "area_unit": "m^2",
+      "time_unit": "s",
+      "min": "1e-10",
+      "max": "0.01"
+    },
+    "location": {
+      "restriction_sid": "213",
+      "upstream_junction_sids": [
+        "47",
+        "48",
+        "50"
+      ],
+      "flow_sensor_sid": "218",
+      "reservoir_sid": "200"
+    },
+    "mechanism": "Matched SID 213 opening under a common reservoir pressure offset",
+    "design_basis": "Both twins increase source reservoir pressure by 0.05 bar at 500 s, within the observed command range; the original command continues underneath.",
+    "downstream": "Existing SID 200 atmospheric reservoir. Source reproduction logged 0.100 MPa and 293.15 K internally; re-verify runtime.",
+    "matching": "Same pinned gas network, original initial-condition policy and logging. Identical overlays except the sole approved final step value.",
+    "solver_basis": "0.2 s is the finest completed NORMAL resolution; no certified numerical tolerance is implied.",
+    "gas": "Pinned SID 4 configured constant-property perfect-gas representation; R=0.287 kJ/(kg K), Z=0.998386; composition and hydrogen fidelity unverified.",
+    "qualification": [
+      "Verify both effective area command histories and timed change in the intervention.",
+      "Verify signed branch flow, upstream and downstream pressure, and atmospheric sink state.",
+      "Compare derived NORMAL with original 0.2 s NORMAL and both twins before the event.",
+      "Check after-event incremental outflow and all sensor histories before treating the label as a verified intervention."
+    ],
+    "pair": "alternate_profile",
+    "overlay": {
+      "role": "boundary_pressure",
+      "receiver_sid": "1",
+      "producer_sid": "6",
+      "port": "P",
+      "receiver_log": "Reservoir/P",
+      "step_time": "500",
+      "normal_final": "0.005",
+      "intervention_final": "0.005",
+      "unit": "MPa",
+      "min_pa": 294000.00000000454,
+      "max_pa": 739999.9999999999
+    },
+    "initialization": "Start from the original solver initialization at 0 s. For the profile pair, allow 500 s of shared evolution between the boundary step and opening. Equilibrium is not presumed."
+  }
+}

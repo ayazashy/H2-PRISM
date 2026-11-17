@@ -1,0 +1,13 @@
+fold,heldout_topology,kind,jaccard_selected,only_s_C,only_s_C_minus_D,only_s_C_wrong,only_s_C_minus_D_wrong,only_s_C_NORMAL,only_s_C_minus_D_NORMAL,spearman_D_confidence,spearman_s_C_s_C_minus_D,spearman_s_C_D,spearman_s_C_confidence,D_saturation_share_at_1,D_saturation_among_errors,auroc_D,auroc_confidence,auroc_D_within_conf_top60,auroc_D_within_NORMAL_true,auroc_D_excluding_NORMAL_true,share_errors_from_NORMAL,evidence_status
+1,Downstream,selection_change_s_C_vs_s_C_minus_D,0.760138,763,763,1,134,0,134,,,,,,,,,,,,,EXPLORATORY_DIAGNOSTIC
+1,Downstream,score_relations,,,,,,,,-0.206869,0.822936,0.38476,0.511754,0.603687,0.375596,0.641108,0.593724,0.828542,0.0248092,0.316671,0.624404,EXPLORATORY_DIAGNOSTIC
+1,Upstream,selection_change_s_C_vs_s_C_minus_D,0.992172,22,22,0,5,0,5,,,,,,,,,,,,,EXPLORATORY_DIAGNOSTIC
+1,Upstream,score_relations,,,,,,,,0.378925,0.501912,0.209905,0.360845,0.684814,0.0107858,0.880426,0.736889,0.943208,0.000722265,,1,EXPLORATORY_DIAGNOSTIC
+2,Center,selection_change_s_C_vs_s_C_minus_D,0.995723,12,12,0,2,0,2,,,,,,,,,,,,,EXPLORATORY_DIAGNOSTIC
+2,Center,score_relations,,,,,,,,0.232609,0.987595,0.253201,0.994978,0.678277,0.00151286,0.865905,0.614752,0.853357,0.0145613,,1,EXPLORATORY_DIAGNOSTIC
+2,Upstream,selection_change_s_C_vs_s_C_minus_D,0.636656,1243,1243,0,257,0,257,,,,,,,,,,,,,EXPLORATORY_DIAGNOSTIC
+2,Upstream,score_relations,,,,,,,,0.793998,-0.133284,0.830082,0.720593,0.675276,0,0.868981,0.890425,,,,1,EXPLORATORY_DIAGNOSTIC
+3,Center,selection_change_s_C_vs_s_C_minus_D,0.961808,109,109,0,22,0,22,,,,,,,,,,,,,EXPLORATORY_DIAGNOSTIC
+3,Center,score_relations,,,,,,,,0.27926,0.376043,0.944996,0.213699,0.682242,0.00613497,0.863691,0.476044,0.891349,0.0415105,0.963366,0.990798,EXPLORATORY_DIAGNOSTIC
+3,Downstream,selection_change_s_C_vs_s_C_minus_D,0.705452,967,967,100,217,97,213,,,,,,,,,,,,,EXPLORATORY_DIAGNOSTIC
+3,Downstream,score_relations,,,,,,,,-0.182297,0.755415,0.730439,-0.563309,0.604544,0.0026178,0.847505,0.582938,0.797409,0.00917431,0.84922,0.570681,EXPLORATORY_DIAGNOSTIC

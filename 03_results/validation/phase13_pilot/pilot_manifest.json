@@ -1,0 +1,32 @@
+{
+  "regions": [
+    "213",
+    "312",
+    "215"
+  ],
+  "records": [],
+  "pilot_candidates": [
+    {
+      "event": "NORMAL",
+      "status": "reference only"
+    },
+    {
+      "event": "LEAK",
+      "status": "controlled outlet only",
+      "locations": [
+        "213",
+        "312",
+        "215"
+      ]
+    },
+    {
+      "event": "FAULT",
+      "status": "blocked"
+    },
+    {
+      "event": "DELAY",
+      "status": "blocked"
+    }
+  ],
+  "reason": "No independent run receipts or source-qualified fault/delay mechanism."
+}

@@ -1,0 +1,8 @@
+{
+  "status": "COMPLETED",
+  "artifact_class": "DEVELOPMENT_EXPERIMENT",
+  "out": "03_results\\ablation_runs\\G1_DATA_CORRECTIONS"
+}
+ELAPSED_S 28199
+RUN_EXIT 0
+# [completion recorded 2026-11-13: the wrapper shell ended with the session; the run process continued and its run_manifest.json reports COMPLETED with 3/3 folds (DONE.json)]

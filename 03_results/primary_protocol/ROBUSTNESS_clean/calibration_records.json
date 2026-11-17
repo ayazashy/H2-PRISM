@@ -1,0 +1,90 @@
+[
+  {
+    "dev_support_flags": {
+      "": 2484,
+      "OUT_OF_SUPPORT": 742,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS": 17,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY": 15375,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|OUT_OF_SUPPORT": 44
+    },
+    "feasibility": {
+      "allowed_methods": [
+        "none",
+        "sigmoid"
+      ],
+      "groups_per_class": {
+        "0": 2,
+        "1": 2,
+        "2": 2,
+        "3": 2
+      },
+      "reason": "all classes have sufficient independent groups"
+    },
+    "fold": 1,
+    "method": "none",
+    "params": {
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 500
+    }
+  },
+  {
+    "dev_support_flags": {
+      "": 24,
+      "OUT_OF_SUPPORT": 8694,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS": 14,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY": 9877,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|OUT_OF_SUPPORT": 53
+    },
+    "feasibility": {
+      "allowed_methods": [
+        "none",
+        "sigmoid"
+      ],
+      "groups_per_class": {
+        "0": 2,
+        "1": 2,
+        "2": 2,
+        "3": 2
+      },
+      "reason": "all classes have sufficient independent groups"
+    },
+    "fold": 2,
+    "method": "none",
+    "params": {
+      "max_features": "sqrt",
+      "min_samples_leaf": 5,
+      "n_estimators": 500
+    }
+  },
+  {
+    "dev_support_flags": {
+      "": 850,
+      "OUT_OF_SUPPORT": 74,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS": 38,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY": 17627,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY|OUT_OF_SUPPORT": 5,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|OUT_OF_SUPPORT": 68
+    },
+    "feasibility": {
+      "allowed_methods": [
+        "none",
+        "sigmoid"
+      ],
+      "groups_per_class": {
+        "0": 2,
+        "1": 2,
+        "2": 2,
+        "3": 2
+      },
+      "reason": "all classes have sufficient independent groups"
+    },
+    "fold": 3,
+    "method": "none",
+    "params": {
+      "max_features": 0.3,
+      "min_samples_leaf": 1,
+      "n_estimators": 500
+    }
+  }
+]

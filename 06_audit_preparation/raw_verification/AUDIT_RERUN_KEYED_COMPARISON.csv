@@ -1,0 +1,10 @@
+file,rows_committed,rows_rerun,keys_only_committed,keys_only_rerun,matched_rows,columns_with_value_differences,example_only_committed
+FILE_LEVEL_AUDIT.csv,265,264,1,0,264,"{'size_bytes': 8, 'sha256': 8}","[('H2-SimNet-Dataset/.gitkeep',)]"
+DATASET_SCENARIO_MAP.csv,242,242,0,0,242,{'duplicate_class_id': 36},[]
+DUPLICATE_EXPORT_AUDIT.csv,1423,1423,0,0,1423,"{'shared_stem': 6, 'comparison_type': 366}",[]
+EVENT_TIMING_AUDIT.csv,58,58,0,0,58,{'canonical_parquet': 55},[]
+OPERATING_CONDITIONS_AUDIT.csv,58,58,0,0,58,{'file_example': 55},[]
+folds.csv,276,276,0,0,276,{},[]
+SCENARIO_RELATIONSHIP_EDGES.csv,481,481,229,229,252,{},"[('H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/assestment_transient/leakG4.csv', 'H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/assestment_transient/leakG4.csv'), ('H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/assestment_transient/leakG4.csv', 'H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/assestment_transient/leakG4.parquet')]"
+provisional/PROVISIONAL_DATA_FREEZE_MANIFEST.csv,242,242,0,0,242,{'duplicate_class_id': 36},[]
+SENSOR_CHANNEL_AUDIT.csv,25,25,0,0,25,{},[]

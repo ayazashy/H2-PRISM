@@ -1,0 +1,11 @@
+# A14 secondary Logistic Regression reference (Ahmed). DRAFT - NOT FROZEN.
+# Requires Faisal approval of the bounded C grid and inner split count before any
+# outer-test run (Ahmed plan A14 steps 2-3). Consumed by h2prism.secondary_baseline.
+status: DEVELOPMENT_ONLY          # becomes FROZEN only after Faisal technical acceptance
+classes: [NORMAL, LEAK, COMPRESSOR_FAULT, COMPRESSOR_DELAY]   # from class_mapping.yaml (pending Y4 re-review)
+C_grid: [0.01, 0.1, 1.0, 10.0]    # bounded, prespecified; selection by inner grouped CV only
+class_weight: balanced
+max_iter: 2000
+inner_n_splits: 3                 # PENDING F4: feasibility depends on the approved family structure
+seed: 20261104
+independence_unit: Scenario_Family_ID

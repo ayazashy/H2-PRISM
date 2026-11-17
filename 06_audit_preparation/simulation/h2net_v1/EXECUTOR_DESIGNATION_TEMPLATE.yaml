@@ -1,0 +1,9 @@
+# Copy to EXECUTOR_DESIGNATION.yaml and fill every <...>. Filled by the project lead only.
+# The H2Net v1 grant names "Yazan (dataset owner) or a designated modeller" as executor; acceptance is not recorded.
+grant: MODEL_DEVELOPMENT:H2NET_V1
+executor: <full name>
+executor_role: <dataset owner | designated modeller>
+machine: <computer name, Windows version, RAM>
+designated_by: <project lead full name>
+date: <YYYY-MM-DD>
+scope_note: "covers building the H2Net v1 copies and the validation simulations V2-V6 only; V7 and dataset generation need separate grants"

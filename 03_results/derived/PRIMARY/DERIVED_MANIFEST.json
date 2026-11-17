@@ -1,0 +1,68 @@
+{
+  "source_run_dir": "PRIMARY",
+  "source_run_key": "a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb",
+  "source_artifact_class": "PRIMARY_EXPERIMENT",
+  "source_status": "COMPLETED",
+  "source_sha256": {
+    "decisions.parquet": "1f4579271b8fa5ec11d4950cf1e19c4f5eb73c552e7f831cbb1d418b70862c86",
+    "predictions.parquet": "4338c8c9ececc477212043ba890812b3163e0f7ef16d10c567fb4161c0103098",
+    "estimability.csv": "af1cad1d07106593eefdaca41e6b92d2a16f9f75002f73b9e5d7bb169af54e78",
+    "rq2.csv": "9f7821a19d39eabe5aa404eca9648de9549b003af80ec11d3c9903ad892931a4",
+    "run_manifest.json": "1c405dbded67086717b6f0572b8aa8f20edc6e81d655c6eeed4360e552430a39"
+  },
+  "code_sha256": "974ae355a9d116792f1192f7a7d8197f2e64a7cb0016f82fa5dac8947cbc5f06",
+  "reason_precedence": [
+    "UNRESOLVED_BY_SUPPORT_FLAG",
+    "SPECIFIC_BLOCKED_BY_SUPPORT_FLAG",
+    "INVALID_SCORE",
+    "BELOW_MATCHED_COVERAGE_CUT",
+    "AMBIGUITY_SET_TOO_BROAD",
+    "AMBIGUITY_SET_TOO_BROAD",
+    "SINGLE_CANDIDATE_REJECTED"
+  ],
+  "cross_checks": [
+    {
+      "check": "rq2[primary|0.6|rank_matched|COMPRESSOR_DELAY]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|rank_matched|COMPRESSOR_FAULT]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|rank_matched|LEAK]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|rank_matched|NORMAL]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|COMPRESSOR_DELAY]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|COMPRESSOR_FAULT]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|LEAK]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|NORMAL]",
+      "ok": true
+    },
+    {
+      "check": "primary_reasons_exclusive_and_exhaustive",
+      "ok": true
+    }
+  ],
+  "outputs": {
+    "rq2_scoped.csv": "6fddf12dda66a8f67fbc72572af8205d2d2b17cecb0a0b0a3ad9f286e5dddecc",
+    "decision_reasons_primary.csv": "7bed91e655562704a00897175d46cb52cdb287dba66cb2e0e355e7d32fc17e16",
+    "decision_reasons_contributing.csv": "97b0bfd667105db54df307b4a9da9ce79d7e755805208dd974ee6cebf7204e8d",
+    "support_flags_scoped.csv": "8d026b2d167f6c0068fc13053d6ce6a510564f91bb7dd2b159090a15f079b535",
+    "matched_selection_ties.csv": "748a86e044deb740ba8d180806e7f2ed9d52a4d1b74ebd3b97a22c3a35818902"
+  }
+}

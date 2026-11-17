@@ -1,0 +1,22 @@
+{
+  "settings": 6272,
+  "scenarios": 8,
+  "independent_families": 0,
+  "thirty_second_controlled": {
+    "nonwithdrawal_forced": 4,
+    "nonwithdrawal_routed": 0,
+    "withdrawals_routed": 4,
+    "withdrawals_total": 4,
+    "held_out_withdrawals": 1
+  },
+  "all_controlled": {
+    "nonwithdrawal_forced": 1792,
+    "nonwithdrawal_nearest_mechanism": 165,
+    "nonwithdrawal_routed": 164,
+    "withdrawals_retained": 1792,
+    "withdrawals_total": 1792
+  },
+  "reference_status": "BLOCKED_REFERENCE / UNRESOLVED",
+  "decision": "REVISE_OR_REJECT",
+  "formal": "12/12 UNRESOLVED, zero qualified exclusions, L0"
+}

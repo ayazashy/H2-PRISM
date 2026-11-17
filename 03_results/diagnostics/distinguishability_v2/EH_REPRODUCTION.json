@@ -1,0 +1,22 @@
+{
+  "arm": "F_EVIDENCE_MARGIN",
+  "reproduction_matches_stored_E": true,
+  "n_window_fold_instances": 55986,
+  "share_undefined": 0.795627478298146,
+  "share_by_state": {
+    "INSUFFICIENT_INDEPENDENT_EVIDENCE": 0.540564,
+    "DEFINED": 0.204373,
+    "OUT_OF_SUPPORT": 0.157664,
+    "HYPOTHESIS_UNSUPPORTED": 0.097399
+  },
+  "unsupported_where_only_group_of_h_is_query_own_group": 1.0,
+  "unsupported_hypotheses": {
+    "COMPRESSOR_FAULT": 4061,
+    "NORMAL": 1330,
+    "COMPRESSOR_DELAY": 62
+  },
+  "insufficient_units_median_n_units": 1.0,
+  "share_query_group_present_in_reference": 1.0,
+  "evidence_status": "EXPLORATORY_DIAGNOSTIC",
+  "model_fitted": false
+}

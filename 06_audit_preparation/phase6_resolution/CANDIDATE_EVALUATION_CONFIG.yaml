@@ -1,0 +1,93 @@
+# H2-PRISM candidate evaluation configuration - Phase 6.
+# STATUS: PROVISIONALLY_SELECTED - NOT FROZEN. Every value carries its decision ID and
+# signoff state. Copy to configs/frozen_evaluation_config.yaml ONLY after the listed owners sign.
+# Validated by tests/test_candidate_config.py (structure, hashes, constructibility of objects).
+status: PROVISIONALLY_SELECTED
+signoff: PENDING_HUMAN_SIGNOFF
+version: candidate-eval-0.3-phase6
+dataset:
+  manifest: {file: 06_audit_preparation/phase6_resolution/CANDIDATE_MANIFEST_V02.csv, sha256: 36bcbaf97bb17659995f393884d1dcde3bbca9236c3dcdcc6e7651e61538fb59, decision: Y-D07, signoff: PENDING_HUMAN_SIGNOFF}
+  source_package_hashes: 06_audit_preparation/pre_experiment_review/OUTPUT_HASHES.json
+  label_mapping: {file: 06_audit_preparation/pre_experiment_review/CANDIDATE_LABEL_MAPPING.yaml, sha256: 61a3182b04e0fd7c9728945f07ab7eee13fe8fb75a8f4b55a999244cb49c1f18, decision: A-D05, signoff: PENDING_HUMAN_SIGNOFF}
+  family_column: {value: Scenario_Family_ID, meaning: family_primary, sensitivity: [family_extended_sensitivity, family_conservative_sensitivity], decision: Y-D04, signoff: PENDING_HUMAN_SIGNOFF}
+  realization: {value: noise_added, secondary: clean, pooling: forbidden, decision: F-D01, signoff: PENDING_HUMAN_SIGNOFF}
+  classes: [NORMAL, LEAK, COMPRESSOR_FAULT, COMPRESSOR_DELAY]
+splits:
+  outer: {file: 06_audit_preparation/pre_experiment_review/CANDIDATE_OUTER_FOLDS.csv, sha256: 3b21d8231a40245140f32aa6cb5193e3f45b05bd57cbb079ccccd69aafa8b1dd, design: leave_one_topology_out, decision: F-D02, signoff: PENDING_HUMAN_SIGNOFF}
+  inner: {file: 06_audit_preparation/pre_experiment_review/CANDIDATE_INNER_FOLDS.csv, sha256: ebff65da38a5e70e45e1f1e0c4303b518ba13f9874aed06a3a191bf9c0963c5b, scheme: LOTO_within_train, decision: F-D03, signoff: PENDING_HUMAN_SIGNOFF}
+windows:
+  window_s: 60
+  stride_s: 30
+  min_samples: 60
+  label_mode: row_level
+  pre_event_policy: exclude
+  sensitivity: [{window_s: 60, stride_s: 60}, {pre_event_policy: label_normal, role: secondary_registered}]
+  decision: [F-D04, F-D05]
+  signoff: PENDING_HUMAN_SIGNOFF
+features:
+  register: {file: 02_methodology/FEATURE_DEFINITION_REGISTER.csv, sha256: 3dd5e927e3473d01168b39ca7539d51fd5d599621bb6263bae20bfdc25bfc137}
+  statistics: [mean, std, min, max, range, last_minus_first, slope, mean_abs_diff]
+  sensitivity_arm: offset_invariant   # std, range, last_minus_first, slope, mean_abs_diff (80 features)
+  scaling: fit_on_training_fold_only
+  decision: F-D06
+  signoff: PENDING_HUMAN_SIGNOFF
+model:
+  primary: random_forest
+  grid: {n_estimators: [300, 500], min_samples_leaf: [1, 5], max_features: [sqrt, 0.3]}
+  class_weight: balanced_subsample
+  selection: {criterion: macro_f1, tie_break: log_loss, data: inner_oof_only}
+  decision: F-D14
+  signoff: PENDING_HUMAN_SIGNOFF
+calibration:
+  candidates: [none, sigmoid]          # isotonic excluded (single run per thin class in development)
+  criterion: log_loss
+  feasibility_rule: {function: h2prism.calibration.calibration_feasibility, min_groups_per_class: 2, fallback: none}
+  decision: F-D09
+  signoff: PENDING_HUMAN_SIGNOFF
+distinguishability:
+  k: 25
+  weighting: uniform
+  prior_correction: false
+  exclude_query_family: true
+  min_class_reference: 25
+  min_distinct_scenarios: 2
+  low_support_min_top_count: 5
+  min_top_class_families: 2
+  out_of_support_quantile: 0.99
+  sensitivity: [{k: 10}, {k: 50}, {prior_correction: true}]
+  decision: F-D08
+  signoff: PENDING_HUMAN_SIGNOFF
+combined_scores:
+  s_C: {features: [logit_C, M, neg_H, D], module: h2prism.combined_score}
+  s_C_minus_D: {features: [logit_C, M, neg_H], module: h2prism.combined_score}
+  fit: {data: development_predictions, cross_fit_groups: topology, n_splits: 2, C: 1.0}
+  decision: F-D10
+  signoff: PENDING_HUMAN_SIGNOFF
+policy:
+  candidate_source: p_only
+  singleton_handling: unresolved
+  max_set_size: 2
+  ambiguity_mass: 0.9
+  unresolved_flags: [OUT_OF_SUPPORT, INVALID_FEATURES, NO_REFERENCE]
+  specific_blocking_flags: [LOW_SCENARIO_DIVERSITY, TOP_CLASS_FEW_INDEPENDENT_RUNS]
+  known_consequence: "in development folds NORMAL/FAULT/DELAY top classes have 1 reference family, so SPECIFIC is reachable there only for LEAK; report per-class realized coverage (see FAISAL_RESOLUTION.md section B7)"
+  decision: F-D11
+  signoff: PENDING_HUMAN_SIGNOFF
+thresholds:
+  source: development
+  rule: rank_match_target_coverage
+  target_coverage_primary: 0.80
+  target_coverage_secondary: [0.60, 0.90]
+  unattainable_coverage: report_realized_coverage_and_flag   # never force coverage on the outer test
+  decision: F-D12
+  signoff: PENDING_HUMAN_SIGNOFF
+evaluation:
+  primary_comparison: s_C_vs_s_C_minus_D
+  secondary_comparisons: [s_C_vs_confidence_only, margin_only, neg_entropy_only, D_only]
+  metrics: [coverage, selective_risk, ambiguity_inclusion_rate, ambiguity_mean_size, unresolved_rate, accuracy, macro_f1_present_classes, log_loss, brier, ece]
+  uncertainty: {module: h2prism.uncertainty.paired_stratified_bootstrap, unit: Scenario_Family_ID, stratum: topology, n_boot: 2000, seed: 20261104, scope: pooled_only, decision: F-D13, signoff: PENDING_HUMAN_SIGNOFF}
+  per_class_reporting: {NORMAL: descriptive_only, COMPRESSOR_FAULT: descriptive_only, COMPRESSOR_DELAY: descriptive_only, LEAK: restricted, decision: F-D07, signoff: PENDING_HUMAN_SIGNOFF}
+  practical_significance: {value: effect_sizes_only, decision: A-D04, signoff: PENDING_HUMAN_SIGNOFF}
+seeds: {global: 20261104}
+software: {python: 3.12.1, scikit-learn: 1.7.0, numpy: 2.3.1, pandas: 2.3.3, scipy: 1.16.0, pyarrow: 25.0.1}
+provenance: {required: [git_commit, config_sha256, manifest_sha256, folds_sha256, seed, run_status], tool: tools/research_audit/build_provenance_index.py}

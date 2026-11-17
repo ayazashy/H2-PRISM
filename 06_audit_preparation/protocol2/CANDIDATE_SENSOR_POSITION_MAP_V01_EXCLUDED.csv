@@ -1,0 +1,6 @@
+sensor_block_sid,logged_as,reason
+134,Downstream:PS5,block not logged by every source model
+196,Downstream:MFS4,block not logged by every source model
+402,Downstream:PS9,block not logged by every source model
+403,Downstream:PS10,block not logged by every source model
+418,Center:PS8;Upstream:PS8,block not logged by every source model

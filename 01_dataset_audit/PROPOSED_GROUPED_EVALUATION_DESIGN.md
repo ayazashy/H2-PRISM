@@ -1,3 +1,5 @@
+> **AMENDED 2026-11:** statements in this 2026-10-30 document are superseded where listed in [DATASET_AUDIT_AMENDMENT_2026-11.md](DATASET_AUDIT_AMENDMENT_2026-11.md). The original text below is kept unchanged as the historical record.
+
 # H2-PRISM Proposed Grouped Evaluation Design (Task Y5)
 **Author**: Yazan (Lead, Dataset Audit, Data Engineering & Dataset Readiness)  
 **Target Consumer**: Faisal (ML Lead)  

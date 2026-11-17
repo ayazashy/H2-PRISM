@@ -1,0 +1,86 @@
+# H2Net v1 - PROPOSED decision-record entries (2026-11-14). NOT A DECISION RECORD.
+# Prepared for the authorized owners: Yazan (dataset/model owner) with the designated modeller; methods review Faisal.
+# Execution coordinated by Ahmed (project lead). Nothing here is approved by Yazan, Faisal or a designated modeller.
+# To decide: the owner copies an entry into ../PARAMETER_DECISIONS.yaml, sets decided: true, decided_by, date, and keeps
+# or edits the value. That file (status OWNER_DECISIONS_REQUIRED) is the only decision record and is NOT changed here.
+# Basis: ../H2NET_V1_DECISION_PACKAGE.md (P1-P17), candidate/REFERENCE_CALCS.json (A-G),
+# candidate/PROVISIONAL_STEADY_STATES.json (provisional network steady states), candidate/SIMSCAPE_SOURCE_EVIDENCE.md.
+status: PROPOSED_NOT_APPROVED
+prepared_by: preparer (Claude), coordinated by Ahmed Zayed (project lead)
+approved_by: null
+
+minimum_for_X06: [M1_pressures_and_compressors, M2_demand, M3_outlet_topology, M4_roughness, M5_reference_temperature]
+
+S2_thermal_boundary:            # P3 soil value, P8
+  decided: false
+  owner: "modeller"
+  proposal:
+    representation: convective heat transfer from each pipe (Pipe (G) port H) to a fixed-temperature ground node
+    soil_temperature_K: 283.15
+    U_W_per_m2K: null           # NO verified source: must be supplied with a citation before deciding
+  recommendation: "DEFER (U-value source missing); steady-state targets do not depend on it (isothermal reference)"
+
+S3_compressor_stations:         # P9 (amended 2026-11-14), P15, M1
+  decided: false
+  owner: "Yazan + modeller"
+  proposal:
+    representation: Pressure Source (G), power_spec = isentropic (1) kept, followed by an aftercooler
+    power_spec_note: >-
+      Installed foundation.enum.power_spec has only isentropic (1) and none (0). none adds no energy, so the discharge
+      temperature equals the suction temperature (an implicit perfect cooler with no power to check in V3). isentropic
+      lets Simscape compute heating and power from the real-gas tables; the aftercooler then removes the heat.
+    aftercooler: Pipe (G) cooler segment (port H) connected to a Temperature Source at 313.15 K; outlet temperature verified in V3
+    supply_reservoir_pressure_MPa: 3.0
+    C1_discharge_setpoint_MPa: 6.5       # Pressure Source (G)3, SID 55 (dp = 3.5 MPa at the supply pressure above)
+    C2_discharge_setpoint_MPa: 6.5       # Pressure Source (G)1, SID 239 (dp restores the trunk loss; about 0.03-0.1 MPa)
+    isentropic_efficiency_for_power_reporting: [0.75, 0.85]   # reported range; Simscape itself is ideal (no efficiency)
+    down_model_letdown: "DEFER (P15); provisional calculations use an isenthalpic reduction to 4.0 MPa at SID 111"
+  recommendation: "APPROVE representation; AMEND set-points (provisional steady states show C2 needs only a small dp)"
+
+S4_demand_and_leaks:            # P4, P10, P11, M2, M3
+  decided: false
+  owner: "Yazan (+ Faisal for labels)"
+  proposal:
+    demand_outlets: >-
+      Flow Rate Source (G), mass, controlled, power_spec none, port A at the network node, port B to an atmospheric
+      Reservoir (G). Replaces Local Restriction (G)3/4/5/6 (SID 213/222/312/215) and the open end vent.
+    nominal_demand_kg_s: {G3: 4.0, G5: 4.0, G4: 5.0, G6: 5.0, END: 2.0}   # total 20.0
+    demand_rule: "every segment <= 50 % of its 20 m/s capacity at 3 MPa (1.2 m 25.9, 1.0 m 17.9, 0.355 m 2.2 kg/s)"
+    load_profiles: null          # owner to specify
+    leaks:
+      representation: separate Local Restriction (G) branch to an atmospheric Reservoir (G), never on a demand block
+      positions: ">= 6 mid-pipe positions (pipe split at the leak position)"
+      severity_classes_percent: [0.5, 2.0, 10.0]
+      severity_definition: CHOOSE A or B   # A: fraction of actual local throughput (area recomputed per operating point)
+                                            # B: fixed area, actual fraction recorded per run
+      discharge_coefficient: 0.64
+  recommendation: "APPROVE outlets; AMEND demand numbers and severity definition"
+
+S5_discretisation:              # P12
+  decided: false
+  owner: "modeller (inertia scope: owner)"
+  proposal: {steady_state: one block per pipe, transient: segment length from V5/V7 starting at <= 1 km, inertia: owner choice}
+  recommendation: "DEFER (MATLAB convergence study)"
+
+S6_roughness_and_initial_state:  # P7, P13, M4
+  decided: false
+  owner: "modeller"
+  proposal: {roughness_m: 4.5e-5, applies_to: all pipes, length_add: released values kept, initial_state: steady state from the reference solver}
+  recommendation: "APPROVE value (literature source still to cite)"
+
+S8_numerics:                    # P14
+  decided: false
+  owner: "modeller"
+  proposal: {reference_solver: ode15s, RelTol: 1.0e-6, production: only if within V6 of the reference}
+  recommendation: "APPROVE as baseline"
+
+operating_envelope_V8:          # P2, P3, P5, M1, M5
+  decided: false
+  owner: "Yazan + modeller"
+  proposal:
+    transmission_pressure_MPa: [3.0, 8.0]
+    gas_temperature_K: [270.0, 330.0]
+    isothermal_reference_temperature_K: 313.15
+    velocity_limit_m_s: 20.0
+    velocity_limit_applies_at: pipe outlet
+  recommendation: "AMEND (pressure lower bound 3 MPa; reference temperature choice; velocity-limit source to cite)"

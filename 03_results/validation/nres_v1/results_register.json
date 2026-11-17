@@ -1,0 +1,72 @@
+[
+  {
+    "id": "A",
+    "question": "Timing invariance",
+    "experimental_unit": "matched timing pair",
+    "result": "0.027781→0.000130 B3 fixed query; B4 0.000191",
+    "status": "EXPLORATORY_POSITIVE",
+    "artifact": "timing.csv",
+    "provenance": "provenance.json",
+    "limit": "One Center family; zero verified independent generating families"
+  },
+  {
+    "id": "B",
+    "question": "Location separability",
+    "experimental_unit": "3 outlet pair contrasts",
+    "result": "B3 0.040499/0.028433/0.029388 at 30 s ±1 s",
+    "status": "EXPLORATORY_POSITIVE",
+    "artifact": "location_geometry.csv",
+    "provenance": "provenance.json",
+    "limit": "One Center family; zero verified independent generating families"
+  },
+  {
+    "id": "C",
+    "question": "Incremental ranking",
+    "experimental_unit": "1 alternate query, 560 dependent settings per method",
+    "result": "B0 555, B1 560, B2 550, B3 560, B4 560 SID 213 first",
+    "status": "EXPLORATORY_NEGATIVE",
+    "artifact": "transfer.csv",
+    "provenance": "provenance.json",
+    "limit": "One Center family; zero verified independent generating families"
+  },
+  {
+    "id": "D",
+    "question": "Forced location check",
+    "experimental_unit": "3 non-withdrawal controls",
+    "result": "closest SID assigned but all retained",
+    "status": "EXPLORATORY_NEGATIVE",
+    "artifact": "negative_controls.csv",
+    "provenance": "provenance.json",
+    "limit": "One Center family; zero verified independent generating families"
+  },
+  {
+    "id": "MFS3",
+    "question": "Sensor contribution",
+    "experimental_unit": "one alternate query",
+    "result": "full-universe 0.028358 to 0.000141 after removal",
+    "status": "EXPLORATORY_POSITIVE",
+    "artifact": "mfs3_reproduction.csv",
+    "provenance": "provenance.json",
+    "limit": "One Center family; zero verified independent generating families"
+  },
+  {
+    "id": "OP",
+    "question": "Operational residual",
+    "experimental_unit": "no qualified online reference",
+    "result": null,
+    "status": "BLOCKED",
+    "artifact": "provenance.json",
+    "provenance": "provenance.json",
+    "limit": "One Center family; zero verified independent generating families"
+  },
+  {
+    "id": "FORMAL",
+    "question": "Qualified hypothesis exclusion",
+    "experimental_unit": "12 accepted, one family",
+    "result": "0 exclusions; 12 UNRESOLVED; L0",
+    "status": "BLOCKED",
+    "artifact": "provenance.json",
+    "provenance": "provenance.json",
+    "limit": "One Center family; zero verified independent generating families"
+  }
+]

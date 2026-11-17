@@ -1,0 +1,7 @@
+arm,ranking_score,specific_eligible_if,isolates,role,estimable_on_current_data,reason
+A,confidence,current safeguards (support flags),baseline,baseline,yes,
+B,s_C_minus_D,current safeguards,historical,secondary,yes,
+C,s_C,current safeguards,historical D(x) inside s_C,secondary,yes,
+D,confidence,A and y_hat SUPPORTED (>= m groups) and not OUT_OF_SUPPORT,support only,secondary control,partly,only LEAK predictions can be SUPPORTED; NORMAL->LEAK errors are not blocked
+F,confidence,D and no CONFLICT (margin >= -tau),evidence-conflict rule,secondary factor,no,margin undefined for 100% of windows (no eligible competitor)
+E,confidence,D and SEPARATED (margin >= tau) and no detectability contradiction,separability beyond support,confirmatory contrast E vs A,no,margin and detectability undefined for 100% of windows

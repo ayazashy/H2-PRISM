@@ -1,0 +1,27 @@
+# UNSIGNED TEMPLATE - not an approval. See SIGNOFF_PACKAGE.md.
+approval_id: fig2_rq1_risk_coverage__6725c7d1__REVIEWER
+artifact_id: fig2_rq1_risk_coverage
+claim_scope: DESCRIPTIVE
+decision: TO_BE_DECIDED_BY_REVIEWER
+approved_claims:
+- "Selective risk versus coverage for the combined score with D(x) (s_C), its no-D ablation (s_C\u2212D) and the confidence-only\
+  \ baseline under the primary safeguarded policy. (a) Pooled over the three held-out topologies; dotted lines mark the registered\
+  \ coverage targets and open markers their realized operating points; the shaded region is not attainable because D(x) support\
+  \ safeguards withhold SPECIFIC decisions. (b\u2013d) Each held-out topology. Curves are not extrapolated beyond attainable\
+  \ coverage."
+limitations_acknowledged:
+- descriptive curve; registered estimands are the matched-coverage targets; three held-out topologies; Center and Downstream
+  reflect the disputed release topology attribution (L12 / R-18)
+reviewer:
+  name: TO_BE_FILLED_BY_REVIEWER
+  role: TO_BE_FILLED_BY_REVIEWER
+date: YYYY-MM-DD
+statement: ''
+binding:
+  input_sha256:
+    03_results/primary_protocol/PRIMARY/coverage_risk.csv: dee5cbbc376cea31aa3c5e1071a4469efbe26142326c45be62ab9aee8800f108
+    03_results/primary_protocol/PRIMARY/risk_coverage_curve.csv: 84e9232dfc0e5c338c7d9ae2cd383cf8f496be55f51a0230ece5e793991653b2
+  spec_sha256: 6725c7d1a72c0f497189c78bb5798ddb7d0f14c6c42b0929ccd7bbae74f0b1d3
+  renderer_sha256: f22bdc0d4265ec76c35c4b6c235dd5502439eb9c850b67e824a55f987fe53eea
+  source_run_keys:
+  - a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb

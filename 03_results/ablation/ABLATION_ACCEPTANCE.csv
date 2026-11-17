@@ -1,0 +1,22 @@
+arm_id,criterion,result,detail,evidence_status
+B_TOPOLOGY,confidence AUROC >= 0.5 in every development topology,PASS,min 0.514 (A: 0.073),EXPLORATORY_DEVELOPMENT
+B_TOPOLOGY,share of errors with confidence >= 0.9 lower than A,PASS,0.000 vs A 0.696,EXPLORATORY_DEVELOPMENT
+C_COMMON_SENSORS,no padded channel among model inputs,PASS,104 model features,EXPLORATORY_DEVELOPMENT
+C_COMMON_SENSORS,dev group-balanced accuracy not lower than A by more than 0.05,PASS,0.488 vs A 0.468,EXPLORATORY_DEVELOPMENT
+D_GROUP_SUPPORT,group-balanced selective risk not higher than A,PASS,0.0000 vs A 0.0000; UNINFORMATIVE: both risks 0 on 1 estimable development topology(ies),EXPLORATORY_DEVELOPMENT
+E_EVIDENCE_CONFLICT,group-balanced selective risk lower than A,FAIL,0.0000 vs A 0.0000; UNINFORMATIVE: both risks 0 on 1 estimable development topology(ies),EXPLORATORY_DEVELOPMENT
+E_EVIDENCE_CONFLICT,ambiguity-set inclusion >= 0.9 where sets are issued,PASS,1.0,EXPLORATORY_DEVELOPMENT
+F_EVIDENCE_MARGIN,AUROC(E) > AUROC(D_only of A) by >= 0.05 in every development topology (min over topologies),FAIL,min E 0.4902898907 vs min D 0.4939725554,EXPLORATORY_DEVELOPMENT
+F_EVIDENCE_MARGIN,AUROC(s_C) - AUROC(s_C_minus_D) > 0,NOT_EVALUABLE,nan,EXPLORATORY_DEVELOPMENT
+G1_DATA_CORRECTIONS,confidence AUROC >= 0.5 in every development topology,PASS,min 0.615 (A: 0.073),EXPLORATORY_DEVELOPMENT
+G1_DATA_CORRECTIONS,share of errors with confidence >= 0.9 lower than A,PASS,0.612 vs A 0.696,EXPLORATORY_DEVELOPMENT
+G1_DATA_CORRECTIONS,no padded channel among model inputs,PASS,104 model features,EXPLORATORY_DEVELOPMENT
+G1_DATA_CORRECTIONS,dev group-balanced accuracy not lower than A by more than 0.05,PASS,0.902 vs A 0.468,EXPLORATORY_DEVELOPMENT
+G2_FULL_CANDIDATE,confidence AUROC >= 0.5 in every development topology,PASS,min 0.615 (A: 0.073),EXPLORATORY_DEVELOPMENT
+G2_FULL_CANDIDATE,share of errors with confidence >= 0.9 lower than A,PASS,0.612 vs A 0.696,EXPLORATORY_DEVELOPMENT
+G2_FULL_CANDIDATE,no padded channel among model inputs,PASS,104 model features,EXPLORATORY_DEVELOPMENT
+G2_FULL_CANDIDATE,dev group-balanced accuracy not lower than A by more than 0.05,PASS,0.902 vs A 0.468,EXPLORATORY_DEVELOPMENT
+G2_FULL_CANDIDATE,group-balanced selective risk vs A at the same target,NOT_EVALUABLE,targets differ: 1:nan;2:0.5;3:nan vs A 1:0.5;2:nan;3:nan,EXPLORATORY_DEVELOPMENT
+G2_FULL_CANDIDATE,ambiguity-set inclusion >= 0.9 where sets are issued,PASS,1.0,EXPLORATORY_DEVELOPMENT
+G2_FULL_CANDIDATE,AUROC(E) > AUROC(D_only of A) by >= 0.05 in every development topology (min over topologies),FAIL,min E 0.2692451072 vs min D 0.4939725554,EXPLORATORY_DEVELOPMENT
+G2_FULL_CANDIDATE,AUROC(s_C) - AUROC(s_C_minus_D) > 0,PASS,0.12145569319999999,EXPLORATORY_DEVELOPMENT

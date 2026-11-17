@@ -1,0 +1,555 @@
+<title>H2Net v1 Decision Review</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: single reading column (max 1080px) of numbered review sections; decisions as expandable rows with a filter bar. */
+:root {
+  --bg: #f6f7f8;
+  --surface: #ffffff;
+  --ink: #17202a;
+  --muted: #56636f;
+  --line: #d7dde2;
+  --accent: #0b5d7a;
+  --accent-soft: #e3f0f5;
+  --approve: #1f7a4a; --approve-bg: #e4f3ea;
+  --amend: #9a5b00;   --amend-bg: #fbefd9;
+  --defer: #5b4f8a;   --defer-bg: #ece9f6;
+  --draft: #8a1c1c;   --draft-bg: #fbe7e5;
+  --f-display: "IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f1418; --surface: #161d23; --ink: #e3e9ee; --muted: #9aa8b4; --line: #2b3640;
+  --accent: #5cb8d8; --accent-soft: #15303b;
+  --approve: #6fd29b; --approve-bg: #15301f; --amend: #f0b456; --amend-bg: #3a2a10;
+  --defer: #b4a8ec; --defer-bg: #262140; --draft: #ff8f86; --draft-bg: #3b1715; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f1418; --surface: #161d23; --ink: #e3e9ee; --muted: #9aa8b4; --line: #2b3640;
+  --accent: #5cb8d8; --accent-soft: #15303b;
+  --approve: #6fd29b; --approve-bg: #15301f; --amend: #f0b456; --amend-bg: #3a2a10;
+  --defer: #b4a8ec; --defer-bg: #262140; --draft: #ff8f86; --draft-bg: #3b1715; color-scheme: dark }
+
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 64px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; line-height: 1.15; margin: 0; }
+h1 { font-size: clamp(28px, 4.2vw, 40px); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 24px; font-weight: 600; }
+h3 { font-size: 17px; font-weight: 600; }
+p { margin: 0; max-width: 72ch; }
+code, .mono { font-family: var(--f-mono); font-size: 0.86em; }
+.num { font-variant-numeric: tabular-nums; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+
+/* draft band */
+.band { background: var(--draft-bg); color: var(--draft); border-bottom: 1px solid var(--line); }
+.band .wrap { padding-block: 10px; display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; font-size: 13.5px; }
+.band strong { font-family: var(--f-display); letter-spacing: 0.06em; text-transform: uppercase; font-size: 13px; }
+
+header.top { padding-block: 36px 24px; display: grid; gap: 14px; border-bottom: 1px solid var(--line); }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 28px; font-size: 13.5px; color: var(--muted); }
+.meta b { color: var(--ink); font-weight: 600; }
+
+nav.toc { display: flex; flex-wrap: wrap; gap: 6px 4px; padding-block: 14px; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+nav.toc a { text-decoration: none; color: var(--muted); padding: 4px 10px; border-radius: 4px; }
+nav.toc a:hover { background: var(--accent-soft); color: var(--accent); }
+
+section { padding-block: 40px 8px; display: grid; gap: 18px; }
+.sec-head { display: grid; gap: 6px; }
+.sec-id { font-family: var(--f-mono); font-size: 12px; color: var(--accent); letter-spacing: 0.06em; }
+.lede { color: var(--muted); }
+
+/* minimum decisions */
+.mgrid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 860px) { .mgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mgrid .mcard:last-child { grid-column: 1 / -1; } }
+@media (max-width: 460px) { .mgrid { grid-template-columns: 1fr; } }
+.mcard { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 4px; padding: 14px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.mcard .mid { font-family: var(--f-mono); font-weight: 500; color: var(--accent); font-size: 13px; }
+.mcard .rows { font-size: 12.5px; color: var(--muted); }
+.note { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; display: grid; gap: 8px; font-size: 14px; }
+.note ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+
+/* chips */
+.chip { display: inline-block; font-family: var(--f-display); font-weight: 600; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px; border-radius: 3px; white-space: nowrap; }
+.chip.approve { color: var(--approve); background: var(--approve-bg); }
+.chip.amend { color: var(--amend); background: var(--amend-bg); }
+.chip.defer { color: var(--defer); background: var(--defer-bg); }
+.chip.pass { color: var(--approve); background: var(--approve-bg); }
+.chip.open { color: var(--amend); background: var(--amend-bg); }
+.chip.matlab { color: var(--defer); background: var(--defer-bg); }
+
+/* filter */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); }
+.filters button { font: inherit; font-size: 13px; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 4px; padding: 5px 12px; }
+.filters button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.filters .count { margin-left: auto; font-family: var(--f-mono); font-size: 12px; }
+
+/* decision rows */
+.dlist { display: grid; gap: 0; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); overflow: hidden; }
+.dhead, .dsum { display: grid; grid-template-columns: 52px minmax(0, 1.1fr) minmax(0, 2.2fr) 96px minmax(0, 0.9fr); gap: 12px; align-items: start; padding: 12px 14px; }
+.dhead { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); }
+details.drow { border-bottom: 1px solid var(--line); }
+details.drow:last-child { border-bottom: 0; }
+.dsum { cursor: pointer; list-style: none; }
+.dsum::-webkit-details-marker { display: none; }
+.dsum:hover { background: var(--accent-soft); }
+.pid { font-family: var(--f-mono); font-weight: 500; color: var(--accent); }
+.pid::before { content: "▸ "; color: var(--muted); }
+details[open] .pid::before { content: "▾ "; }
+.pname { font-weight: 600; }
+.pval { font-size: 14px; }
+.powner { font-size: 13px; color: var(--muted); }
+.dbody { padding: 4px 14px 18px 78px; display: grid; gap: 10px; }
+.dl { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 6px 16px; font-size: 14px; }
+.dl dt { color: var(--muted); font-size: 12.5px; font-family: var(--f-mono); padding-top: 2px; }
+.dl dd { margin: 0; min-width: 0; }
+.dl ul { margin: 0; padding-left: 18px; }
+
+/* tables */
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+th { font-family: var(--f-mono); font-weight: 500; font-size: 11.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); background: var(--bg); }
+tr:last-child td { border-bottom: 0; }
+td.n { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+th.n { text-align: right; }
+.infeasible { color: var(--draft); font-weight: 600; }
+
+/* classification */
+.cgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.cbox { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 14px; display: grid; gap: 8px; align-content: start; min-width: 0; font-size: 14px; }
+.cbox h3 { font-size: 15px; }
+.cbox ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.cbox.fact h3 { color: var(--approve); } .cbox.prop h3 { color: var(--accent); } .cbox.owner h3 { color: var(--amend); }
+.cbox.mat h3 { color: var(--defer); } .cbox.unc h3 { color: var(--draft); }
+
+.docs { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 6px 20px; font-size: 14px; }
+.docs div { display: grid; gap: 2px; padding-block: 6px; border-bottom: 1px solid var(--line); min-width: 0; }
+.docs code { overflow-wrap: anywhere; }
+.docs span { color: var(--muted); font-size: 13px; }
+footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
+
+@media (max-width: 760px) {
+  .dhead { display: none; }
+  .dsum { grid-template-columns: 52px minmax(0, 1fr) auto; grid-template-areas: "id name rec" "id val val" "id own own"; gap: 4px 10px; }
+  .dsum .pid { grid-area: id; } .dsum .pname { grid-area: name; } .dsum .prec { grid-area: rec; }
+  .dsum .pval { grid-area: val; } .dsum .powner { grid-area: own; }
+  .dbody { padding-left: 14px; }
+  .dl { grid-template-columns: 1fr; gap: 2px; }
+  .dl dd { margin-bottom: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+html { scroll-behavior: smooth; }
+</style>
+
+<div class="band"><div class="wrap">
+  <strong>Draft for owner review</strong>
+  <span>No proposed value has been approved. Not sent. <code>PARAMETER_DECISIONS.yaml</code> remains <code>OWNER_DECISIONS_REQUIRED</code>.</span>
+</div></div>
+
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">H₂-PRISM · H2Net v1 · Engineering decision package</div>
+  <h1>H2Net v1 Decision Review</h1>
+  <p class="lede">Seventeen engineering proposals for the hydrogen network model H2Net v1, with the evidence behind each, the released-model defects they remedy, the operating-envelope checks, and the validation gates every generated dataset must pass. For decision by Yazan (dataset and model owner) and the designated modeller; methods review by Faisal.</p>
+  <div class="meta">
+    <span>Prepared <b>2026-11-14</b></span>
+    <span>Source document <b><code>H2NET_V1_DECISION_PACKAGE.md</code></b></span>
+    <span>Repository commit <b class="mono">d35ca80</b> (local)</span>
+    <span>Gas <b>pure normal hydrogen</b></span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <a href="#minimum">0 Minimum decisions</a>
+  <a href="#decisions">1 Decision table</a>
+  <a href="#defects">2 Released-model defects</a>
+  <a href="#envelope">3 Envelope consistency</a>
+  <a href="#gates">4 Validation gates</a>
+  <a href="#classification">5 Evidence classification</a>
+  <a href="#sources">6 Supporting documents</a>
+</nav>
+
+<!-- 0 -->
+<section id="minimum">
+  <div class="sec-head">
+    <span class="sec-id">§0</span>
+    <h2>Minimum decisions for the next step</h2>
+    <p class="lede">The next technically valid step is X06: computing the V2 steady-state reference targets before any simulation. It needs no MATLAB. An isothermal steady state needs only these five decisions.</p>
+  </div>
+  <div class="mgrid">
+    <div class="mcard"><span class="mid">M1</span><h3>Pressure and compressors</h3><p>Operating pressure envelope, supply set-point and compressor Δp.</p><span class="rows">Rows P2, P9</span></div>
+    <div class="mcard"><span class="mid">M2</span><h3>Demand</h3><p>Nominal demand and its allocation to the outlets G3–G6 and the network end.</p><span class="rows">Row P4</span></div>
+    <div class="mcard"><span class="mid">M3</span><h3>Outlet topology</h3><p>Controlled demand outlets replace the open vent and the atmospheric orifices.</p><span class="rows">Row P10</span></div>
+    <div class="mcard"><span class="mid">M4</span><h3>Roughness</h3><p>One roughness value for all pipes.</p><span class="rows">Row P7</span></div>
+    <div class="mcard"><span class="mid">M5</span><h3>Reference temperature</h3><p>Gas temperature for the isothermal targets.</p><span class="rows">Row P3</span></div>
+  </div>
+  <div class="note">
+    <strong>Both gates are fail-closed.</strong>
+    <ul>
+      <li>The X06 tool (<code>h2net_v1_envelope_screening.py --targets</code>) refuses until <code>PARAMETER_DECISIONS.yaml</code> is <code>DECIDED</code> for <em>all</em> items.</li>
+      <li>Model construction (X05) needs all of S2–S8 decided as well.</li>
+      <li>The owners either decide everything at once, or decide M1–M5 and explicitly record the rest as deferred. Changing the gate's scope is itself an owner decision and is not made here.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 1 -->
+<section id="decisions">
+  <div class="sec-head">
+    <span class="sec-id">§1</span>
+    <h2>Decision table P1–P17</h2>
+    <p class="lede">Recommendations are the preparer's advice for owner consideration. <span class="chip approve">Approve</span> adopt as proposed · <span class="chip amend">Amend</span> adopt with the stated change, or choose between stated options · <span class="chip defer">Defer</span> needs a source, a MATLAB result or a scope choice first. Open a row for the full engineering detail.</p>
+  </div>
+  <div class="filters" role="group" aria-label="Filter by recommendation">
+    <button type="button" id="f-all" data-f="all" aria-pressed="true">All</button>
+    <button type="button" id="f-approve" data-f="approve" aria-pressed="false">Approve</button>
+    <button type="button" id="f-amend" data-f="amend" aria-pressed="false">Amend</button>
+    <button type="button" id="f-defer" data-f="defer" aria-pressed="false">Defer</button>
+    <button type="button" id="f-expand" data-x="1">Expand all</button>
+    <span class="count" id="fcount">17 of 17</span>
+  </div>
+  <div class="dlist" id="dlist">
+    <div class="dhead"><span>ID</span><span>Parameter</span><span>Proposed value</span><span>Rec.</span><span>Owner</span></div>
+
+    <details class="drow" data-rec="approve"><summary class="dsum"><span class="pid">P1</span><span class="pname">Gas composition</span><span class="pval">Pure normal hydrogen (x<sub>H2</sub> ≥ 1 − 10⁻⁶); real-gas tables T 200–500 K × p 0.05–12 MPa</span><span class="prec"><span class="chip approve">Approve</span></span><span class="powner">Yazan (confirm)</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Rationale</dt><dd>Project scope decision of 2026-11-13: H₂-PRISM targets hydrogen pipeline systems.</dd>
+        <dt>Evidence</dt><dd>S1 already decided. V1 PASS. The table interface matches Simscape: all 15 fields exist and all 10 table units match (installed R2026b <code>gas_properties.ssc</code>).</dd>
+        <dt>Source</dt><dd>Leachman 2009, Muzny 2013 and Assael 2011 via CoolProp 7.2.0 (register L10–L13).</dd>
+        <dt>Limits</dt><dd><ul><li>Tables cover 200–500 K and 0.05–12 MPa; outside that range Simscape stops (range check = error).</li><li>Blends are refused by the composition interface.</li></ul></dd>
+        <dt>Sensitivity</dt><dd>n/a</dd>
+        <dt>Alternatives</dt><dd>H2–CH4 blends: GERG-2008 parameters exist in CoolProp, but the default flash fails for H2-rich blends; a new authorization is needed.</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="amend"><summary class="dsum"><span class="pid">P2</span><span class="pname">Operating pressure</span><span class="pval"><b>3–8 MPa</b> in transmission sections (amended from 2–8 MPa)</span><span class="prec"><span class="chip amend">Amend</span></span><span class="powner">Yazan + modeller</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Rationale</dt><dd><ul><li>With a 2 MPa lower bound, any supply at the bound puts all outlets below it.</li><li>Capacity at 2 MPa is about 40 % of that at 5 MPa: the 20 m/s capacity of the 1.2 m line is 34.6 kg/s at 2 MPa.</li></ul></dd>
+        <dt>Evidence</dt><dd>Reference calcs F; envelope screening (144 states).</dd>
+        <dt>Source</dt><dd>No verified design-code source in the literature register.</dd>
+        <dt>Assumptions</dt><dd>Transmission service; the property tables extend to 12 MPa.</dd>
+        <dt>Sensitivity</dt><dd>Capacity ∝ p; leak flow ∝ p.</dd>
+        <dt>Alternatives</dt><dd>Keep 2–8 MPa with the nominal demand ≤ 17 kg/s (50 % of 34.6).</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="amend"><summary class="dsum"><span class="pid">P3</span><span class="pname">Gas temperature</span><span class="pval">270–330 K in transmission after cooling; isothermal reference at <b>313.15 K</b> (aftercooler set-point); soil 283.15 K</span><span class="prec"><span class="chip amend">Amend</span></span><span class="powner">Yazan + modeller</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Recommendation</dt><dd>AMEND the reference temperature (owner chooses). DEFER the soil value until a source is cited.</dd>
+        <dt>Rationale</dt><dd><ul><li>The aftercooler fixes discharge temperature.</li><li>Buried-line gas relaxes toward soil temperature at a rate set by the heat-transfer coefficient U, which is unknown.</li></ul></dd>
+        <dt>Evidence</dt><dd>Compressor discharge 330–431 K without cooling (calcs G).</dd>
+        <dt>Source</dt><dd>No verified soil-temperature or U source.</dd>
+        <dt>Limits</dt><dd>The isothermal V2 target ignores the axial temperature profile.</dd>
+        <dt>Sensitivity</dt><dd>313 K vs 283 K changes density by about 10 %, and Δp proportionally at fixed mass flow.</dd>
+        <dt>Alternatives</dt><dd>Reference at soil temperature; or a non-isothermal reference (not implemented).</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="amend"><summary class="dsum"><span class="pid">P4</span><span class="pname">Nominal demand</span><span class="pval">≤ 50 % of the 20 m/s capacity <b>at minimum pressure, in every segment</b>. At 3 MPa, 313 K: ≤ 25.9 kg/s (1.2 m), ≤ 17.9 kg/s (1.0 m), ≤ 2.2 kg/s (0.355 m end pipe)</span><span class="prec"><span class="chip amend">Amend</span></span><span class="powner">Yazan</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Rationale</dt><dd>Keeps margin for load profiles and leaks within V8.</dd>
+        <dt>Evidence</dt><dd>Calcs F. The earlier candidate nominal of 42.6 kg/s (defined at 5 MPa) is infeasible at 2 MPa.</dd>
+        <dt>Limits</dt><dd>The 50 % margin is an engineering choice.</dd>
+        <dt>Sensitivity</dt><dd>Velocity ∝ demand / p.</dd>
+        <dt>Alternatives</dt><dd>A 70 % margin (fewer V8 rejections at high load is not guaranteed); demand defined per outlet profile.</dd>
+        <dt>Owner action</dt><dd>Fix the numbers and the allocation across G3–G6 and the network end.</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="amend"><summary class="dsum"><span class="pid">P5</span><span class="pname">Velocity limit</span><span class="pval">v ≤ 20 m/s at pipe <b>outlets</b></span><span class="prec"><span class="chip amend">Amend</span></span><span class="powner">Modeller</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Recommendation</dt><dd>AMEND (apply the limit at the outlet). The limit's source: DEFER.</dd>
+        <dt>Rationale</dt><dd>Erosion and noise limits are customary.</dd>
+        <dt>Evidence</dt><dd>Velocity grows along each pipe: up to 20.9 m/s at the outlet for a 20 m/s inlet (envelope screening).</dd>
+        <dt>Source</dt><dd>None verified.</dd>
+        <dt>Limits</dt><dd>Applying the limit at the inlet under-states the outlet velocity by up to 4.5 %.</dd>
+        <dt>Alternatives</dt><dd>A lower limit for hydrogen service.</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="approve"><summary class="dsum"><span class="pid">P6</span><span class="pname">Pipe lengths and diameters</span><span class="pval">Released geometry unchanged: 8 pipes, 3–30 km, D<sub>h</sub> 0.355–1.2 m</span><span class="prec"><span class="chip approve">Approve</span></span><span class="powner">Yazan</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Rationale</dt><dd>Preserves the released topology for comparability with the released models.</dd>
+        <dt>Evidence</dt><dd>Read-only XML extraction of all six models (hash-checked). Feasibility is established under P2/P4.</dd>
+        <dt>Limits</dt><dd>The 0.355 m and 0.4 m end pipes constrain the end demand strongly (3–12 kg/s capacity across the envelope).</dd>
+        <dt>Alternatives</dt><dd>Re-sized end pipes (breaks comparability).</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="approve"><summary class="dsum"><span class="pid">P7</span><span class="pname">Wall roughness</span><span class="pval"><b>0.045 mm</b> for all pipes (range 0.02–0.1 mm)</span><span class="prec"><span class="chip approve">Approve</span></span><span class="powner">Modeller</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Recommendation</dt><dd>APPROVE the value; the literature source: DEFER.</dd>
+        <dt>Rationale</dt><dd>Commercial steel.</dd>
+        <dt>Evidence</dt><dd>Released values range 0.0045–50 mm (A-08). Calcs B (16 km, 1.2 m, 10 m/s, 5 MPa, 313 K): Δp 24.9 / 26.9 / 30.1 kPa at 0.02 / 0.045 / 0.1 mm; 168.3 kPa at the released 50 mm.</dd>
+        <dt>Sensitivity</dt><dd>Δp +12 % / −8 % at 0.1 / 0.02 mm. The released 50 mm gives 6× the Δp.</dd>
+        <dt>Source</dt><dd>None verified yet.</dd>
+        <dt>Alternatives</dt><dd>0.02 mm (coated line).</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="defer"><summary class="dsum"><span class="pid">P8</span><span class="pname">Heat transfer</span><span class="pval">Convective transfer to ground at soil temperature, replacing the perfect insulators. U per pipe <b>not yet sourced</b></span><span class="prec"><span class="chip defer">Defer</span></span><span class="powner">Modeller</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Rationale</dt><dd>Buried lines are not adiabatic (A-04).</dd>
+        <dt>Evidence</dt><dd>Specification step S2.</dd>
+        <dt>Source</dt><dd>None verified; a cited U-value is required.</dd>
+        <dt>Limits</dt><dd>Steady-state targets are isothermal and unaffected; transients and V3 are affected.</dd>
+        <dt>Alternatives</dt><dd>Keep adiabatic and state it as a limitation.</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="approve"><summary class="dsum"><span class="pid">P9</span><span class="pname">Compressors</span><span class="pval">Ideal pressure rise, <b>power_spec = none</b>, plus an <b>explicit aftercooler to 313.15 K</b>; Δp set so every node stays inside P2; efficiency recorded for V3</span><span class="prec"><span class="chip approve">Approve</span></span><span class="powner">Yazan + modeller</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Recommendation</dt><dd>APPROVE the representation; AMEND the Δp set-points to M1.</dd>
+        <dt>Rationale</dt><dd>The released isentropic compressors overheat hydrogen.</dd>
+        <dt>Evidence</dt><dd>Released <code>power_spec = isentropic</code> with no efficiency or cooling gives 330–431 K discharge for Δp = 4 MPa (calcs G; A-05).</dd>
+        <dt>Limits</dt><dd><ul><li>No compressor map.</li><li>Power from a hand calculation in V3.</li><li>Faults realised as explicit Δp changes (multiclass design).</li></ul></dd>
+        <dt>Alternatives</dt><dd>Two-stage with intercooling; isentropic with efficiency.</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="approve"><summary class="dsum"><span class="pid">P10</span><span class="pname">Demand outlets</span><span class="pval"><b>Controlled mass-flow sinks</b> at G3–G6 <b>and the network end</b>; remove the open terminal vent and the four atmospheric demand orifices</span><span class="prec"><span class="chip approve">Approve</span></span><span class="powner">Yazan</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Rationale</dt><dd>Separates demand from leaks (A-06) and makes demand controllable.</dd>
+        <dt>Evidence</dt><dd>With hydrogen the open vent alone passes 3.3–3.5× the line capacity; each orifice passes 0.8–3.2 kg/s dictated by local pressure (calcs A).</dd>
+        <dt>Limits</dt><dd>Load profiles are still to be specified (owner).</dd>
+        <dt>Alternatives</dt><dd>Pressure-controlled outlets (not proposed).</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="amend"><summary class="dsum"><span class="pid">P11</span><span class="pname">Leak geometry</span><span class="pval">Separate Local Restriction (G) branches to atmosphere at ≥ 6 mid-pipe positions, never on demand blocks; three severity classes (0.5 / 2 / 10 %)</span><span class="prec"><span class="chip amend">Amend</span></span><span class="powner">Yazan (+ Faisal for labels)</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Recommendation</dt><dd>AMEND: choose severity definition A or B (§3.2).</dd>
+        <dt>Evidence</dt><dd>Equivalent diameters with definition A at 5 MPa and a 42.6 kg/s nominal: 11.9 / 23.8 / 53.3 mm (Cd 0.64). They scale as √(nominal / p) and must be recomputed at the decided P4 (calcs C, E).</dd>
+        <dt>Limits</dt><dd>Sized with the isentropic nozzle formula; Simscape uses a loss-coefficient model (V4, P16). Final areas must be confirmed against the Simscape block.</dd>
+        <dt>Sensitivity</dt><dd>Leak flow ∝ p · A. All leaks are choked throughout the envelope.</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="defer"><summary class="dsum"><span class="pid">P12</span><span class="pname">Segmentation and inertia</span><span class="pval">Steady state: one block per pipe is sufficient. Transients: segment length from V5/V7 convergence, starting at ≤ 1 km; inertia on only if wave signatures are in scope</span><span class="prec"><span class="chip defer">Defer</span></span><span class="powner">Modeller (inertia scope: owner)</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Facts</dt><dd><ul><li>Steady-state lumping error &lt; 4×10⁻⁶ of Δp even for one 30 km block (calcs D).</li><li>Transient wave content requires segments and inertia.</li></ul></dd>
+        <dt>Value</dt><dd>Decided after V5/V7, which need MATLAB transient runs.</dd>
+        <dt>Correction</dt><dd>The earlier "≤ 1 km segments" rationale is justified by transients only, not by steady-state accuracy.</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="approve"><summary class="dsum"><span class="pid">P13</span><span class="pname">Initial state</span><span class="pval">Steady state from the reference solver or a converged pre-run; never from atmosphere</span><span class="prec"><span class="chip approve">Approve</span></span><span class="powner">Modeller</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Rationale</dt><dd>Avoids the fill transient present in every released run (A-09; specification S6).</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="approve"><summary class="dsum"><span class="pid">P14</span><span class="pname">Numerics</span><span class="pval">ode15s / ode23t, RelTol 1e-6 as validation reference; production solver only if within V6</span><span class="prec"><span class="chip approve">Approve</span></span><span class="powner">Modeller</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Rationale</dt><dd>Numerical credibility (specification S8, gate V6). Approved as the baseline.</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="defer"><summary class="dsum"><span class="pid">P15</span><span class="pname">Down-model let-down</span><span class="pval">Pressure Source (G)6 (−1 MPa, isentropic) → pressure-reducing element with power_spec = none, set-point inside P2</span><span class="prec"><span class="chip defer">Defer</span></span><span class="powner">Yazan + modeller</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Rationale</dt><dd>The released isentropic expansion is not a let-down station model.</dd>
+        <dt>Limits</dt><dd>Hydrogen's Joule–Thomson inversion temperature lies far below ambient, so real throttling warms slightly. The chosen representation must state its thermal assumption.</dd>
+        <dt>Owner action</dt><dd>Choose the representation.</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="amend"><summary class="dsum"><span class="pid">P16</span><span class="pname">V4 acceptance rule</span><span class="pval">Compare Local Restriction (G) against an implementation of <b>its own</b> loss-coefficient equation (≤ 1 %); report a model-form comparison with the isentropic orifice equation separately</span><span class="prec"><span class="chip amend">Amend</span></span><span class="powner">Faisal</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Evidence</dt><dd>Installed <code>local_restriction.ssc</code>: a loss-coefficient model with area ratio, pressure recovery and a smoothed choke transition, not the nozzle formula. "Within 1 % of <code>gas_physics.orifice_mass_flow</code>" is therefore not guaranteed by construction.</dd>
+      </dl></div></details>
+
+    <details class="drow" data-rec="approve"><summary class="dsum"><span class="pid">P17</span><span class="pname">Sensors and units</span><span class="pval">Position map v0.1 blocks; MPa absolute, kg/s; log by block identity</span><span class="prec"><span class="chip approve">Approve</span></span><span class="powner">Yazan (confirm)</span></summary>
+      <div class="dbody"><dl class="dl">
+        <dt>Evidence</dt><dd>S7 already decided.</dd>
+      </dl></div></details>
+  </div>
+</section>
+
+<!-- 2 -->
+<section id="defects">
+  <div class="sec-head">
+    <span class="sec-id">§2</span>
+    <h2>Released-model defects and proposed remedies</h2>
+    <p class="lede">Facts from the released <code>.slx</code> XML (all six models, hash-checked) and the installed R2026b Simscape source. Consequences use the hydrogen reference calculations.</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Defect (fact)</th><th>Consequence for hydrogen</th><th>Proposed remedy</th><th>Row</th></tr></thead>
+    <tbody>
+      <tr><td>Gas Properties (G): <code>gas_spec = 1</code> = perfect gas, R = 0.287 kJ/(kg·K) (air), cp = 0.3469 → γ ≈ 5.75, Pr ≈ 0.079</td><td>Not hydrogen; thermodynamically impossible constants</td><td>Real-gas normal-hydrogen tables (interface verified statically)</td><td>P1</td></tr>
+      <tr><td>Open terminal vent: fully open Local Restriction (G)2 → Pipe (G)5 → atmosphere (center and up models)</td><td>Vent flow 3.3–3.5× line capacity; no envelope-compliant steady state exists</td><td>Controlled end-of-line demand sink</td><td>P10</td></tr>
+      <tr><td>Demands are fixed 1e-3 m² orifices to atmosphere (Cd 0.64)</td><td>Demand dictated by local pressure (0.8–3.2 kg/s each); demand and leak mechanisms indistinguishable</td><td>Controlled sinks; leaks as separate branches</td><td>P10, P11</td></tr>
+      <tr><td>Compressors: Pressure Source (G) Δp = 4 MPa, <code>power_spec = isentropic</code>, no efficiency or cooling</td><td>Discharge 330–431 K, above the 330 K envelope at nearly every suction pressure</td><td>power_spec none plus aftercooler</td><td>P9</td></tr>
+      <tr><td>Down models: constant −1 MPa isentropic let-down</td><td>Expansion modelled as a reversed compressor</td><td>Pressure-reducing element</td><td>P15</td></tr>
+      <tr><td>Roughness 0.0045 / 0.045 / 0.45 / 4.5 / 45 / 50 mm</td><td>Δp distorted by up to 6× between otherwise equal pipes</td><td>One steel value</td><td>P7</td></tr>
+      <tr><td>Perfect insulators on all pipes and the chamber</td><td>Adiabatic network; temperatures drift with compression heating</td><td>Convective transfer to ground</td><td>P8</td></tr>
+      <tr><td>Initial pressure 0.101325 MPa in every pipe</td><td>Every run starts with a fill transient</td><td>Steady-state initial state</td><td>P13</td></tr>
+      <tr><td>Lumped 3–30 km pipes, inertia off</td><td>Steady state accurate (&lt; 10⁻⁵); waves not represented</td><td>Segment for transients only</td><td>P12</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 3 -->
+<section id="envelope">
+  <div class="sec-head">
+    <span class="sec-id">§3</span>
+    <h2>Operating-envelope consistency</h2>
+    <p class="lede">Reference calcs E, F and G evaluate the whole envelope (2–8 MPa × 283–313 K). No single operating point is extrapolated.</p>
+  </div>
+
+  <h3>3.1 Capacity at 20 m/s, 313 K (kg/s)</h3>
+  <p>Capacity is proportional to pressure, so a fixed demand that is feasible at 8 MPa can be infeasible at the lowest pressure. P4 therefore binds nominal demand to the <b>lowest</b> pressure and to <b>every</b> segment.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Pipe</th><th class="n">2 MPa</th><th class="n">3 MPa</th><th class="n">5 MPa</th><th class="n">8 MPa</th></tr></thead>
+    <tbody>
+      <tr><td>1.2 m (Pipe 1, 2, 3, 8)</td><td class="n">34.6</td><td class="n">51.7</td><td class="n">85.1</td><td class="n">133.9</td></tr>
+      <tr><td>1.0 m (Pipe 4, 7)</td><td class="n">24.0</td><td class="n">35.9</td><td class="n">59.1</td><td class="n">93.0</td></tr>
+      <tr><td>0.4 m (Pipe 6, down models)</td><td class="n">3.8</td><td class="n">5.7</td><td class="n">9.5</td><td class="n">14.9</td></tr>
+      <tr><td>0.355 m (Pipe 5)</td><td class="n">3.0</td><td class="n">4.5</td><td class="n">7.4</td><td class="n">11.7</td></tr>
+    </tbody>
+  </table></div>
+  <p class="infeasible">The earlier candidate nominal of 42.6 kg/s exceeds the 1.2 m capacity at 2 MPa at both 283 K and 313 K.</p>
+
+  <h3>3.2 Leak severity across the envelope</h3>
+  <p>Choked leak flow is proportional to upstream pressure. With areas sized once at 5 MPa:</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Severity definition</th><th>0.5 % class</th><th>2 % class</th><th>10 % class</th><th>Assessment</th></tr></thead>
+    <tbody>
+      <tr><td><b>A</b> demand scales with capacity (∝ p)</td><td class="n">0.47–0.51 %</td><td class="n">1.89–2.02 %</td><td class="n">9.4–10.1 %</td><td>Consistent within ±6 %</td></tr>
+      <tr><td><b>B</b> demand fixed in kg/s</td><td class="n">×0.40–×1.67</td><td class="n">0.8 %–3.3 %</td><td class="n">×0.40–×1.67</td><td>Not consistent: severity mixes with operating point</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">
+    <strong>Owner choice (P11)</strong>
+    <ul>
+      <li><b>(A)</b> Severity = fraction of the run's actual local throughput; the leak area is recomputed per operating point.</li>
+      <li><b>(B)</b> Severity = fixed area; the actual fraction is recorded per run as a label attribute.</li>
+      <li>Both are valid. (B) mixes severity with operating point. All leaks are choked at every pressure in the envelope.</li>
+    </ul>
+  </div>
+
+  <h3>3.3 Model form</h3>
+  <p>The leak areas come from the isentropic nozzle formula with local hydrogen γ (1.41–1.43). Simscape's Local Restriction (G) uses a loss-coefficient model. Final areas must be confirmed against the Simscape block (V4, P16) at the decided operating points.</p>
+
+  <h3>3.4 Compressor discharge temperature (released Δp = 4 MPa, isentropic)</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Suction</th><th class="n">2 MPa</th><th class="n">3 MPa</th><th class="n">4 MPa</th><th class="n">6 MPa</th></tr></thead>
+    <tbody>
+      <tr><td>283.15 K</td><td class="n">390 K</td><td class="n">363 K</td><td class="n">347 K</td><td class="n">330 K</td></tr>
+      <tr><td>313.15 K</td><td class="n">431 K</td><td class="n">401 K</td><td class="n">384 K</td><td class="n">364 K</td></tr>
+    </tbody>
+  </table></div>
+  <p>Inside the property tables (≤ 500 K) but outside 270–330 K, so the aftercooler is necessary. These are ideal-gas isentropic estimates with mean local γ; the real-gas path is to be checked in V3.</p>
+
+  <h3>3.5 Pressure drop</h3>
+  <p>Frictional Δp per pipe is 14–85 kPa at 20 m/s and 2 MPa. Leak signatures in pressure are therefore small relative to the operating pressure. This is an input to the sensor-noise budget (specification §5), not a defect.</p>
+</section>
+
+<!-- 4 -->
+<section id="gates">
+  <div class="sec-head">
+    <span class="sec-id">§4</span>
+    <h2>Validation gates before any dataset is usable</h2>
+    <p class="lede">All must pass and be recorded. Thresholds are fixed before running (specification §4); amendments are marked. "Validated" means these gates passed; it does not mean agreement with a real network.</p>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Gate</th><th>Content</th><th>Status / dependency</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">R0</td><td>MATLAB readiness Phases 1, 3, 4 PASS (independent validator), memory gate respected</td><td><span class="chip open">Open</span> E4 blocks on the 8 GB laptop</td></tr>
+      <tr><td class="mono">V1</td><td>Property tables vs reference EOS</td><td><span class="chip pass">Pass</span> recorded</td></tr>
+      <tr><td class="mono">V2</td><td>Steady state vs independent solver at ≥ 5 operating points per topology: pressures within 0.5 % of Δp, flows within 1 %. Effective length = L + length_add; Haaland confirmed identical.</td><td><span class="chip open">Open</span> targets need M1–M5 (X06); then MATLAB</td></tr>
+      <tr><td class="mono">V3</td><td>Compressor and aftercooler energy balance; outlet temperature inside the band</td><td><span class="chip matlab">MATLAB</span> needs P8/P9</td></tr>
+      <tr><td class="mono">V4</td><td>Local Restriction (G) flows vs its own documented equation (≤ 1 %), plus a reported model-form comparison with the nozzle formula</td><td><span class="chip matlab">MATLAB</span> P16 amendment</td></tr>
+      <tr><td class="mono">V5</td><td>Spatial convergence (&lt; 1 % change on halving) for the transient outputs</td><td><span class="chip matlab">MATLAB</span> P12</td></tr>
+      <tr><td class="mono">V6</td><td>Numerical convergence (&lt; 0.5 %)</td><td><span class="chip matlab">MATLAB</span></td></tr>
+      <tr><td class="mono">V7</td><td>Wave arrival L/c and line-pack mass balance (&lt; 0.1 %) if inertia is on</td><td><span class="chip matlab">MATLAB</span> P12 scope</td></tr>
+      <tr><td class="mono">V8</td><td>Every run inside the envelope: P2 pressures, v ≤ 20 m/s at outlets, P3 temperatures, choking only at orifices</td><td><span class="chip open">Per run</span></td></tr>
+      <tr><td class="mono">D1</td><td>Parameter diff of each H2Net copy against the released SIDs; released files' hashes unchanged</td><td><span class="chip open">At build</span> X05</td></tr>
+      <tr><td class="mono">D2</td><td>Leak labels carry the chosen severity definition and the actual per-run fraction</td><td><span class="chip open">Design</span> X11</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 5 -->
+<section id="classification">
+  <div class="sec-head">
+    <span class="sec-id">§5</span>
+    <h2>Evidence classification</h2>
+  </div>
+  <div class="cgrid">
+    <div class="cbox fact"><h3>Verified evidence</h3><ul>
+      <li>Released gas is a perfect, air-like gas (<code>gas_spec = 1</code>, R = 0.287)</li>
+      <li>Pipe (G) friction = Haaland, identical to the reference solver</li>
+      <li>Real-gas table interface and all units match</li>
+      <li>Released topology: vent, orifices, isentropic compressors, roughness, insulators, atmospheric initial state</li>
+      <li>Hydrogen calcs A–G under their stated approximations</li>
+      <li>V1 PASS; source-model hashes unchanged</li>
+    </ul></div>
+    <div class="cbox prop"><h3>Candidate recommendations</h3><ul>
+      <li>P2–P16 values and representations</li>
+      <li>Revised operating pressure 3–8 MPa</li>
+      <li>Per-segment demand limits at minimum pressure</li>
+      <li>Leak classes and the V4 acceptance amendment</li>
+    </ul></div>
+    <div class="cbox owner"><h3>Owner decisions</h3><ul>
+      <li>Every row in §1, by the named owner</li>
+      <li>Leak severity definition (A or B)</li>
+      <li>Inertia scope</li>
+      <li>Whether X06 may run on M1–M5 alone</li>
+    </ul></div>
+    <div class="cbox mat"><h3>MATLAB-dependent</h3><ul>
+      <li>R0 and V2–V7 runs</li>
+      <li>Final leak areas against the Simscape restriction</li>
+      <li>Transient segmentation</li>
+      <li>Run-time exposure of the real-gas parameters on the released block instance</li>
+    </ul></div>
+    <div class="cbox unc"><h3>Unresolved uncertainties</h3><ul>
+      <li>U-value and soil-temperature sources</li>
+      <li>Velocity-limit and roughness literature sources</li>
+      <li>Real-gas isentropic discharge path</li>
+      <li>Let-down representation</li>
+      <li>Executor designation under the grant</li>
+      <li>Memory sufficiency of the 8 GB laptop for Phase 3 compiles</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="sources">
+  <div class="sec-head">
+    <span class="sec-id">§6</span>
+    <h2>Supporting documents</h2>
+    <p class="lede">Paths in the H₂-PRISM repository (branch <code>audit/preparation-integration</code>, local).</p>
+  </div>
+  <div class="docs">
+    <div><code>06_audit_preparation/simulation/h2net_v1/H2NET_V1_DECISION_PACKAGE.md</code><span>Authoritative text of this package</span></div>
+    <div><code>06_audit_preparation/simulation/h2net_v1/candidate/SIMSCAPE_SOURCE_EVIDENCE.md</code><span>Installed R2026b Simscape source, with SHA-256</span></div>
+    <div><code>06_audit_preparation/simulation/h2net_v1/candidate/REFERENCE_CALCS.json</code><span>Hydrogen reference calculations, parts A–G</span></div>
+    <div><code>06_audit_preparation/simulation/h2net_v1/candidate/RELEASED_NETWORK_GRAPH.json</code><span>Released networks of all six models</span></div>
+    <div><code>06_audit_preparation/simulation/h2net_v1/candidate/RELEASED_PIPES.csv</code><span>Released pipe parameters per model</span></div>
+    <div><code>06_audit_preparation/simulation/h2net_v1/candidate/ENVELOPE_SCREENING.csv</code><span>144-state envelope screening</span></div>
+    <div><code>06_audit_preparation/simulation/h2net_v1/candidate/CANDIDATE_DESIGN.md</code><span>Candidate design history</span></div>
+    <div><code>06_audit_preparation/simulation/h2net_v1/PARAMETER_DECISIONS.yaml</code><span>Owner decision record (unchanged)</span></div>
+    <div><code>02_methodology/HYDROGEN_MODEL_SPECIFICATION.md</code><span>Specification S1–S8, gates V1–V8</span></div>
+    <div><code>00_governance/ISSUE_CLOSURE_MATRIX.csv</code><span>Issue status (95 issues)</span></div>
+    <div><code>00_governance/LITERATURE_REGISTER.csv</code><span>Verified references</span></div>
+    <div><code>06_audit_preparation/simulation/matlab_readiness/MATLAB_READINESS.md</code><span>MATLAB readiness and execution record</span></div>
+  </div>
+</section>
+
+<footer>
+  <span><b>Not approved.</b> This page presents proposals. A decision counts only when the named owner records it in <code>PARAMETER_DECISIONS.yaml</code>. No simulation, dataset generation or training is authorized by this page.</span>
+  <span>Generated from the repository decision package of 2026-11-14. Read-only review copy.</span>
+</footer>
+</div>
+
+<script>
+(function () {
+  var list = document.getElementById('dlist');
+  var rows = Array.prototype.slice.call(list.querySelectorAll('details.drow'));
+  var count = document.getElementById('fcount');
+  var filterBtns = Array.prototype.slice.call(document.querySelectorAll('.filters button[data-f]'));
+  var expandBtn = document.getElementById('f-expand');
+  function apply(f) {
+    var shown = 0;
+    rows.forEach(function (r) { var on = f === 'all' || r.dataset.rec === f; r.hidden = !on; if (on) shown++; });
+    filterBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.f === f)); });
+    count.textContent = shown + ' of ' + rows.length;
+  }
+  filterBtns.forEach(function (b) { b.addEventListener('click', function () { apply(b.dataset.f); }); });
+  expandBtn.addEventListener('click', function () {
+    var open = expandBtn.dataset.x === '1';
+    rows.forEach(function (r) { if (!r.hidden) r.open = open; });
+    expandBtn.dataset.x = open ? '0' : '1';
+    expandBtn.textContent = open ? 'Collapse all' : 'Expand all';
+  });
+})();
+</script>

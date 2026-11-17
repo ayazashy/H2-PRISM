@@ -1,0 +1,23 @@
+function h2prism_validate_center_reservoir(actual, plan)
+% Validate the single documented compatibility exception for the pinned SID.
+spec = plan.reservoir;
+assert(strcmp(actual.sid,spec.sid) && strcmp(actual.linkStatus,'resolved'), ...
+    'H2PRISM:ReservoirIdentity','Center reservoir must be the resolved link at SID %s',spec.sid);
+legacy = strcmp(actual.library,plan.reservoir_library);
+migrated = strcmp(actual.library,spec.migration.library) && ...
+    any(strcmp(actual.release,spec.migration.supported_releases));
+assert(legacy || migrated,'H2PRISM:ReservoirLibrary','Unsupported Center reservoir library or release: %s (%s)', ...
+    actual.library,actual.release);
+assert(strcmp(actual.areaUnit,spec.native_area_unit) && str2double(actual.area) == spec.area_m2, ...
+    'H2PRISM:ReservoirArea','Center reservoir port A area or units differ from the pinned model');
+if migrated
+    assert(strcmp(actual.pressureInput,'true') && strcmp(actual.temperatureInput,'true'), ...
+        'H2PRISM:ReservoirControlMode','Migrated Center reservoir must have both physical-signal inputs enabled');
+    if strcmp(actual.release,'2026b')
+        assert(strcmp(actual.reservoirSpec,spec.migration.static_spec_2026b), ...
+            'H2PRISM:ReservoirSpecification','Migrated Center reservoir must use static pressure and static temperature');
+    end
+end
+assert(actual.pressureConnected && actual.temperatureConnected, ...
+    'H2PRISM:ReservoirConnections','Required Center reservoir P/T physical connections were not verified');
+end

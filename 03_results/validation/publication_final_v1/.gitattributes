@@ -1,0 +1,4 @@
+# Preserve publication export bytes for SHA-256 verification.
+figures/*.svg binary
+tables/*.csv -text whitespace=cr-at-eol
+tables/*.md -text whitespace=cr-at-eol

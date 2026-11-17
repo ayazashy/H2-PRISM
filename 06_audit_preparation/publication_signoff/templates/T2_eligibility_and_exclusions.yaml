@@ -1,0 +1,21 @@
+# UNSIGNED TEMPLATE - not an approval. See SIGNOFF_PACKAGE.md.
+approval_id: T2_eligibility_and_exclusions__df7d3bf2__REVIEWER
+artifact_id: T2_eligibility_and_exclusions
+claim_scope: DATASET
+decision: TO_BE_DECIDED_BY_REVIEWER
+approved_claims:
+- Inclusion of the 57 underlying runs in the primary four-class task, with recorded exclusion reasons.
+limitations_acknowledged:
+- ''
+reviewer:
+  name: TO_BE_FILLED_BY_REVIEWER
+  role: TO_BE_FILLED_BY_REVIEWER
+date: YYYY-MM-DD
+statement: ''
+binding:
+  input_sha256:
+    03_results/dataset_design/inclusion_exclusion.csv: 28ba14af25a0744b640a5210ccd1eb3436e9608ac36b95316b68fe8efaf4074f
+  spec_sha256: df7d3bf2c5cfd32ac6cb45a16aac75bbe77c8657e2dbcba4b0d2c737de35a006
+  renderer_sha256: 12ba184bfc5f603546a75e47764b8f3569dffc44810423add4bc024b4cdfdd66
+  source_run_keys:
+  - dataset_design_4d1310a6509f

@@ -1,0 +1,16 @@
+artifact_id,artifact,version,sha256,source,owner,evidence_status,change_ref,notes
+P-01,H2-SimNet-Dataset.zip (Zenodo 17871393 V2),V2,md5:15bc64a3afc9e2990c9db66eb37617de,https://zenodo.org/records/17871393,Yazan,VERIFIED,-,"509,236,976 bytes; md5 equals Zenodo; extracted to gitignored data/raw/"
+P-02,06_audit_preparation/phase8_execution_readiness/RAW_CHECKSUMS_OFFICIAL_ARCHIVE.sha256,2026-11-11,7fc3d56e00db1d1ea2474e0f03ff1e6fc8ea32265cefa32c2349149f5b5ee87e,untouched archive extract,Yazan (adoption pending),VERIFIED,Y-D10,264/264 files re-verified 2026-11-11
+P-03,01_dataset_audit/raw_checksums.sha256,2026-10-30,47f1657efa868b221a987ba7c9cb268f2f61e1d20d29eef7e10f566484639327,Yazan local copy,Yazan,SUPERSEDED_FOR_ARCHIVE,DATASET_AUDIT_AMENDMENT_2026-11,256 match; 8 CRLF->LF; 1 .gitkeep; kept for sample-data validation
+P-04,01_dataset_audit/provisional/PROVISIONAL_DATA_FREEZE_MANIFEST.csv,v0.1-provisional-2026-10-30,e0cb4a313adbc70fef714f459df545a2c4b53ee6572ede27a5df238d002b1c8d,audit scripts,Yazan,SUPERSEDED,CC-001,development only
+P-05,06_audit_preparation/phase6_resolution/CANDIDATE_MANIFEST_V02.csv,v0.2,36bcbaf97bb17659995f393884d1dcde3bbca9236c3dcdcc6e7651e61538fb59,tools/dataset/build_manifest_v02.py,Yazan,VERIFIED (attestation pending),CC-001,57 runs; 51 eligible; pinned in config
+P-06,06_audit_preparation/pre_experiment_review/CANDIDATE_LABEL_MAPPING.yaml,candidate,61a3182b04e0fd7c9728945f07ab7eee13fe8fb75a8f4b55a999244cb49c1f18,label audit,Yazan,VERIFIED (attestation pending),-,pinned in config
+P-07,06_audit_preparation/pre_experiment_review/CANDIDATE_OUTER_FOLDS.csv,LOTO,3b21d8231a40245140f32aa6cb5193e3f45b05bd57cbb079ccccd69aafa8b1dd,fold builder,Faisal/Yazan,VERIFIED,-,pinned in config
+P-08,06_audit_preparation/pre_experiment_review/CANDIDATE_INNER_FOLDS.csv,LOTO_within_train,ebff65da38a5e70e45e1f1e0c4303b518ba13f9874aed06a3a191bf9c0963c5b,fold builder,Faisal,VERIFIED,-,matches runner-derived splits (preflight)
+P-09,02_methodology/FEATURE_DEFINITION_REGISTER.csv,v1,3dd5e927e3473d01168b39ca7539d51fd5d599621bb6263bae20bfdc25bfc137,features.feature_register,Faisal,VERIFIED,-,pinned in config
+P-10,06_audit_preparation/phase6_resolution/CANDIDATE_EVALUATION_CONFIG.yaml,candidate,e4be96df29bf99c7e37a32695d83e763e5ee41765f673f79f0265f574023e208,phase 6,Faisal,SUPERSEDED,CC-002,predecessor of final config
+P-11,06_audit_preparation/FINAL_EXPERIMENT_CONFIG.yaml,final-protocol-1.1,f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae,phase 7 + PA-1,Faisal (delegated selection),PROTOCOL_SELECTED_PENDING_EXECUTION,CC-002; CC-004,authorization binds this hash
+P-12,noise_added eligible feature table (derived; not stored),60/30 128 features,4d1310a6509ff5eb381792c0886afcda1209017361390bf395c805b5c3955280,runner build_features,Faisal,VERIFIED (reproduced),-,27993 windows
+P-13,clean eligible feature table (derived; not stored),60/30 128 features,3bc7e712d275e540dbb1b7cdcd8c9d48437289e9b2de0b55dcb37d16a3432b2c,runner build_features,Faisal,VERIFIED (reproduced),-,27993 windows
+P-14,configs/interface_contracts.yaml,2.0.0,see file (versioned),phase 9-10,Faisal (acceptance pending),TESTED,CC-005,enforced by tests/test_interface_contract.py
+P-15,03_results/primary_protocol/PRIMARY/*,not created,-,authorized runner execution,Faisal,PENDING,-,no research result exists

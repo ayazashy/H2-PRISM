@@ -1,0 +1,22 @@
+# UNSIGNED TEMPLATE - not an approval. See SIGNOFF_PACKAGE.md.
+approval_id: T3_outer_folds__6b74bdf5__REVIEWER
+artifact_id: T3_outer_folds
+claim_scope: DATASET
+decision: TO_BE_DECIDED_BY_REVIEWER
+approved_claims:
+- 'Leave-one-topology-out outer folds: runs and topology-scoped families per role, under the release topology attribution
+  (disputed for Center/Downstream event runs, L12 / R-18).'
+limitations_acknowledged:
+- ''
+reviewer:
+  name: TO_BE_FILLED_BY_REVIEWER
+  role: TO_BE_FILLED_BY_REVIEWER
+date: YYYY-MM-DD
+statement: ''
+binding:
+  input_sha256:
+    03_results/dataset_design/loto_folds.csv: 3003aa32e8421fa44946c7730f41d83f4e1da824897f0286344badc5d4371791
+  spec_sha256: 6b74bdf50a23ed3cc78393c20ab6654f693425572d98668a89281bd91829e7d7
+  renderer_sha256: 12ba184bfc5f603546a75e47764b8f3569dffc44810423add4bc024b4cdfdd66
+  source_run_keys:
+  - dataset_design_4d1310a6509f
