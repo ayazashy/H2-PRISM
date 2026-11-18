@@ -1,0 +1,8 @@
+# Checksum-indexed outputs (results/SHA256SUMS.csv) must keep identical bytes on every platform.
+*.csv text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.svg text eol=lf
+*.py text eol=lf
+*.png binary
+*.gz binary

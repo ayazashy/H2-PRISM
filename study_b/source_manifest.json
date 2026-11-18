@@ -1,0 +1,217 @@
+{
+  "record": "https://zenodo.org/records/19036733",
+  "doi": "10.5281/zenodo.19036733",
+  "version": "1.2",
+  "archive_bytes": 377874239,
+  "md5": "64cbe2a68c0af5dc2e4a0a9690003eac",
+  "sha256": "91755fb1e555e0eb32d160ac140a4261b6bb47d24944c7e717b723fe2a641e32",
+  "overview": "LukasFleming-MHC-Dataset-680ec48/Experiment Overview.xlsx",
+  "experiments": {
+    "1": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 1.xlsx",
+    "10": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 10.xlsx",
+    "11": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 11.xlsx",
+    "12": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 12.xlsx",
+    "13": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 13.xlsx",
+    "14": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 14.xlsx",
+    "15": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 15.xlsx",
+    "16": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 16.xlsx",
+    "17": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 17.xlsx",
+    "18": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 18.xlsx",
+    "19": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 19.xlsx",
+    "2": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 2.xlsx",
+    "20": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 20.xlsx",
+    "21": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 21.xlsx",
+    "22": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 22.xlsx",
+    "23": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 23.xlsx",
+    "24": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 24.xlsx",
+    "25": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 25.xlsx",
+    "26": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 26.xlsx",
+    "27": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 27.xlsx",
+    "28": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 28.xlsx",
+    "29": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 29.xlsx",
+    "3": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 3.xlsx",
+    "4": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 4.xlsx",
+    "5": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 5.xlsx",
+    "6": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 6.xlsx",
+    "7": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 7.xlsx",
+    "8": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 8.xlsx",
+    "9": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 9.xlsx"
+  },
+  "members": [
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 1.xlsx",
+      "bytes": 12528398,
+      "crc32": "ff287f91"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 10.xlsx",
+      "bytes": 13763713,
+      "crc32": "04d9b294"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 11.xlsx",
+      "bytes": 14083613,
+      "crc32": "733c7cd7"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 12.xlsx",
+      "bytes": 13794277,
+      "crc32": "545edc1e"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 13.xlsx",
+      "bytes": 14027966,
+      "crc32": "6675f2e6"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 14.xlsx",
+      "bytes": 15391719,
+      "crc32": "a7734aa8"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 15.xlsx",
+      "bytes": 13622003,
+      "crc32": "90d3f321"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 16.xlsx",
+      "bytes": 13572301,
+      "crc32": "6f7dceac"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 17.xlsx",
+      "bytes": 13584118,
+      "crc32": "74408df1"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 18.xlsx",
+      "bytes": 15761428,
+      "crc32": "20a0939b"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 19.xlsx",
+      "bytes": 13682874,
+      "crc32": "38c13087"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 2.xlsx",
+      "bytes": 14413027,
+      "crc32": "e4eefd26"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 20.xlsx",
+      "bytes": 13812633,
+      "crc32": "c5c6c1f5"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 21.xlsx",
+      "bytes": 13798246,
+      "crc32": "879e94e5"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 22.xlsx",
+      "bytes": 16912962,
+      "crc32": "88cd7095"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 23.xlsx",
+      "bytes": 15076091,
+      "crc32": "662bf00a"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 24.xlsx",
+      "bytes": 16508055,
+      "crc32": "bce44348"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 25.xlsx",
+      "bytes": 14999593,
+      "crc32": "628dc393"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 26.xlsx",
+      "bytes": 16598806,
+      "crc32": "d9e5323e"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 27.xlsx",
+      "bytes": 14858506,
+      "crc32": "5ad050aa"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 28.xlsx",
+      "bytes": 15073869,
+      "crc32": "87367511"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 29.xlsx",
+      "bytes": 15385391,
+      "crc32": "8f11afb7"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 3.xlsx",
+      "bytes": 13953345,
+      "crc32": "49a8baf1"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 4.xlsx",
+      "bytes": 17822440,
+      "crc32": "d4bf07a8"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 5.xlsx",
+      "bytes": 15569780,
+      "crc32": "7ca00c1f"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 6.xlsx",
+      "bytes": 13563384,
+      "crc32": "5781bfe7"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 7.xlsx",
+      "bytes": 14546952,
+      "crc32": "b27d9578"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 8.xlsx",
+      "bytes": 15386747,
+      "crc32": "b99dd8ca"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Dataset/Experiment 9.xlsx",
+      "bytes": 14105210,
+      "crc32": "cda83374"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Experiment Overview.xlsx",
+      "bytes": 11731,
+      "crc32": "a4038de0"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/LICENSE",
+      "bytes": 829,
+      "crc32": "4e5e7654"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/PCI data.xlsx",
+      "bytes": 119034,
+      "crc32": "cbb9db4e"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/README.txt",
+      "bytes": 3304,
+      "crc32": "3f3a12cb"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Stage-I.STEP",
+      "bytes": 7677045,
+      "crc32": "9960dbd7"
+    },
+    {
+      "path": "LukasFleming-MHC-Dataset-680ec48/Stage-II.STEP",
+      "bytes": 6944940,
+      "crc32": "c6241550"
+    }
+  ]
+}
