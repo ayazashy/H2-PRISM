@@ -1,48 +1,3 @@
-<<<<<<< HEAD
-config_version: "1.0.2"
-status: "FROZEN_BEFORE_OUTER_EVALUATION"
-random_state: 2026
-outer_folds: [1, 2, 3]
-window_size_samples: 60
-stride_samples: 60
-sampling_rate_hz: 1
-d_neighbors: 25
-target_specific_coverage: 0.80
-bootstrap_replicates: 1000
-policy:
-  ambiguity_delta: 0.15
-  max_candidates: 3
-  minimum_confidence_for_ambiguity: 0.40
-  minimum_support_for_ambiguity: 0.35
-model:
-  estimator: "RandomForestClassifier"
-  n_estimators: 300
-  max_features: "sqrt"
-  min_samples_leaf: 2
-  class_weight: "balanced_subsample"
-  family_balanced_sample_weight: true
-calibration:
-  candidates: ["none", "sigmoid", "isotonic"]
-  selection_metric: "inner_grouped_oof_log_loss"
-  score_direction: "lower_is_better"
-evaluation:
-  estimand: "cross_topology_transfer"
-  family_overlap_expected: true
-  report_unseen_family_generalization: false
-  primary_independence_unit_for_uncertainty: "Scenario_Family_ID"
-  event_window_rule: "complete_nonoverlapping_windows_inside_annotated_event_interval"
-  normal_window_rule: "complete_nonoverlapping_windows_from_normal_baseline_scenarios"
-  boundary_crossing_windows: "exclude_and_record"
-  pre_event_and_post_event_windows: "exclude_and_record"
-  compound_events: "exclude_using_provisional_manifest"
-  excluded_model_inputs:
-    - "phase"
-    - "topology"
-    - "Timestamp"
-    - "Scenario_ID"
-    - "Scenario_Family_ID"
-    - "labels"
-=======
 # F4 plan path: configs/frozen_evaluation_config.yaml
 # This is a POINTER, not a copy. The single frozen evaluation configuration is the file below;
 # duplicating its values here would create two sources of truth. tests/test_plan_deliverables.py
@@ -57,4 +12,3 @@ frozen_config:
 candidate_predecessor:   # plan name "evaluation_config.yaml"
   file: 06_audit_preparation/phase6_resolution/CANDIDATE_EVALUATION_CONFIG.yaml
   sha256: e4be96df29bf99c7e37a32695d83e763e5ee41765f673f79f0265f574023e208
->>>>>>> 6fee8a0a58a0773ad0ac6f0d5eb1f71ae4d984ed
