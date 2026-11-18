@@ -17,6 +17,6 @@
 6. **HY2RES singleton calls are not certifiable.** 10,762 frozen calls become UNRESOLVED once a single-coordinate exclusion certificate is required.
 7. **Reproducibility defects.**
    - L21: hash pins recorded on CRLF working copies fail on fresh checkouts.
-   - L22: the v1 Q1 manifest name collides with the figure-system test (our own commit e944e1b).
+   - L22 (repaired): the v1 Q1 manifest name collided with the figure-system test (our own commit e944e1b); it is now `Q1_FIGURE_MANIFEST.csv` with unchanged bytes.
    - L20: the Stage-2 pipeline is non-importable (owner decision).
 8. **Traceability (H10).** The frozen export persists 7/16 required fields.

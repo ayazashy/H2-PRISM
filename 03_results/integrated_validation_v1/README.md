@@ -34,7 +34,7 @@ Additive package on branch `research/integrated-validation` (base `6eddd4a`). No
 **Quality control (`publication_q1/quality_control/`):**
 
 - `FIGURE_INVENTORY` — all 191 historical figure files with their Q1 replacements;
-- `FIGURE_MANIFEST` — per-figure QA record and SHA-256;
+- `Q1_FIGURE_MANIFEST` — per-figure QA record and SHA-256 (renamed from `FIGURE_MANIFEST.csv`, contents unchanged; see `MANIFEST_RENAME_RECORD.csv`);
 - `NUMERICAL_VERIFICATION`.
 
 **Checksums:** `SHA256SUMS.csv` lists every file in this package.

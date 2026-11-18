@@ -42,7 +42,8 @@ def main():
             rows.append(r)
     qc = Q1 / "quality_control"
     qc.mkdir(exist_ok=True)
-    man = qc / "FIGURE_MANIFEST.csv"
+    # Q1_ prefix (formerly FIGURE_MANIFEST.csv): the bare name is reserved for the repository figure-system schema (L22)
+    man = qc / "Q1_FIGURE_MANIFEST.csv"
     if not rows:
         print("no figure matched")
         return

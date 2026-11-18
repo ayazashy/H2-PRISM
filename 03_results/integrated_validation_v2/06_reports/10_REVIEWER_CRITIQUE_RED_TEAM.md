@@ -30,7 +30,7 @@ A skeptical review of this package. It assumes a reviewer who is looking for rea
 - **Baseline audit.** It no longer leaves v1 QC records or governance files modified after running verifiers or tests.
 
 ## Unresolved
-- L20, L21, L22 (owner or lead decisions).
+- L20 and L21 (owner decisions). L22 was repaired by renaming the v1 Q1 manifest (bytes unchanged).
 - D1 (dataset owner).
 - No held-out templates.
 - No calibrated bounds.

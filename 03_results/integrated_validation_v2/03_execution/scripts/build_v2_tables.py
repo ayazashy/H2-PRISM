@@ -342,7 +342,7 @@ def main():
         dict(issue="L22 Q1 package manifest name collides with the figure-system schema", affected_study="integrated_validation_v1 (this project)", files="integrated_validation_v1/publication_q1/quality_control/FIGURE_MANIFEST.csv",
              evidence="tests/test_figure_system.py globs every FIGURE_MANIFEST.csv and requires status/artifact_class columns; introduced by e944e1b",
              severity="low (test failure; no result affected)", impacted_claims="none", corrective_action="rename to Q1_FIGURE_MANIFEST.csv and refresh v1 checksums, or add the two columns",
-             approval_needed="project lead (touches a committed package)", status="CONFIRMED, REPAIR PROPOSED", origin="v2"),
+             approval_needed="project lead (approved; L22 repair commit)", status="REPAIRED: renamed to Q1_FIGURE_MANIFEST.csv, bytes unchanged (publication_q1/quality_control/MANIFEST_RENAME_RECORD.csv)", origin="v2"),
     ])
     write(pd.concat([a3, new], ignore_index=True), "LEAKAGE_REGISTER_V2", "Leakage and evaluation-integrity register",
           "v1 entries carried forward unchanged; v2 entries L17-L22 added from this round's analyses.", V2 / "01_audit")

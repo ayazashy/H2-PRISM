@@ -19,7 +19,7 @@ $S = '03_results/integrated_validation_v1/publication_q1/scripts'
 # optional: re-extract the Center trace windows through the hash-verifying frozen loader
 python "$S/extract_center_traces.py" --workspace $env:H2PRISM_CENTER_WORKSPACE --output 03_results/integrated_validation_v1/publication_q1/data/center_trace_windows.csv
 python "$S/build_inventory.py"      # quality_control/FIGURE_INVENTORY.{csv,md}
-python "$S/build_figures.py"        # figures/ (PNG + SVG), captions/, tables/TS01–TS02, quality_control/FIGURE_MANIFEST.csv
+python "$S/build_figures.py"        # figures/ (PNG + SVG), captions/, tables/TS01–TS02, quality_control/Q1_FIGURE_MANIFEST.csv
 python "$S/build_tables.py"         # tables/T01–T10 (CSV + Markdown), TABLES_BUNDLE.md
 python "$S/results_report.py"       # INTEGRATED_RESULTS.md, FIGURE_INDEX.md, TABLE_INDEX.md
 python "$S/verify_package.py"       # quality_control/NUMERICAL_VERIFICATION.csv, ../SHA256SUMS.csv

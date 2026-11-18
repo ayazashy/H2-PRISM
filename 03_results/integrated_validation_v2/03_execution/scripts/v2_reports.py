@@ -292,7 +292,7 @@ All values are generated from the files cited; the hypothesis statuses come from
 6. **HY2RES singleton calls are not certifiable.** {int(hy.frozen_specific):,} frozen calls become UNRESOLVED once a single-coordinate exclusion certificate is required.
 7. **Reproducibility defects.**
    - L21: hash pins recorded on CRLF working copies fail on fresh checkouts.
-   - L22: the v1 Q1 manifest name collides with the figure-system test (our own commit e944e1b).
+   - L22 (repaired): the v1 Q1 manifest name collided with the figure-system test (our own commit e944e1b); it is now `Q1_FIGURE_MANIFEST.csv` with unchanged bytes.
    - L20: the Stage-2 pipeline is non-importable (owner decision).
 8. **Traceability (H10).** The frozen export persists {F['trace'].in_frozen_serialized_record} required fields.
 """)
@@ -471,7 +471,7 @@ Relative units only (V2-T07); these are not prices:
 - **Baseline audit.** It no longer leaves v1 QC records or governance files modified after running verifiers or tests.
 
 ## Unresolved
-- L20, L21, L22 (owner or lead decisions).
+- L20 and L21 (owner decisions). L22 was repaired by renaming the v1 Q1 manifest (bytes unchanged).
 - D1 (dataset owner).
 - No held-out templates.
 - No calibrated bounds.

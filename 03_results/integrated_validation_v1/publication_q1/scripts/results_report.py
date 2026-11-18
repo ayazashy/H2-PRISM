@@ -158,7 +158,7 @@ def main():
         out.append(f"**Interpretation.** {interp}\n\n**Limitation.** {lim}\n")
     (Q1 / "INTEGRATED_RESULTS.md").write_text("\n".join(out), encoding="utf-8", newline="\n")
     # figure index from both manifests
-    m = pd.concat([pd.read_csv(Q1 / "quality_control/FIGURE_MANIFEST.csv"),
+    m = pd.concat([pd.read_csv(Q1 / "quality_control/Q1_FIGURE_MANIFEST.csv"),
                    pd.read_csv(H1 / "quality_control/H1_FIGURE_MANIFEST.csv")], ignore_index=True)
     lines = ["# Figure index\n", f"{len(m)} standalone figures (PNG + SVG + caption + plotting function).\n",
              "| ID | Study | Title | Question | PNG | QA |", "|---|---|---|---|---|---|"]

@@ -31,7 +31,7 @@ def main():
     def chk(item, reported, recomputed, ok):
         rows.append({"item": item, "reported": reported, "recomputed": recomputed, "match": bool(ok)})
 
-    for man in (Q1 / "quality_control/FIGURE_MANIFEST.csv", ROOT / "h1_validation/quality_control/H1_FIGURE_MANIFEST.csv"):
+    for man in (Q1 / "quality_control/Q1_FIGURE_MANIFEST.csv", ROOT / "h1_validation/quality_control/H1_FIGURE_MANIFEST.csv"):
         m = pd.read_csv(man)
         for r in m.itertuples():
             for kind in ("png", "svg"):
