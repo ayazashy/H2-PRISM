@@ -23,3 +23,4 @@ DELETE,outside_v1,src/h2prism/experiments.py,6eddd4a,a7144ddbb68c3124b6e4c356a3d
 ADD,outside_v1,src/h2prism/simnet_experiments.py,6eddd4a,,c7d1df906098cce2b8b67a4f458246d1c0e1da2154ae9455b1eb4f9d6503cb53,L20,"Stage-2 runner from 9fa470c under a non-colliding name; 2 lines changed (import, provenance path)",2026-11-18,
 ADD,outside_v1,src/h2prism/simnet_windows.py,6eddd4a,,25784162932ecee33fc7dd98339c2360a82c1885db2107096d82ad2e06dd1012,L20,"Stage-2 windows.py from 9fa470c, byte-identical (sha256 25784162...)",2026-11-18,
 ADD,outside_v1,tests/test_windows_modules.py,6eddd4a,,fe75dbb147f043b9beaa20af194414117fb72be7823fdbd4aec2e00d92439c14,L20,regression test for the two window modules,2026-11-18,
+ADD_PREFIX,outside_v1,03_results/poster_inventory/,6eddd4a,,,poster inventory,read-only scientific results inventory for poster preparation; no source artifact modified,2026-11-18,
