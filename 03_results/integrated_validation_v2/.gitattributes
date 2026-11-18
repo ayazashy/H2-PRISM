@@ -7,3 +7,5 @@
 *.png binary
 *.gz binary
 *.txt text eol=lf
+*.log text eol=lf
+.gitattributes text eol=lf
