@@ -72,12 +72,23 @@ Superseded, preliminary, demo and engineering-QC figures are listed in the inven
 
 ## Downloading from GitHub
 
-- **One file (PNG, SVG, PDF, CSV).**
+The repository is **private**. Every download needs a GitHub account with access to `ayazashy/H2-PRISM`. Anonymous raw URLs return 404.
+
+- **One file (PNG, SVG, PDF, CSV), simplest way.**
+  1. Sign in to GitHub in the browser.
+  2. Open the file, then use **Download raw file**.
+- **One file from the command line.** With the GitHub CLI signed in (`gh auth login`), this writes the file:
+
+  ```bash
+  gh api -H "Accept: application/vnd.github.raw" "repos/ayazashy/H2-PRISM/contents/03_results/integrated_validation_v2/05_figures/V2-F03_isolability_onset.svg?ref=research/integrated-validation" > V2-F03_isolability_onset.svg
+  ```
+
+- **One file (PNG, SVG, PDF, CSV), details.**
   1. Open the file link on GitHub.
   2. Use **Download raw file** (the download icon at the top right of the file view).
   3. Alternatively, click **Raw** and save the page; for an SVG, right-click and choose "Save as".
 
-  The direct raw URL pattern is:
+  The direct raw URL pattern below works only with authentication: a signed-in browser, or `curl -H "Authorization: Bearer <token>"`.
 
   ```bash
   https://raw.githubusercontent.com/ayazashy/H2-PRISM/research/integrated-validation/<path>
@@ -86,7 +97,7 @@ Superseded, preliminary, demo and engineering-QC figures are listed in the inven
   For example:
 
   ```bash
-  curl -L -O https://raw.githubusercontent.com/ayazashy/H2-PRISM/research/integrated-validation/03_results/integrated_validation_v2/05_figures/V2-F03_isolability_onset.svg
+  curl -L -O -H "Authorization: Bearer $(gh auth token)" https://raw.githubusercontent.com/ayazashy/H2-PRISM/research/integrated-validation/03_results/integrated_validation_v2/05_figures/V2-F03_isolability_onset.svg
   ```
 
 - **Whole branch.** On the repository page, switch to branch `research/integrated-validation`, then **Code → Download ZIP**.
