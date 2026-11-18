@@ -1,0 +1,4 @@
+fold,held_out_topology,test_ancestors,test_ancestors_also_in_training_topologies,share_test_windows_with_training_ancestor,test_families_in_training
+1,Center,17,17,1,0
+2,Downstream,17,17,1,0
+3,Upstream,17,17,1,0

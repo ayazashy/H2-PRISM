@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="691.2pt" height="388.8pt" viewBox="0 0 691.2 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 388.8 
+L 691.2 388.8 
+L 691.2 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 89.520938 354.362188 
+L 685.44 354.362188 
+L 685.44 53.738281 
+L 89.520938 53.738281 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 89.520938 53.738281 
+L 280.215037 53.738281 
+L 280.215037 145.929612 
+L 89.520938 145.929612 
+z
+" clip-path="url(#pfcc3b99736)" style="fill: #ffffff; stroke: #e5e7eb; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 288.160625 53.738281 
+L 478.854725 53.738281 
+L 478.854725 145.929612 
+L 288.160625 145.929612 
+z
+" clip-path="url(#pfcc3b99736)" style="fill: url(#h0198fd3f5d); stroke: #20252b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 486.800312 53.738281 
+L 677.494412 53.738281 
+L 677.494412 145.929612 
+L 486.800312 145.929612 
+z
+" clip-path="url(#pfcc3b99736)" style="fill: url(#h0198fd3f5d); stroke: #20252b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 89.520938 153.94625 
+L 280.215037 153.94625 
+L 280.215037 246.137581 
+L 89.520938 246.137581 
+z
+" clip-path="url(#pfcc3b99736)" style="fill: #ffffff; stroke: #e5e7eb; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 288.160625 153.94625 
+L 478.854725 153.94625 
+L 478.854725 246.137581 
+L 288.160625 246.137581 
+z
+" clip-path="url(#pfcc3b99736)" style="fill: #ffffff; stroke: #e5e7eb; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 486.800312 153.94625 
+L 677.494412 153.94625 
+L 677.494412 246.137581 
+L 486.800312 246.137581 
+z
+" clip-path="url(#pfcc3b99736)" style="fill: #ffffff; stroke: #e5e7eb; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 89.520938 254.154219 
+L 280.215037 254.154219 
+L 280.215037 346.34555 
+L 89.520938 346.34555 
+z
+" clip-path="url(#pfcc3b99736)" style="fill: #ffffff; stroke: #e5e7eb; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 288.160625 254.154219 
+L 478.854725 254.154219 
+L 478.854725 346.34555 
+L 288.160625 346.34555 
+z
+" clip-path="url(#pfcc3b99736)" style="fill: url(#h0198fd3f5d); stroke: #20252b; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 486.800312 254.154219 
+L 677.494412 254.154219 
+L 677.494412 346.34555 
+L 486.800312 346.34555 
+z
+" clip-path="url(#pfcc3b99736)" style="fill: #ffffff; stroke: #e5e7eb; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1"/>
+     <g id="text_1">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(168.204706 37.627656)">Feasible</text>
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(158.078144 48.099219)">after removal</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2"/>
+     <g id="text_2">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(364.625644 37.627656)">Excluded</text>
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(356.717831 48.099219)">after removal</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3"/>
+     <g id="text_3">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(554.3833 37.627656)">Indeterminate</text>
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(555.357519 48.099219)">after removal</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_4"/>
+     <g id="text_4">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(52.694375 98.764416)">Feasible</text>
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(5.76 109.235978)">with all 13 channels</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_5"/>
+     <g id="text_5">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(48.256875 198.972384)">Excluded</text>
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(5.76 209.443947)">with all 13 channels</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_6"/>
+     <g id="text_6">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(30.492813 299.180353)">Indeterminate</text>
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(5.76 309.651916)">with all 13 channels</text>
+     </g>
+    </g>
+   </g>
+   <g id="text_7">
+    <g id="patch_12">
+     <path d="M 173.557987 107.088556 
+L 196.177988 107.088556 
+L 196.177988 92.579338 
+L 173.557987 92.579338 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="184.867987" y="102.747775" transform="rotate(-0 184.867987 102.747775)">780</text>
+   </g>
+   <g id="text_8">
+    <g id="patch_13">
+     <path d="M 378.697675 107.297775 
+L 388.317675 107.297775 
+L 388.317675 92.370119 
+L 378.697675 92.370119 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 13px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="383.507675" y="102.956994" transform="rotate(-0 383.507675 102.956994)">0</text>
+   </g>
+   <g id="text_9">
+    <g id="patch_14">
+     <path d="M 577.337362 107.297775 
+L 586.957362 107.297775 
+L 586.957362 92.370119 
+L 577.337362 92.370119 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 13px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="582.147362" y="102.956994" transform="rotate(-0 582.147362 102.956994)">0</text>
+   </g>
+   <g id="text_10">
+    <g id="patch_15">
+     <path d="M 173.557987 207.296525 
+L 196.177988 207.296525 
+L 196.177988 192.787306 
+L 173.557987 192.787306 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="184.867987" y="202.955744" transform="rotate(-0 184.867987 202.955744)">576</text>
+   </g>
+   <g id="text_11">
+    <g id="patch_16">
+     <path d="M 367.322675 207.296525 
+L 399.692675 207.296525 
+L 399.692675 192.787306 
+L 367.322675 192.787306 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="383.507675" y="202.955744" transform="rotate(-0 383.507675 202.955744)">8,625</text>
+   </g>
+   <g id="text_12">
+    <g id="patch_17">
+     <path d="M 577.337362 207.296525 
+L 586.957362 207.296525 
+L 586.957362 192.787306 
+L 577.337362 192.787306 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-weight: 700; font-size: 13px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="582.147362" y="202.955744" transform="rotate(-0 582.147362 202.955744)">3</text>
+   </g>
+   <g id="text_13">
+    <g id="patch_18">
+     <path d="M 180.057987 307.713712 
+L 189.677988 307.713712 
+L 189.677988 292.786056 
+L 180.057987 292.786056 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 13px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="184.867987" y="303.372931" transform="rotate(-0 184.867987 303.372931)">0</text>
+   </g>
+   <g id="text_14">
+    <g id="patch_19">
+     <path d="M 378.697675 307.713712 
+L 388.317675 307.713712 
+L 388.317675 292.786056 
+L 378.697675 292.786056 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 13px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="383.507675" y="303.372931" transform="rotate(-0 383.507675 303.372931)">0</text>
+   </g>
+   <g id="text_15">
+    <g id="patch_20">
+     <path d="M 577.337362 307.713712 
+L 586.957362 307.713712 
+L 586.957362 292.786056 
+L 577.337362 292.786056 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-size: 13px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="582.147362" y="303.372931" transform="rotate(-0 582.147362 303.372931)">0</text>
+   </g>
+  </g>
+  <g id="text_16">
+   <text style="font-weight: 700; font-size: 15px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="345.6" y="15.927188" transform="rotate(-0 345.6 15.927188)">Removing sensors never creates a formal exclusion or removes a feasible hypothesis</text>
+  </g>
+  <g id="legend_1">
+   <g id="patch_21">
+    <path d="M 231.058594 377.642188 
+L 251.058594 377.642188 
+L 251.058594 370.642188 
+L 231.058594 370.642188 
+z
+" style="fill: url(#h0198fd3f5d); stroke: #20252b; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="259.058594" y="377.642188" transform="rotate(-0 259.058594 377.642188)">Forbidden transition (would violate monotonicity)</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pfcc3b99736">
+   <rect x="89.520938" y="53.738281" width="595.919062" height="300.623906"/>
+  </clipPath>
+ </defs>
+ <defs>
+  <pattern id="h0198fd3f5d" patternUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+   <rect x="0" y="0" width="73" height="73" fill="#f3e3e3"/>
+   <path d="M -36 36 
+L 36 -36 
+M -30 42 
+L 42 -30 
+M -24 48 
+L 48 -24 
+M -18 54 
+L 54 -18 
+M -12 60 
+L 60 -12 
+M -6 66 
+L 66 -6 
+M 0 72 
+L 72 0 
+M 6 78 
+L 78 6 
+M 12 84 
+L 84 12 
+M 18 90 
+L 90 18 
+M 24 96 
+L 96 24 
+M 30 102 
+L 102 30 
+M 36 108 
+L 108 36 
+" style="fill: #20252b; stroke: #20252b; stroke-width: 0.8; stroke-linecap: butt; stroke-linejoin: miter"/>
+  </pattern>
+ </defs>
+</svg>

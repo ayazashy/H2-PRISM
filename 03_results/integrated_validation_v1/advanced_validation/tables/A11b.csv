@@ -1,0 +1,9 @@
+query,condition,true_mechanism,predicted,status,method
+PRESSURE,frozen,Pressure command,Pressure command,CORRECT,B3 nearest mechanism
+PRESSURE,loto,Pressure command,Timing shift,UNSUPPORTED,B3 nearest mechanism
+TIMING,frozen,Timing shift,Timing shift,CORRECT,B3 nearest mechanism
+TIMING,loto,Timing shift,Withdrawal,UNSUPPORTED,B3 nearest mechanism
+NOMINAL,frozen,Normal,Normal,CORRECT,B3 nearest mechanism
+NOMINAL,loto,Normal,Normal,CORRECT,B3 nearest mechanism
+PRESSURE,"restricted, S3/S4/S5/REF",operational,UNRESOLVED_MODEL_MISMATCH ×4,no false withdrawal call,formal D(Y)
+TIMING,"restricted, S3/S4/S5/REF",operational,UNRESOLVED_MODEL_MISMATCH ×4,no false withdrawal call,formal D(Y)

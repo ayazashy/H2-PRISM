@@ -1,0 +1,4 @@
+fold,held_out_topology,inner_cv_macro_f1_selected,outer_test_accuracy,outer_test_accuracy_undisputed_runs
+1,Center,0.7389622454,0.2126245847,1
+2,Downstream,0.3035043556,0.928732183,0
+3,Upstream,0.09936766034,1,1

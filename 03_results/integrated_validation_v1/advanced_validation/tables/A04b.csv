@@ -1,0 +1,8 @@
+aspect,status,evidence
+Mathematical correctness (engine semantics),VERIFIED,0 invariant violations; all certificates and witnesses re-verify
+Invalid-input handling,IMPLEMENTED,MeasurementContract.issues → UNRESOLVED/INVALID_MEASUREMENT (tests/test_certified_evidence.py)
+Unsupported hypotheses,VERIFIED,always INDETERMINATE; full universe 42/42 UNRESOLVED (E4)
+Observation and model bounds,HYPOTHETICAL,"declared ladder S1–S6; REF = solver-refinement deltas (scale reference, not an enclosure)"
+Physical uncertainty qualification,NOT ESTABLISHED,no instrument specification or model-error enclosure
+Decision correctness inside an incomplete library,FAILS AS EXPECTED,restricted universe: wrong SPECIFIC whenever truth absent and a rival fits
+Physical validation,NOT ESTABLISHED,"air-like simulation, one source family"

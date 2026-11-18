@@ -38,3 +38,12 @@ Additive package on branch `research/integrated-validation` (base `6eddd4a`). No
 - `NUMERICAL_VERIFICATION`.
 
 **Checksums:** `SHA256SUMS.csv` lists every file in this package.
+
+## Advanced validation — `advanced_validation/`
+
+Covers false-specific accounting, negative controls, formal D(Y) invariants, library completeness, sensor and timing robustness, pairwise isolability, localization levels, leakage audit, runtime scaling, portability, gas readiness, cost structure and the literature matrix.
+
+| Document | Content |
+|---|---|
+| [README](advanced_validation/README.md) | Index |
+| [ADVANCED_VALIDATION_RESULTS.md](advanced_validation/ADVANCED_VALIDATION_RESULTS.md) | Results: 16 figures, tables A01–A20 |

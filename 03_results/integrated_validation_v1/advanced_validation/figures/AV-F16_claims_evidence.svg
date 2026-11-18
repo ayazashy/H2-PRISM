@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="691.2pt" height="475.2pt" viewBox="0 0 691.2 475.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 475.2 
+L 691.2 475.2 
+L 691.2 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 207.670469 469.44 
+L 685.44 469.44 
+L 685.44 52.515875 
+L 207.670469 52.515875 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 255.447422 469.44 
+L 255.447422 52.515875 
+" clip-path="url(#p97fafb4b3b)" style="fill: none; stroke: #e5e7eb; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 351.001328 469.44 
+L 351.001328 52.515875 
+" clip-path="url(#p97fafb4b3b)" style="fill: none; stroke: #e5e7eb; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 446.555234 469.44 
+L 446.555234 52.515875 
+" clip-path="url(#p97fafb4b3b)" style="fill: none; stroke: #e5e7eb; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 542.109141 469.44 
+L 542.109141 52.515875 
+" clip-path="url(#p97fafb4b3b)" style="fill: none; stroke: #e5e7eb; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 637.663047 469.44 
+L 637.663047 52.515875 
+" clip-path="url(#p97fafb4b3b)" style="fill: none; stroke: #e5e7eb; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_6"/>
+     <g id="text_1">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(240.150938 37.035781)">Verified</text>
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(234.739648 46.983766)">/ measured</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_7"/>
+     <g id="text_2">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="351.001328" y="46.983766" transform="rotate(-0 351.001328 46.983766)">Conditional</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_8"/>
+     <g id="text_3">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(423.868047 37.017969)">Exploratory</text>
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(420.039844 46.983766)">/ inconclusive</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_9"/>
+     <g id="text_4">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(524.963867 37.017969)">Negative</text>
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(514.142031 46.983766)">/ not estimable</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_10"/>
+     <g id="text_5">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(621.83293 37.035781)">Blocked</text>
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(606.791758 46.983766)">/ not established</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_11"/>
+     <g id="text_6">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="71.351701" transform="rotate(-0 204.170469 71.351701)">Registered H1</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_12"/>
+     <g id="text_7">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="97.24761" transform="rotate(-0 204.170469 97.24761)">H1 exploratory (s_C vs s_C−D)</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_13"/>
+     <g id="text_8">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="123.143518" transform="rotate(-0 204.170469 123.143518)">Evidence guard vs conventional confidence</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_14"/>
+     <g id="text_9">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="149.039426" transform="rotate(-0 204.170469 149.039426)">D(x) incremental information</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_15"/>
+     <g id="text_10">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="174.935335" transform="rotate(-0 204.170469 174.935335)">D(Y) engine semantics and certificates</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_16"/>
+     <g id="text_11">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="200.831243" transform="rotate(-0 204.170469 200.831243)">D(Y) refuses with incomplete declared library</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_17"/>
+     <g id="text_12">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="226.727152" transform="rotate(-0 204.170469 226.727152)">Restricted library → false SPECIFIC</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_18"/>
+     <g id="text_13">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="252.62306" transform="rotate(-0 204.170469 252.62306)">Missing pressure sensors increase false specificity</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_19"/>
+     <g id="text_14">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="278.518968" transform="rotate(-0 204.170469 278.518968)">Delay beyond admissible clock bound → abstention</text>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_20"/>
+     <g id="text_15">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="304.414877" transform="rotate(-0 204.170469 304.414877)">Formal minimum sensor set (template level)</text>
+     </g>
+    </g>
+    <g id="ytick_11">
+     <g id="line2d_21"/>
+     <g id="text_16">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="330.310785" transform="rotate(-0 204.170469 330.310785)">Categorical localization</text>
+     </g>
+    </g>
+    <g id="ytick_12">
+     <g id="line2d_22"/>
+     <g id="text_17">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="356.206694" transform="rotate(-0 204.170469 356.206694)">Fault classification / localization accuracy</text>
+     </g>
+    </g>
+    <g id="ytick_13">
+     <g id="line2d_23"/>
+     <g id="text_18">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="382.102602" transform="rotate(-0 204.170469 382.102602)">Pure-H2 or H2/NG diagnostic transfer</text>
+     </g>
+    </g>
+    <g id="ytick_14">
+     <g id="line2d_24"/>
+     <g id="text_19">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="407.99851" transform="rotate(-0 204.170469 407.99851)">Cost saving</text>
+     </g>
+    </g>
+    <g id="ytick_15">
+     <g id="line2d_25"/>
+     <g id="text_20">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="433.894419" transform="rotate(-0 204.170469 433.894419)">Computational scaling</text>
+     </g>
+    </g>
+    <g id="ytick_16">
+     <g id="line2d_26"/>
+     <g id="text_21">
+      <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="204.170469" y="459.790327" transform="rotate(-0 204.170469 459.790327)">Cross-study engine portability</text>
+     </g>
+    </g>
+   </g>
+   <g id="PathCollection_1">
+    <defs>
+     <path id="mb8125a3677" d="M -2.622022 5.244044 
+L 0 2.622022 
+L 2.622022 5.244044 
+L 5.244044 2.622022 
+L 2.622022 0 
+L 5.244044 -2.622022 
+L 2.622022 -5.244044 
+L 0 -2.622022 
+L -2.622022 -5.244044 
+L -5.244044 -2.622022 
+L -2.622022 0 
+L -5.244044 2.622022 
+z
+" style="stroke: #20252b; stroke-width: 0.5"/>
+    </defs>
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#mb8125a3677" x="542.109141" y="68.05342" style="fill: #a44a4a; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="PathCollection_2">
+    <defs>
+     <path id="m2e6ef5fb4a" d="M 0 -5.244044 
+L -5.244044 5.244044 
+L 5.244044 5.244044 
+z
+" style="stroke: #20252b; stroke-width: 0.5"/>
+    </defs>
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#m2e6ef5fb4a" x="446.555234" y="93.949328" style="fill: #ba8a28; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="PathCollection_3">
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#m2e6ef5fb4a" x="446.555234" y="119.845237" style="fill: #ba8a28; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="PathCollection_4">
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#mb8125a3677" x="542.109141" y="145.741145" style="fill: #a44a4a; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="PathCollection_5">
+    <defs>
+     <path id="m3ee6854187" d="M 0 5.244044 
+C 1.390737 5.244044 2.7247 4.691499 3.708099 3.708099 
+C 4.691499 2.7247 5.244044 1.390737 5.244044 0 
+C 5.244044 -1.390737 4.691499 -2.7247 3.708099 -3.708099 
+C 2.7247 -4.691499 1.390737 -5.244044 0 -5.244044 
+C -1.390737 -5.244044 -2.7247 -4.691499 -3.708099 -3.708099 
+C -4.691499 -2.7247 -5.244044 -1.390737 -5.244044 0 
+C -5.244044 1.390737 -4.691499 2.7247 -3.708099 3.708099 
+C -2.7247 4.691499 -1.390737 5.244044 0 5.244044 
+z
+" style="stroke: #20252b; stroke-width: 0.5"/>
+    </defs>
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#m3ee6854187" x="255.447422" y="171.637054" style="fill: #087e8b; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="PathCollection_6">
+    <defs>
+     <path id="mc8547f40e2" d="M 0 7.416198 
+L 7.416198 0 
+L 0 -7.416198 
+L -7.416198 0 
+z
+" style="stroke: #20252b; stroke-width: 0.5"/>
+    </defs>
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#mc8547f40e2" x="351.001328" y="197.532962" style="fill: #3b6f9c; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="PathCollection_7">
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#mc8547f40e2" x="351.001328" y="223.42887" style="fill: #3b6f9c; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="PathCollection_8">
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#mc8547f40e2" x="351.001328" y="249.324779" style="fill: #3b6f9c; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="PathCollection_9">
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#mc8547f40e2" x="351.001328" y="275.220687" style="fill: #3b6f9c; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="PathCollection_10">
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#mc8547f40e2" x="351.001328" y="301.116595" style="fill: #3b6f9c; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="PathCollection_11">
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#mc8547f40e2" x="351.001328" y="327.012504" style="fill: #3b6f9c; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="PathCollection_12">
+    <defs>
+     <path id="md8819b6ff5" d="M -5.244044 5.244044 
+L 5.244044 5.244044 
+L 5.244044 -5.244044 
+L -5.244044 -5.244044 
+z
+" style="stroke: #20252b; stroke-width: 0.5"/>
+    </defs>
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#md8819b6ff5" x="637.663047" y="352.908412" style="fill: #64748b; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="PathCollection_13">
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#md8819b6ff5" x="637.663047" y="378.804321" style="fill: #64748b; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="PathCollection_14">
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#md8819b6ff5" x="637.663047" y="404.700229" style="fill: #64748b; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="PathCollection_15">
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#m3ee6854187" x="255.447422" y="430.596137" style="fill: #087e8b; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="PathCollection_16">
+    <g clip-path="url(#p97fafb4b3b)">
+     <use xlink:href="#md8819b6ff5" x="637.663047" y="456.492046" style="fill: #64748b; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+  </g>
+  <g id="text_22">
+   <text style="font-weight: 700; font-size: 15px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="345.6" y="15.692813" transform="rotate(-0 345.6 15.692813)">Advanced-validation claims versus evidence level</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p97fafb4b3b">
+   <rect x="207.670469" y="52.515875" width="477.769531" height="416.924125"/>
+  </clipPath>
+ </defs>
+</svg>

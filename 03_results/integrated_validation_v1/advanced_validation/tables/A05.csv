@@ -1,0 +1,5 @@
+experiment,config_family,decisions,specific,specific_correct,specific_wrong,specific_coverage,wrong_specific_risk,ambiguous,ambiguous_truth_in,mean_ambiguity_set_size,unresolved_model_mismatch,unresolved_indeterminate,truth_retained,truth_in_library,mean_excluded_hypotheses,n_channels
+E4_library,full,42,0,0,0,0,,0,0,,0,42,38,14,4.761904762,13
+E4_library,minus_NORMAL,42,8,8,0,0.1904761905,0,4,2,2.5,30,0,10,14,3.904761905,13
+E4_library,minus_true,42,2,0,2,0.04761904762,1,4,0,3,36,0,0,0,4.666666667,13
+E4_library,restricted,42,10,8,2,0.2380952381,0.2,4,2,3.5,28,0,10,14,4.761904762,13
