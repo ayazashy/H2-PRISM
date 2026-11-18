@@ -5,7 +5,7 @@
 ...                                                                      [100%]
 =================================== ERRORS ====================================
 _______________ ERROR collecting tests/test_faisal_pipeline.py ________________
-ImportError while importing test module 'C:\Users\ahmd1\Documents\H2-PRISM-Integrated\tests\test_faisal_pipeline.py'.
+ImportError while importing test module '<USER_HOME>\Documents\H2-PRISM-Integrated\tests\test_faisal_pipeline.py'.
 Hint: make sure your test modules/packages have valid Python names.
 Traceback:
 ..\..\AppData\Local\Programs\Python\Python312\Lib\importlib\__init__.py:90: in import_module
@@ -15,7 +15,7 @@ tests\test_faisal_pipeline.py:4: in <module>
     from h2prism.evaluation import (
 src\h2prism\evaluation.py:15: in <module>
     from h2prism.windows import TARGET_CLASSES, map_target_class
-E   ImportError: cannot import name 'TARGET_CLASSES' from 'h2prism.windows' (C:\Users\ahmd1\Documents\H2-PRISM-Integrated\src\h2prism\windows.py)
+E   ImportError: cannot import name 'TARGET_CLASSES' from 'h2prism.windows' (<USER_HOME>\Documents\H2-PRISM-Integrated\src\h2prism\windows.py)
 ================================== FAILURES ===================================
 _______________ test_registered_matrix_is_complete_and_bounded ________________
 
@@ -141,8 +141,8 @@ ___ test_released_network_extraction_is_current_and_matches_known_structure ___
     def test_released_network_extraction_is_current_and_matches_known_structure():
 >       assert _run("extract_released_network.py", "--check").returncode == 0
 E       AssertionError: assert 1 == 0
-E        +  where 1 = CompletedProcess(args=['C:\\Users\\ahmd1\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', 'C:\\Users\\ahmd1\\Documen...w\\\\H2-SimNet-Dataset\\\\MATLAB_SIMSCAPE_Simulation\\\\anomalous_scenarios\\\\Anomalous_HNetwork_gest_center.slx\'\n').returncode
-E        +    where CompletedProcess(args=['C:\\Users\\ahmd1\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', 'C:\\Users\\ahmd1\\Documen...w\\\\H2-SimNet-Dataset\\\\MATLAB_SIMSCAPE_Simulation\\\\anomalous_scenarios\\\\Anomalous_HNetwork_gest_center.slx\'\n') = _run('extract_released_network.py', '--check')
+E        +  where 1 = CompletedProcess(args=['<USER_HOME>\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', '<USER_HOME>\\Documen...w\\\\H2-SimNet-Dataset\\\\MATLAB_SIMSCAPE_Simulation\\\\anomalous_scenarios\\\\Anomalous_HNetwork_gest_center.slx\'\n').returncode
+E        +    where CompletedProcess(args=['<USER_HOME>\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', '<USER_HOME>\\Documen...w\\\\H2-SimNet-Dataset\\\\MATLAB_SIMSCAPE_Simulation\\\\anomalous_scenarios\\\\Anomalous_HNetwork_gest_center.slx\'\n') = _run('extract_released_network.py', '--check')
 
 tests\test_h2net_candidate_evidence.py:19: AssertionError
 ____ test_provisional_steady_states_are_current_conservative_and_feasible _____
@@ -151,8 +151,8 @@ ____ test_provisional_steady_states_are_current_conservative_and_feasible _____
     def test_provisional_steady_states_are_current_conservative_and_feasible():
 >       assert subprocess.run([sys.executable, str(TOOLS / "h2net_v1_provisional_network.py"), "--check"]).returncode == 0
 E       AssertionError: assert 1 == 0
-E        +  where 1 = CompletedProcess(args=['C:\\Users\\ahmd1\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', 'C:\\Users\\ahmd1\\Documents\\H2-PRISM-Integrated\\tools\\simulation\\h2net_v1_provisional_network.py', '--check'], returncode=1).returncode
-E        +    where CompletedProcess(args=['C:\\Users\\ahmd1\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', 'C:\\Users\\ahmd1\\Documents\\H2-PRISM-Integrated\\tools\\simulation\\h2net_v1_provisional_network.py', '--check'], returncode=1) = <function run at 0x000001C5C9B7C860>(['C:\\Users\\ahmd1\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', 'C:\\Users\\ahmd1\\Documents\\H2-PRISM-Integrated\\tools\\simulation\\h2net_v1_provisional_network.py', '--check'])
+E        +  where 1 = CompletedProcess(args=['<USER_HOME>\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', '<USER_HOME>\\Documents\\H2-PRISM-Integrated\\tools\\simulation\\h2net_v1_provisional_network.py', '--check'], returncode=1).returncode
+E        +    where CompletedProcess(args=['<USER_HOME>\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', '<USER_HOME>\\Documents\\H2-PRISM-Integrated\\tools\\simulation\\h2net_v1_provisional_network.py', '--check'], returncode=1) = <function run at 0x000001C5C9B7C860>(['<USER_HOME>\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', '<USER_HOME>\\Documents\\H2-PRISM-Integrated\\tools\\simulation\\h2net_v1_provisional_network.py', '--check'])
 E        +      where <function run at 0x000001C5C9B7C860> = subprocess.run
 
 tests\test_h2net_v1_execution_prep.py:30: AssertionError
@@ -183,8 +183,8 @@ ______ test_entrypoints_are_portable_gated_and_reference_existing_tools _______
         assert re.findall(r"save_system\(([^,)]*)", b) == ["copyName"] and "load_system(rel" not in b
 >       assert subprocess.run([sys.executable, str(TOOLS / "h2net_v1_handoff_manifest.py"), "--check"]).returncode == 0
 E       AssertionError: assert 1 == 0
-E        +  where 1 = CompletedProcess(args=['C:\\Users\\ahmd1\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', 'C:\\Users\\ahmd1\\Documents\\H2-PRISM-Integrated\\tools\\simulation\\h2net_v1_handoff_manifest.py', '--check'], returncode=1).returncode
-E        +    where CompletedProcess(args=['C:\\Users\\ahmd1\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', 'C:\\Users\\ahmd1\\Documents\\H2-PRISM-Integrated\\tools\\simulation\\h2net_v1_handoff_manifest.py', '--check'], returncode=1) = <function run at 0x000001C5C9B7C860>(['C:\\Users\\ahmd1\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', 'C:\\Users\\ahmd1\\Documents\\H2-PRISM-Integrated\\tools\\simulation\\h2net_v1_handoff_manifest.py', '--check'])
+E        +  where 1 = CompletedProcess(args=['<USER_HOME>\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', '<USER_HOME>\\Documents\\H2-PRISM-Integrated\\tools\\simulation\\h2net_v1_handoff_manifest.py', '--check'], returncode=1).returncode
+E        +    where CompletedProcess(args=['<USER_HOME>\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', '<USER_HOME>\\Documents\\H2-PRISM-Integrated\\tools\\simulation\\h2net_v1_handoff_manifest.py', '--check'], returncode=1) = <function run at 0x000001C5C9B7C860>(['<USER_HOME>\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', '<USER_HOME>\\Documents\\H2-PRISM-Integrated\\tools\\simulation\\h2net_v1_handoff_manifest.py', '--check'])
 E        +      where <function run at 0x000001C5C9B7C860> = subprocess.run
 
 tests\test_h2net_v1_handoff.py:190: AssertionError
@@ -205,7 +205,7 @@ E         + 0566843e82410019af00fcd4f9e2680f56b184b4e3a63365460bb9fa0b29c691
 tests\test_protocol2_release_candidate.py:104: AssertionError
 ___________ test_arm_h_registered_and_authorization_bound_to_config ___________
 
-tmp_path = WindowsPath('C:/Users/ahmd1/AppData/Local/Temp/pytest-of-ahmd1/pytest-130/test_arm_h_registered_and_auth0')
+tmp_path = WindowsPath('<USER_HOME>/AppData/Local/Temp/pytest-of-<USER>/pytest-130/test_arm_h_registered_and_auth0')
 
     def test_arm_h_registered_and_authorization_bound_to_config(tmp_path):
         h = yaml.safe_load(ARM_H.read_text(encoding="utf-8"))
@@ -237,7 +237,7 @@ E         + f0c6434ae4a4c1ba477a46637de93dafeae19bcc9d9f66fb7065c792e55ec8af)
 tests\test_protocol2_release_candidate.py:196: AssertionError
 ________________________ test_template_is_not_runnable ________________________
 
-tmp_path = WindowsPath('C:/Users/ahmd1/AppData/Local/Temp/pytest-of-ahmd1/pytest-130/test_template_is_not_runnable0')
+tmp_path = WindowsPath('<USER_HOME>/AppData/Local/Temp/pytest-of-<USER>/pytest-130/test_template_is_not_runnable0')
 
     def test_template_is_not_runnable(tmp_path):
         t = V2 / "V2_EXPERIMENT_TEMPLATE.yaml"
@@ -274,7 +274,7 @@ tests/test_primary_protocol.py: 630 warnings
 tests/test_protocol2_candidate.py: 102 warnings
 tests/test_reporting_outputs.py: 108 warnings
 tests/test_secondary_baseline.py: 61 warnings
-  C:\Users\ahmd1\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\linear_model\_logistic.py:456: DeprecationWarning: scipy.optimize: The `disp` and `iprint` options of the L-BFGS-B solver are deprecated and will be removed in SciPy 1.18.0.
+  <USER_HOME>\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\linear_model\_logistic.py:456: DeprecationWarning: scipy.optimize: The `disp` and `iprint` options of the L-BFGS-B solver are deprecated and will be removed in SciPy 1.18.0.
     opt_res = optimize.minimize(
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html

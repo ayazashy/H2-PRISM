@@ -20,7 +20,7 @@ __________________ test_accepted_frozen_config_is_supported ___________________
 tests\test_faisal_pipeline.py:49: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-config_path = WindowsPath('C:/Users/ahmd1/Documents/H2-PRISM-Integrated/configs/frozen_evaluation_config.yaml')
+config_path = WindowsPath('<USER_HOME>/Documents/H2-PRISM-Integrated/configs/frozen_evaluation_config.yaml')
 
     def _read_config(config_path: Path) -> Dict[str, object]:
         with open(config_path, "r", encoding="utf-8") as file:
@@ -57,8 +57,8 @@ ___ test_released_network_extraction_is_current_and_matches_known_structure ___
     def test_released_network_extraction_is_current_and_matches_known_structure():
 >       assert _run("extract_released_network.py", "--check").returncode == 0
 E       AssertionError: assert 1 == 0
-E        +  where 1 = CompletedProcess(args=['C:\\Users\\ahmd1\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', 'C:\\Users\\ahmd1\\Documen...w\\\\H2-SimNet-Dataset\\\\MATLAB_SIMSCAPE_Simulation\\\\anomalous_scenarios\\\\Anomalous_HNetwork_gest_center.slx\'\n').returncode
-E        +    where CompletedProcess(args=['C:\\Users\\ahmd1\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', 'C:\\Users\\ahmd1\\Documen...w\\\\H2-SimNet-Dataset\\\\MATLAB_SIMSCAPE_Simulation\\\\anomalous_scenarios\\\\Anomalous_HNetwork_gest_center.slx\'\n') = _run('extract_released_network.py', '--check')
+E        +  where 1 = CompletedProcess(args=['<USER_HOME>\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', '<USER_HOME>\\Documen...w\\\\H2-SimNet-Dataset\\\\MATLAB_SIMSCAPE_Simulation\\\\anomalous_scenarios\\\\Anomalous_HNetwork_gest_center.slx\'\n').returncode
+E        +    where CompletedProcess(args=['<USER_HOME>\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe', '<USER_HOME>\\Documen...w\\\\H2-SimNet-Dataset\\\\MATLAB_SIMSCAPE_Simulation\\\\anomalous_scenarios\\\\Anomalous_HNetwork_gest_center.slx\'\n') = _run('extract_released_network.py', '--check')
 
 tests\test_h2net_candidate_evidence.py:19: AssertionError
 ============================== warnings summary ===============================
@@ -73,7 +73,7 @@ tests/test_primary_protocol.py: 630 warnings
 tests/test_protocol2_candidate.py: 102 warnings
 tests/test_reporting_outputs.py: 108 warnings
 tests/test_secondary_baseline.py: 61 warnings
-  C:\Users\ahmd1\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\linear_model\_logistic.py:456: DeprecationWarning: scipy.optimize: The `disp` and `iprint` options of the L-BFGS-B solver are deprecated and will be removed in SciPy 1.18.0.
+  <USER_HOME>\AppData\Local\Programs\Python\Python312\Lib\site-packages\sklearn\linear_model\_logistic.py:456: DeprecationWarning: scipy.optimize: The `disp` and `iprint` options of the L-BFGS-B solver are deprecated and will be removed in SciPy 1.18.0.
     opt_res = optimize.minimize(
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
