@@ -2,8 +2,10 @@
 
 Checks: (1) every figure listed in the manifests exists and matches its recorded SHA-256; (2) every figure is
 APPROVED; (3) Times New Roman resolves to a real Times file; (4) key table numbers reconcile with their sources;
-(5) no tracked frozen file is modified (git). Writes quality_control/NUMERICAL_VERIFICATION.csv and
-integrated_validation_v1/SHA256SUMS.csv (all package files except the checksum file itself).
+(5) protected scope (scope_check.py): no uncommitted change anywhere, and every committed change since the baselines
+(outside v1 vs 6eddd4a; v1 vs its release 6b98a8a) is authorized by exact hash in
+03_results/maintenance/POST_BASELINE_CHANGE_REGISTER.csv. Writes quality_control/NUMERICAL_VERIFICATION.csv,
+quality_control/SCOPE_CHECK.csv and integrated_validation_v1/SHA256SUMS.csv (all package files except itself).
 Usage (repository root): python 03_results/integrated_validation_v1/publication_q1/scripts/verify_package.py
 """
 import hashlib
@@ -19,6 +21,7 @@ ROOT = Q1.parent
 REPO = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from q1style import font_path  # noqa: E402
+import scope_check  # noqa: E402
 
 
 def sha(p):
@@ -73,14 +76,20 @@ def main():
         int(a.specific_correct.iloc[0]) == int((rr.correctness == "correct").sum()))
     hv = pd.read_csv(ROOT / "h1_validation/analysis/h1_verification.csv")
     chk("H1 reproduction checks", f"{int(hv.match.sum())}/{len(hv)}", "all", hv.match.all())
-    # frozen preservation
+    # frozen preservation: uncommitted changes anywhere, then committed changes against the protected baselines
     st = subprocess.run(["git", "status", "--porcelain"], cwd=REPO, capture_output=True, text=True).stdout.splitlines()
-    # any change outside this additive package (new, staged, modified or deleted) counts as a failure
     outside = [l for l in st if not l[3:].startswith("03_results/integrated_validation_v1")]
     chk("files changed outside the package (git status)", len(outside), 0, not outside)
-    vs_base = subprocess.run(["git", "diff", "--name-only", "6eddd4a", "--", ".", ":(exclude)03_results/integrated_validation_v1"],
-                             cwd=REPO, capture_output=True, text=True).stdout.split()
-    chk("files differing from base 6eddd4a outside the package", len(vs_base), 0, not vs_base)
+    inside = scope_check.uncommitted(REPO, [scope_check.V1])
+    chk("uncommitted changes inside the package (verifier outputs exempt)", len(inside), 0, not inside)
+    reg = scope_check.load_register(REPO)
+    S = pd.concat([scope_check.evaluate(REPO, reg, s, c["base"]) for s, c in scope_check.SCOPES.items()], ignore_index=True)
+    S.to_csv(Q1 / "quality_control/SCOPE_CHECK.csv", index=False, lineterminator="\n")
+    for s, c in scope_check.SCOPES.items():
+        g = S[S.scope == s]
+        bad = g[g.verdict == "UNAUTHORIZED"]
+        chk(f"{s}: committed changes vs {c['base']} authorized by the change register",
+            f"{len(g) - len(bad)}/{len(g)} authorized or exempt", "all", bad.empty)
     V = pd.DataFrame(rows)
     V.to_csv(Q1 / "quality_control/NUMERICAL_VERIFICATION.csv", index=False, lineterminator="\n")
     files = sorted(p for p in ROOT.rglob("*") if p.is_file() and p.name != "SHA256SUMS.csv" and "__pycache__" not in p.parts)
