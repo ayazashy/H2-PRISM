@@ -1,0 +1,15 @@
+check,observed,expected,status,evidence
+git branch,research/integrated-validation,research/integrated-validation,PASS,git branch --show-current
+git HEAD at audit,6b98a8a,recorded,PASS,git rev-parse HEAD
+tracked changes outside v2 package,0,0,PASS,git status --porcelain
+sha256 r2_predictions.parquet,4338c8c9ececc477,4338c8c9ececc477,PASS,v1 h1_validation/analysis/h1_summary.json sources_sha256
+sha256 r2_decisions.parquet,1f4579271b8fa5ec,1f4579271b8fa5ec,PASS,v1 h1_validation/analysis/h1_summary.json sources_sha256
+sha256 FINAL_EXPERIMENT_CONFIG.yaml,f788b6d870183303,f788b6d870183303,PASS,v1 h1_validation/analysis/h1_summary.json sources_sha256
+sha256 source_model_attribution.csv,8ae38caf0de31cbc,8ae38caf0de31cbc,PASS,v1 h1_validation/analysis/h1_summary.json sources_sha256
+Center raw captures re-hashed on load,12,all verified (load raises on mismatch),PASS,"center_enhancement.load, 3.5 s"
+HY2RES CSV md5,9a3c3e3b16685968,9a3c3e3b16685968,PASS,assert in hy2res_external_validation/publication/distinguishability/build_distinguishability.py
+v1 publication package verifier,exit 1; rewritten QC files 2 (restored),all checks pass except 'files changed outside the package' = uncommitted v2 work (2 entries),PASS,03_execution/logs/verify_package.log (6 s)
+v1 advanced-validation verifier,exit 1; rewritten QC files 1 (restored),all checks pass except 'files changed outside the package' = uncommitted v2 work (2 entries),PASS,03_execution/logs/verify_av.log (3 s)
+full pytest suite,"13 failed, 743 passed, 42 skipped, 1254 warnings, 1 error in 1147.18s (0:19:07)",0 failed; errors only the known blocker,FAIL,03_execution/logs/pytest_full.log; failures triaged in 01_audit/TEST_FAILURE_TRIAGE.csv
+known blocker: tests/test_faisal_pipeline.py import,tests/test_faisal_pipeline.py,documented in commit 6eddd4a: Stage-2 modules need the pre-merge windows.py (owner decision),PASS,"git show 6eddd4a; KNOWN_BLOCKED, not repaired here (owner-controlled code)"
+tracked files rewritten by the test suite (restored),00_governance/ACTION_EXECUTION_STATUS.csv; 00_governance/ISSUE_CLOSURE_MATRIX.csv,none,FAIL,03_execution/logs/pytest_restored_files.txt

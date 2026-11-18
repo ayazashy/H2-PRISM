@@ -1,0 +1,21 @@
+frozen_decision      Electrolyzer only  Both powered  Ambiguous  Unresolved
+label                                                                      
+electrolyzer_active              10762             0       1126       31279
+multiple_active                      0             0        201         616
+unknown                              0             0          0         413
+col_0              AMBIGUOUS|  UNRESOLVED|
+frozen_decision                           
+Ambiguous                1327            0
+Electrolyzer only           0        10762
+Unresolved                  0        32308
+                                                                                 0
+frozen_rule_reproduced_vs_published_table                                     True
+test_rows                                                                    44397
+frozen_specific                                                              10762
+certified_specific                                                               0
+certified_specific_agrees_with_frozen                                            0
+frozen_ambiguous                                                              1327
+certified_ambiguous                                                           1327
+certified_specific_wrong_vs_power_label                                          0
+bound_basis                                           HYPOTHETICAL zero half-width
+status                                     EXPLORATORY (previously inspected test)
