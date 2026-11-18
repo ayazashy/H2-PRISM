@@ -1,0 +1,7 @@
+variant,fold,held_out_topology,n_windows,n_eligible_specific,max_attainable_coverage,reported_max_attainable_coverage,match,dev_max_attainable_coverage,n_runs,n_families,n_ancestors,n_errors_classifier,n_errors_in_disputed_runs,n_windows_disputed_runs,target_0.60_attainable,target_0.80_attainable,target_0.90_attainable,eligible_share_NORMAL,eligible_share_LEAK,eligible_share_COMPRESSOR_FAULT,eligible_share_COMPRESSOR_DELAY,analysis_status
+primary,1,Center,9331,2405,0.2577430072,0.2577430072,True,0.5692851784,17,13,17,7347,7347,8666,False,False,False,0.9864661654,0.1452032298,0.4954819277,0.9677419355,RECOMPUTED_VERIFIED
+primary,2,Downstream,9331,6733,0.7215732505,0.7215732505,True,5.358482478e-05,17,13,17,665,0,8666,True,False,False,0.977443609,0.8324893937,0,0,RECOMPUTED_VERIFIED
+primary,3,Upstream,9331,6871,0.7363626621,0.7363626621,True,0.03493730576,17,13,17,0,0,0,True,False,False,0.9744360902,0.8516491036,0,0,RECOMPUTED_VERIFIED
+warning_only,1,Center,9331,2463,0.2639588469,0.2639588469,True,0.577376487,17,13,17,7347,7347,8666,False,False,False,0.9864661654,0.1530039688,0.4954819277,1,RECOMPUTED_VERIFIED
+warning_only,2,Downstream,9331,6790,0.7276819205,0.7276819205,True,0.01655771086,17,13,17,665,0,8666,True,False,False,0.977443609,0.8328999589,0.01807228916,0.9677419355,RECOMPUTED_VERIFIED
+warning_only,3,Upstream,9331,6989,0.7490086807,0.7490086807,True,0.03659843532,17,13,17,0,0,0,True,False,False,0.9759398496,0.8526070891,0.05948795181,1,RECOMPUTED_VERIFIED

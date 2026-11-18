@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="691.2pt" height="432pt" viewBox="0 0 691.2 432" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 432 
+L 691.2 432 
+L 691.2 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 14.59584 415.164429 
+L 132.86016 415.164429 
+Q 136.25856 415.164429 136.25856 413.186649 
+L 136.25856 51.648379 
+Q 136.25856 49.670599 132.86016 49.670599 
+L 14.59584 49.670599 
+Q 11.19744 49.670599 11.19744 51.648379 
+L 11.19744 413.186649 
+Q 11.19744 415.164429 14.59584 415.164429 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #087e8b; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 150.53184 415.164429 
+L 268.79616 415.164429 
+Q 272.19456 415.164429 272.19456 413.186649 
+L 272.19456 51.648379 
+Q 272.19456 49.670599 268.79616 49.670599 
+L 150.53184 49.670599 
+Q 147.13344 49.670599 147.13344 51.648379 
+L 147.13344 413.186649 
+Q 147.13344 415.164429 150.53184 415.164429 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #3b6f9c; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 286.46784 415.164429 
+L 404.73216 415.164429 
+Q 408.13056 415.164429 408.13056 413.186649 
+L 408.13056 51.648379 
+Q 408.13056 49.670599 404.73216 49.670599 
+L 286.46784 49.670599 
+Q 283.06944 49.670599 283.06944 51.648379 
+L 283.06944 413.186649 
+Q 283.06944 415.164429 286.46784 415.164429 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #17324d; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 422.40384 415.164429 
+L 540.66816 415.164429 
+Q 544.06656 415.164429 544.06656 413.186649 
+L 544.06656 51.648379 
+Q 544.06656 49.670599 540.66816 49.670599 
+L 422.40384 49.670599 
+Q 419.00544 49.670599 419.00544 51.648379 
+L 419.00544 413.186649 
+Q 419.00544 415.164429 422.40384 415.164429 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #64748b; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 558.33984 415.164429 
+L 676.60416 415.164429 
+Q 680.00256 415.164429 680.00256 413.186649 
+L 680.00256 51.648379 
+Q 680.00256 49.670599 676.60416 49.670599 
+L 558.33984 49.670599 
+Q 554.94144 49.670599 554.94144 51.648379 
+L 554.94144 413.186649 
+Q 554.94144 415.164429 558.33984 415.164429 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #a44a4a; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #087e8b" transform="translate(25.345148 67.360547)">Hydrogen production</text>
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #087e8b" transform="translate(47.624016 77.969812)">and storage</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(41.148938 120.183967)">h2_flow [target]</text>
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(54.855656 129.960952)">1 missing</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(58.160617 156.738409)">h2_total</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(55.384094 166.704206)">1 missing</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(39.383273 192.966288)">pres_buf [target]</text>
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(54.855656 202.743273)">1 missing</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(35.166164 229.214949)">pres_comp [target]</text>
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(54.855656 238.991933)">1 missing</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #3b6f9c" x="209.664" y="72.592992" transform="rotate(-0 209.664 72.592992)">Fuel cell</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="209.664" y="120.347248" transform="rotate(-0 209.664 120.347248)">P_pila</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="209.664" y="142.341046" transform="rotate(-0 209.664 142.341046)">pres_pila [constant target]</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="209.664" y="164.492187" transform="rotate(-0 209.664 164.492187)">h2_flow_pila [constant target]</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #17324d" transform="translate(308.71793 67.370391)">Electrical power</text>
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #17324d" transform="translate(319.496836 77.959969)">and battery</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(332.938281 120.347248)">P_elec</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(327.256094 130.313045)">1 missing</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(330.030391 156.720597)">P_comp</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(327.256094 166.686393)">2 missing</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(334.251953 193.111757)">P_pur</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(327.256094 203.077554)">1 missing</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="345.6" y="229.502918" transform="rotate(-0 345.6 229.502918)">P_pan</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(334.513945 251.671872)">P_viv</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(327.256094 261.637668)">2 missing</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="345.6" y="288.04522" transform="rotate(-0 345.6 288.04522)">P_car</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="345.6" y="310.214173" transform="rotate(-0 345.6 310.214173)">P_des</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="345.6" y="332.347502" transform="rotate(-0 345.6 332.347502)">P_exp</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="345.6" y="354.516456" transform="rotate(-0 345.6 354.516456)">P_imp</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="345.6" y="376.667597" transform="rotate(-0 345.6 376.667597)">SOC</text>
+   </g>
+   <g id="text_21">
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #64748b" transform="translate(463.748344 67.298203)">Context</text>
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #64748b" transform="translate(452.807016 77.887781)">and markers</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="481.536" y="120.347248" transform="rotate(-0 481.536 120.347248)">Temperature</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="481.536" y="142.49839" transform="rotate(-0 481.536 142.49839)">datetime</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(468.345102 164.649531)">Breaks</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(450.129594 174.597515)">300,728 missing</text>
+   </g>
+   <g id="text_25">
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #a44a4a" transform="translate(564.046687 67.290328)">Undefined in the record</text>
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #a44a4a" transform="translate(594.142313 77.895656)">(excluded)</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="617.472" y="120.329436" transform="rotate(-0 617.472 120.329436)">P_con</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="617.472" y="142.49839" transform="rotate(-0 617.472 142.49839)">P_perdidas</text>
+   </g>
+   <g id="text_28">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(604.543836 164.649531)">h2_inc</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(596.753094 174.615328)">27 missing</text>
+   </g>
+  </g>
+  <g id="text_29">
+   <text style="font-weight: 700; font-size: 15px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="345.6" y="15.927188" transform="rotate(-0 345.6 15.927188)">HY2RES record: 23 published columns grouped by role</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pa2312f0de1">
+   <rect x="5.76" y="30.683906" width="679.68" height="395.556094"/>
+  </clipPath>
+ </defs>
+</svg>

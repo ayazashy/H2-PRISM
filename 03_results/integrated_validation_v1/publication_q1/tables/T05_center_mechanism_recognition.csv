@@ -1,0 +1,15 @@
+query,condition,true_mechanism,templates,predicted,best_template,runner_up,margin,status,near_duplicate
+SID213,frozen,Withdrawal,7,Withdrawal,SID213,Normal,0.0283581961,CORRECT,SID213
+SID213,loto,Withdrawal,6,Normal,NORMAL_ZERO,Withdrawal,7.43929e-05,INCORRECT,—
+SID312,frozen,Withdrawal,7,Withdrawal,SID312,Normal,0.0294073626,CORRECT,SID312
+SID312,loto,Withdrawal,6,Withdrawal,SID215,Normal,1.936e-05,CORRECT,—
+SID215,frozen,Withdrawal,7,Withdrawal,SID215,Normal,0.0021850341,CORRECT,SID215
+SID215,loto,Withdrawal,6,Normal,NORMAL_ZERO,Timing shift,0.0094483573,INCORRECT,—
+PRESSURE,frozen,Pressure command,7,Pressure command,PRESSURE,Timing shift,0.0369240596,CORRECT,PRESSURE
+PRESSURE,loto,Pressure command,6,Timing shift,TIMING,Withdrawal,0.0104224927,UNSUPPORTED,—
+TIMING,frozen,Timing shift,7,Timing shift,TIMING,Withdrawal,0.0116330626,CORRECT,TIMING
+TIMING,loto,Timing shift,6,Withdrawal,SID215,Normal,0.001984123,UNSUPPORTED,—
+ALT,frozen,Withdrawal,7,Withdrawal,SID213,Normal,0.0283581876,CORRECT,SID213
+ALT,loto,Withdrawal,7,Withdrawal,SID213,Normal,0.0283581876,CORRECT,SID213
+NOMINAL,frozen,Normal,7,Normal,NORMAL_TRANSIENT,Withdrawal,0.2514306892,CORRECT,NORMAL_TRANSIENT
+NOMINAL,loto,Normal,7,Normal,NORMAL_TRANSIENT,Withdrawal,0.2514306892,CORRECT,NORMAL_TRANSIENT

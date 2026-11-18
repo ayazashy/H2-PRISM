@@ -1,0 +1,5 @@
+universe,decision,reason,cells_all_sensors_1s
+full,UNRESOLVED,INDETERMINATE_HYPOTHESES,42
+restricted,AMBIGUOUS,MULTIPLE_FEASIBLE,4
+restricted,SPECIFIC,UNIQUE_FEASIBLE,10
+restricted,UNRESOLVED,MODEL_MISMATCH,28

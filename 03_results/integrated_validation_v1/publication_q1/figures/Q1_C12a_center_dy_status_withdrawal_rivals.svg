@@ -1,0 +1,974 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="691.2pt" height="403.2pt" viewBox="0 0 691.2 403.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 403.2 
+L 691.2 403.2 
+L 691.2 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 74.806875 397.44 
+L 547.093437 397.44 
+L 547.093437 59.666719 
+L 74.806875 59.666719 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 101.278988 65.627424 
+L 156.62977 65.627424 
+L 156.62977 93.444047 
+L 101.278988 93.444047 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 161.442881 65.627424 
+L 216.793663 65.627424 
+L 216.793663 93.444047 
+L 161.442881 93.444047 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 221.606775 65.627424 
+L 276.957557 65.627424 
+L 276.957557 93.444047 
+L 221.606775 93.444047 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 281.770668 65.627424 
+L 337.12145 65.627424 
+L 337.12145 93.444047 
+L 281.770668 93.444047 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 341.934561 65.627424 
+L 397.285343 65.627424 
+L 397.285343 93.444047 
+L 341.934561 93.444047 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 402.098455 65.627424 
+L 457.449236 65.627424 
+L 457.449236 93.444047 
+L 402.098455 93.444047 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 483.319711 65.627424 
+L 538.670492 65.627424 
+L 538.670492 93.444047 
+L 483.319711 93.444047 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 101.278988 98.742451 
+L 156.62977 98.742451 
+L 156.62977 126.559074 
+L 101.278988 126.559074 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 161.442881 98.742451 
+L 216.793663 98.742451 
+L 216.793663 126.559074 
+L 161.442881 126.559074 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 221.606775 98.742451 
+L 276.957557 98.742451 
+L 276.957557 126.559074 
+L 221.606775 126.559074 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 281.770668 98.742451 
+L 337.12145 98.742451 
+L 337.12145 126.559074 
+L 281.770668 126.559074 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 341.934561 98.742451 
+L 397.285343 98.742451 
+L 397.285343 126.559074 
+L 341.934561 126.559074 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 402.098455 98.742451 
+L 457.449236 98.742451 
+L 457.449236 126.559074 
+L 402.098455 126.559074 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 483.319711 98.742451 
+L 538.670492 98.742451 
+L 538.670492 126.559074 
+L 483.319711 126.559074 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 101.278988 131.857479 
+L 156.62977 131.857479 
+L 156.62977 159.674102 
+L 101.278988 159.674102 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 161.442881 131.857479 
+L 216.793663 131.857479 
+L 216.793663 159.674102 
+L 161.442881 159.674102 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 221.606775 131.857479 
+L 276.957557 131.857479 
+L 276.957557 159.674102 
+L 221.606775 159.674102 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 281.770668 131.857479 
+L 337.12145 131.857479 
+L 337.12145 159.674102 
+L 281.770668 159.674102 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_21">
+    <path d="M 341.934561 131.857479 
+L 397.285343 131.857479 
+L 397.285343 159.674102 
+L 341.934561 159.674102 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_22">
+    <path d="M 402.098455 131.857479 
+L 457.449236 131.857479 
+L 457.449236 159.674102 
+L 402.098455 159.674102 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_23">
+    <path d="M 483.319711 131.857479 
+L 538.670492 131.857479 
+L 538.670492 159.674102 
+L 483.319711 159.674102 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_24">
+    <path d="M 101.278988 164.972506 
+L 156.62977 164.972506 
+L 156.62977 192.78913 
+L 101.278988 192.78913 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_25">
+    <path d="M 161.442881 164.972506 
+L 216.793663 164.972506 
+L 216.793663 192.78913 
+L 161.442881 192.78913 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_26">
+    <path d="M 221.606775 164.972506 
+L 276.957557 164.972506 
+L 276.957557 192.78913 
+L 221.606775 192.78913 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_27">
+    <path d="M 281.770668 164.972506 
+L 337.12145 164.972506 
+L 337.12145 192.78913 
+L 281.770668 192.78913 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_28">
+    <path d="M 341.934561 164.972506 
+L 397.285343 164.972506 
+L 397.285343 192.78913 
+L 341.934561 192.78913 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_29">
+    <path d="M 402.098455 164.972506 
+L 457.449236 164.972506 
+L 457.449236 192.78913 
+L 402.098455 192.78913 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_30">
+    <path d="M 483.319711 164.972506 
+L 538.670492 164.972506 
+L 538.670492 192.78913 
+L 483.319711 192.78913 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_31">
+    <path d="M 101.278988 198.087534 
+L 156.62977 198.087534 
+L 156.62977 225.904157 
+L 101.278988 225.904157 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_32">
+    <path d="M 161.442881 198.087534 
+L 216.793663 198.087534 
+L 216.793663 225.904157 
+L 161.442881 225.904157 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_33">
+    <path d="M 221.606775 198.087534 
+L 276.957557 198.087534 
+L 276.957557 225.904157 
+L 221.606775 225.904157 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_34">
+    <path d="M 281.770668 198.087534 
+L 337.12145 198.087534 
+L 337.12145 225.904157 
+L 281.770668 225.904157 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_35">
+    <path d="M 341.934561 198.087534 
+L 397.285343 198.087534 
+L 397.285343 225.904157 
+L 341.934561 225.904157 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_36">
+    <path d="M 402.098455 198.087534 
+L 457.449236 198.087534 
+L 457.449236 225.904157 
+L 402.098455 225.904157 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_37">
+    <path d="M 483.319711 198.087534 
+L 538.670492 198.087534 
+L 538.670492 225.904157 
+L 483.319711 225.904157 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_38">
+    <path d="M 101.278988 231.202562 
+L 156.62977 231.202562 
+L 156.62977 259.019185 
+L 101.278988 259.019185 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_39">
+    <path d="M 161.442881 231.202562 
+L 216.793663 231.202562 
+L 216.793663 259.019185 
+L 161.442881 259.019185 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_40">
+    <path d="M 221.606775 231.202562 
+L 276.957557 231.202562 
+L 276.957557 259.019185 
+L 221.606775 259.019185 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_41">
+    <path d="M 281.770668 231.202562 
+L 337.12145 231.202562 
+L 337.12145 259.019185 
+L 281.770668 259.019185 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_42">
+    <path d="M 341.934561 231.202562 
+L 397.285343 231.202562 
+L 397.285343 259.019185 
+L 341.934561 259.019185 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_43">
+    <path d="M 402.098455 231.202562 
+L 457.449236 231.202562 
+L 457.449236 259.019185 
+L 402.098455 259.019185 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_44">
+    <path d="M 483.319711 231.202562 
+L 538.670492 231.202562 
+L 538.670492 259.019185 
+L 483.319711 259.019185 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_45">
+    <path d="M 101.278988 264.317589 
+L 156.62977 264.317589 
+L 156.62977 292.134212 
+L 101.278988 292.134212 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_46">
+    <path d="M 161.442881 264.317589 
+L 216.793663 264.317589 
+L 216.793663 292.134212 
+L 161.442881 292.134212 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_47">
+    <path d="M 221.606775 264.317589 
+L 276.957557 264.317589 
+L 276.957557 292.134212 
+L 221.606775 292.134212 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_48">
+    <path d="M 281.770668 264.317589 
+L 337.12145 264.317589 
+L 337.12145 292.134212 
+L 281.770668 292.134212 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_49">
+    <path d="M 341.934561 264.317589 
+L 397.285343 264.317589 
+L 397.285343 292.134212 
+L 341.934561 292.134212 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_50">
+    <path d="M 402.098455 264.317589 
+L 457.449236 264.317589 
+L 457.449236 292.134212 
+L 402.098455 292.134212 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_51">
+    <path d="M 483.319711 264.317589 
+L 538.670492 264.317589 
+L 538.670492 292.134212 
+L 483.319711 292.134212 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_52">
+    <path d="M 101.278988 297.432617 
+L 156.62977 297.432617 
+L 156.62977 325.24924 
+L 101.278988 325.24924 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_53">
+    <path d="M 161.442881 297.432617 
+L 216.793663 297.432617 
+L 216.793663 325.24924 
+L 161.442881 325.24924 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_54">
+    <path d="M 221.606775 297.432617 
+L 276.957557 297.432617 
+L 276.957557 325.24924 
+L 221.606775 325.24924 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_55">
+    <path d="M 281.770668 297.432617 
+L 337.12145 297.432617 
+L 337.12145 325.24924 
+L 281.770668 325.24924 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_56">
+    <path d="M 341.934561 297.432617 
+L 397.285343 297.432617 
+L 397.285343 325.24924 
+L 341.934561 325.24924 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_57">
+    <path d="M 402.098455 297.432617 
+L 457.449236 297.432617 
+L 457.449236 325.24924 
+L 402.098455 325.24924 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_58">
+    <path d="M 483.319711 297.432617 
+L 538.670492 297.432617 
+L 538.670492 325.24924 
+L 483.319711 325.24924 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_59">
+    <path d="M 101.278988 330.547644 
+L 156.62977 330.547644 
+L 156.62977 358.364267 
+L 101.278988 358.364267 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_60">
+    <path d="M 161.442881 330.547644 
+L 216.793663 330.547644 
+L 216.793663 358.364267 
+L 161.442881 358.364267 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_61">
+    <path d="M 221.606775 330.547644 
+L 276.957557 330.547644 
+L 276.957557 358.364267 
+L 221.606775 358.364267 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_62">
+    <path d="M 281.770668 330.547644 
+L 337.12145 330.547644 
+L 337.12145 358.364267 
+L 281.770668 358.364267 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_63">
+    <path d="M 341.934561 330.547644 
+L 397.285343 330.547644 
+L 397.285343 358.364267 
+L 341.934561 358.364267 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_64">
+    <path d="M 402.098455 330.547644 
+L 457.449236 330.547644 
+L 457.449236 358.364267 
+L 402.098455 358.364267 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_65">
+    <path d="M 483.319711 330.547644 
+L 538.670492 330.547644 
+L 538.670492 358.364267 
+L 483.319711 358.364267 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_66">
+    <path d="M 101.278988 363.662672 
+L 156.62977 363.662672 
+L 156.62977 391.479295 
+L 101.278988 391.479295 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_67">
+    <path d="M 161.442881 363.662672 
+L 216.793663 363.662672 
+L 216.793663 391.479295 
+L 161.442881 391.479295 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_68">
+    <path d="M 221.606775 363.662672 
+L 276.957557 363.662672 
+L 276.957557 391.479295 
+L 221.606775 391.479295 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_69">
+    <path d="M 281.770668 363.662672 
+L 337.12145 363.662672 
+L 337.12145 391.479295 
+L 281.770668 391.479295 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_70">
+    <path d="M 341.934561 363.662672 
+L 397.285343 363.662672 
+L 397.285343 391.479295 
+L 341.934561 391.479295 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_71">
+    <path d="M 402.098455 363.662672 
+L 457.449236 363.662672 
+L 457.449236 391.479295 
+L 402.098455 391.479295 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #087e8b; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_72">
+    <path d="M 483.319711 363.662672 
+L 538.670492 363.662672 
+L 538.670492 391.479295 
+L 483.319711 391.479295 
+z
+" clip-path="url(#pcb511b5543)" style="fill: #17324d; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1"/>
+     <g id="text_1">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="128.954379" y="54.027656" transform="rotate(-0 128.954379 54.027656)">S1</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2"/>
+     <g id="text_2">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="189.118272" y="54.027656" transform="rotate(-0 189.118272 54.027656)">S2</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3"/>
+     <g id="text_3">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="249.282166" y="54.027656" transform="rotate(-0 249.282166 54.027656)">S3</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4"/>
+     <g id="text_4">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="309.446059" y="54.027656" transform="rotate(-0 309.446059 54.027656)">S4</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5"/>
+     <g id="text_5">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="369.609952" y="54.027656" transform="rotate(-0 369.609952 54.027656)">S5</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6"/>
+     <g id="text_6">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="429.773846" y="54.027656" transform="rotate(-0 429.773846 54.027656)">S6</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_7"/>
+     <g id="text_7">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="510.995102" y="54.027656" transform="rotate(-0 510.995102 54.027656)">REF</text>
+     </g>
+    </g>
+    <g id="text_8">
+     <!-- Declared bound scenario ($\varepsilon_P$, $\varepsilon_F$ increase S1 → S6; REF = reference widths) -->
+     <g style="fill: #20252b" transform="translate(127.710156 39.083906)">
+      <text>
+       <tspan x="0" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">D</tspan>
+       <tspan x="8.666016" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">e</tspan>
+       <tspan x="13.992188" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">c</tspan>
+       <tspan x="19.318359" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">l</tspan>
+       <tspan x="22.652344" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">a</tspan>
+       <tspan x="27.978516" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">r</tspan>
+       <tspan x="31.974609" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">e</tspan>
+       <tspan x="37.300781" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">d</tspan>
+       <tspan x="43.300781" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b"> </tspan>
+       <tspan x="46.300781" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">b</tspan>
+       <tspan x="52.300781" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">o</tspan>
+       <tspan x="58.300781" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">u</tspan>
+       <tspan x="64.300781" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">n</tspan>
+       <tspan x="70.300781" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">d</tspan>
+       <tspan x="76.300781" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b"> </tspan>
+       <tspan x="79.300781" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">s</tspan>
+       <tspan x="83.970703" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">c</tspan>
+       <tspan x="89.296875" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">e</tspan>
+       <tspan x="94.623047" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">n</tspan>
+       <tspan x="100.623047" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">a</tspan>
+       <tspan x="105.949219" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">r</tspan>
+       <tspan x="109.945312" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">i</tspan>
+       <tspan x="113.279297" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">o</tspan>
+       <tspan x="119.279297" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b"> </tspan>
+       <tspan x="122.279297" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">(</tspan>
+       <tspan x="126.275391" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">ε</tspan>
+       <tspan x="136.68172" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">,</tspan>
+       <tspan x="139.68172" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b"> </tspan>
+       <tspan x="142.68172" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">ε</tspan>
+       <tspan x="153.08805" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b"> </tspan>
+       <tspan x="156.08805" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">i</tspan>
+       <tspan x="159.422034" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">n</tspan>
+       <tspan x="165.422034" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">c</tspan>
+       <tspan x="170.748206" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">r</tspan>
+       <tspan x="174.7443" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">e</tspan>
+       <tspan x="180.070472" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">a</tspan>
+       <tspan x="185.396644" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">s</tspan>
+       <tspan x="190.066566" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">e</tspan>
+       <tspan x="195.392738" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b"> </tspan>
+       <tspan x="198.392738" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">S</tspan>
+       <tspan x="205.066566" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">1</tspan>
+       <tspan x="211.066566" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b"> </tspan>
+       <tspan x="214.066566" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">→</tspan>
+       <tspan x="226.066566" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b"> </tspan>
+       <tspan x="229.066566" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">S</tspan>
+       <tspan x="235.740394" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">6</tspan>
+       <tspan x="241.740394" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">;</tspan>
+       <tspan x="245.074378" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b"> </tspan>
+       <tspan x="248.074378" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">R</tspan>
+       <tspan x="256.078284" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">E</tspan>
+       <tspan x="263.408363" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">F</tspan>
+       <tspan x="270.082191" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b"> </tspan>
+       <tspan x="273.082191" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">=</tspan>
+       <tspan x="279.849769" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b"> </tspan>
+       <tspan x="282.849769" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">r</tspan>
+       <tspan x="286.845863" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">e</tspan>
+       <tspan x="292.172034" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">f</tspan>
+       <tspan x="296.168128" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">e</tspan>
+       <tspan x="301.4943" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">r</tspan>
+       <tspan x="305.490394" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">e</tspan>
+       <tspan x="310.816566" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">n</tspan>
+       <tspan x="316.816566" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">c</tspan>
+       <tspan x="322.142738" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">e</tspan>
+       <tspan x="327.468909" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b"> </tspan>
+       <tspan x="330.468909" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">w</tspan>
+       <tspan x="339.134925" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">i</tspan>
+       <tspan x="342.468909" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">d</tspan>
+       <tspan x="348.468909" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">t</tspan>
+       <tspan x="351.802894" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">h</tspan>
+       <tspan x="357.802894" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">s</tspan>
+       <tspan x="362.472816" y="-0.671875" style="font-size: 12px; font-family: 'Times New Roman'; fill: #20252b">)</tspan>
+       <tspan x="131.494791" y="2.419625" style="font-size: 8.4px; font-family: 'Times New Roman'; fill: #20252b">P</tspan>
+       <tspan x="147.90112" y="2.419625" style="font-size: 8.4px; font-family: 'Times New Roman'; fill: #20252b">F</tspan>
+      </text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_8"/>
+     <g id="text_9">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="71.306875" y="83.00761" transform="rotate(-0 71.306875 83.00761)">Q213 / H213</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_9"/>
+     <g id="text_10">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="71.306875" y="116.122638" transform="rotate(-0 71.306875 116.122638)">Q213 / H312</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_10"/>
+     <g id="text_11">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="71.306875" y="149.237665" transform="rotate(-0 71.306875 149.237665)">Q213 / H215</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_11"/>
+     <g id="text_12">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="71.306875" y="182.352693" transform="rotate(-0 71.306875 182.352693)">Q213-alt / H213</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_12"/>
+     <g id="text_13">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="71.306875" y="215.467721" transform="rotate(-0 71.306875 215.467721)">Q213-alt / H312</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_13"/>
+     <g id="text_14">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="71.306875" y="248.582748" transform="rotate(-0 71.306875 248.582748)">Q213-alt / H215</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_14"/>
+     <g id="text_15">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="71.306875" y="281.697776" transform="rotate(-0 71.306875 281.697776)">Q312 / H213</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_15"/>
+     <g id="text_16">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="71.306875" y="314.812803" transform="rotate(-0 71.306875 314.812803)">Q312 / H215</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_16"/>
+     <g id="text_17">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="71.306875" y="347.927831" transform="rotate(-0 71.306875 347.927831)">Q215 / H213</text>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_17"/>
+     <g id="text_18">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="71.306875" y="381.042858" transform="rotate(-0 71.306875 381.042858)">Q215 / H312</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_18">
+    <path d="M 470.384474 397.44 
+L 470.384474 59.666719 
+" clip-path="url(#pcb511b5543)" style="fill: none; stroke: #20252b; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_19">
+    <path d="M 74.806875 162.323304 
+L 547.093437 162.323304 
+" clip-path="url(#pcb511b5543)" style="fill: none; stroke: #64748b; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_20">
+    <path d="M 74.806875 261.668387 
+L 547.093437 261.668387 
+" clip-path="url(#pcb511b5543)" style="fill: none; stroke: #64748b; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_21">
+    <path d="M 74.806875 327.898442 
+L 547.093437 327.898442 
+" clip-path="url(#pcb511b5543)" style="fill: none; stroke: #64748b; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="PathCollection_1">
+    <defs>
+     <path id="md0e45d3fd7" d="M 0 1.870829 
+C 0.49615 1.870829 0.972045 1.673706 1.322876 1.322876 
+C 1.673706 0.972045 1.870829 0.49615 1.870829 0 
+C 1.870829 -0.49615 1.673706 -0.972045 1.322876 -1.322876 
+C 0.972045 -1.673706 0.49615 -1.870829 0 -1.870829 
+C -0.49615 -1.870829 -0.972045 -1.673706 -1.322876 -1.322876 
+C -1.673706 -0.972045 -1.870829 -0.49615 -1.870829 0 
+C -1.870829 0.49615 -1.673706 0.972045 -1.322876 1.322876 
+C -0.972045 1.673706 -0.49615 1.870829 0 1.870829 
+z
+" style="stroke: #ffffff"/>
+    </defs>
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="249.282166" y="79.535735" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_2">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="309.446059" y="79.535735" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_3">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="369.609952" y="79.535735" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_4">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="429.773846" y="79.535735" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_5">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="510.995102" y="79.535735" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_6">
+    <defs>
+     <path id="mdf3a3b1e88" d="M 0 3.605551 
+L 3.605551 0 
+L 0 -3.605551 
+L -3.605551 0 
+z
+" style="stroke: #a44a4a"/>
+    </defs>
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#mdf3a3b1e88" x="91.652765" y="79.535735" style="fill: #a44a4a; stroke: #a44a4a"/>
+    </g>
+   </g>
+   <g id="PathCollection_7">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="429.773846" y="112.650763" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_8">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="429.773846" y="145.76579" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_9">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="249.282166" y="178.880818" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_10">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="309.446059" y="178.880818" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_11">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="369.609952" y="178.880818" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_12">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="429.773846" y="178.880818" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_13">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="510.995102" y="178.880818" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_14">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#mdf3a3b1e88" x="91.652765" y="178.880818" style="fill: #a44a4a; stroke: #a44a4a"/>
+    </g>
+   </g>
+   <g id="PathCollection_15">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="429.773846" y="211.995846" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_16">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="429.773846" y="245.110873" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_17">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="429.773846" y="278.225901" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_18">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="429.773846" y="311.340928" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_19">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="429.773846" y="344.455956" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+   <g id="PathCollection_20">
+    <g clip-path="url(#pcb511b5543)">
+     <use xlink:href="#md0e45d3fd7" x="429.773846" y="377.570983" style="fill: #ffffff; stroke: #ffffff"/>
+    </g>
+   </g>
+  </g>
+  <g id="text_19">
+   <text style="font-weight: 700; font-size: 15px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="345.6" y="15.927188" transform="rotate(-0 345.6 15.927188)">Withdrawal rivals are excluded at every bound except the widest</text>
+  </g>
+  <g id="legend_1">
+   <g id="text_20">
+    <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="587.646094" y="182.775" transform="rotate(-0 587.646094 182.775)">Hypothesis status</text>
+   </g>
+   <g id="patch_73">
+    <path d="M 563.373437 196.932813 
+L 583.373437 196.932813 
+L 583.373437 189.932813 
+L 563.373437 189.932813 
+z
+" style="fill: #17324d; stroke: #20252b; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="591.373437" y="196.932813" transform="rotate(-0 591.373437 196.932813)">Excluded</text>
+   </g>
+   <g id="patch_74">
+    <path d="M 563.373437 211.071875 
+L 583.373437 211.071875 
+L 583.373437 204.071875 
+L 563.373437 204.071875 
+z
+" style="fill: #087e8b; stroke: #20252b; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="591.373437" y="211.071875" transform="rotate(-0 591.373437 211.071875)">Consistent</text>
+   </g>
+   <g id="line2d_22">
+    <defs>
+     <path id="maafb9b3de1" d="M 0 4.242641 
+L 4.242641 0 
+L 0 -4.242641 
+L -4.242641 0 
+z
+" style="stroke: #a44a4a; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#maafb9b3de1" x="573.373437" y="221.710938" style="fill: #a44a4a; stroke: #a44a4a; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="591.373437" y="225.210938" transform="rotate(-0 591.373437 225.210938)">Configured hypothesis</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pcb511b5543">
+   <rect x="74.806875" y="59.666719" width="472.286562" height="337.773281"/>
+  </clipPath>
+ </defs>
+</svg>

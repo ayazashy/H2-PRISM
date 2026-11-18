@@ -1,0 +1,6 @@
+part,decision,primary_reason,rows,segments,electrolyzer_only,compressor_powered,unknown_power,pct_of_test_rows,pct_of_unresolved
+decision taxonomy,Ambiguous,—,1327,15,1126,201,0,0.02988940694,
+decision taxonomy,Electrolyzer only,—,10762,106,10762,0,0,0.242403766,
+decision taxonomy,Unresolved,EMPTY_CELL (no state with >=2 development segments),306,3,306,0,0,0.006892357592,0.009471338368
+decision taxonomy,Unresolved,INVALID_INPUT (nonfinite origin measurement),413,413,0,0,413,0.009302430344,0.01278321159
+decision taxonomy,Unresolved,OUT_OF_SUPPORT (pres_comp),31589,299,30973,616,0,0.7115120391,0.97774545

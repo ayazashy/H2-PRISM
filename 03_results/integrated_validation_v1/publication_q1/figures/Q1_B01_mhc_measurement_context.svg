@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="691.2pt" height="388.8pt" viewBox="0 0 691.2 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 388.8 
+L 691.2 388.8 
+L 691.2 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 20.71296 243.859343 
+L 126.74304 243.859343 
+Q 129.46176 243.859343 129.46176 240.335782 
+L 129.46176 155.77032 
+Q 129.46176 152.246759 126.74304 152.246759 
+L 20.71296 152.246759 
+Q 17.99424 152.246759 17.99424 155.77032 
+L 17.99424 240.335782 
+Q 17.99424 243.859343 20.71296 243.859343 
+z
+" clip-path="url(#p4695c48278)" style="fill: #ffffff; stroke: #64748b; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 156.64896 243.859343 
+L 262.67904 243.859343 
+Q 265.39776 243.859343 265.39776 240.335782 
+L 265.39776 155.77032 
+Q 265.39776 152.246759 262.67904 152.246759 
+L 156.64896 152.246759 
+Q 153.93024 152.246759 153.93024 155.77032 
+L 153.93024 240.335782 
+Q 153.93024 243.859343 156.64896 243.859343 
+z
+" clip-path="url(#p4695c48278)" style="fill: #ffffff; stroke: #64748b; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 292.58496 243.859343 
+L 398.61504 243.859343 
+Q 401.33376 243.859343 401.33376 240.335782 
+L 401.33376 155.77032 
+Q 401.33376 152.246759 398.61504 152.246759 
+L 292.58496 152.246759 
+Q 289.86624 152.246759 289.86624 155.77032 
+L 289.86624 240.335782 
+Q 289.86624 243.859343 292.58496 243.859343 
+z
+" clip-path="url(#p4695c48278)" style="fill: #ffffff; stroke: #64748b; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 428.52096 243.859343 
+L 534.55104 243.859343 
+Q 537.26976 243.859343 537.26976 240.335782 
+L 537.26976 155.77032 
+Q 537.26976 152.246759 534.55104 152.246759 
+L 428.52096 152.246759 
+Q 425.80224 152.246759 425.80224 155.77032 
+L 425.80224 240.335782 
+Q 425.80224 243.859343 428.52096 243.859343 
+z
+" clip-path="url(#p4695c48278)" style="fill: #e6f2f3; stroke: #087e8b; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 564.45696 243.859343 
+L 670.48704 243.859343 
+Q 673.20576 243.859343 673.20576 240.335782 
+L 673.20576 155.77032 
+Q 673.20576 152.246759 670.48704 152.246759 
+L 564.45696 152.246759 
+Q 561.73824 152.246759 561.73824 155.77032 
+L 561.73824 240.335782 
+Q 561.73824 243.859343 564.45696 243.859343 
+z
+" clip-path="url(#p4695c48278)" style="fill: #e6f2f3; stroke: #087e8b; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 130.103606 198.053051 
+Q 141.695866 198.053051 151.946484 198.053051 
+" clip-path="url(#p4695c48278)" style="fill: none; stroke: #20252b; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 146.346484 195.253051 
+L 151.946484 198.053051 
+L 146.346484 200.853051 
+z
+" clip-path="url(#p4695c48278)" style="fill: #20252b; stroke: #20252b; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 266.039606 198.053051 
+Q 277.631866 198.053051 287.882484 198.053051 
+" clip-path="url(#p4695c48278)" style="fill: none; stroke: #20252b; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 282.282484 195.253051 
+L 287.882484 198.053051 
+L 282.282484 200.853051 
+z
+" clip-path="url(#p4695c48278)" style="fill: #20252b; stroke: #20252b; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 401.975606 198.053051 
+Q 413.567866 198.053051 423.818484 198.053051 
+" clip-path="url(#p4695c48278)" style="fill: none; stroke: #20252b; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 418.218484 195.253051 
+L 423.818484 198.053051 
+L 418.218484 200.853051 
+z
+" clip-path="url(#p4695c48278)" style="fill: #20252b; stroke: #20252b; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 537.911606 198.053051 
+Q 549.503866 198.053051 559.754484 198.053051 
+" clip-path="url(#p4695c48278)" style="fill: none; stroke: #20252b; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 554.154484 195.253051 
+L 559.754484 198.053051 
+L 554.154484 200.853051 
+z
+" clip-path="url(#p4695c48278)" style="fill: #20252b; stroke: #20252b; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_1">
+    <!-- H$_2$ inlet -->
+    <g style="fill: #20252b" transform="translate(56.348 194.713691)">
+     <text>
+      <tspan x="0" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #20252b">H</tspan>
+      <tspan x="12.43147" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #20252b"> </tspan>
+      <tspan x="15.18147" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #20252b">i</tspan>
+      <tspan x="18.237622" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #20252b">n</tspan>
+      <tspan x="23.737622" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #20252b">l</tspan>
+      <tspan x="26.793774" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #20252b">e</tspan>
+      <tspan x="31.676098" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #20252b">t</tspan>
+      <tspan x="8.109157" y="2.4745" style="font-size: 7.7px; font-family: 'Times New Roman'; fill: #20252b">2</tspan>
+     </text>
+    </g>
+    <text style="font-size: 11px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(57.528781 206.739441)">MFC-1</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(194.238219 194.915645)">Stage I</text>
+    <text style="font-size: 11px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(202.024156 206.454988)">P-1</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 11px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(323.185781 194.93627)">Transition</text>
+    <text style="font-size: 11px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(329.400781 206.454988)">MFC-2</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(463.048266 194.940738)">Stage II</text>
+    <text style="font-weight: 700; font-size: 11px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(446.353187 206.261457)">P-2 (predicted)</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(602.503406 194.868551)">Outlet</text>
+    <text style="font-weight: 700; font-size: 11px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(573.125672 206.168645)">MFC-3 (predicted)</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #64748b" x="345.6" y="299.355428" transform="rotate(-0 345.6 299.355428)">Conceptual order from the workbook channel names; no piping geometry, valve or sensor position is implied.</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 10px; font-family: 'Times New Roman', serif; fill: #087e8b" transform="translate(574.294656 103.896916)">back-pressure control</text>
+    <text style="font-size: 10px; font-family: 'Times New Roman', serif; fill: #087e8b" transform="translate(585.675125 114.368479)">(protocol notes)</text>
+   </g>
+  </g>
+  <g id="text_8">
+   <text style="font-weight: 700; font-size: 15px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="345.6" y="15.927188" transform="rotate(-0 345.6 15.927188)">MHC dual-stage metal-hydride compressor: evaluated channels</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p4695c48278">
+   <rect x="5.76" y="30.683906" width="679.68" height="352.356094"/>
+  </clipPath>
+ </defs>
+</svg>

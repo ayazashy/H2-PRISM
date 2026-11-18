@@ -1,0 +1,24 @@
+{
+  "sources_sha256": {
+    "r2_predictions.parquet": "4338c8c9ececc477212043ba890812b3163e0f7ef16d10c567fb4161c0103098",
+    "r2_decisions.parquet": "1f4579271b8fa5ec11d4950cf1e19c4f5eb73c552e7f831cbb1d418b70862c86",
+    "FINAL_EXPERIMENT_CONFIG.yaml": "f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae",
+    "source_model_attribution.csv": "8ae38caf0de31cbc73aa0302f90a804cd8dea9e0236bddf1676704e25c85f6f9",
+    "ARM_SUMMARY.csv": "f16e01d962cfc9c16751dabb4768719752f5d71b1c8e306cc3e2bbf1ad733312",
+    "dy_decisions.json": "072308dc8aa39406a2ca148eb18de430e90851907b3be0822a8e1f1c3dd98267",
+    "r2_run_key": "a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb"
+  },
+  "verification_items": 161,
+  "verification_all_match": true,
+  "shared_attainable_coverage_primary": 0.2577430071803665,
+  "grid": [
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25
+  ],
+  "status": "EXPLORATORY_POST_HOC",
+  "classifier_errors_total": 8012,
+  "classifier_errors_disputed": 7347
+}
