@@ -124,6 +124,8 @@ Unclassified failures: {len(unclassified)}.
 
 Scientific blockers: D1. Methodological: the L20 remainder. Everything else is engineering or environment.
 
+`integrated_validation_v2/01_audit/LEAKAGE_REGISTER_V2.csv` and `TEST_FAILURE_TRIAGE.csv` are the audit-time snapshot taken before this phase. For L20 and L21 they are superseded by this report and are intentionally left unchanged.
+
 ## Repository readiness
 - Maintenance phase: **closed**. Every safely executable repair is committed and verified.
 - Ready for scientific-results finalization: **yes**, within the evidence limits recorded in `integrated_validation_v2` (diagnostic claims exploratory; H3 is the only hypothesis supported within scope).

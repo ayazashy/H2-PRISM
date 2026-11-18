@@ -271,4 +271,6 @@ T07a restricted SPECIFIC correct / wrong,48/11,48/11,True
 "T07a all-sensor ±1 s vs TAB_C06 (8 correct, 2 wrong)",8/2,8/2,True
 H1 reproduction checks,161/161,all,True
 files changed outside the package (git status),0,0,True
-files differing from base 6eddd4a outside the package,0,0,True
+uncommitted changes inside the package (verifier outputs exempt),0,0,True
+outside_v1: committed changes vs 6eddd4a authorized by the change register,143/143 authorized or exempt,all,True
+v1: committed changes vs 6b98a8a authorized by the change register,12/12 authorized or exempt,all,True
