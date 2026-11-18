@@ -6,3 +6,4 @@
 *.svg text eol=lf
 *.png binary
 *.gz binary
+*.txt text eol=lf
