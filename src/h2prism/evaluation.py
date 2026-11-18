@@ -12,7 +12,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GroupKFold
 from sklearn.preprocessing import StandardScaler
 
-from h2prism.windows import TARGET_CLASSES, map_target_class
+from h2prism.simnet_windows import TARGET_CLASSES, map_target_class
 
 
 WORKSPACE_ROOT = Path(__file__).resolve().parents[2]

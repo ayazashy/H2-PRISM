@@ -7,7 +7,7 @@ from pathlib import Path
 WORKSPACE_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(WORKSPACE_ROOT / "src"))
 
-from h2prism.experiments import DEFAULT_CONFIG, DEFAULT_OUTPUT_DIR, run_experiments
+from h2prism.simnet_experiments import DEFAULT_CONFIG, DEFAULT_OUTPUT_DIR, run_experiments
 
 
 def main():

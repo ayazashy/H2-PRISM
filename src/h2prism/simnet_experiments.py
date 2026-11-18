@@ -37,7 +37,7 @@ from h2prism.evaluation import (
     probability_metrics,
     threshold_for_coverage,
 )
-from h2prism.windows import build_window_dataset
+from h2prism.simnet_windows import build_window_dataset
 
 
 WORKSPACE_ROOT = Path(__file__).resolve().parents[2]
@@ -585,7 +585,7 @@ def run_experiments(
     source_files = [
         Path(__file__),
         Path(__file__).with_name("evaluation.py"),
-        Path(__file__).with_name("windows.py"),
+        Path(__file__).with_name("simnet_windows.py"),
         WORKSPACE_ROOT / "scripts" / "run_experiments.py",
     ]
     for fold_id in config["outer_folds"]:

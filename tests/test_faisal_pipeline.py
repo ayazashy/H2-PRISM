@@ -9,8 +9,8 @@ from h2prism.evaluation import (
     probability_metrics,
     threshold_for_coverage,
 )
-from h2prism.experiments import DEFAULT_CONFIG, _read_config
-from h2prism.windows import SENSOR_CHANNELS, build_window_dataset, map_target_class
+from h2prism.simnet_experiments import DEFAULT_CONFIG, _read_config
+from h2prism.simnet_windows import SENSOR_CHANNELS, build_window_dataset, map_target_class
 
 
 def _scenario_metadata(
