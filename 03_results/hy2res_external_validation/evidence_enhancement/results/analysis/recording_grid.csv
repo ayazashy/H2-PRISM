@@ -1,0 +1,4 @@
+channel,unit,valid_rows,missing_rows,distinct_values,minimum,maximum,smallest_positive_step,modal_step,on_0p1_grid_fraction,off_grid_rows,decimals_observed
+pres_buf,bar,300767,1,64,28.0,34.3,0.1,0.1,1.0,0,1
+pres_comp,bar,300767,1,263,84.5,110.7,0.1,0.1,1.0,0,1
+h2_flow,NL/h,300767,1,25465,0.0,376.9,0.0005,0.001,0.897598473236758,30799,15

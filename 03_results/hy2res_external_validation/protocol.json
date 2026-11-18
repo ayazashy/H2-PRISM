@@ -1,0 +1,63 @@
+{
+  "protocol_status": "FROZEN_BEFORE_MODEL_FIT_AND_TEST_SCORING",
+  "source_record": "Zenodo 15166733 v1; CC BY 4.0",
+  "source_md5": "9a3c3e3b1668596854b43bfd790d3e0e",
+  "target_definition": "Per-channel one-step-ahead reference prediction at the next verified 5-second sample.",
+  "target_channels_and_units": {
+    "pres_buf": "bar",
+    "pres_comp": "bar (tank pressure; not compressor-discharge pressure)",
+    "pres_pila": "bar",
+    "h2_flow": "NL/h (generated over the preceding sample interval)",
+    "h2_flow_pila": "NL/h (fuel-cell consumption)"
+  },
+  "baseline": "Persistence: predict each target using that channel value at t-1.",
+  "single_candidate": "Ridge(alpha=10) with standardized predictors and standardized target, separately per channel.",
+  "candidate_predictors": [
+    "pres_buf_lag1",
+    "pres_comp_lag1",
+    "pres_pila_lag1",
+    "h2_flow_lag1",
+    "h2_flow_pila_lag1",
+    "P_elec_lag1",
+    "P_comp_lag1",
+    "P_pila_lag1",
+    "pres_buf_lag2",
+    "pres_comp_lag2",
+    "pres_pila_lag2",
+    "h2_flow_lag2",
+    "h2_flow_pila_lag2",
+    "P_elec_lag2",
+    "P_comp_lag2",
+    "P_pila_lag2",
+    "pres_buf_lag3",
+    "pres_comp_lag3",
+    "pres_pila_lag3",
+    "h2_flow_lag3",
+    "h2_flow_pila_lag3",
+    "P_elec_lag3",
+    "P_comp_lag3",
+    "P_pila_lag3"
+  ],
+  "predictor_availability": "Only t-1, t-2, and t-3 values within the same continuous segment; transforms fit on training rows only.",
+  "equipment_context_channels": [
+    "P_elec",
+    "P_comp",
+    "P_pila"
+  ],
+  "development_cutoff": "2024-04-09 02:35:03.500000",
+  "validation_cutoff": "2024-04-12 11:13:54.749999872",
+  "embargo": "0 days 01:00:00",
+  "split_policy": "Chronological 70/15/15 cutoffs; one-hour embargo before validation and test; roles frozen before model fitting.",
+  "model_selection": "Select contextual Ridge only when the unweighted mean validation RMSE ratio is < 1 across channels with nonzero persistence RMSE; constant-baseline channels have undefined ratios and are excluded.",
+  "test_policy": "Final test is scored once after selection; no test-based tuning or model selection.",
+  "segmentation_policy": "New segment at OPEN, after CLOSE, and at every timestamp interval other than exactly 5 seconds; no interpolation.",
+  "timezone_policy": "Timezone-naive source values preserved; timezone not inferred.",
+  "metric_policy": "MAE and RMSE per channel in source units; coverage and effective denominators reported; regime strata are descriptive.",
+  "prohibited_claims": [
+    "incident detection",
+    "false-alarm rate without incident truth",
+    "leak localization",
+    "certified D(Y)",
+    "cross-plant transfer"
+  ]
+}

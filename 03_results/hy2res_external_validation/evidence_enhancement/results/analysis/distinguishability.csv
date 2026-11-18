@@ -1,0 +1,7 @@
+pair,channel,unit,flow_rule,n_electrolyzer_only,n_compressor,segments_electrolyzer_only,segments_compressor,rank_probability,exact_value_overlap,compressor_min,compressor_max
+compressor-powered vs electrolyzer only,pres_buf,bar,all rows,43167,817,405,12,0.5829969820037118,0.5598997420822079,29.0,34.0
+compressor-powered vs electrolyzer only,pres_buf,bar,positive flow only,5353,817,55,12,0.4654382253079468,0.9004747106428154,29.0,34.0
+compressor-powered vs electrolyzer only,pres_comp,bar,all rows,43167,817,405,12,0.527530932994596,0.576883113060747,104.7,110.4
+compressor-powered vs electrolyzer only,pres_comp,bar,positive flow only,5353,817,55,12,0.4941656390529933,0.3322661242360351,104.7,110.4
+compressor-powered vs electrolyzer only,h2_flow,NL/h,all rows,43167,817,405,12,0.9447459737578336,0.005536636782727547,318.704,338.969
+compressor-powered vs electrolyzer only,h2_flow,NL/h,positive flow only,5353,817,55,12,0.5544273209797135,0.044647861012516346,318.704,338.969

@@ -1,0 +1,174 @@
+{
+  "test_opened_for_scoring_once": true,
+  "test_first_timestamp": "2024-04-12 12:13:56",
+  "test_last_timestamp": "2024-04-15 02:00:00",
+  "test_split_rows": 44397,
+  "selected_model_from_validation": "contextual_ridge",
+  "context_models_fit_rows_by_target": {
+    "pres_buf": 247903,
+    "pres_comp": 247903,
+    "pres_pila": 247903,
+    "h2_flow": 247903,
+    "h2_flow_pila": 247903
+  },
+  "test_eligible_rows_by_target": {
+    "pres_buf": 43168,
+    "pres_comp": 43168,
+    "pres_pila": 43168,
+    "h2_flow": 43168,
+    "h2_flow_pila": 43168
+  },
+  "test_observed_target_rows_by_target": {
+    "pres_buf": 44396,
+    "pres_comp": 44396,
+    "pres_pila": 44397,
+    "h2_flow": 44396,
+    "h2_flow_pila": 44397
+  },
+  "test_target_variation": {
+    "pres_buf": {
+      "unique_values": 52,
+      "minimum": 28.9,
+      "maximum": 34.0,
+      "constant_in_test": false
+    },
+    "pres_comp": {
+      "unique_values": 70,
+      "minimum": 103.8,
+      "maximum": 110.7,
+      "constant_in_test": false
+    },
+    "pres_pila": {
+      "unique_values": 1,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "constant_in_test": true
+    },
+    "h2_flow": {
+      "unique_values": 5388,
+      "minimum": 0.0,
+      "maximum": 361.537,
+      "constant_in_test": false
+    },
+    "h2_flow_pila": {
+      "unique_values": 1,
+      "minimum": 0.0,
+      "maximum": 0.0,
+      "constant_in_test": true
+    }
+  },
+  "overall_metrics": [
+    {
+      "target": "pres_buf",
+      "method": "persistence",
+      "scored_rows": 43168,
+      "segments_scored": 409,
+      "test_target_unique_values": 52,
+      "test_target_constant": false,
+      "reference_coverage": 0.9723398504369763,
+      "mae": 0.0039635841363973474,
+      "rmse": 0.019908752186908556
+    },
+    {
+      "target": "pres_buf",
+      "method": "contextual_ridge",
+      "scored_rows": 43168,
+      "segments_scored": 409,
+      "test_target_unique_values": 52,
+      "test_target_constant": false,
+      "reference_coverage": 0.9723398504369763,
+      "mae": 0.0055002032590044285,
+      "rmse": 0.01713751758479819
+    },
+    {
+      "target": "pres_comp",
+      "method": "persistence",
+      "scored_rows": 43168,
+      "segments_scored": 409,
+      "test_target_unique_values": 70,
+      "test_target_constant": false,
+      "reference_coverage": 0.9723398504369763,
+      "mae": 0.025597664936990654,
+      "rmse": 0.050598713420914175
+    },
+    {
+      "target": "pres_comp",
+      "method": "contextual_ridge",
+      "scored_rows": 43168,
+      "segments_scored": 409,
+      "test_target_unique_values": 70,
+      "test_target_constant": false,
+      "reference_coverage": 0.9723398504369763,
+      "mae": 0.025141486141691097,
+      "rmse": 0.040698181508210626
+    },
+    {
+      "target": "pres_pila",
+      "method": "persistence",
+      "scored_rows": 43168,
+      "segments_scored": 409,
+      "test_target_unique_values": 1,
+      "test_target_constant": true,
+      "reference_coverage": 0.9723179494109963,
+      "mae": 0.0,
+      "rmse": 0.0
+    },
+    {
+      "target": "pres_pila",
+      "method": "contextual_ridge",
+      "scored_rows": 43168,
+      "segments_scored": 409,
+      "test_target_unique_values": 1,
+      "test_target_constant": true,
+      "reference_coverage": 0.9723179494109963,
+      "mae": 0.0,
+      "rmse": 0.0
+    },
+    {
+      "target": "h2_flow",
+      "method": "persistence",
+      "scored_rows": 43168,
+      "segments_scored": 409,
+      "test_target_unique_values": 5388,
+      "test_target_constant": false,
+      "reference_coverage": 0.9723398504369763,
+      "mae": 0.03273032107116387,
+      "rmse": 1.256965381843669
+    },
+    {
+      "target": "h2_flow",
+      "method": "contextual_ridge",
+      "scored_rows": 43168,
+      "segments_scored": 409,
+      "test_target_unique_values": 5388,
+      "test_target_constant": false,
+      "reference_coverage": 0.9723398504369763,
+      "mae": 0.17800544173754976,
+      "rmse": 1.1852585716573396
+    },
+    {
+      "target": "h2_flow_pila",
+      "method": "persistence",
+      "scored_rows": 43168,
+      "segments_scored": 409,
+      "test_target_unique_values": 1,
+      "test_target_constant": true,
+      "reference_coverage": 0.9723179494109963,
+      "mae": 0.0,
+      "rmse": 0.0
+    },
+    {
+      "target": "h2_flow_pila",
+      "method": "contextual_ridge",
+      "scored_rows": 43168,
+      "segments_scored": 409,
+      "test_target_unique_values": 1,
+      "test_target_constant": true,
+      "reference_coverage": 0.9723179494109963,
+      "mae": 0.0,
+      "rmse": 0.0
+    }
+  ],
+  "incident_labels_available": false,
+  "false_alarm_rate_reported": false
+}

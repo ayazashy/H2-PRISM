@@ -1,0 +1,4 @@
+outer_fold,scenarios_train,scenarios_test,windows_train,windows_test,raw_accuracy,raw_macro_f1,raw_balanced_accuracy,calibrated_accuracy,calibration_method_selected_on,selected_calibration_method,train_test_family_overlap_count,evaluation_estimand
+1,31,15,8484,4079,0.918362343711694,0.736824369508458,0.75,0.918362343711694,inner_grouped_oof_only,isotonic,9,cross_topology_transfer
+2,31,15,8484,4079,0.19612650159352782,0.23409241885718757,0.21541903182011055,0.1627849963226281,inner_grouped_oof_only,isotonic,9,cross_topology_transfer
+3,31,15,8484,4079,1.0,1.0,1.0,0.16646236822750674,inner_grouped_oof_only,sigmoid,9,cross_topology_transfer

@@ -1,0 +1,21 @@
+# Study C discussion
+
+## Why MAE and RMSE rank the models differently
+
+For electrolyzer flow, 37,113 of 43,168 evaluated targets (86.0%) were zero. On those rows, persistence MAE/RMSE were 0.000413/0.058736 NL/h and ridge reached 0.134766/0.271477 NL/h. On the 6,055 nonzero targets, ridge increased MAE from 0.230810 to 0.443033 NL/h while lowering RMSE from 3.353043 to 3.092540 NL/h. Thus the observed zeros account for much of the MAE penalty, while the nonzero subset contributes the squared-error reduction.
+
+Overall, the largest 1% of absolute flow errors account for 99.87% of persistence squared error and 96.58% of ridge squared error. Maximum absolute flow error fell from 193.741 to 185.970 NL/h, while the median rose from 0 to 0.115907 NL/h and the 99th percentile rose from 0.333330 to 0.837903 NL/h. This concentration reconciles the aggregate RMSE and MAE rankings. For buffer pressure the 99th percentile fell from 0.1000 to 0.09190 bar as the median rose from zero to 0.000288 bar. Tank pressure’s maximum fell from 0.2000 to 0.13424 bar while its MAE improvement stayed small.
+
+The median absolute model disagreement was 0.000277 bar for buffer pressure, 0.000423 bar for tank pressure, and 0.115680 NL/h for flow. Disagreement describes the spread between two references and supplies no calibrated uncertainty bound. Ridge had lower segment RMSE in 134/409 buffer segments, 408/409 tank segments and 2/409 flow segments. Segment-weighted and row-weighted summaries answer different questions. These are outcomes within one autocorrelated record. Segment counts indicate support and do not imply independent replicates or statistical significance. [Error tails](ERROR_TAILS.csv) · [Segment errors](SEGMENT_ERRORS.csv)
+
+## Operational-state comparison
+
+At the forecast origin, a state is defined by positive same-segment lag-one equipment powers. Complete finite lag context is required here. The comparison uses measured pressure and flow at that same origin, with power used exclusively for labels. This tests descriptive recognition structure, with no prediction offset, fitted classifier, or post-test threshold. The two eligible groups contain 42,367 and 801 rows. Other state contrasts lack scored support. The threshold is the existing protocol’s positive-power rule, which can include standby electrical draw. An electrolyzer-only label therefore can coexist with zero production.
+
+Buffer-pressure medians are 30.8 and 31.3 bar for electrolyzer-only and multiple-active states. Tank medians are 107.8 and 108.4 bar. Both central pressure distributions overlap. Production flow shows the strongest marginal shift (medians 0 and 322.972 NL/h), but the central 90% ranges overlap from 319.258 to 327.406 NL/h. Observed marginal shifts support a descriptive contrast. These distributions provide neither an independently confirmed state classifier nor evidence for mechanism isolation. Power and flow are physically coupled. [State pressure–flow distributions](STATE_PRESSURE_FLOW.csv)
+
+## Evidence qualification and localization
+
+The publisher describes the electrolyzer, buffer, compressor, tank and fuel-cell supply from storage. Equipment-associated variable definitions support a conceptual schematic. The public record gives no verified event positions or sufficient detail for certified sensor positioning. The companion digital twin is described as trained on HY2RES measurements. Its deposit does not establish independence, a qualified competing diagnostic-hypothesis library, sensor/clock uncertainty bounds, uncertainty on mechanism predictions, or independently authenticated incident/location truth. [Dataset and equipment description](https://zenodo.org/records/15166733) · [Official digital-twin deposit](https://zenodo.org/records/15551164)
+
+Formal D(Y) diagnostic exclusion is not established by the available HY2RES evidence. For mechanism or location hypotheses, observation admissibility, prediction-bound validity, applicability and completeness of the competing set are unqualified. The applicable outcome is INDETERMINATE. The available data support forecast computability and residual measurement. Fault diagnosis, leak localization and independent system-level transfer remain NOT ESTABLISHED. [Evidence matrix](STUDY_C_EVIDENCE_MATRIX.csv)
