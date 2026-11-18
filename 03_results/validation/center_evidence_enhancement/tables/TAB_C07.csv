@@ -1,0 +1,10 @@
+method,output_type,unit,evaluated,supported,agreement,unsupported,note
+Frozen B3 full library (self-templates present),nearest mechanism (ranking),normalized B3 RMS,7 queries,7,7/7,0,all 7 match a self (5) or near-duplicate (2) template
+"B3, own template excluded",nearest mechanism (ranking),normalized B3 RMS,7 queries,5,3/5,2,
+"B3, own template excluded + ALT replicate",nearest mechanism (ranking),normalized B3 RMS,7 queries,5,4/5,2,
+"B3 location ranking, all",ranked outlet SIDs,normalized B3 RMS,4 withdrawal queries,2,top-1 2/2,2,supported queries share one outlet (SID 213)
+"B3 location ranking, pressure",ranked outlet SIDs,normalized B3 RMS,4 withdrawal queries,2,top-1 2/2,2,supported queries share one outlet (SID 213)
+"B3 location ranking, flow",ranked outlet SIDs,normalized B3 RMS,4 withdrawal queries,2,top-1 2/2,2,supported queries share one outlet (SID 213)
+"B3 location ranking, omit_MFS3",ranked outlet SIDs,normalized B3 RMS,4 withdrawal queries,2,top-1 2/2,2,supported queries share one outlet (SID 213)
+"Conditional D(Y), full universe",set-valued decision,"native bounds (MPa, kg/s)",42 query×scenario cells,42,SPECIFIC correct 0/0,0,CONDITIONAL_HYPOTHETICAL_BOUNDS
+"Conditional D(Y), restricted universe",set-valued decision,"native bounds (MPa, kg/s)",42 query×scenario cells,42,SPECIFIC correct 8/10,0,CONDITIONAL_HYPOTHETICAL_BOUNDS
