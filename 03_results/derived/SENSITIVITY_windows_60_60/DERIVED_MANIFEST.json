@@ -1,0 +1,100 @@
+{
+  "source_run_dir": "SENSITIVITY_windows_60_60",
+  "source_run_key": "72075f284d5044f8d8ac45c440d3bdacc8d710e93f040304a3e7369b52385060",
+  "source_artifact_class": "SENSITIVITY_EXPERIMENT",
+  "source_status": "COMPLETED",
+  "source_sha256": {
+    "decisions.parquet": "859a483507432032dc7995f577d3d24a689b17de7d252696a66d19cbfdcbf379",
+    "predictions.parquet": "1e5e249fc2dc8dde18ab174c30911fed4bb4b051a39d4c4a7a3f9facff820a7b",
+    "estimability.csv": "8f6d75c549fd48d1dad79b5e91a3a694b06413ef792285d8a6cb2d32cb62cee6",
+    "rq2.csv": "f660c2c2c9621f9ccddcbab0ea559ddd12d8e17c16bfa65ae62fe0898f4104b3",
+    "run_manifest.json": "86d5db55f0abafacedeeb34b68b090058b1b8511ba899f90e0f53d47c6040e89"
+  },
+  "code_sha256": "974ae355a9d116792f1192f7a7d8197f2e64a7cb0016f82fa5dac8947cbc5f06",
+  "reason_precedence": [
+    "UNRESOLVED_BY_SUPPORT_FLAG",
+    "SPECIFIC_BLOCKED_BY_SUPPORT_FLAG",
+    "INVALID_SCORE",
+    "BELOW_MATCHED_COVERAGE_CUT",
+    "AMBIGUITY_SET_TOO_BROAD",
+    "AMBIGUITY_SET_TOO_BROAD",
+    "SINGLE_CANDIDATE_REJECTED"
+  ],
+  "cross_checks": [
+    {
+      "check": "rq2[primary|0.6|rank_matched|COMPRESSOR_DELAY]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|rank_matched|COMPRESSOR_FAULT]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|rank_matched|LEAK]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|rank_matched|NORMAL]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|threshold_transfer|COMPRESSOR_DELAY]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|threshold_transfer|COMPRESSOR_FAULT]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|threshold_transfer|LEAK]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|threshold_transfer|NORMAL]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|COMPRESSOR_DELAY]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|COMPRESSOR_FAULT]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|LEAK]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|NORMAL]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|threshold_transfer|COMPRESSOR_DELAY]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|threshold_transfer|COMPRESSOR_FAULT]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|threshold_transfer|LEAK]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|threshold_transfer|NORMAL]",
+      "ok": true
+    },
+    {
+      "check": "primary_reasons_exclusive_and_exhaustive",
+      "ok": true
+    }
+  ],
+  "outputs": {
+    "rq2_scoped.csv": "0c5a177de527cbca4af3d60ef27991492d9074d2f45af446d1113ddecb634e27",
+    "decision_reasons_primary.csv": "8e86d61557667412e2a93a7a4c6126d04c79dd41dd49f5a26e02731a34560906",
+    "decision_reasons_contributing.csv": "f75a03c85fafaa34cd857990fc9fde14a11d99e395d71443a52a01ab61491433",
+    "support_flags_scoped.csv": "538ce2b38215daab590b5df9c72d2916f76862725ee2e553e5e460bee1504540",
+    "matched_selection_ties.csv": "44e44dfd13a98c8d61a7e3f0dfe1c1224750e47960b07dd20731152b18e581c8"
+  }
+}

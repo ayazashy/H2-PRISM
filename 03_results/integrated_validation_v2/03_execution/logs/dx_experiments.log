@@ -1,0 +1,24 @@
+                model  oof_log_loss  oof_brier  oof_auroc      n  groups  errors
+0                conf      0.906482   0.136421   0.177318  16009      16    1741
+1              conf+D      0.994737   0.143996   0.242578  16009      16    1741
+2    conf+margin+negH      0.693287   0.076203   0.704948  16009      16    1741
+3  conf+margin+negH+D      0.828029   0.089892   0.703883  16009      16    1741
+                 n      errors  d_logloss_add_D_to_conf  d_logloss_add_D_to_full
+count    16.000000   16.000000                16.000000                16.000000
+mean   1000.562500  108.812500                 0.037477                 0.199524
+std     455.172344  230.480431                 0.179124                 0.768801
+min      30.000000    0.000000                -0.208848                -0.048393
+25%     834.500000    0.000000                -0.064202                -0.020431
+50%    1062.000000    0.000000                 0.034026                 0.027966
+75%    1260.750000    7.500000                 0.042924                 0.032068
+max    1954.000000  650.000000                 0.556603                 3.078778
+   separation            classifier  accuracy  auroc_conf  auroc_D  logloss_conf  logloss_conf_plus_D  delta_logloss                         status
+0         0.5    a_calibrated_bayes    0.6210      0.6077   0.5629        0.6440               0.6440         0.0001  SYNTHETIC (method check only)
+1         0.5  b_overconfident_T0.2    0.6210      0.6077   0.5629        0.6440               0.6440         0.0001  SYNTHETIC (method check only)
+2         0.5  c_blind_to_feature_1    0.5965      0.5430   0.5648        0.6710               0.6647        -0.0063  SYNTHETIC (method check only)
+3         1.0    a_calibrated_bayes    0.7720      0.7131   0.6766        0.4828               0.4834         0.0006  SYNTHETIC (method check only)
+4         1.0  b_overconfident_T0.2    0.7720      0.7131   0.6766        0.4840               0.4845         0.0005  SYNTHETIC (method check only)
+5         1.0  c_blind_to_feature_1    0.7040      0.6482   0.6663        0.5925               0.5690        -0.0235  SYNTHETIC (method check only)
+6         2.0    a_calibrated_bayes    0.9135      0.9009   0.8751        0.1829               0.1832         0.0003  SYNTHETIC (method check only)
+7         2.0  b_overconfident_T0.2    0.9135      0.9009   0.8751        0.1944               0.1942        -0.0002  SYNTHETIC (method check only)
+8         2.0  c_blind_to_feature_1    0.8410      0.8026   0.8235        0.3415               0.2955        -0.0459  SYNTHETIC (method check only)

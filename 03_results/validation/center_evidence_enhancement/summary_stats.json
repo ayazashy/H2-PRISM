@@ -1,0 +1,8 @@
+{
+  "loto_mech": "3/5 supported queries agree; 2 unsupported; frozen library 7/7 with self or near-duplicate templates",
+  "loc": "SID 213 ranked 1st for 2/2 supported queries (all four sensor groups); SID 312 and SID 215 unsupported",
+  "sensor": "B3 flow share \u2265 0.97 for every outlet pair; pressure contrasts 1.1\u20135.5 kPa; withholding MFS3 cuts the SID 213 margin 0.028\u21920.0021 while the correct/runner-up ratio rises 1,030\u00d7\u21922,676\u00d7; pressure alone 569\u00d7",
+  "window": "pressure eps \u2208 [2.5e-6, 5.1e-4) MPa; flow eps \u2208 [6.8e-4, 0.69) kg/s",
+  "wrong": "2 wrong vs 8 correct SPECIFIC cells (all sensors, 7 scenarios \u00d7 6 queries)",
+  "full": "42/42 UNRESOLVED (INDETERMINATE_HYPOTHESES)"
+}

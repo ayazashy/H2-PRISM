@@ -1,0 +1,1 @@
+{"realization": "clean", "checks_passed": 25, "checks_total": 25, "n_windows": 27993, "windows_per_class": {"COMPRESSOR_DELAY": 93, "COMPRESSOR_FAULT": 3984, "LEAK": 21921, "NORMAL": 1995}, "feature_table_sha256": "3bc7e712d275e540dbb1b7cdcd8c9d48437289e9b2de0b55dcb37d16a3432b2c"}

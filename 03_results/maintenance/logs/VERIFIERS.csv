@@ -1,0 +1,4 @@
+verifier,script,result,exit_code,status
+v2 validation package,03_results/integrated_validation_v2/03_execution/scripts/verify_v2.py,35/35 checks pass,0,PASS
+v1 advanced validation,03_results/integrated_validation_v1/advanced_validation/scripts/verify_av.py,57/57 checks pass,0,PASS
+v1 publication package,03_results/integrated_validation_v1/publication_q1/scripts/verify_package.py,275/275 checks pass,0,PASS

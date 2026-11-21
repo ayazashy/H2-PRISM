@@ -1,0 +1,3 @@
+comparison,independent_units,mean_family_risk_difference,bootstrap_ci_95_low,bootstrap_ci_95_high,two_sided_sign_flip_p,permutation_method,bootstrap_replicates,interpretation
+C_minus_C_minus_D,9,-0.011795382074121674,-0.03913155594193902,0.0033755586757559107,0.8125,exact_family_sign_flip,1000,negative favors method C
+C_minus_B,9,-0.011925885986320297,-0.03940349133677676,0.0033402339620876333,0.75,exact_family_sign_flip,1000,negative favors method C

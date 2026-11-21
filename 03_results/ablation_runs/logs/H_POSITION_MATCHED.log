@@ -1,0 +1,6 @@
+{
+  "status": "COMPLETED",
+  "artifact_class": "DEVELOPMENT_EXPERIMENT",
+  "out": "03_results\\ablation_runs\\H_POSITION_MATCHED"
+}
+exit 0

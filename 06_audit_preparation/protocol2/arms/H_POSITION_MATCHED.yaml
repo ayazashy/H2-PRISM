@@ -1,0 +1,266 @@
+# Registered DEVELOPMENT-ONLY arm H_POSITION_MATCHED (tools/dataset/build_release_candidate.py).
+# NOT AUTHORIZED. Runs only with --develop and an authorization scoped DEVELOPMENT_EXPERIMENT:H_POSITION_MATCHED.
+status: DEVELOPMENT_ARM_REGISTERED
+selection_basis: SELECTED_BY_PROJECT_LEAD_PROTOCOL_DELEGATION
+owner_signoffs:
+  yazan: NOT_RECORDED
+  faisal: NOT_RECORDED
+  ahmed: NOT_RECORDED
+version: protocol-2.0-ablation:H_POSITION_MATCHED
+derived_from:
+  file: 06_audit_preparation/FINAL_EXPERIMENT_CONFIG.yaml
+  sha256: f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae
+dataset:
+  manifest:
+    file: 06_audit_preparation/protocol2/CANDIDATE_MANIFEST_V03.csv
+    sha256: f8ce526159b1b9239c7a2c329b0a61c3283239a4ed381295c6011da541b7e3b0
+  label_mapping:
+    file: 06_audit_preparation/pre_experiment_review/CANDIDATE_LABEL_MAPPING.yaml
+    sha256: 61a3182b04e0fd7c9728945f07ab7eee13fe8fb75a8f4b55a999244cb49c1f18
+  source_package_hashes: 06_audit_preparation/pre_experiment_review/OUTPUT_HASHES.json
+  raw_archive_md5: 15bc64a3afc9e2990c9db66eb37617de
+  family_column: Scenario_Family_ID
+  family_sensitivity:
+  - family_extended_sensitivity
+  - family_conservative_sensitivity
+  realization_primary: noise_added
+  realization_secondary: clean
+  classes:
+  - NORMAL
+  - LEAK
+  - COMPRESSOR_FAULT
+  - COMPRESSOR_DELAY
+  eligible_runs: 51
+  restrictions:
+  - brokenC1G5_weak excluded (annotation conflict)
+  - leakG4brokenC1 excluded (compound)
+  - no location analysis for leakG5G6_overlapped
+  - pre-event and post-delay rows excluded
+  - ancestry of 19 pairs unresolved (extended map sensitivity)
+  topology_column: topology_source_model
+splits:
+  outer:
+    file: 06_audit_preparation/protocol2/CANDIDATE_OUTER_FOLDS_V03.csv
+    sha256: e08b3773fca1b0eea55bfa6757823d273679023d1f029a1830ee005f33ff7887
+    design: leave_one_topology_out
+  inner:
+    scheme: LOTO_within_train
+    note: derived by the runner
+windows:
+  window_s: 60
+  stride_s: 30
+  min_samples: 60
+  label_mode: row_level
+  pre_event_policy: exclude
+  note: prespecified candidate settings
+  not empirically optimised: null
+features:
+  register:
+    file: 02_methodology/FEATURE_DEFINITION_REGISTER.csv
+    sha256: 3dd5e927e3473d01168b39ca7539d51fd5d599621bb6263bae20bfdc25bfc137
+  statistics:
+  - mean
+  - std
+  - min
+  - max
+  - range
+  - last_minus_first
+  - slope
+  - mean_abs_diff
+  scaling: fit_on_training_fold_only
+  channels:
+  - MFS1
+  - MFS2
+  - MFS3
+  - PS1
+  - PS2
+  - PS3
+  - PS4
+  - PS5
+  - PS6
+  - PS7
+  - PS9
+  - PS10
+  position_map:
+    file: 06_audit_preparation/protocol2/CANDIDATE_SENSOR_POSITION_MAP_V01.csv
+    sha256: 7b3b8cf1a539ee0f6de9c7f03f00f91fa06b3b607b6325eea6651b1b782fb5a3
+model:
+  primary: random_forest
+  grid:
+    n_estimators:
+    - 300
+    - 500
+    min_samples_leaf:
+    - 1
+    - 5
+    max_features:
+    - sqrt
+    - 0.3
+  class_weight: balanced_subsample
+  selection:
+    criterion: macro_f1
+    tie_break: log_loss
+    data: inner_oof_only
+calibration:
+  candidates:
+  - none
+  - sigmoid
+  criterion: log_loss
+  feasibility_rule:
+    function: h2prism.calibration.calibration_feasibility
+    min_groups_per_class: 2
+    fallback: none
+distinguishability:
+  k: 25
+  weighting: uniform
+  prior_correction: false
+  exclude_query_family: true
+  min_class_reference: 25
+  min_distinct_scenarios: 2
+  low_support_min_top_count: 5
+  min_top_class_families: 2
+  out_of_support_quantile: 0.99
+combined_scores:
+  s_C:
+  - logit_C
+  - M
+  - neg_H
+  - D
+  s_C_minus_D:
+  - logit_C
+  - M
+  - neg_H
+  fit:
+    data: development_predictions
+    cross_fit_groups: topology
+    n_splits: 2
+    C: 1.0
+  on_undefined: not_estimable
+policy_primary:
+  candidate_source: p_only
+  singleton_handling: unresolved
+  max_set_size: 2
+  ambiguity_mass: 0.9
+  unresolved_flags:
+  - OUT_OF_SUPPORT
+  - INVALID_FEATURES
+  - NO_REFERENCE
+  specific_blocking_flags:
+  - LOW_SCENARIO_DIVERSITY
+  - TOP_CLASS_FEW_INDEPENDENT_RUNS
+policy_sensitivity_warning_only:
+  same_as_primary_except:
+    specific_blocking_flags:
+    - LOW_SCENARIO_DIVERSITY
+  role: secondary_sensitivity
+thresholds:
+  source: development
+  rule: rank_match_target_coverage
+  target_coverage_primary: 0.8
+  target_coverage_secondary:
+  - 0.6
+  - 0.9
+  matched_coverage:
+    applies_to: rank_matched
+    selection: exact_count
+    unit: window
+    denominator: all_eligible_windows_of_the_outer_test_fold
+    requested_count: ceil(target * denominator)
+    eligibility: finite score, valid probabilities, no unresolved or specific-blocking
+      flag under the evaluated policy variant
+    order: score_descending_then_tie_key_ascending
+    tie_break_key: sha256(salt|window_id)
+    tie_break_salt: h2prism-pa1-v1
+    attainability: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL if requested_count exceeds
+      the eligible count; never forced
+    shared_across_methods: true
+    tie_sensitivity:
+      n_alternative_salts: 20
+      role: secondary_reported_not_selected
+  estimability_rule:
+    definition: a target coverage is ESTIMABLE in a fold only if the development data
+      can reach it under the primary policy without relaxing any safeguard
+    if_not_estimable: report NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL for that target
+      and fold, report realized coverage; never force coverage; never substitute a
+      less conservative primary policy
+    structural_expectation: LEAK = 78.3% of eligible 60/30 windows per topology and
+      thin-class top classes are flagged in development, so 0.80 and 0.90 are expected
+      NOT_ESTIMABLE and 0.60 estimable; to be confirmed in the development stage
+  target_rule:
+    grid:
+    - 0.9
+    - 0.8
+    - 0.7
+    - 0.6
+    - 0.5
+    - 0.4
+    - 0.3
+    margin: 0.05
+    min_target: 0.3
+evaluation:
+  primary_comparison: s_C_vs_s_C_minus_D
+  secondary_comparisons:
+  - confidence_only
+  - margin_only
+  - neg_entropy_only
+  - D_only
+  metrics:
+  - coverage
+  - selective_risk
+  - ambiguity_inclusion_rate
+  - ambiguity_mean_size
+  - unresolved_rate
+  - accuracy
+  - macro_f1_present_classes
+  - log_loss
+  - brier
+  - ece
+  uncertainty:
+    module: h2prism.uncertainty.paired_stratified_bootstrap
+    unit: Scenario_Family_ID
+    stratum: topology
+    n_boot: 2000
+    seed: 20261104
+    scope: pooled_only
+    interpretation: conditional_on_three_simulated_topologies
+  inference: effect_sizes_only
+  per_class_reporting:
+    NORMAL: descriptive_only
+    COMPRESSOR_FAULT: descriptive_only
+    COMPRESSOR_DELAY: descriptive_only
+    LEAK: restricted
+  outcomes_accepted:
+  - positive
+  - null
+  - negative
+  - mixed
+  - not_estimable
+sensitivity_analyses:
+- clean_realization
+- windows_60_60
+- pre_event_label_normal
+- offset_invariant_features
+- k_10
+- k_50
+- prior_correction
+- extended_family_map
+- policy_warning_only
+seeds:
+  global: 20261104
+software:
+  python: 3.12.1
+  scikit-learn: 1.7.0
+  numpy: 2.3.1
+  pandas: 2.3.3
+  scipy: 1.16.0
+  pyarrow: 25.0.1
+provenance:
+  required:
+  - git_commit
+  - config_sha256
+  - manifest_sha256
+  - folds_sha256
+  - seed
+  - run_status
+  tool: tools/research_audit/build_provenance_index.py
+arm_id: H_POSITION_MATCHED

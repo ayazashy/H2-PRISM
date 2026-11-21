@@ -1,0 +1,15 @@
+analysis,population_note,target,status,realized_coverage_a,difference,ci_low,ci_high,n_units,run_id
+primary,same windows (primary population),0.6,NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL,,,,,,a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb
+primary,same windows (primary population),0.8,NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL,,,,,,a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb
+primary,same windows (primary population),0.9,NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL,,,,,,a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb
+policy_warning_only,same windows; different policy,0.6,NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL,,,,,,a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb
+policy_warning_only,same windows; different policy,0.8,NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL,,,,,,a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb
+policy_warning_only,same windows; different policy,0.9,NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL,,,,,,a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb
+clean_realization,same windows; clean realization of the same runs,,NOT_RUN,,,,,,
+windows_60_60,different population: non-overlapping 60 s windows,,NOT_RUN,,,,,,
+pre_event_label_normal,different population: pre-event windows added as NORMAL,,NOT_RUN,,,,,,
+offset_invariant_features,same windows; 80 offset-invariant features,,NOT_RUN,,,,,,
+k_10,same windows; D(x) k=10,,NOT_RUN,,,,,,
+k_50,same windows; D(x) k=50,,NOT_RUN,,,,,,
+prior_correction,same windows; prior-corrected D(x),,NOT_RUN,,,,,,
+extended_family_map,same windows; different independence units (32 families),,NOT_RUN,,,,,,

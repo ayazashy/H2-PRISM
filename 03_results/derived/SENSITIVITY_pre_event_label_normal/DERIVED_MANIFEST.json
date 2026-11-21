@@ -1,0 +1,84 @@
+{
+  "source_run_dir": "SENSITIVITY_pre_event_label_normal",
+  "source_run_key": "105fde53d265c838b7571a66c62eaced0430ac8dd32a34d28a68e4ab938693d5",
+  "source_artifact_class": "SENSITIVITY_EXPERIMENT",
+  "source_status": "COMPLETED",
+  "source_sha256": {
+    "decisions.parquet": "2b1f0af5d6deb1bc13b1fd247bb8acc7b97a4ab71afb4a506968da9b433273b7",
+    "predictions.parquet": "882c5dd29c215427b650c3c425b3e71934e1c3473ea863cf1a9936d73d66a394",
+    "estimability.csv": "303d13058300ca6cdcaf4f017fca600de9718987f7e406efcda12bcef6d1a773",
+    "rq2.csv": "956f9f7d0faf7b09e4485969fe46cf408e2f8fd32e3e9e165eebc35b51f71347",
+    "run_manifest.json": "c88cca08385f3590612e66901c87b1bedb3d6c19c875788545acd8aab44bf4fd"
+  },
+  "code_sha256": "974ae355a9d116792f1192f7a7d8197f2e64a7cb0016f82fa5dac8947cbc5f06",
+  "reason_precedence": [
+    "UNRESOLVED_BY_SUPPORT_FLAG",
+    "SPECIFIC_BLOCKED_BY_SUPPORT_FLAG",
+    "INVALID_SCORE",
+    "BELOW_MATCHED_COVERAGE_CUT",
+    "AMBIGUITY_SET_TOO_BROAD",
+    "AMBIGUITY_SET_TOO_BROAD",
+    "SINGLE_CANDIDATE_REJECTED"
+  ],
+  "cross_checks": [
+    {
+      "check": "rq2[primary|0.6|rank_matched|COMPRESSOR_DELAY]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|rank_matched|COMPRESSOR_FAULT]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|rank_matched|LEAK]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|rank_matched|NORMAL]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|COMPRESSOR_DELAY]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|COMPRESSOR_FAULT]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|LEAK]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|NORMAL]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|threshold_transfer|COMPRESSOR_DELAY]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|threshold_transfer|COMPRESSOR_FAULT]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|threshold_transfer|LEAK]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|threshold_transfer|NORMAL]",
+      "ok": true
+    },
+    {
+      "check": "primary_reasons_exclusive_and_exhaustive",
+      "ok": true
+    }
+  ],
+  "outputs": {
+    "rq2_scoped.csv": "903da9b498ccf72112da639714793009d177ba2845a0da349c1a9e3bffd6961d",
+    "decision_reasons_primary.csv": "e9ee58a6b19be0f13bfd8338e8ca51bf25b912cb77a973f7351073a3b2ef48d2",
+    "decision_reasons_contributing.csv": "37576feb84ed6997f275bf3c517d75ecdcfb9f42560b83a2ba5e2427dc56f4bc",
+    "support_flags_scoped.csv": "c7bc3b4bd144dc5e9f48ecc4dda83daba0b53a01098112af57c1c148a7224f4e",
+    "matched_selection_ties.csv": "a533e2ab38a677cd560bf6a39a3a7f7681c78b1d49f789b7fa4c9bd6960502f9"
+  }
+}

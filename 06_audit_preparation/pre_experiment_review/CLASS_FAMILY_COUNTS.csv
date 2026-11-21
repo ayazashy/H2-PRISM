@@ -1,0 +1,5 @@
+candidate_primary_class,independent_scenarios,primary_families,extended_families,topologies
+COMPRESSOR_DELAY,3,3,3,3
+COMPRESSOR_FAULT,6,3,3,3
+LEAK,39,30,26,3
+NORMAL,3,3,3,3

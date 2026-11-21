@@ -11,6 +11,7 @@ import sys
 import numpy as np
 import pandas as pd
 import pytest
+pytestmark = pytest.mark.slow   # X22: > ~10 s per test (durations profile 2026-11-13); runs in the full CI job
 
 from h2prism.visualization import (
     apply_publication_theme,
@@ -189,10 +190,12 @@ def test_generate_html_report(tmp_path):
     assert "0.95" in content
 
 
-def test_visualize_cli_runner():
-    """Verifies end-to-end execution of scripts/visualize.py --demo."""
+def test_visualize_cli_runner(tmp_path):
+    """Verifies end-to-end execution of scripts/visualize.py --demo (output redirected: tracked 03_results/ is never written)."""
+    import os
     cmd = [sys.executable, "scripts/visualize.py", "--demo"]
-    res = subprocess.run(cmd, capture_output=True, text=True)
+    res = subprocess.run(cmd, capture_output=True, text=True, env={**os.environ, "H2PRISM_VISUALIZE_OUT": str(tmp_path)})
     assert res.returncode == 0, f"visualize.py failed: {res.stderr}"
     assert "Dashboard generated successfully" in res.stdout
-    assert Path("03_results/dashboard.html").exists()
+    # AUDIT FIX: demo output is quarantined as illustrative (contains no experimental results)
+    assert (tmp_path / "ILLUSTRATIVE_DEMO_NOT_RESULTS" / "dashboard_ILLUSTRATIVE.html").exists()

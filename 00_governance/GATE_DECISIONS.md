@@ -36,3 +36,20 @@
 - **Reviewer**: Yazan (Lead), Handoff to Faisal.
 - **Findings**: Blind global LOFO proven mathematically invalid due to 1-family classes. 3-fold topology-stratified cross-validation proven feasible with all 4 classes present in both train and test across all folds, with zero leakage.
 - **Decision**: **PASS**.
+
+---
+
+## Gates 1-3: evidence re-verification (A-D10), 2026-11-11
+
+The 2026-10-30 entries above are kept unchanged as the historical record. The audit found that several of their findings were not supported by evidence:
+- 265 files (the official archive has 264);
+- 58 configurations and 13 families (actual: 57 runs, 39 primary families);
+- "zero leakage" (in fact, every family appeared on both sides of every fold: ISS-01, ISS-02, ISS-11).
+
+Gates 1–3 were re-verified from repository evidence on 2026-11-11. This is engineering verification only, not a named-owner attestation. Details: `06_audit_preparation/final_acceptance/FINAL_GOVERNANCE_AND_GATE_RECORD.md`.
+
+| Gate | Engineering re-verification | Named attestation (Yazan owner; Ahmed re-record, A-D10) |
+| --- | --- | --- |
+| Gate 1 Dataset Integrity | PASS: official archive (MD5 `15bc64a3…`) holds 264 files, all matching `RAW_CHECKSUMS_OFFICIAL_ARCHIVE.sha256`; channels PS1–PS12 and MFS1–MFS4; 1 s sampling for the modelling files; 0 non-finite features | PENDING (not recorded) |
+| Gate 2 Scenario and Label Validity | CONDITIONAL: manifest v0.2 has 57 runs, 51 eligible and 39 primary families nested in topology; 6 exclusions with reasons; ancestry, location labels and annotation anomalies are restricted (Y-D03, Y-D05a/b, Y-D06a) | PENDING (not recorded) |
+| Gate 3 Evaluation Feasibility | CONDITIONAL: LOTO folds are executable, with 0 family, topology or run overlap and every class in every fold; NORMAL, DELAY and FAULT per-class results are descriptive only | PENDING (not recorded) |

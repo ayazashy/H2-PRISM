@@ -1,0 +1,9 @@
+analysis,topology,label_mapped,COMPRESSOR_FAULT,LEAK,NORMAL
+"offset_invariant_features fold 3 development (Center+Downstream), out-of-fold, calibration none",Center,COMPRESSOR_DELAY,0,0,31
+"offset_invariant_features fold 3 development (Center+Downstream), out-of-fold, calibration none",Center,COMPRESSOR_FAULT,0,0,1328
+"offset_invariant_features fold 3 development (Center+Downstream), out-of-fold, calibration none",Center,LEAK,0,0,7307
+"offset_invariant_features fold 3 development (Center+Downstream), out-of-fold, calibration none",Center,NORMAL,0,665,0
+"offset_invariant_features fold 3 development (Center+Downstream), out-of-fold, calibration none",Downstream,COMPRESSOR_DELAY,0,0,31
+"offset_invariant_features fold 3 development (Center+Downstream), out-of-fold, calibration none",Downstream,COMPRESSOR_FAULT,0,0,1328
+"offset_invariant_features fold 3 development (Center+Downstream), out-of-fold, calibration none",Downstream,LEAK,0,0,7307
+"offset_invariant_features fold 3 development (Center+Downstream), out-of-fold, calibration none",Downstream,NORMAL,24,641,0

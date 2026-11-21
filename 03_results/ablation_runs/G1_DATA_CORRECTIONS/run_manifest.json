@@ -1,0 +1,223 @@
+{
+  "artifact_class": "DEVELOPMENT_EXPERIMENT",
+  "authorization": {
+    "authorized_by": "Ahmed Zayed (project lead)",
+    "date": "2026-11-12",
+    "file_sha256": "e23c0b34d530967c326922a7e5047466db1b5b230d37009a9c8a020f51241a23",
+    "governance_clearance": {
+      "A-D10": "WAIVED by project lead Ahmed Zayed 2026-11-12 for development-only ablation arms (Gate 1-3 attestation not given)",
+      "F-D15": "WAIVED by project lead Ahmed Zayed 2026-11-12 for development-only ablation arms (Faisal code acceptance not given)",
+      "F-D16": "WAIVED by project lead Ahmed Zayed 2026-11-12 for development-only ablation arms (Faisal contract acceptance not given)",
+      "PA-1": "ATTESTED (approved) by project lead Ahmed Zayed under the protocol delegation (exact-count matched-coverage tie rule)"
+    },
+    "scope": "DEVELOPMENT_EXPERIMENT:G1_DATA_CORRECTIONS"
+  },
+  "code_sha256": "f76b86f53dccce71f7a795ec2635f8de1064e8f667b4f259870258ab72f6b9f9",
+  "config_file": "G1_DATA_CORRECTIONS.yaml",
+  "config_sha256": "0b980ee9404c2601388853bb331ea77934d15c498c9916041471c1d11fecb9a5",
+  "effective_config_sha256": "0b980ee9404c2601388853bb331ea77934d15c498c9916041471c1d11fecb9a5",
+  "features": {
+    "channels": [
+      "PS1",
+      "PS2",
+      "PS3",
+      "PS4",
+      "PS5",
+      "PS6",
+      "PS7",
+      "PS8",
+      "PS9",
+      "PS10",
+      "MFS1",
+      "MFS2",
+      "MFS3"
+    ],
+    "feature_table_sha256": "d1628a0b93365dc1613aa74bb359f391949754bfd241fdd8f3ee25ba63ebb7c1",
+    "n_features": 104,
+    "n_features_extracted": 128,
+    "n_nonfinite_feature_values": 0,
+    "n_post_event_windows_dropped": 0,
+    "n_windows": 27993,
+    "window_manifest_sha256": "92bff9aa3e8e2f452c6b28d90d861e13a7c367f7b1a1e92eec9063ed980a4476",
+    "windows_per_class": {
+      "COMPRESSOR_DELAY": 93,
+      "COMPRESSOR_FAULT": 3984,
+      "LEAK": 21921,
+      "NORMAL": 1995
+    },
+    "windows_per_topology_class": {
+      "Center|COMPRESSOR_DELAY": 31,
+      "Center|COMPRESSOR_FAULT": 1328,
+      "Center|LEAK": 7307,
+      "Center|NORMAL": 665,
+      "Downstream|COMPRESSOR_DELAY": 31,
+      "Downstream|COMPRESSOR_FAULT": 1328,
+      "Downstream|LEAK": 7307,
+      "Downstream|NORMAL": 665,
+      "Upstream|COMPRESSOR_DELAY": 31,
+      "Upstream|COMPRESSOR_FAULT": 1328,
+      "Upstream|LEAK": 7307,
+      "Upstream|NORMAL": 665
+    }
+  },
+  "git_commit": "d3b6cdeaa5965b5f5ed231a825a4d3e51fd3d7a8",
+  "input_sha256": {
+    "feature_register": "3dd5e927e3473d01168b39ca7539d51fd5d599621bb6263bae20bfdc25bfc137",
+    "label_mapping": "61a3182b04e0fd7c9728945f07ab7eee13fe8fb75a8f4b55a999244cb49c1f18",
+    "manifest": "f8ce526159b1b9239c7a2c329b0a61c3283239a4ed381295c6011da541b7e3b0",
+    "outer_folds": "e08b3773fca1b0eea55bfa6757823d273679023d1f029a1830ee005f33ff7887"
+  },
+  "mode": "develop",
+  "preflight": {
+    "checks": [
+      {
+        "check": "config_status",
+        "detail": "DEVELOPMENT_ARM_REGISTERED (expected DEVELOPMENT_ARM_REGISTERED)",
+        "ok": true
+      },
+      {
+        "check": "hash:06_audit_preparation/protocol2/CANDIDATE_MANIFEST_V03.csv",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "hash:06_audit_preparation/protocol2/CANDIDATE_OUTER_FOLDS_V03.csv",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "hash:06_audit_preparation/pre_experiment_review/CANDIDATE_LABEL_MAPPING.yaml",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "hash:02_methodology/FEATURE_DEFINITION_REGISTER.csv",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "config_section:windows",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "config_section:features",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "config_section:model",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "config_section:distinguishability",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "config_section:policy_primary",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "config_section:thresholds",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "config_section:seeds",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "manifest_columns",
+        "detail": "missing []",
+        "ok": true
+      },
+      {
+        "check": "eligible_count",
+        "detail": "51 vs 51",
+        "ok": true
+      },
+      {
+        "check": "unique_scenarios",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "classes",
+        "detail": "['COMPRESSOR_DELAY', 'COMPRESSOR_FAULT', 'LEAK', 'NORMAL']",
+        "ok": true
+      },
+      {
+        "check": "exclusions_have_reasons",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "family_column_present",
+        "detail": "Scenario_Family_ID",
+        "ok": true
+      },
+      {
+        "check": "families_nest_in_topology",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "folds_cover_eligible_runs_exactly",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "fold_family_isolation",
+        "detail": "[]",
+        "ok": true
+      },
+      {
+        "check": "fold_topology_isolation",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "raw_files_present_and_unmodified[noise_added]",
+        "detail": "[]",
+        "ok": true
+      },
+      {
+        "check": "policy_flags_known",
+        "detail": "[]",
+        "ok": true
+      },
+      {
+        "check": "thresholds_from_development",
+        "detail": "",
+        "ok": true
+      },
+      {
+        "check": "matched_coverage_rule_prespecified",
+        "detail": "{'applies_to': 'rank_matched', 'selection': 'exact_count', 'unit': 'window', 'denominator': 'all_eligible_windows_of_the_outer_test_fold', 'requested_count': 'ceil(target * denominator)', 'eligibility': 'finite score, valid probabilities, no unresolved or specific-blocking flag under the evaluated policy variant', 'order': 'score_descending_then_tie_key_ascending', 'tie_break_key': 'sha256(salt|window_id)', 'tie_break_salt': 'h2prism-pa1-v1', 'attainability': 'NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL if requested_count exceeds the eligible count; never forced', 'shared_across_methods': True, 'tie_sensitivity': {'n_alternative_salts': 20, 'role': 'secondary_reported_not_selected'}}",
+        "ok": true
+      }
+    ],
+    "eligible_runs": 51,
+    "folds": 3
+  },
+  "prohibited_claims": [
+    "industrial deployment readiness",
+    "field validation",
+    "generalisation beyond the evaluated simulated topologies",
+    "physical identifiability",
+    "metric leak localisation",
+    "pure-hydrogen performance",
+    "a verified hydrogen blend percentage",
+    "superiority of D(x) beyond the reported effect sizes"
+  ],
+  "realization": "noise_added",
+  "run_key": "3f22efbc6bd837056c3dab1e40930d4e2cad15654712418ba027d9079a4f9e83",
+  "scope_note": "development-only: inner topology-held-out predictions; no outer-test scoring",
+  "seed": 20261104,
+  "sensitivity": null,
+  "status": "COMPLETED"
+}

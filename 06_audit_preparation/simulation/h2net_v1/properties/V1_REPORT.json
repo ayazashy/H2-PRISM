@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "fluid": "Hydrogen",
+    "aliases": "hydrogen,HYDROGEN,H2,R702",
+    "coolprop_version": "7.2.0",
+    "coolprop_gitrevision": "98b3523d5daa98454618d381d2ae53f7471d216b",
+    "references": {
+      "BibTeX-EOS": "Leachman-JPCRD-2009",
+      "BibTeX-VISCOSITY": "Muzny-JCED-2013",
+      "BibTeX-CONDUCTIVITY": "Assael-JPCRD-2011-Hydrogen"
+    },
+    "python": "3.12.1",
+    "reference_state": "CoolProp default for Hydrogen (h, s offsets are arbitrary; only differences matter)",
+    "units": {
+      "T_TLU2": "K",
+      "p_TLU2": "MPa",
+      "rho_TLU2": "kg/m^3",
+      "s_TLU2": "kJ/(kg*K)",
+      "h_TLU2": "kJ/kg",
+      "cp_TLU2": "kJ/(kg*K)",
+      "mu_TLU2": "uPa*s",
+      "k_TLU2": "mW/(m*K)",
+      "beta_TLU2": "MPa",
+      "alpha_TLU2": "1/K"
+    },
+    "shape": [
+      31,
+      20
+    ],
+    "envelope_validated": {
+      "T": [
+        250.0,
+        400.0
+      ],
+      "p_MPa": [
+        0.1,
+        10.0
+      ]
+    }
+  },
+  "checks": {
+    "interpolation_points": 240,
+    "interpolation_max_relative_error": {
+      "rho": 0.0003618737874238054,
+      "cp": 8.647020617136292e-05,
+      "mu": 4.250785688819647e-05,
+      "k": 0.00017314798991052704
+    },
+    "interpolation_pass": {
+      "rho": true,
+      "cp": true,
+      "mu": true,
+      "k": true
+    },
+    "gamma_range": [
+      1.398557580579335,
+      1.433374104760469
+    ],
+    "gamma_pass": true,
+    "prandtl_range": [
+      0.6711092700012045,
+      0.6858059594702194
+    ],
+    "prandtl_pass": true,
+    "R_J_per_kgK": 4124.482914657619,
+    "molar_mass_kg_per_mol": 0.00201588,
+    "Z_at_lowest_pressure_range": [
+      1.0001968829724537,
+      1.0003362726835368
+    ],
+    "Z_low_pressure_pass": true,
+    "Z_envelope_range": [
+      1.000238354241302,
+      1.067257086770355
+    ],
+    "anchor_density_273K_1atm": 0.08988237638480538,
+    "anchor_reference": 0.0899,
+    "anchor_pass": true,
+    "V1_PASS": true
+  },
+  "tolerances": {
+    "rho": 0.001,
+    "cp": 0.005,
+    "mu": 0.01,
+    "k": 0.01
+  }
+}

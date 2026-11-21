@@ -1,0 +1,5 @@
+error_type,window_fold_instances,unique_windows,runs,independence_groups,ancestors,confident_instances,confident_independence_groups,knn_majority_true_class,knn_majority_classifier_label,share_of_instances_in_largest_group,evidence_status
+NORMAL->LEAK,3930,1981,3,1,1,3151,1,0.00636132,0.990585,1,EXPLORATORY_DIAGNOSTIC
+LEAK->NORMAL,866,866,3,3,3,101,1,0.998845,0.00115473,0.539261,EXPLORATORY_DIAGNOSTIC
+COMPRESSOR_DELAY->COMPRESSOR_FAULT,25,25,1,1,1,0,0,0,1,1,EXPLORATORY_DIAGNOSTIC
+COMPRESSOR_FAULT->COMPRESSOR_DELAY,1,1,1,1,1,0,0,1,0,1,EXPLORATORY_DIAGNOSTIC

@@ -1,0 +1,16 @@
+# Publication claim register
+
+| claim | status | hypothesis | publication_use |
+|---|---|---|---|
+| Within its declared hypothesis library and stated bounds, every D(Y) exclusion is certified and re-verifiable, and removing information never creates an exclusion. | SUPPORTED_WITHIN_SCOPE | H3 | ALLOWED with assumptions A1-A5 |
+| Under the registered protocol, the selective-risk benefit of D(x) is not estimable. | NOT_ESTIMABLE | H1 | ALLOWED |
+| On R2 windows, D(x) showed no incremental value over confidence out of template (exploratory). | EXPLORATORY_ONLY | H2 | ALLOWED as exploratory negative result |
+| D(Y) can issue a wrong SPECIFIC decision when the true mechanism is missing from the library. | CONTRADICTED (guarantee) | H9 | ALLOWED (limitation) |
+| Normal vs SID 215 is a bound limitation (isolable below ~0.08 × REF), not intrinsic identity. | EXPLORATORY_ONLY | H4/H5 | ALLOWED with conditional-bound label |
+| The engine runs on an external study (HY2RES) through an adapter; certification removes all frozen singleton calls. | Level A only | H6 | ALLOWED as software portability |
+| H2-PRISM localizes leaks network-wide. | — | H5 | FORBIDDEN (one independent outlet) |
+| Results transfer to pure hydrogen or blends. | BLOCKED_BY_PHYSICS | H7 | FORBIDDEN |
+| H2-PRISM reduces sensor cost by X %. | — | H8 | FORBIDDEN (no prices) |
+| D(x) improves selective risk. | — | H1/H2 | FORBIDDEN |
+| D(Y) is a field-validated safety guarantee. | — | H3 | FORBIDDEN (hypothetical bounds) |
+| Performance generalizes to unseen templates or domains. | BLOCKED_BY_DATA | H6 | FORBIDDEN |

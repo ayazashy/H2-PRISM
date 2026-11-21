@@ -1,0 +1,2 @@
+method,cases,supported_cases,independent_locations_supported,top1_correct_supported,top1_correct_all,mean_reciprocal_rank_supported,mean_reciprocal_rank_all_forced
+"B3 nearest-template (forced, own template excluded + replicate)",8,3,1,3,3,1,0.375

@@ -1,0 +1,16 @@
+# Protocol 2.0 ablation matrix (registered before any arm is run)
+
+- Common to every arm: {"combined_scores.on_undefined": "not_estimable", "thresholds.target_rule": {"grid": [0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3], "margin": 0.05, "min_target": 0.3}}.
+- Metrics are fixed in `src/h2prism/evaluation_metrics.py`. Arms run development-only (`--develop`), so no outer-test topology is scored.
+- All results are EXPLORATORY: every window was an R2 outer-test window. Confirmation requires the independent data in `02_methodology/INDEPENDENT_CONFIRMATION_DATA_SPEC.md`.
+
+| Arm | Components | Question | Targeted failure | Acceptance criterion | Needs dataset decision |
+| --- | --- | --- | --- | --- | --- |
+| `A_P11_DEV` | none (protocol 1.1) | What do the development-stage metrics of protocol 1.1 look like under the common evaluation rules? | reference | reference arm: no criterion; every other arm is compared with it fold by fold | no |
+| `B_TOPOLOGY` | B | Does attributing runs to their source simulation model remove the configuration-swap failure? | FA-01 swapped Center/Downstream event folders | dev AUROC of confidence for correctness >= 0.5 in every development topology AND share of errors with confidence >= 0.9 lower than A | yes (uses candidate manifest v0.3; exploratory only until R-18 option B) |
+| `C_COMMON_SENSORS` | C | Does restricting inputs to sensors present in every model remove the padded-channel fingerprint without losing performance? | FA-02 zero-variance padded channels | no padded channel among model inputs (structural) AND dev group-balanced accuracy not lower than A by more than 0.05 | no |
+| `D_GROUP_SUPPORT` | D | Does counting support by scenario independence group remove pseudo-independent support, and at what coverage cost? | FA-03 cross-topology replicas counted as independent | pseudo-independent support = 0 (structural) AND dev group-balanced selective risk not higher than A; coverage change reported, not optimised | no |
+| `E_EVIDENCE_CONFLICT` | E | Does withholding SPECIFIC when classifier and evidence disagree reduce wrong SPECIFIC decisions without hiding the true class? | FA-05 policy never checks D top class against the label | dev group-balanced selective risk lower than A at the same dev-fixed target AND ambiguity-set inclusion >= 0.9 where sets are issued | no |
+| `F_EVIDENCE_MARGIN` | F | Does the signed, group-balanced evidence margin E_h discriminate correctness better than D(x), and does it add value to s_C? | FA-04/FA-09 D(x) saturation and anti-information under shift | dev AUROC(E) > AUROC(D_only of A) by >= 0.05 in every development topology where defined AND AUROC(s_C) - AUROC(s_C_minus_D) > 0 | no |
+| `G1_DATA_CORRECTIONS` | B+C | Combined data-level corrections (topology attribution + common sensors). | FA-01 + FA-02 | same as B and C jointly (combination effect, not one-factor attribution) | yes (uses candidate manifest v0.3; exploratory only until R-18 option B) |
+| `G2_FULL_CANDIDATE` | B+C+D+E+F | The complete candidate protocol 2.0 at development stage. | all | every component criterion holds jointly AND the primary metric is not worse than A; otherwise report which component fails | yes (uses candidate manifest v0.3; exploratory only until R-18 option B) |

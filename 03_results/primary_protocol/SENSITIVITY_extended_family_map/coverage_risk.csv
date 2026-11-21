@@ -1,0 +1,13 @@
+variant,method,target,mode,folds_estimable,n_families,n_eligible,n_specific,n_ambiguity,n_unresolved,coverage,selective_risk,selective_risk_defined,ambiguity_n_ambiguity,ambiguity_inclusion_rate,ambiguity_mean_size,ambiguity_median_size,ambiguity_broad_rate,analysis,artifact_class
+primary,D_only,0.6,rank_matched,2,22,18662,11198,436,7028,0.6000428679,0.05804607966,True,436,1,2,2,0,extended_family_map,SENSITIVITY_EXPERIMENT
+primary,confidence,0.6,rank_matched,2,22,18662,11198,787,6677,0.6000428679,0.05804607966,True,787,1,2,2,0,extended_family_map,SENSITIVITY_EXPERIMENT
+primary,margin,0.6,rank_matched,2,22,18662,11198,787,6677,0.6000428679,0.05804607966,True,787,1,2,2,0,extended_family_map,SENSITIVITY_EXPERIMENT
+primary,neg_entropy,0.6,rank_matched,2,22,18662,11198,787,6677,0.6000428679,0.05804607966,True,787,1,2,2,0,extended_family_map,SENSITIVITY_EXPERIMENT
+primary,s_C,0.6,rank_matched,2,22,18662,11198,31,7433,0.6000428679,0,True,31,1,2,2,0,extended_family_map,SENSITIVITY_EXPERIMENT
+primary,s_C_minus_D,0.6,rank_matched,2,22,18662,11198,31,7433,0.6000428679,0,True,31,1,2,2,0,extended_family_map,SENSITIVITY_EXPERIMENT
+warning_only,D_only,0.6,rank_matched,2,22,18662,11198,423,7041,0.6000428679,0.05804607966,True,423,1,2,2,0,extended_family_map,SENSITIVITY_EXPERIMENT
+warning_only,confidence,0.6,rank_matched,2,22,18662,11198,787,6677,0.6000428679,0.05804607966,True,787,1,2,2,0,extended_family_map,SENSITIVITY_EXPERIMENT
+warning_only,margin,0.6,rank_matched,2,22,18662,11198,787,6677,0.6000428679,0.05804607966,True,787,1,2,2,0,extended_family_map,SENSITIVITY_EXPERIMENT
+warning_only,neg_entropy,0.6,rank_matched,2,22,18662,11198,787,6677,0.6000428679,0.05804607966,True,787,1,2,2,0,extended_family_map,SENSITIVITY_EXPERIMENT
+warning_only,s_C,0.6,rank_matched,2,22,18662,11198,3,7461,0.6000428679,0,True,3,1,2,2,0,extended_family_map,SENSITIVITY_EXPERIMENT
+warning_only,s_C_minus_D,0.6,rank_matched,2,22,18662,11198,1,7463,0.6000428679,0,True,1,1,2,2,0,extended_family_map,SENSITIVITY_EXPERIMENT

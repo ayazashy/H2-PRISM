@@ -1,0 +1,24 @@
+# Limitations and threats to validity
+
+- **Construct.**
+  - R2 labels are disputed (L01).
+  - Center bounds are hypothetical.
+  - HY2RES labels describe electrical power, not faults.
+- **Internal.**
+  - All R2 analyses use inspected windows.
+  - D tracks source-model signatures (L10, L17).
+  - The test suite mutates governance files.
+  - Hash pins depend on the checkout (L21).
+- **External.**
+  - Simulated air-like gas.
+  - One Center capture per mechanism.
+  - Templates shared across topologies (L04).
+  - No field data.
+- **Statistical.**
+  - 17 ancestors.
+  - One NORMAL template.
+  - Center results are counts, not rates.
+  - The multiplicity of exploratory comparisons is disclosed, not corrected.
+- **Synthetic studies.**
+  - Faults and jitter are injected in units of ε_obs, not from sensor specifications.
+  - The X5 classes are artificial.

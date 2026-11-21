@@ -1,0 +1,82 @@
+{
+  "source_sha256": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+  "prior_raw_sha256": "82487367abc40f5ac4a22324eca3178c39ed95e3fad35a650a8a08d92823a5a7",
+  "pressure_source": {
+    "source_sid": "55",
+    "command_sid": "59",
+    "saved_parameters": {
+      "step_time": "25",
+      "step_time_unit": "s",
+      "initial_value": "3",
+      "initial_value_unit": "MPa",
+      "final_value": "6.4",
+      "final_value_unit": "MPa"
+    },
+    "boundary_role": "Internal commanded pressure difference, distinct from atmospheric outlet withdrawal",
+    "receiver_library": "fl_lib/Gas/Sources/Pressure Source (G)",
+    "command_library": "fl_lib/Physical Signals/Sources/PS Step"
+  },
+  "conserving_nets_A_B": [
+    [
+      [
+        "1#lconn:1",
+        "187#lconn:1",
+        "4#rconn:1",
+        "55#lconn:1",
+        "7#rconn:1"
+      ]
+    ],
+    [
+      [
+        "392#lconn:1",
+        "47#lconn:1",
+        "55#rconn:1"
+      ]
+    ]
+  ],
+  "metered_paths": "SID 55 is internal transfer; reservoir SID 1 is an external boundary.",
+  "designs": {
+    "pressure_rival": {
+      "approved_command_envelope_Pa": [
+        2999999.9999999944,
+        6400000.000000028
+      ],
+      "calculated_commands": {
+        "normal": {
+          "min_pa": 2999999.9999999944,
+          "max_pa": 6400000.000000028,
+          "before_step_pa": 6399999.999999999,
+          "at_step_pa": 6399999.999999999
+        },
+        "outlet_opening": {
+          "min_pa": 2999999.9999999944,
+          "max_pa": 6400000.00000001,
+          "before_step_pa": 6399999.999999999,
+          "at_step_pa": 6229999.999999999
+        }
+      },
+      "qualification": "Command envelope is observed in the simulator. It is not a pressure rating or error bound."
+    },
+    "alternate_profile": {
+      "approved_command_envelope_Pa": [
+        294000.00000000454,
+        739999.9999999999
+      ],
+      "calculated_commands": {
+        "normal": {
+          "min_pa": 299000.00000000454,
+          "max_pa": 739999.9999999999,
+          "before_step_pa": 719999.9999999994,
+          "at_step_pa": 724999.9999999994
+        },
+        "outlet_opening": {
+          "min_pa": 299000.00000000454,
+          "max_pa": 739999.9999999999,
+          "before_step_pa": 719999.9999999994,
+          "at_step_pa": 724999.9999999994
+        }
+      },
+      "qualification": "Command envelope is observed in the simulator. It is not a pressure rating or error bound."
+    }
+  }
+}

@@ -1,0 +1,36 @@
+item,reported,expected,match
+V2-F01.png sha256,4d09c105902f597e,4d09c105902f597e,True
+V2-F01.svg sha256,e95d62d23236d676,e95d62d23236d676,True
+V2-F01 QA,APPROVED,APPROVED,True
+V2-F02.png sha256,bb645357ea62999e,bb645357ea62999e,True
+V2-F02.svg sha256,629cdae7cc34a02b,629cdae7cc34a02b,True
+V2-F02 QA,APPROVED,APPROVED,True
+V2-F03.png sha256,67144971fb2d0a5f,67144971fb2d0a5f,True
+V2-F03.svg sha256,80097945933f0df0,80097945933f0df0,True
+V2-F03 QA,APPROVED,APPROVED,True
+V2-F04.png sha256,a4220b4c4da355f3,a4220b4c4da355f3,True
+V2-F04.svg sha256,e460e41ad423bdfa,e460e41ad423bdfa,True
+V2-F04 QA,APPROVED,APPROVED,True
+V2-F05.png sha256,75c67a90ac050ddc,75c67a90ac050ddc,True
+V2-F05.svg sha256,d3226d5a0f0c19b5,d3226d5a0f0c19b5,True
+V2-F05 QA,APPROVED,APPROVED,True
+V2-F06.png sha256,f0a63ffa08f6ba5c,f0a63ffa08f6ba5c,True
+V2-F06.svg sha256,59424679bd818c5d,59424679bd818c5d,True
+V2-F06 QA,APPROVED,APPROVED,True
+R2 NORMAL precision vs frozen class_metrics,0.15382836,0.15382836,True
+R2 NORMAL recall vs frozen class_metrics,0.666666667,0.666666667,True
+R2 LEAK precision vs frozen class_metrics,0.956664048,0.956664048,True
+R2 LEAK recall vs frozen class_metrics,0.666666667,0.666666667,True
+R2 COMPRESSOR_FAULT precision vs frozen class_metrics,0.991519082,0.991519082,True
+R2 COMPRESSOR_FAULT recall vs frozen class_metrics,0.997740964,0.997740964,True
+R2 COMPRESSOR_DELAY precision vs frozen class_metrics,1.0,1.0,True
+R2 COMPRESSOR_DELAY recall vs frozen class_metrics,0.666666667,0.666666667,True
+HY2RES frozen rule reproduces published table,True,True,True
+HY2RES rows accounted,44397,44397,True
+HY2RES certified wrong SPECIFIC,0,0,True
+isolable pairs at REF (all) v2 lambda* vs v1,14,14,True
+isolable pairs at REF (pressure_only) v2 lambda* vs v1,9,9,True
+isolable pairs at REF (flow_only) v2 lambda* vs v1,14,14,True
+"stress baseline equals v1 E1 all-channel outcomes (S4, REF)",1,1,True
+RESULTS_INDEX sources present with recorded hash,1,1,True
+files changed outside the package,0,0,True

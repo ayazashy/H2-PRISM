@@ -1,0 +1,13 @@
+### TAB_H00b — Gate C — frozen decision reproduction
+
+Replica of the frozen rule against published counts.
+
+| label | decision | frozen | reproduced | passed |
+| --- | --- | --- | --- | --- |
+| electrolyzer_active | Electrolyzer only | 10762 | 10762 | True |
+| electrolyzer_active | Ambiguous | 1126 | 1126 | True |
+| electrolyzer_active | Unresolved | 31279 | 31279 | True |
+| multiple_active | Ambiguous | 201 | 201 | True |
+| multiple_active | Unresolved | 616 | 616 | True |
+| unknown | Unresolved | 413 | 413 | True |
+| all | out of range or nonfinite | 32002 | 32002 | True |

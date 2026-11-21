@@ -1,0 +1,14 @@
+experiment,config_family,decisions,specific,specific_correct,specific_wrong,specific_coverage,wrong_specific_risk,ambiguous,ambiguous_truth_in,mean_ambiguity_set_size,unresolved_model_mismatch,unresolved_indeterminate,truth_retained,truth_in_library,mean_excluded_hypotheses,n_channels
+E2_clock_bound,tau_0s,24,10,8,2,0.4166666667,0.2,0,0,,14,0,8,8,4.916666667,13
+E2_clock_bound,tau_10s,24,10,8,2,0.4166666667,0.2,0,0,,14,0,8,8,4.916666667,13
+E2_clock_bound,tau_1s,24,10,8,2,0.4166666667,0.2,0,0,,14,0,8,8,4.916666667,13
+E2_clock_bound,tau_2s,24,10,8,2,0.4166666667,0.2,0,0,,14,0,8,8,4.916666667,13
+E2_clock_bound,tau_5s,24,10,8,2,0.4166666667,0.2,0,0,,14,0,8,8,4.916666667,13
+E3_delay,delay_0s_tau_1s,24,10,8,2,0.4166666667,0.2,0,0,,14,0,8,8,4.916666667,13
+E3_delay,delay_10s_tau_10s,24,10,8,2,0.4166666667,0.2,0,0,,14,0,8,8,4.916666667,13
+E3_delay,delay_10s_tau_1s,24,2,0,2,0.08333333333,1,0,0,,22,0,0,8,5.25,13
+E3_delay,delay_1s_tau_1s,24,10,8,2,0.4166666667,0.2,0,0,,14,0,8,8,4.916666667,13
+E3_delay,delay_2s_tau_1s,24,2,0,2,0.08333333333,1,0,0,,22,0,0,8,5.25,13
+E3_delay,delay_2s_tau_2s,24,10,8,2,0.4166666667,0.2,0,0,,14,0,8,8,4.916666667,13
+E3_delay,delay_5s_tau_1s,24,2,0,2,0.08333333333,1,0,0,,22,0,0,8,5.25,13
+E3_delay,delay_5s_tau_5s,24,10,8,2,0.4166666667,0.2,0,0,,14,0,8,8,4.916666667,13

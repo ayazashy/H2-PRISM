@@ -1,0 +1,5 @@
+y_true,windows,runs,families,scenario_ancestors
+COMPRESSOR_DELAY,93,3,3,1
+COMPRESSOR_FAULT,3984,6,3,2
+LEAK,21921,39,30,13
+NORMAL,1995,3,3,1

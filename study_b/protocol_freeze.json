@@ -1,0 +1,12 @@
+[
+  {
+    "Algorithm": "SHA256",
+    "Hash": "843200F94F8F3B13B69EFCC7CF550D087B7C1F7D5543EC4DF94A4FCF44566710",
+    "File": "protocol.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "469C57DA50BFA1B891723A8F8482AA89E6E8AF7D21E33D7F892837077D59CF43",
+    "File": "benchmark.py"
+  }
+]

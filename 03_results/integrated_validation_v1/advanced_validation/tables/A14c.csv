@@ -1,0 +1,2 @@
+decisions,median_s,p95_s,p99_s,max_s,workers,note
+2376,0.4077433,1.10704845,2.0531566,3.2440663,7,per-decision wall time inside 7 parallel workers

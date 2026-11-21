@@ -1,0 +1,4 @@
+scope,runs,families,ancestors,run_majority_accuracy,mean_window_accuracy_per_run,normal_runs,normal_runs_called_event,event_runs,event_runs_called_normal
+all,51,39,17,0.7058823529411765,0.7056165839829908,3,1,48,13
+undisputed,19,15,17,0.9473684210526315,0.9473684210526315,3,1,16,0
+disputed,32,24,16,0.5625,0.5620764307228916,0,0,32,13

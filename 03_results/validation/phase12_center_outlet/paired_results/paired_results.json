@@ -1,0 +1,5055 @@
+{
+  "classification": "ACCEPTED",
+  "tier": "New source-derived controlled simulation",
+  "samples_per_case": 100001,
+  "timing": "Exact saved common clock; no interpolation",
+  "capture_acceptance": {
+    "normal": {
+      "classification": "ACCEPTED",
+      "authorized_next": "Execute only the approved outlet_opening twin",
+      "runtime_model": {
+        "stopEvent": "ReachedStopTime",
+        "errorDiagnostic": [],
+        "warningCount": 0,
+        "warnings": [],
+        "simulationErrorMessage": [],
+        "modelName": "Center_phase12",
+        "solverInfo": {
+          "Type": "Fixed-Step",
+          "Solver": "ode14x",
+          "FixedStepSize": 0.2
+        },
+        "start_s": 0,
+        "stop_s": 20000
+      },
+      "stages": [
+        "SIM_STARTED",
+        "SIM_RETURNED",
+        "NUMERIC_EXTRACTION_STARTED",
+        "NUMERIC_CAPTURE_SAVED"
+      ],
+      "capture_hashes": {
+        "execution.log": "22e4c96a9b260914958d9cc1689acbfcf56519dd313b19976f3cf860cc030584",
+        "stages.log": "2e7fe4431dcd85fd852ce22a5fe99a4a8f83f0ac413bfc0d8aa5bdecbe3b8632",
+        "center_raw.mat": "82487367abc40f5ac4a22324eca3178c39ed95e3fad35a650a8a08d92823a5a7",
+        "center_extracted.mat": "0c9df4261dfadb405bf8f7970eecd6fd0ce25cd27698b3800d8724ef37ae2a6a",
+        "sensor_checkpoint.mat": "0d2859f0fd020f221cd4bf11a65edc9e54e79bb677457462cf9281bf8d82275d",
+        "outlet_evidence.mat": "a813c32d3401a1120e702ea04a51193d6f4b82e7767765381d9ad8f23c3fb271",
+        "logging_policy.mat": "10a3778e9a50db39b6628787f06c344b6f0f53a45b3da385ca43f189c8d38b8a"
+      },
+      "pair": {
+        "approval_sha256": "7d7017202e25dbd17a3dea2e50c96ba91c861e10c18ff1a3f51539c8a49a3368",
+        "retry_provenance_sha256": "33b25e6f1e8c478eecb1bae6c3a737c4966ca881512ceef233d04eed1529c73b",
+        "saved_model_delta": [
+          "Phase12 Outlet Area.final_value"
+        ],
+        "configset_json_checked": true,
+        "cases": {
+          "normal": {
+            "input_sha256": {
+              "Normal_HNetwork_gest_center.slx": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+              "Center_phase12.slx": "291e4ecc65861bd4fe1db23591c4c7350385faad7492da9041b691409d414a22",
+              "preflight.json": "4e7dca4140826a0f795258c56d321245991e3e541c2b4b5f2c9b90defe10e2b0",
+              "design.json": "9c8e6ce99263e02a4ab9f7ed318aafee542ee0f436e9632ab760e75d83e172de"
+            },
+            "preflight": {
+              "case": "normal",
+              "source_sha256": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+              "derived_sha256": "291e4ecc65861bd4fe1db23591c4c7350385faad7492da9041b691409d414a22",
+              "compile_status": "PASSED",
+              "solver": {
+                "SolverType": "Fixed-step",
+                "Solver": "ode14x",
+                "FixedStep": "0.2",
+                "StartTime": "0.0",
+                "StopTime": "20000",
+                "RelTol": "1e-3",
+                "AbsTol": "auto",
+                "LoadInitialState": "off",
+                "LoadExternalInput": "off"
+              },
+              "existing_block_links_parameters_and_connections_unchanged": true,
+              "location": {
+                "restriction_sid": "213",
+                "upstream_junction_sids": [
+                  "47",
+                  "48",
+                  "50"
+                ],
+                "flow_sensor_sid": "218",
+                "reservoir_sid": "200"
+              },
+              "command_final_area_m2": "0.001",
+              "version": "26.2.0.3433840 (R2026b) Update 1",
+              "products": [
+                {
+                  "Name": "MATLAB",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                },
+                {
+                  "Name": "MATLAB Copilot",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                },
+                {
+                  "Name": "Simscape",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                },
+                {
+                  "Name": "Simulink",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                }
+              ]
+            }
+          },
+          "outlet_opening": {
+            "input_sha256": {
+              "Normal_HNetwork_gest_center.slx": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+              "Center_phase12.slx": "4990dee87fb61a5471afb37c660967bcfd976959215a1b2415423e0652cf5bac",
+              "preflight.json": "a9f1ab24dd10f3b3e32f0da6a732599dd1e4d729fcb3e149a0dac33bd7e15995",
+              "design.json": "6a623f13b8daf61c455c616c38b5783f44127471f7a060a9a5081368a9fb9643"
+            },
+            "preflight": {
+              "case": "outlet_opening",
+              "source_sha256": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+              "derived_sha256": "4990dee87fb61a5471afb37c660967bcfd976959215a1b2415423e0652cf5bac",
+              "compile_status": "PASSED",
+              "solver": {
+                "SolverType": "Fixed-step",
+                "Solver": "ode14x",
+                "FixedStep": "0.2",
+                "StartTime": "0.0",
+                "StopTime": "20000",
+                "RelTol": "1e-3",
+                "AbsTol": "auto",
+                "LoadInitialState": "off",
+                "LoadExternalInput": "off"
+              },
+              "existing_block_links_parameters_and_connections_unchanged": true,
+              "location": {
+                "restriction_sid": "213",
+                "upstream_junction_sids": [
+                  "47",
+                  "48",
+                  "50"
+                ],
+                "flow_sensor_sid": "218",
+                "reservoir_sid": "200"
+              },
+              "command_final_area_m2": "0.0011",
+              "version": "26.2.0.3433840 (R2026b) Update 1",
+              "products": [
+                {
+                  "Name": "MATLAB",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                },
+                {
+                  "Name": "MATLAB Copilot",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                },
+                {
+                  "Name": "Simscape",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                },
+                {
+                  "Name": "Simulink",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "logging_policy": {
+        "SignalLogging": [
+          "on",
+          "off"
+        ],
+        "SaveState": [
+          "on",
+          "off"
+        ],
+        "SaveOutput": [
+          "on",
+          "off"
+        ],
+        "SaveFinalState": [
+          "off",
+          "off"
+        ]
+      },
+      "policy_hash_basis": "Computed from the completed file. Its payload is bound by the approved model hash; no independently recorded pre-run file digest exists.",
+      "reference_extraction_sha256": "67179d668850a7934c94aa5b71449e22c68797688c445469e9a842b8bcedf5ba",
+      "max_clock_grid_error_s": 0.0,
+      "sensors": {
+        "PS1": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.700379412146472,
+          "max": 7.073515169882191,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS2": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.606925289726865,
+          "max": 6.865131389465476,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS3": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.2652758457822824,
+          "max": 6.469974330613208,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS4": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.019155103895426,
+          "max": 5.976854207651502,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS5": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 0.29400000000000454,
+          "max": 0.74,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 2.220446049250313e-16
+        },
+        "PS6": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.3067732897268654,
+          "max": 6.553462594824321,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS7": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.7199999999999935,
+          "max": 7.120000000000209,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS8": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.019154936277432,
+          "max": 5.976853873185183,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS9": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.0963156582829248,
+          "max": 6.1316119211867175,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS10": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.2652758457822824,
+          "max": 6.469974330613208,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "MFS1": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 4.416884502928832,
+          "max": 6.471351286573584,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "kg/s",
+          "native_log_max_difference": 0.0
+        },
+        "MFS2": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": -0.00014656604759011316,
+          "max": 0.005752363026573448,
+          "negative": 38040,
+          "zero": 0,
+          "positive": 61961,
+          "unit": "kg/s",
+          "native_log_max_difference": 0.0
+        },
+        "MFS3": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 4.80549283029079,
+          "max": 6.952617742747166,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "kg/s",
+          "native_log_max_difference": 0.0
+        }
+      },
+      "residuals": [
+        {
+          "sensor": "PS1",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 0.0001802191662219066,
+          "mae": 1.1066179120275522e-06,
+          "rmse": 6.524489447699153e-06,
+          "relative_rmse_reference_rms": 9.497719682925502e-07,
+          "bias": -1.635289400027773e-07,
+          "peak_time_s": 4.800000000000001,
+          "signed_residual_at_peak": 0.0001802191662219066
+        },
+        {
+          "sensor": "PS1",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 5.6981766860531025e-08,
+          "mae": 3.415637906928501e-08,
+          "rmse": 3.7759660279266014e-08,
+          "relative_rmse_reference_rms": 5.362181333324704e-09,
+          "bias": -3.415637906928501e-08,
+          "peak_time_s": 7073.0,
+          "signed_residual_at_peak": -5.6981766860531025e-08
+        },
+        {
+          "sensor": "PS1",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 0.0001802191662219066,
+          "mae": 8.777891949179414e-08,
+          "rmse": 1.459377040537681e-06,
+          "relative_rmse_reference_rms": 2.0749441762070693e-07,
+          "bias": -4.062494243032601e-08,
+          "peak_time_s": 4.800000000000001,
+          "signed_residual_at_peak": 0.0001802191662219066
+        },
+        {
+          "sensor": "PS2",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 8.005056371551689e-06,
+          "mae": 3.3229186505278287e-06,
+          "rmse": 4.220628760566967e-06,
+          "relative_rmse_reference_rms": 6.671850552868953e-07,
+          "bias": 3.3229186504626364e-06,
+          "peak_time_s": 198.0,
+          "signed_residual_at_peak": 8.005056371551689e-06
+        },
+        {
+          "sensor": "PS2",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 7.460718292051638e-07,
+          "mae": 1.9792678534772286e-07,
+          "rmse": 2.3491832003291807e-07,
+          "relative_rmse_reference_rms": 3.437037114289866e-08,
+          "bias": -1.012379516422283e-07,
+          "peak_time_s": 1000.0,
+          "signed_residual_at_peak": 7.460718292051638e-07
+        },
+        {
+          "sensor": "PS2",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 8.005056371551689e-06,
+          "mae": 3.5417481612642036e-07,
+          "rmse": 9.711352963349236e-07,
+          "relative_rmse_reference_rms": 1.4259661572702222e-07,
+          "bias": 6.996816640183448e-08,
+          "peak_time_s": 198.0,
+          "signed_residual_at_peak": 8.005056371551689e-06
+        },
+        {
+          "sensor": "PS3",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 8.146036338807505e-06,
+          "mae": 3.330806495281813e-06,
+          "rmse": 4.217460982769967e-06,
+          "relative_rmse_reference_rms": 7.150311968556274e-07,
+          "bias": 3.330806495273997e-06,
+          "peak_time_s": 219.0,
+          "signed_residual_at_peak": 8.146036338807505e-06
+        },
+        {
+          "sensor": "PS3",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 8.242396773994187e-07,
+          "mae": 2.2494515132143722e-07,
+          "rmse": 2.675583035012345e-07,
+          "relative_rmse_reference_rms": 4.2154582355574097e-08,
+          "bias": -9.94458519898785e-08,
+          "peak_time_s": 1000.0,
+          "signed_residual_at_peak": 8.242396773994187e-07
+        },
+        {
+          "sensor": "PS3",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 8.146036338807505e-06,
+          "mae": 3.8023666560431316e-07,
+          "rmse": 9.78441655356575e-07,
+          "relative_rmse_reference_rms": 1.5468473653654395e-07,
+          "bias": 7.206505026429274e-08,
+          "peak_time_s": 219.0,
+          "signed_residual_at_peak": 8.146036338807505e-06
+        },
+        {
+          "sensor": "PS4",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 7.6278477880720175e-06,
+          "mae": 3.0673817488511723e-06,
+          "rmse": 3.897192951893296e-06,
+          "relative_rmse_reference_rms": 7.215974745620076e-07,
+          "bias": 3.0673817488477973e-06,
+          "peak_time_s": 238.0,
+          "signed_residual_at_peak": 7.6278477880720175e-06
+        },
+        {
+          "sensor": "PS4",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 8.08951567066174e-07,
+          "mae": 2.436811164960664e-07,
+          "rmse": 2.8731208635187357e-07,
+          "relative_rmse_reference_rms": 4.90122494698966e-08,
+          "bias": -8.148659637669132e-08,
+          "peak_time_s": 1000.0,
+          "signed_residual_at_peak": 8.08951567066174e-07
+        },
+        {
+          "sensor": "PS4",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 7.6278477880720175e-06,
+          "mae": 3.848647362776239e-07,
+          "rmse": 9.153244865746817e-07,
+          "relative_rmse_reference_rms": 1.5673769714048017e-07,
+          "bias": 7.595524646610467e-08,
+          "peak_time_s": 238.0,
+          "signed_residual_at_peak": 7.6278477880720175e-06
+        },
+        {
+          "sensor": "PS5",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 2.886579864025407e-15,
+          "mae": 8.770761894538737e-18,
+          "rmse": 1.1163125508639222e-16,
+          "relative_rmse_reference_rms": 1.5502552970719647e-16,
+          "bias": 2.4202861936828413e-18,
+          "peak_time_s": 176.4,
+          "signed_residual_at_peak": 2.886579864025407e-15
+        },
+        {
+          "sensor": "PS5",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 2.0128343436454088e-13,
+          "mae": 2.1428013741878448e-16,
+          "rmse": 5.832778896981503e-15,
+          "relative_rmse_reference_rms": 8.423103502933113e-15,
+          "bias": -2.489210684573408e-18,
+          "peak_time_s": 18556.8,
+          "signed_residual_at_peak": 2.0128343436454088e-13
+        },
+        {
+          "sensor": "PS5",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 2.0128343436454088e-13,
+          "mae": 2.0400477139623242e-16,
+          "rmse": 5.685145931207813e-15,
+          "relative_rmse_reference_rms": 8.193265082645393e-15,
+          "bias": -2.2437382953844876e-18,
+          "peak_time_s": 18556.8,
+          "signed_residual_at_peak": 2.0128343436454088e-13
+        },
+        {
+          "sensor": "PS6",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 8.00505637066351e-06,
+          "mae": 3.322918650852369e-06,
+          "rmse": 4.220628760789292e-06,
+          "relative_rmse_reference_rms": 7.005723374592473e-07,
+          "bias": 3.322918650786999e-06,
+          "peak_time_s": 198.0,
+          "signed_residual_at_peak": 8.00505637066351e-06
+        },
+        {
+          "sensor": "PS6",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 7.46071854962338e-07,
+          "mae": 1.979267853176186e-07,
+          "rmse": 2.349183200191735e-07,
+          "relative_rmse_reference_rms": 3.653128381081266e-08,
+          "bias": -1.0123795159116325e-07,
+          "peak_time_s": 1000.0,
+          "signed_residual_at_peak": 7.46071854962338e-07
+        },
+        {
+          "sensor": "PS6",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 8.00505637066351e-06,
+          "mae": 3.5417481611404817e-07,
+          "rmse": 9.711352963800766e-07,
+          "relative_rmse_reference_rms": 1.514815508535388e-07,
+          "bias": 6.996816646656428e-08,
+          "peak_time_s": 198.0,
+          "signed_residual_at_peak": 8.00505637066351e-06
+        },
+        {
+          "sensor": "PS7",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 2.398081733190338e-14,
+          "mae": 1.2240874980307127e-15,
+          "rmse": 5.345904516746046e-15,
+          "relative_rmse_reference_rms": 7.577424543712731e-16,
+          "bias": 4.0678571622265736e-17,
+          "peak_time_s": 326.6,
+          "signed_residual_at_peak": 2.398081733190338e-14
+        },
+        {
+          "sensor": "PS7",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 2.149391775674303e-13,
+          "mae": 2.5448381158342976e-16,
+          "rmse": 5.9093720353579895e-15,
+          "relative_rmse_reference_rms": 8.338372828329259e-16,
+          "bias": -3.1226154690986605e-18,
+          "peak_time_s": 18601.8,
+          "signed_residual_at_peak": -2.149391775674303e-13
+        },
+        {
+          "sensor": "PS7",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 2.149391775674303e-13,
+          "mae": 3.0296351110879864e-16,
+          "rmse": 5.882480929482511e-15,
+          "relative_rmse_reference_rms": 8.302293969453326e-16,
+          "bias": -9.325780149049824e-19,
+          "peak_time_s": 18601.8,
+          "signed_residual_at_peak": -2.149391775674303e-13
+        },
+        {
+          "sensor": "PS8",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 7.627847375957231e-06,
+          "mae": 3.0673815756053103e-06,
+          "rmse": 3.8971927321581665e-06,
+          "relative_rmse_reference_rms": 7.215974742400329e-07,
+          "bias": 3.06738157559856e-06,
+          "peak_time_s": 238.0,
+          "signed_residual_at_peak": 7.627847375957231e-06
+        },
+        {
+          "sensor": "PS8",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 8.089515324272156e-07,
+          "mae": 2.4368110057171854e-07,
+          "rmse": 2.8731206822313297e-07,
+          "relative_rmse_reference_rms": 4.901224911902132e-08,
+          "bias": -8.148658949775643e-08,
+          "peak_time_s": 1000.0,
+          "signed_residual_at_peak": 8.089515324272156e-07
+        },
+        {
+          "sensor": "PS8",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 7.627847375957231e-06,
+          "mae": 3.8486471248727896e-07,
+          "rmse": 9.153244343907175e-07,
+          "relative_rmse_reference_rms": 1.5673769697234368e-07,
+          "bias": 7.595524433872103e-08,
+          "peak_time_s": 238.0,
+          "signed_residual_at_peak": 7.627847375957231e-06
+        },
+        {
+          "sensor": "PS9",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 7.812116043837136e-06,
+          "mae": 3.148554578894558e-06,
+          "rmse": 3.99683855846671e-06,
+          "relative_rmse_reference_rms": 7.207160681678277e-07,
+          "bias": 3.1485545788863865e-06,
+          "peak_time_s": 236.20000000000002,
+          "signed_residual_at_peak": 7.812116043837136e-06
+        },
+        {
+          "sensor": "PS9",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 8.253899244081708e-07,
+          "mae": 2.4561453826937796e-07,
+          "rmse": 2.8976335529072316e-07,
+          "relative_rmse_reference_rms": 4.818192838460456e-08,
+          "bias": -8.63851070403838e-08,
+          "peak_time_s": 1000.0,
+          "signed_residual_at_peak": 8.253899244081708e-07
+        },
+        {
+          "sensor": "PS9",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 7.812116043837136e-06,
+          "mae": 3.9076008884513124e-07,
+          "rmse": 9.372793819293191e-07,
+          "relative_rmse_reference_rms": 1.5643752003107403e-07,
+          "bias": 7.536025980228631e-08,
+          "peak_time_s": 236.20000000000002,
+          "signed_residual_at_peak": 7.812116043837136e-06
+        },
+        {
+          "sensor": "PS10",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 8.146036338807505e-06,
+          "mae": 3.330806495281813e-06,
+          "rmse": 4.217460982769967e-06,
+          "relative_rmse_reference_rms": 7.150311968556274e-07,
+          "bias": 3.330806495273997e-06,
+          "peak_time_s": 219.0,
+          "signed_residual_at_peak": 8.146036338807505e-06
+        },
+        {
+          "sensor": "PS10",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 8.242396773994187e-07,
+          "mae": 2.2494515132143722e-07,
+          "rmse": 2.675583035012345e-07,
+          "relative_rmse_reference_rms": 4.2154582355574097e-08,
+          "bias": -9.94458519898785e-08,
+          "peak_time_s": 1000.0,
+          "signed_residual_at_peak": 8.242396773994187e-07
+        },
+        {
+          "sensor": "PS10",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 8.146036338807505e-06,
+          "mae": 3.8023666560431316e-07,
+          "rmse": 9.78441655356575e-07,
+          "relative_rmse_reference_rms": 1.5468473653654395e-07,
+          "bias": 7.206505026429274e-08,
+          "peak_time_s": 219.0,
+          "signed_residual_at_peak": 8.146036338807505e-06
+        },
+        {
+          "sensor": "MFS1",
+          "unit": "kg/s",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 4.7964396845401325e-06,
+          "mae": 1.923188533579534e-06,
+          "rmse": 2.4338939165569276e-06,
+          "relative_rmse_reference_rms": 3.987821808997538e-07,
+          "bias": 1.109878434801459e-06,
+          "peak_time_s": 189.60000000000002,
+          "signed_residual_at_peak": 4.7964396845401325e-06
+        },
+        {
+          "sensor": "MFS1",
+          "unit": "kg/s",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 5.3315059274083865e-06,
+          "mae": 2.739107191666061e-06,
+          "rmse": 3.2088524096842137e-06,
+          "relative_rmse_reference_rms": 4.994529365845471e-07,
+          "bias": -2.739107191666061e-06,
+          "peak_time_s": 4709.6,
+          "signed_residual_at_peak": -5.3315059274083865e-06
+        },
+        {
+          "sensor": "MFS1",
+          "unit": "kg/s",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 5.3315059274083865e-06,
+          "mae": 2.6983116667169844e-06,
+          "rmse": 3.1746009613898326e-06,
+          "relative_rmse_reference_rms": 4.953312485556959e-07,
+          "bias": -2.5466598348162538e-06,
+          "peak_time_s": 4709.6,
+          "signed_residual_at_peak": -5.3315059274083865e-06
+        },
+        {
+          "sensor": "MFS2",
+          "unit": "kg/s",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 7.387694722638116e-08,
+          "mae": 7.707950121016438e-09,
+          "rmse": 1.1469449722729746e-08,
+          "relative_rmse_reference_rms": 5.228984926496379e-06,
+          "bias": -1.7815691450095983e-09,
+          "peak_time_s": 10.200000000000001,
+          "signed_residual_at_peak": 7.387694722638116e-08
+        },
+        {
+          "sensor": "MFS2",
+          "unit": "kg/s",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 4.757680471811909e-09,
+          "mae": 1.6847126479383562e-09,
+          "rmse": 2.087904190881755e-09,
+          "relative_rmse_reference_rms": 5.445934754617942e-05,
+          "bias": -2.690909116169893e-11,
+          "peak_time_s": 2296.0,
+          "signed_residual_at_peak": -4.757680471811909e-09
+        },
+        {
+          "sensor": "MFS2",
+          "unit": "kg/s",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 7.387694722638116e-08,
+          "mae": 1.9858715100036394e-09,
+          "rmse": 3.2739466959721892e-09,
+          "relative_rmse_reference_rms": 6.6558992403289985e-06,
+          "bias": -1.1464121653284019e-10,
+          "peak_time_s": 10.200000000000001,
+          "signed_residual_at_peak": 7.387694722638116e-08
+        },
+        {
+          "sensor": "MFS3",
+          "unit": "kg/s",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 9.381960909760068e-05,
+          "mae": 1.7535297631202694e-05,
+          "rmse": 1.8113383289643487e-05,
+          "relative_rmse_reference_rms": 2.6795627636579136e-06,
+          "bias": -1.7278178458790093e-05,
+          "peak_time_s": 4.800000000000001,
+          "signed_residual_at_peak": 9.381960909760068e-05
+        },
+        {
+          "sensor": "MFS3",
+          "unit": "kg/s",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 1.3303668222164333e-05,
+          "mae": 1.6065689654227183e-06,
+          "rmse": 3.2328672319977187e-06,
+          "relative_rmse_reference_rms": 4.6935336421032493e-07,
+          "bias": -1.6065689654227183e-06,
+          "peak_time_s": 1000.0,
+          "signed_residual_at_peak": -1.3303668222164333e-05
+        },
+        {
+          "sensor": "MFS3",
+          "unit": "kg/s",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 9.381960909760068e-05,
+          "mae": 2.4029974344270273e-06,
+          "rmse": 5.13161114101522e-06,
+          "relative_rmse_reference_rms": 7.457035800254926e-07,
+          "bias": -2.3901416043646976e-06,
+          "peak_time_s": 4.800000000000001,
+          "signed_residual_at_peak": 9.381960909760068e-05
+        }
+      ],
+      "native_commands": {
+        "Reservoir/P": {
+          "min": 294000.00000000454,
+          "max": 739999.9999999999,
+          "initial": 739999.9999999999,
+          "final": 294000.00000000454,
+          "unit": "Pa",
+          "max_abs_change_from_reference": 0.0
+        },
+        "Reservoir/T": {
+          "min": 288.0,
+          "max": 288.0,
+          "initial": 288.0,
+          "final": 288.0,
+          "unit": "K",
+          "max_abs_change_from_reference": 0.0
+        },
+        "PS_Step/O": {
+          "min": 2999999.9999999944,
+          "max": 6400000.000000028,
+          "initial": 2999999.9999999995,
+          "final": 6400000.000000001,
+          "unit": "Pa",
+          "max_abs_change_from_reference": 2.9802322387695312e-08
+        },
+        "PS_Ramp/O": {
+          "min": -499900.0000000009,
+          "max": -299999.99999999994,
+          "initial": -299999.99999999994,
+          "final": -499900.0000000009,
+          "unit": "Pa",
+          "max_abs_change_from_reference": 4.976755008101463e-08
+        },
+        "Pressure_Source_G1/P": {
+          "min": -499900.0000000009,
+          "max": -299999.99999999994,
+          "initial": -299999.99999999994,
+          "final": -499900.0000000009,
+          "unit": "Pa",
+          "max_abs_change_from_reference": 4.976755008101463e-08
+        },
+        "Pressure_Source_G3/P": {
+          "min": 2999999.9999999944,
+          "max": 6400000.000000028,
+          "initial": 2999999.9999999995,
+          "final": 6400000.000000001,
+          "unit": "Pa",
+          "max_abs_change_from_reference": 2.9802322387695312e-08
+        }
+      },
+      "outlet": {
+        "histories": {
+          "area": {
+            "min": 0.001,
+            "max": 0.001,
+            "initial": 0.001,
+            "final": 0.001,
+            "unit": "m^2",
+            "max_abs_change_from_native": 0.0
+          },
+          "restriction_area_input": {
+            "min": 0.001,
+            "max": 0.001,
+            "initial": 0.001,
+            "final": 0.001,
+            "unit": "m^2",
+            "max_abs_change_from_native": 0.0
+          },
+          "signed_outlet_flow": {
+            "min": 4.80549283029079,
+            "max": 6.952617742747166,
+            "initial": 4.819208855943636,
+            "final": 5.932713877062126,
+            "unit": "kg/s",
+            "max_abs_change_from_native": 0.0
+          },
+          "signed_sink_flow": {
+            "min": 4.80549283029079,
+            "max": 6.952617742747166,
+            "initial": 4.819208855943636,
+            "final": 5.932713877062126,
+            "unit": "kg/s",
+            "max_abs_change_from_native": 0.0
+          },
+          "upstream_pressure": {
+            "min": 3700379.4121464724,
+            "max": 7073515.169882192,
+            "initial": 3715877.0259093745,
+            "final": 6670716.144042307,
+            "unit": "Pa",
+            "max_abs_change_from_native": 0.0
+          },
+          "downstream_pressure": {
+            "min": 100000.0,
+            "max": 100000.0,
+            "initial": 100000.0,
+            "final": 100000.0,
+            "unit": "Pa",
+            "max_abs_change_from_native": 0.0
+          },
+          "sink_pressure": {
+            "min": 100000.0,
+            "max": 100000.0,
+            "initial": 100000.0,
+            "final": 100000.0,
+            "unit": "Pa",
+            "max_abs_change_from_native": 0.0
+          },
+          "sink_temperature": {
+            "min": 293.15,
+            "max": 293.15,
+            "initial": 293.15,
+            "final": 293.15,
+            "unit": "K",
+            "max_abs_change_from_native": 0.0
+          }
+        },
+        "sign": "Positive from upstream restriction A toward atmospheric reservoir SID 200",
+        "first_received_area_change_s": null,
+        "pre_1000_samples": 5000,
+        "at_or_after_1000_samples": 95001
+      },
+      "boundary_flows_positive_into_network_kg_s": {
+        "Reservoir": {
+          "sid": "1",
+          "min": -100.3473324376038,
+          "max": 1229.9319121810515,
+          "initial": 72.13692237433388,
+          "final": 47.97038000689088
+        },
+        "Reservoir_G": {
+          "sid": "195",
+          "min": -81.75292175605374,
+          "max": -54.67413346820273,
+          "initial": -54.677690095784946,
+          "final": -77.21704161735796
+        },
+        "Reservoir_G1": {
+          "sid": "200",
+          "min": -6.952617742747166,
+          "max": -4.80549283029079,
+          "initial": -4.819208855943636,
+          "final": -5.932713877062126
+        },
+        "Reservoir_G2": {
+          "sid": "217",
+          "min": -6.020563445950093,
+          "max": -4.058758728118388,
+          "initial": -4.0590858503040455,
+          "final": -5.692048240014889
+        },
+        "Reservoir_G3": {
+          "sid": "224",
+          "min": -6.170468128124405,
+          "max": -4.162555005387648,
+          "initial": -4.162900443387125,
+          "final": -5.837433760224911
+        },
+        "Reservoir_G4": {
+          "sid": "316",
+          "min": -6.471351286573584,
+          "max": -4.416884502928832,
+          "initial": -4.418011138080457,
+          "final": -6.157604156248565
+        }
+      },
+      "storage": {
+        "Constant_Volume_Chamber_G": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 11.154346730800448,
+            "max": 12.359289680910646,
+            "initial": 11.154904355203108,
+            "final": 12.029571090516718
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 3.265275845782283,
+            "max": 6.4699743306132085,
+            "initial": 3.2665817513274584,
+            "final": 5.945056535993388
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1021.6340433168465,
+            "max": 1854.666491342509,
+            "initial": 1021.9915417966033,
+            "final": 1724.7472724633194
+          }
+        },
+        "Pipe_G1": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 9.958984329295198,
+            "max": 12.956766645037376,
+            "initial": 11.849538514622939,
+            "final": 9.958984329295198
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 3.710444671404494,
+            "max": 7.096757070218962,
+            "initial": 3.727938516491154,
+            "final": 6.687528381535052
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1095.0186730219036,
+            "max": 2343.528341283258,
+            "initial": 1097.9610276835026,
+            "final": 2343.528341283258
+          }
+        },
+        "Pipe_G2": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 11.638959116904406,
+            "max": 12.712998230122189,
+            "initial": 11.642139081594507,
+            "final": 12.052457383988894
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 3.6568054453541032,
+            "max": 6.969228789638148,
+            "initial": 3.6626433440727464,
+            "final": 6.611451946723907
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1096.49671053491,
+            "max": 1946.0070107233714,
+            "initial": 1097.9472320588145,
+            "final": 1914.4360426298367
+          }
+        },
+        "Pipe_G3": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 11.260758838514834,
+            "max": 12.32054964939988,
+            "initial": 11.261887326593754,
+            "final": 12.018908956449964
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 3.296017778378768,
+            "max": 6.531313065473647,
+            "initial": 3.298013654797101,
+            "final": 6.001166230657134
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1021.5073803208426,
+            "max": 1869.1558917523557,
+            "initial": 1022.023524418805,
+            "final": 1742.5699969591324
+          }
+        },
+        "Pipe_G4": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 10.86467308203686,
+            "max": 12.06578456108461,
+            "initial": 10.865035493832638,
+            "final": 11.742989101652775
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 3.181038409341651,
+            "max": 6.30156545258818,
+            "initial": 3.1816850904187657,
+            "final": 5.79090417965175
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1021.8140522476987,
+            "max": 1851.3508893803407,
+            "initial": 1021.9876889856419,
+            "final": 1721.0256452684257
+          }
+        },
+        "Pipe_G5": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 5.886863295514024,
+            "max": 6.549801126286097,
+            "initial": 5.886934417811192,
+            "final": 6.366813591963273
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 1.7024209676918964,
+            "max": 3.3714911402738035,
+            "initial": 1.7026161968743936,
+            "final": 3.0984144575785777
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1009.258983777043,
+            "max": 1826.7513075046797,
+            "initial": 1009.3625416928611,
+            "final": 1698.3883280880002
+          }
+        },
+        "Pipe_G7": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 10.442957104590075,
+            "max": 11.615348274762955,
+            "initial": 10.443195174800575,
+            "final": 11.290274793888035
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 3.0577552017730323,
+            "max": 6.054390325190787,
+            "initial": 3.0581810067056683,
+            "final": 5.564348776357133
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1021.8775083661532,
+            "max": 1850.0323786097688,
+            "initial": 1021.9965103318789,
+            "final": 1720.0039825112503
+          }
+        },
+        "Pipe_G8": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 11.187879676114385,
+            "max": 12.397853670764608,
+            "initial": 11.18869800224979,
+            "final": 12.06565863832359
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 3.2752051997606837,
+            "max": 6.489904296802653,
+            "initial": 3.276599755166293,
+            "final": 5.963257292425901
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1021.6693121621224,
+            "max": 1854.7775715804198,
+            "initial": 1022.0295752238286,
+            "final": 1724.8531838876747
+          }
+        }
+      },
+      "log_inventory": {
+        "series": 101,
+        "initial_samples": 34,
+        "extraction_errors": 0
+      },
+      "mass_balance": {
+        "step_s": 0.2,
+        "samples": 100001,
+        "pointwise_max_abs_boundary_minus_storage_port_kg_s": 4.547473508864641e-13,
+        "clock_quality": {
+          "first": 0.0,
+          "last": 20000.0,
+          "duplicate_times": 0,
+          "minimum_spacing_s": 0.19999999999708962
+        },
+        "initial_storage_kg": 991685.9619684606,
+        "final": {
+          "time_s": 20000.0,
+          "boundary_net_kg_s": -52.86646164401758,
+          "storage_kg": 1000092.1632225041,
+          "storage_change_kg": 8406.201254043495,
+          "trapezoid_kg": 8520.668719761183,
+          "simpson_kg": 8562.827832200088,
+          "step_left_trapezoid_kg": 8404.070599851673,
+          "step_split_simpson_kg": 8407.139807694177,
+          "trapezoid_residual_kg": -114.46746571768745,
+          "simpson_residual_kg": -156.6265781565926,
+          "step_left_trapezoid_residual_kg": 2.130654191822032,
+          "step_split_simpson_residual_kg": -0.9385536506815697
+        },
+        "gross_boundary_kg": 4212217.24852731,
+        "trapezoid_final_abs_fraction_of_gross": 2.717510967833104e-05,
+        "trapezoid_final_abs_fraction_of_storage_change": 0.01361702655674905,
+        "largest_single_interval_residual_change": [
+          {
+            "time_s": 24.8,
+            "boundary_net_kg_s": -8.170351675188467,
+            "storage_kg": 991123.6094088015,
+            "storage_change_kg": -562.352559659048,
+            "trapezoid_kg": -564.5945989417058,
+            "simpson_kg": -561.4135158197961,
+            "step_left_trapezoid_kg": -564.5945989417058,
+            "step_split_simpson_kg": -561.4135158197961,
+            "trapezoid_residual_kg": 2.2420392826578563,
+            "simpson_residual_kg": -0.9390438392518945,
+            "step_left_trapezoid_residual_kg": 2.2420392826578563,
+            "step_split_simpson_residual_kg": -0.9390438392518945
+          },
+          {
+            "time_s": 25.0,
+            "boundary_net_kg_s": 1157.8108474199114,
+            "storage_kg": 991121.9779235381,
+            "storage_change_kg": -563.9840449225157,
+            "trapezoid_kg": -449.6305493672339,
+            "simpson_kg": -426.90381740458554,
+            "step_left_trapezoid_kg": -566.2286692767435,
+            "step_split_simpson_kg": -563.0475861548338,
+            "trapezoid_residual_kg": -114.35349555528182,
+            "simpson_residual_kg": -137.0802275179302,
+            "step_left_trapezoid_residual_kg": 2.244624354227767,
+            "step_split_simpson_residual_kg": -0.9364587676819838
+          }
+        ],
+        "step_bracket": [
+          {
+            "time_s": 24.8,
+            "boundary_net_kg_s": -8.170351675188467,
+            "storage_kg": 991123.6094088015,
+            "storage_change_kg": -562.352559659048,
+            "trapezoid_kg": -564.5945989417058,
+            "simpson_kg": -561.4135158197961,
+            "step_left_trapezoid_kg": -564.5945989417058,
+            "step_split_simpson_kg": -561.4135158197961,
+            "trapezoid_residual_kg": 2.2420392826578563,
+            "simpson_residual_kg": -0.9390438392518945,
+            "step_left_trapezoid_residual_kg": 2.2420392826578563,
+            "step_split_simpson_residual_kg": -0.9390438392518945
+          },
+          {
+            "time_s": 25.0,
+            "boundary_net_kg_s": 1157.8108474199114,
+            "storage_kg": 991121.9779235381,
+            "storage_change_kg": -563.9840449225157,
+            "trapezoid_kg": -449.6305493672339,
+            "simpson_kg": -426.90381740458554,
+            "step_left_trapezoid_kg": -566.2286692767435,
+            "step_split_simpson_kg": -563.0475861548338,
+            "trapezoid_residual_kg": -114.35349555528182,
+            "simpson_residual_kg": -137.0802275179302,
+            "step_left_trapezoid_residual_kg": 2.244624354227767,
+            "step_split_simpson_residual_kg": -0.9364587676819838
+          }
+        ],
+        "ramp_bracket": [
+          {
+            "time_s": 9.8,
+            "boundary_net_kg_s": -17.434218670291237,
+            "storage_kg": 991278.428279893,
+            "storage_change_kg": -407.5336885675788,
+            "trapezoid_kg": -409.7648103730147,
+            "simpson_kg": -406.5947077105894,
+            "step_left_trapezoid_kg": -409.7648103730147,
+            "step_split_simpson_kg": -406.5947077105894,
+            "trapezoid_residual_kg": 2.2311218054359188,
+            "simpson_residual_kg": -0.9389808569894171,
+            "step_left_trapezoid_residual_kg": 2.2311218054359188,
+            "step_split_simpson_residual_kg": -0.9389808569894171
+          },
+          {
+            "time_s": 10.0,
+            "boundary_net_kg_s": -16.7857270174474,
+            "storage_kg": 991275.0073506853,
+            "storage_change_kg": -410.95461777527817,
+            "trapezoid_kg": -413.1868049417886,
+            "simpson_kg": -410.01556567422097,
+            "step_left_trapezoid_kg": -413.1868049417886,
+            "step_split_simpson_kg": -410.01556567422097,
+            "trapezoid_residual_kg": 2.232187166510414,
+            "simpson_residual_kg": -0.9390521010572002,
+            "step_left_trapezoid_residual_kg": 2.232187166510414,
+            "step_split_simpson_residual_kg": -0.9390521010572002
+          }
+        ],
+        "jump_treatment": "Left-held net flow over the interval ending at the first post-step observation; sensitivity estimate, with no claim of resolved between-knot flow."
+      },
+      "limitations": [
+        "Derived NORMAL is measurably different from the fixed-restriction historical reference.",
+        "The reference comparison is descriptive and carries no certified agreement tolerance.",
+        "Numerical logging retains the physical initial-state samples, with Simulink Dataset state logging disabled.",
+        "Opening runtime response, hydrogen fidelity and independent diagnostic validity remain unverified."
+      ]
+    },
+    "outlet_opening": {
+      "classification": "ACCEPTED",
+      "authorized_next": "Analyze completed pair",
+      "runtime_model": {
+        "stopEvent": "ReachedStopTime",
+        "errorDiagnostic": [],
+        "warningCount": 0,
+        "warnings": [],
+        "simulationErrorMessage": [],
+        "modelName": "Center_phase12",
+        "solverInfo": {
+          "Type": "Fixed-Step",
+          "Solver": "ode14x",
+          "FixedStepSize": 0.2
+        },
+        "start_s": 0,
+        "stop_s": 20000
+      },
+      "stages": [
+        "SIM_STARTED",
+        "SIM_RETURNED",
+        "NUMERIC_EXTRACTION_STARTED",
+        "NUMERIC_CAPTURE_SAVED"
+      ],
+      "capture_hashes": {
+        "execution.log": "22e4c96a9b260914958d9cc1689acbfcf56519dd313b19976f3cf860cc030584",
+        "stages.log": "2e7fe4431dcd85fd852ce22a5fe99a4a8f83f0ac413bfc0d8aa5bdecbe3b8632",
+        "center_raw.mat": "a8cb6432e8b1860805a3a2b3c90f1af1644f6757a17e403c44be831131fe5513",
+        "center_extracted.mat": "e68ed238394f825039951e82f21c417b94eca8586e17058eec84d1098e279317",
+        "sensor_checkpoint.mat": "9e5927f0424bfbc755a13bd29a2dc57343b48dcceb1acbeca47b32a267bbad99",
+        "outlet_evidence.mat": "9378454c950cbe73eeb4e30464c946d03cf2e1189cf9119dcac196dfdc06c709",
+        "logging_policy.mat": "a5b628e49fec0d69429a92ea20fb2be41d31bdc00de7543d57c57a37d5424ee8"
+      },
+      "pair": {
+        "approval_sha256": "7d7017202e25dbd17a3dea2e50c96ba91c861e10c18ff1a3f51539c8a49a3368",
+        "retry_provenance_sha256": "33b25e6f1e8c478eecb1bae6c3a737c4966ca881512ceef233d04eed1529c73b",
+        "saved_model_delta": [
+          "Phase12 Outlet Area.final_value"
+        ],
+        "configset_json_checked": true,
+        "cases": {
+          "normal": {
+            "input_sha256": {
+              "Normal_HNetwork_gest_center.slx": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+              "Center_phase12.slx": "291e4ecc65861bd4fe1db23591c4c7350385faad7492da9041b691409d414a22",
+              "preflight.json": "4e7dca4140826a0f795258c56d321245991e3e541c2b4b5f2c9b90defe10e2b0",
+              "design.json": "9c8e6ce99263e02a4ab9f7ed318aafee542ee0f436e9632ab760e75d83e172de"
+            },
+            "preflight": {
+              "case": "normal",
+              "source_sha256": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+              "derived_sha256": "291e4ecc65861bd4fe1db23591c4c7350385faad7492da9041b691409d414a22",
+              "compile_status": "PASSED",
+              "solver": {
+                "SolverType": "Fixed-step",
+                "Solver": "ode14x",
+                "FixedStep": "0.2",
+                "StartTime": "0.0",
+                "StopTime": "20000",
+                "RelTol": "1e-3",
+                "AbsTol": "auto",
+                "LoadInitialState": "off",
+                "LoadExternalInput": "off"
+              },
+              "existing_block_links_parameters_and_connections_unchanged": true,
+              "location": {
+                "restriction_sid": "213",
+                "upstream_junction_sids": [
+                  "47",
+                  "48",
+                  "50"
+                ],
+                "flow_sensor_sid": "218",
+                "reservoir_sid": "200"
+              },
+              "command_final_area_m2": "0.001",
+              "version": "26.2.0.3433840 (R2026b) Update 1",
+              "products": [
+                {
+                  "Name": "MATLAB",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                },
+                {
+                  "Name": "MATLAB Copilot",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                },
+                {
+                  "Name": "Simscape",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                },
+                {
+                  "Name": "Simulink",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                }
+              ]
+            }
+          },
+          "outlet_opening": {
+            "input_sha256": {
+              "Normal_HNetwork_gest_center.slx": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+              "Center_phase12.slx": "4990dee87fb61a5471afb37c660967bcfd976959215a1b2415423e0652cf5bac",
+              "preflight.json": "a9f1ab24dd10f3b3e32f0da6a732599dd1e4d729fcb3e149a0dac33bd7e15995",
+              "design.json": "6a623f13b8daf61c455c616c38b5783f44127471f7a060a9a5081368a9fb9643"
+            },
+            "preflight": {
+              "case": "outlet_opening",
+              "source_sha256": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+              "derived_sha256": "4990dee87fb61a5471afb37c660967bcfd976959215a1b2415423e0652cf5bac",
+              "compile_status": "PASSED",
+              "solver": {
+                "SolverType": "Fixed-step",
+                "Solver": "ode14x",
+                "FixedStep": "0.2",
+                "StartTime": "0.0",
+                "StopTime": "20000",
+                "RelTol": "1e-3",
+                "AbsTol": "auto",
+                "LoadInitialState": "off",
+                "LoadExternalInput": "off"
+              },
+              "existing_block_links_parameters_and_connections_unchanged": true,
+              "location": {
+                "restriction_sid": "213",
+                "upstream_junction_sids": [
+                  "47",
+                  "48",
+                  "50"
+                ],
+                "flow_sensor_sid": "218",
+                "reservoir_sid": "200"
+              },
+              "command_final_area_m2": "0.0011",
+              "version": "26.2.0.3433840 (R2026b) Update 1",
+              "products": [
+                {
+                  "Name": "MATLAB",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                },
+                {
+                  "Name": "MATLAB Copilot",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                },
+                {
+                  "Name": "Simscape",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                },
+                {
+                  "Name": "Simulink",
+                  "Version": "26.2",
+                  "Release": "(R2026b)",
+                  "Date": "22-May-2026"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "logging_policy": {
+        "SignalLogging": [
+          "on",
+          "off"
+        ],
+        "SaveState": [
+          "on",
+          "off"
+        ],
+        "SaveOutput": [
+          "on",
+          "off"
+        ],
+        "SaveFinalState": [
+          "off",
+          "off"
+        ]
+      },
+      "policy_hash_basis": "Computed from the completed file. Its payload is bound by the approved model hash; no independently recorded pre-run file digest exists.",
+      "reference_extraction_sha256": "67179d668850a7934c94aa5b71449e22c68797688c445469e9a842b8bcedf5ba",
+      "max_clock_grid_error_s": 0.0,
+      "sensors": {
+        "PS1": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.7003781685003587,
+          "max": 7.0729162951608595,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS2": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.6069218589976138,
+          "max": 6.864554918512514,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS3": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.2652732478300064,
+          "max": 6.469973423044716,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS4": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.019153782414999,
+          "max": 5.976853347750989,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS5": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 0.29400000000000454,
+          "max": 0.74,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 2.220446049250313e-16
+        },
+        "PS6": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.3067698589976136,
+          "max": 6.5534617550247996,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS7": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.7199999999999935,
+          "max": 7.120000000000209,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS8": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.0191536147970863,
+          "max": 5.976853013284724,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS9": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.0963142458518265,
+          "max": 6.131611041256831,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "PS10": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 3.2652732478300064,
+          "max": 6.469973423044716,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "MPa",
+          "native_log_max_difference": 1.7763568394002505e-15
+        },
+        "MFS1": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 4.41688234079483,
+          "max": 6.471352313177963,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "kg/s",
+          "native_log_max_difference": 0.0
+        },
+        "MFS2": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": -0.0001465629609640473,
+          "max": 0.0057523516160813415,
+          "negative": 38063,
+          "zero": 0,
+          "positive": 61938,
+          "unit": "kg/s",
+          "native_log_max_difference": 0.0
+        },
+        "MFS3": {
+          "samples": 100001,
+          "first_s": 0.0,
+          "last_s": 20000.0,
+          "invalid_timestamps": 0,
+          "duplicates": 0,
+          "strictly_increasing": true,
+          "nan_or_missing": 0,
+          "infinite": 0,
+          "min": 4.805511307512902,
+          "max": 7.647166513559157,
+          "negative": 0,
+          "zero": 0,
+          "positive": 100001,
+          "unit": "kg/s",
+          "native_log_max_difference": 0.0
+        }
+      },
+      "residuals": [
+        {
+          "sensor": "PS1",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 1.457396612281059e-07,
+          "mae": 2.774400156546619e-09,
+          "rmse": 8.42686743980812e-09,
+          "relative_rmse_reference_rms": 1.226701727239273e-09,
+          "bias": -1.9004848528680895e-09,
+          "peak_time_s": 4.800000000000001,
+          "signed_residual_at_peak": 1.457396612281059e-07
+        },
+        {
+          "sensor": "PS1",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 0.0006049441962634461,
+          "mae": 0.0005790086077176695,
+          "rmse": 0.0005821556247579872,
+          "relative_rmse_reference_rms": 8.26708715353924e-05,
+          "bias": -0.0005790086077176695,
+          "peak_time_s": 4056.6000000000004,
+          "signed_residual_at_peak": -0.0006049441962634461
+        },
+        {
+          "sensor": "PS1",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 0.0006049441962634461,
+          "mae": 0.0005500586055518155,
+          "rmse": 0.000567415264440371,
+          "relative_rmse_reference_rms": 8.06751761702217e-05,
+          "bias": -0.0005500585618564872,
+          "peak_time_s": 4056.6000000000004,
+          "signed_residual_at_peak": -0.0006049441962634461
+        },
+        {
+          "sensor": "PS2",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 1.792008852419258e-08,
+          "mae": 7.2849017082710075e-09,
+          "rmse": 9.250971568245819e-09,
+          "relative_rmse_reference_rms": 1.4623674166472935e-09,
+          "bias": 7.284901550885792e-09,
+          "peak_time_s": 227.20000000000002,
+          "signed_residual_at_peak": 1.792008852419258e-08
+        },
+        {
+          "sensor": "PS2",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 0.0005791818503197987,
+          "mae": 0.0005428706811814433,
+          "rmse": 0.000550159251982659,
+          "relative_rmse_reference_rms": 8.049256301379063e-05,
+          "bias": -0.0005428706811372806,
+          "peak_time_s": 2104.2000000000003,
+          "signed_residual_at_peak": -0.0005791818503197987
+        },
+        {
+          "sensor": "PS2",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 0.0005791818503197987,
+          "mae": 0.0005157277827964403,
+          "rmse": 0.0005362290497123219,
+          "relative_rmse_reference_rms": 7.873717290687715e-05,
+          "bias": -0.0005157270542716076,
+          "peak_time_s": 2104.2000000000003,
+          "signed_residual_at_peak": -0.0005791818503197987
+        },
+        {
+          "sensor": "PS3",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 1.8198713647166187e-08,
+          "mae": 7.266666944971689e-09,
+          "rmse": 9.228264969321798e-09,
+          "relative_rmse_reference_rms": 1.5645663049101234e-09,
+          "bias": 7.266666833594115e-09,
+          "peak_time_s": 247.4,
+          "signed_residual_at_peak": 1.8198713647166187e-08
+        },
+        {
+          "sensor": "PS3",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 0.0005713050418769683,
+          "mae": 0.0005341419113086332,
+          "rmse": 0.0005416391538201342,
+          "relative_rmse_reference_rms": 8.533681077331605e-05,
+          "bias": -0.0005341419112181759,
+          "peak_time_s": 1884.4,
+          "signed_residual_at_peak": -0.0005713050418769683
+        },
+        {
+          "sensor": "PS3",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 0.0005713050418769683,
+          "mae": 0.0005074354461412005,
+          "rmse": 0.0005279246830682564,
+          "relative_rmse_reference_rms": 8.346117529286049e-05,
+          "bias": -0.0005074347193958438,
+          "peak_time_s": 1884.4,
+          "signed_residual_at_peak": -0.0005713050418769683
+        },
+        {
+          "sensor": "PS4",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 1.696972606879399e-08,
+          "mae": 6.671468853536311e-09,
+          "rmse": 8.505986510594348e-09,
+          "relative_rmse_reference_rms": 1.5749536808849895e-09,
+          "bias": 6.671468805752312e-09,
+          "peak_time_s": 266.2,
+          "signed_residual_at_peak": 1.696972606879399e-08
+        },
+        {
+          "sensor": "PS4",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 0.0005270733726430166,
+          "mae": 0.0004908064320703624,
+          "rmse": 0.0004979034659222857,
+          "relative_rmse_reference_rms": 8.493679884326973e-05,
+          "bias": -0.0004908064316041717,
+          "peak_time_s": 1844.4,
+          "signed_residual_at_peak": -0.0005270733726430166
+        },
+        {
+          "sensor": "PS4",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 0.0005270733726430166,
+          "mae": 0.00046626668943771326,
+          "rmse": 0.0004852963963031894,
+          "relative_rmse_reference_rms": 8.310084642418187e-05,
+          "bias": -0.00046626602185462034,
+          "peak_time_s": 1844.4,
+          "signed_residual_at_peak": -0.0005270733726430166
+        },
+        {
+          "sensor": "PS5",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 2.886579864025407e-15,
+          "mae": 9.370282327836322e-18,
+          "rmse": 1.185185829040815e-16,
+          "relative_rmse_reference_rms": 1.6459015963434438e-16,
+          "bias": -3.68594044175552e-18,
+          "peak_time_s": 178.4,
+          "signed_residual_at_peak": 2.886579864025407e-15
+        },
+        {
+          "sensor": "PS5",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 2.0128343436454088e-13,
+          "mae": 2.489952773204725e-16,
+          "rmse": 6.324368676993704e-15,
+          "relative_rmse_reference_rms": 9.13300725055669e-15,
+          "bias": -2.442172783139568e-17,
+          "peak_time_s": 18556.8,
+          "signed_residual_at_peak": 2.0128343436454088e-13
+        },
+        {
+          "sensor": "PS5",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 2.0128343436454088e-13,
+          "mae": 2.3701414738214e-16,
+          "rmse": 6.164290675230457e-15,
+          "relative_rmse_reference_rms": 8.88379439327995e-15,
+          "bias": -2.3384948829703686e-17,
+          "peak_time_s": 18556.8,
+          "signed_residual_at_peak": 2.0128343436454088e-13
+        },
+        {
+          "sensor": "PS6",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 1.7920077866051543e-08,
+          "mae": 7.284902076776234e-09,
+          "rmse": 9.250971764207306e-09,
+          "relative_rmse_reference_rms": 1.535547256093714e-09,
+          "bias": 7.284901919391018e-09,
+          "peak_time_s": 227.20000000000002,
+          "signed_residual_at_peak": 1.7920077866051543e-08
+        },
+        {
+          "sensor": "PS6",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 0.0005791818503197987,
+          "mae": 0.0005428706811813796,
+          "rmse": 0.0005501592519825927,
+          "relative_rmse_reference_rms": 8.555324154233751e-05,
+          "bias": -0.0005428706811372164,
+          "peak_time_s": 2104.2000000000003,
+          "signed_residual_at_peak": -0.0005791818503197987
+        },
+        {
+          "sensor": "PS6",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 0.0005791818503197987,
+          "mae": 0.0005157277827963983,
+          "rmse": 0.0005362290497122574,
+          "relative_rmse_reference_rms": 8.36431425836481e-05,
+          "bias": -0.0005157270542715284,
+          "peak_time_s": 2104.2000000000003,
+          "signed_residual_at_peak": -0.0005791818503197987
+        },
+        {
+          "sensor": "PS7",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 4.973799150320701e-14,
+          "mae": 1.4008350035510375e-15,
+          "rmse": 5.7318551478803624e-15,
+          "relative_rmse_reference_rms": 8.124481038241872e-16,
+          "bias": 8.597567102697212e-17,
+          "peak_time_s": 483.20000000000005,
+          "signed_residual_at_peak": 4.973799150320701e-14
+        },
+        {
+          "sensor": "PS7",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 2.1582735598713043e-13,
+          "mae": 2.9182430913905865e-16,
+          "rmse": 6.466175831365067e-15,
+          "relative_rmse_reference_rms": 9.124046435534249e-16,
+          "bias": -1.897877066547988e-17,
+          "peak_time_s": 18617.600000000002,
+          "signed_residual_at_peak": 2.1582735598713043e-13
+        },
+        {
+          "sensor": "PS7",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 2.1582735598713043e-13,
+          "mae": 3.472742893598554e-16,
+          "rmse": 6.431451705363711e-15,
+          "relative_rmse_reference_rms": 9.077088960995363e-16,
+          "bias": -1.373110105755336e-17,
+          "peak_time_s": 18617.600000000002,
+          "signed_residual_at_peak": 2.1582735598713043e-13
+        },
+        {
+          "sensor": "PS8",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 1.6969731397864507e-08,
+          "mae": 6.6714684275659406e-09,
+          "rmse": 8.50598598224539e-09,
+          "relative_rmse_reference_rms": 1.5749536711545661e-09,
+          "bias": 6.671468378360856e-09,
+          "peak_time_s": 266.2,
+          "signed_residual_at_peak": 1.6969731397864507e-08
+        },
+        {
+          "sensor": "PS8",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 0.0005270733428588414,
+          "mae": 0.0004908064042762725,
+          "rmse": 0.0004979034377328079,
+          "relative_rmse_reference_rms": 8.493679878572067e-05,
+          "bias": -0.0004908064038100818,
+          "peak_time_s": 1844.4,
+          "signed_residual_at_peak": -0.0005270733428588414
+        },
+        {
+          "sensor": "PS8",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 0.0005270733428588414,
+          "mae": 0.00046626666303329267,
+          "rmse": 0.00048529636882747775,
+          "relative_rmse_reference_rms": 8.310084636786937e-05,
+          "bias": -0.0004662659954502424,
+          "peak_time_s": 1844.4,
+          "signed_residual_at_peak": -0.0005270733428588414
+        },
+        {
+          "sensor": "PS9",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 1.7384636841200063e-08,
+          "mae": 6.847885180327751e-09,
+          "rmse": 8.723594860176138e-09,
+          "relative_rmse_reference_rms": 1.5730520249802538e-09,
+          "bias": 6.847885119753982e-09,
+          "peak_time_s": 264.40000000000003,
+          "signed_residual_at_peak": 1.7384636841200063e-08
+        },
+        {
+          "sensor": "PS9",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 0.0005409582888225017,
+          "mae": 0.0005040559457821791,
+          "rmse": 0.0005113161305181472,
+          "relative_rmse_reference_rms": 8.502178323342745e-05,
+          "bias": -0.0005040559454643539,
+          "peak_time_s": 1847.0,
+          "signed_residual_at_peak": -0.0005409582888225017
+        },
+        {
+          "sensor": "PS9",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 0.0005409582888225017,
+          "mae": 0.00047885374290935795,
+          "rmse": 0.0004983694480866969,
+          "relative_rmse_reference_rms": 8.318083382721553e-05,
+          "bias": -0.0004788530578257567,
+          "peak_time_s": 1847.0,
+          "signed_residual_at_peak": -0.0005409582888225017
+        },
+        {
+          "sensor": "PS10",
+          "unit": "MPa",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 1.8198713647166187e-08,
+          "mae": 7.266666944971689e-09,
+          "rmse": 9.228264969321798e-09,
+          "relative_rmse_reference_rms": 1.5645663049101234e-09,
+          "bias": 7.266666833594115e-09,
+          "peak_time_s": 247.4,
+          "signed_residual_at_peak": 1.8198713647166187e-08
+        },
+        {
+          "sensor": "PS10",
+          "unit": "MPa",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 0.0005713050418769683,
+          "mae": 0.0005341419113086332,
+          "rmse": 0.0005416391538201342,
+          "relative_rmse_reference_rms": 8.533681077331605e-05,
+          "bias": -0.0005341419112181759,
+          "peak_time_s": 1884.4,
+          "signed_residual_at_peak": -0.0005713050418769683
+        },
+        {
+          "sensor": "PS10",
+          "unit": "MPa",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 0.0005713050418769683,
+          "mae": 0.0005074354461412005,
+          "rmse": 0.0005279246830682564,
+          "relative_rmse_reference_rms": 8.346117529286049e-05,
+          "bias": -0.0005074347193958438,
+          "peak_time_s": 1884.4,
+          "signed_residual_at_peak": -0.0005713050418769683
+        },
+        {
+          "sensor": "MFS1",
+          "unit": "kg/s",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 9.55821377601751e-09,
+          "mae": 4.078270624141567e-09,
+          "rmse": 4.899574052277585e-09,
+          "relative_rmse_reference_rms": 8.027723857460078e-10,
+          "bias": 1.1398323609412841e-09,
+          "peak_time_s": 218.8,
+          "signed_residual_at_peak": 9.55821377601751e-09
+        },
+        {
+          "sensor": "MFS1",
+          "unit": "kg/s",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 0.0005639119924207847,
+          "mae": 0.00044685522224802594,
+          "rmse": 0.00045225908099690904,
+          "relative_rmse_reference_rms": 7.039342956978319e-05,
+          "bias": -0.00044685522224802594,
+          "peak_time_s": 20000.0,
+          "signed_residual_at_peak": -0.0005639119924207847
+        },
+        {
+          "sensor": "MFS1",
+          "unit": "kg/s",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 0.0005639119924207847,
+          "mae": 0.0004245128884724936,
+          "rmse": 0.00044080774130711,
+          "relative_rmse_reference_rms": 6.877899034563251e-05,
+          "bias": -0.0004245126275699534,
+          "peak_time_s": 20000.0,
+          "signed_residual_at_peak": -0.0005639119924207847
+        },
+        {
+          "sensor": "MFS2",
+          "unit": "kg/s",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 8.321165978486533e-11,
+          "mae": 1.767857185086541e-11,
+          "rmse": 2.0868144210437946e-11,
+          "relative_rmse_reference_rms": 9.513901203480071e-09,
+          "bias": -6.3758434976080025e-12,
+          "peak_time_s": 6.800000000000001,
+          "signed_residual_at_peak": 8.321165978486533e-11
+        },
+        {
+          "sensor": "MFS2",
+          "unit": "kg/s",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 1.5044228405258764e-06,
+          "mae": 6.087639399571578e-08,
+          "rmse": 1.1704248188783874e-07,
+          "relative_rmse_reference_rms": 0.003052849468205413,
+          "bias": -5.961922033872819e-08,
+          "peak_time_s": 1035.2,
+          "signed_residual_at_peak": -1.5044228405258764e-06
+        },
+        {
+          "sensor": "MFS2",
+          "unit": "kg/s",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 1.5044228405258764e-06,
+          "mae": 5.783348865357596e-08,
+          "rmse": 1.1407893017257109e-07,
+          "relative_rmse_reference_rms": 0.00023192126664960545,
+          "bias": -5.663860792009085e-08,
+          "peak_time_s": 1035.2,
+          "signed_residual_at_peak": -1.5044228405258764e-06
+        },
+        {
+          "sensor": "MFS3",
+          "unit": "kg/s",
+          "window": "pre_1000_s",
+          "matched_samples": 5000,
+          "finite_pairs": 5000,
+          "max_absolute": 1.2040798758050641e-07,
+          "mae": 5.014396323375081e-08,
+          "rmse": 5.1514734778867054e-08,
+          "relative_rmse_reference_rms": 7.620716841568162e-09,
+          "bias": -4.9937088632745484e-08,
+          "peak_time_s": 6.800000000000001,
+          "signed_residual_at_peak": -1.2040798758050641e-07
+        },
+        {
+          "sensor": "MFS3",
+          "unit": "kg/s",
+          "window": "at_or_after_1000_s",
+          "matched_samples": 95001,
+          "finite_pairs": 95001,
+          "max_absolute": 0.6945487366892849,
+          "mae": 0.6876207277231355,
+          "rmse": 0.6878951525841643,
+          "relative_rmse_reference_rms": 0.09986983099514436,
+          "bias": 0.6876207277231355,
+          "peak_time_s": 17000.0,
+          "signed_residual_at_peak": 0.6945487366892849
+        },
+        {
+          "sensor": "MFS3",
+          "unit": "kg/s",
+          "window": "entire",
+          "matched_samples": 100001,
+          "finite_pairs": 100001,
+          "max_absolute": 0.6945487366892849,
+          "mae": 0.6532400376510775,
+          "rmse": 0.6704774347424796,
+          "relative_rmse_reference_rms": 0.09743088665032047,
+          "bias": 0.6532400326470751,
+          "peak_time_s": 17000.0,
+          "signed_residual_at_peak": 0.6945487366892849
+        }
+      ],
+      "native_commands": {
+        "Reservoir/P": {
+          "min": 294000.00000000454,
+          "max": 739999.9999999999,
+          "initial": 739999.9999999999,
+          "final": 294000.00000000454,
+          "unit": "Pa",
+          "max_abs_change_from_reference": 0.0
+        },
+        "Reservoir/T": {
+          "min": 288.0,
+          "max": 288.0,
+          "initial": 288.0,
+          "final": 288.0,
+          "unit": "K",
+          "max_abs_change_from_reference": 0.0
+        },
+        "PS_Step/O": {
+          "min": 2999999.9999999944,
+          "max": 6400000.000000028,
+          "initial": 2999999.9999999995,
+          "final": 6400000.000000001,
+          "unit": "Pa",
+          "max_abs_change_from_reference": 5.029141902923584e-08
+        },
+        "PS_Ramp/O": {
+          "min": -499900.0000000002,
+          "max": -299999.99999999994,
+          "initial": -299999.99999999994,
+          "final": -499900.0000000002,
+          "unit": "Pa",
+          "max_abs_change_from_reference": 4.976755008101463e-08
+        },
+        "Pressure_Source_G1/P": {
+          "min": -499900.0000000002,
+          "max": -299999.99999999994,
+          "initial": -299999.99999999994,
+          "final": -499900.0000000002,
+          "unit": "Pa",
+          "max_abs_change_from_reference": 4.976755008101463e-08
+        },
+        "Pressure_Source_G3/P": {
+          "min": 2999999.9999999944,
+          "max": 6400000.000000028,
+          "initial": 2999999.9999999995,
+          "final": 6400000.000000001,
+          "unit": "Pa",
+          "max_abs_change_from_reference": 5.029141902923584e-08
+        }
+      },
+      "outlet": {
+        "histories": {
+          "area": {
+            "min": 0.001,
+            "max": 0.0011,
+            "initial": 0.001,
+            "final": 0.0011,
+            "unit": "m^2",
+            "max_abs_change_from_native": 0.0
+          },
+          "restriction_area_input": {
+            "min": 0.001,
+            "max": 0.0011,
+            "initial": 0.001,
+            "final": 0.0011,
+            "unit": "m^2",
+            "max_abs_change_from_native": 0.0
+          },
+          "signed_outlet_flow": {
+            "min": 4.805511307512902,
+            "max": 7.647166513559157,
+            "initial": 4.819208855943634,
+            "final": 6.520960988360034,
+            "unit": "kg/s",
+            "max_abs_change_from_native": 0.0
+          },
+          "signed_sink_flow": {
+            "min": 4.805511307512902,
+            "max": 7.647166513559157,
+            "initial": 4.819208855943634,
+            "final": 6.520960988360034,
+            "unit": "kg/s",
+            "max_abs_change_from_native": 0.0
+          },
+          "upstream_pressure": {
+            "min": 3700378.168500359,
+            "max": 7072916.295160861,
+            "initial": 3715877.0259093745,
+            "final": 6670380.932950291,
+            "unit": "Pa",
+            "max_abs_change_from_native": 0.0
+          },
+          "downstream_pressure": {
+            "min": 100000.0,
+            "max": 100000.0,
+            "initial": 100000.0,
+            "final": 100000.0,
+            "unit": "Pa",
+            "max_abs_change_from_native": 0.0
+          },
+          "sink_pressure": {
+            "min": 100000.0,
+            "max": 100000.0,
+            "initial": 100000.0,
+            "final": 100000.0,
+            "unit": "Pa",
+            "max_abs_change_from_native": 0.0
+          },
+          "sink_temperature": {
+            "min": 293.15,
+            "max": 293.15,
+            "initial": 293.15,
+            "final": 293.15,
+            "unit": "K",
+            "max_abs_change_from_native": 0.0
+          }
+        },
+        "sign": "Positive from upstream restriction A toward atmospheric reservoir SID 200",
+        "first_received_area_change_s": 1000.0,
+        "pre_1000_samples": 5000,
+        "at_or_after_1000_samples": 95001
+      },
+      "boundary_flows_positive_into_network_kg_s": {
+        "Reservoir": {
+          "sid": "1",
+          "min": -99.8666920099513,
+          "max": 1229.9371544685196,
+          "initial": 72.13692237433382,
+          "final": 48.333654766819514
+        },
+        "Reservoir_G": {
+          "sid": "195",
+          "min": -81.75291470053784,
+          "max": -54.67412122776884,
+          "initial": -54.677690095784904,
+          "final": -77.21326025990095
+        },
+        "Reservoir_G1": {
+          "sid": "200",
+          "min": -7.647166513559157,
+          "max": -4.805511307512902,
+          "initial": -4.819208855943634,
+          "final": -6.520960988360034
+        },
+        "Reservoir_G2": {
+          "sid": "217",
+          "min": -6.020562939978401,
+          "max": -4.0587576963449035,
+          "initial": -4.059085850304041,
+          "final": -5.691772029547808
+        },
+        "Reservoir_G3": {
+          "sid": "224",
+          "min": -6.170467660212214,
+          "max": -4.162553937470925,
+          "initial": -4.162900443387122,
+          "final": -5.837133879084887
+        },
+        "Reservoir_G4": {
+          "sid": "316",
+          "min": -6.471352313177963,
+          "max": -4.41688234079483,
+          "initial": -4.4180111380804545,
+          "final": -6.15704066891339
+        }
+      },
+      "storage": {
+        "Constant_Volume_Chamber_G": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 11.154345520135568,
+            "max": 12.359289840519095,
+            "initial": 11.15490435520308,
+            "final": 12.028440637655242
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 3.265273247830007,
+            "max": 6.469973423044717,
+            "initial": 3.2665817513274593,
+            "final": 5.944901270027537
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1021.6333413594116,
+            "max": 1854.533932347268,
+            "initial": 1021.9915417966059,
+            "final": 1724.8643179354176
+          }
+        },
+        "Pipe_G1": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 9.944706829021293,
+            "max": 12.956223157629378,
+            "initial": 11.849538514622939,
+            "final": 9.944706829021293
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 3.7104441005009243,
+            "max": 7.096457635587152,
+            "initial": 3.727938516491154,
+            "final": 6.687423300668529
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1095.009365265012,
+            "max": 2346.856041112148,
+            "initial": 1097.9610276835028,
+            "final": 2346.856041112148
+          }
+        },
+        "Pipe_G2": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 11.638956874840332,
+            "max": 12.711991686372931,
+            "initial": 11.642139081594507,
+            "final": 12.048634665833834
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 3.6568006063285026,
+            "max": 6.9686416940188,
+            "initial": 3.662643344072747,
+            "final": 6.611264948567758
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1096.495470771085,
+            "max": 1946.004073246662,
+            "initial": 1097.9472320588145,
+            "final": 1914.9892783085397
+          }
+        },
+        "Pipe_G3": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 11.260757077404174,
+            "max": 12.319598831194208,
+            "initial": 11.261887326593735,
+            "final": 12.017013852472427
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 3.2960146312909027,
+            "max": 6.53131217809587,
+            "initial": 3.2980136547971015,
+            "final": 6.001006182652161
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1021.5065647271656,
+            "max": 1869.154577898422,
+            "initial": 1022.0235244188065,
+            "final": 1742.7983225062437
+          }
+        },
+        "Pipe_G4": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 10.864672127491602,
+            "max": 12.06578445188997,
+            "initial": 10.865035493832618,
+            "final": 11.74207929581642
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 3.1810367024371327,
+            "max": 6.30156455020542,
+            "initial": 3.1816850904187657,
+            "final": 5.790756905804975
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1021.8135937295497,
+            "max": 1851.2202417126111,
+            "initial": 1021.9876889856432,
+            "final": 1721.1152222757248
+          }
+        },
+        "Pipe_G5": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 5.886863047746807,
+            "max": 6.549800975611503,
+            "initial": 5.886934417811176,
+            "final": 6.366359636829268
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 1.7024202966707032,
+            "max": 3.371490651843366,
+            "initial": 1.7026161968743936,
+            "final": 3.0983366114362836
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1009.258632321224,
+            "max": 1826.6229854017022,
+            "initial": 1009.362541692863,
+            "final": 1698.4667579482496
+          }
+        },
+        "Pipe_G7": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 10.442956354301629,
+            "max": 11.615348000350316,
+            "initial": 10.443195174800564,
+            "final": 11.289463971907978
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 3.057753859975384,
+            "max": 6.054389453879666,
+            "initial": 3.0581810067056683,
+            "final": 5.564208181834043
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1021.8771333661846,
+            "max": 1849.9023626848962,
+            "initial": 1021.9965103318806,
+            "final": 1720.0840526289542
+          }
+        },
+        "Pipe_G8": {
+          "rho_I": {
+            "unit": "kg/m^3",
+            "min": 11.187878079685358,
+            "max": 12.397853817189153,
+            "initial": 11.18869800224977,
+            "final": 12.064522436098922
+          },
+          "p_I": {
+            "unit": "MPa",
+            "min": 3.275202476397731,
+            "max": 6.489903387400415,
+            "initial": 3.2765997551662935,
+            "final": 5.9631013914890465
+          },
+          "T_I": {
+            "unit": "K",
+            "min": 1021.6686084194615,
+            "max": 1854.6449819745599,
+            "initial": 1022.0295752238302,
+            "final": 1724.9705275319557
+          }
+        }
+      },
+      "log_inventory": {
+        "series": 101,
+        "initial_samples": 34,
+        "extraction_errors": 0
+      },
+      "mass_balance": {
+        "step_s": 0.2,
+        "samples": 100001,
+        "pointwise_max_abs_boundary_minus_storage_port_kg_s": 4.547473508864641e-13,
+        "clock_quality": {
+          "first": 0.0,
+          "last": 20000.0,
+          "duplicate_times": 0,
+          "minimum_spacing_s": 0.19999999999708962
+        },
+        "initial_storage_kg": 991685.9619684599,
+        "final": {
+          "time_s": 20000.0,
+          "boundary_net_kg_s": -53.086513058987556,
+          "storage_kg": 999658.1627163411,
+          "storage_change_kg": 7972.200747881201,
+          "trapezoid_kg": 8086.884757308192,
+          "simpson_kg": 8129.151735254806,
+          "step_left_trapezoid_kg": 7970.286338179855,
+          "step_split_simpson_kg": 7973.415694262693,
+          "trapezoid_residual_kg": -114.684009426991,
+          "simpson_residual_kg": -156.95098737360513,
+          "step_left_trapezoid_residual_kg": 1.9144097013459032,
+          "step_split_simpson_residual_kg": -1.2149463814921546
+        },
+        "gross_boundary_kg": 4237672.104313814,
+        "trapezoid_final_abs_fraction_of_gross": 2.706297386960316e-05,
+        "trapezoid_final_abs_fraction_of_storage_change": 0.01438548940924135,
+        "largest_single_interval_residual_change": [
+          {
+            "time_s": 24.8,
+            "boundary_net_kg_s": -8.168111666226892,
+            "storage_kg": 991125.2712345445,
+            "storage_change_kg": -560.6907339154277,
+            "trapezoid_kg": -562.6466389221199,
+            "simpson_kg": -559.3815990159247,
+            "step_left_trapezoid_kg": -562.6466389221199,
+            "step_split_simpson_kg": -559.3815990159247,
+            "trapezoid_residual_kg": 1.9559050066922055,
+            "simpson_residual_kg": -1.3091348995029648,
+            "step_left_trapezoid_residual_kg": 1.9559050066922055,
+            "step_split_simpson_residual_kg": -1.3091348995029648
+          },
+          {
+            "time_s": 25.0,
+            "boundary_net_kg_s": 1157.8160796171437,
+            "storage_kg": 991123.6401950973,
+            "storage_change_kg": -562.3217733625788,
+            "trapezoid_kg": -447.68184212702863,
+            "simpson_kg": -424.87110252985383,
+            "step_left_trapezoid_kg": -564.2802612553653,
+            "step_split_simpson_kg": -561.0152213491701,
+            "trapezoid_residual_kg": -114.6399312355502,
+            "simpson_residual_kg": -137.450670832725,
+            "step_left_trapezoid_residual_kg": 1.9584878927864793,
+            "step_split_simpson_residual_kg": -1.306552013408691
+          }
+        ],
+        "step_bracket": [
+          {
+            "time_s": 24.8,
+            "boundary_net_kg_s": -8.168111666226892,
+            "storage_kg": 991125.2712345445,
+            "storage_change_kg": -560.6907339154277,
+            "trapezoid_kg": -562.6466389221199,
+            "simpson_kg": -559.3815990159247,
+            "step_left_trapezoid_kg": -562.6466389221199,
+            "step_split_simpson_kg": -559.3815990159247,
+            "trapezoid_residual_kg": 1.9559050066922055,
+            "simpson_residual_kg": -1.3091348995029648,
+            "step_left_trapezoid_residual_kg": 1.9559050066922055,
+            "step_split_simpson_residual_kg": -1.3091348995029648
+          },
+          {
+            "time_s": 25.0,
+            "boundary_net_kg_s": 1157.8160796171437,
+            "storage_kg": 991123.6401950973,
+            "storage_change_kg": -562.3217733625788,
+            "trapezoid_kg": -447.68184212702863,
+            "simpson_kg": -424.87110252985383,
+            "step_left_trapezoid_kg": -564.2802612553653,
+            "step_split_simpson_kg": -561.0152213491701,
+            "trapezoid_residual_kg": -114.6399312355502,
+            "simpson_residual_kg": -137.450670832725,
+            "step_left_trapezoid_residual_kg": 1.9584878927864793,
+            "step_split_simpson_residual_kg": -1.306552013408691
+          }
+        ],
+        "ramp_bracket": [
+          {
+            "time_s": 9.8,
+            "boundary_net_kg_s": -17.403078387092382,
+            "storage_kg": 991279.987071706,
+            "storage_change_kg": -405.97489675390534,
+            "trapezoid_kg": -407.9199325344585,
+            "simpson_kg": -404.66582438822184,
+            "step_left_trapezoid_kg": -407.9199325344585,
+            "step_split_simpson_kg": -404.66582438822184,
+            "trapezoid_residual_kg": 1.9450357805531553,
+            "simpson_residual_kg": -1.3090723656835053,
+            "step_left_trapezoid_residual_kg": 1.9450357805531553,
+            "step_split_simpson_residual_kg": -1.3090723656835053
+          },
+          {
+            "time_s": 10.0,
+            "boundary_net_kg_s": -16.75732792750864,
+            "storage_kg": 991276.572090702,
+            "storage_change_kg": -409.38987775787245,
+            "trapezoid_kg": -411.3359731659186,
+            "simpson_kg": -408.08073465506675,
+            "step_left_trapezoid_kg": -411.3359731659186,
+            "step_split_simpson_kg": -408.08073465506675,
+            "trapezoid_residual_kg": 1.9460954080461192,
+            "simpson_residual_kg": -1.309143102805706,
+            "step_left_trapezoid_residual_kg": 1.9460954080461192,
+            "step_split_simpson_residual_kg": -1.309143102805706
+          }
+        ],
+        "jump_treatment": "Left-held net flow over the interval ending at the first post-step observation; sensitivity estimate, with no claim of resolved between-knot flow."
+      },
+      "limitations": [
+        "Derived NORMAL is measurably different from the fixed-restriction historical reference.",
+        "The reference comparison is descriptive and carries no certified agreement tolerance.",
+        "Numerical logging retains the physical initial-state samples, with Simulink Dataset state logging disabled.",
+        "Opening runtime response, hydrogen fidelity and independent diagnostic validity remain unverified."
+      ]
+    }
+  },
+  "outlet_effect": {
+    "onset_s": 1000.0,
+    "prior_knot_s": 999.8000000000001,
+    "command_before_m2": 0.001,
+    "command_after_m2": 0.0011,
+    "pre_max_abs_kg_s": 9.374359277103395e-05,
+    "pre_rmse_kg_s": 1.806239036483021e-05,
+    "at_event_delta_kg_s": 0.6912691173361418,
+    "event_control_kg_s": 6.915908135188345,
+    "at_event_relative_change": 0.09995348460731342,
+    "min_post_delta_kg_s": 0.5882471112979086,
+    "peak_delta_kg_s": 0.6945487708119913,
+    "peak_time_s": 17000.0,
+    "final_delta_kg_s": 0.5882471112979086,
+    "final_relative_change": 0.09915312342506025,
+    "tail_1000_s_mean_delta_kg_s": 0.6147542993064701,
+    "post_trapezoid_increment_kg": 13064.833924393912,
+    "post_simpson_increment_kg": 13064.833924429791,
+    "event_resolution": "Area and outlet flow first differ on the same saved knot; a sub-tick delay is unresolved."
+  },
+  "sensors": [
+    {
+      "sensor": "PS1",
+      "unit": "MPa",
+      "pre_samples": 5000,
+      "pre_max_abs": 0.00018007342656067848,
+      "pre_rmse": 6.518462222023832e-06,
+      "post_samples": 95001,
+      "post_max_abs": 0.0006049018850529109,
+      "post_rmse": 0.0005821205708547772,
+      "post_peak_s": 4021.2000000000003,
+      "post_signed_peak": -0.0006049018850529109,
+      "event_sample_delta": -0.0002522818594963283,
+      "final_delta": -0.00033521109201561927,
+      "tail_1000_s_mean": -0.00037590882576436747,
+      "post_peak_over_pre_envelope": 3.3591957270223873,
+      "descriptive_threshold": 0.00018007342656067848,
+      "first_sustained_s": 1000.0,
+      "descriptive_delay_s": 0.0,
+      "historical_pre_event_max_abs": 0.0001802191662219066,
+      "pre_event_within_observed_reference_scale": true
+    },
+    {
+      "sensor": "PS2",
+      "unit": "MPa",
+      "pre_samples": 5000,
+      "pre_max_abs": 7.987505919793136e-06,
+      "pre_rmse": 4.2116117948479e-06,
+      "post_samples": 95001,
+      "post_max_abs": 0.0005795928648639759,
+      "post_rmse": 0.0005500531402416857,
+      "post_peak_s": 1919.6000000000001,
+      "post_signed_peak": -0.0005795928648639759,
+      "event_sample_delta": -7.439740796755245e-07,
+      "final_delta": -0.00016716671102479097,
+      "tail_1000_s_mean": -0.000240062908817481,
+      "post_peak_over_pre_envelope": 72.56243321557206,
+      "descriptive_threshold": 7.987505919793136e-06,
+      "first_sustained_s": 1002.4000000000001,
+      "descriptive_delay_s": 2.400000000000091,
+      "historical_pre_event_max_abs": 8.005056371551689e-06,
+      "pre_event_within_observed_reference_scale": true
+    },
+    {
+      "sensor": "PS3",
+      "unit": "MPa",
+      "pre_samples": 5000,
+      "pre_max_abs": 8.12824796359024e-06,
+      "pre_rmse": 4.208465804543702e-06,
+      "post_samples": 95001,
+      "post_max_abs": 0.0005718599789261702,
+      "post_rmse": 0.0005415349011893781,
+      "post_peak_s": 1812.4,
+      "post_signed_peak": -0.0005718599789261702,
+      "event_sample_delta": -8.219093876604688e-07,
+      "final_delta": -0.00015526596585058172,
+      "tail_1000_s_mean": -0.00023097722954533746,
+      "post_peak_over_pre_envelope": 70.35464241344086,
+      "descriptive_threshold": 8.12824796359024e-06,
+      "first_sustained_s": 1007.0,
+      "descriptive_delay_s": 7.0,
+      "historical_pre_event_max_abs": 8.146036338807505e-06,
+      "pre_event_within_observed_reference_scale": true
+    },
+    {
+      "sensor": "PS4",
+      "unit": "MPa",
+      "pre_samples": 5000,
+      "pre_max_abs": 7.611299749576972e-06,
+      "pre_rmse": 3.88890348974624e-06,
+      "post_samples": 95001,
+      "post_max_abs": 0.0005276901223574271,
+      "post_rmse": 0.0004978187600394969,
+      "post_peak_s": 1808.2,
+      "post_signed_peak": -0.0005276901223574271,
+      "event_sample_delta": -8.066448575760887e-07,
+      "final_delta": -0.00013870907078405992,
+      "tail_1000_s_mean": -0.00021104371978835214,
+      "post_peak_over_pre_envelope": 69.32983060964791,
+      "descriptive_threshold": 7.611299749576972e-06,
+      "first_sustained_s": 1015.4000000000001,
+      "descriptive_delay_s": 15.400000000000091,
+      "historical_pre_event_max_abs": 7.6278477880720175e-06,
+      "pre_event_within_observed_reference_scale": true
+    },
+    {
+      "sensor": "PS5",
+      "unit": "MPa",
+      "pre_samples": 5000,
+      "pre_max_abs": 2.886579864025407e-15,
+      "pre_rmse": 1.2931119827902236e-16,
+      "post_samples": 95001,
+      "post_max_abs": 2.0117241206207837e-13,
+      "post_rmse": 5.932327782851051e-15,
+      "post_peak_s": 18538.4,
+      "post_signed_peak": 2.0117241206207837e-13,
+      "event_sample_delta": 0.0,
+      "final_delta": 0.0,
+      "tail_1000_s_mean": 0.0,
+      "post_peak_over_pre_envelope": 0.020117241206207837,
+      "descriptive_threshold": 1e-11,
+      "first_sustained_s": null,
+      "descriptive_delay_s": null,
+      "historical_pre_event_max_abs": 2.886579864025407e-15,
+      "pre_event_within_observed_reference_scale": true
+    },
+    {
+      "sensor": "PS6",
+      "unit": "MPa",
+      "pre_samples": 5000,
+      "pre_max_abs": 7.987505919793136e-06,
+      "pre_rmse": 4.211611794897593e-06,
+      "post_samples": 95001,
+      "post_max_abs": 0.0005795928648639759,
+      "post_rmse": 0.0005500531402416746,
+      "post_peak_s": 1919.6000000000001,
+      "post_signed_peak": -0.0005795928648639759,
+      "event_sample_delta": -7.439740814518814e-07,
+      "final_delta": -0.0001671667110239028,
+      "tail_1000_s_mean": -0.00024006290881750783,
+      "post_peak_over_pre_envelope": 72.56243321557206,
+      "descriptive_threshold": 7.987505919793136e-06,
+      "first_sustained_s": 1002.4000000000001,
+      "descriptive_delay_s": 2.400000000000091,
+      "historical_pre_event_max_abs": 8.00505637066351e-06,
+      "pre_event_within_observed_reference_scale": true
+    },
+    {
+      "sensor": "PS7",
+      "unit": "MPa",
+      "pre_samples": 5000,
+      "pre_max_abs": 4.973799150320701e-14,
+      "pre_rmse": 5.928709041460435e-15,
+      "post_samples": 95001,
+      "post_max_abs": 2.1582735598713043e-13,
+      "post_rmse": 6.0610286664872695e-15,
+      "post_peak_s": 18495.0,
+      "post_signed_peak": 2.1582735598713043e-13,
+      "event_sample_delta": 0.0,
+      "final_delta": 0.0,
+      "tail_1000_s_mean": -8.88000819536218e-19,
+      "post_peak_over_pre_envelope": 0.021582735598713043,
+      "descriptive_threshold": 1e-11,
+      "first_sustained_s": null,
+      "descriptive_delay_s": null,
+      "historical_pre_event_max_abs": 2.398081733190338e-14,
+      "pre_event_within_observed_reference_scale": true
+    },
+    {
+      "sensor": "PS8",
+      "unit": "MPa",
+      "pre_samples": 5000,
+      "pre_max_abs": 7.611299315257725e-06,
+      "pre_rmse": 3.888903270569246e-06,
+      "post_samples": 95001,
+      "post_max_abs": 0.0005276900925395012,
+      "post_rmse": 0.0004978187318571365,
+      "post_peak_s": 1808.2,
+      "post_signed_peak": -0.0005276900925395012,
+      "event_sample_delta": -8.066448113908109e-07,
+      "final_delta": -0.0001387090628206522,
+      "tail_1000_s_mean": -0.00021104370773021388,
+      "post_peak_over_pre_envelope": 69.32983064818981,
+      "descriptive_threshold": 7.611299315257725e-06,
+      "first_sustained_s": 1015.4000000000001,
+      "descriptive_delay_s": 15.400000000000091,
+      "historical_pre_event_max_abs": 7.627847375957231e-06,
+      "pre_event_within_observed_reference_scale": true
+    },
+    {
+      "sensor": "PS9",
+      "unit": "MPa",
+      "pre_samples": 5000,
+      "pre_max_abs": 7.795157212164838e-06,
+      "pre_rmse": 3.98833613232033e-06,
+      "post_samples": 95001,
+      "post_max_abs": 0.0005415787547882189,
+      "post_rmse": 0.0005112261776557803,
+      "post_peak_s": 1808.0,
+      "post_signed_peak": -0.0005415787547882189,
+      "event_sample_delta": -8.23039060904307e-07,
+      "final_delta": -0.00014296673103419977,
+      "tail_1000_s_mean": -0.0002169211549274154,
+      "post_peak_over_pre_envelope": 69.47630946340003,
+      "descriptive_threshold": 7.795157212164838e-06,
+      "first_sustained_s": 1013.8000000000001,
+      "descriptive_delay_s": 13.800000000000068,
+      "historical_pre_event_max_abs": 7.812116043837136e-06,
+      "pre_event_within_observed_reference_scale": true
+    },
+    {
+      "sensor": "PS10",
+      "unit": "MPa",
+      "pre_samples": 5000,
+      "pre_max_abs": 8.12824796359024e-06,
+      "pre_rmse": 4.208465804543702e-06,
+      "post_samples": 95001,
+      "post_max_abs": 0.0005718599789261702,
+      "post_rmse": 0.0005415349011893781,
+      "post_peak_s": 1812.4,
+      "post_signed_peak": -0.0005718599789261702,
+      "event_sample_delta": -8.219093876604688e-07,
+      "final_delta": -0.00015526596585058172,
+      "tail_1000_s_mean": -0.00023097722954533746,
+      "post_peak_over_pre_envelope": 70.35464241344086,
+      "descriptive_threshold": 8.12824796359024e-06,
+      "first_sustained_s": 1007.0,
+      "descriptive_delay_s": 7.0,
+      "historical_pre_event_max_abs": 8.146036338807505e-06,
+      "pre_event_within_observed_reference_scale": true
+    },
+    {
+      "sensor": "MFS1",
+      "unit": "kg/s",
+      "pre_samples": 5000,
+      "pre_max_abs": 4.787170851727751e-06,
+      "pre_rmse": 2.4292551742052005e-06,
+      "post_samples": 95001,
+      "post_max_abs": 0.0005634873351754166,
+      "post_rmse": 0.00044973806169316624,
+      "post_peak_s": 20000.0,
+      "post_signed_peak": -0.0005634873351754166,
+      "event_sample_delta": 1.4849781173609244e-06,
+      "final_delta": -0.0005634873351754166,
+      "tail_1000_s_mean": -0.0004981056408827789,
+      "post_peak_over_pre_envelope": 117.70779707435068,
+      "descriptive_threshold": 4.787170851727751e-06,
+      "first_sustained_s": 1007.6,
+      "descriptive_delay_s": 7.600000000000023,
+      "historical_pre_event_max_abs": 4.7964396845401325e-06,
+      "pre_event_within_observed_reference_scale": true
+    },
+    {
+      "sensor": "MFS2",
+      "unit": "kg/s",
+      "pre_samples": 5000,
+      "pre_max_abs": 7.385516198610276e-08,
+      "pre_rmse": 1.1456028858884952e-08,
+      "post_samples": 95001,
+      "post_max_abs": 1.5010015630423368e-06,
+      "post_rmse": 1.1699848635124432e-07,
+      "post_peak_s": 1035.2,
+      "post_signed_peak": -1.5010015630423368e-06,
+      "event_sample_delta": 3.3324027981507243e-09,
+      "final_delta": -3.7491355442398344e-07,
+      "tail_1000_s_mean": -2.1869181286651454e-07,
+      "post_peak_over_pre_envelope": 20.32358365586929,
+      "descriptive_threshold": 7.385516198610276e-08,
+      "first_sustained_s": 1001.8000000000001,
+      "descriptive_delay_s": 1.8000000000000682,
+      "historical_pre_event_max_abs": 7.387694722638116e-08,
+      "pre_event_within_observed_reference_scale": true
+    },
+    {
+      "sensor": "MFS3",
+      "unit": "kg/s",
+      "pre_samples": 5000,
+      "pre_max_abs": 9.374359277103395e-05,
+      "pre_rmse": 1.806239036483021e-05,
+      "post_samples": 95001,
+      "post_max_abs": 0.6945487708119913,
+      "post_rmse": 0.6878967700594093,
+      "post_peak_s": 17000.0,
+      "post_signed_peak": 0.6945487708119913,
+      "event_sample_delta": 0.6912691173361418,
+      "final_delta": 0.5882471112979086,
+      "tail_1000_s_mean": 0.6147542993064701,
+      "post_peak_over_pre_envelope": 7409.026582845047,
+      "descriptive_threshold": 9.374359277103395e-05,
+      "first_sustained_s": 1000.0,
+      "descriptive_delay_s": 0.0,
+      "historical_pre_event_max_abs": 9.381960909760068e-05,
+      "pre_event_within_observed_reference_scale": true
+    }
+  ],
+  "windows": [
+    {
+      "sensor": "PS1",
+      "window_s": 0.2,
+      "samples": 2,
+      "peak_abs": 0.0002686849544728531,
+      "rmse": 0.00026061249144179976,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS1",
+      "window_s": 1,
+      "samples": 6,
+      "peak_abs": 0.00032172595463908493,
+      "rmse": 0.0002899769629805366,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS1",
+      "window_s": 5,
+      "samples": 26,
+      "peak_abs": 0.00043225536550561827,
+      "rmse": 0.00037301473099724257,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS1",
+      "window_s": 30,
+      "samples": 151,
+      "peak_abs": 0.0005142698549382985,
+      "rmse": 0.00046912995038603814,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS1",
+      "window_s": 120,
+      "samples": 601,
+      "peak_abs": 0.0005778395736273367,
+      "rmse": 0.000533994638669415,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS1",
+      "window_s": 600,
+      "samples": 3001,
+      "peak_abs": 0.0006045006255206431,
+      "rmse": 0.0005875563558148927,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS2",
+      "window_s": 0.2,
+      "samples": 2,
+      "peak_abs": 1.15662834510033e-06,
+      "rmse": 9.724419159822792e-07,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS2",
+      "window_s": 1,
+      "samples": 6,
+      "peak_abs": 3.3083153843094237e-06,
+      "rmse": 2.1345570603636727e-06,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS2",
+      "window_s": 5,
+      "samples": 26,
+      "peak_abs": 2.1581713626872556e-05,
+      "rmse": 1.1691795266706972e-05,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS2",
+      "window_s": 30,
+      "samples": 151,
+      "peak_abs": 0.00017015018990296227,
+      "rmse": 9.761938527163687e-05,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS2",
+      "window_s": 120,
+      "samples": 601,
+      "peak_abs": 0.00044822445216130546,
+      "rmse": 0.0003027332866790091,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS2",
+      "window_s": 600,
+      "samples": 3001,
+      "peak_abs": 0.0005792358527214603,
+      "rmse": 0.0005175671997145312,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS3",
+      "window_s": 0.2,
+      "samples": 2,
+      "peak_abs": 8.221893352811094e-07,
+      "rmse": 8.220493733877544e-07,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS3",
+      "window_s": 1,
+      "samples": 6,
+      "peak_abs": 8.631036783057766e-07,
+      "rmse": 8.344998919672711e-07,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS3",
+      "window_s": 5,
+      "samples": 26,
+      "peak_abs": 4.182393078977498e-06,
+      "rmse": 2.067295655342947e-06,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS3",
+      "window_s": 30,
+      "samples": 151,
+      "peak_abs": 0.00011255664605336335,
+      "rmse": 5.6301971601533056e-05,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS3",
+      "window_s": 120,
+      "samples": 601,
+      "peak_abs": 0.00041970716757866455,
+      "rmse": 0.00026561472733725684,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS3",
+      "window_s": 600,
+      "samples": 3001,
+      "peak_abs": 0.0005715533339065715,
+      "rmse": 0.000504154527535855,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS4",
+      "window_s": 0.2,
+      "samples": 2,
+      "peak_abs": 8.066448575760887e-07,
+      "rmse": 8.066109485249828e-07,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS4",
+      "window_s": 1,
+      "samples": 6,
+      "peak_abs": 8.066448575760887e-07,
+      "rmse": 8.064877704376722e-07,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS4",
+      "window_s": 5,
+      "samples": 26,
+      "peak_abs": 8.970325433566018e-07,
+      "rmse": 8.24378949276465e-07,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS4",
+      "window_s": 30,
+      "samples": 151,
+      "peak_abs": 4.615248461092847e-05,
+      "rmse": 1.895483377670831e-05,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS4",
+      "window_s": 120,
+      "samples": 601,
+      "peak_abs": 0.0003558249392057178,
+      "rmse": 0.00020500789609615545,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS4",
+      "window_s": 600,
+      "samples": 3001,
+      "peak_abs": 0.0005273439967412585,
+      "rmse": 0.0004572431939517856,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS5",
+      "window_s": 0.2,
+      "samples": 2,
+      "peak_abs": 0.0,
+      "rmse": 0.0,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS5",
+      "window_s": 1,
+      "samples": 6,
+      "peak_abs": 0.0,
+      "rmse": 0.0,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS5",
+      "window_s": 5,
+      "samples": 26,
+      "peak_abs": 0.0,
+      "rmse": 0.0,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS5",
+      "window_s": 30,
+      "samples": 151,
+      "peak_abs": 0.0,
+      "rmse": 0.0,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS5",
+      "window_s": 120,
+      "samples": 601,
+      "peak_abs": 0.0,
+      "rmse": 0.0,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS5",
+      "window_s": 600,
+      "samples": 3001,
+      "peak_abs": 0.0,
+      "rmse": 0.0,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS6",
+      "window_s": 0.2,
+      "samples": 2,
+      "peak_abs": 1.1566283317776538e-06,
+      "rmse": 9.724419087387506e-07,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS6",
+      "window_s": 1,
+      "samples": 6,
+      "peak_abs": 3.308315385197602e-06,
+      "rmse": 2.13455706248858e-06,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS6",
+      "window_s": 5,
+      "samples": 26,
+      "peak_abs": 2.1581713616214415e-05,
+      "rmse": 1.1691795262296219e-05,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS6",
+      "window_s": 30,
+      "samples": 151,
+      "peak_abs": 0.00017015018991628494,
+      "rmse": 9.761938527105603e-05,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS6",
+      "window_s": 120,
+      "samples": 601,
+      "peak_abs": 0.0004482244521968326,
+      "rmse": 0.0003027332866795623,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS6",
+      "window_s": 600,
+      "samples": 3001,
+      "peak_abs": 0.0005792358527205721,
+      "rmse": 0.0005175671997146469,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS7",
+      "window_s": 0.2,
+      "samples": 2,
+      "peak_abs": 0.0,
+      "rmse": 0.0,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS7",
+      "window_s": 1,
+      "samples": 6,
+      "peak_abs": 0.0,
+      "rmse": 0.0,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS7",
+      "window_s": 5,
+      "samples": 26,
+      "peak_abs": 0.0,
+      "rmse": 0.0,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS7",
+      "window_s": 30,
+      "samples": 151,
+      "peak_abs": 0.0,
+      "rmse": 0.0,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS7",
+      "window_s": 120,
+      "samples": 601,
+      "peak_abs": 0.0,
+      "rmse": 0.0,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS7",
+      "window_s": 600,
+      "samples": 3001,
+      "peak_abs": 0.0,
+      "rmse": 0.0,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS8",
+      "window_s": 0.2,
+      "samples": 2,
+      "peak_abs": 8.066448113908109e-07,
+      "rmse": 8.066108992312113e-07,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS8",
+      "window_s": 1,
+      "samples": 6,
+      "peak_abs": 8.066448113908109e-07,
+      "rmse": 8.064877264725285e-07,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS8",
+      "window_s": 5,
+      "samples": 26,
+      "peak_abs": 8.970324847368261e-07,
+      "rmse": 8.243789003229025e-07,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS8",
+      "window_s": 30,
+      "samples": 151,
+      "peak_abs": 4.6152481758099384e-05,
+      "rmse": 1.895483257844808e-05,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS8",
+      "window_s": 120,
+      "samples": 601,
+      "peak_abs": 0.0003558249190289686,
+      "rmse": 0.00020500788437290534,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS8",
+      "window_s": 600,
+      "samples": 3001,
+      "peak_abs": 0.0005273439669295499,
+      "rmse": 0.0004572431680993603,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS9",
+      "window_s": 0.2,
+      "samples": 2,
+      "peak_abs": 8.23039060904307e-07,
+      "rmse": 8.230040461031748e-07,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS9",
+      "window_s": 1,
+      "samples": 6,
+      "peak_abs": 8.231879657927266e-07,
+      "rmse": 8.229940860396781e-07,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS9",
+      "window_s": 5,
+      "samples": 26,
+      "peak_abs": 1.0583443836864603e-06,
+      "rmse": 8.780581641082019e-07,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS9",
+      "window_s": 30,
+      "samples": 151,
+      "peak_abs": 5.38641834211262e-05,
+      "rmse": 2.2895723183695254e-05,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS9",
+      "window_s": 120,
+      "samples": 601,
+      "peak_abs": 0.00036901145011825065,
+      "rmse": 0.00021505453244015626,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS9",
+      "window_s": 600,
+      "samples": 3001,
+      "peak_abs": 0.0005412305886869362,
+      "rmse": 0.000470179831524883,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS10",
+      "window_s": 0.2,
+      "samples": 2,
+      "peak_abs": 8.221893352811094e-07,
+      "rmse": 8.220493733877544e-07,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS10",
+      "window_s": 1,
+      "samples": 6,
+      "peak_abs": 8.631036783057766e-07,
+      "rmse": 8.344998919672711e-07,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS10",
+      "window_s": 5,
+      "samples": 26,
+      "peak_abs": 4.182393078977498e-06,
+      "rmse": 2.067295655342947e-06,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "PS10",
+      "window_s": 30,
+      "samples": 151,
+      "peak_abs": 0.00011255664605336335,
+      "rmse": 5.6301971601533056e-05,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS10",
+      "window_s": 120,
+      "samples": 601,
+      "peak_abs": 0.00041970716757866455,
+      "rmse": 0.00026561472733725684,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "PS10",
+      "window_s": 600,
+      "samples": 3001,
+      "peak_abs": 0.0005715533339065715,
+      "rmse": 0.000504154527535855,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "MFS1",
+      "window_s": 0.2,
+      "samples": 2,
+      "peak_abs": 1.4849781173609244e-06,
+      "rmse": 1.4845366233518373e-06,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "MFS1",
+      "window_s": 1,
+      "samples": 6,
+      "peak_abs": 1.4849781173609244e-06,
+      "rmse": 1.4689209521949622e-06,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "MFS1",
+      "window_s": 5,
+      "samples": 26,
+      "peak_abs": 1.4849781173609244e-06,
+      "rmse": 1.0598263750543917e-06,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "MFS1",
+      "window_s": 30,
+      "samples": 151,
+      "peak_abs": 6.760555100271404e-05,
+      "rmse": 3.382916999983643e-05,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "MFS1",
+      "window_s": 120,
+      "samples": 601,
+      "peak_abs": 0.00024356647123369157,
+      "rmse": 0.00015519141397226069,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "MFS1",
+      "window_s": 600,
+      "samples": 3001,
+      "peak_abs": 0.00033141192317476253,
+      "rmse": 0.0002917472616981318,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "MFS2",
+      "window_s": 0.2,
+      "samples": 2,
+      "peak_abs": 3.3324027981507243e-09,
+      "rmse": 2.614854015963695e-09,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "MFS2",
+      "window_s": 1,
+      "samples": 6,
+      "peak_abs": 3.140065985007823e-08,
+      "rmse": 1.5956765582855957e-08,
+      "any_over_pre_envelope": false,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "MFS2",
+      "window_s": 5,
+      "samples": 26,
+      "peak_abs": 3.744482626188983e-07,
+      "rmse": 2.0008766094899692e-07,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "MFS2",
+      "window_s": 30,
+      "samples": 151,
+      "peak_abs": 1.4830479102556637e-06,
+      "rmse": 1.0596552601683528e-06,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "MFS2",
+      "window_s": 120,
+      "samples": 601,
+      "peak_abs": 1.5010015630423368e-06,
+      "rmse": 1.1181962132960654e-06,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "MFS2",
+      "window_s": 600,
+      "samples": 3001,
+      "peak_abs": 1.5010015630423368e-06,
+      "rmse": 5.25707697326631e-07,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "MFS3",
+      "window_s": 0.2,
+      "samples": 2,
+      "peak_abs": 0.6912691173361418,
+      "rmse": 0.6912646454010323,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": false
+    },
+    {
+      "sensor": "MFS3",
+      "window_s": 1,
+      "samples": 6,
+      "peak_abs": 0.6912691173361418,
+      "rmse": 0.6912491089813845,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "MFS3",
+      "window_s": 5,
+      "samples": 26,
+      "peak_abs": 0.6912691173361418,
+      "rmse": 0.6912057084301808,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "MFS3",
+      "window_s": 30,
+      "samples": 151,
+      "peak_abs": 0.6912691173361418,
+      "rmse": 0.69116200195731,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "MFS3",
+      "window_s": 120,
+      "samples": 601,
+      "peak_abs": 0.6912691173361418,
+      "rmse": 0.6911831583953169,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    },
+    {
+      "sensor": "MFS3",
+      "window_s": 600,
+      "samples": 3001,
+      "peak_abs": 0.6918789727799437,
+      "rmse": 0.6914891173363641,
+      "any_over_pre_envelope": true,
+      "five_consecutive_over_envelope": true
+    }
+  ],
+  "mass": {
+    "normal": {
+      "initial_storage_kg": 991685.9619684606,
+      "final_storage_kg": 1000092.1632225041,
+      "trapezoid_residual_kg": -114.46746571768745,
+      "event_aware_residual_kg": -0.9385536506815697,
+      "peak_abs_event_aware_residual_kg": 2.2477981941399605,
+      "pointwise_flow_residual_kg_s": 4.547473508864641e-13,
+      "event_right_knots_s": [
+        25.0
+      ]
+    },
+    "outlet_opening": {
+      "initial_storage_kg": 991685.9619684599,
+      "final_storage_kg": 999658.1627163411,
+      "trapezoid_residual_kg": -114.684009426991,
+      "event_aware_residual_kg": -1.3064655699854484,
+      "peak_abs_event_aware_residual_kg": 2.3352953195723103,
+      "pointwise_flow_residual_kg_s": 4.547473508864641e-13,
+      "event_right_knots_s": [
+        25.0,
+        1000.0
+      ]
+    }
+  },
+  "paired_mass": {
+    "final_storage_delta_kg": -434.0005061629927,
+    "final_net_inflow_delta_kg_s": -0.22005141496997283,
+    "signed_boundary_integral_delta_kg": -433.6325942429903,
+    "boundary_components_positive_into_network": {
+      "1": {
+        "post_integrated_delta_kg": 12510.09054828166,
+        "final_delta_kg_s": 0.3632747599286361
+      },
+      "195": {
+        "post_integrated_delta_kg": 96.3695659766386,
+        "final_delta_kg_s": 0.003781357457015133
+      },
+      "200": {
+        "post_integrated_delta_kg": -13064.833924429791,
+        "final_delta_kg_s": -0.5882471112979086
+      },
+      "217": {
+        "post_integrated_delta_kg": 6.998790878841032,
+        "final_delta_kg_s": 0.0002762104670805954
+      },
+      "224": {
+        "post_integrated_delta_kg": 7.27453403438858,
+        "final_delta_kg_s": 0.00029988114002410526
+      },
+      "316": {
+        "post_integrated_delta_kg": 8.438238808427062,
+        "final_delta_kg_s": 0.0005634873351754166
+      }
+    }
+  },
+  "framework": {
+    "diagnostic": {
+      "certificate": {
+        "excluded": [],
+        "feasible": [],
+        "indeterminate": [
+          "NORMAL",
+          "OUTLET_SID_213",
+          "OUTLET_SID_312",
+          "OUTLET_SID_215",
+          "OUTLET_SID_222"
+        ],
+        "measurement": {
+          "cadence_tolerance_s": 1e-09,
+          "channels": [
+            {
+              "absolute_errors": [],
+              "resampled": false,
+              "sensor_id": "PS1",
+              "timestamp_source": "Saved approved Phase 12 MAT clock",
+              "timestamps_s": [
+                1000.0,
+                1000.2,
+                1000.4000000000001,
+                1000.6,
+                1000.8000000000001,
+                1001.0,
+                1001.2,
+                1001.4000000000001,
+                1001.6,
+                1001.8000000000001,
+                1002.0,
+                1002.2,
+                1002.4000000000001,
+                1002.6,
+                1002.8000000000001,
+                1003.0,
+                1003.2,
+                1003.4000000000001,
+                1003.6,
+                1003.8000000000001,
+                1004.0,
+                1004.2,
+                1004.4000000000001,
+                1004.6,
+                1004.8000000000001,
+                1005.0
+              ],
+              "unit": "MPa",
+              "values": [
+                7.072385121830655,
+                7.072368758867942,
+                7.072353769702334,
+                7.072340032107436,
+                7.072327434876325,
+                7.072315876816287,
+                7.072305265836909,
+                7.072295518123108,
+                7.072286557384215,
+                7.072278314172318,
+                7.072270725263226,
+                7.07226373309402,
+                7.072257285252162,
+                7.0722513340112,
+                7.072245835908496,
+                7.072240751361651,
+                7.072236044319733,
+                7.072231681945804,
+                7.072227634328338,
+                7.0722238742189285,
+                7.072220376793331,
+                7.072217119434291,
+                7.0722140815339225,
+                7.072211244313649,
+                7.072208590660749,
+                7.072206104979295
+              ]
+            },
+            {
+              "absolute_errors": [],
+              "resampled": false,
+              "sensor_id": "PS2",
+              "timestamp_source": "Saved approved Phase 12 MAT clock",
+              "timestamps_s": [
+                1000.0,
+                1000.2,
+                1000.4000000000001,
+                1000.6,
+                1000.8000000000001,
+                1001.0,
+                1001.2,
+                1001.4000000000001,
+                1001.6,
+                1001.8000000000001,
+                1002.0,
+                1002.2,
+                1002.4000000000001,
+                1002.6,
+                1002.8000000000001,
+                1003.0,
+                1003.2,
+                1003.4000000000001,
+                1003.6,
+                1003.8000000000001,
+                1004.0,
+                1004.2,
+                1004.4000000000001,
+                1004.6,
+                1004.8000000000001,
+                1005.0
+              ],
+              "unit": "MPa",
+              "values": [
+                6.862258741864457,
+                6.862258281534661,
+                6.862257767245747,
+                6.862257202184934,
+                6.862256589358186,
+                6.862255931597843,
+                6.862255231570404,
+                6.862254491784671,
+                6.862253714599711,
+                6.862252902232803,
+                6.862252056767036,
+                6.862251180159121,
+                6.862250274246379,
+                6.862249340754061,
+                6.862248381301973,
+                6.862247397410938,
+                6.862246390508953,
+                6.862245361937047,
+                6.862244312954654,
+                6.862243244744977,
+                6.862242158419949,
+                6.862241055024651,
+                6.862239935541776,
+                6.862238800895958,
+                6.862237651957113,
+                6.86223648954445
+              ]
+            },
+            {
+              "absolute_errors": [],
+              "resampled": false,
+              "sensor_id": "PS3",
+              "timestamp_source": "Saved approved Phase 12 MAT clock",
+              "timestamps_s": [
+                1000.0,
+                1000.2,
+                1000.4000000000001,
+                1000.6,
+                1000.8000000000001,
+                1001.0,
+                1001.2,
+                1001.4000000000001,
+                1001.6,
+                1001.8000000000001,
+                1002.0,
+                1002.2,
+                1002.4000000000001,
+                1002.6,
+                1002.8000000000001,
+                1003.0,
+                1003.2,
+                1003.4000000000001,
+                1003.6,
+                1003.8000000000001,
+                1004.0,
+                1004.2,
+                1004.4000000000001,
+                1004.6,
+                1004.8000000000001,
+                1005.0
+              ],
+              "unit": "MPa",
+              "values": [
+                6.468942010722393,
+                6.468939943471091,
+                6.468937873210643,
+                6.4689357979950755,
+                6.46893371605752,
+                6.4689316258004075,
+                6.468929525784764,
+                6.468927414720313,
+                6.468925291455487,
+                6.4689231549681345,
+                6.468921004356416,
+                6.468918838829665,
+                6.4689166577004595,
+                6.4689144603763715,
+                6.468912246352793,
+                6.468910015205598,
+                6.468907766584648,
+                6.468905500207575,
+                6.468903215853923,
+                6.468900913359658,
+                6.468898592612083,
+                6.468896253545314,
+                6.468893896135681,
+                6.4688915203978095,
+                6.468889126380723,
+                6.468886714164565
+              ]
+            },
+            {
+              "absolute_errors": [],
+              "resampled": false,
+              "sensor_id": "PS4",
+              "timestamp_source": "Saved approved Phase 12 MAT clock",
+              "timestamps_s": [
+                1000.0,
+                1000.2,
+                1000.4000000000001,
+                1000.6,
+                1000.8000000000001,
+                1001.0,
+                1001.2,
+                1001.4000000000001,
+                1001.6,
+                1001.8000000000001,
+                1002.0,
+                1002.2,
+                1002.4000000000001,
+                1002.6,
+                1002.8000000000001,
+                1003.0,
+                1003.2,
+                1003.4000000000001,
+                1003.6,
+                1003.8000000000001,
+                1004.0,
+                1004.2,
+                1004.4000000000001,
+                1004.6,
+                1004.8000000000001,
+                1005.0
+              ],
+              "unit": "MPa",
+              "values": [
+                5.976317357469665,
+                5.976315904613638,
+                5.97631445065561,
+                5.976312995595527,
+                5.976311539429347,
+                5.976310082147942,
+                5.976308623735789,
+                5.976307164170046,
+                5.976305703419963,
+                5.976304241446476,
+                5.976302778201805,
+                5.976301313629309,
+                5.9762998476637135,
+                5.9762983802309195,
+                5.976296911248423,
+                5.9762954406254964,
+                5.976293968263544,
+                5.97629249405654,
+                5.976291017891412,
+                5.976289539648617,
+                5.9762880592025,
+                5.976286576421961,
+                5.97628509117081,
+                5.976283603308458,
+                5.976282112690406,
+                5.976280619168604
+              ]
+            },
+            {
+              "absolute_errors": [],
+              "resampled": false,
+              "sensor_id": "PS5",
+              "timestamp_source": "Saved approved Phase 12 MAT clock",
+              "timestamps_s": [
+                1000.0,
+                1000.2,
+                1000.4000000000001,
+                1000.6,
+                1000.8000000000001,
+                1001.0,
+                1001.2,
+                1001.4000000000001,
+                1001.6,
+                1001.8000000000001,
+                1002.0,
+                1002.2,
+                1002.4000000000001,
+                1002.6,
+                1002.8000000000001,
+                1003.0,
+                1003.2,
+                1003.4000000000001,
+                1003.6,
+                1003.8000000000001,
+                1004.0,
+                1004.2,
+                1004.4000000000001,
+                1004.6,
+                1004.8000000000001,
+                1005.0
+              ],
+              "unit": "MPa",
+              "values": [
+                0.7200000000000002,
+                0.7200000000000002,
+                0.7200000000000002,
+                0.7200000000000002,
+                0.7200000000000002,
+                0.7200000000000002,
+                0.7200000000000016,
+                0.7200000000000002,
+                0.7200000000000002,
+                0.7200000000000016,
+                0.7200000000000002,
+                0.7200000000000002,
+                0.7200000000000016,
+                0.7200000000000002,
+                0.7200000000000002,
+                0.7200000000000016,
+                0.7200000000000002,
+                0.7200000000000002,
+                0.7200000000000016,
+                0.7200000000000002,
+                0.7200000000000002,
+                0.7200000000000002,
+                0.7200000000000002,
+                0.7200000000000002,
+                0.7200000000000002,
+                0.7200000000000002
+              ]
+            },
+            {
+              "absolute_errors": [],
+              "resampled": false,
+              "sensor_id": "PS6",
+              "timestamp_source": "Saved approved Phase 12 MAT clock",
+              "timestamps_s": [
+                1000.0,
+                1000.2,
+                1000.4000000000001,
+                1000.6,
+                1000.8000000000001,
+                1001.0,
+                1001.2,
+                1001.4000000000001,
+                1001.6,
+                1001.8000000000001,
+                1002.0,
+                1002.2,
+                1002.4000000000001,
+                1002.6,
+                1002.8000000000001,
+                1003.0,
+                1003.2,
+                1003.4000000000001,
+                1003.6,
+                1003.8000000000001,
+                1004.0,
+                1004.2,
+                1004.4000000000001,
+                1004.6,
+                1004.8000000000001,
+                1005.0
+              ],
+              "unit": "MPa",
+              "values": [
+                6.552358741864456,
+                6.552356281534673,
+                6.552353767245736,
+                6.5523512021849335,
+                6.552348589358162,
+                6.552345931597842,
+                6.552343231570403,
+                6.552340491784672,
+                6.552337714599724,
+                6.55233490223279,
+                6.552332056767048,
+                6.552329180159123,
+                6.552326274246378,
+                6.552323340754072,
+                6.5523203813019615,
+                6.552317397410927,
+                6.552314390508976,
+                6.5523113619370585,
+                6.552308312954654,
+                6.552305244744975,
+                6.552302158419938,
+                6.5522990550246645,
+                6.5522959355418005,
+                6.5522928008959465,
+                6.552289651957137,
+                6.55228648954446
+              ]
+            },
+            {
+              "absolute_errors": [],
+              "resampled": false,
+              "sensor_id": "PS7",
+              "timestamp_source": "Saved approved Phase 12 MAT clock",
+              "timestamps_s": [
+                1000.0,
+                1000.2,
+                1000.4000000000001,
+                1000.6,
+                1000.8000000000001,
+                1001.0,
+                1001.2,
+                1001.4000000000001,
+                1001.6,
+                1001.8000000000001,
+                1002.0,
+                1002.2,
+                1002.4000000000001,
+                1002.6,
+                1002.8000000000001,
+                1003.0,
+                1003.2,
+                1003.4000000000001,
+                1003.6,
+                1003.8000000000001,
+                1004.0,
+                1004.2,
+                1004.4000000000001,
+                1004.6,
+                1004.8000000000001,
+                1005.0
+              ],
+              "unit": "MPa",
+              "values": [
+                7.12,
+                7.12,
+                7.12,
+                7.12,
+                7.12,
+                7.12,
+                7.120000000000001,
+                7.12,
+                7.12,
+                7.120000000000001,
+                7.12,
+                7.12,
+                7.120000000000001,
+                7.12,
+                7.12,
+                7.120000000000001,
+                7.12,
+                7.12,
+                7.120000000000001,
+                7.12,
+                7.12,
+                7.12,
+                7.12,
+                7.12,
+                7.12,
+                7.12
+              ]
+            },
+            {
+              "absolute_errors": [],
+              "resampled": false,
+              "sensor_id": "PS8",
+              "timestamp_source": "Saved approved Phase 12 MAT clock",
+              "timestamps_s": [
+                1000.0,
+                1000.2,
+                1000.4000000000001,
+                1000.6,
+                1000.8000000000001,
+                1001.0,
+                1001.2,
+                1001.4000000000001,
+                1001.6,
+                1001.8000000000001,
+                1002.0,
+                1002.2,
+                1002.4000000000001,
+                1002.6,
+                1002.8000000000001,
+                1003.0,
+                1003.2,
+                1003.4000000000001,
+                1003.6,
+                1003.8000000000001,
+                1004.0,
+                1004.2,
+                1004.4000000000001,
+                1004.6,
+                1004.8000000000001,
+                1005.0
+              ],
+              "unit": "MPa",
+              "values": [
+                5.976317023033974,
+                5.976315570178035,
+                5.976314116220084,
+                5.976312661160076,
+                5.976311204993986,
+                5.976309747712658,
+                5.976308289300593,
+                5.976306829734933,
+                5.976305368984945,
+                5.9763039070115225,
+                5.976302443766929,
+                5.97630097919454,
+                5.976299513229017,
+                5.976298045796301,
+                5.976296576813893,
+                5.97629510619105,
+                5.976293633829181,
+                5.976292159622256,
+                5.976290683457228,
+                5.976289205214517,
+                5.976287724768485,
+                5.976286241988017,
+                5.976284756736952,
+                5.976283268874697,
+                5.976281778256717,
+                5.976280284735013
+              ]
+            },
+            {
+              "absolute_errors": [],
+              "resampled": false,
+              "sensor_id": "PS9",
+              "timestamp_source": "Saved approved Phase 12 MAT clock",
+              "timestamps_s": [
+                1000.0,
+                1000.2,
+                1000.4000000000001,
+                1000.6,
+                1000.8000000000001,
+                1001.0,
+                1001.2,
+                1001.4000000000001,
+                1001.6,
+                1001.8000000000001,
+                1002.0,
+                1002.2,
+                1002.4000000000001,
+                1002.6,
+                1002.8000000000001,
+                1003.0,
+                1003.2,
+                1003.4000000000001,
+                1003.6,
+                1003.8000000000001,
+                1004.0,
+                1004.2,
+                1004.4000000000001,
+                1004.6,
+                1004.8000000000001,
+                1005.0
+              ],
+              "unit": "MPa",
+              "values": [
+                6.131026265876306,
+                6.131024724374474,
+                6.131023181740248,
+                6.131021637946856,
+                6.131020092949411,
+                6.131018546686164,
+                6.131016999079847,
+                6.131015450038726,
+                6.131013899457968,
+                6.1310123472207385,
+                6.131010793199464,
+                6.131009237256788,
+                6.13100767924684,
+                6.131006119016105,
+                6.131004556404515,
+                6.131002991246365,
+                6.131001423371154,
+                6.130999852604481,
+                6.130998278768794,
+                6.130996701684231,
+                6.130995121169169,
+                6.130993537041035,
+                6.130991949116782,
+                6.13099035721354,
+                6.130988761149153,
+                6.130987160742509
+              ]
+            },
+            {
+              "absolute_errors": [],
+              "resampled": false,
+              "sensor_id": "PS10",
+              "timestamp_source": "Saved approved Phase 12 MAT clock",
+              "timestamps_s": [
+                1000.0,
+                1000.2,
+                1000.4000000000001,
+                1000.6,
+                1000.8000000000001,
+                1001.0,
+                1001.2,
+                1001.4000000000001,
+                1001.6,
+                1001.8000000000001,
+                1002.0,
+                1002.2,
+                1002.4000000000001,
+                1002.6,
+                1002.8000000000001,
+                1003.0,
+                1003.2,
+                1003.4000000000001,
+                1003.6,
+                1003.8000000000001,
+                1004.0,
+                1004.2,
+                1004.4000000000001,
+                1004.6,
+                1004.8000000000001,
+                1005.0
+              ],
+              "unit": "MPa",
+              "values": [
+                6.468942010722393,
+                6.468939943471091,
+                6.468937873210643,
+                6.4689357979950755,
+                6.46893371605752,
+                6.4689316258004075,
+                6.468929525784764,
+                6.468927414720313,
+                6.468925291455487,
+                6.4689231549681345,
+                6.468921004356416,
+                6.468918838829665,
+                6.4689166577004595,
+                6.4689144603763715,
+                6.468912246352793,
+                6.468910015205598,
+                6.468907766584648,
+                6.468905500207575,
+                6.468903215853923,
+                6.468900913359658,
+                6.468898592612083,
+                6.468896253545314,
+                6.468893896135681,
+                6.4688915203978095,
+                6.468889126380723,
+                6.468886714164565
+              ]
+            },
+            {
+              "absolute_errors": [],
+              "resampled": false,
+              "sensor_id": "MFS1",
+              "timestamp_source": "Saved approved Phase 12 MAT clock",
+              "timestamps_s": [
+                1000.0,
+                1000.2,
+                1000.4000000000001,
+                1000.6,
+                1000.8000000000001,
+                1001.0,
+                1001.2,
+                1001.4000000000001,
+                1001.6,
+                1001.8000000000001,
+                1002.0,
+                1002.2,
+                1002.4000000000001,
+                1002.6,
+                1002.8000000000001,
+                1003.0,
+                1003.2,
+                1003.4000000000001,
+                1003.6,
+                1003.8000000000001,
+                1004.0,
+                1004.2,
+                1004.4000000000001,
+                1004.6,
+                1004.8000000000001,
+                1005.0
+              ],
+              "unit": "kg/s",
+              "values": [
+                6.469839559240143,
+                6.469837471104683,
+                6.469835379311227,
+                6.4698332827692795,
+                6.469831180499618,
+                6.469829071627255,
+                6.469826955373439,
+                6.469824831049993,
+                6.469822698052004,
+                6.469820555851832,
+                6.469818403993133,
+                6.469816242085145,
+                6.469814069797381,
+                6.469811886854877,
+                6.469809693032972,
+                6.46980748815352,
+                6.469805272080267,
+                6.469803044715522,
+                6.469800805996151,
+                6.469798555890477,
+                6.469796294395316,
+                6.469794021533017,
+                6.469791737348782,
+                6.46978944190859,
+                6.469787135296527,
+                6.46978481761303
+              ]
+            },
+            {
+              "absolute_errors": [],
+              "resampled": false,
+              "sensor_id": "MFS2",
+              "timestamp_source": "Saved approved Phase 12 MAT clock",
+              "timestamps_s": [
+                1000.0,
+                1000.2,
+                1000.4000000000001,
+                1000.6,
+                1000.8000000000001,
+                1001.0,
+                1001.2,
+                1001.4000000000001,
+                1001.6,
+                1001.8000000000001,
+                1002.0,
+                1002.2,
+                1002.4000000000001,
+                1002.6,
+                1002.8000000000001,
+                1003.0,
+                1003.2,
+                1003.4000000000001,
+                1003.6,
+                1003.8000000000001,
+                1004.0,
+                1004.2,
+                1004.4000000000001,
+                1004.6,
+                1004.8000000000001,
+                1005.0
+              ],
+              "unit": "kg/s",
+              "values": [
+                -0.00013832074249364723,
+                -0.0001383096670224404,
+                -0.00013830168401796072,
+                -0.00013829626293215824,
+                -0.00013829296631229226,
+                -0.00013829142523036353,
+                -0.00013829133202136745,
+                -0.00013829242772089856,
+                -0.00013829449468971688,
+                -0.0001382973521231179,
+                -0.00013830084769494988,
+                -0.0001383048549854493,
+                -0.00013830926815217026,
+                -0.00013831399871833128,
+                -0.00013831897227589707,
+                -0.00013832412852821108,
+                -0.0001383294148524783,
+                -0.00013833478905667107,
+                -0.00013834021478942304,
+                -0.00013834566281900607,
+                -0.00013835110785009874,
+                -0.00013835652895011208,
+                -0.00013836190682070537,
+                -0.00013836722801841006,
+                -0.00013837247979608946,
+                -0.00013837765024504733
+              ]
+            },
+            {
+              "absolute_errors": [],
+              "resampled": false,
+              "sensor_id": "MFS3",
+              "timestamp_source": "Saved approved Phase 12 MAT clock",
+              "timestamps_s": [
+                1000.0,
+                1000.2,
+                1000.4000000000001,
+                1000.6,
+                1000.8000000000001,
+                1001.0,
+                1001.2,
+                1001.4000000000001,
+                1001.6,
+                1001.8000000000001,
+                1002.0,
+                1002.2,
+                1002.4000000000001,
+                1002.6,
+                1002.8000000000001,
+                1003.0,
+                1003.2,
+                1003.4000000000001,
+                1003.6,
+                1003.8000000000001,
+                1004.0,
+                1004.2,
+                1004.4000000000001,
+                1004.6,
+                1004.8000000000001,
+                1005.0
+              ],
+              "unit": "kg/s",
+              "values": [
+                7.607177252524487,
+                7.6071715340250465,
+                7.607166568781354,
+                7.607162290052069,
+                7.60715863710714,
+                7.607155554679478,
+                7.60715299246737,
+                7.60715090468389,
+                7.607149249647246,
+                7.607147989409277,
+                7.607147089417415,
+                7.607146518208422,
+                7.607146247129439,
+                7.60714625008481,
+                7.607146503305734,
+                7.6071469851413145,
+                7.607147675867935,
+                7.60714855751627,
+                7.607149613713746,
+                7.6071508295418875,
+                7.607152191405177,
+                7.607153686913393,
+                7.607155304773298,
+                7.60715703469063,
+                7.607158867280667,
+                7.607160793987391
+              ]
+            }
+          ],
+          "independence_group": "Center source family",
+          "run_id": "Phase12 outlet opening",
+          "sensors": [
+            {
+              "availability": "AVAILABLE",
+              "location_id": "50",
+              "location_kind": "node",
+              "network_id": "Center",
+              "quantity": "pressure",
+              "sampling_period_s": 0.2,
+              "sensor_id": "PS1",
+              "unit": "MPa"
+            },
+            {
+              "availability": "AVAILABLE",
+              "location_id": "51",
+              "location_kind": "node",
+              "network_id": "Center",
+              "quantity": "pressure",
+              "sampling_period_s": 0.2,
+              "sensor_id": "PS2",
+              "unit": "MPa"
+            },
+            {
+              "availability": "AVAILABLE",
+              "location_id": "52",
+              "location_kind": "node",
+              "network_id": "Center",
+              "quantity": "pressure",
+              "sampling_period_s": 0.2,
+              "sensor_id": "PS3",
+              "unit": "MPa"
+            },
+            {
+              "availability": "AVAILABLE",
+              "location_id": "109",
+              "location_kind": "node",
+              "network_id": "Center",
+              "quantity": "pressure",
+              "sampling_period_s": 0.2,
+              "sensor_id": "PS4",
+              "unit": "MPa"
+            },
+            {
+              "availability": "AVAILABLE",
+              "location_id": "187",
+              "location_kind": "node",
+              "network_id": "Center",
+              "quantity": "pressure",
+              "sampling_period_s": 0.2,
+              "sensor_id": "PS5",
+              "unit": "MPa"
+            },
+            {
+              "availability": "AVAILABLE",
+              "location_id": "318",
+              "location_kind": "node",
+              "network_id": "Center",
+              "quantity": "pressure",
+              "sampling_period_s": 0.2,
+              "sensor_id": "PS6",
+              "unit": "MPa"
+            },
+            {
+              "availability": "AVAILABLE",
+              "location_id": "392",
+              "location_kind": "node",
+              "network_id": "Center",
+              "quantity": "pressure",
+              "sampling_period_s": 0.2,
+              "sensor_id": "PS7",
+              "unit": "MPa"
+            },
+            {
+              "availability": "AVAILABLE",
+              "location_id": "418",
+              "location_kind": "node",
+              "network_id": "Center",
+              "quantity": "pressure",
+              "sampling_period_s": 0.2,
+              "sensor_id": "PS8",
+              "unit": "MPa"
+            },
+            {
+              "availability": "AVAILABLE",
+              "location_id": "428",
+              "location_kind": "node",
+              "network_id": "Center",
+              "quantity": "pressure",
+              "sampling_period_s": 0.2,
+              "sensor_id": "PS9",
+              "unit": "MPa"
+            },
+            {
+              "availability": "AVAILABLE",
+              "location_id": "431",
+              "location_kind": "node",
+              "network_id": "Center",
+              "quantity": "pressure",
+              "sampling_period_s": 0.2,
+              "sensor_id": "PS10",
+              "unit": "MPa"
+            },
+            {
+              "availability": "AVAILABLE",
+              "location_id": "311",
+              "location_kind": "edge",
+              "network_id": "Center",
+              "quantity": "mass_flow",
+              "sampling_period_s": 0.2,
+              "sensor_id": "MFS1",
+              "unit": "kg/s"
+            },
+            {
+              "availability": "AVAILABLE",
+              "location_id": "210",
+              "location_kind": "edge",
+              "network_id": "Center",
+              "quantity": "mass_flow",
+              "sampling_period_s": 0.2,
+              "sensor_id": "MFS2",
+              "unit": "kg/s"
+            },
+            {
+              "availability": "AVAILABLE",
+              "location_id": "218",
+              "location_kind": "edge",
+              "network_id": "Center",
+              "quantity": "mass_flow",
+              "sampling_period_s": 0.2,
+              "sensor_id": "MFS3",
+              "unit": "kg/s"
+            }
+          ],
+          "source_id": "a8cb6432e8b1860805a3a2b3c90f1af1644f6757a17e403c44be831131fe5513",
+          "timestamps_s": [
+            1000.0,
+            1000.2,
+            1000.4000000000001,
+            1000.6,
+            1000.8000000000001,
+            1001.0,
+            1001.2,
+            1001.4000000000001,
+            1001.6,
+            1001.8000000000001,
+            1002.0,
+            1002.2,
+            1002.4000000000001,
+            1002.6,
+            1002.8000000000001,
+            1003.0,
+            1003.2,
+            1003.4000000000001,
+            1003.6,
+            1003.8000000000001,
+            1004.0,
+            1004.2,
+            1004.4000000000001,
+            1004.6,
+            1004.8000000000001,
+            1005.0
+          ],
+          "uncertainty_basis": "No qualified measurement bounds or prediction enclosures"
+        },
+        "measurement_issues": [
+          "INVALID_UNCERTAINTY"
+        ],
+        "results": [
+          {
+            "affine_model": null,
+            "assumptions": [
+              "Requires a validated source-compatible prediction enclosure"
+            ],
+            "hypothesis": "NORMAL",
+            "reason": "INVALID_MEASUREMENT",
+            "separation": null,
+            "status": "INDETERMINATE",
+            "witness": null
+          },
+          {
+            "affine_model": null,
+            "assumptions": [
+              "Requires a validated source-compatible prediction enclosure"
+            ],
+            "hypothesis": "OUTLET_SID_213",
+            "reason": "INVALID_MEASUREMENT",
+            "separation": null,
+            "status": "INDETERMINATE",
+            "witness": null
+          },
+          {
+            "affine_model": null,
+            "assumptions": [
+              "Requires a validated source-compatible prediction enclosure"
+            ],
+            "hypothesis": "OUTLET_SID_312",
+            "reason": "INVALID_MEASUREMENT",
+            "separation": null,
+            "status": "INDETERMINATE",
+            "witness": null
+          },
+          {
+            "affine_model": null,
+            "assumptions": [
+              "Requires a validated source-compatible prediction enclosure"
+            ],
+            "hypothesis": "OUTLET_SID_215",
+            "reason": "INVALID_MEASUREMENT",
+            "separation": null,
+            "status": "INDETERMINATE",
+            "witness": null
+          },
+          {
+            "affine_model": null,
+            "assumptions": [
+              "Requires a validated source-compatible prediction enclosure"
+            ],
+            "hypothesis": "OUTLET_SID_222",
+            "reason": "INVALID_MEASUREMENT",
+            "separation": null,
+            "status": "INDETERMINATE",
+            "witness": null
+          }
+        ]
+      },
+      "hypothesis": null,
+      "reason": "INVALID_MEASUREMENT",
+      "status": "UNRESOLVED"
+    },
+    "localization": {
+      "level": "L0",
+      "candidates": [
+        "OUTLET_SID_213",
+        "OUTLET_SID_312",
+        "OUTLET_SID_215",
+        "OUTLET_SID_222"
+      ],
+      "conditional": true,
+      "reason": "LEAK_EVENT_NOT_ESTABLISHED"
+    },
+    "ground_truth": "Engineered area command on restriction SID 213 toward atmospheric reservoir SID 200",
+    "bounds": "Unknown measurement, model discrepancy and prediction enclosure. No numerical floor entered as a measurement bound.",
+    "independence": "Both runs share a source and form one exploratory controlled pair."
+  },
+  "pre_event_tolerance": "Pre-event max by channel with a 1e-11 native-unit numerical reporting floor. The pair screen is descriptive. Historical reference scale is reported separately. No certified bound is available.",
+  "remaining_cases": [
+    {
+      "restriction_sid": "312",
+      "sink_sid": "316",
+      "purpose": "Competing metered outlet via MFS1 SID 311"
+    },
+    {
+      "restriction_sid": "215",
+      "sink_sid": "217",
+      "purpose": "Competing outlet without a direct flow measurement"
+    }
+  ],
+  "limitations": [
+    "Single shared source family; no independent confirmation or accuracy estimate.",
+    "Archived LEAK reproduction remains blocked; no hydrogen validation.",
+    "No uniform bound for numerical or physical uncertainty."
+  ]
+}

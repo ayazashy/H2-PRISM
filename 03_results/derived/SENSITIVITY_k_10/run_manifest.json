@@ -1,0 +1,27 @@
+{
+  "artifact_class": "SENSITIVITY_EXPERIMENT",
+  "status": "COMPLETED",
+  "run_key": "821642d2201e0f9fc200f790d6533a2216a541c3bdde65021144526231a35b50",
+  "config_sha256": "f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae",
+  "effective_config_sha256": "089f9dc7149ca01931c00dac821ee295f7df01469b1a5189c5c0d1a86a683fb1",
+  "git_commit": "ddb91aecbafe3d7211902749a3a2365239c11582",
+  "authorization": {
+    "authorized_by": "Ahmed Zayed (project lead)",
+    "date": "2026-11-11",
+    "file_sha256": "2ef5f36dcc910e26e8a746b00b9bfe5a3391c38effd217eec6391f56b8450404",
+    "governance_clearance": {
+      "A-D10": "WAIVED by project lead Ahmed Zayed 2026-11-11 (Gate 1-3 named attestation not given; engineering re-verification on record)",
+      "F-D15": "WAIVED by project lead Ahmed Zayed 2026-11-11 (Faisal code acceptance not given; independent review + calibration defect fix on record)",
+      "F-D16": "WAIVED by project lead Ahmed Zayed 2026-11-11 (Faisal contract v2.0.0 acceptance not given; contract tests on record)",
+      "PA-1": "ATTESTED (approved) by project lead Ahmed Zayed 2026-11-11 under the protocol delegation (exact-count matched-coverage tie rule)"
+    },
+    "scope": "SENSITIVITY_EXPERIMENT:k_10"
+  },
+  "sensitivity": {
+    "name": "k_10",
+    "override": {
+      "distinguishability.k": 10
+    }
+  },
+  "derived_from": "SENSITIVITY_k_10"
+}

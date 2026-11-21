@@ -1,0 +1,16 @@
+id,kind,source_key,description
+Q213,query,SID213,withdrawal at outlet SID 213
+Q213-alt,query,ALT,"withdrawal at SID 213, alternate (+5 kPa) profile"
+Q312,query,SID312,withdrawal at outlet SID 312
+Q215,query,SID215,withdrawal at outlet SID 215
+QP55,query,PRESSURE,pressure-command change at SID 55
+QT59,query,TIMING,one-second command-issuance shift at SID 59
+H213,hypothesis,WITHDRAWAL_SID213,withdrawal at SID 213
+H312,hypothesis,WITHDRAWAL_SID312,withdrawal at SID 312
+H215,hypothesis,WITHDRAWAL_SID215,withdrawal at SID 215
+H222,hypothesis,WITHDRAWAL_SID222,withdrawal at SID 222 (no adapter)
+HN,hypothesis,NORMAL_OPERATION,normal operation
+HP55,hypothesis,PRESSURE_COMMAND_SID55,pressure-command change at SID 55
+HT59,hypothesis,COMMAND_ISSUANCE_SHIFT_SID59,command-issuance shift at SID 59
+HCF,hypothesis,COMPRESSOR_FAULT,compressor fault (no adapter)
+HAD,hypothesis,ACTUATOR_DELAY,actuator delay (no adapter)

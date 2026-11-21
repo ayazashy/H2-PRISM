@@ -1,0 +1,22 @@
+# UNSIGNED TEMPLATE - not an approval. See SIGNOFF_PACKAGE.md.
+approval_id: T6b_rq2_primary_reasons__35f36c0b__REVIEWER
+artifact_id: T6b_rq2_primary_reasons
+claim_scope: DESCRIPTIVE
+decision: TO_BE_DECIDED_BY_REVIEWER
+approved_claims:
+- 'Mutually exclusive primary reason of every non-SPECIFIC decision (precedence: unresolved-by-flag, SPECIFIC blocked by support
+  flag, invalid score, below matched-coverage cut, ambiguity set too broad, single candidate rejected).'
+limitations_acknowledged:
+- precedence rule documented in tools/reporting/derive_decision_tables.py
+reviewer:
+  name: TO_BE_FILLED_BY_REVIEWER
+  role: TO_BE_FILLED_BY_REVIEWER
+date: YYYY-MM-DD
+statement: ''
+binding:
+  input_sha256:
+    03_results/derived/PRIMARY/decision_reasons_primary.csv: 7bed91e655562704a00897175d46cb52cdb287dba66cb2e0e355e7d32fc17e16
+  spec_sha256: 35f36c0ba5a32b4502a0cbaf5ab1d960d25f417c5b88adab9a089700aa45db9f
+  renderer_sha256: 12ba184bfc5f603546a75e47764b8f3569dffc44810423add4bc024b4cdfdd66
+  source_run_keys:
+  - a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb

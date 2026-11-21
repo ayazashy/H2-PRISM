@@ -1,0 +1,9 @@
+param_index,params,inner_macro_f1,inner_log_loss,inner_warnings,selected,fold
+0,"{""max_features"": ""sqrt"", ""min_samples_leaf"": 1, ""n_estimators"": 300}",0.19381196,14.74583728,,False,2
+1,"{""max_features"": 0.3, ""min_samples_leaf"": 1, ""n_estimators"": 300}",0.2022350971,16.14338531,,False,2
+2,"{""max_features"": ""sqrt"", ""min_samples_leaf"": 5, ""n_estimators"": 300}",0.231762758,13.44298531,,False,2
+3,"{""max_features"": 0.3, ""min_samples_leaf"": 5, ""n_estimators"": 300}",0.2318751917,16.14249335,,False,2
+4,"{""max_features"": ""sqrt"", ""min_samples_leaf"": 1, ""n_estimators"": 500}",0.1946231038,14.17188071,,False,2
+5,"{""max_features"": 0.3, ""min_samples_leaf"": 1, ""n_estimators"": 500}",0.2024435148,16.13944476,,False,2
+6,"{""max_features"": ""sqrt"", ""min_samples_leaf"": 5, ""n_estimators"": 500}",0.231249502,12.43993986,,False,2
+7,"{""max_features"": 0.3, ""min_samples_leaf"": 5, ""n_estimators"": 500}",0.231951861,16.14559236,,True,2

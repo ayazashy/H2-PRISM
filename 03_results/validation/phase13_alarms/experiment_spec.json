@@ -1,0 +1,94 @@
+{
+  "schema_version": "h2prism-independent-design/1",
+  "status": "BLOCKED_PENDING_INDEPENDENT_RUNS",
+  "unit": "independently generated root run; group every restart, treatment twin, derived variant, clean/noisy export and shared checkpoint with its root",
+  "normal": "verified event-free schedule including pressure and compressor operating transients",
+  "labels": {
+    "LEAK": "independently recorded withdrawal location, onset/end and signed flow; physical leak label requires demonstrated mechanism",
+    "FAULT": "documented source-supported actuator or component deviation and actual response",
+    "DELAY": "logged command, actuator response, nominal latency and independently measured excess delay"
+  },
+  "allocation": {
+    "development": "all four labels across independent roots, with recorded source profiles and known candidate location truth",
+    "calibration": "separate roots, all four labels and location coverage where calibrated; freeze score mapping and abstention thresholds before test",
+    "untouched_test": "separate roots and operators or source lineage when practicable; reserve a profile condition and topology for subsequent separate transfer arms",
+    "coverage_rule": "each required label and localization region must have independent coverage in every partition where evaluated; minimum coverage is an admission rule, not a precision guarantee",
+    "planning_rule": "pre-register target precision and operational error budgets with domain owners; derive family counts from design, dependence and pilot variability before confirmatory testing"
+  },
+  "manifest_required": [
+    "root_id",
+    "parent_checkpoint",
+    "model_sha256",
+    "raw_export_sha256",
+    "scenario_id",
+    "partition",
+    "topology_id",
+    "profile_id",
+    "gas_definition",
+    "seed",
+    "event_class",
+    "onset_clock",
+    "end_clock",
+    "location_truth",
+    "sensor_schema",
+    "initial_state_receipt",
+    "boundary_history",
+    "solver_and_time_grid",
+    "units",
+    "measurement_error_evidence",
+    "label_source",
+    "independence_receipt"
+  ],
+  "design": [
+    {
+      "id": "I",
+      "priority": 1,
+      "experiment": "Independent in-domain runs",
+      "controls": "matched normal and interventions allowed within a root; group together",
+      "purpose": "four-class support, false alarms, event delay, location candidate comparison"
+    },
+    {
+      "id": "II",
+      "priority": 2,
+      "experiment": "Independent source-model discrepancy and instrumentation qualification",
+      "purpose": "prediction and observation enclosures"
+    },
+    {
+      "id": "III",
+      "priority": 3,
+      "experiment": "Independent pressure, flow and boundary regimes with qualified gas properties",
+      "purpose": "operating condition transfer and stress"
+    },
+    {
+      "id": "IV",
+      "priority": 4,
+      "experiment": "Untouched topology transfer and external reference runs",
+      "purpose": "test new topology separately; document sensor-role remapping or retraining"
+    }
+  ],
+  "metrics": {
+    "detection": "fixed causal clock; positive opens episode, first negative resets; credit only new starts during verified event; counts, inactive hours, missed events and delay quantiles",
+    "diagnosis": "macro F1, per-class counts and confidence intervals over independent roots conditional on class support",
+    "calibration": "calibration only on disjoint roots; reliability and Brier/log loss on untouched class-supported cases",
+    "selective_risk": "paired same observations; choose coverage targets and confidence rule in calibration; report denominator and uncertainty at attained matched nonzero coverage",
+    "localization": "conditional on supported leak, score against source-time location; preserve configured versus inferred distinctions",
+    "formal": "validated predictive enclosures; report every hypothesis status and unresolved cases"
+  },
+  "formal_required": {
+    "measurement": "per-channel physical units, bias, repeatability, resolution, timestamp synchronization, clock uncertainty and dropout state, with traceable coverage and applicable ranges",
+    "initial_and_boundary": "admissible initial states and control trajectories conditioned on independently recorded settings and their uncertainties",
+    "model_discrepancy": "independent matched physical/reference data across intended conditions, separated from measurement and numerical error; correlated error and validity domain documented",
+    "numerical": "convergence and event handling used as numerical evidence with justified verified enclosures when available",
+    "prediction": "source-compatible adapter maps feasible initial/boundary/parameter/gas sets to simultaneous sensor-and-time enclosures for each hypothesis, including model discrepancy; verify no excluded true states within declared domain",
+    "current": "Hypothetical stresses and fixed threshold boxes are exploratory; qualified uncertainty unavailable. Preserve INDETERMINATE, UNRESOLVED and L0."
+  },
+  "gates": {
+    "provenance": "BLOCKED",
+    "independent_calibration": "BLOCKED",
+    "four_class_test": "BLOCKED",
+    "location_test": "BLOCKED",
+    "external_transfer": "NOT_ESTABLISHED",
+    "formal_enclosures": "BLOCKED",
+    "field_deployment": "NOT_ESTABLISHED"
+  }
+}

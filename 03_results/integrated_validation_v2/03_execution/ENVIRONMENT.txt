@@ -1,0 +1,12 @@
+python 3.12.1
+platform Windows-11-10.0.26300-SP0
+cpu AMD Ryzen 5 7520U with Radeon Graphics (8 logical)
+ram_GB 7.2
+numpy 2.3.1
+pandas 2.3.3
+matplotlib 3.10.7
+scipy 1.16.0
+pyyaml 6.0.3
+pytest 9.2.0
+pyarrow 25.0.1
+coolprop not installed

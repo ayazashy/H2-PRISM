@@ -1,0 +1,30 @@
+{
+  "selection_source": "Chronological validation only; final test not scored or inspected.",
+  "development_training_rows_by_target": {
+    "pres_buf": 204769,
+    "pres_comp": 204769,
+    "pres_pila": 204769,
+    "h2_flow": 204769,
+    "h2_flow_pila": 204769
+  },
+  "validation_scored_rows_by_target": {
+    "pres_buf": 43134,
+    "pres_comp": 43134,
+    "pres_pila": 43134,
+    "h2_flow": 43134,
+    "h2_flow_pila": 43134
+  },
+  "macro_mean_contextual_to_persistence_rmse_ratio": 0.8784286895134344,
+  "selection_eligible_targets": [
+    "pres_buf",
+    "pres_comp",
+    "h2_flow"
+  ],
+  "undefined_ratio_targets_excluded": [
+    "pres_pila",
+    "h2_flow_pila"
+  ],
+  "fixed_selection_rule": "contextual_ridge iff unweighted mean of defined channel RMSE ratios < 1.0; otherwise persistence",
+  "selected_model": "contextual_ridge",
+  "validation_predictions_file": "development_validation_predictions.csv.gz"
+}

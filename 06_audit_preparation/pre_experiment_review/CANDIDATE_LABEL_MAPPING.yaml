@@ -1,0 +1,58 @@
+# CANDIDATE_NOT_APPROVED. Proposed label mapping for the H2-PRISM primary task.
+# Review: Yazan (label definitions), Faisal (technical use), Ahmed (scientific class definitions).
+# Raw annotations are NEVER modified; this file only states how they are read.
+# Evidence: CANDIDATE_SCENARIO_MANIFEST.csv, LABEL_AND_TIMING_CORRECTIONS.md,
+#           06_audit_preparation/raw_verification/LABEL_CONSISTENCY.csv
+metadata:
+  status: CANDIDATE_NOT_APPROVED
+  version: candidate-0.2-2026-11-10
+  supersedes_for_review: 01_dataset_audit/class_mapping.yaml   # original kept unchanged
+  source_dataset: "Zenodo 10.5281/zenodo.17871393 V2 (official archive, MD5 verified)"
+  label_granularity: row_level          # verified: binary step labels per row
+  label_source_realization: CLEAN_SIMULATION  # labels identical in all realizations (60/60 clean-vs-noisy comparisons)
+
+raw_label_columns: [label_anomaly, Leak, CompressorFault, CompressorDelay, leak_G3, leak_G4, leak_G5, leak_G6]
+
+primary_candidate_4_class:
+  description: >-
+    Mutually exclusive row-level event type. Leak locations are NOT predicted (categorical
+    restriction labels, no metric localisation). Defined only on scenarios whose anomalous rows
+    carry exactly one event type and no annotation conflict.
+  row_rule_precedence:   # implemented by h2prism.windows.map_rows_to_primary
+    - "COMPOUND_EVENT if more than one of {Leak, CompressorFault, CompressorDelay} == 1"
+    - "LEAK if Leak == 1"
+    - "COMPRESSOR_FAULT if CompressorFault == 1"
+    - "COMPRESSOR_DELAY if CompressorDelay == 1"
+    - "ANOMALY_WITHOUT_TYPE if label_anomaly == 1 and no type (observed rows: 0)"
+    - "NORMAL otherwise"
+  classes:
+    NORMAL:            {source: "rows with all type columns 0 in NORMAL scenarios (pre/post-event rows: see open_decisions)"}
+    LEAK:              {source: "Leak == 1; includes single- and multi-location leaks", scenarios: 39}
+    COMPRESSOR_FAULT:  {source: "CompressorFault == 1", scenarios: 6}
+    COMPRESSOR_DELAY:  {source: "CompressorDelay == 1 (active rows 25-1000 s only)", scenarios: 3}
+  scenario_eligibility:
+    eligible: 51
+    excluded:
+      leakG4brokenC1 (3 scenarios): "EXCLUDED_COMPOUND - Leak and CompressorFault simultaneously active"
+      brokenC1G5_weak (3 scenarios): >-
+        EXCLUDED_PENDING_REVIEW - leak_G5 active while Leak == 0 (annotation conflict). Either reading
+        (compound fault+leak per filename, or compressor fault with a stray location label) excludes
+        it from an exclusive single-type task until Yazan resolves the annotation.
+  multi_location_leaks: >-
+    Consistent rule (candidate): every scenario whose only event type is LEAK is LEAK regardless
+    of the number of active location columns (G3G4, G3G5, G3G6, and the files named leakG5G6 whose
+    labels are G4+G6). Alternative for review: exclude all multi-location leaks (15 fewer LEAK scenarios: 5 per topology).
+
+restricted_alternatives:
+  multi_label_secondary:
+    description: "Keep the raw multi-label annotation (Leak, CompressorFault, CompressorDelay) for exploratory analysis; includes compound scenarios."
+    status: EXPLORATORY
+  three_class_operational:
+    description: "NORMAL / LEAK / COMPRESSOR_EVENT (fault+delay merged) - only if Ahmed/Faisal judge fault vs delay unsupported by 3 vs 3 independent runs."
+    status: NOT_RECOMMENDED_WITHOUT_EVIDENCE   # merging merely to increase counts is prohibited by the plans
+
+open_decisions:
+  pre_event_rows_of_fault_scenarios: "exclude | label_normal  (Yazan + Faisal; changes NORMAL support from 3 runs to ~all runs)"
+  post_event_rows_compressor_delay: "rows after 1000 s have all labels 0; same policy choice as pre-event rows"
+  boundary_windows: "windows spanning a label change are BOUNDARY_CROSSING and excluded (implemented)"
+  leakG5G6_location_mismatch: "filename says G5+G6, labels say G4+G6; irrelevant for the 4-class target, must be fixed before any location analysis"

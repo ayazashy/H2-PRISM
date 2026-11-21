@@ -1,0 +1,49 @@
+{
+  "classification": "NEW CONTROLLED SIMULATION",
+  "status": "CONDITIONAL",
+  "archived_anomalous_status": "BLOCKED",
+  "source_sha256": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+  "solver": {
+    "SolverType": "Fixed-step",
+    "Solver": "ode14x",
+    "FixedStep": "0.2",
+    "StartTime": "0.0",
+    "StopTime": "20000",
+    "RelTol": "1e-3",
+    "AbsTol": "auto",
+    "LoadInitialState": "off",
+    "LoadExternalInput": "off"
+  },
+  "area": {
+    "initial_value": "0.001",
+    "normal_final": "0.001",
+    "intervention_final": "0.0011",
+    "step_time": "1000",
+    "area_unit": "m^2",
+    "time_unit": "s",
+    "min": "1e-10",
+    "max": "0.01"
+  },
+  "location": {
+    "restriction_sid": "213",
+    "upstream_junction_sids": [
+      "47",
+      "48",
+      "50"
+    ],
+    "flow_sensor_sid": "218",
+    "reservoir_sid": "200"
+  },
+  "mechanism": "Increase the existing PS1-to-atmosphere outlet conductance. This is an engineered incremental atmospheric withdrawal through an existing model branch.",
+  "design_basis": "Set both twins to the pinned nominal 0.001 m^2 before 1000 s. Increase only the intervention final area by 10%. These are design settings, not source leak ground truth or calibration. The event is on the 0.2 s grid and separated from the existing 25 s pressure step.",
+  "downstream": "Existing SID 200 atmospheric reservoir. Source reproduction logged 0.100 MPa and 293.15 K internally; re-verify runtime.",
+  "matching": "Both twins receive the same variable restriction and PS Step wiring. Only final_value differs between the twins. Keep physical parameters, native controls, sensor mapping, initial-state policy, and horizon fixed.",
+  "solver_basis": "0.2 s is the finest completed NORMAL resolution; no certified numerical tolerance is implied.",
+  "gas": "Pinned SID 4 configured constant-property perfect-gas representation; R=0.287 kJ/(kg K), Z=0.998386; composition and hydrogen fidelity unverified.",
+  "qualification": [
+    "Verify both effective area command histories and timed change in the intervention.",
+    "Verify signed branch flow, upstream and downstream pressure, and atmospheric sink state.",
+    "Compare derived NORMAL with original 0.2 s NORMAL and both twins before the event.",
+    "Check after-event incremental outflow and all sensor histories before treating the label as a verified intervention."
+  ]
+}

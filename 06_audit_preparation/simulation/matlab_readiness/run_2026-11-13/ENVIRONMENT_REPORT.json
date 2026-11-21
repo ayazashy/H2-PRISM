@@ -1,0 +1,191 @@
+{
+  "kind": "ENVIRONMENT",
+  "created": "2026-11-13T23:43:50+03:00",
+  "matlab_version": "26.2.0.3433840 (R2026b) Update 1",
+  "computer": "PCWIN64",
+  "overall": "FAIL",
+  "n_pass": 26,
+  "n_fail": 1,
+  "n_warn": 0,
+  "n_skip": 0,
+  "checks": [
+    {
+      "id": "E0",
+      "name": "SHA-256 known-answer test",
+      "status": "PASS",
+      "detail": "FIPS 180-4 vectors; Java runtime available: 0"
+    },
+    {
+      "id": "E1",
+      "name": "MATLAB release",
+      "status": "PASS",
+      "detail": "26.2.0.3433840 (R2026b) Update 1; minimum R2025a; models saved in R2025a (25.1.0.2943329)"
+    },
+    {
+      "id": "E2.1",
+      "name": "installed: MATLAB",
+      "status": "PASS",
+      "detail": "26.2 (R2026b)"
+    },
+    {
+      "id": "E2.2",
+      "name": "installed: Simulink",
+      "status": "PASS",
+      "detail": "26.2 (R2026b)"
+    },
+    {
+      "id": "E2.3",
+      "name": "installed: Simscape",
+      "status": "PASS",
+      "detail": "26.2 (R2026b)"
+    },
+    {
+      "id": "E3.1",
+      "name": "licence: MATLAB",
+      "status": "PASS",
+      "detail": "test=1 checkout=1 "
+    },
+    {
+      "id": "E3.2",
+      "name": "licence: Simulink",
+      "status": "PASS",
+      "detail": "test=1 checkout=1 "
+    },
+    {
+      "id": "E3.3",
+      "name": "licence: Simscape",
+      "status": "PASS",
+      "detail": "test=1 checkout=1 "
+    },
+    {
+      "id": "E4",
+      "name": "physical memory",
+      "status": "FAIL",
+      "detail": "total 7413 MB, available 712 MB, MATLAB 2335 MB (need >= 2500 MB available to start; close other applications if this fails)"
+    },
+    {
+      "id": "E5",
+      "name": "no parallel pool",
+      "status": "PASS",
+      "detail": "Parallel Computing Toolbox not installed"
+    },
+    {
+      "id": "E6",
+      "name": "Python for authorization gates",
+      "status": "PASS",
+      "detail": "C:\\Users\\<user>\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe -> 3.12.1"
+    },
+    {
+      "id": "E7.1",
+      "name": "released model: Anomalous_HNetwork_gest_center",
+      "status": "PASS",
+      "detail": "sha256 e6caa8cf6558f7a5 (expected e6caa8cf6558f7a5)"
+    },
+    {
+      "id": "E7.2",
+      "name": "released model: Anomalous_HNetwork_gest_down",
+      "status": "PASS",
+      "detail": "sha256 b1c0b93579d10412 (expected b1c0b93579d10412)"
+    },
+    {
+      "id": "E7.3",
+      "name": "released model: Anomalous_HNetwork_gest_up",
+      "status": "PASS",
+      "detail": "sha256 35376a208c133789 (expected 35376a208c133789)"
+    },
+    {
+      "id": "E7.4",
+      "name": "released model: Normal_HNetwork_gest_center",
+      "status": "PASS",
+      "detail": "sha256 710711f41e33adb9 (expected 710711f41e33adb9)"
+    },
+    {
+      "id": "E7.5",
+      "name": "released model: Normal_HNetwork_gest_down",
+      "status": "PASS",
+      "detail": "sha256 2fcf47dfe91adf54 (expected 2fcf47dfe91adf54)"
+    },
+    {
+      "id": "E7.6",
+      "name": "released model: Normal_HNetwork_gest_up",
+      "status": "PASS",
+      "detail": "sha256 5c3c76e9866dcbbe (expected 5c3c76e9866dcbbe)"
+    },
+    {
+      "id": "E8.1",
+      "name": "H2 table file: ENVIRONMENT.txt",
+      "status": "PASS",
+      "detail": "sha256 pinned 5deef53dd97f9f1e"
+    },
+    {
+      "id": "E8.2",
+      "name": "H2 table file: H2_REALGAS_TLU2.json",
+      "status": "PASS",
+      "detail": "sha256 pinned 962facbbcea0bd4c"
+    },
+    {
+      "id": "E8.3",
+      "name": "H2 table file: H2_REALGAS_TLU2_params.m",
+      "status": "PASS",
+      "detail": "sha256 pinned d095075e44e85de7"
+    },
+    {
+      "id": "E8.4",
+      "name": "H2 table file: V1_REPORT.json",
+      "status": "PASS",
+      "detail": "sha256 pinned a35ddd17f6261449"
+    },
+    {
+      "id": "E8.S",
+      "name": "H2 parameter struct",
+      "status": "PASS",
+      "detail": "T 31 points (200-500 K), p 20 points (0.05-12 MPa), 15 fields"
+    },
+    {
+      "id": "E9.1",
+      "name": "H2Net v1 grant-bound: 02_methodology/HYDROGEN_MODEL_SPECIFICATION.md",
+      "status": "PASS",
+      "detail": "grant status ACTIVE, scope MODEL_DEVELOPMENT:H2NET_V1_PROPERTIES_AND_STEADY_STATE"
+    },
+    {
+      "id": "E9.2",
+      "name": "H2Net v1 grant-bound: src/h2prism/gas_physics.py",
+      "status": "PASS",
+      "detail": "grant status ACTIVE, scope MODEL_DEVELOPMENT:H2NET_V1_PROPERTIES_AND_STEADY_STATE"
+    },
+    {
+      "id": "E10.1",
+      "name": "library: fl_lib",
+      "status": "PASS",
+      "detail": "loads"
+    },
+    {
+      "id": "E10.2",
+      "name": "library: nesl_utility",
+      "status": "PASS",
+      "detail": "loads"
+    },
+    {
+      "id": "E10.3",
+      "name": "library: simulink",
+      "status": "PASS",
+      "detail": "loads"
+    }
+  ],
+  "extra": {
+    "memory": {
+      "total_mb": 7413.24609375,
+      "available_mb": 711.984375,
+      "matlab_used_mb": 2334.9296875,
+      "source": "memory()"
+    },
+    "products": [
+      "MATLAB 26.2",
+      "MATLAB Copilot 26.2",
+      "Simscape 26.2",
+      "Simulink 26.2"
+    ],
+    "python": "C:\\Users\\<user>\\Documents\\H2-PRISM\\.venv\\Scripts\\python.exe"
+  },
+  "note": "Engineering readiness evidence only. A successful load or compile is NOT physical validation."
+}

@@ -1,0 +1,10 @@
+{
+  "status": "COMPLETED",
+  "artifact_class": "PRIMARY_EXPERIMENT",
+  "out": "03_results\\primary_protocol\\PRIMARY"
+}
+
+real	48m44.219s
+user	0m0.062s
+sys	0m0.015s
+RUN_EXIT 0

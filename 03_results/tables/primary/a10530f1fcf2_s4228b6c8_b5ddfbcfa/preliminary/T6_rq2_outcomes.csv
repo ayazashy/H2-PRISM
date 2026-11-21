@@ -1,0 +1,13 @@
+target,class,scope,topologies_included,exclusion_reason,n_windows,n_runs,n_families,n_independence_groups,n_specific,n_specific_correct,specific_correct,n_ambiguity_set,n_ambiguity_includes_true,ambiguity_inclusion,n_unresolved
+0.6,COMPRESSOR_DELAY,POOLED_ESTIMABLE,Downstream|Upstream,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.258),62,2,2,1,0,0,,31,31,1.0,31
+0.6,COMPRESSOR_DELAY,Downstream,Downstream,,31,1,1,1,0,0,,31,31,1.0,0
+0.6,COMPRESSOR_DELAY,Upstream,Upstream,,31,1,1,1,0,0,,0,0,,31
+0.6,COMPRESSOR_FAULT,POOLED_ESTIMABLE,Downstream|Upstream,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.258),2656,4,2,1,0,0,,0,0,,2656
+0.6,COMPRESSOR_FAULT,Downstream,Downstream,,1328,2,1,1,0,0,,0,0,,1328
+0.6,COMPRESSOR_FAULT,Upstream,Upstream,,1328,2,1,1,0,0,,0,0,,1328
+0.6,LEAK,POOLED_ESTIMABLE,Downstream|Upstream,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.258),14614,26,20,10,10701,10701,1.0,0,0,,3913
+0.6,LEAK,Downstream,Downstream,,7307,13,10,10,5599,5599,1.0,0,0,,1708
+0.6,LEAK,Upstream,Upstream,,7307,13,10,10,5102,5102,1.0,0,0,,2205
+0.6,NORMAL,POOLED_ESTIMABLE,Downstream|Upstream,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.258),1330,2,2,1,497,497,1.0,0,0,,833
+0.6,NORMAL,Downstream,Downstream,,665,1,1,1,0,0,,0,0,,665
+0.6,NORMAL,Upstream,Upstream,,665,1,1,1,497,497,1.0,0,0,,168

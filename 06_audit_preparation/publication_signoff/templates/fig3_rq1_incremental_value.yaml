@@ -1,0 +1,30 @@
+# UNSIGNED TEMPLATE - not an approval. See SIGNOFF_PACKAGE.md.
+approval_id: fig3_rq1_incremental_value__d78ff9da__REVIEWER
+artifact_id: fig3_rq1_incremental_value
+claim_scope: DESCRIPTIVE
+decision: TO_BE_DECIDED_BY_REVIEWER
+approved_claims:
+- "Incremental decision value of D(x). (a) Paired differences in selective risk between s_C and each comparator at matched\
+  \ coverage (negative favours s_C; filled squares: the primary contrast against the no-D ablation s_C\u2212D); bars are 95%\
+  \ topology-stratified family-bootstrap intervals conditional on the three simulated topologies. (b) The primary contrast\
+  \ in each held-out topology (single-fold point estimates). (c) Sensitivity of the primary contrast to the deterministic\
+  \ tie-breaking order (protocol amendment PA-1). Comparisons that are not estimable under the registered protocol are labelled\
+  \ and no value is drawn; in R2 this applies to every registered comparison (pooled estimates require every fold, and Center's\
+  \ flag-free coverage ceiling is 0.258; see T7)."
+limitations_acknowledged:
+- conditional on three simulated topologies; not a generalisation interval; effect sizes only; non-estimable comparisons are
+  listed, not imputed
+reviewer:
+  name: TO_BE_FILLED_BY_REVIEWER
+  role: TO_BE_FILLED_BY_REVIEWER
+date: YYYY-MM-DD
+statement: ''
+binding:
+  input_sha256:
+    03_results/primary_protocol/PRIMARY/rq1.csv: fb73e4eea74ba3320310df1747e1fbf626fd230fb94d26ea382bed41c1bd7510
+    03_results/primary_protocol/PRIMARY/rq1_by_topology.csv: ed0b9ec89d7f6d8e876cd595c2363ac1f394b7ada3eabcc908e229bb6feaa222
+    03_results/primary_protocol/PRIMARY/tie_sensitivity.csv: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+  spec_sha256: d78ff9da7bd01655c1fc4e220f8e54eac730453068c2a9d55e90322412a7eb70
+  renderer_sha256: af0f8d10b32ab86d1ec4225f7da077055655579cd0e4588e249d6cae16cb249a
+  source_run_keys:
+  - a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb

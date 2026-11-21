@@ -1,0 +1,18 @@
+required_field,in_engine_certificate,in_frozen_serialized_record,where
+source capture / run identity,True,True,MeasurementContract.source_id/run_id; JSON: query only
+timestamps / window,True,False,MeasurementContract.timestamps_s; JSON: none (implicit 30 s)
+valid sensors,True,False,sensors; JSON: group name only
+measured units,True,False,SensorRecord.unit
+quality checks,True,True,measurement_issues
+candidate hypotheses,True,True,results / consistent+excluded+indeterminate
+predicted signatures,False,False,template labels only; trajectories not serialized
+residuals,False,False,not recorded
+observation bounds,True,True,absolute_errors; JSON: eps × split
+model bounds,False,True,adapter-internal only; JSON: eps × (1 − split)
+time-alignment choice,True,False,witness shift for FEASIBLE only
+exclusion certificates,True,False,IntervalSeparation in memory; JSON: names only
+feasibility witnesses,True,False,"witness (template, shift) in memory"
+decision,True,True,status
+reason code,True,True,reason
+source-model version,False,False,SLX hash not attached to the decision
+TRACE COVERAGE,12/16,7/16,"certificate re-verification: 11,061/11,061 exclusions, 1,552/1,552 witnesses"

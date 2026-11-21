@@ -1,0 +1,6 @@
+target,unit,source_rows_observed,source_unique_values,source_min,source_max,source_standard_deviation,source_constant
+pres_buf,bar,300767,64,28.0,34.3,1.541204588532829,False
+pres_comp,bar (tank pressure; not compressor-discharge pressure),300767,263,84.5,110.7,7.099244669409075,False
+pres_pila,bar,300768,1,0.0,0.0,0.0,True
+h2_flow,NL/h (generated over the preceding sample interval),300767,25465,0.0,376.9,96.44209657382206,False
+h2_flow_pila,NL/h (fuel-cell consumption),300768,1,0.0,0.0,0.0,True

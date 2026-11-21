@@ -1,4 +1,6 @@
 # Status of Legacy Stage 1 Results & Claims (Task F1 / Stage 2)
+
+> **Correction (2026-11-13).** The released models define an **air-like** gas (R = 0.287 kJ/kg/K), not a 10% H₂ / 90% CH₄ blend, and their active constants are physically inconsistent. The blend statement is **refuted**. See `05_documentation/GAS_MODEL_LIMITATION.md` and `00_governance/MASTER_ISSUE_REGISTER.csv` (B-14).
 **Author**: Yazan (Lead, Dataset Audit, Data Engineering & Dataset Readiness)  
 **Date**: 2026-10-30  
 **Status**: RETIRED / HISTORICAL ONLY

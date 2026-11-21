@@ -1,0 +1,32 @@
+file,comparison,detail
+class_mapping.yaml,TEXT_DIFFERS,"2 changed lines; e.g. ['-  date: 2026-10-30 18:22:43 UTC', '+  date: 2026-11-10 17:50:41 UTC']"
+DATA_LEAKAGE_ASSESSMENT.md,TEXT_DIFFERS,"2 changed lines; e.g. ['-**Date**: 2026-10-30 18:22:44 UTC', '+**Date**: 2026-11-10 17:50:45 UTC']"
+DATASET_INVENTORY.md,TEXT_DIFFERS,"8 changed lines; e.g. ['-**Verification Date**: 2026-10-30 18:22:42 UTC  ', '+**Verification Date**: 2026-11-10 17:50:36 UTC  ']"
+DATASET_READINESS_REPORT.md,TEXT_DIFFERS,"2 changed lines; e.g. ['-**Evaluation Date**: 2026-10-30 18:22:44 UTC  ', '+**Evaluation Date**: 2026-11-10 17:50:47 UTC  ']"
+DATASET_SCENARIO_MAP.csv,VALUES_DIFFER,file:242;Scenario_ID:233;Scenario_Family_ID:229;duplicate_class_id:234;formats_present:4;event_label_raw:229;phase:114;topology:115;variant_type:188;notes:233
+DUPLICATE_EXPORT_AUDIT.csv,VALUES_DIFFER,file_a:1423;file_b:1423;shared_stem:399;comparison_type:763;byte_match:4;numeric_equivalence:172;duplicate_classification:172;notes:1199
+EVENT_TIMING_AUDIT.csv,VALUES_DIFFER,canonical_parquet:58
+FAMILY_CLASS_DISTRIBUTION.csv,BYTE_IDENTICAL,
+FILE_LEVEL_AUDIT.csv,SHAPE_OR_COLUMNS_DIFFER,"(265, 28) vs (264, 28)"
+folds.csv,VALUES_DIFFER,split_role:22;Scenario_ID:138;Scenario_Family_ID:138;Topology_Family_ID:138;file:276;topology:36;target_class:57
+GROUPING_SENSITIVITY_REPORT.md,TEXT_DIFFERS,"2 changed lines; e.g. ['-**Date**: 2026-10-30 18:22:42 UTC', '+**Date**: 2026-11-10 17:50:38 UTC']"
+HOW_TO_ACCESS_DATA.md,BYTE_IDENTICAL,
+LABEL_ANNOTATION_AUDIT.md,TEXT_DIFFERS,"2 changed lines; e.g. ['-**Date**: 2026-10-30 18:22:43 UTC', '+**Date**: 2026-11-10 17:50:41 UTC']"
+LABEL_MAPPING_SPEC.md,TEXT_DIFFERS,"2 changed lines; e.g. ['-**Date**: 2026-10-30 18:22:43 UTC  ', '+**Date**: 2026-11-10 17:50:41 UTC  ']"
+LABEL_OVERLAP_MATRIX.csv,VALUES_EQUAL_FORMAT_DIFF,
+OPERATING_CONDITIONS_AUDIT.csv,VALUES_DIFFER,file_example:58
+ORIGINAL_LABEL_INVENTORY.csv,BYTE_IDENTICAL,
+PHASE_AND_LABEL_DISTRIBUTION.md,TEXT_DIFFERS,"2 changed lines; e.g. ['-**Date**: 2026-10-30 18:22:43 UTC', '+**Date**: 2026-11-10 17:50:41 UTC']"
+PHASE_CONFOUNDING_REPORT.md,TEXT_DIFFERS,"2 changed lines; e.g. ['-**Date**: 2026-10-30 18:22:43 UTC  ', '+**Date**: 2026-11-10 17:50:41 UTC  ']"
+PROPOSED_GROUPED_EVALUATION_DESIGN.md,TEXT_DIFFERS,"2 changed lines; e.g. ['-**Date**: 2026-10-30 18:22:44 UTC', '+**Date**: 2026-11-10 17:50:45 UTC']"
+provisional\PROVISIONAL_DATA_FREEZE_MANIFEST.csv,VALUES_DIFFER,file:242;Scenario_ID:233;Scenario_Family_ID:229;duplicate_class_id:234;formats_present:4;event_label_raw:229;phase:114;topology:115;variant_type:188;notes:233;event_onset_s:200;event_offset_s:46;event_active_duration_s:205;timing_status:24;eligible_primary:86;exclusion_reason:86
+provisional\PROVISIONAL_DATA_FREEZE_NOTES.md,TEXT_DIFFERS,"2 changed lines; e.g. ['-**Date**: 2026-10-30 18:22:44 UTC  ', '+**Date**: 2026-11-10 17:50:43 UTC  ']"
+provisional\PROVISIONAL_DATA_FREEZE_VERSION.txt,TEXT_DIFFERS,"2 changed lines; e.g. ['-Generated: 2026-10-30 18:22:44 UTC', '+Generated: 2026-11-10 17:50:43 UTC']"
+provisional\PROVISIONAL_LABEL_MAPPING.yaml,TEXT_DIFFERS,"2 changed lines; e.g. ['-  date: 2026-10-30 18:22:43 UTC', '+  date: 2026-11-10 17:50:41 UTC']"
+raw_checksums.sha256,TEXT_DIFFERS,"529 changed lines; e.g. ['-c39d8eb2542953c8f6effe78225a17f31bd5dc2ac8a1b1a7d702e79c51239b1b  H2-SimNet-Dataset/.gitkeep', '-09d1ed8b8c63be2a68b3a990150c7c3b99cfed27f06aec99ec096f66cb786523  H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/assestment_transient/leakG4.csv']"
+SCENARIO_FAMILY_REPORT.md,TEXT_DIFFERS,"2 changed lines; e.g. ['-**Date**: 2026-10-30 18:22:42 UTC  ', '+**Date**: 2026-11-10 17:50:38 UTC  ']"
+SCENARIO_INDEPENDENCE_AUDIT.md,TEXT_DIFFERS,"2 changed lines; e.g. ['-**Date**: 2026-10-30 18:22:42 UTC', '+**Date**: 2026-11-10 17:50:38 UTC']"
+SCENARIO_RELATIONSHIP_EDGES.csv,VALUES_DIFFER,node_a:406;node_b:406;scenario_id_a:63;scenario_id_b:63;evidence:9
+SENSOR_CHANNEL_AUDIT.csv,VALUES_EQUAL_FORMAT_DIFF,
+SPLIT_FEASIBILITY_REPORT.md,TEXT_DIFFERS,"2 changed lines; e.g. ['-**Date**: 2026-10-30 18:22:44 UTC  ', '+**Date**: 2026-11-10 17:50:45 UTC  ']"
+Y1_AUDIT_LOG.md,TEXT_DIFFERS,"4 changed lines; e.g. ['-**Date**: 2026-10-30 18:22:42 UTC  ', '+**Date**: 2026-11-10 17:50:36 UTC  ']"

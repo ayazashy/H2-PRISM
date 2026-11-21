@@ -1,0 +1,23 @@
+# UNSIGNED TEMPLATE - not an approval. See SIGNOFF_PACKAGE.md.
+approval_id: T5_rq1_effects__9bc808eb__REVIEWER
+artifact_id: T5_rq1_effects
+claim_scope: DESCRIPTIVE
+decision: TO_BE_DECIDED_BY_REVIEWER
+approved_claims:
+- "RQ1 paired effects: risk(s_C) \u2212 risk(comparator), 95% topology-stratified family bootstrap; rank-matched (primary\
+  \ rule) and threshold-transfer (secondary) modes. Every registered comparison of R2 is NOT_ESTIMABLE (values empty, never\
+  \ imputed)."
+limitations_acknowledged:
+- effect sizes only; conditional on three simulated topologies
+reviewer:
+  name: TO_BE_FILLED_BY_REVIEWER
+  role: TO_BE_FILLED_BY_REVIEWER
+date: YYYY-MM-DD
+statement: ''
+binding:
+  input_sha256:
+    03_results/primary_protocol/PRIMARY/rq1.csv: fb73e4eea74ba3320310df1747e1fbf626fd230fb94d26ea382bed41c1bd7510
+  spec_sha256: 9bc808eb68ba79344e750b1f8747dfb5514db7fd91b6ffe40a0138d4d330473f
+  renderer_sha256: 12ba184bfc5f603546a75e47764b8f3569dffc44810423add4bc024b4cdfdd66
+  source_run_keys:
+  - a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb

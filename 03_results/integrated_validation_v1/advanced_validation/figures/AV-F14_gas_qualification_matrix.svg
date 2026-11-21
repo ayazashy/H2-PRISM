@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="691.2pt" height="388.8pt" viewBox="0 0 691.2 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 388.8 
+L 691.2 388.8 
+L 691.2 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 105.125625 354.362188 
+L 685.44 354.362188 
+L 685.44 43.285469 
+L 105.125625 43.285469 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 172.604041 354.362188 
+L 172.604041 43.285469 
+" clip-path="url(#pcd3df33036)" style="fill: none; stroke: #e5e7eb; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 307.560872 354.362188 
+L 307.560872 43.285469 
+" clip-path="url(#pcd3df33036)" style="fill: none; stroke: #e5e7eb; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 442.517703 354.362188 
+L 442.517703 43.285469 
+" clip-path="url(#pcd3df33036)" style="fill: none; stroke: #e5e7eb; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 577.474535 354.362188 
+L 577.474535 43.285469 
+" clip-path="url(#pcd3df33036)" style="fill: none; stroke: #e5e7eb; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_5"/>
+     <g id="text_1">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="172.604041" y="37.627656" transform="rotate(-0 172.604041 37.627656)">Property basis</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_6"/>
+     <g id="text_2">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="307.560872" y="37.646406" transform="rotate(-0 307.560872 37.646406)">Level A: software</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_7"/>
+     <g id="text_3">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="442.517703" y="37.646406" transform="rotate(-0 442.517703 37.646406)">Level B: simulation transfer</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_8"/>
+     <g id="text_4">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="577.474535" y="37.646406" transform="rotate(-0 577.474535 37.646406)">Level C: experimental transfer</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_9"/>
+     <g id="text_5">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="101.625625" y="92.280766" transform="rotate(-0 101.625625 92.280766)">Air-like legacy (Center)</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_10"/>
+     <g id="text_6">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="101.625625" y="168.153136" transform="rotate(-0 101.625625 168.153136)">Natural gas</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_11"/>
+     <g id="text_7">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="101.625625" y="244.025507" transform="rotate(-0 101.625625 244.025507)">H2/CH4 blends</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_12"/>
+     <g id="text_8">
+      <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: end; fill: #20252b" x="101.625625" y="319.897877" transform="rotate(-0 101.625625 319.897877)">Pure H2</text>
+     </g>
+    </g>
+   </g>
+   <g id="PathCollection_1">
+    <defs>
+     <path id="mb8125a3677" d="M -2.622022 5.244044 
+L 0 2.622022 
+L 2.622022 5.244044 
+L 5.244044 2.622022 
+L 2.622022 0 
+L 5.244044 -2.622022 
+L 2.622022 -5.244044 
+L 0 -2.622022 
+L -2.622022 -5.244044 
+L -5.244044 -2.622022 
+L -2.622022 0 
+L -5.244044 2.622022 
+z
+" style="stroke: #20252b; stroke-width: 0.5"/>
+    </defs>
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#mb8125a3677" x="172.604041" y="88.808891" style="fill: #a44a4a; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="190.148429" y="90.842914" transform="rotate(-0 190.148429 90.842914)">unphysical γ = 5.75</text>
+   </g>
+   <g id="PathCollection_2">
+    <defs>
+     <path id="m3ee6854187" d="M 0 5.244044 
+C 1.390737 5.244044 2.7247 4.691499 3.708099 3.708099 
+C 4.691499 2.7247 5.244044 1.390737 5.244044 0 
+C 5.244044 -1.390737 4.691499 -2.7247 3.708099 -3.708099 
+C 2.7247 -4.691499 1.390737 -5.244044 0 -5.244044 
+C -1.390737 -5.244044 -2.7247 -4.691499 -3.708099 -3.708099 
+C -4.691499 -2.7247 -5.244044 -1.390737 -5.244044 0 
+C -5.244044 1.390737 -4.691499 2.7247 -3.708099 3.708099 
+C -2.7247 4.691499 -1.390737 5.244044 0 5.244044 
+z
+" style="stroke: #20252b; stroke-width: 0.5"/>
+    </defs>
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#m3ee6854187" x="307.560872" y="88.808891" style="fill: #087e8b; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="325.10526" y="90.842914" transform="rotate(-0 325.10526 90.842914)">engine runs</text>
+   </g>
+   <g id="PathCollection_3">
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#mb8125a3677" x="442.517703" y="88.808891" style="fill: #a44a4a; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="460.062092" y="90.850883" transform="rotate(-0 460.062092 90.850883)">none</text>
+   </g>
+   <g id="PathCollection_4">
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#mb8125a3677" x="577.474535" y="88.808891" style="fill: #a44a4a; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="595.018923" y="90.850883" transform="rotate(-0 595.018923 90.850883)">none</text>
+   </g>
+   <g id="PathCollection_5">
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#mb8125a3677" x="172.604041" y="164.681261" style="fill: #a44a4a; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="190.148429" y="166.723254" transform="rotate(-0 190.148429 166.723254)">no provider</text>
+   </g>
+   <g id="PathCollection_6">
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#mb8125a3677" x="307.560872" y="164.681261" style="fill: #a44a4a; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="325.10526" y="166.723254" transform="rotate(-0 325.10526 166.723254)">refused</text>
+   </g>
+   <g id="PathCollection_7">
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#mb8125a3677" x="442.517703" y="164.681261" style="fill: #a44a4a; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="460.062092" y="166.723254" transform="rotate(-0 460.062092 166.723254)">none</text>
+   </g>
+   <g id="PathCollection_8">
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#mb8125a3677" x="577.474535" y="164.681261" style="fill: #a44a4a; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="595.018923" y="166.723254" transform="rotate(-0 595.018923 166.723254)">none</text>
+   </g>
+   <g id="PathCollection_9">
+    <defs>
+     <path id="mf9914b6add" d="M 0 7.416198 
+L 7.416198 0 
+L 0 -7.416198 
+L -7.416198 0 
+z
+" style="stroke: #20252b; stroke-width: 0.5"/>
+    </defs>
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#mf9914b6add" x="172.604041" y="240.553632" style="fill: #ba8a28; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="190.148429" y="242.595624" transform="rotate(-0 190.148429 242.595624)">GERG probe; flash fails</text>
+   </g>
+   <g id="PathCollection_10">
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#mb8125a3677" x="307.560872" y="240.553632" style="fill: #a44a4a; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="325.10526" y="242.587655" transform="rotate(-0 325.10526 242.587655)">refused by interface</text>
+   </g>
+   <g id="PathCollection_11">
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#mb8125a3677" x="442.517703" y="240.553632" style="fill: #a44a4a; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="460.062092" y="242.595624" transform="rotate(-0 460.062092 242.595624)">none</text>
+   </g>
+   <g id="PathCollection_12">
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#mb8125a3677" x="577.474535" y="240.553632" style="fill: #a44a4a; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="595.018923" y="242.595624" transform="rotate(-0 595.018923 242.595624)">none</text>
+   </g>
+   <g id="PathCollection_13">
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#m3ee6854187" x="172.604041" y="316.426002" style="fill: #087e8b; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="190.148429" y="318.467994" transform="rotate(-0 190.148429 318.467994)">Leachman EOS tables</text>
+   </g>
+   <g id="PathCollection_14">
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#m3ee6854187" x="307.560872" y="316.426002" style="fill: #087e8b; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="325.10526" y="318.467994" transform="rotate(-0 325.10526 318.467994)">provider resolves</text>
+   </g>
+   <g id="PathCollection_15">
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#mb8125a3677" x="442.517703" y="316.426002" style="fill: #a44a4a; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="460.062092" y="318.467994" transform="rotate(-0 460.062092 318.467994)">none</text>
+   </g>
+   <g id="PathCollection_16">
+    <g clip-path="url(#pcd3df33036)">
+     <use xlink:href="#mb8125a3677" x="577.474535" y="316.426002" style="fill: #a44a4a; stroke: #20252b; stroke-width: 0.5"/>
+    </g>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 8.5px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="595.018923" y="318.467994" transform="rotate(-0 595.018923 318.467994)">none</text>
+   </g>
+  </g>
+  <g id="text_25">
+   <text style="font-weight: 700; font-size: 15px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="345.6" y="15.927188" transform="rotate(-0 345.6 15.927188)">Gas-composition readiness: no diagnostic transfer exists for any gas</text>
+  </g>
+  <g id="legend_1">
+   <g id="line2d_13">
+    <defs>
+     <path id="m28f46d7f8b" d="M 0 4 
+C 1.060812 4 2.078319 3.578535 2.828427 2.828427 
+C 3.578535 2.078319 4 1.060812 4 0 
+C 4 -1.060812 3.578535 -2.078319 2.828427 -2.828427 
+C 2.078319 -3.578535 1.060812 -4 0 -4 
+C -1.060812 -4 -2.078319 -3.578535 -2.828427 -2.828427 
+C -3.578535 -2.078319 -4 -1.060812 -4 0 
+C -4 1.060812 -3.578535 2.078319 -2.828427 2.828427 
+C -2.078319 3.578535 -1.060812 4 0 4 
+z
+" style="stroke: #087e8b"/>
+    </defs>
+    <g>
+     <use xlink:href="#m28f46d7f8b" x="197.746875" y="374.142188" style="fill: #087e8b; stroke: #087e8b"/>
+    </g>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="215.746875" y="377.642188" transform="rotate(-0 215.746875 377.642188)">Available / verified</text>
+   </g>
+   <g id="line2d_14">
+    <defs>
+     <path id="m7fed5f4e87" d="M 0 5.656854 
+L 5.656854 0 
+L 0 -5.656854 
+L -5.656854 0 
+z
+" style="stroke: #ba8a28; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#m7fed5f4e87" x="322.754687" y="374.142188" style="fill: #ba8a28; stroke: #ba8a28; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="340.754687" y="377.642188" transform="rotate(-0 340.754687 377.642188)">Probe only</text>
+   </g>
+   <g id="line2d_15">
+    <defs>
+     <path id="ma7040193fb" d="M -2 4 
+L 0 2 
+L 2 4 
+L 4 2 
+L 2 0 
+L 4 -2 
+L 2 -4 
+L 0 -2 
+L -2 -4 
+L -4 -2 
+L -2 0 
+L -4 2 
+z
+" style="stroke: #a44a4a; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#ma7040193fb" x="414.3625" y="374.142188" style="fill: #a44a4a; stroke: #a44a4a; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="text_28">
+    <text style="font-size: 10px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #20252b" x="432.3625" y="377.642188" transform="rotate(-0 432.3625 377.642188)">Absent or refused</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pcd3df33036">
+   <rect x="105.125625" y="43.285469" width="580.314375" height="311.076719"/>
+  </clipPath>
+ </defs>
+</svg>

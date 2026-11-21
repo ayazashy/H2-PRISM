@@ -1,0 +1,35 @@
+{
+  "targets": [
+    "P-2",
+    "MFC-3"
+  ],
+  "interval_s": [
+    0.8,
+    1.2
+  ],
+  "ridge_alpha": 100,
+  "partition": {
+    "22": "development",
+    "23": "development",
+    "24": "test",
+    "25": "development",
+    "26": "development",
+    "27": "development",
+    "28": "test",
+    "29": "test"
+  },
+  "groups": {
+    "22": "12 May",
+    "23": "12 May",
+    "24": "26 May",
+    "25": "26 June",
+    "26": "18 July",
+    "27": "18 July",
+    "28": "22 July",
+    "29": "22 July"
+  },
+  "figure_cases": [
+    24,
+    29
+  ]
+}

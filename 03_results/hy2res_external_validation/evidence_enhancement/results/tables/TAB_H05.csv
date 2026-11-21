@@ -1,0 +1,13 @@
+channel,condition,rows,fraction_of_test,fraction_of_unresolved,overlap_with_other_channel_outside,segments,primary_reason_rows,max_excess
+pres_buf,below,0,0.0,0.0,0,0,,
+pres_buf,above,0,0.0,0.0,0,0,,
+pres_buf,outside,0,0.0,0.0,0,0,0.0,
+pres_buf,nonfinite,413,0.0093024303443926,0.012783211588461,0,413,,
+pres_comp,below,0,0.0,0.0,0,0,,
+pres_comp,above,31589,0.7115120391017411,0.9777454500433328,0,299,,4.1000000000000085
+pres_comp,outside,31589,0.7115120391017411,0.9777454500433328,0,299,31589.0,4.1000000000000085
+pres_comp,nonfinite,413,0.0093024303443926,0.012783211588461,0,413,,
+h2_flow,below,0,0.0,0.0,0,0,,
+h2_flow,above,0,0.0,0.0,0,0,,
+h2_flow,outside,0,0.0,0.0,0,0,0.0,
+h2_flow,nonfinite,413,0.0093024303443926,0.012783211588461,0,413,,

@@ -1,0 +1,243 @@
+file,time_source,n,t0,t_end,dt_unique
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/assestment_transient/leakG4.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/assestment_transient/leakG5G6_overlapped.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/constant_segment/brokenC1_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/constant_segment/brokenC1_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/constant_segment/brokenC1G5_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG3.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG3G4_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG3G4_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG3G5_overlapped.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG3G6.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG4_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG4_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG5_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG5_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG6.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/constant_segment/startdelayC1.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/start_transient/leakG3.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestcent/start_transient/leakG4brokenC1.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/assestment_transient/leakG4.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/assestment_transient/leakG5G6_overlapped.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/constant_segment/brokenC1_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/constant_segment/brokenC1_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/constant_segment/brokenC1G5_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG3.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG3G4_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG3G4_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG3G5_overlapped.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG3G6.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG4_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG4_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG5_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG5_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG6.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/constant_segment/startdelayC1.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/start_transient/leakG3.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestdown/start_transient/leakG4brokenC1.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/assestment_transient/leakG4.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/assestment_transient/leakG5G6_overlapped.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/constant_segment/brokenC1_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/constant_segment/brokenC1_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/constant_segment/brokenC1G5_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG3.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG3G4_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG3G4_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG3G5_overlapped.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG3G6.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG4_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG4_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG5_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG5_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG6.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/constant_segment/startdelayC1.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/start_transient/leakG3.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/start_transient/leakG4brokenC1.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/parquet/leakG4.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/assestment_transient/leakG4.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/assestment_transient/leakG5G6_overlapped.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/assestment_transient/leakG5G6_overlapped_noisy.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/constant_segment/brokenC1_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/constant_segment/brokenC1_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/constant_segment/brokenC1G5_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG3.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG3G4_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG3G4_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG3G5_overlapped.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG3G6.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG4_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG4_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG5_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG5_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/constant_segment/leakG6.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/constant_segment/startdelayC1.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/start_transient/leakG3.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestcent/start_transient/leakG4brokenC1.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/assestment_transient/leakG4.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/assestment_transient/leakG5G6_overlapped.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/assestment_transient/leakG5G6_overlapped_noisy.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/constant_segment/brokenC1_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/constant_segment/brokenC1_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/constant_segment/brokenC1G5_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG3.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG3G4_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG3G4_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG3G5_overlapped.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG3G6.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG4_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG4_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG5_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG5_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/constant_segment/leakG6.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/constant_segment/startdelayC1.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/start_transient/leakG3.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestdown/start_transient/leakG4brokenC1.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/assestment_transient/leakG4.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/assestment_transient/leakG5G6_overlapped.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/assestment_transient/leakG5G6_overlapped_noisy.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/constant_segment/brokenC1_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/constant_segment/brokenC1_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/constant_segment/brokenC1G5_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG3.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG3G4_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG3G4_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG3G5_overlapped.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG3G6.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG4_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG4_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG5_strong.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG5_weak.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/constant_segment/leakG6.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/constant_segment/startdelayC1.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/start_transient/leakG3.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/anom_gestup/start_transient/leakG4brokenC1.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/parquet/leakG4.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/normality-scenarios/parquet/normality_gest_center.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/normality-scenarios/parquet/normality_gest_down.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/normality-scenarios/parquet/normality_gest_up.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/normality-scenarios/parquet/normality_gest_center.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/normality-scenarios/parquet/normality_gest_down.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/normality-scenarios/parquet/normality_gest_up.parquet,parquet_index_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/assestment_transient/leakG4.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/assestment_transient/leakG5G6_overlapped.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/constant_segment/brokenC1_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/constant_segment/brokenC1_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/constant_segment/brokenC1G5_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG3.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG3G4_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG3G4_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG3G5_overlapped.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG3G6.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG4_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG4_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG5_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG5_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG6.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/constant_segment/startdelayC1.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/start_transient/leakG3.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestcent/start_transient/leakG4brokenC1.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/assestment_transient/leakG4.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/assestment_transient/leakG5G6_overlapped.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/constant_segment/brokenC1_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/constant_segment/brokenC1_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/constant_segment/brokenC1G5_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG3.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG3G4_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG3G4_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG3G5_overlapped.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG3G6.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG4_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG4_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG5_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG5_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG6.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/constant_segment/startdelayC1.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/start_transient/leakG3.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestdown/start_transient/leakG4brokenC1.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/assestment_transient/leakG4.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/assestment_transient/leakG5G6_overlapped.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/constant_segment/brokenC1_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/constant_segment/brokenC1_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/constant_segment/brokenC1G5_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG3.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG3G4_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG3G4_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG3G5_overlapped.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG3G6.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG4_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG4_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG5_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG5_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG6.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/constant_segment/startdelayC1.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/start_transient/leakG3.csv,none (row index only),,,,
+H2-SimNet-Dataset/anomalous-scenarios/csv/anom_gestup/start_transient/leakG4brokenC1.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/assestment_transient/leakG4.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/assestment_transient/leakG5G6_overlapped.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/assestment_transient/leakG5G6_overlapped_noisy.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/brokenC1_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/brokenC1_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/brokenC1G5_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG3.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG3G4_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG3G4_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG3G5_overlapped.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG3G6.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG4_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG4_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG5_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG5_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/leakG6.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/constant_segment/startdelayC1.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/start_transient/leakG3.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestcent/start_transient/leakG4brokenC1.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/assestment_transient/leakG4.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/assestment_transient/leakG5G6_overlapped.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/assestment_transient/leakG5G6_overlapped_noisy.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/brokenC1_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/brokenC1_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/brokenC1G5_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG3.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG3G4_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG3G4_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG3G5_overlapped.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG3G6.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG4_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG4_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG5_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG5_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/leakG6.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/constant_segment/startdelayC1.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/start_transient/leakG3.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestdown/start_transient/leakG4brokenC1.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/assestment_transient/leakG4.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/assestment_transient/leakG5G6_overlapped.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/assestment_transient/leakG5G6_overlapped_noisy.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/brokenC1_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/brokenC1_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/brokenC1G5_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG3.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG3G4_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG3G4_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG3G5_overlapped.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG3G6.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG4_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG4_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG5_strong.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG5_weak.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/leakG6.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/constant_segment/startdelayC1.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/start_transient/leakG3.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/anomalous-scenarios/csv/anom_gestup/start_transient/leakG4brokenC1.csv,none (row index only),,,,
+H2-SimNet-Dataset/H2-SimNet-clean/normality-scenarios/csv/normality_gest_center.csv,csv_column_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/normality-scenarios/csv/normality_gest_down.csv,csv_column_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/H2-SimNet-clean/normality-scenarios/csv/normality_gest_up.csv,csv_column_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/normality_scenarios/normality_datasets/normality_gest_center.csv,csv_column_Timestamp,25001.0,0.0,20000.0,0.8
+H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/normality_scenarios/normality_datasets/normality_gest_down.csv,csv_column_Timestamp,22223.0,0.0,19999.8,0.9
+H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/normality_scenarios/normality_datasets/normality_gest_up.csv,csv_column_Timestamp,22223.0,0.0,19999.8,0.9
+H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/normality_scenarios/normality_gest_center.csv,csv_column_Timestamp,25001.0,0.0,20000.0,0.8
+H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/normality_scenarios/normality_gest_down.csv,csv_column_Timestamp,22223.0,0.0,19999.8,0.9
+H2-SimNet-Dataset/MATLAB_SIMSCAPE_Simulation/normality_scenarios/normality_gest_up.csv,csv_column_Timestamp,22223.0,0.0,19999.8,0.9
+H2-SimNet-Dataset/normality-scenarios/csv/normality_gest_center.csv,csv_column_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/normality-scenarios/csv/normality_gest_down.csv,csv_column_Timestamp,20000.0,0.0,19999.0,1.0
+H2-SimNet-Dataset/normality-scenarios/csv/normality_gest_up.csv,csv_column_Timestamp,20000.0,0.0,19999.0,1.0

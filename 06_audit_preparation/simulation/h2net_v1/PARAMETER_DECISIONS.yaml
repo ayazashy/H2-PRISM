@@ -1,0 +1,47 @@
+# H2Net v1 engineering parameters that must be FIXED (and justified) before step (b) builds the model and before any
+# V2 reference target is computed. Proposed defaults are suggestions for discussion, not decisions.
+# Owner: Yazan (dataset/model owner) with the modeller; methods review: Faisal. Nothing below is decided.
+status: OWNER_DECISIONS_REQUIRED
+decided_by: null
+date: null
+S1_gas:
+  decided: true
+  value: normal hydrogen, Simscape real-gas specification, tables properties/H2_REALGAS_TLU2.json (CoolProp 7.2.0;
+    Leachman 2009 / Muzny 2013 / Assael 2011); V1 passed (properties/V1_REPORT.json)
+S2_thermal_boundary:
+  decided: false
+  proposed: convective heat transfer from each pipe segment to ground at a fixed soil temperature
+  open: [soil temperature (proposed 283.15 K), overall heat-transfer coefficient per pipe (literature value for buried
+         steel line pipe; source to be cited)]
+S3_compressor_stations:
+  decided: false
+  proposed: ideal pressure-rise element with power_spec none plus an explicit aftercooler to a set outlet temperature
+  open: [number of stages, pressure ratio per stage, isentropic efficiency for the energy balance (V3), aftercooler
+         outlet temperature (proposed 313.15 K), set-points of the two sources, fault/delay parameterisation]
+S4_demand_and_leaks:
+  decided: false
+  proposed: demands as controlled mass-flow sinks at the released withdrawal nodes G3-G6; leaks as separate orifice
+    branches to atmosphere at mid-pipe positions
+  open: [nominal demand per node (kg/s), load-profile families, leak positions (>= 6), leak areas for 0.5 / 2 / 10 %
+         of local throughput at nominal conditions, discharge coefficient]
+S5_discretisation:
+  decided: false
+  proposed: segments <= 1 km per pipe; inertia on only if wave-level signatures are in scope (decision affects solver
+    cost and V7)
+  open: [segment length, inertia on/off]
+S6_roughness_and_initial_state:
+  decided: false
+  proposed: 0.045 mm (new steel) for all pipes; initial state = steady state at the nominal operating point
+  open: [roughness value and source]
+S7_sensors_and_units:
+  decided: true
+  value: position map v0.1 blocks; MPa absolute, kg/s; log by block identity; optional compressor-outlet temperature
+S8_numerics:
+  decided: false
+  proposed: variable-step ode15s / ode23t for validation (RelTol 1e-6 reference); production solver only if within V6
+    tolerance of the reference
+  open: [production solver and step]
+operating_envelope_V8:
+  decided: false
+  proposed: [pressures 2-8 MPa in transmission sections, velocity <= 20 m/s, gas temperature 270-330 K after cooling]
+  open: [design limits and sources]

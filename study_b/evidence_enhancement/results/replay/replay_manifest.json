@@ -1,0 +1,346 @@
+{
+  "source_sha256": "91755fb1e555e0eb32d160ac140a4261b6bb47d24944c7e717b723fe2a641e32",
+  "source_md5": "64cbe2a68c0af5dc2e4a0a9690003eac",
+  "development_pairs": 25757,
+  "coefficients": [
+    [
+      0.0030839830082466605,
+      -0.02175511235823047
+    ],
+    [
+      0.011443429807493594,
+      -0.01758920311770782
+    ]
+  ],
+  "intercept": [
+    0.0144426757774587,
+    -0.00012889699887376236
+  ],
+  "scaler_mean": [
+    104.9774818495952,
+    1.7109143145552703
+  ],
+  "scaler_scale": [
+    44.666137514775976,
+    3.527807164028205
+  ],
+  "tolerance": {
+    "persistence_abs": 0.0,
+    "ridge_abs": 1e-12,
+    "ridge_rel": 1e-09
+  },
+  "units": {
+    "22": {
+      "Seconds": "s",
+      "P-2": "barg",
+      "MFC-3": "ln/min"
+    },
+    "23": {
+      "Seconds": "s",
+      "P-2": "barg",
+      "MFC-3": "ln/min"
+    },
+    "24": {
+      "Seconds": "s",
+      "P-2": "barg",
+      "MFC-3": "ln/min"
+    },
+    "25": {
+      "Seconds": "s",
+      "P-2": "barg",
+      "MFC-3": "ln/min"
+    },
+    "26": {
+      "Seconds": "s",
+      "P-2": "barg",
+      "MFC-3": "ln/min"
+    },
+    "27": {
+      "Seconds": "s",
+      "P-2": "barg",
+      "MFC-3": "ln/min"
+    },
+    "28": {
+      "Seconds": "s",
+      "P-2": "barg",
+      "MFC-3": "ln/min"
+    },
+    "29": {
+      "Seconds": "s",
+      "P-2": "barg",
+      "MFC-3": "ln/min"
+    }
+  },
+  "dates": {
+    "22": [
+      "2025-05-12"
+    ],
+    "23": [
+      "2025-05-12"
+    ],
+    "24": [
+      "2025-05-26"
+    ],
+    "25": [
+      "2025-06-26"
+    ],
+    "26": [
+      "2025-07-18"
+    ],
+    "27": [
+      "2025-07-18"
+    ],
+    "28": [
+      "2025-07-22"
+    ],
+    "29": [
+      "2025-07-22"
+    ]
+  },
+  "protocol_sha256": "ff218fc92aed2ec2bfa64aa07b680cd3a767c31055a5bf5d4500532863832058",
+  "gate_passed": true,
+  "eligible_pairs": {
+    "22": 6305,
+    "23": 4834,
+    "24": 4940,
+    "25": 4796,
+    "26": 5499,
+    "27": 4323,
+    "28": 5002,
+    "29": 5943
+  },
+  "source_notes": {
+    "22": [
+      "Experiment No. 22 Two-Stage Compression",
+      "Stage 1 TiZrMn activated",
+      "Stage 2 TiCrMn activated",
+      "Continuous cycles to observe behavior when compressing from inlet through stage I and stage II.",
+      "Inlet pressure is 30 bar, final outlet pressure is 140 bar; that back pressure is controlled by MFC-3",
+      "Protocol",
+      "--- 15min cycle time ---",
+      "09:15:00 heating up the thermostat Represantative Cycle",
+      "09:48:00 first switch-over to st-1 abs., startup of the compressor Start: 11:03:00 =VLOOKUP(H12,B47:C20001,2) 0",
+      "10:03:00 switch-over =I12 240",
+      "10:18:00 switch-over to st-1 abs., st-2 des.; data can be taken from here on End: 11:33:00 =VLOOKUP(H14,B47:C20001,2) =J12",
+      "10:33:00 switch-over =I14 =J13",
+      "10:48:00 switch-over; outlet valve opened too late",
+      "11:03:00 switch-over",
+      "11:18:00 switch-over",
+      "11:33:00 end",
+      "0",
+      "200",
+      "=J22",
+      "=J23",
+      "0",
+      "200",
+      "=J32",
+      "=J33",
+      "Data",
+      "Labview",
+      "Datum Uhrzeit Seconds P-4 HTF Stage I P-5 HTF Stage II MF-1 HTF Stage I MF-1 HTF Stage I Temp MF-2 HTF Stage II MF-2 HTF Stage II Temp P-1 H2 Stage I P-2 H2 Stage II P-3 H2 Bottle MFC1-H2 Inlet MFC2-H2 Transition MFC3-H2 Outlet"
+    ],
+    "23": [
+      "Experiment No. 23 Two-Stage Compression",
+      "Stage 1 TiZrMn activated",
+      "Stage 2 TiCrMn activated",
+      "Continuous cycles to observe behavior when compressing from inlet through stage I and stage II.",
+      "Inlet pressure is 30 bar, final outlet pressure is 140 bar; that back pressure is controlled by MFC-3",
+      "Protocol",
+      "--- 10min cycle time ---",
+      "13:13:00 pre-runs for startup of the compressor Represantative Cycle",
+      "13:52:00 start recording Start: 14:13:00 =VLOOKUP(H12,B47:C20001,2) 0",
+      "13:53:00 switch-over =I12 240",
+      "14:03:00 switch-over End: 14:33:00 =VLOOKUP(H14,B47:C20001,2) =J12",
+      "14:13:00 switch-over =I14 =J13",
+      "14:23:00 switch-over",
+      "14:33:00 switch-over",
+      "14:43:00 switch-over; outlet valve opened too late",
+      "14:53:00 switch-over",
+      "15:03:00 switch-over",
+      "15:13:00 end",
+      "0",
+      "200",
+      "=J22",
+      "=J23",
+      "0",
+      "200",
+      "=J32",
+      "=J33",
+      "Data",
+      "Labview",
+      "Datum Uhrzeit Seconds P-4 HTF Stage I P-5 HTF Stage II MF-1 HTF Stage I MF-1 HTF Stage I Temp MF-2 HTF Stage II MF-2 HTF Stage II Temp P-1 H2 Stage I P-2 H2 Stage II P-3 H2 Bottle MFC1-H2 Inlet MFC2-H2 Transition MFC3-H2 Outlet"
+    ],
+    "24": [
+      "Experiment No. 24 Two-Stage Compression",
+      "Stage 1 TiZrMn activated",
+      "Stage 2 TiCrMn activated",
+      "Testing the full compressor with both stages to go from 30 to 180 bar.",
+      "MFC3 is used as back pressure control.",
+      "Cycle time is 15 min.",
+      "Protocol",
+      "13:40:00 ramp up: absorption in stage I, des. in stage II",
+      "13:44:00 start data recording Represantative Cycle",
+      "14:00:00 switch-over Start: 14:30:00 =VLOOKUP(H12,B47:C20000,2, TRUE) 0",
+      "14:15:00 switch-over =I12 240",
+      "14:30:00 switch-over; data can be taken from here End: 15:00:00 =VLOOKUP(H14,B47:C20001,2, TRUE) =J12",
+      "During the transition-phase, the pressure in stage I surpassed the safety valve =I14 =J13",
+      "set pressure of 90 bar. Some hydrogen might have been released through it.",
+      "14:45:00 switch-over",
+      "15:00:00 switch-over",
+      "Transition pressure again is over 90 bar; experiment stopped",
+      "0",
+      "200",
+      "=J22",
+      "=J23",
+      "0",
+      "200",
+      "=J32",
+      "=J33",
+      "Data",
+      "Labview",
+      "Datum Uhrzeit Seconds P-4 HTF Stage I P-5 HTF Stage II MF-1 HTF Stage I MF-1 HTF Stage I Temp MF-2 HTF Stage II MF-2 HTF Stage II Temp P-1 H2 Stage I P-2 H2 Stage II P-3 H2 Bottle MFC1-H2 Inlet MFC2-H2 Transition MFC3-H2 Outlet"
+    ],
+    "25": [
+      "Experiment No. 25 Two-Stage Compression",
+      "Stage 1 TiZrMn activated",
+      "Stage 2 TiCrMn activated",
+      "compression of C5 and HPM3, 10min, 20 to 140 bar",
+      "Starting the process with a fully absobed first stage from cap. measurements experiment no. 5.",
+      "Protocol",
+      "16:30:00 switching to heating st I and cooling st II",
+      "16:40:00 switch-over Represantative Cycle",
+      "16:50:00 switch-over Start: 17:30:00 =VLOOKUP(H12,B47:C20001,2) 0",
+      "17:00:00 switch-over =I12 240",
+      "17:10:00 switch-over; cycle 2 complete End: 17:50:00 =VLOOKUP(H14,B47:C20001,2) =J12",
+      "17:20:00 switch-over; valves opened a little too late =I14 =J13",
+      "17:30:00 switch-over; cycle 3 complete",
+      "17:40:00 switch-over",
+      "17:50:00 switch-over; cycle 4 complete; experiment ended",
+      "0",
+      "200",
+      "=J22",
+      "=J23",
+      "0",
+      "200",
+      "=J32",
+      "=J33",
+      "Data",
+      "Labview",
+      "Datum Uhrzeit Seconds P-4 HTF Stage I P-5 HTF Stage II MF-1 HTF Stage I MF-1 HTF Stage I Temp MF-2 HTF Stage II MF-2 HTF Stage II Temp P-1 H2 Stage I P-2 H2 Stage II P-3 H2 Bottle MFC1-H2 Inlet MFC2-H2 Transition MFC3-H2 Outlet"
+    ],
+    "26": [
+      "Experiment No. 26 Two-Stage Compression",
+      "Stage 1 MmNiFe activated",
+      "Stage 2 TiCrMn activated",
+      "MmNiFe and TiCrMn. Compressing from 30 to 140 bar final. Cycle time 15 min.",
+      "Starting up the compressor from an mostly uncharged state, but pre-heated.",
+      "Experiments 67 and 68 were recorded in one go, 68 directly following 67.",
+      "Protocol",
+      "09:26:00 Start data recording",
+      "09:28:00 open hydrogen inlet Represantative Cycle",
+      "09:47:00 switch to step 2 (heating st 1, cooling st 2) Start: 10:13:00 =VLOOKUP(H12,B47:C20001,2) 0",
+      "09:58:00 switch to step 1; first cycle complete =I12 240",
+      "10:13:00 switch to step 2 End: 10:43:00 =VLOOKUP(H14,B47:C20001,2) =J12",
+      "10:28:00 switch to step 1; second cycle complete; valves opened too late =I14 =J13",
+      "10:43:00 switch to step 2",
+      "10:58:00 switch to step 1; third cycle complete",
+      "0",
+      "200",
+      "=J22",
+      "=J23",
+      "0",
+      "200",
+      "=J32",
+      "=J33",
+      "Data",
+      "Labview",
+      "Datum Uhrzeit Seconds P-4 HTF Stage I P-5 HTF Stage II MF-1 HTF Stage I MF-1 HTF Stage I Temp MF-2 HTF Stage II MF-2 HTF Stage II Temp P-1 H2 Stage I P-2 H2 Stage II P-3 H2 Bottle MFC1-H2 Inlet MFC2-H2 Transition MFC3-H2 Outlet"
+    ],
+    "27": [
+      "Experiment No. 27 Two-Stage Compression",
+      "Stage 1 MmNiFe activated",
+      "Stage 2 TiCrMn activated",
+      "MmNiFe and TiCrMn. Compressing from 30 to 140 bar final. Cycle time 15 min.",
+      "Starting up the compressor from an mostly uncharged state, but pre-heated.",
+      "Experiments 26 and 27 were recorded in one go, 27 directly following 26.",
+      "Protocol",
+      "11:10:00 switch-over",
+      "11:20:00 switch-over; error in back pressure control, pressure too low Represantative Cycle",
+      "11:30:00 switch-over; first cycle complete Start: 11:50:00 =VLOOKUP(H12,B47:C20001,2) 0",
+      "11:40:30 switch-over =I12 240",
+      "11:50:00 switch-over; second cycle complete End: 12:10:00 =VLOOKUP(H14,B47:C20001,2) =J12",
+      "12:00:00 switch-over =I14 =J13",
+      "12:10:00 third cycle complete; end of experiment",
+      "0",
+      "200",
+      "=J22",
+      "=J23",
+      "0",
+      "200",
+      "=J32",
+      "=J33",
+      "Data",
+      "Labview",
+      "Datum Uhrzeit Seconds P-4 HTF Stage I P-5 HTF Stage II MF-1 HTF Stage I MF-1 HTF Stage I Temp MF-2 HTF Stage II MF-2 HTF Stage II Temp P-1 H2 Stage I P-2 H2 Stage II P-3 H2 Bottle MFC1-H2 Inlet MFC2-H2 Transition MFC3-H2 Outlet"
+    ],
+    "28": [
+      "Experiment No. 28 Two-Stage Compression",
+      "Stage 1 MmNiFe activated",
+      "Stage 2 TiCrMn activated",
+      "MmNiFe and HPM3. Compressing from 20 to 140 bar final. Cycle time 10 min.",
+      "Starting the compressor from an undefined state.",
+      "Protocol",
+      "10:26:00 start recording",
+      "10:30:00 switch to stage I des, stage II abs Represantative Cycle",
+      "10:40:00 switch-over Start: 11:30:00 =VLOOKUP(H12,B47:C20001,2) 0",
+      "10:50:00 switch-over; end of first cycle =I12 240",
+      "11:00:00 switch-over End: 11:50:00 =VLOOKUP(H14,B47:C20001,2) =J12",
+      "11:10:00 switch-over; end of second cycle =I14 =J13",
+      "11:20:00 switch-over",
+      "11:30:00 switch-over; end of third cycle",
+      "11:40:00 switch-over",
+      "11:50:00 switch-over; end of fourth cycle",
+      "0",
+      "200",
+      "=J22",
+      "=J23",
+      "0",
+      "200",
+      "=J32",
+      "=J33",
+      "Data",
+      "Labview",
+      "Datum Uhrzeit Seconds P-4 HTF Stage I P-5 HTF Stage II MF-1 HTF Stage I MF-1 HTF Stage I Temp MF-2 HTF Stage II MF-2 HTF Stage II Temp P-1 H2 Stage I P-2 H2 Stage II P-3 H2 Bottle MFC1-H2 Inlet MFC2-H2 Transition MFC3-H2 Outlet"
+    ],
+    "29": [
+      "Experiment No. 29 Two-Stage Compression",
+      "Stage 1 MmNiFe activated",
+      "Stage 2 TiCrMn activated",
+      "MmNiFe and TiCrMn. Compressing from 30 to 180 bar final. Cycle time 10 min.",
+      "Starting the compressor from an undefined state",
+      "Protocol",
+      "12:57:00 start data recording",
+      "13:00:00 inlet openend for absorption of first stage  Represantative Cycle",
+      "13:10:00 switch-over; end of first cycle Start: 14:10:00 =VLOOKUP(H12,B47:C20001,2) 0",
+      "13:20:00 switch-over =I12 240",
+      "13:30:00 switch-over; end of second cycle End: 14:30:00 =VLOOKUP(H14,B47:C20001,2) =J12",
+      "13:40:00 switch-over =I14 =J13",
+      "13:50:00 switch-over; end of third cycle",
+      "14:00:00 switch-over",
+      "14:10:00 switch-over; end of fourth cycle",
+      "14:20:00 switch-over",
+      "14:30:00 switch-over; end of fifth cycle; end of experiment",
+      "0",
+      "200",
+      "=J22",
+      "=J23",
+      "0",
+      "200",
+      "=J32",
+      "=J33",
+      "Data",
+      "Labview",
+      "Datum Uhrzeit Seconds P-4 HTF Stage I P-5 HTF Stage II MF-1 HTF Stage I MF-1 HTF Stage I Temp MF-2 HTF Stage II MF-2 HTF Stage II Temp P-1 H2 Stage I P-2 H2 Stage II P-3 H2 Bottle MFC1-H2 Inlet MFC2-H2 Transition MFC3-H2 Outlet"
+    ]
+  }
+}

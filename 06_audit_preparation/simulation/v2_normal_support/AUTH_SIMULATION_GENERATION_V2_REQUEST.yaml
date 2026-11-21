@@ -1,0 +1,24 @@
+# AUTHORIZATION (package v2). Project-lead authorization given explicitly in-session on 2026-11-13 (next-step answer:
+# 'Authorize package v2'). Supersedes AUTH_SIMULATION_GENERATION.yaml (package v1, void). Covers ONE execution attempt.
+# Bound hashes unchanged from the request; any change to a bound file voids this record.
+authorized: true
+status: ACTIVE_NOT_YET_EXECUTED
+scope: SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION
+package_version: v2
+authorized_by: Ahmed Zayed (project lead)
+date: '2026-11-13'
+bound_to:
+  design: {file: 06_audit_preparation/simulation/v2_normal_support/DESIGN.csv, sha256: c59caa77fba33a9e604feed681f649ef753f12cfd42da7a6bcdf3c65e829788c}
+  generator: {file: 06_audit_preparation/simulation/v2_normal_support/generate_v2_normal_support.m, sha256: 1d864d54e368c7ba3b0a961224c131136efbab0d9b82faf473c22a977c40ccba}
+  postprocess: {file: tools/simulation/postprocess_v2_normal_runs.py, sha256: 3186861e9dbb87ea402dccbae9653c1b2ef8bc870ba228d9c48713e2e62dcd9e}
+  validator: {file: tools/simulation/validate_v2_normal_outputs.py, sha256: d2c763e327eb02d5988894e6b905ad5a8ed8ea58e4c95c5dc0fc599f3db7b362}
+  authorization_check: {file: tools/simulation/v2_normal_authorization.py, sha256: 9783800320698c92136baf4102b7686d15b27273c8b9b0381a8f26a43eee851c}
+covers: preflight and generation of the 9 NORMAL operating points x 3 released NORMAL models in DESIGN.csv (27 runs),
+  resampling to the release grid, measurement noise, provenance, validation (integrity + physical checks P1-P6) and
+  sealing of the confirmation partition; at most ONE execution attempt per authorization record
+executor: Yazan (dataset owner) or a person he designates; executor acceptance NOT_RECORDED
+output_location: data/generated/v2_normal_support/ (outside the release, git-ignored)
+not_covered: any event scenario; any training or evaluation; any summary, statistic, plot or inspection of the
+  confirmation partition beyond the automated PASS/FAIL checks; any change to the released data or models, R2, arms
+  A-H, RC1 or manifest v0.3; protocol 2.0 activation; Yazan's D1/D2 decisions; Faisal's component acceptance
+void_if: any bound file's SHA-256 differs from the values above, or after one execution attempt (success or failure)

@@ -1,0 +1,17 @@
+{
+  "calibration": "sigmoid",
+  "fold": 2,
+  "meta_model_status": "FITTED",
+  "params": {
+    "max_features": 0.3,
+    "min_samples_leaf": 5,
+    "n_estimators": 300
+  },
+  "run_key": "28e9fbc540c80c995f33870cfa4eee66dec3466a95900e9991e7ede455cc290b",
+  "target_rule": {
+    "min_dev_attainable": 0.5873968492123031,
+    "reason": "",
+    "status": "REGISTERABLE",
+    "target": 0.5
+  }
+}

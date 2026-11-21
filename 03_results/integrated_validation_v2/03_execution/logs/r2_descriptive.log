@@ -1,0 +1,30 @@
+                  scope               cls  support_windows  support_runs  support_families  support_ancestors  precision  recall     f1  balanced_accuracy  macro_f1  classes_present
+0           all_windows            NORMAL             1995             3                 3                  1      0.154   0.667  0.250                NaN       NaN              NaN
+1           all_windows              LEAK            21921            39                30                 13      0.957   0.667  0.786                NaN       NaN              NaN
+2           all_windows  COMPRESSOR_FAULT             3984             6                 3                  2      0.992   0.998  0.995                NaN       NaN              NaN
+3           all_windows  COMPRESSOR_DELAY               93             3                 3                  1      1.000   0.667  0.800                NaN       NaN              NaN
+0           all_windows               ALL            27993            51                39                 17        NaN   0.714    NaN              0.749     0.708              4.0
+0  undisputed_runs_only            NORMAL             1995             3                 3                  1      1.000   0.667  0.800                NaN       NaN              NaN
+1  undisputed_runs_only              LEAK             7307            13                10                 13      0.917   1.000  0.957                NaN       NaN              NaN
+2  undisputed_runs_only  COMPRESSOR_FAULT             1328             2                 1                  2      0.998   1.000  0.999                NaN       NaN              NaN
+3  undisputed_runs_only  COMPRESSOR_DELAY               31             1                 1                  1      1.000   1.000  1.000                NaN       NaN              NaN
+0  undisputed_runs_only               ALL            10661            19                15                 17        NaN   0.938    NaN              0.917     0.939              4.0
+0       topology=Center            NORMAL              665             1                 1                  1      0.083   1.000  0.154                NaN       NaN              NaN
+1       topology=Center              LEAK             7307            13                10                 13        NaN   0.000  0.000                NaN       NaN              NaN
+2       topology=Center  COMPRESSOR_FAULT             1328             2                 1                  2      0.977   0.993  0.985                NaN       NaN              NaN
+3       topology=Center  COMPRESSOR_DELAY               31             1                 1                  1        NaN   0.000  0.000                NaN       NaN              NaN
+0       topology=Center               ALL             9331            17                13                 17        NaN   0.213    NaN              0.498     0.285              4.0
+0   topology=Downstream            NORMAL              665             1                 1                  1        NaN   0.000  0.000                NaN       NaN              NaN
+1   topology=Downstream              LEAK             7307            13                10                 13      0.917   1.000  0.957                NaN       NaN              NaN
+2   topology=Downstream  COMPRESSOR_FAULT             1328             2                 1                  2      0.998   1.000  0.999                NaN       NaN              NaN
+3   topology=Downstream  COMPRESSOR_DELAY               31             1                 1                  1      1.000   1.000  1.000                NaN       NaN              NaN
+0   topology=Downstream               ALL             9331            17                13                 17        NaN   0.929    NaN              0.750     0.739              4.0
+0     topology=Upstream            NORMAL              665             1                 1                  1      1.000   1.000  1.000                NaN       NaN              NaN
+1     topology=Upstream              LEAK             7307            13                10                 13      1.000   1.000  1.000                NaN       NaN              NaN
+2     topology=Upstream  COMPRESSOR_FAULT             1328             2                 1                  2      1.000   1.000  1.000                NaN       NaN              NaN
+3     topology=Upstream  COMPRESSOR_DELAY               31             1                 1                  1      1.000   1.000  1.000                NaN       NaN              NaN
+0     topology=Upstream               ALL             9331            17                13                 17        NaN   1.000    NaN              1.000     1.000              4.0
+        scope  runs  families  ancestors  run_majority_accuracy  mean_window_accuracy_per_run  normal_runs  normal_runs_called_event  event_runs  event_runs_called_normal
+0         all    51        39         17                  0.706                         0.706            3                         1          48                        13
+1  undisputed    19        15         17                  0.947                         0.947            3                         1          16                         0
+2    disputed    32        24         16                  0.562                         0.562            0                         0          32                        13

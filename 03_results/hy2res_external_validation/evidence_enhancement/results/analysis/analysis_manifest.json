@@ -1,0 +1,33 @@
+{
+  "analysis": "hy2res_evidence_enhancement_v1",
+  "source": {
+    "path_name": "HY2RES_202404.csv",
+    "bytes": 38621947,
+    "md5": "9a3c3e3b1668596854b43bfd790d3e0e",
+    "sha256": "c9adf30dc1ac53e28c929505a23f84abc6e91185a4c07088adb49dd994601cdf"
+  },
+  "frozen_commit": "6a926de43f3283d9a995fbe0d8381a06c015344f",
+  "frozen_rule_script": "publication/distinguishability/build_distinguishability.py",
+  "precedence": [
+    "pres_comp",
+    "pres_buf",
+    "h2_flow"
+  ],
+  "time_bin": "6h",
+  "gates": {
+    "A": true,
+    "B": true,
+    "C": true,
+    "D": {
+      "dev_last": "2024-04-09 02:34:59",
+      "test_first": "2024-04-12 12:13:56",
+      "ordered": true,
+      "shared_dev_test_segments": 0
+    }
+  },
+  "environment": {
+    "python": "3.12.1",
+    "numpy": "2.3.1",
+    "pandas": "2.3.3"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "model": "Normal_HNetwork_gest_center",
+  "sha256": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+  "reservoir_library": "fl_lib/Gas/Elements/Controlled Reservoir (G)",
+  "converter_library": "nesl_utility/Simulink-PS Converter",
+  "pressure_source_library": "fl_lib/Gas/Sources/Pressure Source (G)",
+  "controlled_mode": "foundation.enum.constant_controlled.controlled",
+  "reservoir_inputs": [
+    {
+      "role": "reservoir_temperature",
+      "unit": "K",
+      "converter_sid": "5",
+      "from_sid": "3",
+      "goto_sid": "10",
+      "tag": "T1",
+      "subsystem_output": 2,
+      "reservoir_port": 1,
+      "reservoir_signal_name": "T"
+    },
+    {
+      "role": "reservoir_pressure",
+      "unit": "bar",
+      "converter_sid": "6",
+      "from_sid": "2",
+      "goto_sid": "9",
+      "tag": "P1",
+      "subsystem_output": 1,
+      "reservoir_port": 2,
+      "reservoir_signal_name": "P"
+    }
+  ],
+  "physical_inputs": [
+    {
+      "role": "pressure_source_step",
+      "source_sid": "59",
+      "target_sid": "55",
+      "library": "fl_lib/Physical Signals/Sources/PS Step",
+      "parameters": [
+        "step_time",
+        "initial_value",
+        "final_value"
+      ]
+    },
+    {
+      "role": "pressure_source_ramp",
+      "source_sid": "241",
+      "target_sid": "239",
+      "library": "fl_lib/Physical Signals/Sources/PS Ramp",
+      "parameters": [
+        "slope",
+        "start_time",
+        "initial_output"
+      ]
+    }
+  ],
+  "reservoir": {
+    "sid": "1",
+    "area_m2": 1.134,
+    "native_area_unit": "m^2",
+    "migration": {
+      "library": "fl_lib/Gas/Elements/Reservoir (G)",
+      "supported_releases": [
+        "2026a",
+        "2026b"
+      ],
+      "static_spec_2026b": "foundation.enum.ReservoirSpec.StaticPressureTemperature"
+    }
+  }
+}

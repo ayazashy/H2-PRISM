@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="691.2pt" height="388.8pt" viewBox="0 0 691.2 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-18T04:01:24.665064</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.7, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 388.8 
+L 691.2 388.8 
+L 691.2 0 
+L 0 0 
+z
+" style="fill: #f4f4e9"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 279.2448 110.2896 
+L 345.6 110.2896 
+L 345.6 76.8528 
+L 279.2448 76.8528 
+z
+" clip-path="url(#p9bdcf5b83c)" style="fill: #ffffff; stroke: #007f86; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 438.49728 105.83136 
+C 442.368753 105.83136 446.082182 104.539552 448.819727 102.240442 
+C 451.557271 99.941332 453.095424 96.822632 453.095424 93.5712 
+C 453.095424 90.319768 451.557271 87.201068 448.819727 84.901958 
+C 446.082182 82.602848 442.368753 81.31104 438.49728 81.31104 
+C 434.625807 81.31104 430.912378 82.602848 428.174833 84.901958 
+C 425.437289 87.201068 423.899136 90.319768 423.899136 93.5712 
+C 423.899136 96.822632 425.437289 99.941332 428.174833 102.240442 
+C 430.912378 104.539552 434.625807 105.83136 438.49728 105.83136 
+z
+" clip-path="url(#p9bdcf5b83c)" style="fill: #ffffff; stroke: #10263e; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 544.6656 107.5032 
+L 597.74976 107.5032 
+L 597.74976 79.6392 
+L 544.6656 79.6392 
+z
+" clip-path="url(#p9bdcf5b83c)" style="fill: #d9dfde; stroke: #64748b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 279.2448 199.4544 
+L 345.6 199.4544 
+L 345.6 166.0176 
+L 279.2448 166.0176 
+z
+" clip-path="url(#p9bdcf5b83c)" style="fill: #ffffff; stroke: #356cb1; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 438.49728 194.99616 
+C 442.368753 194.99616 446.082182 193.704352 448.819727 191.405242 
+C 451.557271 189.106132 453.095424 185.987432 453.095424 182.736 
+C 453.095424 179.484568 451.557271 176.365868 448.819727 174.066758 
+C 446.082182 171.767648 442.368753 170.47584 438.49728 170.47584 
+C 434.625807 170.47584 430.912378 171.767648 428.174833 174.066758 
+C 425.437289 176.365868 423.899136 179.484568 423.899136 182.736 
+C 423.899136 185.987432 425.437289 189.106132 428.174833 191.405242 
+C 430.912378 193.704352 434.625807 194.99616 438.49728 194.99616 
+z
+" clip-path="url(#p9bdcf5b83c)" style="fill: #ffffff; stroke: #10263e; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 544.6656 196.668 
+L 597.74976 196.668 
+L 597.74976 168.804 
+L 544.6656 168.804 
+z
+" clip-path="url(#p9bdcf5b83c)" style="fill: #d9dfde; stroke: #64748b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 279.2448 288.6192 
+L 345.6 288.6192 
+L 345.6 255.1824 
+L 279.2448 255.1824 
+z
+" clip-path="url(#p9bdcf5b83c)" style="fill: #ffffff; stroke: #a33f43; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 544.6656 285.8328 
+L 597.74976 285.8328 
+L 597.74976 257.9688 
+L 544.6656 257.9688 
+z
+" clip-path="url(#p9bdcf5b83c)" style="fill: #d9dfde; stroke: #64748b; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 212.8896 93.5712 
+L 279.2448 93.5712 
+" clip-path="url(#p9bdcf5b83c)" style="fill: none; stroke: #64748b; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 345.6 93.5712 
+L 544.6656 93.5712 
+" clip-path="url(#p9bdcf5b83c)" style="fill: none; stroke: #64748b; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 212.8896 182.736 
+L 279.2448 182.736 
+" clip-path="url(#p9bdcf5b83c)" style="fill: none; stroke: #64748b; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 345.6 182.736 
+L 544.6656 182.736 
+" clip-path="url(#p9bdcf5b83c)" style="fill: none; stroke: #64748b; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 212.8896 271.9008 
+L 279.2448 271.9008 
+" clip-path="url(#p9bdcf5b83c)" style="fill: none; stroke: #64748b; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_6">
+    <path d="M 345.6 271.9008 
+L 544.6656 271.9008 
+" clip-path="url(#p9bdcf5b83c)" style="fill: none; stroke: #64748b; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 10.5px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #64748b" x="53.63712" y="43.416" transform="rotate(-0 53.63712 43.416)">Upstream junction SIDs</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 10.5px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #64748b" x="279.2448" y="43.416" transform="rotate(-0 279.2448 43.416)">Outlet restriction</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 10.5px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #64748b" x="398.68416" y="43.416" transform="rotate(-0 398.68416 43.416)">Branch flow sensor</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 10.5px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #64748b" x="531.39456" y="43.416" transform="rotate(-0 531.39456 43.416)">Atmospheric reservoir</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 10.5px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #1f2933" x="53.63712" y="96.250341" transform="rotate(-0 53.63712 96.250341)">47, 48, 50 (PS1 at 50)</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 600; font-size: 11px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #007f86" x="312.4224" y="96.377919" transform="rotate(-0 312.4224 96.377919)">SID 213</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 600; font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #10263e" x="438.49728" y="96.122763" transform="rotate(-0 438.49728 96.122763)">F</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #1f2933" x="438.49728" y="126.051925" transform="rotate(-0 438.49728 126.051925)">218 · MFS3</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #1f2933" x="571.20768" y="96.122763" transform="rotate(-0 571.20768 96.122763)">SID 200</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 8.6px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #64748b" transform="translate(524.402852 123.343648)">area 0.0010 → 0.0011 m²</text>
+    <text style="font-size: 8.6px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #64748b" transform="translate(554.110477 132.961673)">at 1000 s</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 10.5px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #1f2933" x="53.63712" y="185.415141" transform="rotate(-0 53.63712 185.415141)">309, 49</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 600; font-size: 11px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #356cb1" x="312.4224" y="185.542719" transform="rotate(-0 312.4224 185.542719)">SID 312</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 600; font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #10263e" x="438.49728" y="185.287563" transform="rotate(-0 438.49728 185.287563)">F</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #1f2933" x="438.49728" y="215.216725" transform="rotate(-0 438.49728 215.216725)">311 · MFS1</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #1f2933" x="571.20768" y="185.287563" transform="rotate(-0 571.20768 185.287563)">SID 316</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 8.6px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #64748b" transform="translate(524.402852 212.508448)">area 0.0010 → 0.0011 m²</text>
+    <text style="font-size: 8.6px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #64748b" transform="translate(554.110477 222.126473)">at 1000 s</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 10.5px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #1f2933" x="53.63712" y="274.579941" transform="rotate(-0 53.63712 274.579941)">109, 221, 453 (PS4 at 109)</text>
+   </g>
+   <g id="text_18">
+    <text style="font-weight: 600; font-size: 11px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #a33f43" x="312.4224" y="274.707519" transform="rotate(-0 312.4224 274.707519)">SID 215</text>
+   </g>
+   <g id="text_19">
+    <g id="patch_10">
+     <path d="M 402.323843 280.752363 
+L 474.670718 280.752363 
+L 474.670718 263.049238 
+L 402.323843 263.049238 
+z
+" style="fill: #f4f4e9"/>
+    </g>
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #a33f43" x="438.49728" y="274.452362" transform="rotate(-0 438.49728 274.452362)">no flow sensor</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #1f2933" x="571.20768" y="274.452362" transform="rotate(-0 571.20768 274.452362)">SID 217</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 8.6px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #64748b" transform="translate(524.402852 301.673248)">area 0.0010 → 0.0011 m²</text>
+    <text style="font-size: 8.6px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #64748b" transform="translate(554.110477 311.291272)">at 1000 s</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #1f2933" transform="translate(53.63712 324.67675)">Operational rivals on the same source model: SID 55 pressure-source command −0.17 MPa at 1000 s;</text>
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #1f2933" transform="translate(53.63712 335.988)">SID 59 command step time shifted 25 s → 26 s (command issuance, not actuator lag).</text>
+   </g>
+   <g id="text_23">
+    <text style="font-weight: 600; font-size: 13px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #1f2933" x="13.824" y="9.552" transform="rotate(-0 13.824 9.552)">Controlled Center interventions and their branch instrumentation</text>
+   </g>
+  </g>
+  <g id="text_24">
+   <text style="font-size: 8.6px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #64748b" transform="translate(8.2944 371.351066)">Logical connectivity from capture design records; no pipe lengths, coordinates or flow directions are implied. One air-like Center source family (R = 0.287</text>
+   <text style="font-size: 8.6px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #64748b" transform="translate(8.2944 381.333113)">kJ/(kg·K)).</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p9bdcf5b83c">
+   <rect x="13.824" y="15.552" width="663.552" height="334.368"/>
+  </clipPath>
+ </defs>
+</svg>

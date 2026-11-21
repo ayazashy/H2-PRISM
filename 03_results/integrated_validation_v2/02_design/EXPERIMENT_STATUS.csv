@@ -1,0 +1,46 @@
+id,experiment,status,artifact,blocker_or_reason
+A1,"Repository and artifact integrity, baseline reproduction",EXECUTED,01_audit/BASELINE_REPRODUCTION.csv,
+A2,D1 correction matrix,EXECUTED,01_audit/D1_CORRECTION_MATRIX.csv,
+A3,Corrected-manifest replication (D1 = B),BLOCKED_BY_PROVENANCE,03_execution/scripts/d1_correction.py replicate,no owner decision record; gate exits 3
+A4,Leakage register update,EXECUTED,01_audit/LEAKAGE_REGISTER_V2.csv,
+A5,Full test-suite triage,EXECUTED,01_audit/TEST_FAILURE_TRIAGE.csv,
+X01,D(x): full vs ablated matched evaluation,EXECUTED (v1),h1_validation/analysis/h1_05_paired_comparisons.csv,
+X02,D(x): score correlation / redundancy,EXECUTED (v1),h1_validation/analysis/h1_03_score_redundancy_test.csv,
+X03,D(x): conditional on confidence,EXECUTED,04_results/analysis/x1_conditional_D_given_confidence.csv,
+X04,D(x): incremental predictive utility (leave-one-template-out),EXECUTED,04_results/analysis/x2_incremental_utility_lotemplate.csv,
+X05,D(x): alternative estimators,NOT_EXECUTED,—,any new estimator could only be tuned on inspected windows (no uninspected evaluation set); would be test-set optimisation
+X06,D(x): neighbourhood size / scaling,EXECUTED (registered; NOT_ESTIMABLE),04_results/analysis/x4_registered_sensitivities.csv,
+X07,D(x): noisy vs clean data,EXECUTED (registered; NOT_ESTIMABLE),04_results/analysis/x4_registered_sensitivities.csv,
+X08,D(x): sensor-conditional analysis,NOT_EXECUTED,—,requires recomputing D on masked feature sets of disputed-label windows; low information until D1/D2
+X09,D(x): class/location-conditional,PARTIAL,x1 by topology; advanced_validation/tables/A02b.csv,one location per class
+X10,D(x): stability across grouped resampling,EXECUTED,h1_05 family/ancestor bootstrap; x2 per-template,
+X11,D(x): synthetic known-distinguishability cases,EXECUTED (SYNTHETIC),04_results/analysis/x5_synthetic_dx_control.csv,
+X12,D(x): negative control where D should not help,EXECUTED (SYNTHETIC),x5 calibrated-Bayes case,
+X13,D(x): dataset-artifact test,EXECUTED,04_results/analysis/x3_D_artifact_test.csv,
+Y1,"Re-verify invariants, certificates, witnesses","EXECUTED (v1, reproduced by verify_av)",advanced_validation/tables/A04a.csv,
+Y2,Adversarial and property tests,EXECUTED,tests/test_dy_adversarial.py,
+Y3,Monotonicity proof with assumptions,EXECUTED,02_design/DY_MONOTONICITY_PROOF.md,
+Y4,Library incompleteness,EXECUTED (v1),advanced_validation/tables/A05.csv,
+Y5,Bound-origin audit,EXECUTED,01_audit/BOUND_ORIGIN_AUDIT.csv,
+Y6,Validated model-discrepancy / open-set detection,BLOCKED_BY_DATA,—,no independent captures to calibrate a discrepancy bound
+C1,"Class-wise, run-level, disputed vs undisputed metrics",EXECUTED (EXPLORATORY),"04_results/tables/V2-T08, V2-T09",
+C2,"Model improvements (features, imbalance, calibration)",NOT_EXECUTED,—,labels disputed (D1) and no uninspected evaluation set: any gain would be unverifiable
+C3,Detection delay,NOT_ESTIMABLE,—,window labels carry no onset-resolved predictions
+L1,Localization hierarchy and selective risk,EXECUTED (v1),"advanced_validation/tables/A06a.csv, A07.csv",
+L2,Isolability onset (structural vs bound-limited),EXECUTED,04_results/analysis/i1_isolability_onset.csv,
+L3,Sensor-hypothesis incidence matrix,EXECUTED,04_results/analysis/i2_structural_incidence.csv,
+L4,Unidentifiable-pair register,EXECUTED,04_results/analysis/i3_unidentifiable_pair_register_REF.csv,
+S1,Sensor masks and outages,EXECUTED (v1),advanced_validation/tables/A08.csv,
+S2,"Bias, drift, noise, stuck faults",EXECUTED (SYNTHETIC),04_results/analysis/s1_dy_synthetic_stress_runs.csv,
+S3,Minimum sensor sets and Pareto,EXECUTED (v1) + hypothetical cost scenarios,A16a/b; 04_results/tables/V2-T07,
+T1,Clock bound and delay,EXECUTED (v1),advanced_validation/tables/A09.csv,
+T2,Timestamp jitter,EXECUTED (SYNTHETIC),s1 jitter rows,
+T3,"Clock drift, asynchrony, sampling-rate differences",NOT_EXECUTED,—,no timing model for the fixed simulation clock beyond delay/jitter
+E1,Evidence sufficiency (multidimensional),EXECUTED (v1),advanced_validation/tables/A10.csv,no scalar index invented
+N1,"Negative controls (NORMAL, operational interventions)",EXECUTED (v1),"advanced_validation/tables/A11a.csv, A11b.csv",
+G1,Out-of-template generalization,BLOCKED_BY_DATA,advanced_validation/analysis/av_r2_template_sharing.csv,no held-out template
+G2,HY2RES Level-A adapter + equivalence,EXECUTED,04_results/analysis/h*_hy2res_*.csv,
+G3,MHC adapter,NOT_EXECUTED,—,MHC is a forecasting study with no diagnostic hypotheses or labelled faults
+G4,Gas Level B/C transfer,BLOCKED_BY_PHYSICS,advanced_validation/tables/A13.csv,no qualified transient H2/blend model
+P1,Runtime and scaling benchmarks,EXECUTED (v1),advanced_validation/tables/A14a-c,
+P2,Cost categories,EXECUTED (no prices),04_results/tables/V2-T10,

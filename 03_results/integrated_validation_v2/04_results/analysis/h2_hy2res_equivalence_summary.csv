@@ -1,0 +1,2 @@
+frozen_rule_reproduced_vs_published_table,test_rows,frozen_specific,certified_specific,certified_specific_agrees_with_frozen,frozen_ambiguous,certified_ambiguous,certified_specific_wrong_vs_power_label,bound_basis,status
+True,44397,10762,0,0,1327,1327,0,HYPOTHETICAL zero half-width,EXPLORATORY (previously inspected test)

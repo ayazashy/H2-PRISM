@@ -1,0 +1,30 @@
+# REQUEST (package v3) - NOT AUTHORIZED. Prepared because implementing the project lead's attempt policy
+# (POLICY_CLARIFICATION_2026-11-13.yaml) changed hash-bound files, which voided the package v2 authorization.
+# Becomes active only when the project lead sets authorized: true, authorized_by and date, leaving every hash unchanged.
+authorized: false
+status: PENDING_PROJECT_LEAD_AUTHORIZATION
+scope: SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION
+package_version: v3
+authorized_by: null
+date: null
+policy: POLICY_CLARIFICATION_2026-11-13.yaml (attempt begins at 'run'; preflight non-consuming; a started attempt is
+  consumed on success, failure or interruption; atomic claim in claims/)
+bound_to:
+  design: {file: 06_audit_preparation/simulation/v2_normal_support/DESIGN.csv, sha256: c59caa77fba33a9e604feed681f649ef753f12cfd42da7a6bcdf3c65e829788c}
+  generator: {file: 06_audit_preparation/simulation/v2_normal_support/generate_v2_normal_support.m, sha256: 497590d4a06780f2e7abdeec99186a8cc5b934e3c5968c82461d592ec98e101e}
+  postprocess: {file: tools/simulation/postprocess_v2_normal_runs.py, sha256: e9f059a64fe528975f8796bfb4ba79514b8994f44b41172d5187d96c607f5531}
+  validator: {file: tools/simulation/validate_v2_normal_outputs.py, sha256: 6ebdb433f4f615ba91ffcd716ccfff3cc06049afbeae4ef7d96b5a982d8957b5}
+  authorization_check: {file: tools/simulation/v2_normal_authorization.py, sha256: 5faec8f1e8c05a9f2a2811c5c9044acd249a853c8a8498e05c8411738d27ff28}
+covers: non-consuming preflight (any number of times) and ONE simulation attempt (the first 'run'), i.e. generation of the
+  9 NORMAL operating points x 3 released NORMAL models in DESIGN.csv (27 runs), resampling, measurement noise,
+  provenance, validation (integrity + physical checks P1-P6) and sealing of the confirmation partition
+description_required: "Exploratory NORMAL-support simulations of the released H2-SimNet network models, using the
+  released gas definition (air-like R = 0.287 kJ/kg/K; perfect-gas constants that are physically inconsistent,
+  gamma ~ 5.75). Not hydrogen-specific, not a physical validation, and not an evaluation of any method."
+executor: Yazan (dataset owner) or a person he designates; executor acceptance NOT_RECORDED
+output_location: data/generated/v2_normal_support/ (outside the release, git-ignored); claim file in claims/
+not_covered: any event scenario; any training or evaluation; any summary, statistic, plot or inspection of the
+  confirmation partition beyond the automated PASS/FAIL checks; any change to the released data or models, R2, arms
+  A-H, RC1 or manifest v0.3; protocol 2.0 activation; any hydrogen-specific or physical-validation claim; Yazan's D1/D2
+  decisions; Faisal's component acceptance
+void_if: any bound file's SHA-256 differs from the values above; consumed by the first 'run' (claim file exists)

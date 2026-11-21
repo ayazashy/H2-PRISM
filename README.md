@@ -3,6 +3,7 @@
 > **Project Phase**: Stage 2 Active Research & Engineering Workspace  
 > **Target Research Deadline**: 4 November 2026  
 > **Dataset Anchor**: Peer-Reviewed H2-SimNet Dataset (Zenodo Record 17871393)  
+> **Experiment status (2026-11)**: the primary protocol is selected and hash-pinned (`06_audit_preparation/FINAL_EXPERIMENT_CONFIG.yaml`); **no primary experiment has been run and no research result exists**. Runner: `tools/experiments/run_primary_protocol.py` (dry run by default; execution requires an authorization file).  
 > **Legacy Archive**: Stage 1 prototype and visual dashboard are preserved on branch [`old-main`](https://github.com/ayazashy/H2-PRISM/tree/old-main).
 
 ---
@@ -33,10 +34,10 @@ python3 setup_data.py
 # Step 3: Execute the deterministic dataset audit suite (Completes in ~12 seconds)
 python3 audit/run_all_audits.py
 
-# Step 4: Run the automated test suite (23 passing tests: Data loader, Audits, Visualizations)
+# Step 4: Run the automated test suite (current totals: 06_audit_preparation/final_acceptance/FINAL_VALIDATION_EVIDENCE.md)
 pytest tests/
 
-# Step 5: Generate research figures & interactive HTML evaluation dashboard
+# Step 5: Generate the ILLUSTRATIVE demo figures/dashboard (invented values, quarantined; NOT results)
 python3 scripts/visualize.py --demo
 # (Optional: append --open to automatically launch the interactive dashboard in your browser)
 ```
@@ -138,7 +139,7 @@ H2-PRISM/
 
 ## 4. Direct Dataset Access & Testing (Python API)
 
-A unified data access layer is provided in [`src/h2prism/data/`](file:///Users/ya/Documents/codes/H2-PRISM/src/h2prism/data/) and documented in [`01_dataset_audit/HOW_TO_ACCESS_DATA.md`](file:///Users/ya/Documents/codes/H2-PRISM/01_dataset_audit/HOW_TO_ACCESS_DATA.md).
+A unified data access layer is provided in [`src/h2prism/data/`](src/h2prism/data/) and documented in [`01_dataset_audit/HOW_TO_ACCESS_DATA.md`](01_dataset_audit/HOW_TO_ACCESS_DATA.md).
 
 ### 1. Where Does the Data Live?
 - **Full Benchmark (`data/raw/H2-SimNet-Dataset/`)**: **998 MB**, 265 files (Zenodo Record 17871393). Ignored by Git.
@@ -191,7 +192,9 @@ python3 scripts/download_data.py --summary
 
 ## 6. Visualization Subpackage & Research Reporting Engine
 
-A centralized, publication-grade visual reporting suite is implemented in [`src/h2prism/visualization/`](file:///Users/ya/Documents/codes/H2-PRISM/src/h2prism/visualization/) and documented in [`05_documentation/FIGURE_SPECIFICATION.md`](file:///Users/ya/Documents/codes/H2-PRISM/05_documentation/FIGURE_SPECIFICATION.md).
+A centralized, publication-grade visual reporting suite is implemented in [`src/h2prism/visualization/`](src/h2prism/visualization/) and documented in [`05_documentation/FIGURE_SPECIFICATION.md`](05_documentation/FIGURE_SPECIFICATION.md).
+
+> **Status (2026-11):** figures 3–6 and the dashboard are illustrative mock-ups generated from invented values and are quarantined in `03_results/ILLUSTRATIVE_DEMO_NOT_RESULTS/`. **No experimental figure or result exists yet**; real figures will be built by `tools/reporting/` from authorized runner outputs (see `05_documentation/FIGURE_SPECIFICATION.md`).
 
 ### Quick Usage:
 ```bash
@@ -205,7 +208,7 @@ python3 scripts/visualize.py --demo --open
 ### Generated Figures:
 | Figure File | Specification | Research Question / Task |
 | :--- | :--- | :--- |
-| `fig1_family_distribution.png` | Grouped Family Count per Target Class | Justifies 3-fold topology CV (Task Y2/Y5) |
+| `fig1_family_distribution.png` | Grouped Family Count per Target Class | Historical (built from the superseded 2026-10-30 family map); not evidence for the current LOTO folds |
 | `fig2_pipeline_telemetry.png` | SCADA Pressure & Flow Dynamics with Event Shading | Visualizes raw physical transients (Task Y3) |
 | `fig3_confusion_matrix.png` | Normalized 4-Class Attribution Matrix | Primary Attribution Evaluation (Task F5) |
 | `fig4_risk_coverage_curve.png` | Risk-Coverage Comparison (Method C vs C-D vs B) | **RQ1**: Distinguishability value beyond confidence |
@@ -213,17 +216,21 @@ python3 scripts/visualize.py --demo --open
 | `fig6_distinguishability_separation.png`| Empirical $D(x) = q_{(1)} - q_{(2)}$ Density Separation | **RQ1**: Separation between correct vs ambiguous cases |
 
 ### Standalone HTML Dashboard:
-The compiler in [`src/h2prism/visualization/dashboard.py`](file:///Users/ya/Documents/codes/H2-PRISM/src/h2prism/visualization/dashboard.py) embeds all 300 DPI figures as Base64 URIs into [`03_results/dashboard.html`](file:///Users/ya/Documents/codes/H2-PRISM/03_results/dashboard.html). The resulting dashboard is **100% self-contained**, responsive, and requires zero external servers, local dependencies, or active internet connection to inspect.
+The compiler in [`src/h2prism/visualization/dashboard.py`](src/h2prism/visualization/dashboard.py) embeds all 300 DPI figures as Base64 URIs into [`03_results/dashboard.html`](03_results/dashboard.html). The resulting dashboard is **100% self-contained**, responsive, and requires zero external servers, local dependencies, or active internet connection to inspect.
 
 ---
 
 ## 7. Verified Dataset Truth & Scientific Boundaries
 
-1. **Fluid Composition**: The raw dataset simulates a **10% $\text{H}_2$ / 90% $\text{CH}_4$ blend** in Simscape Gas Fluids R2025a, **not** pure hydrogen.
+1. **Fluid Composition**: the dataset documentation reports a 10% H₂ / 90% CH₄ blend simulated in Simscape Gas Fluids. This is **REFUTED by the released models** (2026-11-13).
+   - All six released `.slx` files define an air-like gas: R = 0.287 kJ/kg/K, molar mass ≈ 29 g/mol. A 10% blend would have R ≈ 0.57 kJ/kg/K.
+   - The models' active perfect-gas constants are physically inconsistent (γ ≈ 5.75); see `05_documentation/GAS_MODEL_LIMITATION.md`.
+   - No hydrogen, blend or physical-validation claim may be made from the released data.
+   - The hydrogen-specific path is `02_methodology/HYDROGEN_MODEL_SPECIFICATION.md`. Open issues are tracked in `00_governance/MASTER_ISSUE_REGISTER.csv`.
 2. **Sensor Channels**: Pressure transmitters `PS1` through `PS12` (MPa) and mass flow meters `MFS1` through `MFS4` (kg/s) are verified. **Zero localized temperature channels exist**.
 3. **No Continuous Metric Localization Over-claiming**: Categorical valve restriction labels (`leak_G3` through `leak_G6`) represent discrete valve zones, not continuous metric coordinates.
-4. **Primary Evaluation Strategy**: A **3-Fold Topology-Stratified Cross-Validation** (holding out Downstream, Center, or Upstream per fold) guarantees that all 4 target classes (`NORMAL`, `LEAK`, `COMPRESSOR_FAULT`, `COMPRESSOR_DELAY`) are present in both train and test with **zero scenario or topology leakage**.
-5. **Phase-Event Confounding Safeguard**: Leaks were injected during steady state; compressor faults during initial ramp-up. Operational phase is **excluded as an input feature** to prevent trivial shortcut learning.
+4. **Primary Evaluation Strategy**: leave-one-topology-out over 57 underlying runs (51 eligible, 39 families nested in topology; manifest v0.2). Folds are family-, topology- and duplicate-disjoint and every class appears in every fold, but NORMAL/FAULT/DELAY have only 1–2 runs per topology, so their per-class results are descriptive only. The original `01_dataset_audit/folds.csv` leaks (every family on both sides) and must not be used. See `02_methodology/GROUPED_EVALUATION_PROTOCOL.md`.
+5. **Phase-Event Confounding**: phase is not a model input, but COMPRESSOR_DELAY windows all come from the start-up segment, so DELAY cannot be separated from start-up behaviour (descriptive only). Absolute-level features also nearly identify each run; a registered offset-invariant sensitivity analysis addresses this. See `05_documentation/DATASET_LIMITATIONS.md`.
 
 ---
 

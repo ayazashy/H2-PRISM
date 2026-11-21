@@ -1,0 +1,750 @@
+{
+  "signals": {
+    "P-1": "barg",
+    "P-2": "barg",
+    "MFC-1": "ln/min",
+    "MFC-2": "ln/min",
+    "MFC-3": "ln/min",
+    "T_HTF-1": "°C",
+    "T_HTF-2": "°C"
+  },
+  "workbooks": {
+    "1": {
+      "raw_sheet": "Cycle Definition Exp.1",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.1",
+        "Cycle Data Exp.1",
+        "Heat Balance Exp.1",
+        "Summary Exp.1"
+      ],
+      "units_sheet": "Cycle Data Exp.1",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "2": {
+      "raw_sheet": "Cycle Definition Exp.2",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.2",
+        "Cycle Data Exp.2",
+        "Heat Balance Exp.2",
+        "Summary Exp.2"
+      ],
+      "units_sheet": "Cycle Data Exp.2",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "3": {
+      "raw_sheet": "Cycle Definition Exp.3",
+      "header_row": 52,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.3",
+        "Cycle Data Exp.3",
+        "H2 Mass Balance Exp.3"
+      ],
+      "units_sheet": "Cycle Data Exp.3",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "4": {
+      "raw_sheet": "Cycle Definition Exp.4",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.4",
+        "Cycle 1 Data Exp.4",
+        "Cycle 2 Data Exp.4",
+        "Cycle 1 H2 Mass Balance Exp.4",
+        "Cycle 2 H2 Mass Balance Exp.4"
+      ],
+      "units_sheet": null,
+      "units": {
+        "Seconds": null,
+        "P-1": null,
+        "P-2": null,
+        "MFC-1": null,
+        "MFC-2": null,
+        "MFC-3": null,
+        "T_HTF-1": null,
+        "T_HTF-2": null
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "5": {
+      "raw_sheet": "Cycle Definition Exp.5",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.5",
+        "Cycle Data Exp.5",
+        "H2 Mass Balance Exp.5"
+      ],
+      "units_sheet": "Cycle Data Exp.5",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "6": {
+      "raw_sheet": "Cycle Definition Exp.6",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.6",
+        "Cycle Data Exp.6",
+        "H2 Mass Balance Exp.6"
+      ],
+      "units_sheet": "Cycle Data Exp.6",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": null,
+        "MFC-2": null,
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "7": {
+      "raw_sheet": "Cycle Definition Exp.7",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.7",
+        "Cycle Data Exp.7",
+        "H2 Mass Balance Exp.7"
+      ],
+      "units_sheet": "Cycle Data Exp.7",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": null,
+        "MFC-2": null,
+        "MFC-3": null,
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "8": {
+      "raw_sheet": "Cycle Definition Exp.8",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.8",
+        "Cycle Data Exp.8",
+        "H2 Mass Balance Exp.8",
+        "Heat Balance Exp.8",
+        "Efficiency Exp.8",
+        "Summary Exp.8"
+      ],
+      "units_sheet": "Cycle Data Exp.8",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "9": {
+      "raw_sheet": "Cycle Definition Exp.9",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.9",
+        "Cycle Data Exp.9",
+        "H2 Mass Balance Exp.9",
+        "Heat Balance Exp.9",
+        "Efficiency Exp.9",
+        "Summary Exp.9"
+      ],
+      "units_sheet": "Cycle Data Exp.9",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "10": {
+      "raw_sheet": "Cycle Definition Exp.10",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.10",
+        "Cycle Data Exp.10",
+        "H2 Mass Balance Exp.10",
+        "Heat Balance Exp.10",
+        "Efficiency Exp.10",
+        "Summary Exp.10"
+      ],
+      "units_sheet": "Cycle Data Exp.10",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "11": {
+      "raw_sheet": "Cycle Definition Exp.11",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.11",
+        "Cycle Data Exp.11",
+        "H2 Mass Balance Exp.11",
+        "Heat Balance Exp.11",
+        "Efficiency Exp.11",
+        "Summary Exp.11"
+      ],
+      "units_sheet": "Cycle Data Exp.11",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "12": {
+      "raw_sheet": "Cycle Definition Exp.12",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.12",
+        "Cycle Data Exp.12",
+        "H2 Mass Balance Exp.12",
+        "Heat Balance Exp.12",
+        "Efficiency Exp.12",
+        "Summary Exp.12"
+      ],
+      "units_sheet": "Cycle Data Exp.12",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "13": {
+      "raw_sheet": "Cycle Definition Exp.13",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.13",
+        "Cycle Data Exp.13",
+        "H2 Mass Balance Exp.13",
+        "Heat Balance Exp.13",
+        "Efficiency Exp.13",
+        "Summary Exp.13"
+      ],
+      "units_sheet": "Cycle Data Exp.13",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "14": {
+      "raw_sheet": "Cycle Definition Exp.14",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.14",
+        "Cycle Data Exp.14",
+        "H2 Mass Balance Exp.14",
+        "Heat Balance Exp.14",
+        "Efficiency Exp.14",
+        "Summary Exp.14"
+      ],
+      "units_sheet": "Cycle Data Exp.14",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "15": {
+      "raw_sheet": "Cycle Definition Exp.15",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.15",
+        "Cycle Data Exp.15",
+        "H2 Mass Balance Exp.15",
+        "Heat Balance Exp.15",
+        "Efficiency Exp.15",
+        "Summary Exp.15"
+      ],
+      "units_sheet": "Cycle Data Exp.15",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "16": {
+      "raw_sheet": "Cycle Definition Exp.16",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.16",
+        "Cycle Data Exp.16",
+        "H2 Mass Balance Exp.16",
+        "Heat Balance Exp.16",
+        "Efficiency Exp.16",
+        "Summary Exp.16"
+      ],
+      "units_sheet": "Cycle Data Exp.16",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "17": {
+      "raw_sheet": "Cycle Definition Exp.17",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.17",
+        "Cycle Data Exp.17",
+        "H2 Mass Balance Exp.17",
+        "Heat Balance Exp.17",
+        "Efficiency Exp.17",
+        "Summary Exp.17"
+      ],
+      "units_sheet": "Cycle Data Exp.17",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "18": {
+      "raw_sheet": "Cycle Definition Exp.18",
+      "header_row": 45,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.18",
+        "Cycle Data Exp.18",
+        "H2 Mass Balance Exp.18",
+        "Heat Balance Exp.18",
+        "Efficiency Exp.18",
+        "Summary Exp.18"
+      ],
+      "units_sheet": "Cycle Data Exp.18",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "19": {
+      "raw_sheet": "Cycle Definition Exp.19",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.19",
+        "Cycle Data Exp.19",
+        "H2 Mass Balance Exp.19",
+        "Heat Balance Exp.19",
+        "Efficiency Exp.19",
+        "Summary Exp.19"
+      ],
+      "units_sheet": "Cycle Data Exp.19",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "20": {
+      "raw_sheet": "Cycle Definition Exp.20",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.20",
+        "Cycle Data Exp.20",
+        "H2 Mass Balance Exp.20",
+        "Heat Balance Exp.20",
+        "Efficiency Exp.20",
+        "Summary Exp.20"
+      ],
+      "units_sheet": "Cycle Data Exp.20",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "21": {
+      "raw_sheet": "Cycle Definition Exp.21",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.21",
+        "Cycle Data Exp.21",
+        "H2 Mass Balance Exp.21",
+        "Heat Balance Exp.21",
+        "Efficiency Exp.21",
+        "Summary Exp.21"
+      ],
+      "units_sheet": "Cycle Data Exp.21",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "22": {
+      "raw_sheet": "Cycle Definition Exp.22",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.22",
+        "Cycle Data Exp.22",
+        "H2 Mass Balance Exp.22",
+        "Heat Balance Exp.22",
+        "Efficiency Exp.22",
+        "Summary Exp.22"
+      ],
+      "units_sheet": "Cycle Data Exp.22",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "23": {
+      "raw_sheet": "Cycle Definition Exp.23",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.23",
+        "Cycle Data Exp.23",
+        "H2 Mass Balance Exp.23",
+        "Heat Balance Exp.23",
+        "Efficiency Exp.23",
+        "Summary Exp.23"
+      ],
+      "units_sheet": "Cycle Data Exp.23",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "24": {
+      "raw_sheet": "Cycle Definition Exp.24",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.24",
+        "Cycle Data Exp.24",
+        "H2 Mass Balance Exp.24",
+        "Heat Balance Exp.24",
+        "Efficiency Exp.24",
+        "Summary Exp.24"
+      ],
+      "units_sheet": "Cycle Data Exp.24",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "25": {
+      "raw_sheet": "Cycle Definition Exp.25",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.25",
+        "Cycle Data Exp.25",
+        "H2 Mass Balance Exp.25",
+        "Heat Balance Exp.25",
+        "Efficiency Exp.25",
+        "Summary Exp.25"
+      ],
+      "units_sheet": "Cycle Data Exp.25",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "26": {
+      "raw_sheet": "Cycle Definition Exp.26",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.26",
+        "Cycle Data Exp.26",
+        "H2 Mass Balance Exp.26",
+        "Heat Balance Exp.26",
+        "Efficiency Exp.26",
+        "Summary Exp.26"
+      ],
+      "units_sheet": "Cycle Data Exp.26",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "27": {
+      "raw_sheet": "Cycle Definition Exp.27",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.27",
+        "Cycle Data Exp.27",
+        "H2 Mass Balance Exp.27",
+        "Heat Balance Exp.27",
+        "Efficiency Exp.27",
+        "Summary Exp.27"
+      ],
+      "units_sheet": "Cycle Data Exp.27",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "28": {
+      "raw_sheet": "Cycle Definition Exp.28",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.28",
+        "Cycle Data Exp.28",
+        "H2 Mass Balance Exp.28",
+        "Heat Balance Exp.28",
+        "Efficiency Exp.28",
+        "Summary Exp.28"
+      ],
+      "units_sheet": "Cycle Data Exp.28",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    },
+    "29": {
+      "raw_sheet": "Cycle Definition Exp.29",
+      "header_row": 46,
+      "sheets": [
+        "Sensor Overview",
+        "Cycle Definition Exp.29",
+        "Cycle Data Exp.29",
+        "H2 Mass Balance Exp.29",
+        "Heat Balance Exp.29",
+        "Efficiency Exp.29",
+        "Summary Exp.29"
+      ],
+      "units_sheet": "Cycle Data Exp.29",
+      "units": {
+        "Seconds": "s",
+        "P-1": "barg",
+        "P-2": "barg",
+        "MFC-1": "ln/min",
+        "MFC-2": "ln/min",
+        "MFC-3": "ln/min",
+        "T_HTF-1": "°C",
+        "T_HTF-2": "°C"
+      },
+      "unit_row": 10,
+      "channel_row": 11
+    }
+  }
+}

@@ -1,0 +1,8 @@
+fold,severity,code,detail
+1,CRITICAL,FAMILY_IN_TRAIN_AND_TEST,"9 families on both sides: ['FAM_COMPRESSOR_DELAY_C1', 'FAM_COMPRESSOR_FAULT_C1', 'FAM_LEAK_G3', 'FAM_LEAK_G3G4_COMBINED', 'FAM_LEAK_G3G6_COMBINED', 'FAM_LEAK_G4', 'FAM_LEAK_G5', 'FAM_LEAK_G6', 'FAM_NORMALITY']"
+1,MAJOR,MULTIPLE_FILES_PER_SCENARIO,46 scenarios list >1 file; loading all would double-count windows
+2,CRITICAL,FAMILY_IN_TRAIN_AND_TEST,"9 families on both sides: ['FAM_COMPRESSOR_DELAY_C1', 'FAM_COMPRESSOR_FAULT_C1', 'FAM_LEAK_G3', 'FAM_LEAK_G3G4_COMBINED', 'FAM_LEAK_G3G6_COMBINED', 'FAM_LEAK_G4', 'FAM_LEAK_G5', 'FAM_LEAK_G6', 'FAM_NORMALITY']"
+2,MAJOR,MULTIPLE_FILES_PER_SCENARIO,46 scenarios list >1 file; loading all would double-count windows
+3,CRITICAL,FAMILY_IN_TRAIN_AND_TEST,"9 families on both sides: ['FAM_COMPRESSOR_DELAY_C1', 'FAM_COMPRESSOR_FAULT_C1', 'FAM_LEAK_G3', 'FAM_LEAK_G3G4_COMBINED', 'FAM_LEAK_G3G6_COMBINED', 'FAM_LEAK_G4', 'FAM_LEAK_G5', 'FAM_LEAK_G6', 'FAM_NORMALITY']"
+3,CRITICAL,CONTENT_DUPLICATE_ACROSS_SPLIT,train file H2-SimNet-Dataset/anomalous-scenarios/parquet/leakG4.parquet is content-equivalent to test file H2-SimNet-Dataset/anomalous-scenarios/parquet/anom_gestup/assestment_transient/leakG4.parquet
+3,MAJOR,MULTIPLE_FILES_PER_SCENARIO,46 scenarios list >1 file; loading all would double-count windows

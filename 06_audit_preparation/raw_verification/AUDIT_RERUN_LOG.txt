@@ -1,0 +1,110 @@
+================================================================================
+ H2-PRISM — TASK Y1: COMPLETE DATASET INVENTORY AND INTEGRITY AUDIT
+ Owner: Yazan | Role: Dataset Audit & Readiness Lead
+================================================================================
+[*] Task Y1: Scanning all files under data/raw/...
+[+] Total raw files identified: 264
+    Processed 50/264 files...
+    Processed 100/264 files...
+    Processed 150/264 files...
+    Processed 200/264 files...
+    Processed 250/264 files...
+    Processed 264/264 files...
+[✓] Saved 01_dataset_audit\FILE_LEVEL_AUDIT.csv (264 records)
+[*] Task Y1: Auditing duplicate exports across formats and tree directories...
+[✓] Saved 01_dataset_audit\DUPLICATE_EXPORT_AUDIT.csv (1423 pairwise comparisons)
+[*] Task Y1: Auditing sensor channels and searching for temperature channels...
+[✓] Saved 01_dataset_audit\SENSOR_CHANNEL_AUDIT.csv (25 channels)
+[*] Task Y1: Writing DATASET_INVENTORY.md and Y1_AUDIT_LOG.md...
+[✓] Saved 01_dataset_audit\DATASET_INVENTORY.md
+[✓] Saved 01_dataset_audit\Y1_AUDIT_LOG.md
+================================================================================
+[✓] Task Y1 completed successfully in 25.43 seconds.
+================================================================================
+================================================================================
+ H2-PRISM — TASK Y2: SCENARIO IDENTIFICATION & FAMILY MAPPING
+ Owner: Yazan | Role: Dataset Audit & Readiness Lead
+================================================================================
+[*] Task Y2: Building Scenario and Scenario-Family Mappings...
+[+] Total distinct underlying simulation scenarios: 58
+[✓] Saved 01_dataset_audit\DATASET_SCENARIO_MAP.csv (242 file-to-scenario records)
+[✓] Saved 01_dataset_audit\SCENARIO_RELATIONSHIP_EDGES.csv (481 relationship edges)
+[*] Task Y2: Generating SCENARIO_FAMILY_REPORT.md, SCENARIO_INDEPENDENCE_AUDIT.md, and GROUPING_SENSITIVITY_REPORT.md...
+================================================================================
+[✓] Task Y2 completed successfully.
+================================================================================
+================================================================================
+ H2-PRISM — TASKS Y3 & Y4: TIMING, PHASE CONFOUNDING & LABEL OVERLAP AUDIT
+ Owner: Yazan | Role: Dataset Audit & Readiness Lead
+================================================================================
+[*] Tasks Y3 & Y4: Auditing Operating Conditions, Timing & Label Co-occurrences...
+[✓] Saved 01_dataset_audit\OPERATING_CONDITIONS_AUDIT.csv (58 scenario operating records)
+[✓] Saved 01_dataset_audit\EVENT_TIMING_AUDIT.csv (58 timing records)
+[✓] Saved 01_dataset_audit\LABEL_OVERLAP_MATRIX.csv
+[✓] Saved 01_dataset_audit\ORIGINAL_LABEL_INVENTORY.csv
+[✓] Saved 01_dataset_audit\class_mapping.yaml
+[*] Tasks Y3 & Y4: Generating Markdown Reports...
+================================================================================
+[✓] Tasks Y3 & Y4 completed successfully.
+================================================================================
+================================================================================
+ H2-PRISM — TASK Y8: PROVISIONAL DATA FREEZE EARLY HANDOFF
+ Owner: Yazan | Role: Dataset Audit & Readiness Lead
+================================================================================
+[*] Task Y8: Generating Provisional Data Freeze Package for Faisal...
+[✓] Saved 01_dataset_audit\provisional\PROVISIONAL_DATA_FREEZE_MANIFEST.csv (242 records)
+[✓] Saved 01_dataset_audit\provisional\PROVISIONAL_LABEL_MAPPING.yaml
+[✓] Saved 01_dataset_audit\provisional\PROVISIONAL_DATA_FREEZE_VERSION.txt
+[✓] Saved 01_dataset_audit\provisional\PROVISIONAL_DATA_FREEZE_NOTES.md
+================================================================================
+[✓] Task Y8 completed successfully.
+================================================================================
+================================================================================
+ H2-PRISM — TASK Y5: DATASET FEASIBILITY & LEAKAGE EVIDENCE
+ Owner: Yazan | Role: Dataset Audit & Readiness Lead
+================================================================================
+[*] Task Y5: Evaluating Grouped Split Feasibility & Leakage Pathways...
+[✓] Saved 01_dataset_audit\FAMILY_CLASS_DISTRIBUTION.csv
+[✓] Saved 01_dataset_audit\folds.csv (276 fold assignment records)
+[*] Task Y5: Generating Split Feasibility & Leakage Assessment Reports...
+================================================================================
+[✓] Task Y5 completed successfully.
+================================================================================
+================================================================================
+ H2-PRISM — TASK Y7: FINAL DATASET READINESS DECISION
+ Owner: Yazan | Role: Dataset Audit & Readiness Lead
+================================================================================
+[*] Task Y7: Synthesizing Audit Evidence & Formulating Dataset Readiness Decision...
+[✓] Saved 01_dataset_audit\DATASET_READINESS_REPORT.md
+================================================================================
+[✓] Task Y7 completed successfully. Dataset status: READY_WITH_EXCLUSIONS
+================================================================================
+================================================================================
+ H2-PRISM MASTER AUDIT SUITE — DETERMINISTIC EXECUTION
+ Lead: Yazan | Role: Dataset Audit, Data Engineering & Dataset Readiness
+================================================================================
+
+[>>>] Running Task Y1: Complete Dataset Inventory & Integrity Audit (audit/01_inventory_integrity.py)...
+[✓] Task Y1: Complete Dataset Inventory & Integrity Audit completed in 28.05s
+
+[>>>] Running Task Y2: Scenario Identification & Family Construction (audit/02_scenario_family_mapping.py)...
+[✓] Task Y2: Scenario Identification & Family Construction completed in 2.25s
+
+[>>>] Running Tasks Y3 & Y4: Timing, Phase Confounding & Label Hierarchy (audit/03_04_timing_labels_concurrency.py)...
+[✓] Tasks Y3 & Y4: Timing, Phase Confounding & Label Hierarchy completed in 2.95s
+
+[>>>] Running Task Y8: Provisional Data Freeze Packaging (audit/08_provisional_freeze.py)...
+[✓] Task Y8: Provisional Data Freeze Packaging completed in 2.20s
+
+[>>>] Running Task Y5: Dataset Feasibility & Leakage Evidence (audit/05_split_feasibility_leakage.py)...
+[✓] Task Y5: Dataset Feasibility & Leakage Evidence completed in 2.02s
+
+[>>>] Running Task Y7: Final Dataset Readiness Decision (audit/07_readiness_decision.py)...
+[✓] Task Y7: Final Dataset Readiness Decision completed in 1.96s
+
+================================================================================
+ ALL H2-PRISM DATASET AUDIT TASKS COMPLETED DETERMINISTICALLY IN 39.42s
+ Status: ALL GATES PASSED (Gate 1, Gate 2, Gate 3)
+ Final Decision: READY_WITH_EXCLUSIONS
+ Deliverables Directory: 01_dataset_audit/
+================================================================================

@@ -1,0 +1,41 @@
+target,unit,operating_regime,method,selected_for_reporting,test_split_rows,observed_target_rows,scored_rows,segments_scored,test_target_unique_values,test_target_min,test_target_max,test_target_constant,reference_coverage,mae,rmse,support_status
+pres_buf,bar,overall,persistence,False,44397,44396,43168,409,52,28.9,34.0,False,0.9723398504369763,0.0039635841363973474,0.019908752186908556,descriptive; not an incident-performance estimate
+pres_buf,bar,overall,contextual_ridge,True,44397,44396,43168,409,52,28.9,34.0,False,0.9723398504369763,0.0055002032590044285,0.01713751758479819,descriptive; not an incident-performance estimate
+pres_buf,bar,electrolyzer_active,persistence,False,44397,43167,42367,405,52,28.9,34.0,False,0.9814673245766442,0.003573536006797759,0.01890379857805773,descriptive; not an incident-performance estimate
+pres_buf,bar,electrolyzer_active,contextual_ridge,True,44397,43167,42367,405,52,28.9,34.0,False,0.9814673245766442,0.004973497718096835,0.01647020892286213,descriptive; not an incident-performance estimate
+pres_buf,bar,multiple_active,persistence,False,44397,817,801,12,52,28.9,34.0,False,0.9804161566707467,0.024594257178526844,0.04959259740982201,descriptive; not an incident-performance estimate
+pres_buf,bar,multiple_active,contextual_ridge,True,44397,817,801,12,52,28.9,34.0,False,0.9804161566707467,0.033359046769156804,0.0384695097056335,descriptive; not an incident-performance estimate
+pres_buf,bar,unknown,persistence,False,44397,412,0,0,52,28.9,34.0,False,0.0,,,no eligible rows
+pres_buf,bar,unknown,contextual_ridge,True,44397,412,0,0,52,28.9,34.0,False,0.0,,,no eligible rows
+pres_comp,bar (tank pressure; not compressor-discharge pressure),overall,persistence,False,44397,44396,43168,409,70,103.8,110.7,False,0.9723398504369763,0.025597664936990654,0.050598713420914175,descriptive; not an incident-performance estimate
+pres_comp,bar (tank pressure; not compressor-discharge pressure),overall,contextual_ridge,True,44397,44396,43168,409,70,103.8,110.7,False,0.9723398504369763,0.025141486141691097,0.040698181508210626,descriptive; not an incident-performance estimate
+pres_comp,bar (tank pressure; not compressor-discharge pressure),electrolyzer_active,persistence,False,44397,43167,42367,405,70,103.8,110.7,False,0.9814673245766442,0.025642599192768258,0.050643183004226246,descriptive; not an incident-performance estimate
+pres_comp,bar (tank pressure; not compressor-discharge pressure),electrolyzer_active,contextual_ridge,True,44397,43167,42367,405,70,103.8,110.7,False,0.9814673245766442,0.025066022185049663,0.04072163092792653,descriptive; not an incident-performance estimate
+pres_comp,bar (tank pressure; not compressor-discharge pressure),multiple_active,persistence,False,44397,817,801,12,70,103.8,110.7,False,0.9804161566707467,0.023220973782771527,0.048188145619821814,descriptive; not an incident-performance estimate
+pres_comp,bar (tank pressure; not compressor-discharge pressure),multiple_active,contextual_ridge,True,44397,817,801,12,70,103.8,110.7,False,0.9804161566707467,0.02913297359615753,0.03943801283173123,descriptive; not an incident-performance estimate
+pres_comp,bar (tank pressure; not compressor-discharge pressure),unknown,persistence,False,44397,412,0,0,70,103.8,110.7,False,0.0,,,no eligible rows
+pres_comp,bar (tank pressure; not compressor-discharge pressure),unknown,contextual_ridge,True,44397,412,0,0,70,103.8,110.7,False,0.0,,,no eligible rows
+pres_pila,bar,overall,persistence,False,44397,44397,43168,409,1,0.0,0.0,True,0.9723179494109963,0.0,0.0,constant target in test; errors are uninformative
+pres_pila,bar,overall,contextual_ridge,True,44397,44397,43168,409,1,0.0,0.0,True,0.9723179494109963,0.0,0.0,constant target in test; errors are uninformative
+pres_pila,bar,electrolyzer_active,persistence,False,44397,43167,42367,405,1,0.0,0.0,True,0.9814673245766442,0.0,0.0,descriptive; not an incident-performance estimate
+pres_pila,bar,electrolyzer_active,contextual_ridge,True,44397,43167,42367,405,1,0.0,0.0,True,0.9814673245766442,0.0,0.0,descriptive; not an incident-performance estimate
+pres_pila,bar,multiple_active,persistence,False,44397,817,801,12,1,0.0,0.0,True,0.9804161566707467,0.0,0.0,descriptive; not an incident-performance estimate
+pres_pila,bar,multiple_active,contextual_ridge,True,44397,817,801,12,1,0.0,0.0,True,0.9804161566707467,0.0,0.0,descriptive; not an incident-performance estimate
+pres_pila,bar,unknown,persistence,False,44397,413,0,0,1,0.0,0.0,True,0.0,,,no eligible rows
+pres_pila,bar,unknown,contextual_ridge,True,44397,413,0,0,1,0.0,0.0,True,0.0,,,no eligible rows
+h2_flow,NL/h (generated over the preceding sample interval),overall,persistence,False,44397,44396,43168,409,5388,0.0,361.537,False,0.9723398504369763,0.03273032107116387,1.256965381843669,descriptive; not an incident-performance estimate
+h2_flow,NL/h (generated over the preceding sample interval),overall,contextual_ridge,True,44397,44396,43168,409,5388,0.0,361.537,False,0.9723398504369763,0.17800544173754976,1.1852585716573396,descriptive; not an incident-performance estimate
+h2_flow,NL/h (generated over the preceding sample interval),electrolyzer_active,persistence,False,44397,43167,42367,405,5388,0.0,361.537,False,0.9814673245766442,0.03139117709538087,1.2686568057462972,descriptive; not an incident-performance estimate
+h2_flow,NL/h (generated over the preceding sample interval),electrolyzer_active,contextual_ridge,True,44397,43167,42367,405,5388,0.0,361.537,False,0.9814673245766442,0.17169910787110984,1.1931033443224208,descriptive; not an incident-performance estimate
+h2_flow,NL/h (generated over the preceding sample interval),multiple_active,persistence,False,44397,817,801,12,5388,0.0,361.537,False,0.9804161566707467,0.10356117353308476,0.1346920251368127,descriptive; not an incident-performance estimate
+h2_flow,NL/h (generated over the preceding sample interval),multiple_active,contextual_ridge,True,44397,817,801,12,5388,0.0,361.537,False,0.9804161566707467,0.5115640521238941,0.6465156830351819,descriptive; not an incident-performance estimate
+h2_flow,NL/h (generated over the preceding sample interval),unknown,persistence,False,44397,412,0,0,5388,0.0,361.537,False,0.0,,,no eligible rows
+h2_flow,NL/h (generated over the preceding sample interval),unknown,contextual_ridge,True,44397,412,0,0,5388,0.0,361.537,False,0.0,,,no eligible rows
+h2_flow_pila,NL/h (fuel-cell consumption),overall,persistence,False,44397,44397,43168,409,1,0.0,0.0,True,0.9723179494109963,0.0,0.0,constant target in test; errors are uninformative
+h2_flow_pila,NL/h (fuel-cell consumption),overall,contextual_ridge,True,44397,44397,43168,409,1,0.0,0.0,True,0.9723179494109963,0.0,0.0,constant target in test; errors are uninformative
+h2_flow_pila,NL/h (fuel-cell consumption),electrolyzer_active,persistence,False,44397,43167,42367,405,1,0.0,0.0,True,0.9814673245766442,0.0,0.0,descriptive; not an incident-performance estimate
+h2_flow_pila,NL/h (fuel-cell consumption),electrolyzer_active,contextual_ridge,True,44397,43167,42367,405,1,0.0,0.0,True,0.9814673245766442,0.0,0.0,descriptive; not an incident-performance estimate
+h2_flow_pila,NL/h (fuel-cell consumption),multiple_active,persistence,False,44397,817,801,12,1,0.0,0.0,True,0.9804161566707467,0.0,0.0,descriptive; not an incident-performance estimate
+h2_flow_pila,NL/h (fuel-cell consumption),multiple_active,contextual_ridge,True,44397,817,801,12,1,0.0,0.0,True,0.9804161566707467,0.0,0.0,descriptive; not an incident-performance estimate
+h2_flow_pila,NL/h (fuel-cell consumption),unknown,persistence,False,44397,413,0,0,1,0.0,0.0,True,0.0,,,no eligible rows
+h2_flow_pila,NL/h (fuel-cell consumption),unknown,contextual_ridge,True,44397,413,0,0,1,0.0,0.0,True,0.0,,,no eligible rows

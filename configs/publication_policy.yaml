@@ -1,0 +1,38 @@
+# H2-PRISM publication policy (A13 results lifecycle; forensic phase follow-up 2026-11-12).
+#
+# Who may approve which claim scope for which artifact. Read by tools/reporting/publication.py.
+# An artifact leaves preliminary/ (and loses its watermark) ONLY when every required role has a valid
+# APPROVED_FOR_PUBLICATION record bound to the artifact's current source hashes, spec and renderer.
+# Changing names here does not create approvals; approvals are separate, dated, signed-by-name files.
+version: 1
+roles:
+  dataset_owner: ["Yazan"]          # Y-plan owner: dataset facts, manifest, topology attribution (R-18)
+  methods_owner: ["Faisal"]         # F-plan owner: evaluation design, results contract, inference
+  science_owner: ["Ahmed Zayed"]    # A-plan owner: scientific claims, reporting (A5/A7/A13); also project lead
+claim_scopes:
+  DESCRIPTIVE: "what was observed in the recorded run, with its population, denominators and limitations; no causal, comparative-superiority or generalisation claim"
+  CONFIRMATORY: "a registered hypothesis test or effect estimate with inference"
+  DATASET: "structural facts about the dataset (counts, eligibility, folds)"
+required_roles:
+  DESCRIPTIVE: [science_owner]
+  CONFIRMATORY: [science_owner, methods_owner]
+  DATASET: [dataset_owner, science_owner]
+# Scopes each artifact may be approved for. An artifact not listed here cannot be published.
+artifact_scopes:
+  fig1_dataset_and_design: [DATASET]
+  T1_dataset_support: [DATASET]
+  T2_eligibility_and_exclusions: [DATASET]
+  T3_outer_folds: [DATASET]
+  fig2_rq1_risk_coverage: [DESCRIPTIVE]
+  fig3_rq1_incremental_value: [DESCRIPTIVE]      # documents NOT_ESTIMABLE; no estimable effect exists to confirm
+  fig4_rq2_three_outcome: [DESCRIPTIVE]
+  fig5_error_structure: [DESCRIPTIVE]
+  fig6_robustness: [DESCRIPTIVE]
+  T4_matched_coverage: [DESCRIPTIVE]
+  T5_rq1_effects: [DESCRIPTIVE]
+  T6_rq2_outcomes: [DESCRIPTIVE]
+  T6b_rq2_primary_reasons: [DESCRIPTIVE]
+  T6c_rq2_contributing_reasons: [DESCRIPTIVE]
+  T7_estimability: [DESCRIPTIVE]
+  T8_robustness: [DESCRIPTIVE]
+  T9_matched_selection_ties: [DESCRIPTIVE]

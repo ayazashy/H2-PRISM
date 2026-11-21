@@ -1,0 +1,9 @@
+variant,target,mode,class,n,n_families,specific,ambiguity_set,unresolved,specific_correct,ambiguity_inclusion,reporting,analysis,artifact_class
+primary,0.6,rank_matched,COMPRESSOR_DELAY,62,2,0,0.5,0.5,,1,descriptive_only,primary,PRIMARY_EXPERIMENT
+primary,0.6,rank_matched,COMPRESSOR_FAULT,2656,2,0,0,1,,,descriptive_only,primary,PRIMARY_EXPERIMENT
+primary,0.6,rank_matched,LEAK,14614,20,0.7322430546,0,0.2677569454,1,,restricted,primary,PRIMARY_EXPERIMENT
+primary,0.6,rank_matched,NORMAL,1330,2,0.3736842105,0,0.6263157895,1,,descriptive_only,primary,PRIMARY_EXPERIMENT
+warning_only,0.6,rank_matched,COMPRESSOR_DELAY,62,2,0.7258064516,0.04838709677,0.2258064516,1,1,descriptive_only,primary,PRIMARY_EXPERIMENT
+warning_only,0.6,rank_matched,COMPRESSOR_FAULT,2656,2,0.02936746988,0,0.9706325301,1,,descriptive_only,primary,PRIMARY_EXPERIMENT
+warning_only,0.6,rank_matched,LEAK,14614,20,0.7241001779,0,0.2758998221,1,,restricted,primary,PRIMARY_EXPERIMENT
+warning_only,0.6,rank_matched,NORMAL,1330,2,0.3706766917,0,0.6293233083,1,,descriptive_only,primary,PRIMARY_EXPERIMENT

@@ -1,0 +1,5 @@
+policy,comparator,role,independent_units_family,independent_units_ancestor,attainable_Center,attainable_Downstream,attainable_Upstream,common_interval,registered_targets_inside,limitation
+s_C,s_C−D,registered primary contrast,39,17,0.2577430072,0.7215732505,0.7363626621,"[0, 0.2577]","none (0.60, 0.80, 0.90)",all windows inspected in R2; 91.7 % of classifier errors in D1-disputed runs
+s_C,confidence / margin / −entropy,registered secondary,39,17,0.2577430072,0.7215732505,0.7363626621,"[0, 0.2577]","none (0.60, 0.80, 0.90)",all windows inspected in R2; 91.7 % of classifier errors in D1-disputed runs
+s_C,D_only,registered secondary,39,17,0.2577430072,0.7215732505,0.7363626621,"[0, 0.2577]","none (0.60, 0.80, 0.90)",all windows inspected in R2; 91.7 % of classifier errors in D1-disputed runs
+s_C,confidence without evidence guard,exploratory conventional baseline,39,17,0.2577430072,0.7215732505,0.7363626621,"[0, 0.2577]","none (0.60, 0.80, 0.90)",all windows inspected in R2; 91.7 % of classifier errors in D1-disputed runs
