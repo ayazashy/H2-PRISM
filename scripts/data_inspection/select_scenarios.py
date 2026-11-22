@@ -113,15 +113,18 @@ def select_and_standardize_benchmarks(
             
         # Assign mass flow in kg/s
         df_std["m_inlet"] = df["MFS1"] if "MFS1" in df.columns else 4.5
-        # Depending on topology, active outlet is MFS3 (center) or MFS4 (down)
-        if "MFS3" in df.columns and df["MFS3"].mean() > 0.5:
-            df_std["m_outlet"] = df["MFS3"]
-        elif "MFS4" in df.columns and df["MFS4"].mean() > 0.5:
+        
+        # In H2-SimNet topology: gest_center delivers to MFS3; gest_down delivers to MFS4 (or MFS2)
+        if "center" in item["relative_raw"]:
+            df_std["m_outlet"] = df["MFS3"] if "MFS3" in df.columns else df["MFS1"]
+        elif "MFS4" in df.columns:
             df_std["m_outlet"] = df["MFS4"]
-        elif "MFS2" in df.columns and df["MFS2"].mean() > 0.5:
+        elif "MFS2" in df.columns:
             df_std["m_outlet"] = df["MFS2"]
+        elif "MFS3" in df.columns:
+            df_std["m_outlet"] = df["MFS3"]
         else:
-            df_std["m_outlet"] = df["MFS1"] if "MFS1" in df.columns else 4.5
+            df_std["m_outlet"] = df_std["m_inlet"]
             
         # Preserve all individual sensor columns (MPa / kg/s)
         for col in df.columns:

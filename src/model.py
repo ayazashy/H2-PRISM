@@ -115,9 +115,11 @@ class EventAttributionModel:
 
     def _heuristic_fallback(self, event_id: str, f: Dict[str, float]) -> MLResult:
         """Cold-start heuristic before training data is ingested."""
-        z_mb = abs(f.get("normalized_z_mb", 0.0))
-        p_drop = f.get("p_drop_total", 0.0)
+        raw_z_mb = f.get("normalized_z_mb", 0.0)
+        p_drop = abs(f.get("p_drop_total", 0.0))
         p_std = f.get("p_upstream_std", 0.0)
+        max_dp = f.get("max_abs_dp_dt", 0.0)
+        delta_m = f.get("delta_m_mean", 0.0)
 
         probs = {
             AttributionClass.NORMAL.value: 0.1,
@@ -126,16 +128,19 @@ class EventAttributionModel:
             AttributionClass.SENSOR_FAULT.value: 0.1
         }
 
-        if z_mb > 3.0:
-            probs[AttributionClass.LEAK.value] = 0.75
+        # True Leak: positive mass deficit (z_MB > 2.5, m_in > m_out)
+        if raw_z_mb > 2.5 and p_drop < 5e5:
+            probs[AttributionClass.LEAK.value] = 0.85
             probs[AttributionClass.NORMAL.value] = 0.05
-        elif p_drop > 1e5:
-            probs[AttributionClass.OPERATIONAL_TRANSIENT.value] = 0.70
-            probs[AttributionClass.NORMAL.value] = 0.10
-        elif p_std > 5e4 and z_mb < 1.0:
-            probs[AttributionClass.SENSOR_FAULT.value] = 0.65
+        # Operational Transient: compressor ramp/trip, negative decompression (raw_z_mb < -1.5), or p_drop
+        elif p_drop >= 5e5 or max_dp > 5000.0 or raw_z_mb < -1.5:
+            probs[AttributionClass.OPERATIONAL_TRANSIENT.value] = 0.85
+            probs[AttributionClass.NORMAL.value] = 0.05
+        elif p_std > 2e4 and abs(raw_z_mb) < 1.5:
+            probs[AttributionClass.SENSOR_FAULT.value] = 0.80
+            probs[AttributionClass.NORMAL.value] = 0.05
         else:
-            probs[AttributionClass.NORMAL.value] = 0.70
+            probs[AttributionClass.NORMAL.value] = 0.80
 
         # Normalize
         total = sum(probs.values())

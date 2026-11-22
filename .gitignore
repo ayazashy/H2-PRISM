@@ -56,3 +56,9 @@ results/*.pkl
 results/*.joblib
 !results/.gitkeep
 !results/figures/.gitkeep
+
+# Video project builds & caches
+video-general/node_modules/
+video-general/out/
+.remotion/
+

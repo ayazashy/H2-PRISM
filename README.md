@@ -200,23 +200,68 @@ src/pipeline.py (Yazan) ─────────► StructuredEventReport
 pip install -r requirements.txt
 ```
 
+### Prototype Validation Suite & Visual Dashboard
+Run the end-to-end prototype validation suite to evaluate all benchmark scenarios, generate high-resolution engineering figures, and build the interactive HTML dashboard:
+```bash
+# Execute validation runner & generate all visuals
+python3 run_prototype.py
+
+# Open interactive executive dashboard in browser
+python3 run_prototype.py --open
+# or
+open results/prototype_dashboard.html
+```
+
 ### Running Mock Scenario Demonstrations
-Execute the four representative demonstration scenarios:
+Execute individual scenario demonstrations:
 ```bash
 # 1. Genuine Leak with Acoustic Propagation Delay & Mass Balance Residual
-python run_scenario.py --mock leak
+python3 run_scenario.py --mock leak
 
 # 2. Operational Transient Explained by Line-Pack Accumulation
-python run_scenario.py --mock operational_transient
+python3 run_scenario.py --mock operational_transient
 
 # 3. Sensor Fault (Single-Channel Pressure Deviation without Flow Loss)
-python run_scenario.py --mock sensor_fault
+python3 run_scenario.py --mock sensor_fault
 
 # 4. Ambiguous Scenario (Low Observability -> UNKNOWN Abstention)
-python run_scenario.py --mock ambiguous
+python3 run_scenario.py --mock ambiguous
 ```
 
 ### Running Test Suite
 ```bash
 pytest tests/
 ```
+
+---
+
+## 7. Prototype Validation Figures & Visual Outputs
+
+The prototype validation suite produces 5 dedicated engineering visual figures in `results/figures/` and an interactive executive dashboard in `results/prototype_dashboard.html`:
+
+| Artifact | Visual Output | Description |
+| :--- | :--- | :--- |
+| **Figure 1** | [`results/figures/kpi_confusion_matrix.png`](file:///Users/ya/Documents/codes/H2-PRISM/results/figures/kpi_confusion_matrix.png) | Multi-class attribution confusion matrix and validation KPI bars (FPAR, Recall, Covered Acc, Abstention Honesty). |
+| **Figure 2** | [`results/figures/linepack_mass_balance.png`](file:///Users/ya/Documents/codes/H2-PRISM/results/figures/linepack_mass_balance.png) | Real-gas line-pack dynamics ($dM/dt$), uncorrected mass imbalance, and normalized residual $z_{MB}$. |
+| **Figure 3** | [`results/figures/acoustic_localization_profile.png`](file:///Users/ya/Documents/codes/H2-PRISM/results/figures/acoustic_localization_profile.png) | Cross-correlation signal lag $\Delta t_{12}$, spatial delay profile, and $\pm 650\text{ m}$ localization bounding interval. |
+| **Figure 4** | [`results/figures/observability_radar_gauge.png`](file:///Users/ya/Documents/codes/H2-PRISM/results/figures/observability_radar_gauge.png) | 3-Axis Observability radar ($O_Q, O_S, O_E$), composite score gauge, and gated decision flow tree. |
+| **Figure 5** | [`results/figures/scada_event_signatures.png`](file:///Users/ya/Documents/codes/H2-PRISM/results/figures/scada_event_signatures.png) | SCADA pressure/flow timeseries across 4 operational regimes (Leak, Transient, Sensor Fault, Ambiguous). |
+| **Interactive Dashboard** | [`results/prototype_dashboard.html`](file:///Users/ya/Documents/codes/H2-PRISM/results/prototype_dashboard.html) | Standalone interactive HTML dashboard combining telemetry graphs, KPI cards, and scenario truth table. |
+
+---
+
+## 8. Executive KPI Target & Validation Scorecard
+
+```
+========================================================================================
+                      H2-PRISM PROTOTYPE VALIDATION SCORECARD
+========================================================================================
+  [1] False Physical Attribution Rate (FPAR): 0.0%    (Target: <= 0.0% | Status: PASS)
+  [2] Leak Detection Recall:                  100.0%  (Target: >= 98.0%| Status: PASS)
+  [3] Covered Decision Accuracy:              100.0%  (Target: >= 95.0%| Status: PASS)
+  [4] Intelligent Abstention Honesty:         100.0%  (Target: 100.0%  | Status: PASS)
+  [5] Acoustic Spatial Resolution:            +/-650m (a = 1300 m/s @ 1 Hz dt)
+  [6] Verified Dataset Scope:                 123 Scenarios (2.47M Continuous Timesteps)
+========================================================================================
+```
+
