@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0.0",
+  "split": "fixture_only",
+  "artifact_hash": "fixture0000",
+  "cohort_n": 4,
+  "ci_method": "Fixture placeholder (not experimental)",
+  "summary": {
+    "coverage": 0.75,
+    "selective_risk": 0.0,
+    "fpar": 0.0,
+    "leak_recall": 1.0
+  },
+  "confusion_matrix": {
+    "labels": [
+      "NORMAL",
+      "LEAK",
+      "TRANSIENT"
+    ],
+    "matrix": [
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "supports": [
+      1,
+      1,
+      1
+    ]
+  },
+  "risk_coverage": [
+    {
+      "coverage": 0.5,
+      "h2_prism_risk": 0.0,
+      "baseline_risk": 0.12
+    },
+    {
+      "coverage": 0.75,
+      "h2_prism_risk": 0.0,
+      "baseline_risk": 0.18
+    },
+    {
+      "coverage": 1.0,
+      "h2_prism_risk": 0.1,
+      "baseline_risk": 0.25
+    }
+  ]
+}

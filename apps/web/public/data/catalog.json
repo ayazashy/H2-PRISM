@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0.0",
+  "release_id": "v1.0.0-fixture-preview",
+  "build_utc": "2026-11-22T02:55:00Z",
+  "source_repository_commit": "11b529c",
+  "data_release_checksum": "7c6c77fc35ff75d6f992f0bdc51d7ddc03fde1aca1fac86c53da3299581c24fb",
+  "label_set": [
+    "NORMAL",
+    "LEAK",
+    "COMPRESSOR_FAULT",
+    "COMPRESSOR_DELAY"
+  ],
+  "supported_features": {
+    "localization": false,
+    "inference": true,
+    "baseline_comparison": true,
+    "gas_comparison": false,
+    "operating_condition_analysis": false
+  },
+  "scenarios": [
+    {
+      "id": "fixture_leak_g3_strong",
+      "display_name": "Strong Leak (G3) \u00b7 Fixture",
+      "family_id": "fam_g3",
+      "scenario_class": "LEAK",
+      "summary_hint": "Observe sustained pressure drop at N3 and flow divergence after t=15s.",
+      "data_path": "data/scenarios/fixture_leak_g3_strong.json",
+      "sha256": "6f86a15ed0a8bb54b271016e0959d0317a7080633dd0f9b455fca6e419554c68",
+      "gas_metadata_status": "H2-SimNet synthetic fixture",
+      "topology_id": "h2_simnet_center_v1",
+      "provenance_status": "FIXTURE_ONLY",
+      "split": "fixture",
+      "time_range": [
+        0.0,
+        40.0
+      ],
+      "samples": 41,
+      "publish_approved": false
+    },
+    {
+      "id": "fixture_overlap_g5g6",
+      "display_name": "Overlapping Leak (G5/G6) \u00b7 Fixture",
+      "family_id": "fam_g5g6",
+      "scenario_class": "LEAK_OVERLAP",
+      "summary_hint": "Competing branch signatures trigger AMBIGUOUS abstention.",
+      "data_path": "data/scenarios/fixture_overlap_g5g6.json",
+      "sha256": "108cffd13fae3ad7d730f8b17e4dde0ab258f425885df88d9a7a86c725938d8d",
+      "gas_metadata_status": "H2-SimNet synthetic fixture",
+      "topology_id": "h2_simnet_center_v1",
+      "provenance_status": "FIXTURE_ONLY",
+      "split": "fixture",
+      "time_range": [
+        0.0,
+        40.0
+      ],
+      "samples": 41,
+      "publish_approved": false
+    },
+    {
+      "id": "fixture_comp_delay_c1",
+      "display_name": "Compressor Startup Delay (C1) \u00b7 Fixture",
+      "family_id": "fam_c1_delay",
+      "scenario_class": "COMPRESSOR_DELAY",
+      "summary_hint": "Short transient with weak residual triggers UNRESOLVED abstention.",
+      "data_path": "data/scenarios/fixture_comp_delay_c1.json",
+      "sha256": "5d6c05b0e51a0d0759ff6767e148192bde209f20a3f76e9f6a9424991a71d2f8",
+      "gas_metadata_status": "H2-SimNet synthetic fixture",
+      "topology_id": "h2_simnet_center_v1",
+      "provenance_status": "FIXTURE_ONLY",
+      "split": "fixture",
+      "time_range": [
+        0.0,
+        40.0
+      ],
+      "samples": 41,
+      "publish_approved": false
+    },
+    {
+      "id": "fixture_normal_001",
+      "display_name": "Normal Baseline \u00b7 Fixture",
+      "family_id": "fam_norm",
+      "scenario_class": "NORMAL",
+      "summary_hint": "Steady-state baseline with zero event onset.",
+      "data_path": "data/scenarios/fixture_normal_001.json",
+      "sha256": "47abac32991e0e429686ba16d55369ecfaed106d63071b165a744a82349eda79",
+      "gas_metadata_status": "H2-SimNet synthetic fixture",
+      "topology_id": "h2_simnet_center_v1",
+      "provenance_status": "FIXTURE_ONLY",
+      "split": "fixture",
+      "time_range": [
+        0.0,
+        40.0
+      ],
+      "samples": 41,
+      "publish_approved": false
+    }
+  ],
+  "metrics_catalog": [
+    {
+      "id": "fixture_eval",
+      "title": "Fixture Evaluation Summary",
+      "data_path": "data/metrics.json",
+      "sha256": "9a2df11a176cd827ca83032125a7799b95ad0b5875966e130306825bbec39adb"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0.0",
+  "topology_id": "h2_simnet_center_v1",
+  "is_schematic": true,
+  "coordinate_note": "Schematic layout only. Physical sensor coordinates and pipe lengths are not verified in H2-SimNet.",
+  "nodes": [
+    {
+      "id": "N1",
+      "label": "Supply N1",
+      "kind": "source",
+      "x": 0.0,
+      "y": 1.0,
+      "z": 0.0
+    },
+    {
+      "id": "C1",
+      "label": "Compressor C1",
+      "kind": "compressor",
+      "x": 1.5,
+      "y": 1.0,
+      "z": 0.0
+    },
+    {
+      "id": "N2",
+      "label": "Junction N2",
+      "kind": "junction",
+      "x": 3.0,
+      "y": 1.0,
+      "z": 0.0
+    },
+    {
+      "id": "N3",
+      "label": "Branch N3",
+      "kind": "junction",
+      "x": 4.5,
+      "y": 0.2,
+      "z": 0.0
+    },
+    {
+      "id": "N4",
+      "label": "Branch N4",
+      "kind": "junction",
+      "x": 4.5,
+      "y": 1.8,
+      "z": 0.0
+    },
+    {
+      "id": "N5",
+      "label": "Delivery N5",
+      "kind": "delivery",
+      "x": 6.0,
+      "y": 1.0,
+      "z": 0.0
+    }
+  ],
+  "edges": [
+    {
+      "id": "G1",
+      "label": "Pipe G1",
+      "source": "N1",
+      "target": "C1",
+      "component_group": "G1"
+    },
+    {
+      "id": "G2",
+      "label": "Pipe G2",
+      "source": "C1",
+      "target": "N2",
+      "component_group": "G2"
+    },
+    {
+      "id": "G3",
+      "label": "Pipe G3",
+      "source": "N2",
+      "target": "N3",
+      "component_group": "G3"
+    },
+    {
+      "id": "G4",
+      "label": "Pipe G4",
+      "source": "N2",
+      "target": "N4",
+      "component_group": "G4"
+    },
+    {
+      "id": "G5",
+      "label": "Pipe G5",
+      "source": "N3",
+      "target": "N5",
+      "component_group": "G5"
+    },
+    {
+      "id": "G6",
+      "label": "Pipe G6",
+      "source": "N4",
+      "target": "N5",
+      "component_group": "G6"
+    }
+  ],
+  "sensors": [
+    {
+      "channel_id": "PS1",
+      "attached_to": "N1",
+      "variable": "pressure"
+    },
+    {
+      "channel_id": "PS4",
+      "attached_to": "N2",
+      "variable": "pressure"
+    },
+    {
+      "channel_id": "PS8",
+      "attached_to": "N3",
+      "variable": "pressure"
+    },
+    {
+      "channel_id": "PS12",
+      "attached_to": "N5",
+      "variable": "pressure"
+    },
+    {
+      "channel_id": "MFS1",
+      "attached_to": "G1",
+      "variable": "mass_flow"
+    },
+    {
+      "channel_id": "MFS3",
+      "attached_to": "G5",
+      "variable": "mass_flow"
+    }
+  ]
+}

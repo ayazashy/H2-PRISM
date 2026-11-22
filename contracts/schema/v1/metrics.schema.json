@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://h2-prism.local/contracts/schema/v1/metrics.schema.json",
+  "title": "H2-PRISM Evaluation Metrics v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "split", "artifact_hash", "cohort_n", "ci_method", "summary", "confusion_matrix", "risk_coverage"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "split": { "type": "string" },
+    "artifact_hash": { "type": "string" },
+    "cohort_n": { "type": "integer", "minimum": 0 },
+    "ci_method": { "type": "string" },
+    "summary": {
+      "type": "object",
+      "required": ["coverage", "selective_risk", "fpar", "leak_recall"],
+      "properties": {
+        "coverage": { "type": "number" },
+        "selective_risk": { "type": "number" },
+        "fpar": { "type": "number" },
+        "leak_recall": { "type": "number" }
+      }
+    },
+    "confusion_matrix": {
+      "type": "object",
+      "required": ["labels", "matrix", "supports"],
+      "properties": {
+        "labels": { "type": "array", "items": { "type": "string" } },
+        "matrix": { "type": "array", "items": { "type": "array", "items": { "type": "integer" } } },
+        "supports": { "type": "array", "items": { "type": "integer" } }
+      }
+    },
+    "risk_coverage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["coverage", "h2_prism_risk", "baseline_risk"],
+        "properties": {
+          "coverage": { "type": "number" },
+          "h2_prism_risk": { "type": "number" },
+          "baseline_risk": { "type": ["number", "null"] }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+:root {
+  /* Approved H2-PRISM core palette */
+  --color-pine: #0E3F3C;
+  --color-alabaster: #F4F4E9;
+  --color-navy: #10263E;
+  --color-teal: #007F86;
+
+  /* Surface & ink hierarchy */
+  --bg-canvas: #F4F4E9;
+  --bg-surface: #FFFFFF;
+  --bg-subtle: #EAEADF;
+  --bg-header: #0E3F3C;
+  --ink-primary: #10263E;
+  --ink-secondary: #3D5166;
+  --ink-muted: #5C6F82;
+  --ink-on-dark: #F4F4E9;
+  --border-subtle: #D5D7CB;
+  --border-strong: #9AA6A3;
+
+  /* Semantic decision & ground-truth tokens */
+  --decision-specific: #0E7C66;
+  --decision-specific-bg: #E6F4F1;
+  --decision-ambiguous: #B45309;
+  --decision-ambiguous-bg: #FEF3C7;
+  --decision-unresolved: #475569;
+  --decision-unresolved-bg: #E2E8F0;
+  --truth-accent: #B91C1C;
+  --truth-bg: #FEE2E2;
+  --error-accent: #991B1B;
+  --error-bg: #FEF2F2;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Radii & shadows */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 2px rgba(16, 38, 62, 0.06);
+  --shadow-md: 0 6px 20px rgba(16, 38, 62, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
