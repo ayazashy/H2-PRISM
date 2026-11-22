@@ -14,7 +14,6 @@ interface NetworkSchematic2DProps {
   showTruthLayer: boolean;
 }
 
-// Well-spaced schematic positions on a 900x400 canvas so zero nodes or labels overlap
 const NODE_POS_2D: Record<string, [number, number]> = {
   N47: [80, 210],
   N50: [220, 210],
@@ -26,7 +25,6 @@ const NODE_POS_2D: Record<string, [number, number]> = {
   N195: [825, 315],
 };
 
-// Non-overlapping anchor offsets for small sensor marker pills
 const SENSOR_PIN_POS: Record<string, [number, number]> = {
   PS7: [80, 152],
   PS1: [220, 152],
@@ -101,12 +99,12 @@ export function NetworkSchematic2D({
           style={{ display: 'block', maxHeight: 410, userSelect: 'none' }}
         >
           <defs>
-            <pattern id="petrol-grid" width="28" height="28" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="1" fill="#24524A" opacity="0.55" />
+            <pattern id="light-grid" width="28" height="28" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1.1" fill="#D5D7CB" opacity="0.7" />
             </pattern>
           </defs>
 
-          <rect x="0" y="0" width="900" height="400" fill="url(#petrol-grid)" />
+          <rect x="0" y="0" width="900" height="400" fill="url(#light-grid)" />
 
           {/* Pipes / Edges */}
           {topology.edges.map((edge) => {
@@ -125,8 +123,8 @@ export function NetworkSchematic2D({
                   y1={p1[1]}
                   x2={p2[0]}
                   y2={p2[1]}
-                  stroke={isPred ? '#34B5A5' : '#24524A'}
-                  strokeWidth={13}
+                  stroke={isPred ? '#007F86' : '#10263E'}
+                  strokeWidth={12}
                   strokeLinecap="round"
                 />
                 <line
@@ -134,8 +132,8 @@ export function NetworkSchematic2D({
                   y1={p1[1]}
                   x2={p2[0]}
                   y2={p2[1]}
-                  stroke="#0B2B28"
-                  strokeWidth={7}
+                  stroke="#1E3A5F"
+                  strokeWidth={6}
                   strokeLinecap="round"
                 />
                 {showSymbolicFlow && (
@@ -144,13 +142,13 @@ export function NetworkSchematic2D({
                     y1={p1[1]}
                     x2={p2[0]}
                     y2={p2[1]}
-                    stroke={isPostOnset ? '#E5AB65' : '#34B5A5'}
-                    strokeWidth={2.6}
+                    stroke={isPostOnset ? '#F59E0B' : '#2DD4BF'}
+                    strokeWidth={2.8}
                     strokeLinecap="round"
                     strokeDasharray="9 15"
                     className={isPlaying ? 'pipe-flow-anim' : 'pipe-flow-paused'}
                     style={{ animationDuration: `${flowDurationSec}s` }}
-                    opacity={0.9}
+                    opacity={0.95}
                   />
                 )}
                 {isTruth && (
@@ -159,8 +157,8 @@ export function NetworkSchematic2D({
                     y1={p1[1]}
                     x2={p2[0]}
                     y2={p2[1]}
-                    stroke="#DC776C"
-                    strokeWidth={17}
+                    stroke="#DC2626"
+                    strokeWidth={16}
                     strokeDasharray="10 7"
                     strokeLinecap="round"
                     className={isPostOnset && isPlaying ? 'truth-pulse' : ''}
@@ -173,8 +171,8 @@ export function NetworkSchematic2D({
                   width={30}
                   height={18}
                   rx={4}
-                  fill="#0B2B28"
-                  stroke={isTruth ? '#DC776C' : '#326C62'}
+                  fill={isTruth ? '#FEE2E2' : '#F4F4E9'}
+                  stroke={isTruth ? '#B91C1C' : '#9AA6A3'}
                   strokeWidth={1}
                 />
                 <text
@@ -182,9 +180,9 @@ export function NetworkSchematic2D({
                   y={my + 3.5}
                   textAnchor="middle"
                   fontSize="10"
-                  fontWeight="600"
+                  fontWeight="700"
                   fontFamily="IBM Plex Mono, monospace"
-                  fill={isTruth ? '#DC776C' : '#9CB9B1'}
+                  fill={isTruth ? '#B91C1C' : '#10263E'}
                 >
                   {edge.component_group}
                 </text>
@@ -208,7 +206,7 @@ export function NetworkSchematic2D({
                     cy={cy}
                     r={isComp ? 26 : 22}
                     fill="none"
-                    stroke="#DC776C"
+                    stroke="#DC2626"
                     strokeWidth={2.5}
                     strokeDasharray="5 4"
                     className={isPostOnset && isPlaying ? 'truth-pulse' : ''}
@@ -220,8 +218,8 @@ export function NetworkSchematic2D({
                     cy={cy}
                     r={22}
                     fill="none"
-                    stroke="#34B5A5"
-                    strokeWidth={1.8}
+                    stroke="#007F86"
+                    strokeWidth={2}
                     strokeDasharray="5 5"
                     className={isPlaying && showSymbolicFlow ? 'compressor-spin' : ''}
                     style={{ transformOrigin: `${cx}px ${cy}px` }}
@@ -231,18 +229,18 @@ export function NetworkSchematic2D({
                   cx={cx}
                   cy={cy}
                   r={isComp ? 17 : 14}
-                  fill={isComp ? '#16433D' : node.kind === 'source' ? '#103632' : '#0B2B28'}
-                  stroke={isComp ? '#34B5A5' : '#91D7C6'}
-                  strokeWidth={2}
+                  fill={isComp ? '#0E3F3C' : node.kind === 'source' ? '#007F86' : '#FFFFFF'}
+                  stroke="#10263E"
+                  strokeWidth={2.2}
                 />
                 <text
                   x={cx}
                   y={cy + 3.5}
                   textAnchor="middle"
                   fontSize="9.5"
-                  fontWeight="600"
+                  fontWeight="700"
                   fontFamily="IBM Plex Mono, monospace"
-                  fill="#EDF5F1"
+                  fill={isComp || node.kind === 'source' ? '#F4F4E9' : '#10263E'}
                 >
                   {node.id}
                 </text>
@@ -250,7 +248,7 @@ export function NetworkSchematic2D({
             );
           })}
 
-          {/* Compact, Non-Overlapping Sensor Tags */}
+          {/* Compact Non-Overlapping Sensor Pins */}
           {topology.sensors.map((sensor) => {
             const { ch, alertLevel } = getChannelMetrics(sensor.channel_id);
             if (!ch) return null;
@@ -300,7 +298,7 @@ export function NetworkSchematic2D({
                   y1={ay}
                   x2={sx}
                   y2={sy}
-                  stroke={isSelected || isHovered ? '#34B5A5' : '#24524A'}
+                  stroke={isSelected || isHovered ? '#007F86' : '#9AA6A3'}
                   strokeWidth={1.2}
                   strokeDasharray="3 3"
                 />
@@ -310,17 +308,17 @@ export function NetworkSchematic2D({
                   width={46}
                   height={22}
                   rx={5}
-                  fill={isSelected ? '#34B5A5' : isHovered ? '#16433D' : '#103632'}
+                  fill={isSelected ? '#0E3F3C' : isHovered ? '#E6F4F1' : '#FFFFFF'}
                   stroke={
                     isSelected
-                      ? '#91D7C6'
+                      ? '#007F86'
                       : isShifted
-                      ? '#E5AB65'
+                      ? '#B45309'
                       : ch.variable === 'pressure'
-                      ? '#326C62'
-                      : '#34B5A5'
+                      ? '#10263E'
+                      : '#007F86'
                   }
-                  strokeWidth={isSelected || isShifted ? 1.8 : 1.2}
+                  strokeWidth={isSelected || isShifted ? 2 : 1.3}
                 />
                 <text
                   x={sx}
@@ -329,7 +327,7 @@ export function NetworkSchematic2D({
                   fontSize="10"
                   fontWeight="700"
                   fontFamily="IBM Plex Mono, monospace"
-                  fill={isSelected ? '#071F1D' : isShifted ? '#E5AB65' : '#EDF5F1'}
+                  fill={isSelected ? '#FFFFFF' : isShifted ? '#B45309' : '#10263E'}
                 >
                   {ch.id}
                 </text>
@@ -338,19 +336,19 @@ export function NetworkSchematic2D({
           })}
         </svg>
 
-        {/* Single Clean Anchored Readout Pill when Hovering/Selecting a Sensor */}
         {inspected?.ch && (
           <div
             style={{
               position: 'absolute',
               top: 10,
               right: 12,
-              background: 'var(--bg-sidebar)',
-              border: '1px solid var(--accent-primary)',
+              background: '#FFFFFF',
+              border: '1.5px solid #007F86',
               borderRadius: 'var(--radius-sm)',
-              padding: '6px 10px',
+              padding: '5px 10px',
               fontSize: '12px',
               color: 'var(--text-primary)',
+              boxShadow: 'var(--shadow-sm)',
               pointerEvents: 'none',
             }}
           >
@@ -366,7 +364,7 @@ export function NetworkSchematic2D({
         )}
       </div>
 
-      {/* Live 16-Channel Tabular Grid — Zero Overlaps, Clear Numbers */}
+      {/* Live 16-Channel Tabular Grid */}
       <div className="sensor-chip-grid" aria-label="Live sensor telemetry grid">
         {scenario.sensor_channels.map((ch) => {
           const { val, delta, alertLevel } = getChannelMetrics(ch.id);
@@ -381,14 +379,22 @@ export function NetworkSchematic2D({
               title={ch.status_note ?? ch.node_or_edge}
               onClick={() => onSelectChannel(active ? null : ch.id)}
             >
-              <span className="mono" style={{ fontWeight: 700, color: active ? 'var(--accent-soft)' : 'var(--text-secondary)' }}>
+              <span
+                className="mono"
+                style={{
+                  fontWeight: 700,
+                  color: active ? '#A7F3D0' : 'var(--text-secondary)',
+                }}
+              >
                 {ch.id}
               </span>
               <span
                 className="mono"
                 style={{
                   fontWeight: 600,
-                  color: !ch.observable
+                  color: active
+                    ? '#FFFFFF'
+                    : !ch.observable
                     ? 'var(--text-muted)'
                     : isShifted
                     ? 'var(--state-warning)'

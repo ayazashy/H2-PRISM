@@ -11,16 +11,16 @@ interface SignalChartsProps {
 }
 
 const SERIES_COLORS = [
-  '#34B5A5',
-  '#E5AB65',
-  '#60A5FA',
-  '#F472B6',
-  '#91D7C6',
-  '#A78BFA',
-  '#FBBF24',
-  '#38BDF8',
-  '#FB7185',
-  '#4ADE80',
+  '#0E3F3C',
+  '#007F86',
+  '#B45309',
+  '#2563EB',
+  '#9333EA',
+  '#059669',
+  '#D97706',
+  '#0284C7',
+  '#DC2626',
+  '#4F46E5',
 ];
 
 function ChannelChart({
@@ -97,22 +97,22 @@ function ChannelChart({
     const markLines: Record<string, unknown>[] = [
       {
         xAxis: currentT,
-        lineStyle: { color: '#EDF5F1', width: 2, type: 'solid' },
+        lineStyle: { color: '#10263E', width: 2, type: 'solid' },
         label: { show: false },
       },
     ];
     if (onsetTime !== null) {
       markLines.push({
         xAxis: onsetTime,
-        lineStyle: { color: '#DC776C', width: 1.5, type: 'dashed' },
-        label: { formatter: 'Onset', color: '#DC776C', fontSize: 10 },
+        lineStyle: { color: '#B91C1C', width: 1.5, type: 'dashed' },
+        label: { formatter: 'Onset', color: '#B91C1C', fontSize: 10 },
       });
     }
     if (endTime !== null && endTime < timeSeconds[timeSeconds.length - 1]) {
       markLines.push({
         xAxis: endTime,
-        lineStyle: { color: '#E5AB65', width: 1.4, type: 'dotted' },
-        label: { formatter: 'End', color: '#E5AB65', fontSize: 10 },
+        lineStyle: { color: '#B45309', width: 1.4, type: 'dotted' },
+        label: { formatter: 'End', color: '#B45309', fontSize: 10 },
       });
     }
 
@@ -120,42 +120,36 @@ function ChannelChart({
       {
         animation: false,
         backgroundColor: 'transparent',
-        grid: { left: 52, right: 34, top: 38, bottom: 28 },
+        grid: { left: 48, right: 34, top: 36, bottom: 26 },
         tooltip: {
           trigger: 'axis',
-          backgroundColor: '#0B2B28',
-          borderColor: '#24524A',
-          textStyle: { color: '#EDF5F1', fontSize: 12, fontFamily: 'IBM Plex Mono, monospace' },
           valueFormatter: (v: unknown) =>
             v === null || v === undefined ? 'Missing (null)' : Number(v).toFixed(3),
         },
         legend: {
           top: 2,
           type: 'scroll',
-          pageIconColor: '#91D7C6',
-          pageIconInactiveColor: '#24524A',
-          pageTextStyle: { color: '#9CB9B1', fontSize: 11 },
-          textStyle: { fontSize: 11, color: '#9CB9B1' },
+          textStyle: { fontSize: 11, color: '#3D5166' },
         },
         xAxis: {
           type: 'value',
           min: timeSeconds[0],
           max: timeSeconds[timeSeconds.length - 1],
-          axisLine: { lineStyle: { color: '#24524A' } },
-          splitLine: { lineStyle: { color: 'rgba(36, 82, 74, 0.45)' } },
+          axisLine: { lineStyle: { color: '#CBD5E1' } },
+          splitLine: { lineStyle: { color: '#E2E8F0' } },
           axisLabel: {
             formatter: '{value}s',
             fontSize: 10.5,
-            color: '#9CB9B1',
+            color: '#5C6F82',
             hideOverlap: true,
           },
         },
         yAxis: {
           type: 'value',
           scale: true,
-          axisLine: { lineStyle: { color: '#24524A' } },
-          splitLine: { lineStyle: { color: 'rgba(36, 82, 74, 0.45)' } },
-          axisLabel: { fontSize: 10.5, color: '#9CB9B1' },
+          axisLine: { lineStyle: { color: '#CBD5E1' } },
+          splitLine: { lineStyle: { color: '#E2E8F0' } },
+          axisLabel: { fontSize: 10.5, color: '#5C6F82' },
         },
         series: channels.map((ch, i) => {
           const isHighlighted = selectedChannelId === ch.id;
@@ -183,7 +177,7 @@ function ChannelChart({
   const exportPng = () => {
     const chart = chartRef.current;
     if (!chart) return;
-    const url = chart.getDataURL({ type: 'png', pixelRatio: 2, backgroundColor: '#071F1D' });
+    const url = chart.getDataURL({ type: 'png', pixelRatio: 2, backgroundColor: '#FFFFFF' });
     const a = document.createElement('a');
     a.href = url;
     a.download = `h2-prism-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.png`;
@@ -192,8 +186,8 @@ function ChannelChart({
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
-        <span style={{ fontSize: '12.5px', fontWeight: 600, color: 'var(--text-secondary)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+        <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--text-secondary)' }}>
           {title}
         </span>
         <button
@@ -207,7 +201,7 @@ function ChannelChart({
           PNG
         </button>
       </div>
-      <div ref={containerRef} style={{ width: '100%', height: 175, cursor: 'crosshair' }} />
+      <div ref={containerRef} style={{ width: '100%', height: 170, cursor: 'crosshair' }} />
     </div>
   );
 }
@@ -252,7 +246,7 @@ export function SignalCharts({
         </div>
       </div>
 
-      <div style={{ padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <div style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 12 }}>
         {viewMode === 'charts' ? (
           <>
             {pressureChannels.length > 0 && (

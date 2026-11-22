@@ -93,11 +93,11 @@ def main() -> int:
                     page.click("button:has-text('Onset (400.0s)')")
                     assert "t = 400.0s" in page.inner_text("body")
 
-                    page.click("button.nav-item:has-text('Benchmarks (R2)')")
+                    page.click("button.nav-tab:has-text('Benchmarks (R2)')")
                     page.wait_for_selector("text=NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL")
                     assert "27,993" in page.inner_text("body")
 
-                    page.click("button.nav-item:has-text('Methods & Limits')")
+                    page.click("button.nav-tab:has-text('Methods & Limits')")
                     page.wait_for_selector("text=Explicitly Prohibited Claims")
 
                 assert not errors, f"Console/page errors on {name}: {errors}"

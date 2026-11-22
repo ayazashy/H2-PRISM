@@ -32,9 +32,6 @@ function ConfusionHeatmap({
       backgroundColor: 'transparent',
       tooltip: {
         position: 'top',
-        backgroundColor: '#0B2B28',
-        borderColor: '#24524A',
-        textStyle: { color: '#EDF5F1', fontSize: 12 },
         formatter: (p: { value: [number, number, number] }) =>
           `True: <b>${labels[p.value[1]]}</b><br/>Pred: <b>${labels[p.value[0]]}</b><br/>Windows: <b>${p.value[2]}</b>`,
       },
@@ -45,28 +42,25 @@ function ConfusionHeatmap({
         name: 'Predicted Class',
         nameLocation: 'middle',
         nameGap: 32,
-        nameTextStyle: { color: '#9CB9B1', fontSize: 11.5 },
-        axisLine: { lineStyle: { color: '#24524A' } },
-        axisLabel: { fontSize: 10.5, color: '#9CB9B1', interval: 0 },
+        axisLabel: { fontSize: 10.5, color: '#3D5166', interval: 0 },
       },
       yAxis: {
         type: 'category',
         data: labels.map((l) => l.replace('COMPRESSOR_', 'COMP_')),
         inverse: true,
-        axisLine: { lineStyle: { color: '#24524A' } },
-        axisLabel: { fontSize: 10.5, color: '#9CB9B1' },
+        axisLabel: { fontSize: 10.5, color: '#3D5166' },
       },
       visualMap: {
         min: 0,
         max: maxVal,
         show: false,
-        inRange: { color: ['#0B2B28', '#16433D', '#247B71', '#34B5A5'] },
+        inRange: { color: ['#F4F4E9', '#7CC6C3', '#007F86', '#0E3F3C'] },
       },
       series: [
         {
           type: 'heatmap',
           data,
-          label: { show: true, fontWeight: 700, fontSize: 12, color: '#EDF5F1' },
+          label: { show: true, fontWeight: 700, fontSize: 12 },
         },
       ],
     });
@@ -94,10 +88,10 @@ function RiskCoverageChart({
     if (!ref.current) return;
     const chart = echarts.init(ref.current);
     const methodMeta: { id: string; label: string; color: string; dashed?: boolean }[] = [
-      { id: 's_C', label: 's_C (H2-PRISM)', color: '#34B5A5' },
-      { id: 's_C_minus_D', label: 's_C−D (No D)', color: '#91D7C6', dashed: true },
-      { id: 'confidence', label: 'Baseline Confidence', color: '#E5AB65', dashed: true },
-      { id: 'D_only', label: 'D(x) Only', color: '#A6B4C1', dashed: true },
+      { id: 's_C', label: 's_C (H2-PRISM)', color: '#0E3F3C' },
+      { id: 's_C_minus_D', label: 's_C−D (No D)', color: '#007F86', dashed: true },
+      { id: 'confidence', label: 'Baseline Confidence', color: '#B45309', dashed: true },
+      { id: 'D_only', label: 'D(x) Only', color: '#64748B', dashed: true },
     ];
 
     const series = methodMeta.map((m) => {
@@ -124,19 +118,11 @@ function RiskCoverageChart({
 
     chart.setOption({
       backgroundColor: 'transparent',
-      tooltip: {
-        trigger: 'axis',
-        backgroundColor: '#0B2B28',
-        borderColor: '#24524A',
-        textStyle: { color: '#EDF5F1', fontSize: 12 },
-        valueFormatter: (v: unknown) => `${Number(v).toFixed(2)}%`,
-      },
+      tooltip: { trigger: 'axis', valueFormatter: (v: unknown) => `${Number(v).toFixed(2)}%` },
       legend: {
         top: 2,
         type: 'scroll',
-        textStyle: { fontSize: 11, color: '#9CB9B1' },
-        pageIconColor: '#91D7C6',
-        pageTextStyle: { color: '#9CB9B1' },
+        textStyle: { fontSize: 11, color: '#3D5166' },
       },
       grid: { left: 62, right: 24, top: 48, bottom: 44 },
       xAxis: {
@@ -144,23 +130,17 @@ function RiskCoverageChart({
         name: 'Realized Coverage (%)',
         nameLocation: 'middle',
         nameGap: 26,
-        nameTextStyle: { color: '#9CB9B1', fontSize: 11.5 },
         min: 0,
         max: 100,
-        axisLine: { lineStyle: { color: '#24524A' } },
-        splitLine: { lineStyle: { color: 'rgba(36, 82, 74, 0.45)' } },
-        axisLabel: { color: '#9CB9B1', fontSize: 10.5 },
+        axisLabel: { color: '#3D5166', fontSize: 10.5 },
       },
       yAxis: {
         type: 'value',
         name: 'Selective Risk (%)',
         nameLocation: 'middle',
         nameGap: 42,
-        nameTextStyle: { color: '#9CB9B1', fontSize: 11.5 },
         min: 0,
-        axisLine: { lineStyle: { color: '#24524A' } },
-        splitLine: { lineStyle: { color: 'rgba(36, 82, 74, 0.45)' } },
-        axisLabel: { color: '#9CB9B1', fontSize: 10.5 },
+        axisLabel: { color: '#3D5166', fontSize: 10.5 },
       },
       series,
     });
@@ -220,9 +200,9 @@ export function BenchmarksView({ metrics, features }: BenchmarksViewProps) {
         className="panel"
         style={{
           padding: '12px 16px',
-          borderColor: 'rgba(229, 171, 101, 0.45)',
-          background: 'var(--state-warning-bg)',
-          color: 'var(--state-warning)',
+          borderColor: 'rgba(180, 83, 9, 0.35)',
+          background: '#FEF3C7',
+          color: '#78350F',
           fontSize: '13px',
         }}
       >
@@ -270,10 +250,10 @@ export function BenchmarksView({ metrics, features }: BenchmarksViewProps) {
       <section className="kpi-grid" aria-label="Summary evaluation metrics">
         <div className="kpi-card">
           <div className="meta-label">s_C Selective Risk (0.60, 2 folds)</div>
-          <div className="kpi-value" style={{ color: 'var(--accent-soft)' }}>
+          <div className="kpi-value">
             {sC06 ? `${(sC06.selective_risk * 100).toFixed(2)}%` : 'N/A'}
           </div>
-          <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+          <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
             n={sC06?.n_specific.toLocaleString()} / {sC06?.n_eligible.toLocaleString()} (Downstream | Upstream)
           </div>
         </div>
@@ -282,30 +262,30 @@ export function BenchmarksView({ metrics, features }: BenchmarksViewProps) {
           <div className="kpi-value">
             {conf06 ? `${(conf06.selective_risk * 100).toFixed(2)}%` : 'N/A'}
           </div>
-          <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+          <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
             26 families · rank-matched coverage
           </div>
         </div>
         <div className="kpi-card">
           <div className="meta-label">Center Max Coverage</div>
           <div className="kpi-value">25.8%</div>
-          <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+          <div style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
             Fold 1 NOT_ESTIMABLE at 0.60 / 0.80 / 0.90
           </div>
         </div>
         <div className="kpi-card">
           <div className="meta-label">Registered RQ1 / H1</div>
-          <div className="kpi-value" style={{ fontSize: '20px', color: 'var(--state-warning)' }}>
+          <div className="kpi-value" style={{ fontSize: '20px', color: '#B45309' }}>
             NOT ESTIMABLE
           </div>
-          <div className="mono" style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
+          <div className="mono" style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
             Run {metrics.run_key.slice(0, 12)}
           </div>
         </div>
       </section>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-        <span style={{ fontSize: '12.5px', fontWeight: 600, color: 'var(--text-secondary)' }}>
+        <span style={{ fontSize: '12.5px', fontWeight: 700, color: 'var(--text-secondary)' }}>
           Topology Fold Scope:
         </span>
         {(['pooled', 'Downstream', 'Upstream', 'Center'] as const).map((sc) => (
@@ -321,8 +301,8 @@ export function BenchmarksView({ metrics, features }: BenchmarksViewProps) {
       </div>
 
       <section className="charts-grid">
-        <div className="panel" style={{ padding: 16 }}>
-          <h3 className="panel-title" style={{ marginBottom: 12 }}>
+        <div className="panel" style={{ padding: 14 }}>
+          <h3 className="panel-title" style={{ marginBottom: 10 }}>
             Confusion Matrix — {scope} (n={cm.total_windows.toLocaleString()})
           </h3>
           {asTable ? (
@@ -355,8 +335,8 @@ export function BenchmarksView({ metrics, features }: BenchmarksViewProps) {
           )}
         </div>
 
-        <div className="panel" style={{ padding: 16 }}>
-          <h3 className="panel-title" style={{ marginBottom: 12 }}>
+        <div className="panel" style={{ padding: 14 }}>
+          <h3 className="panel-title" style={{ marginBottom: 10 }}>
             Risk–Coverage Curve — {scope} {features.baseline_comparison ? '(vs. Baseline)' : ''}
           </h3>
           {asTable ? (
@@ -388,8 +368,8 @@ export function BenchmarksView({ metrics, features }: BenchmarksViewProps) {
         </div>
       </section>
 
-      <section className="panel" style={{ padding: 16 }}>
-        <h3 className="panel-title" style={{ marginBottom: 12 }}>
+      <section className="panel" style={{ padding: 14 }}>
+        <h3 className="panel-title" style={{ marginBottom: 10 }}>
           Per-Class Three-Outcome Breakdown (s_C, Target 0.60, Downstream | Upstream)
         </h3>
         <div className="table-scroll">
@@ -429,28 +409,28 @@ export function BenchmarksView({ metrics, features }: BenchmarksViewProps) {
       <section className="kpi-grid" aria-label="Feature availability gates">
         <div className="kpi-card">
           <div className="meta-label">Leak Localization</div>
-          <div className="meta-value" style={{ color: 'var(--state-unresolved)' }}>
+          <div className="meta-value" style={{ color: 'var(--text-muted)' }}>
             {features.localization ? 'Enabled' : 'Not available (unevaluable)'}
           </div>
-          <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: 6 }}>
+          <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: 4 }}>
             Physical sensor coordinates &amp; meter-level truth are absent in H2-SimNet.
           </div>
         </div>
         <div className="kpi-card">
           <div className="meta-label">Gas Composition Comparison</div>
-          <div className="meta-value" style={{ color: 'var(--state-unresolved)' }}>
+          <div className="meta-value" style={{ color: 'var(--text-muted)' }}>
             {features.gas_comparison ? 'Enabled' : 'Not available (unsupported)'}
           </div>
-          <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: 6 }}>
+          <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: 4 }}>
             Center model uses air-like R=0.287 kJ/(kg·K); H2/CH4 blend transfer unvalidated.
           </div>
         </div>
         <div className="kpi-card">
           <div className="meta-label">Operating-Condition Analysis</div>
-          <div className="meta-value" style={{ color: 'var(--state-unresolved)' }}>
+          <div className="meta-value" style={{ color: 'var(--text-muted)' }}>
             {features.operating_condition_analysis ? 'Enabled' : 'Not available (confounded)'}
           </div>
-          <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: 6 }}>
+          <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: 4 }}>
             Not separately evaluated under the frozen primary R2 protocol.
           </div>
         </div>

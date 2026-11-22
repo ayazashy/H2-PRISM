@@ -40,7 +40,6 @@ class WebGLErrorBoundary extends Component<
   }
 }
 
-// Well-spread 3D coordinates derived from Simscape node graph so node tags never stack
 const NODE_POS_3D: Record<string, [number, number, number]> = {
   N47: [-5.4, 0, 0.0],
   N50: [-3.4, 0, 0.0],
@@ -99,7 +98,7 @@ function PipeSegment3D({
     <group>
       <mesh position={midpoint} quaternion={quaternion}>
         <cylinderGeometry args={[0.1, 0.1, length, 16]} />
-        <meshStandardMaterial color={color} metalness={0.35} roughness={0.55} />
+        <meshStandardMaterial color={color} metalness={0.25} roughness={0.5} />
       </mesh>
       {showSymbolicFlow &&
         [0, 1, 2].map((i) => (
@@ -111,7 +110,7 @@ function PipeSegment3D({
             position={start}
           >
             <sphereGeometry args={[0.075, 10, 10]} />
-            <meshStandardMaterial color="#91D7C6" emissive="#34B5A5" emissiveIntensity={0.65} />
+            <meshStandardMaterial color="#2DD4BF" emissive="#007F86" emissiveIntensity={0.8} />
           </mesh>
         ))}
     </group>
@@ -136,7 +135,7 @@ function CompressorRing3D({
   return (
     <mesh ref={ringRef} position={position} rotation={[Math.PI / 2, 0, 0]}>
       <torusGeometry args={[0.36, 0.035, 10, 28]} />
-      <meshStandardMaterial color="#34B5A5" metalness={0.3} roughness={0.4} />
+      <meshStandardMaterial color="#007F86" />
     </mesh>
   );
 }
@@ -181,8 +180,7 @@ export function NetworkScene3D({
   return (
     <WebGLErrorBoundary>
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-        <div style={{ position: 'relative', width: '100%', height: 420 }}>
-          {/* Corner Camera Presets */}
+        <div style={{ position: 'relative', width: '100%', height: 410 }}>
           <div
             style={{
               position: 'absolute',
@@ -216,26 +214,26 @@ export function NetworkScene3D({
             </button>
           </div>
 
-          {/* Dedicated Corner Telemetry HUD (replaces overlapping floating HTML boxes) */}
           <div
             style={{
               position: 'absolute',
               top: 10,
               left: 12,
               zIndex: 3,
-              background: 'rgba(11, 43, 40, 0.92)',
+              background: 'rgba(255, 255, 255, 0.94)',
               border: '1px solid var(--border-default)',
               borderRadius: 'var(--radius-sm)',
-              padding: '6px 10px',
+              padding: '5px 10px',
               fontSize: '12px',
               color: 'var(--text-primary)',
+              boxShadow: 'var(--shadow-sm)',
               pointerEvents: 'none',
             }}
           >
             {focusedCh ? (
               <>
                 <strong className="mono">{focusedCh.id}</strong> ({focusedCh.node_or_edge}):{' '}
-                <span className="mono" style={{ color: 'var(--accent-soft)' }}>
+                <span className="mono" style={{ color: 'var(--color-teal)' }}>
                   {!focusedCh.observable
                     ? 'Absent (Center)'
                     : focusedVal !== null && focusedVal !== undefined
@@ -256,12 +254,10 @@ export function NetworkScene3D({
             camera={{ position: camPos, fov: 42 }}
             dpr={[1, 1.5]}
           >
-            <color attach="background" args={['#071F1D']} />
-            <fog attach="fog" args={['#071F1D', 12, 24]} />
-            <ambientLight intensity={0.75} />
-            <directionalLight position={[6, 12, 8]} intensity={0.9} color="#EDF5F1" />
-            <directionalLight position={[-6, 4, -6]} intensity={0.35} color="#34B5A5" />
-            <gridHelper args={[18, 22, '#24524A', '#103632']} position={[0, -0.5, 0]} />
+            <color attach="background" args={['#FAFBF7']} />
+            <ambientLight intensity={0.85} />
+            <directionalLight position={[6, 12, 8]} intensity={0.75} />
+            <gridHelper args={[18, 22, '#CBD5E1', '#E2E8F0']} position={[0, -0.5, 0]} />
             <OrbitControls enableDamping maxDistance={18} minDistance={4} />
 
             {topology.edges.map((edge) => {
@@ -270,7 +266,7 @@ export function NetworkScene3D({
               if (!p1 || !p2) return null;
               const isTruth = showTruthLayer && truthTargets.has(edge.id);
               const isPred = predictedTarget === edge.id;
-              const color = isTruth ? '#DC776C' : isPred ? '#34B5A5' : '#2E6760';
+              const color = isTruth ? '#DC2626' : isPred ? '#007F86' : '#10263E';
 
               return (
                 <PipeSegment3D
@@ -296,8 +292,8 @@ export function NetworkScene3D({
                   <mesh position={pos}>
                     <sphereGeometry args={[isComp ? 0.26 : 0.19, 18, 18]} />
                     <meshStandardMaterial
-                      color={isTruth ? '#DC776C' : isComp ? '#34B5A5' : '#91D7C6'}
-                      metalness={0.3}
+                      color={isTruth ? '#DC2626' : isComp ? '#0E3F3C' : '#3D5166'}
+                      metalness={0.2}
                       roughness={0.45}
                     />
                   </mesh>
@@ -311,14 +307,14 @@ export function NetworkScene3D({
                   <Html distanceFactor={10} position={[pos.x, pos.y + 0.42, pos.z]}>
                     <div
                       style={{
-                        background: '#0B2B28',
-                        border: '1px solid #24524A',
+                        background: 'rgba(244, 244, 233, 0.94)',
+                        border: '1px solid #9AA6A3',
                         borderRadius: 4,
                         padding: '1px 5px',
                         fontSize: 10,
-                        fontWeight: 600,
+                        fontWeight: 700,
                         fontFamily: 'IBM Plex Mono, monospace',
-                        color: '#EDF5F1',
+                        color: '#10263E',
                         whiteSpace: 'nowrap',
                         pointerEvents: 'none',
                       }}
@@ -332,7 +328,6 @@ export function NetworkScene3D({
           </Canvas>
         </div>
 
-        {/* Same 16-channel telemetry grid below 3D viewport for non-overlapping reading */}
         <div className="sensor-chip-grid" aria-label="Live sensor telemetry grid">
           {scenario.sensor_channels.map((ch) => {
             const val = ch.values[timeIndex];
@@ -344,7 +339,13 @@ export function NetworkScene3D({
                 className={`sensor-chip ${active ? 'active' : ''} ${!ch.observable ? 'absent' : ''}`}
                 onClick={() => onSelectChannel(active ? null : ch.id)}
               >
-                <span className="mono" style={{ fontWeight: 700, color: active ? 'var(--accent-soft)' : 'var(--text-secondary)' }}>
+                <span
+                  className="mono"
+                  style={{
+                    fontWeight: 700,
+                    color: active ? '#A7F3D0' : 'var(--text-secondary)',
+                  }}
+                >
                   {ch.id}
                 </span>
                 <span className="mono" style={{ fontWeight: 600 }}>

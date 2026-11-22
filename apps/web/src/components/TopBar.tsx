@@ -1,46 +1,33 @@
-import { FileSearch, Menu } from 'lucide-react';
+import { FileSearch } from 'lucide-react';
 import type { CatalogScenarioEntry, ProvenanceStatus } from '../data/types';
-import type { NavTab } from './Sidebar';
+
+export type NavTab = 'workspace' | 'benchmarks' | 'methods';
 
 interface TopBarProps {
-  activeTab: NavTab;
   scenarios: CatalogScenarioEntry[];
   selectedId: string;
   onSelectScenario: (id: string) => void;
+  activeTab: NavTab;
+  onChangeTab: (tab: NavTab) => void;
   onOpenEvidence: () => void;
-  onOpenMobileNav: () => void;
   provenanceStatus?: ProvenanceStatus;
 }
 
-const TAB_TITLES: Record<NavTab, string> = {
-  workspace: 'Digital Twin & Replay',
-  benchmarks: 'Primary R2 Benchmarks',
-  methods: 'Methods & Limitations',
-};
-
 export function TopBar({
-  activeTab,
   scenarios,
   selectedId,
   onSelectScenario,
+  activeTab,
+  onChangeTab,
   onOpenEvidence,
-  onOpenMobileNav,
   provenanceStatus,
 }: TopBarProps) {
   const isFixture = provenanceStatus === 'FIXTURE_ONLY';
 
   return (
     <header className="topbar">
-      <div className="topbar-left">
-        <button
-          type="button"
-          className="mobile-menu-btn"
-          aria-label="Open navigation menu"
-          onClick={onOpenMobileNav}
-        >
-          <Menu size={18} />
-        </button>
-        <h1 className="page-heading">{TAB_TITLES[activeTab]}</h1>
+      <div className="topbar-brand">
+        <h1 className="brand-title">H2-PRISM</h1>
         <span className={`replay-pill ${isFixture ? 'fixture' : ''}`}>
           {isFixture ? 'Fixture Only · Replay' : 'Simulation Replay · Audited'}
         </span>
@@ -63,7 +50,31 @@ export function TopBar({
           ))}
         </select>
 
-        <button type="button" className="btn-secondary" onClick={onOpenEvidence}>
+        <nav className="nav-tabs" aria-label="Primary views">
+          <button
+            type="button"
+            className={`nav-tab ${activeTab === 'workspace' ? 'active' : ''}`}
+            onClick={() => onChangeTab('workspace')}
+          >
+            Digital Twin
+          </button>
+          <button
+            type="button"
+            className={`nav-tab ${activeTab === 'benchmarks' ? 'active' : ''}`}
+            onClick={() => onChangeTab('benchmarks')}
+          >
+            Benchmarks (R2)
+          </button>
+          <button
+            type="button"
+            className={`nav-tab ${activeTab === 'methods' ? 'active' : ''}`}
+            onClick={() => onChangeTab('methods')}
+          >
+            Methods &amp; Limits
+          </button>
+        </nav>
+
+        <button type="button" className="btn-outline-light" onClick={onOpenEvidence}>
           <FileSearch size={15} />
           Evidence
         </button>
