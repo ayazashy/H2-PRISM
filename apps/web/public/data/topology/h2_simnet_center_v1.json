@@ -2,130 +2,188 @@
   "schema_version": "1.0.0",
   "topology_id": "h2_simnet_center_v1",
   "is_schematic": true,
-  "coordinate_note": "Schematic layout only. Physical sensor coordinates and pipe lengths are not verified in H2-SimNet.",
+  "coordinate_note": "Schematic connectivity derived from Simscape MODEL_FILES / NETWORK_EDGES.csv. Pipe lengths (3-30 km) exist in model metadata, but planar (x, y, z) coordinates are schematic for legibility and not physical coordinates.",
   "nodes": [
     {
-      "id": "N1",
-      "label": "Supply N1",
+      "id": "N47",
+      "label": "Source / Header 47",
       "kind": "source",
       "x": 0.0,
       "y": 1.0,
       "z": 0.0
     },
     {
-      "id": "C1",
-      "label": "Compressor C1",
+      "id": "N50",
+      "label": "Junction 50 (C1/G1/G2)",
       "kind": "compressor",
-      "x": 1.5,
+      "x": 1.4,
       "y": 1.0,
       "z": 0.0
     },
     {
-      "id": "N2",
-      "label": "Junction N2",
+      "id": "N239",
+      "label": "Header 48 / 239",
       "kind": "junction",
-      "x": 3.0,
+      "x": 2.6,
       "y": 1.0,
       "z": 0.0
     },
     {
-      "id": "N3",
-      "label": "Branch N3",
+      "id": "N309",
+      "label": "Junction 309",
       "kind": "junction",
-      "x": 4.5,
-      "y": 0.2,
+      "x": 3.8,
+      "y": 1.0,
       "z": 0.0
     },
     {
-      "id": "N4",
-      "label": "Branch N4",
+      "id": "N106",
+      "label": "Junction 106",
       "kind": "junction",
-      "x": 4.5,
-      "y": 1.8,
+      "x": 4.9,
+      "y": 0.35,
       "z": 0.0
     },
     {
-      "id": "N5",
-      "label": "Delivery N5",
+      "id": "N221",
+      "label": "Junction 221",
+      "kind": "junction",
+      "x": 5.8,
+      "y": 1.0,
+      "z": 0.0
+    },
+    {
+      "id": "N109",
+      "label": "Junction 109",
+      "kind": "junction",
+      "x": 4.9,
+      "y": 1.65,
+      "z": 0.0
+    },
+    {
+      "id": "N195",
+      "label": "Outlet Reservoir 195",
       "kind": "delivery",
-      "x": 6.0,
-      "y": 1.0,
+      "x": 6.8,
+      "y": 1.65,
       "z": 0.0
     }
   ],
   "edges": [
     {
-      "id": "G1",
-      "label": "Pipe G1",
-      "source": "N1",
-      "target": "C1",
+      "id": "Pipe_G1",
+      "label": "Pipe (G)1 [16 km]",
+      "source": "N47",
+      "target": "N50",
       "component_group": "G1"
     },
     {
-      "id": "G2",
-      "label": "Pipe G2",
-      "source": "C1",
-      "target": "N2",
+      "id": "Pipe_G2",
+      "label": "Pipe (G)2 [30 km]",
+      "source": "N50",
+      "target": "N239",
       "component_group": "G2"
     },
     {
-      "id": "G3",
-      "label": "Pipe G3",
-      "source": "N2",
-      "target": "N3",
+      "id": "Pipe_G3",
+      "label": "Pipe (G)3 [11 km]",
+      "source": "N239",
+      "target": "N309",
       "component_group": "G3"
     },
     {
-      "id": "G4",
-      "label": "Pipe G4",
-      "source": "N2",
-      "target": "N4",
+      "id": "Pipe_G8",
+      "label": "Pipe (G)8 [11 km]",
+      "source": "N309",
+      "target": "N106",
+      "component_group": "G8"
+    },
+    {
+      "id": "Pipe_G4",
+      "label": "Pipe (G)4 [8 km]",
+      "source": "N106",
+      "target": "N221",
       "component_group": "G4"
     },
     {
-      "id": "G5",
-      "label": "Pipe G5",
-      "source": "N3",
-      "target": "N5",
-      "component_group": "G5"
+      "id": "Pipe_G7",
+      "label": "Pipe (G)7 [4 km]",
+      "source": "N221",
+      "target": "N109",
+      "component_group": "G7"
     },
     {
-      "id": "G6",
-      "label": "Pipe G6",
-      "source": "N4",
-      "target": "N5",
-      "component_group": "G6"
+      "id": "Pipe_G5",
+      "label": "Pipe (G)5 [4 km]",
+      "source": "N109",
+      "target": "N195",
+      "component_group": "G5"
     }
   ],
   "sensors": [
     {
       "channel_id": "PS1",
-      "attached_to": "N1",
+      "attached_to": "N50",
+      "variable": "pressure"
+    },
+    {
+      "channel_id": "PS2",
+      "attached_to": "N239",
+      "variable": "pressure"
+    },
+    {
+      "channel_id": "PS3",
+      "attached_to": "N106",
       "variable": "pressure"
     },
     {
       "channel_id": "PS4",
-      "attached_to": "N2",
+      "attached_to": "N109",
+      "variable": "pressure"
+    },
+    {
+      "channel_id": "PS6",
+      "attached_to": "N239",
+      "variable": "pressure"
+    },
+    {
+      "channel_id": "PS7",
+      "attached_to": "N47",
       "variable": "pressure"
     },
     {
       "channel_id": "PS8",
-      "attached_to": "N3",
+      "attached_to": "N195",
       "variable": "pressure"
     },
     {
-      "channel_id": "PS12",
-      "attached_to": "N5",
+      "channel_id": "PS9",
+      "attached_to": "N221",
+      "variable": "pressure"
+    },
+    {
+      "channel_id": "PS10",
+      "attached_to": "N309",
       "variable": "pressure"
     },
     {
       "channel_id": "MFS1",
-      "attached_to": "G1",
+      "attached_to": "Pipe_G3",
+      "variable": "mass_flow"
+    },
+    {
+      "channel_id": "MFS2",
+      "attached_to": "Pipe_G8",
       "variable": "mass_flow"
     },
     {
       "channel_id": "MFS3",
-      "attached_to": "G5",
+      "attached_to": "Pipe_G2",
+      "variable": "mass_flow"
+    },
+    {
+      "channel_id": "MFS4",
+      "attached_to": "Pipe_G5",
       "variable": "mass_flow"
     }
   ]

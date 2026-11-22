@@ -1,4 +1,4 @@
-import { Component, type ReactNode, useMemo, useRef, useState } from 'react';
+import { Component, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Html, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
@@ -41,8 +41,7 @@ class WebGLErrorBoundary extends Component<
 }
 
 function nodeToVec3(n: TopologyNode): THREE.Vector3 {
-  // Center topology around origin in Three.js XZ plane
-  return new THREE.Vector3(n.x - 3.0, n.z, n.y - 1.0);
+  return new THREE.Vector3(n.x - 3.4, n.z, n.y - 1.0);
 }
 
 function PipeSegment3D({
@@ -91,7 +90,7 @@ function PipeSegment3D({
   return (
     <group>
       <mesh position={midpoint} quaternion={quaternion}>
-        <cylinderGeometry args={[0.095, 0.095, length, 16]} />
+        <cylinderGeometry args={[0.09, 0.09, length, 14]} />
         <meshStandardMaterial color={color} metalness={0.25} roughness={0.45} />
       </mesh>
       {showSymbolicFlow &&
@@ -103,12 +102,8 @@ function PipeSegment3D({
             }}
             position={start}
           >
-            <sphereGeometry args={[0.07, 10, 10]} />
-            <meshStandardMaterial
-              color="#2DD4BF"
-              emissive="#007F86"
-              emissiveIntensity={0.9}
-            />
+            <sphereGeometry args={[0.065, 10, 10]} />
+            <meshStandardMaterial color="#2DD4BF" emissive="#007F86" emissiveIntensity={0.9} />
           </mesh>
         ))}
     </group>
@@ -132,7 +127,7 @@ function CompressorRing3D({
   });
   return (
     <mesh ref={ringRef} position={position} rotation={[Math.PI / 2, 0, 0]}>
-      <torusGeometry args={[0.34, 0.035, 10, 28]} />
+      <torusGeometry args={[0.32, 0.032, 10, 28]} />
       <meshStandardMaterial color="#007F86" emissive="#007F86" emissiveIntensity={0.4} />
     </mesh>
   );
@@ -152,6 +147,15 @@ export function NetworkScene3D({
 }: NetworkScene3DProps) {
   const [preset, setPreset] = useState<'iso' | 'top'>('iso');
   const [resetTick, setResetTick] = useState(0);
+  const [tabHidden, setTabHidden] = useState(
+    typeof document !== 'undefined' ? document.hidden : false
+  );
+
+  useEffect(() => {
+    const onVis = () => setTabHidden(document.hidden);
+    document.addEventListener('visibilitychange', onVis);
+    return () => document.removeEventListener('visibilitychange', onVis);
+  }, []);
 
   const nodeMap = new Map(topology.nodes.map((n) => [n.id, n]));
   const channelMap = new Map(scenario.sensor_channels.map((c) => [c.id, c]));
@@ -162,7 +166,7 @@ export function NetworkScene3D({
       : null;
 
   const camPos: [number, number, number] =
-    preset === 'iso' ? [0.2, 4.2, 5.8] : [0, 7.6, 0.01];
+    preset === 'iso' ? [0.2, 4.4, 6.2] : [0, 8.2, 0.01];
 
   return (
     <WebGLErrorBoundary>
@@ -202,14 +206,15 @@ export function NetworkScene3D({
 
         <Canvas
           key={`${preset}-${resetTick}`}
+          frameloop={tabHidden ? 'never' : 'always'}
           camera={{ position: camPos, fov: 44 }}
           dpr={[1, 1.75]}
         >
           <color attach="background" args={['#FAFBF7']} />
           <ambientLight intensity={0.85} />
           <directionalLight position={[6, 10, 6]} intensity={0.7} />
-          <gridHelper args={[12, 18, '#CBD5E1', '#E2E8F0']} position={[0, -0.45, 0]} />
-          <OrbitControls enableDamping maxDistance={14} minDistance={2.5} />
+          <gridHelper args={[14, 20, '#CBD5E1', '#E2E8F0']} position={[0, -0.45, 0]} />
+          <OrbitControls enableDamping maxDistance={15} minDistance={2.5} />
 
           {topology.edges.map((edge) => {
             const src = nodeMap.get(edge.source);
@@ -238,7 +243,7 @@ export function NetworkScene3D({
             return (
               <group key={node.id}>
                 <mesh position={pos}>
-                  <sphereGeometry args={[isComp ? 0.24 : 0.17, 18, 18]} />
+                  <sphereGeometry args={[isComp ? 0.22 : 0.16, 16, 16]} />
                   <meshStandardMaterial
                     color={
                       isComp
@@ -258,7 +263,7 @@ export function NetworkScene3D({
                     showSymbolicFlow={showSymbolicFlow}
                   />
                 )}
-                <Html distanceFactor={8} position={[pos.x, pos.y + 0.36, pos.z]}>
+                <Html distanceFactor={9} position={[pos.x, pos.y + 0.34, pos.z]}>
                   <div
                     style={{
                       background: 'rgba(244,244,233,0.94)',
@@ -279,15 +284,15 @@ export function NetworkScene3D({
             );
           })}
 
-          {topology.sensors.map((s) => {
+          {topology.sensors.slice(0, 8).map((s) => {
             const ch = channelMap.get(s.channel_id);
             const node = nodeMap.get(s.attached_to);
-            if (!ch || !node) return null;
+            if (!ch || !node || !ch.observable) return null;
             const pos = nodeToVec3(node);
             const val = ch.values[timeIndex];
             const isSelected = selectedChannelId === ch.id;
             return (
-              <Html key={ch.id} distanceFactor={8} position={[pos.x, pos.y - 0.42, pos.z]}>
+              <Html key={ch.id} distanceFactor={9} position={[pos.x, pos.y - 0.38, pos.z]}>
                 <button
                   type="button"
                   onClick={() => onSelectChannel(isSelected ? null : ch.id)}
@@ -296,15 +301,15 @@ export function NetworkScene3D({
                     color: isSelected ? '#FFFFFF' : '#10263E',
                     border: `1.5px solid ${isSelected ? '#2DD4BF' : '#007F86'}`,
                     borderRadius: 5,
-                    padding: '2px 6px',
-                    fontSize: 9.5,
+                    padding: '2px 5px',
+                    fontSize: 9,
                     fontFamily: 'monospace',
                     fontWeight: 700,
                     cursor: 'pointer',
                     whiteSpace: 'nowrap',
                   }}
                 >
-                  {ch.id}: {val !== null && val !== undefined ? val.toFixed(2) : 'NULL'} {ch.unit}
+                  {ch.id}: {val !== null && val !== undefined ? val.toFixed(2) : 'NULL'}
                 </button>
               </Html>
             );

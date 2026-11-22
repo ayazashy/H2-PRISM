@@ -4,43 +4,123 @@
   "title": "H2-PRISM Evaluation Metrics v1",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "split", "artifact_hash", "cohort_n", "ci_method", "summary", "confusion_matrix", "risk_coverage"],
+  "required": [
+    "schema_version",
+    "run_key",
+    "git_commit",
+    "split",
+    "artifact_hash",
+    "cohort_n",
+    "estimable_n",
+    "ci_method",
+    "rq1_status",
+    "rq1_note",
+    "matched_coverage_06",
+    "confusion_matrices_by_scope",
+    "risk_coverage_series",
+    "three_outcome_by_class",
+    "estimability_by_fold",
+    "prohibited_claims",
+    "source_artifacts"
+  ],
   "properties": {
     "schema_version": { "const": "1.0.0" },
+    "run_key": { "type": "string" },
+    "git_commit": { "type": "string" },
     "split": { "type": "string" },
     "artifact_hash": { "type": "string" },
     "cohort_n": { "type": "integer", "minimum": 0 },
+    "estimable_n": { "type": "integer", "minimum": 0 },
     "ci_method": { "type": "string" },
-    "summary": {
-      "type": "object",
-      "required": ["coverage", "selective_risk", "fpar", "leak_recall"],
-      "properties": {
-        "coverage": { "type": "number" },
-        "selective_risk": { "type": "number" },
-        "fpar": { "type": "number" },
-        "leak_recall": { "type": "number" }
-      }
-    },
-    "confusion_matrix": {
-      "type": "object",
-      "required": ["labels", "matrix", "supports"],
-      "properties": {
-        "labels": { "type": "array", "items": { "type": "string" } },
-        "matrix": { "type": "array", "items": { "type": "array", "items": { "type": "integer" } } },
-        "supports": { "type": "array", "items": { "type": "integer" } }
-      }
-    },
-    "risk_coverage": {
+    "rq1_status": { "type": "string" },
+    "rq1_note": { "type": "string" },
+    "matched_coverage_06": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["coverage", "h2_prism_risk", "baseline_risk"],
+        "required": ["method", "target_coverage", "coverage", "selective_risk", "n_specific", "n_eligible", "n_families", "folds_estimable"],
         "properties": {
+          "method": { "type": "string" },
+          "target_coverage": { "type": "number" },
           "coverage": { "type": "number" },
-          "h2_prism_risk": { "type": "number" },
-          "baseline_risk": { "type": ["number", "null"] }
+          "selective_risk": { "type": "number" },
+          "n_specific": { "type": "integer" },
+          "n_eligible": { "type": "integer" },
+          "n_families": { "type": "integer" },
+          "folds_estimable": { "type": "integer" }
         }
       }
+    },
+    "confusion_matrices_by_scope": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["labels", "matrix", "supports", "total_windows"],
+        "properties": {
+          "labels": { "type": "array", "items": { "type": "string" } },
+          "matrix": { "type": "array", "items": { "type": "array", "items": { "type": "integer" } } },
+          "supports": { "type": "array", "items": { "type": "integer" } },
+          "total_windows": { "type": "integer" }
+        }
+      }
+    },
+    "risk_coverage_series": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["scope", "method", "coverage_requested", "status", "coverage", "selective_risk", "n_total", "n_specific"],
+        "properties": {
+          "scope": { "type": "string" },
+          "method": { "type": "string" },
+          "coverage_requested": { "type": "number" },
+          "status": { "type": "string" },
+          "coverage": { "type": ["number", "null"] },
+          "selective_risk": { "type": ["number", "null"] },
+          "n_total": { "type": ["integer", "null"] },
+          "n_specific": { "type": ["integer", "null"] }
+        }
+      }
+    },
+    "three_outcome_by_class": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["class", "scope", "n_windows", "n_runs", "n_families", "n_specific", "n_specific_correct", "n_ambiguity_set", "n_ambiguity_includes_true", "n_unresolved"],
+        "properties": {
+          "class": { "type": "string" },
+          "scope": { "type": "string" },
+          "n_windows": { "type": "integer" },
+          "n_runs": { "type": "integer" },
+          "n_families": { "type": "integer" },
+          "n_specific": { "type": "integer" },
+          "n_specific_correct": { "type": "integer" },
+          "n_ambiguity_set": { "type": "integer" },
+          "n_ambiguity_includes_true": { "type": "integer" },
+          "n_unresolved": { "type": "integer" }
+        }
+      }
+    },
+    "estimability_by_fold": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["fold", "method", "target", "status", "test_max_attainable_coverage"],
+        "properties": {
+          "fold": { "type": "integer" },
+          "method": { "type": "string" },
+          "target": { "type": "number" },
+          "status": { "type": "string" },
+          "test_max_attainable_coverage": { "type": "number" }
+        }
+      }
+    },
+    "prohibited_claims": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "source_artifacts": {
+      "type": "array",
+      "items": { "type": "string" }
     }
   }
 }

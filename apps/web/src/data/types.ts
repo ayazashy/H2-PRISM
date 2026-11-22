@@ -54,6 +54,7 @@ export interface SensorChannel {
   pressure_reference: 'absolute' | 'gauge' | null;
   values: (number | null)[];
   observable: boolean;
+  status_note?: string;
 }
 
 export interface ScenarioEvent {
@@ -88,11 +89,13 @@ export interface ScenarioPayloadV1 {
   schema_version: '1.0.0';
   id: string;
   provenance_status: ProvenanceStatus;
+  source_artifact: string;
   topology_id: string;
+  decimation_note: string;
   time_seconds: number[];
   sensor_channels: SensorChannel[];
   event: ScenarioEvent;
-  model_result: ModelResult;
+  model_result: ModelResult | null;
   location_prediction: LocationPrediction | null;
 }
 
@@ -129,26 +132,72 @@ export interface TopologyV1 {
   sensors: TopologySensor[];
 }
 
+export interface ConfusionMatrixScope {
+  labels: string[];
+  matrix: number[][];
+  supports: number[];
+  total_windows: number;
+}
+
+export interface MatchedCoverageRow {
+  method: string;
+  target_coverage: number;
+  coverage: number;
+  selective_risk: number;
+  n_specific: number;
+  n_eligible: number;
+  n_families: number;
+  folds_estimable: number;
+}
+
+export interface RiskCoveragePoint {
+  scope: string;
+  method: string;
+  coverage_requested: number;
+  status: string;
+  coverage: number | null;
+  selective_risk: number | null;
+  n_total: number | null;
+  n_specific: number | null;
+}
+
+export interface ThreeOutcomeRow {
+  class: string;
+  scope: string;
+  n_windows: number;
+  n_runs: number;
+  n_families: number;
+  n_specific: number;
+  n_specific_correct: number;
+  n_ambiguity_set: number;
+  n_ambiguity_includes_true: number;
+  n_unresolved: number;
+}
+
+export interface FoldEstimabilityRow {
+  fold: number;
+  method: string;
+  target: number;
+  status: string;
+  test_max_attainable_coverage: number;
+}
+
 export interface MetricsV1 {
   schema_version: '1.0.0';
+  run_key: string;
+  git_commit: string;
   split: string;
   artifact_hash: string;
   cohort_n: number;
+  estimable_n: number;
   ci_method: string;
-  summary: {
-    coverage: number;
-    selective_risk: number;
-    fpar: number;
-    leak_recall: number;
-  };
-  confusion_matrix: {
-    labels: string[];
-    matrix: number[][];
-    supports: number[];
-  };
-  risk_coverage: {
-    coverage: number;
-    h2_prism_risk: number;
-    baseline_risk: number | null;
-  }[];
+  rq1_status: string;
+  rq1_note: string;
+  matched_coverage_06: MatchedCoverageRow[];
+  confusion_matrices_by_scope: Record<string, ConfusionMatrixScope>;
+  risk_coverage_series: RiskCoveragePoint[];
+  three_outcome_by_class: ThreeOutcomeRow[];
+  estimability_by_fold: FoldEstimabilityRow[];
+  prohibited_claims: string[];
+  source_artifacts: string[];
 }

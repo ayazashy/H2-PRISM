@@ -2,8 +2,10 @@ import { Suspense, lazy, useCallback, useEffect, useState } from 'react';
 import { BenchmarksView } from './components/BenchmarksView';
 import { DecisionCard } from './components/DecisionCard';
 import { EvidenceDrawer } from './components/EvidenceDrawer';
+import { MethodsView } from './components/MethodsView';
 import { NetworkSchematic2D } from './components/NetworkSchematic2D';
 import { PlaybackBar } from './components/PlaybackBar';
+import { ReleaseFooter } from './components/ReleaseFooter';
 import { SignalCharts } from './components/SignalCharts';
 import { TopBar } from './components/TopBar';
 import {
@@ -30,13 +32,14 @@ function prefersReducedMotion(): boolean {
 
 export function App() {
   const [catalog, setCatalog] = useState<CatalogV1 | null>(null);
+  const [classFilter, setClassFilter] = useState<string>('ALL');
   const [selectedId, setSelectedId] = useState<string>('');
   const [topology, setTopology] = useState<TopologyV1 | null>(null);
   const [scenario, setScenario] = useState<ScenarioPayloadV1 | null>(null);
   const [metrics, setMetrics] = useState<MetricsV1 | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const [activeTab, setActiveTab] = useState<'workspace' | 'benchmarks'>('workspace');
+  const [activeTab, setActiveTab] = useState<'workspace' | 'benchmarks' | 'methods'>('workspace');
   const [networkMode, setNetworkMode] = useState<'2d' | '3d'>('2d');
   const [showTruthLayer, setShowTruthLayer] = useState(false);
   const [showSymbolicFlow, setShowSymbolicFlow] = useState(() => !prefersReducedMotion());
@@ -49,7 +52,6 @@ export function App() {
   const handleTogglePlay = useCallback(() => setIsPlaying((p) => !p), []);
   const handleStopPlay = useCallback(() => setIsPlaying(false), []);
 
-  // Load catalog on mount
   useEffect(() => {
     const ac = new AbortController();
     loadCatalog(ac.signal)
@@ -69,7 +71,6 @@ export function App() {
     return () => ac.abort();
   }, []);
 
-  // Load selected scenario + topology with stale-fetch cancellation
   useEffect(() => {
     if (!catalog || !selectedId) return;
     const entry = catalog.scenarios.find((s) => s.id === selectedId);
@@ -119,13 +120,36 @@ export function App() {
     );
   }
 
+  const filteredScenarios =
+    classFilter === 'ALL'
+      ? catalog.scenarios
+      : catalog.scenarios.filter((s) => s.scenario_class === classFilter);
+
   const activeEntry =
     catalog.scenarios.find((s) => s.id === selectedId) ?? catalog.scenarios[0];
+
+  const handleFilterChange = (cls: string) => {
+    setClassFilter(cls);
+    const nextList =
+      cls === 'ALL'
+        ? catalog.scenarios
+        : catalog.scenarios.filter((s) => s.scenario_class === cls);
+    if (nextList.length > 0 && !nextList.some((s) => s.id === selectedId)) {
+      setSelectedId(nextList[0].id);
+    }
+  };
+
+  const handleResetWorkspace = () => {
+    setIsPlaying(false);
+    setTimeIndex(0);
+    setSelectedChannelId(null);
+    setShowTruthLayer(false);
+  };
 
   return (
     <div className="app-shell">
       <TopBar
-        scenarios={catalog.scenarios}
+        scenarios={filteredScenarios}
         selectedId={selectedId}
         onSelectScenario={setSelectedId}
         activeTab={activeTab}
@@ -135,12 +159,24 @@ export function App() {
       />
 
       <div className="hint-strip">
-        <span>
-          <strong>{activeEntry.display_name}:</strong> {activeEntry.summary_hint}
-        </span>
-        <span className="mono">
-          split={activeEntry.split} · gas={activeEntry.gas_metadata_status}
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+          <span>
+            <strong>{activeEntry.display_name}:</strong> {activeEntry.summary_hint}
+          </span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+          {(['ALL', ...catalog.label_set] as const).map((cls) => (
+            <button
+              key={cls}
+              type="button"
+              className={`seg-btn ${classFilter === cls ? 'active' : ''}`}
+              style={{ fontSize: '0.72rem', padding: '2px 7px' }}
+              onClick={() => handleFilterChange(cls)}
+            >
+              {cls}
+            </button>
+          ))}
+        </div>
       </div>
 
       {error ? (
@@ -150,6 +186,8 @@ export function App() {
         </div>
       ) : activeTab === 'benchmarks' ? (
         <BenchmarksView metrics={metrics} features={catalog.supported_features} />
+      ) : activeTab === 'methods' ? (
+        <MethodsView catalog={catalog} metrics={metrics} />
       ) : scenario && topology ? (
         <>
           <main className="workspace-main">
@@ -185,6 +223,9 @@ export function App() {
                     onClick={() => setShowTruthLayer((v) => !v)}
                   >
                     {showTruthLayer ? 'Hide Ground Truth' : 'Show Ground Truth'}
+                  </button>
+                  <button type="button" className="seg-btn" onClick={handleResetWorkspace}>
+                    Reset
                   </button>
                 </div>
               </div>
@@ -232,7 +273,7 @@ export function App() {
                   Click any sensor to isolate its curve · Space: Play/Pause · O: Jump to Onset
                 </span>
                 <span>
-                  {selectedChannelId ? `Focused: ${selectedChannelId}` : 'All channels visible'}
+                  {selectedChannelId ? `Focused: ${selectedChannelId}` : 'All observable channels plotted'}
                 </span>
               </div>
             </section>
@@ -242,6 +283,7 @@ export function App() {
                 scenario={scenario}
                 features={catalog.supported_features}
                 timeIndex={timeIndex}
+                onOpenBenchmarks={() => setActiveTab('benchmarks')}
               />
               <SignalCharts
                 scenario={scenario}
@@ -266,9 +308,15 @@ export function App() {
         </>
       ) : (
         <div style={{ padding: 24, color: 'var(--ink-secondary)' }}>
-          Validating scenario payload…
+          Validating SHA-256 integrity &amp; loading scenario…
         </div>
       )}
+
+      <ReleaseFooter
+        catalog={catalog}
+        activeEntry={activeEntry}
+        onOpenMethods={() => setActiveTab('methods')}
+      />
 
       <EvidenceDrawer
         open={evidenceOpen}

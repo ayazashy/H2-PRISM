@@ -8,7 +8,9 @@
     "schema_version",
     "id",
     "provenance_status",
+    "source_artifact",
     "topology_id",
+    "decimation_note",
     "time_seconds",
     "sensor_channels",
     "event",
@@ -19,7 +21,9 @@
     "schema_version": { "const": "1.0.0" },
     "id": { "type": "string", "minLength": 1 },
     "provenance_status": { "type": "string", "enum": ["VERIFIED_EXPORT", "FIXTURE_ONLY"] },
+    "source_artifact": { "type": "string", "minLength": 1 },
     "topology_id": { "type": "string", "minLength": 1 },
+    "decimation_note": { "type": "string", "minLength": 1 },
     "time_seconds": {
       "type": "array",
       "minItems": 2,
@@ -42,7 +46,8 @@
             "type": "array",
             "items": { "type": ["number", "null"] }
           },
-          "observable": { "type": "boolean" }
+          "observable": { "type": "boolean" },
+          "status_note": { "type": "string" }
         }
       }
     },
@@ -62,7 +67,7 @@
       }
     },
     "model_result": {
-      "type": "object",
+      "type": ["object", "null"],
       "additionalProperties": false,
       "required": [
         "experiment_id",

@@ -26,7 +26,10 @@ export function validateCatalog(data: unknown): CatalogV1 {
   }
   const c = data as Partial<CatalogV1>;
   if (c.schema_version !== '1.0.0') {
-    throw new IntegrityError('SCHEMA_VERSION_MISMATCH', `Unsupported catalog schema_version: ${String(c.schema_version)}`);
+    throw new IntegrityError(
+      'SCHEMA_VERSION_MISMATCH',
+      `Unsupported catalog schema_version: ${String(c.schema_version)}`
+    );
   }
   if (!c.supported_features || typeof c.supported_features !== 'object') {
     throw new IntegrityError('MISSING_FEATURES', 'Catalog missing supported_features.');
@@ -37,7 +40,10 @@ export function validateCatalog(data: unknown): CatalogV1 {
   const seenIds = new Set<string>();
   for (const s of c.scenarios) {
     if (!s.id || seenIds.has(s.id)) {
-      throw new IntegrityError('DUPLICATE_SCENARIO_ID', `Invalid or duplicate scenario id: ${String(s.id)}`);
+      throw new IntegrityError(
+        'DUPLICATE_SCENARIO_ID',
+        `Invalid or duplicate scenario id: ${String(s.id)}`
+      );
     }
     seenIds.add(s.id);
     if (!/^[a-f0-9]{64}$/.test(s.sha256)) {
@@ -57,23 +63,31 @@ export function validateScenario(
   }
   const s = data as Partial<ScenarioPayloadV1>;
   if (s.schema_version !== '1.0.0') {
-    throw new IntegrityError('SCHEMA_VERSION_MISMATCH', `Unsupported scenario schema_version: ${String(s.schema_version)}`);
+    throw new IntegrityError(
+      'SCHEMA_VERSION_MISMATCH',
+      `Unsupported scenario schema_version: ${String(s.schema_version)}`
+    );
   }
   if (s.topology_id !== topology.topology_id) {
-    throw new IntegrityError('TOPOLOGY_MISMATCH', `Scenario topology ${String(s.topology_id)} !== ${topology.topology_id}`);
+    throw new IntegrityError(
+      'TOPOLOGY_MISMATCH',
+      `Scenario topology ${String(s.topology_id)} !== ${topology.topology_id}`
+    );
   }
   if (!Array.isArray(s.time_seconds) || s.time_seconds.length < 2) {
     throw new IntegrityError('TIME_ARRAY_INVALID', 'time_seconds must contain at least 2 samples.');
   }
 
-  // Strictly increasing finite timestamps
   for (let i = 0; i < s.time_seconds.length; i++) {
     const t = s.time_seconds[i];
     if (typeof t !== 'number' || !Number.isFinite(t)) {
       throw new IntegrityError('NON_FINITE_TIME', `Non-finite timestamp at index ${i}.`);
     }
     if (i > 0 && t <= s.time_seconds[i - 1]) {
-      throw new IntegrityError('NON_MONOTONIC_TIME', `time_seconds not strictly increasing at index ${i}.`);
+      throw new IntegrityError(
+        'NON_MONOTONIC_TIME',
+        `time_seconds not strictly increasing at index ${i}.`
+      );
     }
   }
 
@@ -94,10 +108,20 @@ export function validateScenario(
     seenChannels.add(ch.id);
 
     if (!validTargets.has(ch.node_or_edge)) {
-      throw new IntegrityError('UNKNOWN_TOPOLOGY_TARGET', `Channel ${ch.id} references unknown node/edge ${ch.node_or_edge}.`);
+      throw new IntegrityError(
+        'UNKNOWN_TOPOLOGY_TARGET',
+        `Channel ${ch.id} references unknown node/edge ${ch.node_or_edge}.`
+      );
     }
-    if (ch.variable === 'pressure' && ch.pressure_reference !== 'absolute' && ch.pressure_reference !== 'gauge') {
-      throw new IntegrityError('MISSING_PRESSURE_REF', `Pressure channel ${ch.id} must declare absolute or gauge.`);
+    if (
+      ch.variable === 'pressure' &&
+      ch.pressure_reference !== 'absolute' &&
+      ch.pressure_reference !== 'gauge'
+    ) {
+      throw new IntegrityError(
+        'MISSING_PRESSURE_REF',
+        `Pressure channel ${ch.id} must declare absolute or gauge.`
+      );
     }
     if (!Array.isArray(ch.values) || ch.values.length !== s.time_seconds.length) {
       throw new IntegrityError(
@@ -108,27 +132,40 @@ export function validateScenario(
     for (let i = 0; i < ch.values.length; i++) {
       const v = ch.values[i];
       if (v !== null && (typeof v !== 'number' || !Number.isFinite(v))) {
-        throw new IntegrityError('INVALID_SAMPLE', `Channel ${ch.id} has non-finite sample at index ${i}.`);
+        throw new IntegrityError(
+          'INVALID_SAMPLE',
+          `Channel ${ch.id} has non-finite sample at index ${i}.`
+        );
       }
     }
   }
 
-  if (!s.model_result || !VALID_DECISIONS.has(s.model_result.decision)) {
-    throw new IntegrityError('INVALID_DECISION', `Unsupported decision: ${String(s.model_result?.decision)}`);
+  // model_result may be null when a verified run has no exported per-run predictions
+  if (s.model_result !== null && s.model_result !== undefined) {
+    if (!VALID_DECISIONS.has(s.model_result.decision)) {
+      throw new IntegrityError(
+        'INVALID_DECISION',
+        `Unsupported decision: ${String(s.model_result.decision)}`
+      );
+    }
   }
 
-  // Event onset bounds check
   const tMin = s.time_seconds[0];
   const tMax = s.time_seconds[s.time_seconds.length - 1];
   if (s.event?.onset_time !== null && s.event?.onset_time !== undefined) {
     if (s.event.onset_time < tMin || s.event.onset_time > tMax) {
-      throw new IntegrityError('ONSET_OUT_OF_RANGE', `Event onset_time ${s.event.onset_time} outside [${tMin}, ${tMax}].`);
+      throw new IntegrityError(
+        'ONSET_OUT_OF_RANGE',
+        `Event onset_time ${s.event.onset_time} outside [${tMin}, ${tMax}].`
+      );
     }
   }
 
-  // Localization guardrail
   if (!localizationSupported && s.location_prediction !== null) {
-    throw new IntegrityError('DISALLOWED_LOCALIZATION', 'location_prediction present while localization is unsupported.');
+    throw new IntegrityError(
+      'DISALLOWED_LOCALIZATION',
+      'location_prediction present while localization is unsupported.'
+    );
   }
   if (s.location_prediction !== null && s.location_prediction !== undefined) {
     if (!validTargets.has(s.location_prediction.predicted_edge_or_node)) {

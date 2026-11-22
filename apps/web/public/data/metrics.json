@@ -1,59 +1,3734 @@
 {
   "schema_version": "1.0.0",
-  "split": "fixture_only",
-  "artifact_hash": "fixture0000",
-  "cohort_n": 4,
-  "ci_method": "Fixture placeholder (not experimental)",
-  "summary": {
-    "coverage": 0.75,
-    "selective_risk": 0.0,
-    "fpar": 0.0,
-    "leak_recall": 1.0
-  },
-  "confusion_matrix": {
-    "labels": [
-      "NORMAL",
-      "LEAK",
-      "TRANSIENT"
-    ],
-    "matrix": [
-      [
-        1,
-        0,
-        0
-      ],
-      [
-        0,
-        1,
-        0
-      ],
-      [
-        0,
-        0,
-        1
-      ]
-    ],
-    "supports": [
-      1,
-      1,
-      1
-    ]
-  },
-  "risk_coverage": [
+  "run_key": "a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb",
+  "git_commit": "38d7dfae7f83",
+  "split": "Leave-One-Topology-Out (Center / Downstream / Upstream)",
+  "artifact_hash": "4c3edfe43269b18f",
+  "cohort_n": 27993,
+  "estimable_n": 18662,
+  "ci_method": "Exact family sign-flip & clustered family bootstrap (1,000 replicates)",
+  "rq1_status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+  "rq1_note": "Registered H1 contrast (s_C vs s_C-D) is NOT_ESTIMABLE under the primary protocol: Center outer fold reaches max attainable coverage 0.258 (< 0.60 target). Matched coverage at 0.60 covers Downstream + Upstream only (2/3 folds, n=18,662).",
+  "matched_coverage_06": [
     {
-      "coverage": 0.5,
-      "h2_prism_risk": 0.0,
-      "baseline_risk": 0.12
+      "method": "D_only",
+      "target_coverage": 0.6,
+      "coverage": 0.6000428679,
+      "selective_risk": 0.05804607966,
+      "n_specific": 11198,
+      "n_eligible": 18662,
+      "n_families": 26,
+      "folds_estimable": 2
     },
     {
-      "coverage": 0.75,
-      "h2_prism_risk": 0.0,
-      "baseline_risk": 0.18
+      "method": "confidence",
+      "target_coverage": 0.6,
+      "coverage": 0.6000428679,
+      "selective_risk": 0.05804607966,
+      "n_specific": 11198,
+      "n_eligible": 18662,
+      "n_families": 26,
+      "folds_estimable": 2
     },
     {
-      "coverage": 1.0,
-      "h2_prism_risk": 0.1,
-      "baseline_risk": 0.25
+      "method": "margin",
+      "target_coverage": 0.6,
+      "coverage": 0.6000428679,
+      "selective_risk": 0.05804607966,
+      "n_specific": 11198,
+      "n_eligible": 18662,
+      "n_families": 26,
+      "folds_estimable": 2
+    },
+    {
+      "method": "neg_entropy",
+      "target_coverage": 0.6,
+      "coverage": 0.6000428679,
+      "selective_risk": 0.05804607966,
+      "n_specific": 11198,
+      "n_eligible": 18662,
+      "n_families": 26,
+      "folds_estimable": 2
+    },
+    {
+      "method": "s_C",
+      "target_coverage": 0.6,
+      "coverage": 0.6000428679,
+      "selective_risk": 0.0,
+      "n_specific": 11198,
+      "n_eligible": 18662,
+      "n_families": 26,
+      "folds_estimable": 2
+    },
+    {
+      "method": "s_C_minus_D",
+      "target_coverage": 0.6,
+      "coverage": 0.6000428679,
+      "selective_risk": 0.0,
+      "n_specific": 11198,
+      "n_eligible": 18662,
+      "n_families": 26,
+      "folds_estimable": 2
     }
+  ],
+  "confusion_matrices_by_scope": {
+    "pooled": {
+      "labels": [
+        "NORMAL",
+        "LEAK",
+        "COMPRESSOR_FAULT",
+        "COMPRESSOR_DELAY"
+      ],
+      "matrix": [
+        [
+          1330,
+          662,
+          3,
+          0
+        ],
+        [
+          7307,
+          14614,
+          0,
+          0
+        ],
+        [
+          9,
+          0,
+          3975,
+          0
+        ],
+        [
+          0,
+          0,
+          31,
+          62
+        ]
+      ],
+      "supports": [
+        1995,
+        21921,
+        3984,
+        93
+      ],
+      "total_windows": 27993
+    },
+    "Center": {
+      "labels": [
+        "NORMAL",
+        "LEAK",
+        "COMPRESSOR_FAULT",
+        "COMPRESSOR_DELAY"
+      ],
+      "matrix": [
+        [
+          665,
+          0,
+          0,
+          0
+        ],
+        [
+          7307,
+          0,
+          0,
+          0
+        ],
+        [
+          9,
+          0,
+          1319,
+          0
+        ],
+        [
+          0,
+          0,
+          31,
+          0
+        ]
+      ],
+      "supports": [
+        665,
+        7307,
+        1328,
+        31
+      ],
+      "total_windows": 9331
+    },
+    "Downstream": {
+      "labels": [
+        "NORMAL",
+        "LEAK",
+        "COMPRESSOR_FAULT",
+        "COMPRESSOR_DELAY"
+      ],
+      "matrix": [
+        [
+          0,
+          662,
+          3,
+          0
+        ],
+        [
+          0,
+          7307,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1328,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          31
+        ]
+      ],
+      "supports": [
+        665,
+        7307,
+        1328,
+        31
+      ],
+      "total_windows": 9331
+    },
+    "Upstream": {
+      "labels": [
+        "NORMAL",
+        "LEAK",
+        "COMPRESSOR_FAULT",
+        "COMPRESSOR_DELAY"
+      ],
+      "matrix": [
+        [
+          665,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          7307,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1328,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          31
+        ]
+      ],
+      "supports": [
+        665,
+        7307,
+        1328,
+        31
+      ],
+      "total_windows": 9331
+    }
+  },
+  "risk_coverage_series": [
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 0.1862955032,
+      "n_total": 27993,
+      "n_specific": 1401
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 0.4004282655,
+      "n_total": 9331,
+      "n_specific": 467
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 0.1584582441,
+      "n_total": 9331,
+      "n_specific": 467
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 467
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.1809421842,
+      "n_total": 27993,
+      "n_specific": 2802
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.3940042827,
+      "n_total": 9331,
+      "n_specific": 934
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.1488222698,
+      "n_total": 9331,
+      "n_specific": 934
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 934
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.1907142857,
+      "n_total": 27993,
+      "n_specific": 4200
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.4157142857,
+      "n_total": 9331,
+      "n_specific": 1400
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.1564285714,
+      "n_total": 9331,
+      "n_specific": 1400
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 1400
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.1928227102,
+      "n_total": 27993,
+      "n_specific": 5601
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.4301017675,
+      "n_total": 9331,
+      "n_specific": 1867
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.1483663631,
+      "n_total": 9331,
+      "n_specific": 1867
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 1867
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.196028004,
+      "n_total": 27993,
+      "n_specific": 6999
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.4432061723,
+      "n_total": 9331,
+      "n_specific": 2333
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.1448778397,
+      "n_total": 9331,
+      "n_specific": 2333
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 2333
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.3,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.3,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.3,
+      "status": "ESTIMABLE",
+      "coverage": 0.3000750188,
+      "selective_risk": 0.1421428571,
+      "n_total": 9331,
+      "n_specific": 2800
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.3,
+      "status": "ESTIMABLE",
+      "coverage": 0.3000750188,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 2800
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.35,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.35,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.35,
+      "status": "ESTIMABLE",
+      "coverage": 0.3500160754,
+      "selective_risk": 0.1436007348,
+      "n_total": 9331,
+      "n_specific": 3266
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.35,
+      "status": "ESTIMABLE",
+      "coverage": 0.3500160754,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 3266
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.4,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.4,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.4,
+      "status": "ESTIMABLE",
+      "coverage": 0.4000643018,
+      "selective_risk": 0.1446557728,
+      "n_total": 9331,
+      "n_specific": 3733
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.4,
+      "status": "ESTIMABLE",
+      "coverage": 0.4000643018,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 3733
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.45,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.45,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.45,
+      "status": "ESTIMABLE",
+      "coverage": 0.4500053585,
+      "selective_risk": 0.145272684,
+      "n_total": 9331,
+      "n_specific": 4199
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.45,
+      "status": "ESTIMABLE",
+      "coverage": 0.4500053585,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 4199
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.5,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.5,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.5,
+      "status": "ESTIMABLE",
+      "coverage": 0.5000535848,
+      "selective_risk": 0.1393056151,
+      "n_total": 9331,
+      "n_specific": 4666
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.5,
+      "status": "ESTIMABLE",
+      "coverage": 0.5000535848,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 4666
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.55,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.55,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.55,
+      "status": "ESTIMABLE",
+      "coverage": 0.5501018112,
+      "selective_risk": 0.1266315995,
+      "n_total": 9331,
+      "n_specific": 5133
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.55,
+      "status": "ESTIMABLE",
+      "coverage": 0.5501018112,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 5133
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.6,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.6,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.6,
+      "status": "ESTIMABLE",
+      "coverage": 0.6000428679,
+      "selective_risk": 0.1160921593,
+      "n_total": 9331,
+      "n_specific": 5599
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.6,
+      "status": "ESTIMABLE",
+      "coverage": 0.6000428679,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 5599
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.65,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.65,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.65,
+      "status": "ESTIMABLE",
+      "coverage": 0.6500910942,
+      "selective_risk": 0.1071546324,
+      "n_total": 9331,
+      "n_specific": 6066
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.65,
+      "status": "ESTIMABLE",
+      "coverage": 0.6500910942,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 6066
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.7,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.7,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.7,
+      "status": "ESTIMABLE",
+      "coverage": 0.7000321509,
+      "selective_risk": 0.0995101041,
+      "n_total": 9331,
+      "n_specific": 6532
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.7,
+      "status": "ESTIMABLE",
+      "coverage": 0.7000321509,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 6532
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "D_only",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "D_only",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "D_only",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "D_only",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 0.3333333333,
+      "n_total": 27993,
+      "n_specific": 1401
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 467
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 1.0,
+      "n_total": 9331,
+      "n_specific": 467
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 467
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.2469664525,
+      "n_total": 27993,
+      "n_specific": 2802
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.04496788009,
+      "n_total": 9331,
+      "n_specific": 934
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.6959314775,
+      "n_total": 9331,
+      "n_specific": 934
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 934
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.1752380952,
+      "n_total": 27993,
+      "n_specific": 4200
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.06142857143,
+      "n_total": 9331,
+      "n_specific": 1400
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.4642857143,
+      "n_total": 9331,
+      "n_specific": 1400
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 1400
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.2147830745,
+      "n_total": 27993,
+      "n_specific": 5601
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.2961971077,
+      "n_total": 9331,
+      "n_specific": 1867
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.3481521157,
+      "n_total": 9331,
+      "n_specific": 1867
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 1867
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.2384626375,
+      "n_total": 27993,
+      "n_specific": 6999
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.4367766824,
+      "n_total": 9331,
+      "n_specific": 2333
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.2786112302,
+      "n_total": 9331,
+      "n_specific": 2333
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 2333
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.3,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.3,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.3,
+      "status": "ESTIMABLE",
+      "coverage": 0.3000750188,
+      "selective_risk": 0.2321428571,
+      "n_total": 9331,
+      "n_specific": 2800
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.3,
+      "status": "ESTIMABLE",
+      "coverage": 0.3000750188,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 2800
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.35,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.35,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.35,
+      "status": "ESTIMABLE",
+      "coverage": 0.3500160754,
+      "selective_risk": 0.1990202082,
+      "n_total": 9331,
+      "n_specific": 3266
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.35,
+      "status": "ESTIMABLE",
+      "coverage": 0.3500160754,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 3266
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.4,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.4,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.4,
+      "status": "ESTIMABLE",
+      "coverage": 0.4000643018,
+      "selective_risk": 0.1741226895,
+      "n_total": 9331,
+      "n_specific": 3733
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.4,
+      "status": "ESTIMABLE",
+      "coverage": 0.4000643018,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 3733
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.45,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.45,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.45,
+      "status": "ESTIMABLE",
+      "coverage": 0.4500053585,
+      "selective_risk": 0.1547987616,
+      "n_total": 9331,
+      "n_specific": 4199
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.45,
+      "status": "ESTIMABLE",
+      "coverage": 0.4500053585,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 4199
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.5,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.5,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.5,
+      "status": "ESTIMABLE",
+      "coverage": 0.5000535848,
+      "selective_risk": 0.1393056151,
+      "n_total": 9331,
+      "n_specific": 4666
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.5,
+      "status": "ESTIMABLE",
+      "coverage": 0.5000535848,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 4666
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.55,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.55,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.55,
+      "status": "ESTIMABLE",
+      "coverage": 0.5501018112,
+      "selective_risk": 0.1266315995,
+      "n_total": 9331,
+      "n_specific": 5133
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.55,
+      "status": "ESTIMABLE",
+      "coverage": 0.5501018112,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 5133
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.6,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.6,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.6,
+      "status": "ESTIMABLE",
+      "coverage": 0.6000428679,
+      "selective_risk": 0.1160921593,
+      "n_total": 9331,
+      "n_specific": 5599
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.6,
+      "status": "ESTIMABLE",
+      "coverage": 0.6000428679,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 5599
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.65,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.65,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.65,
+      "status": "ESTIMABLE",
+      "coverage": 0.6500910942,
+      "selective_risk": 0.1071546324,
+      "n_total": 9331,
+      "n_specific": 6066
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.65,
+      "status": "ESTIMABLE",
+      "coverage": 0.6500910942,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 6066
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.7,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.7,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.7,
+      "status": "ESTIMABLE",
+      "coverage": 0.7000321509,
+      "selective_risk": 0.0995101041,
+      "n_total": 9331,
+      "n_specific": 6532
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.7,
+      "status": "ESTIMABLE",
+      "coverage": 0.7000321509,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 6532
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "confidence",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "confidence",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "confidence",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "confidence",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 0.0,
+      "n_total": 27993,
+      "n_specific": 1401
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 467
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 467
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 467
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.0,
+      "n_total": 27993,
+      "n_specific": 2802
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 934
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 934
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 934
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.03547619048,
+      "n_total": 27993,
+      "n_specific": 4200
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.1064285714,
+      "n_total": 9331,
+      "n_specific": 1400
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 1400
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 1400
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.1012319229,
+      "n_total": 27993,
+      "n_specific": 5601
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.3036957686,
+      "n_total": 9331,
+      "n_specific": 1867
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 1867
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 1867
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.1455922275,
+      "n_total": 27993,
+      "n_specific": 6999
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.4367766824,
+      "n_total": 9331,
+      "n_specific": 2333
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 2333
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 2333
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.3,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.3,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.3,
+      "status": "ESTIMABLE",
+      "coverage": 0.3000750188,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 2800
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.3,
+      "status": "ESTIMABLE",
+      "coverage": 0.3000750188,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 2800
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.35,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.35,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.35,
+      "status": "ESTIMABLE",
+      "coverage": 0.3500160754,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 3266
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.35,
+      "status": "ESTIMABLE",
+      "coverage": 0.3500160754,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 3266
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.4,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.4,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.4,
+      "status": "ESTIMABLE",
+      "coverage": 0.4000643018,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 3733
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.4,
+      "status": "ESTIMABLE",
+      "coverage": 0.4000643018,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 3733
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.45,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.45,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.45,
+      "status": "ESTIMABLE",
+      "coverage": 0.4500053585,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 4199
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.45,
+      "status": "ESTIMABLE",
+      "coverage": 0.4500053585,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 4199
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.5,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.5,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.5,
+      "status": "ESTIMABLE",
+      "coverage": 0.5000535848,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 4666
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.5,
+      "status": "ESTIMABLE",
+      "coverage": 0.5000535848,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 4666
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.55,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.55,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.55,
+      "status": "ESTIMABLE",
+      "coverage": 0.5501018112,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 5133
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.55,
+      "status": "ESTIMABLE",
+      "coverage": 0.5501018112,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 5133
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.6,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.6,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.6,
+      "status": "ESTIMABLE",
+      "coverage": 0.6000428679,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 5599
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.6,
+      "status": "ESTIMABLE",
+      "coverage": 0.6000428679,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 5599
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.65,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.65,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.65,
+      "status": "ESTIMABLE",
+      "coverage": 0.6500910942,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 6066
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.65,
+      "status": "ESTIMABLE",
+      "coverage": 0.6500910942,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 6066
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.7,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.7,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.7,
+      "status": "ESTIMABLE",
+      "coverage": 0.7000321509,
+      "selective_risk": 0.06873851806,
+      "n_total": 9331,
+      "n_specific": 6532
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.7,
+      "status": "ESTIMABLE",
+      "coverage": 0.7000321509,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 6532
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 0.0,
+      "n_total": 27993,
+      "n_specific": 1401
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 467
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 467
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.05,
+      "status": "ESTIMABLE",
+      "coverage": 0.05004822634,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 467
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.1002855103,
+      "n_total": 27993,
+      "n_specific": 2802
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.300856531,
+      "n_total": 9331,
+      "n_specific": 934
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 934
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.1,
+      "status": "ESTIMABLE",
+      "coverage": 0.1000964527,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 934
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.1692857143,
+      "n_total": 27993,
+      "n_specific": 4200
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.5078571429,
+      "n_total": 9331,
+      "n_specific": 1400
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 1400
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.15,
+      "status": "ESTIMABLE",
+      "coverage": 0.1500375094,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 1400
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.1896089984,
+      "n_total": 27993,
+      "n_specific": 5601
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.5688269952,
+      "n_total": 9331,
+      "n_specific": 1867
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 1867
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.2,
+      "status": "ESTIMABLE",
+      "coverage": 0.2000857357,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 1867
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.1517359623,
+      "n_total": 27993,
+      "n_specific": 6999
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.4552078868,
+      "n_total": 9331,
+      "n_specific": 2333
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 2333
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.25,
+      "status": "ESTIMABLE",
+      "coverage": 0.2500267924,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 2333
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.3,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.3,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.3,
+      "status": "ESTIMABLE",
+      "coverage": 0.3000750188,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 2800
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.3,
+      "status": "ESTIMABLE",
+      "coverage": 0.3000750188,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 2800
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.35,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.35,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.35,
+      "status": "ESTIMABLE",
+      "coverage": 0.3500160754,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 3266
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.35,
+      "status": "ESTIMABLE",
+      "coverage": 0.3500160754,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 3266
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.4,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.4,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.4,
+      "status": "ESTIMABLE",
+      "coverage": 0.4000643018,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 3733
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.4,
+      "status": "ESTIMABLE",
+      "coverage": 0.4000643018,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 3733
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.45,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.45,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.45,
+      "status": "ESTIMABLE",
+      "coverage": 0.4500053585,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 4199
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.45,
+      "status": "ESTIMABLE",
+      "coverage": 0.4500053585,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 4199
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.5,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.5,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.5,
+      "status": "ESTIMABLE",
+      "coverage": 0.5000535848,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 4666
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.5,
+      "status": "ESTIMABLE",
+      "coverage": 0.5000535848,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 4666
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.55,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.55,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.55,
+      "status": "ESTIMABLE",
+      "coverage": 0.5501018112,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 5133
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.55,
+      "status": "ESTIMABLE",
+      "coverage": 0.5501018112,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 5133
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.6,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.6,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.6,
+      "status": "ESTIMABLE",
+      "coverage": 0.6000428679,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 5599
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.6,
+      "status": "ESTIMABLE",
+      "coverage": 0.6000428679,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 5599
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.65,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.65,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.65,
+      "status": "ESTIMABLE",
+      "coverage": 0.6500910942,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 6066
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.65,
+      "status": "ESTIMABLE",
+      "coverage": 0.6500910942,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 6066
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.7,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.7,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.7,
+      "status": "ESTIMABLE",
+      "coverage": 0.7000321509,
+      "selective_risk": 0.06873851806,
+      "n_total": 9331,
+      "n_specific": 6532
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.7,
+      "status": "ESTIMABLE",
+      "coverage": 0.7000321509,
+      "selective_risk": 0.0,
+      "n_total": 9331,
+      "n_specific": 6532
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.75,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.85,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 0.95,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "pooled",
+      "method": "s_C_minus_D",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Center",
+      "method": "s_C_minus_D",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Downstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    },
+    {
+      "scope": "Upstream",
+      "method": "s_C_minus_D",
+      "coverage_requested": 1.0,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "coverage": null,
+      "selective_risk": null,
+      "n_total": null,
+      "n_specific": null
+    }
+  ],
+  "three_outcome_by_class": [
+    {
+      "class": "COMPRESSOR_DELAY",
+      "scope": "POOLED_ESTIMABLE",
+      "n_windows": 62,
+      "n_runs": 2,
+      "n_families": 2,
+      "n_specific": 0,
+      "n_specific_correct": 0,
+      "n_ambiguity_set": 31,
+      "n_ambiguity_includes_true": 31,
+      "n_unresolved": 31
+    },
+    {
+      "class": "COMPRESSOR_DELAY",
+      "scope": "Downstream",
+      "n_windows": 31,
+      "n_runs": 1,
+      "n_families": 1,
+      "n_specific": 0,
+      "n_specific_correct": 0,
+      "n_ambiguity_set": 31,
+      "n_ambiguity_includes_true": 31,
+      "n_unresolved": 0
+    },
+    {
+      "class": "COMPRESSOR_DELAY",
+      "scope": "Upstream",
+      "n_windows": 31,
+      "n_runs": 1,
+      "n_families": 1,
+      "n_specific": 0,
+      "n_specific_correct": 0,
+      "n_ambiguity_set": 0,
+      "n_ambiguity_includes_true": 0,
+      "n_unresolved": 31
+    },
+    {
+      "class": "COMPRESSOR_FAULT",
+      "scope": "POOLED_ESTIMABLE",
+      "n_windows": 2656,
+      "n_runs": 4,
+      "n_families": 2,
+      "n_specific": 0,
+      "n_specific_correct": 0,
+      "n_ambiguity_set": 0,
+      "n_ambiguity_includes_true": 0,
+      "n_unresolved": 2656
+    },
+    {
+      "class": "COMPRESSOR_FAULT",
+      "scope": "Downstream",
+      "n_windows": 1328,
+      "n_runs": 2,
+      "n_families": 1,
+      "n_specific": 0,
+      "n_specific_correct": 0,
+      "n_ambiguity_set": 0,
+      "n_ambiguity_includes_true": 0,
+      "n_unresolved": 1328
+    },
+    {
+      "class": "COMPRESSOR_FAULT",
+      "scope": "Upstream",
+      "n_windows": 1328,
+      "n_runs": 2,
+      "n_families": 1,
+      "n_specific": 0,
+      "n_specific_correct": 0,
+      "n_ambiguity_set": 0,
+      "n_ambiguity_includes_true": 0,
+      "n_unresolved": 1328
+    },
+    {
+      "class": "LEAK",
+      "scope": "POOLED_ESTIMABLE",
+      "n_windows": 14614,
+      "n_runs": 26,
+      "n_families": 20,
+      "n_specific": 10701,
+      "n_specific_correct": 10701,
+      "n_ambiguity_set": 0,
+      "n_ambiguity_includes_true": 0,
+      "n_unresolved": 3913
+    },
+    {
+      "class": "LEAK",
+      "scope": "Downstream",
+      "n_windows": 7307,
+      "n_runs": 13,
+      "n_families": 10,
+      "n_specific": 5599,
+      "n_specific_correct": 5599,
+      "n_ambiguity_set": 0,
+      "n_ambiguity_includes_true": 0,
+      "n_unresolved": 1708
+    },
+    {
+      "class": "LEAK",
+      "scope": "Upstream",
+      "n_windows": 7307,
+      "n_runs": 13,
+      "n_families": 10,
+      "n_specific": 5102,
+      "n_specific_correct": 5102,
+      "n_ambiguity_set": 0,
+      "n_ambiguity_includes_true": 0,
+      "n_unresolved": 2205
+    },
+    {
+      "class": "NORMAL",
+      "scope": "POOLED_ESTIMABLE",
+      "n_windows": 1330,
+      "n_runs": 2,
+      "n_families": 2,
+      "n_specific": 497,
+      "n_specific_correct": 497,
+      "n_ambiguity_set": 0,
+      "n_ambiguity_includes_true": 0,
+      "n_unresolved": 833
+    },
+    {
+      "class": "NORMAL",
+      "scope": "Downstream",
+      "n_windows": 665,
+      "n_runs": 1,
+      "n_families": 1,
+      "n_specific": 0,
+      "n_specific_correct": 0,
+      "n_ambiguity_set": 0,
+      "n_ambiguity_includes_true": 0,
+      "n_unresolved": 665
+    },
+    {
+      "class": "NORMAL",
+      "scope": "Upstream",
+      "n_windows": 665,
+      "n_runs": 1,
+      "n_families": 1,
+      "n_specific": 497,
+      "n_specific_correct": 497,
+      "n_ambiguity_set": 0,
+      "n_ambiguity_includes_true": 0,
+      "n_unresolved": 168
+    }
+  ],
+  "estimability_by_fold": [
+    {
+      "fold": 1,
+      "method": "s_C",
+      "target": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "test_max_attainable_coverage": 0.2577430072
+    },
+    {
+      "fold": 1,
+      "method": "s_C",
+      "target": 0.6,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "test_max_attainable_coverage": 0.2577430072
+    },
+    {
+      "fold": 1,
+      "method": "s_C",
+      "target": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "test_max_attainable_coverage": 0.2577430072
+    },
+    {
+      "fold": 1,
+      "method": "confidence",
+      "target": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "test_max_attainable_coverage": 0.2577430072
+    },
+    {
+      "fold": 1,
+      "method": "confidence",
+      "target": 0.6,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "test_max_attainable_coverage": 0.2577430072
+    },
+    {
+      "fold": 1,
+      "method": "confidence",
+      "target": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "test_max_attainable_coverage": 0.2577430072
+    },
+    {
+      "fold": 2,
+      "method": "s_C",
+      "target": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "test_max_attainable_coverage": 0.7215732505
+    },
+    {
+      "fold": 2,
+      "method": "s_C",
+      "target": 0.6,
+      "status": "ESTIMABLE",
+      "test_max_attainable_coverage": 0.7215732505
+    },
+    {
+      "fold": 2,
+      "method": "s_C",
+      "target": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "test_max_attainable_coverage": 0.7215732505
+    },
+    {
+      "fold": 2,
+      "method": "confidence",
+      "target": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "test_max_attainable_coverage": 0.7215732505
+    },
+    {
+      "fold": 2,
+      "method": "confidence",
+      "target": 0.6,
+      "status": "ESTIMABLE",
+      "test_max_attainable_coverage": 0.7215732505
+    },
+    {
+      "fold": 2,
+      "method": "confidence",
+      "target": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "test_max_attainable_coverage": 0.7215732505
+    },
+    {
+      "fold": 3,
+      "method": "s_C",
+      "target": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "test_max_attainable_coverage": 0.7363626621
+    },
+    {
+      "fold": 3,
+      "method": "s_C",
+      "target": 0.6,
+      "status": "ESTIMABLE",
+      "test_max_attainable_coverage": 0.7363626621
+    },
+    {
+      "fold": 3,
+      "method": "s_C",
+      "target": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "test_max_attainable_coverage": 0.7363626621
+    },
+    {
+      "fold": 3,
+      "method": "confidence",
+      "target": 0.8,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "test_max_attainable_coverage": 0.7363626621
+    },
+    {
+      "fold": 3,
+      "method": "confidence",
+      "target": 0.6,
+      "status": "ESTIMABLE",
+      "test_max_attainable_coverage": 0.7363626621
+    },
+    {
+      "fold": 3,
+      "method": "confidence",
+      "target": 0.9,
+      "status": "NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL",
+      "test_max_attainable_coverage": 0.7363626621
+    }
+  ],
+  "prohibited_claims": [
+    "industrial deployment readiness",
+    "field validation",
+    "generalisation beyond the evaluated simulated topologies",
+    "physical identifiability",
+    "metric leak localisation",
+    "pure-hydrogen performance",
+    "a verified hydrogen blend percentage",
+    "superiority of D(x) beyond the reported effect sizes"
+  ],
+  "source_artifacts": [
+    "03_results/primary_protocol/PRIMARY/run_manifest.json",
+    "03_results/primary_protocol/PRIMARY/confusion_matrix.csv",
+    "03_results/primary_protocol/PRIMARY/risk_coverage_curve.csv",
+    "03_results/tables/primary/a10530f1fcf2_s4228b6c8_b200fcdac/final/T4_matched_coverage.csv",
+    "03_results/tables/primary/a10530f1fcf2_s4228b6c8_b200fcdac/final/T6_rq2_outcomes.csv",
+    "03_results/tables/primary/a10530f1fcf2_s4228b6c8_b200fcdac/final/T7_estimability.csv"
   ]
 }

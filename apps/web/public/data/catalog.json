@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
-  "release_id": "v1.0.0-fixture-preview",
-  "build_utc": "2026-11-22T02:55:00Z",
-  "source_repository_commit": "11b529c",
-  "data_release_checksum": "7c6c77fc35ff75d6f992f0bdc51d7ddc03fde1aca1fac86c53da3299581c24fb",
+  "release_id": "v1.0.0-r2-primary-a10530f1",
+  "build_utc": "2026-11-22T23:25:00Z",
+  "source_repository_commit": "38d7dfae7f83",
+  "data_release_checksum": "95746649c0f1393133ab5ef54e294ce0c082561b1feb8dccd57b0796a66b94b0",
   "label_set": [
     "NORMAL",
     "LEAK",
@@ -19,88 +19,88 @@
   },
   "scenarios": [
     {
-      "id": "fixture_leak_g3_strong",
-      "display_name": "Strong Leak (G3) \u00b7 Fixture",
-      "family_id": "fam_g3",
-      "scenario_class": "LEAK",
-      "summary_hint": "Observe sustained pressure drop at N3 and flow divergence after t=15s.",
-      "data_path": "data/scenarios/fixture_leak_g3_strong.json",
-      "sha256": "6f86a15ed0a8bb54b271016e0959d0317a7080633dd0f9b455fca6e419554c68",
-      "gas_metadata_status": "H2-SimNet synthetic fixture",
-      "topology_id": "h2_simnet_center_v1",
-      "provenance_status": "FIXTURE_ONLY",
-      "split": "fixture",
-      "time_range": [
-        0.0,
-        40.0
-      ],
-      "samples": 41,
-      "publish_approved": false
-    },
-    {
-      "id": "fixture_overlap_g5g6",
-      "display_name": "Overlapping Leak (G5/G6) \u00b7 Fixture",
-      "family_id": "fam_g5g6",
-      "scenario_class": "LEAK_OVERLAP",
-      "summary_hint": "Competing branch signatures trigger AMBIGUOUS abstention.",
-      "data_path": "data/scenarios/fixture_overlap_g5g6.json",
-      "sha256": "108cffd13fae3ad7d730f8b17e4dde0ab258f425885df88d9a7a86c725938d8d",
-      "gas_metadata_status": "H2-SimNet synthetic fixture",
-      "topology_id": "h2_simnet_center_v1",
-      "provenance_status": "FIXTURE_ONLY",
-      "split": "fixture",
-      "time_range": [
-        0.0,
-        40.0
-      ],
-      "samples": 41,
-      "publish_approved": false
-    },
-    {
-      "id": "fixture_comp_delay_c1",
-      "display_name": "Compressor Startup Delay (C1) \u00b7 Fixture",
-      "family_id": "fam_c1_delay",
-      "scenario_class": "COMPRESSOR_DELAY",
-      "summary_hint": "Short transient with weak residual triggers UNRESOLVED abstention.",
-      "data_path": "data/scenarios/fixture_comp_delay_c1.json",
-      "sha256": "5d6c05b0e51a0d0759ff6767e148192bde209f20a3f76e9f6a9424991a71d2f8",
-      "gas_metadata_status": "H2-SimNet synthetic fixture",
-      "topology_id": "h2_simnet_center_v1",
-      "provenance_status": "FIXTURE_ONLY",
-      "split": "fixture",
-      "time_range": [
-        0.0,
-        40.0
-      ],
-      "samples": 41,
-      "publish_approved": false
-    },
-    {
-      "id": "fixture_normal_001",
-      "display_name": "Normal Baseline \u00b7 Fixture",
-      "family_id": "fam_norm",
+      "id": "SCEN_NORMAL_GEST_CENTER",
+      "display_name": "Normal Baseline (Center Model)",
+      "family_id": "FAM_NORMAL_CENTER",
       "scenario_class": "NORMAL",
-      "summary_hint": "Steady-state baseline with zero event onset.",
-      "data_path": "data/scenarios/fixture_normal_001.json",
-      "sha256": "47abac32991e0e429686ba16d55369ecfaed106d63071b165a744a82349eda79",
-      "gas_metadata_status": "H2-SimNet synthetic fixture",
+      "summary_hint": "Real 20,000 s H2-SimNet baseline. Note: PS11, PS12, and MFS4 are absent in the Center Simscape model (released as constant padding) and are marked non-observable.",
+      "data_path": "data/scenarios/SCEN_NORMAL_GEST_CENTER.json",
+      "sha256": "700724eb526d610926e799bae66822d4c0b7462a192c813991260c6037ed362b",
+      "gas_metadata_status": "Center Simscape model (air-like gas block R=0.287 kJ/(kg*K))",
       "topology_id": "h2_simnet_center_v1",
-      "provenance_status": "FIXTURE_ONLY",
-      "split": "fixture",
+      "provenance_status": "VERIFIED_EXPORT",
+      "split": "test",
       "time_range": [
         0.0,
-        40.0
+        19999.0
       ],
-      "samples": 41,
-      "publish_approved": false
+      "samples": 247,
+      "publish_approved": true
+    },
+    {
+      "id": "SCEN_CENTER_TRANSIENT_LEAKG4",
+      "display_name": "Transient Leak (G4)",
+      "family_id": "FAM_LEAK_G4",
+      "scenario_class": "LEAK",
+      "summary_hint": "Real H2-SimNet transient leak (onset t=400.0 s). Per R-18 forensic audit, anom_gestcent carries the 16-sensor Down-model export signature.",
+      "data_path": "data/scenarios/SCEN_CENTER_TRANSIENT_LEAKG4.json",
+      "sha256": "7a60a3ad68ddd243e82d4192bc706c3b312129b42fa5c0400537fb1f6485fe54",
+      "gas_metadata_status": "H2-SimNet simulated run (R-18: anom_gestcent exports Down-model sensors)",
+      "topology_id": "h2_simnet_center_v1",
+      "provenance_status": "VERIFIED_EXPORT",
+      "split": "test",
+      "time_range": [
+        0.0,
+        19999.0
+      ],
+      "samples": 247,
+      "publish_approved": true
+    },
+    {
+      "id": "SCEN_CENTER_STEADY_STATE_BROKENC1_STRONG",
+      "display_name": "Compressor Fault (C1 Strong)",
+      "family_id": "FAM_COMPRESSOR_FAULT_C1",
+      "scenario_class": "COMPRESSOR_FAULT",
+      "summary_hint": "Real H2-SimNet severe mechanical fault on compressor C1 (onset t=25.0 s). In R2 primary protocol, COMPRESSOR_FAULT windows abstain as UNRESOLVED.",
+      "data_path": "data/scenarios/SCEN_CENTER_STEADY_STATE_BROKENC1_STRONG.json",
+      "sha256": "9afe1562697e9c02fbb79a1f82219277c84bddf0c737f4e303425622d09614e5",
+      "gas_metadata_status": "H2-SimNet simulated run (R-18: anom_gestcent exports Down-model sensors)",
+      "topology_id": "h2_simnet_center_v1",
+      "provenance_status": "VERIFIED_EXPORT",
+      "split": "test",
+      "time_range": [
+        0.0,
+        19999.0
+      ],
+      "samples": 248,
+      "publish_approved": true
+    },
+    {
+      "id": "SCEN_CENTER_STEADY_STATE_STARTDELAYC1",
+      "display_name": "Compressor Startup Delay (C1)",
+      "family_id": "FAM_COMPRESSOR_DELAY_C1",
+      "scenario_class": "COMPRESSOR_DELAY",
+      "summary_hint": "Real H2-SimNet startup delay bounded to [25.0 s, 1000.0 s] inside a 20,000 s run. Demonstrates bounded transient end condition.",
+      "data_path": "data/scenarios/SCEN_CENTER_STEADY_STATE_STARTDELAYC1.json",
+      "sha256": "3d6e2a87af2034530c889f1930158129cb069016dcea88c53214970fe0c847a5",
+      "gas_metadata_status": "H2-SimNet simulated run (R-18: anom_gestcent exports Down-model sensors)",
+      "topology_id": "h2_simnet_center_v1",
+      "provenance_status": "VERIFIED_EXPORT",
+      "split": "test",
+      "time_range": [
+        0.0,
+        19999.0
+      ],
+      "samples": 248,
+      "publish_approved": true
     }
   ],
   "metrics_catalog": [
     {
-      "id": "fixture_eval",
-      "title": "Fixture Evaluation Summary",
+      "id": "primary_r2_a10530f1",
+      "title": "Primary LOTO Experiment (Run a10530f1fcf2)",
       "data_path": "data/metrics.json",
-      "sha256": "9a2df11a176cd827ca83032125a7799b95ad0b5875966e130306825bbec39adb"
+      "sha256": "0f42298b288ea535bf0fda31f765722eace9c4e02d3bd134c92c1e958c6c806a"
     }
   ]
 }
