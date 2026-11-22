@@ -1,0 +1,26 @@
+approval_id: T5_rq1_effects__9bc808eb__ahmed_zayed_20261112
+artifact_id: T5_rq1_effects
+claim_scope: DESCRIPTIVE
+decision: APPROVED_FOR_PUBLICATION
+approved_claims:
+- "RQ1 paired effects: risk(s_C) \u2212 risk(comparator), 95% topology-stratified family bootstrap; rank-matched (primary\
+  \ rule) and threshold-transfer (secondary) modes. Every registered comparison of R2 is NOT_ESTIMABLE (values empty, never\
+  \ imputed)."
+limitations_acknowledged:
+- effect sizes only; conditional on three simulated topologies
+reviewer:
+  name: Ahmed Zayed
+  role: science_owner
+date: '2026-11-12'
+statement: 'Science owner decision given in-session on 2026-11-12: ''Approve for publication'' of Fig. 2, Fig. 4, Fig. 5 and
+  Tables T4, T5, T6, T6b, T6c, T7, T8, T9 as DESCRIPTIVE results of R2 (a10530f1fcf2), with the population, denominators and
+  limitations stated in each caption (RQ1 NOT_ESTIMABLE; Center excluded at 0.60; disputed topology attribution L12/R-18;
+  thin independent support; simulation only). No superiority, causal or generalisation claim.'
+binding:
+  input_sha256:
+    03_results/primary_protocol/PRIMARY/rq1.csv: fb73e4eea74ba3320310df1747e1fbf626fd230fb94d26ea382bed41c1bd7510
+  spec_sha256: 9bc808eb68ba79344e750b1f8747dfb5514db7fd91b6ffe40a0138d4d330473f
+  renderer_sha256: 12ba184bfc5f603546a75e47764b8f3569dffc44810423add4bc024b4cdfdd66
+  source_run_keys:
+  - a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb
+recorded_by: Claude Code session on the science owner's explicit in-session instruction (AskUserQuestion answer)

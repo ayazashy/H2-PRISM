@@ -1,0 +1,15 @@
+{
+  "evidence_status": "EXPLORATORY_DIAGNOSTIC",
+  "model_fitted": false,
+  "inputs_verified_against_hash_list": true,
+  "low_visibility_threshold_sigma": 2.0,
+  "steady_period_s": [
+    1000,
+    19000
+  ],
+  "window_s": 60,
+  "k": 25,
+  "n_error_window_fold_instances": 4822,
+  "n_error_unique_windows": 2873,
+  "note": "window-fold instances double-count windows that appear in two folds' development sets; independent units are independence groups"
+}

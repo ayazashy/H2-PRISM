@@ -1,0 +1,16 @@
+{
+  "artifact_class": "SENSITIVITY_SUMMARY",
+  "status": "COMPLETED",
+  "run_key": "sensitivity_summary",
+  "config_sha256": "see source run manifests",
+  "sources": [
+    "PRIMARY",
+    "ROBUSTNESS_clean",
+    "SENSITIVITY_extended_family_map",
+    "SENSITIVITY_k_10",
+    "SENSITIVITY_k_50",
+    "SENSITIVITY_pre_event_label_normal",
+    "SENSITIVITY_prior_correction",
+    "SENSITIVITY_windows_60_60"
+  ]
+}

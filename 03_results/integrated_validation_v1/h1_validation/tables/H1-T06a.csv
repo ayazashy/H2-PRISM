@@ -1,0 +1,9 @@
+held_out_topology,true_class,n,n_families,specific,specific_wrong,ambiguity,ambiguity_includes_true,ambiguity_mean_size,unresolved,unresolved_flag_blocked,unresolved_out_of_support,unresolved_score_below_threshold,classifier_error_rate_specific,classifier_error_rate_unresolved,classifier_errors_total
+Downstream,COMPRESSOR_DELAY,31,1,0,0,31,31,2,0,0,0,0,,,0
+Downstream,COMPRESSOR_FAULT,1328,1,0,0,0,0,,1328,1328,17,1311,,0,0
+Downstream,LEAK,7307,10,5599,0,0,0,,1708,1224,35,1673,0,0,0
+Downstream,NORMAL,665,1,0,0,0,0,,665,15,15,650,,1,665
+Upstream,COMPRESSOR_DELAY,31,1,0,0,0,0,,31,31,0,31,,0,0
+Upstream,COMPRESSOR_FAULT,1328,1,0,0,0,0,,1328,1328,17,1311,,0,0
+Upstream,LEAK,7307,10,5102,0,0,0,,2205,1084,41,2164,0,0,0
+Upstream,NORMAL,665,1,497,0,0,0,,168,17,16,152,0,0,0

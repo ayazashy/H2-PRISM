@@ -1,0 +1,3 @@
+Determinism check, 2026-11-18: full rerun of av_r2, av_dy_experiments (2,376 decisions), av_dy_analysis, av_tables, fig_av and av_report.
+Compared SHA-256 of all files in analysis/, tables/ and figures/ (104 files).
+Identical: all except tables/A14c.csv, A14c.md and AV_TABLES_BUNDLE.md, which hold wall-clock latencies (expected to vary).

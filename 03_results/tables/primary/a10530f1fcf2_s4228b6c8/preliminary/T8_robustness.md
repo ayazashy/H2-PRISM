@@ -1,0 +1,34 @@
+> **PRELIMINARY (PENDING) - NOT A VALIDATED RESULT**
+
+*Primary contrast across registered analyses, with the evaluated population of each analysis.*
+
+| analysis | population_note | target | status | realized_coverage_a | difference | ci_low | ci_high | n_units | run_id |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| primary | same windows (primary population) | 0.600 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb |
+| primary | same windows (primary population) | 0.800 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb |
+| primary | same windows (primary population) | 0.900 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb |
+| policy_warning_only | same windows; different policy | 0.600 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb |
+| policy_warning_only | same windows; different policy | 0.800 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb |
+| policy_warning_only | same windows; different policy | 0.900 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb |
+| clean_realization | same windows; clean realization of the same runs | 0.600 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 220f49ad35f985667b3be78d2ffdc6d1b1891f314aa32db6be15108ab7745808 |
+| clean_realization | same windows; clean realization of the same runs | 0.800 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 220f49ad35f985667b3be78d2ffdc6d1b1891f314aa32db6be15108ab7745808 |
+| clean_realization | same windows; clean realization of the same runs | 0.900 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 220f49ad35f985667b3be78d2ffdc6d1b1891f314aa32db6be15108ab7745808 |
+| extended_family_map | same windows; different independence units (32 families) | 0.600 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 4d13822c55212e2185fae756332447d1bf21618fe9920fe4aa9336218acd8325 |
+| extended_family_map | same windows; different independence units (32 families) | 0.800 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 4d13822c55212e2185fae756332447d1bf21618fe9920fe4aa9336218acd8325 |
+| extended_family_map | same windows; different independence units (32 families) | 0.900 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 4d13822c55212e2185fae756332447d1bf21618fe9920fe4aa9336218acd8325 |
+| k_10 | same windows; D(x) k=10 | 0.600 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 821642d2201e0f9fc200f790d6533a2216a541c3bdde65021144526231a35b50 |
+| k_10 | same windows; D(x) k=10 | 0.800 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 821642d2201e0f9fc200f790d6533a2216a541c3bdde65021144526231a35b50 |
+| k_10 | same windows; D(x) k=10 | 0.900 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 821642d2201e0f9fc200f790d6533a2216a541c3bdde65021144526231a35b50 |
+| k_50 | same windows; D(x) k=50 | 0.600 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 7565497cc7dde2ce4b74ff09ee3f625db852c901ad4aeb0ebe14bbd8d889a994 |
+| k_50 | same windows; D(x) k=50 | 0.800 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 7565497cc7dde2ce4b74ff09ee3f625db852c901ad4aeb0ebe14bbd8d889a994 |
+| k_50 | same windows; D(x) k=50 | 0.900 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 7565497cc7dde2ce4b74ff09ee3f625db852c901ad4aeb0ebe14bbd8d889a994 |
+| pre_event_label_normal | different population: pre-event windows added as NORMAL | 0.600 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 105fde53d265c838b7571a66c62eaced0430ac8dd32a34d28a68e4ab938693d5 |
+| pre_event_label_normal | different population: pre-event windows added as NORMAL | 0.800 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 105fde53d265c838b7571a66c62eaced0430ac8dd32a34d28a68e4ab938693d5 |
+| pre_event_label_normal | different population: pre-event windows added as NORMAL | 0.900 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 105fde53d265c838b7571a66c62eaced0430ac8dd32a34d28a68e4ab938693d5 |
+| prior_correction | same windows; prior-corrected D(x) | 0.600 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | faf07c82b10895c91bb82df9969d4bb3b71aeabcb22a088b9ebe928d6dfb1ce0 |
+| prior_correction | same windows; prior-corrected D(x) | 0.800 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | faf07c82b10895c91bb82df9969d4bb3b71aeabcb22a088b9ebe928d6dfb1ce0 |
+| prior_correction | same windows; prior-corrected D(x) | 0.900 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | faf07c82b10895c91bb82df9969d4bb3b71aeabcb22a088b9ebe928d6dfb1ce0 |
+| windows_60_60 | different population: non-overlapping 60 s windows | 0.600 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 72075f284d5044f8d8ac45c440d3bdacc8d710e93f040304a3e7369b52385060 |
+| windows_60_60 | different population: non-overlapping 60 s windows | 0.800 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 72075f284d5044f8d8ac45c440d3bdacc8d710e93f040304a3e7369b52385060 |
+| windows_60_60 | different population: non-overlapping 60 s windows | 0.900 | NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL | n.e. | n.e. | n.e. | n.e. | n.e. | 72075f284d5044f8d8ac45c440d3bdacc8d710e93f040304a3e7369b52385060 |
+| offset_invariant_features | same windows; 80 offset-invariant features | n.e. | RUN_INCOMPLETE | n.e. | n.e. | n.e. | n.e. | n.e. | ff9cc78ab2cad58ce69af37b304a3535a28f78a9ac8298ec84baf6dfce37d284 |

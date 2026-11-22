@@ -1,0 +1,30 @@
+# UNSIGNED TEMPLATE - not an approval. See SIGNOFF_PACKAGE.md.
+approval_id: fig5_error_structure__a99f00a7__REVIEWER
+artifact_id: fig5_error_structure
+claim_scope: DESCRIPTIVE
+decision: TO_BE_DECIDED_BY_REVIEWER
+approved_claims:
+- Error structure of the underlying Random Forest on held-out topologies. (a) Confusion matrix of the calibrated top label,
+  pooled over the three held-out topologies (row shares and window counts); 7,972 of the 8,012 errors (Center LEAK to NORMAL,
+  Downstream NORMAL to LEAK or FAULT) follow the disputed Center/Downstream topology attribution of the release (L12 / R-18).
+  (b) Window-level precision, recall and F1 per class with the runs and topology-scoped families behind each class; families
+  are not independent across topologies (NORMAL, C-DELAY and C-FAULT each rest on one scenario independence group). (c) Top-label
+  reliability; development-only calibration selected 'none' in every fold, so the two curves coincide. These panels describe
+  the classifier, not the selective H$_2$-PRISM decision.
+limitations_acknowledged:
+- classifier output, not the selective decision; window-level scores overstate independent evidence; thin classes descriptive;
+  pooled over topologies whose release attribution is disputed (L12 / R-18)
+reviewer:
+  name: TO_BE_FILLED_BY_REVIEWER
+  role: TO_BE_FILLED_BY_REVIEWER
+date: YYYY-MM-DD
+statement: ''
+binding:
+  input_sha256:
+    03_results/primary_protocol/PRIMARY/calibration_reliability.csv: 48441ad3ded24bd091046f5512ed31a4f20a7add599edf1f30650e21603d932a
+    03_results/primary_protocol/PRIMARY/class_metrics.csv: e802105cc1d5dfb9f36e34ac12e84ca416c2d7298130ff9487ed23d57c99074c
+    03_results/primary_protocol/PRIMARY/confusion_matrix.csv: f3c192c75d80529c4b710fef74cf472a41ccba099eeac96bcfadde3bce54845d
+  spec_sha256: a99f00a7b3e6ffcadcaa8c46857174f8404f7ec2e32967b6809fc16ac5c270f1
+  renderer_sha256: 5af99e8f111f185418ae7c1c4825b3c783605010499df4f76f45cc42d4d988e0
+  source_run_keys:
+  - a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb

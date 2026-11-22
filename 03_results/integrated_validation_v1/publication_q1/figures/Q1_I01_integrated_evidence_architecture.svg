@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="691.2pt" height="432pt" viewBox="0 0 691.2 432" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 432 
+L 691.2 432 
+L 691.2 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 138.2976 103.367338 
+L 258.3744 103.367338 
+Q 261.7728 103.367338 261.7728 100.400668 
+L 261.7728 42.550589 
+Q 261.7728 39.583918 258.3744 39.583918 
+L 138.2976 39.583918 
+Q 134.8992 39.583918 134.8992 42.550589 
+L 134.8992 100.400668 
+Q 134.8992 103.367338 138.2976 103.367338 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #17324d; stroke-width: 1.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 274.2336 103.367338 
+L 394.3104 103.367338 
+Q 397.7088 103.367338 397.7088 100.400668 
+L 397.7088 42.550589 
+Q 397.7088 39.583918 394.3104 39.583918 
+L 274.2336 39.583918 
+Q 270.8352 39.583918 270.8352 42.550589 
+L 270.8352 100.400668 
+Q 270.8352 103.367338 274.2336 103.367338 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #3b6f9c; stroke-width: 1.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 410.1696 103.367338 
+L 530.2464 103.367338 
+Q 533.6448 103.367338 533.6448 100.400668 
+L 533.6448 42.550589 
+Q 533.6448 39.583918 530.2464 39.583918 
+L 410.1696 39.583918 
+Q 406.7712 39.583918 406.7712 42.550589 
+L 406.7712 100.400668 
+Q 406.7712 103.367338 410.1696 103.367338 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #087e8b; stroke-width: 1.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 546.1056 103.367338 
+L 666.1824 103.367338 
+Q 669.5808 103.367338 669.5808 100.400668 
+L 669.5808 42.550589 
+Q 669.5808 39.583918 666.1824 39.583918 
+L 546.1056 39.583918 
+Q 542.7072 39.583918 542.7072 42.550589 
+L 542.7072 100.400668 
+Q 542.7072 103.367338 546.1056 103.367338 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #ba8a28; stroke-width: 1.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 138.2976 192.36746 
+L 258.3744 192.36746 
+Q 261.7728 192.36746 261.7728 189.400789 
+L 261.7728 119.189582 
+Q 261.7728 116.222912 258.3744 116.222912 
+L 138.2976 116.222912 
+Q 134.8992 116.222912 134.8992 119.189582 
+L 134.8992 189.400789 
+Q 134.8992 192.36746 138.2976 192.36746 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #64748b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 274.2336 192.36746 
+L 394.3104 192.36746 
+Q 397.7088 192.36746 397.7088 189.400789 
+L 397.7088 119.189582 
+Q 397.7088 116.222912 394.3104 116.222912 
+L 274.2336 116.222912 
+Q 270.8352 116.222912 270.8352 119.189582 
+L 270.8352 189.400789 
+Q 270.8352 192.36746 274.2336 192.36746 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #64748b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 410.1696 192.36746 
+L 530.2464 192.36746 
+Q 533.6448 192.36746 533.6448 189.400789 
+L 533.6448 119.189582 
+Q 533.6448 116.222912 530.2464 116.222912 
+L 410.1696 116.222912 
+Q 406.7712 116.222912 406.7712 119.189582 
+L 406.7712 189.400789 
+Q 406.7712 192.36746 410.1696 192.36746 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #64748b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 546.1056 192.36746 
+L 666.1824 192.36746 
+Q 669.5808 192.36746 669.5808 189.400789 
+L 669.5808 119.189582 
+Q 669.5808 116.222912 666.1824 116.222912 
+L 546.1056 116.222912 
+Q 542.7072 116.222912 542.7072 119.189582 
+L 542.7072 189.400789 
+Q 542.7072 192.36746 546.1056 192.36746 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #64748b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 138.2976 293.728709 
+L 258.3744 293.728709 
+Q 261.7728 293.728709 261.7728 290.762038 
+L 261.7728 220.550831 
+Q 261.7728 217.584161 258.3744 217.584161 
+L 138.2976 217.584161 
+Q 134.8992 217.584161 134.8992 220.550831 
+L 134.8992 290.762038 
+Q 134.8992 293.728709 138.2976 293.728709 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #64748b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 274.2336 293.728709 
+L 394.3104 293.728709 
+Q 397.7088 293.728709 397.7088 290.762038 
+L 397.7088 220.550831 
+Q 397.7088 217.584161 394.3104 217.584161 
+L 274.2336 217.584161 
+Q 270.8352 217.584161 270.8352 220.550831 
+L 270.8352 290.762038 
+Q 270.8352 293.728709 274.2336 293.728709 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #64748b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 410.1696 293.728709 
+L 530.2464 293.728709 
+Q 533.6448 293.728709 533.6448 290.762038 
+L 533.6448 220.550831 
+Q 533.6448 217.584161 530.2464 217.584161 
+L 410.1696 217.584161 
+Q 406.7712 217.584161 406.7712 220.550831 
+L 406.7712 290.762038 
+Q 406.7712 293.728709 410.1696 293.728709 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #64748b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 546.1056 293.728709 
+L 666.1824 293.728709 
+Q 669.5808 293.728709 669.5808 290.762038 
+L 669.5808 220.550831 
+Q 669.5808 217.584161 666.1824 217.584161 
+L 546.1056 217.584161 
+Q 542.7072 217.584161 542.7072 220.550831 
+L 542.7072 290.762038 
+Q 542.7072 293.728709 546.1056 293.728709 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #64748b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 138.2976 395.089958 
+L 258.3744 395.089958 
+Q 261.7728 395.089958 261.7728 392.123287 
+L 261.7728 321.91208 
+Q 261.7728 318.94541 258.3744 318.94541 
+L 138.2976 318.94541 
+Q 134.8992 318.94541 134.8992 321.91208 
+L 134.8992 392.123287 
+Q 134.8992 395.089958 138.2976 395.089958 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #64748b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 274.2336 395.089958 
+L 394.3104 395.089958 
+Q 397.7088 395.089958 397.7088 392.123287 
+L 397.7088 321.91208 
+Q 397.7088 318.94541 394.3104 318.94541 
+L 274.2336 318.94541 
+Q 270.8352 318.94541 270.8352 321.91208 
+L 270.8352 392.123287 
+Q 270.8352 395.089958 274.2336 395.089958 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke: #64748b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 410.1696 395.089958 
+L 530.2464 395.089958 
+Q 533.6448 395.089958 533.6448 392.123287 
+L 533.6448 321.91208 
+Q 533.6448 318.94541 530.2464 318.94541 
+L 410.1696 318.94541 
+Q 406.7712 318.94541 406.7712 321.91208 
+L 406.7712 392.123287 
+Q 406.7712 395.089958 410.1696 395.089958 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #a44a4a; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 546.1056 395.089958 
+L 666.1824 395.089958 
+Q 669.5808 395.089958 669.5808 392.123287 
+L 669.5808 321.91208 
+Q 669.5808 318.94541 666.1824 318.94541 
+L 546.1056 318.94541 
+Q 542.7072 318.94541 542.7072 321.91208 
+L 542.7072 392.123287 
+Q 542.7072 395.089958 546.1056 395.089958 
+z
+" clip-path="url(#pa2312f0de1)" style="fill: #ffffff; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #a44a4a; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Times New Roman', serif; fill: #17324d" transform="translate(183.621156 63.77582)">Center</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Times New Roman', serif; fill: #17324d" transform="translate(153.007094 73.861132)">controlled simulation</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Times New Roman', serif; fill: #17324d" transform="translate(157.14225 84.133945)">(air-like gas model)</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Times New Roman', serif; fill: #3b6f9c" transform="translate(300.388406 63.672695)">H2-SimNet / R2</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Times New Roman', serif; fill: #3b6f9c" transform="translate(290.798562 73.945507)">simulated topologies</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Times New Roman', serif; fill: #3b6f9c" transform="translate(293.354812 84.23707)">(registered H1 test)</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Times New Roman', serif; fill: #087e8b" transform="translate(457.988469 63.77582)">MHC</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Times New Roman', serif; fill: #087e8b" transform="translate(420.718156 74.048632)">experimental hydrogen</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Times New Roman', serif; fill: #087e8b" transform="translate(445.579875 84.152695)">compressor</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Times New Roman', serif; fill: #ba8a28" transform="translate(586.417437 63.766445)">HY2RES</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Times New Roman', serif; fill: #ba8a28" transform="translate(560.258062 74.039257)">operational hydrogen</text>
+    <text style="font-weight: 700; font-size: 10px; font-family: 'Times New Roman', serif; fill: #ba8a28" transform="translate(591.702594 84.14332)">system</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(48.555047 146.04924)">Layer I</text>
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(40.967977 156.658506)">source and</text>
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(35.000203 167.248084)">measurement</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(154.024437 151.60342)">12 captures re-verified;</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(178.411977 161.551404)">13 sensors</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(280.173211 151.60342)">27,993 windows; 36/57 runs</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(297.199734 161.551404)">attribution disputed</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(432.882648 151.585607)">bit-identical replay;</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(420.289211 161.551404)">0.2 barg / 0.01 ln/min grid</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(564.859078 151.594514)">MD5-verified source;</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(584.115133 161.542498)">0.1 bar grid</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(46.511648 247.302208)">Layer II</text>
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(34.658133 257.911474)">reference and</text>
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(27.756844 268.697927)">evidence validity</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(157.310102 252.955763)">mechanism contrasts;</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(160.209828 262.903747)">sensor observability</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(284.286414 252.946856)">attainable coverage 0.258;</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(291.784734 262.912653)">flags block SPECIFIC</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(425.881594 252.955763)">persistence MAE wins;</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(426.796711 262.903747)">Ridge RMSE gain tiny</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(568.808258 252.964669)">drift out of support;</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(564.982281 262.912653)">97.8 % of abstentions</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(44.46825 348.663457)">Layer III</text>
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(42.478992 359.469598)">diagnostic</text>
+    <text style="font-weight: 700; font-size: 10.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(47.14657 370.078863)">decision</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(148.33557 349.34302)">D(Y), conditional bounds:</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(158.943656 359.291004)">48 correct, 11 wrong</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(155.988266 369.256801)">SPECIFIC (restricted)</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(284.003641 354.308105)">RQ1 NOT_ESTIMABLE;</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(298.91493 364.273902)">H1 not established</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(451.870773 354.325918)">no labels:</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(455.171281 364.273902)">blocked</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(577.914898 354.325918)">no fault labels:</text>
+    <text style="font-size: 9.5px; font-family: 'Times New Roman', serif; fill: #20252b" transform="translate(591.107281 364.273902)">blocked</text>
+   </g>
+  </g>
+  <g id="text_20">
+   <text style="font-weight: 700; font-size: 15px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #20252b" x="345.6" y="15.927188" transform="rotate(-0 345.6 15.927188)">H2-PRISM evidence architecture: four evidence sources, three layers</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pa2312f0de1">
+   <rect x="5.76" y="30.683906" width="679.68" height="395.556094"/>
+  </clipPath>
+ </defs>
+</svg>

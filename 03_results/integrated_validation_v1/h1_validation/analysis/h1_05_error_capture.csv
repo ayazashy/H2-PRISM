@@ -1,0 +1,5 @@
+scope,n_windows,classifier_errors,base_error_rate,eligible_windows,error_rate_eligible,error_rate_blocked,errors_blocked_by_evidence_flags,share_errors_blocked,errors_in_disputed_runs,analysis_status
+pooled,27993,8012,0.2862144107,16009,0.1087513274,0.5232810414,6271,0.7827009486,7347,EXPLORATORY_POST_HOC
+Center,9331,7347,0.7873754153,2405,0.4536382536,0.9032630667,6256,0.8515040152,7347,EXPLORATORY_POST_HOC
+Downstream,9331,665,0.07126781695,6733,0.09653943265,0.005773672055,15,0.02255639098,0,EXPLORATORY_POST_HOC
+Upstream,9331,0,0,6871,0,0,0,,0,EXPLORATORY_POST_HOC

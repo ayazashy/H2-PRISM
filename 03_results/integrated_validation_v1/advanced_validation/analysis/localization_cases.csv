@@ -1,0 +1,25 @@
+method,query,condition,true_site,true_site_supported,issued_site,top1_correct,true_rank,reciprocal_rank,margin,location_specific
+B3 nearest-template ranking,SID213,loto,SID213,False,SID215,False,,0.0,0.0120665154,True
+B3 nearest-template ranking,SID213,loto_replicate,SID213,True,SID213,True,1.0,1.0,0.0284049771,True
+B3 nearest-template ranking,SID312,loto,SID312,False,SID215,False,,0.0,0.0111354856,True
+B3 nearest-template ranking,SID312,loto_replicate,SID312,False,SID215,False,,0.0,0.0111354856,True
+B3 nearest-template ranking,SID215,loto,SID215,False,SID213,False,,0.0,0.0009351446,True
+B3 nearest-template ranking,SID215,loto_replicate,SID215,False,SID213,False,,0.0,0.0009351446,True
+B3 nearest-template ranking,ALT,loto,SID213,True,SID213,True,1.0,1.0,0.0284324583,True
+B3 nearest-template ranking,ALT,loto_replicate,SID213,True,SID213,True,1.0,1.0,0.0284324583,True
+"formal D(Y), restricted universe",SID213,S3,SID213,True,SID213,True,,,,True
+"formal D(Y), restricted universe",SID213,S4,SID213,True,SID213,True,,,,True
+"formal D(Y), restricted universe",SID213,S5,SID213,True,SID213,True,,,,True
+"formal D(Y), restricted universe",SID213,REF,SID213,True,SID213,True,,,,True
+"formal D(Y), restricted universe",SID312,S3,SID312,False,,,,,,False
+"formal D(Y), restricted universe",SID312,S4,SID312,False,,,,,,False
+"formal D(Y), restricted universe",SID312,S5,SID312,False,,,,,,False
+"formal D(Y), restricted universe",SID312,REF,SID312,False,,,,,,False
+"formal D(Y), restricted universe",SID215,S3,SID215,False,,,,,,False
+"formal D(Y), restricted universe",SID215,S4,SID215,False,,,,,,False
+"formal D(Y), restricted universe",SID215,S5,SID215,False,non-location hypothesis: NORMAL_OPERATION,,,,,False
+"formal D(Y), restricted universe",SID215,REF,SID215,False,non-location hypothesis: NORMAL_OPERATION,,,,,False
+"formal D(Y), restricted universe",ALT,S3,SID213,True,SID213,True,,,,True
+"formal D(Y), restricted universe",ALT,S4,SID213,True,SID213,True,,,,True
+"formal D(Y), restricted universe",ALT,S5,SID213,True,SID213,True,,,,True
+"formal D(Y), restricted universe",ALT,REF,SID213,True,SID213,True,,,,True

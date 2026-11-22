@@ -1,0 +1,9 @@
+original_label,label_type,source,scenarios_present_count,pct_scenarios,verified_status
+label_anomaly,Binary Indicator,Parquet Header / Ground Truth Column,55,94.82758620689656,VERIFIED
+Leak,Binary Indicator,Parquet Header / Ground Truth Column,43,74.13793103448276,VERIFIED
+CompressorFault,Binary Indicator,Parquet Header / Ground Truth Column,12,20.689655172413794,VERIFIED
+CompressorDelay,Binary Indicator,Parquet Header / Ground Truth Column,3,5.172413793103448,VERIFIED
+leak_G3,Binary Indicator,Parquet Header / Ground Truth Column,18,31.03448275862069,VERIFIED
+leak_G4,Binary Indicator,Parquet Header / Ground Truth Column,22,37.93103448275862,VERIFIED
+leak_G5,Binary Indicator,Parquet Header / Ground Truth Column,12,20.689655172413794,VERIFIED
+leak_G6,Binary Indicator,Parquet Header / Ground Truth Column,9,15.517241379310345,VERIFIED

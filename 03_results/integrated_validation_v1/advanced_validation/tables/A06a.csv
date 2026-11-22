@@ -1,0 +1,6 @@
+level,status,eligible_cases,limitation
+Level 1 — candidate-site ranking,DEMONSTRATED (conditional),4 withdrawal queries; 3 candidate outlets,"ranking exists for every query, but only queries with an independent same-outlet template can be correct"
+Level 2 — correct categorical outlet identification,DEMONSTRATED FOR ONE OUTLET,"SID 213: 2 captures (Q213 with replicate, Q213-alt); near-duplicates → 1 independent location",SID 312 and SID 215 unsupported (no independent template)
+Level 3 — topological branch localization,NOT DEMONSTRATED BEYOND LEVEL 2,outlets are branch ends; no intra-branch position,lumped pipes without inertia (HYDROGEN_MODEL_SPECIFICATION P6)
+Level 4 — physical coordinate / distance,NOT POSSIBLE,no coordinates; SIDs are block identifiers,—
+Level 5 — validated real-world localization,NOT ESTABLISHED,MHC/HY2RES: no locations,—

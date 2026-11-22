@@ -1,0 +1,154 @@
+# H2-PRISM Technical Interface Contracts (Task F12; decision F-D16)
+# v2.0.0 replaces v1.0.0 (2026-10-30). v1 described a manifest/prediction schema the pipeline never
+# implemented (e.g. `file`, `event_label_raw`, `y_pred`, `C/M/H` column names). v2 describes ONLY what
+# the implemented pipeline reads and writes; it is enforced by tests/test_interface_contract.py.
+# Prepared in the Phase-9 independent technical review. Owner acceptance (Faisal, F12 owner): NOT_RECORDED.
+metadata:
+  project: "H2-PRISM - Identifiability-Aware Event Attribution and Selective Diagnosis in Hydrogen-Blend Pipeline Networks"
+  version: "2.0.0"
+  supersedes: "1.0.0-frozen-contracts"
+  verified_on: "2026-11-11"
+  owner: "Faisal (F12)"
+  owner_acceptance: NOT_RECORDED
+  enforced_by: tests/test_interface_contract.py
+  change_control: 00_governance/CHANGE_CONTROL_LOG.csv
+
+conventions:
+  encoding: "UTF-8; CSV/JSON/YAML written with LF line endings (.gitattributes)"
+  booleans: "CSV True/False"
+  missing_values: >
+    Empty CSV field = not defined. A NOT_ESTIMABLE result has empty numeric fields, never 0.
+    Non-finite scores are never selected and yield UNRESOLVED (reason INVALID_SCORE).
+  class_labels: [NORMAL, LEAK, COMPRESSOR_FAULT, COMPRESSOR_DELAY]
+  independence_unit: Scenario_Family_ID
+  outer_fold_unit: topology (leave-one-topology-out)
+  hashes: "SHA-256 hex, lower case"
+
+contracts:
+  manifest_schema:
+    description: "Run-level dataset manifest v0.2 (Yazan -> Faisal). One row per underlying run (57 rows; 51 eligible)."
+    file: 06_audit_preparation/phase6_resolution/CANDIDATE_MANIFEST_V02.csv
+    pinned_by: FINAL_EXPERIMENT_CONFIG.yaml dataset.manifest.sha256
+    required_columns:
+      - {name: Scenario_ID, type: string, unique: true}
+      - {name: Scenario_Family_ID, type: string, rule: "nests in exactly one topology"}
+      - {name: topology, type: string}
+      - {name: label_mapped, type: string, enum_when_eligible: [NORMAL, LEAK, COMPRESSOR_FAULT, COMPRESSOR_DELAY]}
+      - {name: eligible_primary, type: boolean}
+      - {name: exclusion_reason, type: string, rule: "non-empty when eligible_primary is False"}
+      - {name: raw_label_columns, type: string}
+      - {name: onset_s, type: float, missing: "allowed (no event)"}
+      - {name: delay_last_active_s, type: float, missing: "allowed (non-DELAY runs)"}
+      - {name: file_noise_added, type: string, rule: "path relative to --raw-parent"}
+      - {name: sha256_noise_added, type: string}
+      - {name: file_clean, type: string}
+      - {name: sha256_clean, type: string}
+    internal_aliases: "feature_table.normalize_manifest_columns maps label_mapped->candidate_primary_class, eligible_primary->eligible_primary_candidate, file_*->file_*_rel; mixing both naming schemes raises ValueError"
+
+  window_manifest_schema:
+    description: "Windows produced by windows.make_windows via feature_table.build_feature_table (Faisal F3)."
+    window_id_format: "{Scenario_ID}_w{index:04d}"
+    required_columns:
+      - {name: window_id, type: string, unique: true}
+      - {name: file_id, type: string}
+      - {name: Scenario_ID, type: string}
+      - {name: Scenario_Family_ID, type: string}
+      - {name: start_time, type: float}
+      - {name: end_time, type: float}
+      - {name: start_row, type: int}
+      - {name: end_row_exclusive, type: int}
+      - {name: n_samples, type: int}
+      - {name: label_raw, type: string}
+      - {name: label_mapped, type: string}
+      - {name: phase, type: string}
+      - {name: topology, type: string}
+      - {name: boundary_status, type: string, enum: [NO_EVENT, PRE_EVENT, DURING_EVENT, POST_EVENT, BOUNDARY_CROSSING, UNKNOWN_TIMING]}
+      - {name: label_mode, type: string}
+      - {name: time_source, type: string}
+      - {name: eligible_primary, type: boolean}
+      - {name: exclusion_reason, type: string}
+    eligibility_rule: "only eligible windows enter the feature table; each eligible window must carry its run's class (runner fails otherwise)"
+
+  feature_table_schema:
+    description: "Model input table (one realization). Features = 16 channels x 8 statistics = 128 columns named <channel>__<stat>."
+    metadata_columns: [window_id, Scenario_ID, Scenario_Family_ID, topology, label_mapped]
+    runner_added_metadata: [start_time, end_time, file_id, realization, feature_version]
+    feature_name_pattern: "^(PS(1[0-2]|[1-9])|MFS[1-4])__(mean|std|min|max|range|last_minus_first|slope|mean_abs_diff)$"
+    n_features: 128
+    sensor_channels_available:
+      pressure_MPa: [PS1, PS2, PS3, PS4, PS5, PS6, PS7, PS8, PS9, PS10, PS11, PS12]
+      mass_flow_kg_per_s: [MFS1, MFS2, MFS3, MFS4]
+      temperature: null   # not present in the raw dataset
+    excluded_from_features: "every column in h2prism.features.METADATA_COLUMNS (identifiers, labels, timing, topology, phase, fold, provenance: realization, feature_version)"
+    leakage_rules:
+      - "features.model_feature_columns() excludes METADATA_COLUMNS; assert_no_metadata_features() raises on any metadata column"
+      - "runner accepts only names matching feature_name_pattern and requires the exact registered set (PreflightError otherwise)"
+      - "no scaling/imputation is fitted outside the development data; D(x) standardisation is fitted on the reference (development) windows only"
+    missing_values: "non-finite feature values: D(x) reference fit raises ValueError (fail closed)"
+
+  prediction_table_schema:
+    description: "Runner per-fold outer-test predictions: folds/fold_<k>/predictions.csv"
+    required_columns:
+      - window_id
+      - Scenario_ID
+      - Scenario_Family_ID
+      - topology
+      - y_true
+      - "p_raw_<class> for each class"
+      - "p_cal_<class> for each class"
+      - D
+      - support_flags            # '|'-joined D(x) flags; empty = none
+      - top_class_n_families
+      - n_distinct_scenarios
+      - score_s_C
+      - score_s_C_minus_D
+      - score_confidence         # C(x) = max_k p_k
+      - score_margin             # M(x) = p_(1) - p_(2)
+      - score_neg_entropy        # -H(x)
+      - score_D_only             # D(x)
+      - fold
+      - artifact_class
+
+  decision_table_schema:
+    description: "folds/fold_<k>/decisions_<nnn>.csv, indexed by decision_index.json (variant, method, target, mode, status, counts)"
+    required_columns: [policy_outcome, y_pred_specific, ambiguity_set, set_size, reason_code, policy_config_id, window_id]
+    policy_outcome_enum: [SPECIFIC, AMBIGUITY_SET, UNRESOLVED]
+    rules:
+      - "y_pred_specific is empty unless policy_outcome == SPECIFIC"
+      - "ambiguity_set is '|'-joined, 2 <= size <= K-1"
+
+  aggregate_outputs:
+    coverage_risk.csv: [variant, method, target, mode, folds_estimable, n_families, n_eligible, n_specific, n_ambiguity, n_unresolved, coverage, selective_risk, selective_risk_defined, ambiguity_n_ambiguity, ambiguity_inclusion_rate, ambiguity_mean_size, ambiguity_median_size, ambiguity_broad_rate, analysis, artifact_class]
+    estimability.csv: [fold, variant, method, target, mode, status, test_max_attainable_coverage, requested_count, realized_count, realized_coverage, n_tied_at_boundary, n_tied_selected, tau, analysis, artifact_class]
+    rq1.csv: [comparison_a, comparison_b, comparison_role, variant, target, mode, status, folds_estimable, n_folds, realized_coverage_a, realized_coverage_b, coverage_gap_a_minus_b, estimate_a, estimate_b, difference, ci_low, ci_high, n_units, n_boot_undefined, comparison, interpretation, analysis, artifact_class]
+    rq2.csv: [variant, target, mode, class, n, n_families, specific, ambiguity_set, unresolved, specific_correct, ambiguity_inclusion, reporting, analysis, artifact_class]
+    calibration_reliability.csv: [probability, bin, bin_low, bin_high, mean_confidence, accuracy, n, analysis, artifact_class]
+    calibration_selection.csv (per fold, when calibration is feasible): [method, log_loss, brier, monotone, fold, selected]
+    risk_coverage_curve.csv: [scope, variant, method, mode, coverage_requested, folds, status, n_total, n_specific, n_errors, coverage, selective_risk, analysis, artifact_class]   # descriptive grid 0.05..1.00, PA-1 selection
+    confusion_matrix.csv: [scope, true_class, predicted_class, n, analysis, artifact_class]   # window counts, calibrated top label; scope pooled or topology
+    class_metrics.csv: [class, n_windows, n_runs, n_families, n_topologies, precision, recall, f1, support_note, analysis, artifact_class]
+    rq1_by_topology.csv: [comparison_a, comparison_b, comparison_role, variant, target, mode, topology, n_eligible, n_specific_a, n_specific_b, risk_a, risk_b, difference, reporting, analysis, artifact_class]
+    decision_reasons.csv: [variant, method, target, mode, class, policy_outcome, reason, n, analysis, artifact_class]
+    ambiguity_sizes.csv: [variant, method, target, mode, class, set_size, n, n_true_class_included, analysis, artifact_class]
+    support_flags_summary.csv: [topology, class, n_windows, flag, n_flagged, analysis, artifact_class]
+    predictions.parquet / decisions.parquet: pooled window-level predictions and decisions (local, not committed)
+    tie_sensitivity.csv: [target, salt_index, pooled_risk_a, pooled_risk_b, difference, primary_difference, role, analysis, artifact_class]
+    thresholds.csv (per fold): [variant, method, target, tau, dev_max_attainable_coverage, dev_realized_coverage_at_tau, dev_status, fold, artifact_class]
+    run_manifest.json: [artifact_class, mode, status, run_key, config_sha256, config_file, code_sha256, realization, git_commit, seed, input_sha256, preflight, features, prohibited_claims, sensitivity, effective_config_sha256, authorization]
+    status_enum: [ESTIMABLE, NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL]
+    artifact_class_enum: [SYNTHETIC_TEST, PREFLIGHT_ONLY, PRIMARY_EXPERIMENT, ROBUSTNESS_EXPERIMENT, SENSITIVITY_EXPERIMENT]
+    analysis_values: "primary, or the registered sensitivity name (h2prism.experiments.primary_protocol.SENSITIVITY_OVERRIDES)"
+
+  execution_gate:
+    authorization_file_fields: {authorized: "true", scope: "PRIMARY_EXPERIMENT | ROBUSTNESS_EXPERIMENT | SENSITIVITY_EXPERIMENT:<name>", config_sha256: "sha256 of the config being run", authorized_by: "non-empty", date: "non-empty", governance_clearance: "mapping F-D15, F-D16, A-D10, PA-1 -> text starting with ATTESTED or WAIVED"}
+    behaviour: "missing/invalid authorization -> AuthorizationError, exit code 2, nothing written"
+
+  failure_behaviour:
+    PreflightError: "config status/hash/section, manifest schema, eligible count, classes, exclusion reasons, family nesting, fold coverage, family/topology isolation, raw file presence/hash, unknown flags, non-development thresholds, missing tie rule, feature-set mismatch, runs without windows, window/run label mismatch, output dir of a different run, synthetic output under 03_results/"
+    AuthorizationError: "outer-test execution without a valid authorization"
+    AssertionError: "invalid ambiguity set, specific prediction on a non-SPECIFIC row, unmatched rank-matched coverage, family/topology/run overlap between development and test"
+    partial_runs: "run_manifest.status stays RUNNING until all folds finish; aggregate CSVs are written only on COMPLETED; resume reuses folds only when DONE.json run_key matches (config, features, realization, mode, code hash)"
+
+  version_compatibility:
+    config: "FINAL_EXPERIMENT_CONFIG.yaml version final-protocol-1.1 (requires thresholds.matched_coverage)"
+    python: "3.12; library versions pinned in config.software"

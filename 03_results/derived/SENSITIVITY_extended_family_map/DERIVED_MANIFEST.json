@@ -1,0 +1,68 @@
+{
+  "source_run_dir": "SENSITIVITY_extended_family_map",
+  "source_run_key": "4d13822c55212e2185fae756332447d1bf21618fe9920fe4aa9336218acd8325",
+  "source_artifact_class": "SENSITIVITY_EXPERIMENT",
+  "source_status": "COMPLETED",
+  "source_sha256": {
+    "decisions.parquet": "ae6056108d8e6672a058816f2987c06aada01522ef9dad57f5d4d6defe8049c2",
+    "predictions.parquet": "12c6acba62fb38da864e1e9075a05f358e7b6c5da222d55489edcbce812ae466",
+    "estimability.csv": "a96e8aab45c12dce4bb1feb0027257af761be18390c3c929f8f91c9f2406ba48",
+    "rq2.csv": "c79a2a4a83e103ae7e844fe2ab4cee34d0e709eef2fa2d8d5de7c38e751dd0d8",
+    "run_manifest.json": "1607909a4dded9d9dad71e543775644bef01edbe12c6d9117fb92f32a0296eac"
+  },
+  "code_sha256": "974ae355a9d116792f1192f7a7d8197f2e64a7cb0016f82fa5dac8947cbc5f06",
+  "reason_precedence": [
+    "UNRESOLVED_BY_SUPPORT_FLAG",
+    "SPECIFIC_BLOCKED_BY_SUPPORT_FLAG",
+    "INVALID_SCORE",
+    "BELOW_MATCHED_COVERAGE_CUT",
+    "AMBIGUITY_SET_TOO_BROAD",
+    "AMBIGUITY_SET_TOO_BROAD",
+    "SINGLE_CANDIDATE_REJECTED"
+  ],
+  "cross_checks": [
+    {
+      "check": "rq2[primary|0.6|rank_matched|COMPRESSOR_DELAY]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|rank_matched|COMPRESSOR_FAULT]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|rank_matched|LEAK]",
+      "ok": true
+    },
+    {
+      "check": "rq2[primary|0.6|rank_matched|NORMAL]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|COMPRESSOR_DELAY]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|COMPRESSOR_FAULT]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|LEAK]",
+      "ok": true
+    },
+    {
+      "check": "rq2[warning_only|0.6|rank_matched|NORMAL]",
+      "ok": true
+    },
+    {
+      "check": "primary_reasons_exclusive_and_exhaustive",
+      "ok": true
+    }
+  ],
+  "outputs": {
+    "rq2_scoped.csv": "910b678070a4f78e04976fcc6ba7cab85f1d144956259c0c31317316bbce9e78",
+    "decision_reasons_primary.csv": "6a18dabede644888aaa0c3fb093fa1d16b31130c7e7635d942c92e4a4f7647ac",
+    "decision_reasons_contributing.csv": "466f9ebebb97440fd750527e67520846ad5f26ebd0521aa17631f794535c98f0",
+    "support_flags_scoped.csv": "b29a8a5de763f9e034fdf6cfa7a3f3e2a851f0f782833fe9e654f059c89539c2",
+    "matched_selection_ties.csv": "bb458c402ba084bfabd343b945901b8e08baa9f53af280976addf9e1b9878215"
+  }
+}

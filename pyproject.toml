@@ -8,5 +8,10 @@ version = "0.1.0"
 requires-python = ">=3.9"
 
 [tool.setuptools.packages.find]
-where = ["."]
-include = ["src*"]
+where = ["src"]
+include = ["h2prism*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+markers = ["slow: long-running tests (> ~30 s); deselect with -m \"not slow\" for the fast tier"]

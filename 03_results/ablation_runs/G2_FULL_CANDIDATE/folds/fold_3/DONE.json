@@ -1,0 +1,17 @@
+{
+  "calibration": "sigmoid",
+  "fold": 3,
+  "meta_model_status": "NOT_ESTIMABLE_META_MODEL_UNDEFINED",
+  "params": {
+    "max_features": "sqrt",
+    "min_samples_leaf": 5,
+    "n_estimators": 300
+  },
+  "run_key": "28e9fbc540c80c995f33870cfa4eee66dec3466a95900e9991e7ede455cc290b",
+  "target_rule": {
+    "min_dev_attainable": 0.0,
+    "reason": "minimum development attainability 0.000 minus margin 0.05 is below 0.3",
+    "status": "NOT_ESTIMABLE_BY_DESIGN",
+    "target": null
+  }
+}

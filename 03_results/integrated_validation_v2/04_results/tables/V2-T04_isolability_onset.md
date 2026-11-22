@@ -1,0 +1,51 @@
+### V2-T04_isolability_onset — Pairwise isolability onset (bound scale lambda* relative to REF)
+
+Isolable iff lambda < lambda*; lambda* = 0 would mean intrinsic non-isolability. Template level, ±1 s, CONDITIONAL_HYPOTHETICAL_BOUNDS.
+
+| hyp_a | hyp_b | channels | lambda_star | onset_eps_pressure_MPa | onset_eps_flow_kg_s | limiting_channel_at_worst_shift_pair | reason |
+|---|---|---|---|---|---|---|---|
+| HN | H213 | all | 18.97 | 0.6533 | 0.3456 | MFS3 | ISOLABLE_AT_REF |
+| HN | H213 | pressure_only | 0.007442 | 0.0002564 | 0.0001356 | PS1 | BOUND_LIMITED |
+| HN | H213 | flow_only | 18.97 | 0.6533 | 0.3456 | MFS3 | ISOLABLE_AT_REF |
+| HN | H312 | all | 17.74 | 0.6113 | 0.3234 | MFS1 | ISOLABLE_AT_REF |
+| HN | H312 | pressure_only | 0.0183 | 0.0006305 | 0.0003335 | PS3 | BOUND_LIMITED |
+| HN | H312 | flow_only | 17.74 | 0.6113 | 0.3234 | MFS1 | ISOLABLE_AT_REF |
+| HN | H215 | all | 0.08012 | 0.00276 | 0.00146 | PS4 | BOUND_LIMITED |
+| HN | H215 | pressure_only | 0.08012 | 0.00276 | 0.00146 | PS4 | BOUND_LIMITED |
+| HN | H215 | flow_only | 0.01012 | 0.0003487 | 0.0001845 | MFS1 | BOUND_LIMITED |
+| HN | HP55 | all | 2.467 | 0.085 | 0.04497 | PS7 | ISOLABLE_AT_REF |
+| HN | HP55 | pressure_only | 2.467 | 0.085 | 0.04497 | PS7 | ISOLABLE_AT_REF |
+| HN | HP55 | flow_only | 2.222 | 0.07654 | 0.04049 | MFS3 | ISOLABLE_AT_REF |
+| HN | HT59 | all | 2.756 | 0.09493 | 0.05022 | MFS3 | ISOLABLE_AT_REF |
+| HN | HT59 | pressure_only | 2.439 | 0.08401 | 0.04444 | PS1 | ISOLABLE_AT_REF |
+| HN | HT59 | flow_only | 2.756 | 0.09493 | 0.05022 | MFS3 | ISOLABLE_AT_REF |
+| H213 | H312 | all | 18.97 | 0.6533 | 0.3456 | MFS3 | ISOLABLE_AT_REF |
+| H213 | H312 | pressure_only | 0.01659 | 0.0005717 | 0.0003024 | PS3 | BOUND_LIMITED |
+| H213 | H312 | flow_only | 18.97 | 0.6533 | 0.3456 | MFS3 | ISOLABLE_AT_REF |
+| H213 | H215 | all | 18.97 | 0.6534 | 0.3456 | MFS3 | ISOLABLE_AT_REF |
+| H213 | H215 | pressure_only | 0.0794 | 0.002735 | 0.001447 | PS4 | BOUND_LIMITED |
+| H213 | H215 | flow_only | 18.97 | 0.6534 | 0.3456 | MFS3 | ISOLABLE_AT_REF |
+| H213 | HP55 | all | 21.19 | 0.7298 | 0.3861 | MFS3 | ISOLABLE_AT_REF |
+| H213 | HP55 | pressure_only | 2.467 | 0.085 | 0.04497 | PS7 | ISOLABLE_AT_REF |
+| H213 | HP55 | flow_only | 21.19 | 0.7298 | 0.3861 | MFS3 | ISOLABLE_AT_REF |
+| H213 | HT59 | all | 21.57 | 0.7429 | 0.393 | MFS3 | ISOLABLE_AT_REF |
+| H213 | HT59 | pressure_only | 2.434 | 0.08385 | 0.04436 | PS1 | ISOLABLE_AT_REF |
+| H213 | HT59 | flow_only | 21.57 | 0.7429 | 0.393 | MFS3 | ISOLABLE_AT_REF |
+| H312 | H215 | all | 17.74 | 0.6113 | 0.3234 | MFS1 | ISOLABLE_AT_REF |
+| H312 | H215 | pressure_only | 0.06917 | 0.002383 | 0.001261 | PS4 | BOUND_LIMITED |
+| H312 | H215 | flow_only | 17.74 | 0.6113 | 0.3234 | MFS1 | ISOLABLE_AT_REF |
+| H312 | HP55 | all | 18.37 | 0.6327 | 0.3347 | MFS1 | ISOLABLE_AT_REF |
+| H312 | HP55 | pressure_only | 2.467 | 0.085 | 0.04497 | PS7 | ISOLABLE_AT_REF |
+| H312 | HP55 | flow_only | 18.37 | 0.6327 | 0.3347 | MFS1 | ISOLABLE_AT_REF |
+| H312 | HT59 | all | 17.88 | 0.6158 | 0.3258 | MFS1 | ISOLABLE_AT_REF |
+| H312 | HT59 | pressure_only | 2.439 | 0.08401 | 0.04444 | PS1 | ISOLABLE_AT_REF |
+| H312 | HT59 | flow_only | 17.87 | 0.6155 | 0.3256 | MFS1 | ISOLABLE_AT_REF |
+| H215 | HP55 | all | 2.467 | 0.085 | 0.04497 | PS7 | ISOLABLE_AT_REF |
+| H215 | HP55 | pressure_only | 2.467 | 0.085 | 0.04497 | PS7 | ISOLABLE_AT_REF |
+| H215 | HP55 | flow_only | 2.22 | 0.07649 | 0.04046 | MFS3 | ISOLABLE_AT_REF |
+| H215 | HT59 | all | 2.755 | 0.09491 | 0.05021 | MFS3 | ISOLABLE_AT_REF |
+| H215 | HT59 | pressure_only | 2.439 | 0.08401 | 0.04444 | PS1 | ISOLABLE_AT_REF |
+| H215 | HT59 | flow_only | 2.755 | 0.09491 | 0.05021 | MFS3 | ISOLABLE_AT_REF |
+| HP55 | HT59 | all | 2.467 | 0.085 | 0.04497 | PS7 | ISOLABLE_AT_REF |
+| HP55 | HT59 | pressure_only | 2.467 | 0.085 | 0.04497 | PS7 | ISOLABLE_AT_REF |
+| HP55 | HT59 | flow_only | 1.767 | 0.06088 | 0.03221 | MFS3 | ISOLABLE_AT_REF |

@@ -1,0 +1,19 @@
+# Project-lead policy clarification, given explicitly in-session on 2026-11-13 (answer to the question "Should
+# preflight be non-consuming?": "Yes, non-consuming", followed by the written decision below). Applies to package v3
+# and later records of scope SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION. Recorded separately;
+# the original authorization records (v1, v2) are preserved unchanged.
+decided_by: Ahmed Zayed (project lead)
+date: '2026-11-13'
+decision:
+  attempt_begins: when the MATLAB simulation-generation 'run' command is initiated
+  non_consuming: [read-only environment checks, hash verification, model loading, parameter read-back,
+                  non-generating preflight]
+  consumption: a started simulation attempt consumes the authorization whether it succeeds or fails (and when it is
+    interrupted); any subsequent simulation attempt requires a new authorization record
+implementation:
+  gate: tools/simulation/v2_normal_authorization.py (claim with O_CREAT|O_EXCL, never released)
+  generator: "'run' claims before any simulation; 'preflight' calls the non-consuming status check and never simulates"
+  postprocess_and_validator: require the claim for exactly the claimed out_dir and unchanged bound files
+  tests: tests/test_v2_simulation_package.py
+consequence: implementing the policy changed hash-bound files; the package v2 authorization is therefore void
+  (fail closed) and was never executed; a package v3 request is prepared (AUTH_SIMULATION_GENERATION_V3_REQUEST.yaml)

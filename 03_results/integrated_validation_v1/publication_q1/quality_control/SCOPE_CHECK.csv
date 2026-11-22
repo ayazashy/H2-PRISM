@@ -1,0 +1,156 @@
+scope,base,status,path,verdict,reason
+outside_v1,6eddd4a,M,.gitattributes,AUTHORIZED,L21
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/.gitattributes,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/01_audit/AUDIT_SUMMARY.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/01_audit/BASELINE_REPRODUCTION.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/01_audit/BOUND_ORIGIN_AUDIT.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/01_audit/BOUND_ORIGIN_AUDIT.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/01_audit/D1_CORRECTION_MATRIX.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/01_audit/D1_CORRECTION_SUMMARY.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/01_audit/LEAKAGE_REGISTER_V2.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/01_audit/LEAKAGE_REGISTER_V2.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/01_audit/TEST_FAILURE_TRIAGE.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/02_design/DY_MONOTONICITY_PROOF.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/02_design/EXPERIMENT_DESIGN.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/02_design/EXPERIMENT_STATUS.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/02_design/HYPOTHESIS_REGISTRY.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/02_design/HYPOTHESIS_REGISTRY.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/ENVIRONMENT.txt,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/EXECUTION_LEDGER.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/DETERMINISM.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/RUN_ALL.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/build_v2_tables.log,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/d1_correction.log,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/dx_experiments.log,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/dy_isolability.log,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/dy_stress.log,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/fig_v2.log,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/hy2res_dy_adapter.log,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/pytest_full.log,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/pytest_restored_files.txt,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/r2_descriptive.log,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/triage_tests.log,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/v2_reports.log,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/verify_av.log,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/logs/verify_package.log,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/scripts/audit_baseline.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/scripts/build_v2_tables.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/scripts/d1_correction.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/scripts/dx_experiments.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/scripts/dy_isolability.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/scripts/dy_stress.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/scripts/fig_v2.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/scripts/hy2res_dy_adapter.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/scripts/r2_descriptive.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/scripts/run_all.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/scripts/triage_tests.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/scripts/v2_reports.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/03_execution/scripts/verify_v2.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/h0_hy2res_frozen_rule_reproduction.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/h1_hy2res_certified_vs_frozen.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/h2_hy2res_equivalence_summary.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/i1_isolability_onset.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/i2_structural_incidence.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/i3_unidentifiable_pair_register_REF.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/r1_class_metrics.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/r1_confusion.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/r1_unit_level.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/s1_dy_synthetic_stress_runs.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/s1_dy_synthetic_stress_summary.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/x1_conditional_D_given_confidence.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/x2_incremental_utility_lotemplate.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/x2_incremental_utility_per_template.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/x3_D_artifact_test.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/x4_registered_sensitivities.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/analysis/x5_synthetic_dx_control.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/RESULTS_INDEX.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T01_dx_incremental_utility.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T01_dx_incremental_utility.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T02_dx_synthetic_control.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T02_dx_synthetic_control.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T03_dy_synthetic_sensor_faults.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T03_dy_synthetic_sensor_faults.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T04_isolability_onset.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T04_isolability_onset.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T05_structural_incidence.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T05_structural_incidence.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T06_hy2res_certified_port.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T06_hy2res_certified_port.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T07_hypothetical_cost_scenarios.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T07_hypothetical_cost_scenarios.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T08_r2_class_metrics.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T08_r2_class_metrics.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T09_r2_run_level.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T09_r2_run_level.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T10_cost_categories.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/04_results/tables/V2-T10_cost_categories.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/V2-F01_dx_incremental_value.png,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/V2-F01_dx_incremental_value.svg,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/V2-F02_dy_synthetic_sensor_faults.png,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/V2-F02_dy_synthetic_sensor_faults.svg,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/V2-F03_isolability_onset.png,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/V2-F03_isolability_onset.svg,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/V2-F04_structural_incidence.png,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/V2-F04_structural_incidence.svg,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/V2-F05_hy2res_certified_port.png,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/V2-F05_hy2res_certified_port.svg,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/V2-F06_hypothesis_evidence_summary.png,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/V2-F06_hypothesis_evidence_summary.svg,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/V2_FIGURE_MANIFEST.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/captions/V2-F01_dx_incremental_value.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/captions/V2-F02_dy_synthetic_sensor_faults.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/captions/V2-F03_isolability_onset.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/captions/V2-F04_structural_incidence.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/captions/V2-F05_hy2res_certified_port.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/05_figures/captions/V2-F06_hypothesis_evidence_summary.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/06_reports/01_COMPREHENSIVE_SCIENTIFIC_RESULTS.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/06_reports/02_CRITICAL_FINDINGS_AND_FAILURE_ANALYSIS.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/06_reports/03_MODEL_IMPROVEMENTS_AND_ABLATION.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/06_reports/04_FORMAL_ENGINE_VERIFICATION.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/06_reports/05_GENERALIZATION_AND_TRANSFER.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/06_reports/06_GAS_PHYSICS_QUALIFICATION.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/06_reports/07_ENGINEERING_COST_AND_SCALABILITY.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/06_reports/08_LIMITATIONS_AND_THREATS_TO_VALIDITY.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/06_reports/09_PUBLICATION_CLAIM_REGISTER.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/06_reports/10_REVIEWER_CRITIQUE_RED_TEAM.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/06_reports/11_FINAL_TECHNICAL_ACCEPTANCE.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/06_reports/ACCEPTANCE_CRITERIA.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/06_reports/ACCEPTANCE_CRITERIA.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/06_reports/PUBLICATION_CLAIM_REGISTER.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/07_reproducibility/REPRODUCE.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/07_reproducibility/V2_VERIFICATION.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/README.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/integrated_validation_v2/SHA256SUMS.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/maintenance/L20_STAGE2_RESOLUTION.md,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/maintenance/L21_CRLF_PIN_SCAN.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/maintenance/L21_MIGRATION_LOG.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/maintenance/POST_BASELINE_CHANGE_REGISTER.csv,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/maintenance/build_closure_report.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/maintenance/l21_apply_eol.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/maintenance/l21_scan_crlf_pins.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/maintenance/logs/pytest_full_final.log,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/maintenance/logs/pytest_restored_files.txt,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/maintenance/register_change.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,A,03_results/maintenance/verify_all.py,AUTHORIZED,registered independent package
+outside_v1,6eddd4a,M,scripts/run_experiments.py,AUTHORIZED,L20
+outside_v1,6eddd4a,M,src/h2prism/evaluation.py,AUTHORIZED,L20
+outside_v1,6eddd4a,D,src/h2prism/experiments.py,AUTHORIZED,L20
+outside_v1,6eddd4a,A,src/h2prism/simnet_experiments.py,AUTHORIZED,L20
+outside_v1,6eddd4a,A,src/h2prism/simnet_windows.py,AUTHORIZED,L20
+outside_v1,6eddd4a,A,tests/test_dy_adversarial.py,AUTHORIZED,test addition
+outside_v1,6eddd4a,M,tests/test_faisal_pipeline.py,AUTHORIZED,L20
+outside_v1,6eddd4a,A,tests/test_package_manifest_names.py,AUTHORIZED,test addition
+outside_v1,6eddd4a,A,tests/test_verifier_scope.py,AUTHORIZED,test addition
+outside_v1,6eddd4a,A,tests/test_windows_modules.py,AUTHORIZED,L20
+v1,6b98a8a,M,03_results/integrated_validation_v1/README.md,AUTHORIZED,L22 (1eb820d)
+v1,6b98a8a,M,03_results/integrated_validation_v1/SHA256SUMS.csv,EXEMPT,verifier output rewritten on every run
+v1,6b98a8a,M,03_results/integrated_validation_v1/publication_q1/REPRODUCE.md,AUTHORIZED,L22 (1eb820d)
+v1,6b98a8a,A,03_results/integrated_validation_v1/publication_q1/quality_control/CHECKSUM_CHANGES_L22.csv,AUTHORIZED,L22 (1eb820d)
+v1,6b98a8a,D,03_results/integrated_validation_v1/publication_q1/quality_control/FIGURE_MANIFEST.csv,AUTHORIZED,L22 (1eb820d)
+v1,6b98a8a,A,03_results/integrated_validation_v1/publication_q1/quality_control/MANIFEST_RENAME_RECORD.csv,AUTHORIZED,L22 (1eb820d)
+v1,6b98a8a,A,03_results/integrated_validation_v1/publication_q1/quality_control/Q1_FIGURE_MANIFEST.csv,AUTHORIZED,L22 (1eb820d)
+v1,6b98a8a,M,03_results/integrated_validation_v1/publication_q1/scripts/build_figures.py,AUTHORIZED,L22 (1eb820d)
+v1,6b98a8a,A,03_results/integrated_validation_v1/publication_q1/scripts/migrate_l22_manifest_name.py,AUTHORIZED,L22 (1eb820d)
+v1,6b98a8a,M,03_results/integrated_validation_v1/publication_q1/scripts/results_report.py,AUTHORIZED,L22 (1eb820d)
+v1,6b98a8a,A,03_results/integrated_validation_v1/publication_q1/scripts/scope_check.py,AUTHORIZED,verifier scope
+v1,6b98a8a,M,03_results/integrated_validation_v1/publication_q1/scripts/verify_package.py,AUTHORIZED,L22 (1eb820d); verifier scope

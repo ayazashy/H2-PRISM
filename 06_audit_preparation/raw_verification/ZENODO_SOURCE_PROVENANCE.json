@@ -1,0 +1,31 @@
+{
+  "record_url": "https://zenodo.org/records/17871393",
+  "doi": "10.5281/zenodo.17871393",
+  "concept_doi": "10.5281/zenodo.17871392",
+  "title": "H2-SimNet Dataset: A Simulation-based Dataset for Anomaly Detection in Hydrogen Blend Transport Networks",
+  "version": "V2",
+  "publication_date": "2025-12-09",
+  "license": "cc-by-4.0",
+  "files": [
+    {
+      "key": "H2-SimNet-Dataset.zip",
+      "size": 509236976,
+      "checksum": "md5:15bc64a3afc9e2990c9db66eb37617de"
+    }
+  ],
+  "local_archive": {
+    "path": "~/Downloads/H2-SimNet-Dataset.zip (pre-existing local copy; no new download needed)",
+    "size": 509236976,
+    "md5": "15bc64a3afc9e2990c9db66eb37617de",
+    "sha256": "3886e9457001abe3842d0ca46bb3b744d29ca0c0de50e7a625aa4d5611537c05",
+    "md5_matches_zenodo": true,
+    "zip_crc_test": "PASS"
+  },
+  "extraction": {
+    "target": "data/raw/H2-SimNet-Dataset (gitignored by .gitignore:51 data/raw/*)",
+    "zip_members": 330,
+    "files_written": 264,
+    "path_traversal_check": "PASS"
+  },
+  "retrieved": "2026-11-10 via Zenodo REST API /api/records/17871393"
+}

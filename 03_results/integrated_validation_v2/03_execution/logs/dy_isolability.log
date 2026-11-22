@@ -1,0 +1,55 @@
+   hyp_a hyp_b       channels  lambda_star           reason limiting_channel_at_worst_shift_pair
+0     HN  H213            all    18.965813  ISOLABLE_AT_REF                                 MFS3
+1     HN  H213  pressure_only     0.007442    BOUND_LIMITED                                  PS1
+2     HN  H213      flow_only    18.965813  ISOLABLE_AT_REF                                 MFS3
+3     HN  H312            all    17.744441  ISOLABLE_AT_REF                                 MFS1
+4     HN  H312  pressure_only     0.018303    BOUND_LIMITED                                  PS3
+5     HN  H312      flow_only    17.744441  ISOLABLE_AT_REF                                 MFS1
+6     HN  H215            all     0.080122    BOUND_LIMITED                                  PS4
+7     HN  H215  pressure_only     0.080122    BOUND_LIMITED                                  PS4
+8     HN  H215      flow_only     0.010123    BOUND_LIMITED                                 MFS1
+9     HN  HP55            all     2.467496  ISOLABLE_AT_REF                                  PS7
+10    HN  HP55  pressure_only     2.467496  ISOLABLE_AT_REF                                  PS7
+11    HN  HP55      flow_only     2.221830  ISOLABLE_AT_REF                                 MFS3
+12    HN  HT59            all     2.755694  ISOLABLE_AT_REF                                 MFS3
+13    HN  HT59  pressure_only     2.438786  ISOLABLE_AT_REF                                  PS1
+14    HN  HT59      flow_only     2.755694  ISOLABLE_AT_REF                                 MFS3
+15  H213  H312            all    18.965695  ISOLABLE_AT_REF                                 MFS3
+16  H213  H312  pressure_only     0.016595    BOUND_LIMITED                                  PS3
+17  H213  H312      flow_only    18.965695  ISOLABLE_AT_REF                                 MFS3
+18  H213  H215            all    18.966447  ISOLABLE_AT_REF                                 MFS3
+19  H213  H215  pressure_only     0.079399    BOUND_LIMITED                                  PS4
+20  H213  H215      flow_only    18.966447  ISOLABLE_AT_REF                                 MFS3
+21  H213  HP55            all    21.185422  ISOLABLE_AT_REF                                 MFS3
+22  H213  HP55  pressure_only     2.467496  ISOLABLE_AT_REF                                  PS7
+23  H213  HP55      flow_only    21.185422  ISOLABLE_AT_REF                                 MFS3
+24  H213  HT59            all    21.565961  ISOLABLE_AT_REF                                 MFS3
+25  H213  HT59  pressure_only     2.434108  ISOLABLE_AT_REF                                  PS1
+26  H213  HT59      flow_only    21.565961  ISOLABLE_AT_REF                                 MFS3
+27  H312  H215            all    17.744512  ISOLABLE_AT_REF                                 MFS1
+28  H312  H215  pressure_only     0.069171    BOUND_LIMITED                                  PS4
+29  H312  H215      flow_only    17.744512  ISOLABLE_AT_REF                                 MFS1
+30  H312  HP55            all    18.368190  ISOLABLE_AT_REF                                 MFS1
+31  H312  HP55  pressure_only     2.467496  ISOLABLE_AT_REF                                  PS7
+32  H312  HP55      flow_only    18.368190  ISOLABLE_AT_REF                                 MFS1
+33  H312  HT59            all    17.876651  ISOLABLE_AT_REF                                 MFS1
+34  H312  HT59  pressure_only     2.438782  ISOLABLE_AT_REF                                  PS1
+35  H312  HT59      flow_only    17.867848  ISOLABLE_AT_REF                                 MFS1
+36  H215  HP55            all     2.467496  ISOLABLE_AT_REF                                  PS7
+37  H215  HP55  pressure_only     2.467496  ISOLABLE_AT_REF                                  PS7
+38  H215  HP55      flow_only     2.220482  ISOLABLE_AT_REF                                 MFS3
+39  H215  HT59            all     2.755060  ISOLABLE_AT_REF                                 MFS3
+40  H215  HT59  pressure_only     2.438785  ISOLABLE_AT_REF                                  PS1
+41  H215  HT59      flow_only     2.755060  ISOLABLE_AT_REF                                 MFS3
+42  HP55  HT59            all     2.467496  ISOLABLE_AT_REF                                  PS7
+43  HP55  HT59  pressure_only     2.467496  ISOLABLE_AT_REF                                  PS7
+44  HP55  HT59      flow_only     1.767403  ISOLABLE_AT_REF                                 MFS3
+channel                 PS1  PS2  PS3  PS4  PS5  PS6  PS7  PS8  PS9  PS10  MFS1  MFS2  MFS3
+hypothesis template                                                                        
+H213       ALT            0    0    0    0    0    0    0    0    0     0     0     0     1
+           SID213         0    0    0    0    0    0    0    0    0     0     0     0     1
+H215       SID215         0    0    0    0    0    0    0    0    0     0     0     0     0
+H312       SID312         0    0    0    0    0    0    0    0    0     0     1     0     0
+HN         NORMAL_ZERO    0    0    0    0    0    0    0    0    0     0     0     0     0
+HP55       PRESSURE       1    0    0    0    0    0    1    0    0     0     0     0     1
+HT59       TIMING         1    0    0    0    0    0    1    0    0     0     0     0     1

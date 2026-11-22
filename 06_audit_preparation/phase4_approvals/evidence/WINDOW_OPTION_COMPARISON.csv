@@ -1,0 +1,11 @@
+window_s,stride_s,pre_event_policy,windows_total,boundary_crossing,eligible,eligible_NORMAL,eligible_LEAK,eligible_COMPRESSOR_FAULT,eligible_COMPRESSOR_DELAY,runs_contributing_NORMAL,runs_contributing_LEAK,runs_contributing_COMPRESSOR_FAULT,runs_contributing_COMPRESSOR_DELAY,overlap_fraction
+30,15,exclude,67932,102,56118,3996,43953,7980,189,3,39,6,3,0.5
+30,15,label_normal,67932,102,67830,15708,43953,7980,189,45,39,6,3,0.5
+60,30,exclude,33915,93,27993,1995,21921,3984,93,3,39,6,3,0.5
+60,30,label_normal,33915,93,33822,7824,21921,3984,93,45,39,6,3,0.5
+60,60,exclude,16983,51,14013,999,10977,1992,45,3,39,6,3,0
+60,60,label_normal,16983,51,16932,3918,10977,1992,45,45,39,6,3,0
+120,60,exclude,16932,93,13962,996,10938,1986,42,3,39,6,3,0.5
+120,60,label_normal,16932,93,16839,3873,10938,1986,42,42,39,6,3,0.5
+300,150,exclude,6732,90,5529,396,4335,786,12,3,39,6,3,0.5
+300,150,label_normal,6732,90,6642,1509,4335,786,12,42,39,6,3,0.5

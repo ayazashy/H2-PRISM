@@ -1,0 +1,22 @@
+component_path,component_type,stage1_role,stage2_status,owner,rationale_and_evidence
+data/raw/H2-SimNet-Dataset,raw_data,Primary benchmark,KEEP,Yazan,Untouched benchmark dataset containing 123 scenarios across 265 physical files.
+audit/,audit_scripts,None (New in Stage 2),IMPLEMENTED,Yazan,Deterministic Python audit suite (Y1-Y8) executable from clean checkout.
+01_dataset_audit/,audit_artifacts,None (New in Stage 2),VALIDATED_FROZEN,Yazan,Complete verified audit outputs checksums manifest folds and readiness report.
+00_governance/,governance,None (New in Stage 2),IMPLEMENTED,Ahmed_Faisal_Yazan,Central task register repo classification gate decisions and change control.
+02_methodology/,methodology_specs,None (New in Stage 2),SPECIFIED,Ahmed_Faisal,Methodology problem formulation windowing baseline D(x) and selective policy specs.
+03_results/,experimental_results,None (New in Stage 2),SPECIFIED,Faisal,Machine-readable outputs baseline results matched coverage and ablation tables.
+04_validation/,testing_and_repro,None (New in Stage 2),SPECIFIED,Faisal,Test results leakage assertions and experiment reproducibility reports.
+05_documentation/,scientific_manuscript,None (New in Stage 2),SPECIFIED,Ahmed,Research paper draft technical report and provenance register.
+src/h2prism/,core_package,None (New in Stage 2),SPECIFIED,Faisal,Modular Python package implementing io windows features distinguishability and policy.
+configs/,configuration,None (New in Stage 2),SPECIFIED,Faisal_Yazan,Interface contracts and frozen evaluation configuration YAMLs.
+run_prototype.py,prototype_script,Stage 1 visual dashboard runner,RETIRED,Team,Deprecated in favor of standardized grouped cross-validation pipeline. Backed up to old-main.
+run_scenario.py,prototype_script,Stage 1 scenario CLI runner,RETIRED,Team,Deprecated in favor of full scenario audit and grouped evaluation. Backed up to old-main.
+scripts/generate_visual_dashboard.py,script,Stage 1 dashboard HTML generator,RETIRED,Team,Stage 1 visual dashboard tool retired. Backed up to old-main.
+scripts/train_baseline_models.py,script,Stage 1 baseline trainer,RETIRED,Team,Superseded by Faisal Task F5 baseline spec and grouped folds. Backed up to old-main.
+results/prototype_dashboard.html,output,Stage 1 prototype dashboard,RETIRED,Team,Stage 1 presentation dashboard archived on old-main.
+results/attribution_model.joblib,model_artifact,Stage 1 model weights,RETIRED,Team,Trained on preliminary Stage 1 features; retired. Backed up to old-main.
+video-general/,media_build,Stage 1 animated video project,RETIRED,Team,1.1 GB Node.js video generator retired. Backed up to old-main.
+UPLOADED_APPLICATION/,temporary_export,Stage 1 Google Drive archive,RETIRED,Team,Temporary export folder for initial registration removed. Backed up to old-main.
+AUDIT.md,documentation,Stage 1 preliminary audit,RETIRED,Ahmed,Superseded by 01_dataset_audit/DATASET_INVENTORY.md. Backed up to old-main.
+ASSUMPTIONS.md,documentation,Stage 1 preliminary assumptions,RETIRED,Ahmed,Superseded by 01_dataset_audit/ and 05_documentation/. Backed up to old-main.
+MATERIALS.md,documentation,Stage 1 data notes,RETIRED,Yazan,Superseded by 01_dataset_audit/DATASET_SCENARIO_MAP.csv. Backed up to old-main.

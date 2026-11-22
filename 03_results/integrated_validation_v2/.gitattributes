@@ -1,0 +1,11 @@
+# Scoped to this package: SHA256SUMS.csv records LF bytes for scripts and text outputs.
+*.py text eol=lf
+*.csv text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.svg text eol=lf
+*.png binary
+*.gz binary
+*.txt text eol=lf
+*.log text eol=lf
+.gitattributes text eol=lf

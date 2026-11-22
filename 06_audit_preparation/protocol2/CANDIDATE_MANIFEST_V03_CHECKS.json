@@ -1,0 +1,61 @@
+{
+  "status": "CANDIDATE_NOT_ACTIVE_PENDING_R18",
+  "source_manifest_v02_sha256": "36bcbaf97bb17659995f393884d1dcde3bbca9236c3dcdcc6e7651e61538fb59",
+  "attribution_sha256": "8ae38caf0de31cbc73aa0302f90a804cd8dea9e0236bddf1676704e25c85f6f9",
+  "n_runs": 57,
+  "n_topology_changed": 36,
+  "n_eligible_changed": 32,
+  "fold_changes_by_class": {
+    "COMPRESSOR_DELAY": 2,
+    "COMPRESSOR_FAULT": 4,
+    "LEAK": 26
+  },
+  "checks": [
+    {
+      "check": "every run has source-model evidence",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "only topology attribution differs (labels, eligibility, families, files unchanged)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "changed runs are exactly the inconsistent ones",
+      "ok": true,
+      "detail": "36 runs"
+    },
+    {
+      "check": "families disjoint between train and test in every fold",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "runs disjoint between train and test in every fold",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "each held-out fold is a single sensor configuration",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "every eligible run is held out exactly once",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "BY DESIGN (not label leakage): train and test share scenario independence groups across topologies",
+      "ok": true,
+      "detail": "{1: 13, 2: 13, 3: 13}"
+    }
+  ],
+  "all_checks_passed": true,
+  "outputs": {
+    "CANDIDATE_MANIFEST_V03.csv": "f8ce526159b1b9239c7a2c329b0a61c3283239a4ed381295c6011da541b7e3b0",
+    "CANDIDATE_OUTER_FOLDS_V03.csv": "e08b3773fca1b0eea55bfa6757823d273679023d1f029a1830ee005f33ff7887",
+    "CANDIDATE_FOLD_COMPOSITION_CHANGE.csv": "0f130de6423e4662d6f8c18d3a39737485a5f60b2fd8cda12fafa2b1ac68dcb2"
+  }
+}

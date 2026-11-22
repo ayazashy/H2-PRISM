@@ -1,0 +1,5 @@
+target,class,n,n_families,specific,ambiguity_set,unresolved,specific_correct,ambiguity_inclusion,reporting
+0.6,COMPRESSOR_DELAY,62,2,0.0,0.5,0.5,,1.0,descriptive_only
+0.6,COMPRESSOR_FAULT,2656,2,0.0,0.0,1.0,,,descriptive_only
+0.6,LEAK,14614,20,0.7322430546,0.0,0.2677569454,1.0,,restricted
+0.6,NORMAL,1330,2,0.3736842105,0.0,0.6263157895,1.0,,descriptive_only

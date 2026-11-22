@@ -1,0 +1,9 @@
+y_true,NORMAL,LEAK,COMPRESSOR_FAULT,COMPRESSOR_DELAY,scope
+NORMAL,1330,662,3,0,all_windows
+LEAK,7307,14614,0,0,all_windows
+COMPRESSOR_FAULT,9,0,3975,0,all_windows
+COMPRESSOR_DELAY,0,0,31,62,all_windows
+NORMAL,1330,662,3,0,undisputed_runs_only
+LEAK,0,7307,0,0,undisputed_runs_only
+COMPRESSOR_FAULT,0,0,1328,0,undisputed_runs_only
+COMPRESSOR_DELAY,0,0,0,31,undisputed_runs_only

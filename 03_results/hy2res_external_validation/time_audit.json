@@ -1,0 +1,19 @@
+{
+  "rows_preserved": 300768,
+  "timestamp_parse_failures": 0,
+  "timestamps_monotonic_nondecreasing": true,
+  "duplicate_timestamp_intervals": 21,
+  "intervals_exactly_5_seconds": 297975,
+  "positive_intervals_shorter_than_5_seconds": 32,
+  "intervals_longer_than_5_seconds": 2739,
+  "non_5_second_intervals": 2792,
+  "break_open_markers": 20,
+  "break_close_markers": 20,
+  "paired_open_close_markers": 20,
+  "unmatched_open_markers": 0,
+  "unmatched_close_markers": 0,
+  "unrecognized_break_markers": [],
+  "segments": 2793,
+  "segmentation_rule": "New segment at OPEN, after CLOSE, and at every timestamp interval other than exactly 5 seconds; no interpolation.",
+  "timezone_handling": "Timezone-naive source values preserved; timezone not inferred."
+}

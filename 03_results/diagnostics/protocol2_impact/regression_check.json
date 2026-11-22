@@ -1,0 +1,25 @@
+{
+  "status": "REGRESSION_CHECK",
+  "all_reproduced": true,
+  "folds": [
+    {
+      "held_out": "Center",
+      "n": 9331,
+      "D_reproduced": true,
+      "flags_reproduced": true
+    },
+    {
+      "held_out": "Downstream",
+      "n": 9331,
+      "D_reproduced": true,
+      "flags_reproduced": true
+    },
+    {
+      "held_out": "Upstream",
+      "n": 9331,
+      "D_reproduced": true,
+      "flags_reproduced": true
+    }
+  ],
+  "source_run_key": "a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb"
+}

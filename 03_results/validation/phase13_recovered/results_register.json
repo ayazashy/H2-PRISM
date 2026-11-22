@@ -1,0 +1,270 @@
+[
+  {
+    "metric": "Recovered opening acceptance",
+    "definition": "Approved hashes, solver, clock, sensor and physical audit",
+    "dataset": "Recovered Center",
+    "evaluation_unit": "simulation",
+    "result": "ACCEPTED",
+    "validity": "ESTABLISHED",
+    "source_evidence": "recovered_acceptance.json",
+    "table_path": "recovered_acceptance.json",
+    "limitations": "Simulator result"
+  },
+  {
+    "metric": "Accepted controlled registry",
+    "definition": "Runs with accepted hashes",
+    "dataset": "Center",
+    "evaluation_unit": "capture",
+    "result": 10,
+    "validity": "ESTABLISHED",
+    "source_evidence": "evidence.json",
+    "table_path": "evidence.json",
+    "limitations": "One source family"
+  },
+  {
+    "metric": "Outlet onset and integral",
+    "definition": "Opening minus its own matched control",
+    "dataset": "Center",
+    "evaluation_unit": "pair",
+    "result": {
+      "kg_s": 0.6919316666199249,
+      "kg": 13104.88308965296
+    },
+    "validity": "ESTABLISHED",
+    "source_evidence": "evidence.json",
+    "table_path": "evidence.json",
+    "limitations": "One alternate profile"
+  },
+  {
+    "metric": "Conservation",
+    "definition": "Final event-aware mass balance residual",
+    "dataset": "Center",
+    "evaluation_unit": "simulation",
+    "result": {
+      "alternate_opening_kg": -0.9416870806162478
+    },
+    "validity": "ESTABLISHED",
+    "source_evidence": "evidence.json",
+    "table_path": "evidence.json",
+    "limitations": "Numerical residual"
+  },
+  {
+    "metric": "Operating profile",
+    "definition": "30-second normalized all-channel RMS contrast",
+    "dataset": "Center",
+    "evaluation_unit": "two paired signatures",
+    "result": 0.00002761196348694492,
+    "validity": "EXPLORATORY",
+    "source_evidence": "pairwise.csv",
+    "table_path": "pairwise.csv",
+    "limitations": "One alternate profile"
+  },
+  {
+    "metric": "Sensor and window ablation",
+    "definition": "Normalized RMS over each selected channel subset and window",
+    "dataset": "Center",
+    "evaluation_unit": "signature pair",
+    "result": "See comparison table",
+    "validity": "EXPLORATORY",
+    "source_evidence": "pairwise.csv",
+    "table_path": "pairwise.csv",
+    "limitations": "Conditional on scales and perturbations"
+  },
+  {
+    "metric": "Formal decision",
+    "definition": "Count by policy decision on same accepted observations",
+    "dataset": "Center",
+    "evaluation_unit": "capture",
+    "result": {
+      "specific": 0,
+      "ambiguous": 0,
+      "unresolved": 10
+    },
+    "validity": "ESTABLISHED",
+    "source_evidence": "evidence.json",
+    "table_path": "evidence.json",
+    "limitations": "No qualified prediction enclosures"
+  },
+  {
+    "metric": "Formal localization",
+    "definition": "Existing L0–L2 criterion",
+    "dataset": "Center",
+    "evaluation_unit": "capture",
+    "result": "L0",
+    "validity": "ESTABLISHED",
+    "source_evidence": "evidence.json",
+    "table_path": "evidence.json",
+    "limitations": "No competing region excluded"
+  },
+  {
+    "metric": "Hypothetical uncertainty",
+    "definition": "Prototype matches under assumed channel half-widths",
+    "dataset": "Center",
+    "evaluation_unit": "prototype and subset",
+    "result": "See sensitivity table",
+    "validity": "EXPLORATORY",
+    "source_evidence": "hypothetical_sensitivity.csv",
+    "table_path": "hypothetical_sensitivity.csv",
+    "limitations": "Self-matched, unqualified bounds"
+  },
+  {
+    "metric": "Release logistic regression",
+    "definition": "Predicted LEAK among scored archived LEAK cases",
+    "dataset": "Historical release",
+    "evaluation_unit": "scenario",
+    "result": {
+      "hits": 30,
+      "n": 39
+    },
+    "validity": "EXPLORATORY",
+    "source_evidence": "ml/ml_results.json",
+    "table_path": "ml/ml_results.json",
+    "limitations": "Annotation onset supplied, dependency component holdout"
+  },
+  {
+    "metric": "Release random forest",
+    "definition": "Predicted LEAK among scored archived LEAK cases",
+    "dataset": "Historical release",
+    "evaluation_unit": "scenario",
+    "result": {
+      "hits": 36,
+      "n": 39
+    },
+    "validity": "EXPLORATORY",
+    "source_evidence": "ml/ml_results.json",
+    "table_path": "ml/ml_results.json",
+    "limitations": "Annotation onset supplied, dependency component holdout"
+  },
+  {
+    "metric": "Balanced accuracy",
+    "definition": "Balanced accuracy",
+    "dataset": "H2-SimNet",
+    "evaluation_unit": "scenario or independent family",
+    "result": null,
+    "validity": "NOT_ESTABLISHED",
+    "source_evidence": "research_report.md",
+    "table_path": "research_report.md",
+    "limitations": "Missing test class support or qualified independent physical evidence"
+  },
+  {
+    "metric": "Macro F1",
+    "definition": "Macro F1",
+    "dataset": "H2-SimNet",
+    "evaluation_unit": "scenario or independent family",
+    "result": null,
+    "validity": "NOT_ESTABLISHED",
+    "source_evidence": "research_report.md",
+    "table_path": "research_report.md",
+    "limitations": "Missing test class support or qualified independent physical evidence"
+  },
+  {
+    "metric": "Multiclass precision and recall",
+    "definition": "Multiclass precision and recall",
+    "dataset": "H2-SimNet",
+    "evaluation_unit": "scenario or independent family",
+    "result": null,
+    "validity": "NOT_ESTABLISHED",
+    "source_evidence": "research_report.md",
+    "table_path": "research_report.md",
+    "limitations": "Missing test class support or qualified independent physical evidence"
+  },
+  {
+    "metric": "Calibration",
+    "definition": "Calibration",
+    "dataset": "H2-SimNet",
+    "evaluation_unit": "scenario or independent family",
+    "result": null,
+    "validity": "NOT_ESTABLISHED",
+    "source_evidence": "research_report.md",
+    "table_path": "research_report.md",
+    "limitations": "Missing test class support or qualified independent physical evidence"
+  },
+  {
+    "metric": "Calibrated abstention",
+    "definition": "Calibrated abstention",
+    "dataset": "H2-SimNet",
+    "evaluation_unit": "scenario or independent family",
+    "result": null,
+    "validity": "NOT_ESTABLISHED",
+    "source_evidence": "research_report.md",
+    "table_path": "research_report.md",
+    "limitations": "Missing test class support or qualified independent physical evidence"
+  },
+  {
+    "metric": "Matched coverage and selective risk",
+    "definition": "Matched coverage and selective risk",
+    "dataset": "H2-SimNet",
+    "evaluation_unit": "scenario or independent family",
+    "result": null,
+    "validity": "NOT_ESTABLISHED",
+    "source_evidence": "research_report.md",
+    "table_path": "research_report.md",
+    "limitations": "Missing test class support or qualified independent physical evidence"
+  },
+  {
+    "metric": "Classifier plus formal added value",
+    "definition": "Classifier plus formal added value",
+    "dataset": "H2-SimNet",
+    "evaluation_unit": "scenario or independent family",
+    "result": null,
+    "validity": "NOT_ESTABLISHED",
+    "source_evidence": "research_report.md",
+    "table_path": "research_report.md",
+    "limitations": "Missing test class support or qualified independent physical evidence"
+  },
+  {
+    "metric": "Independent diagnostic accuracy",
+    "definition": "Independent diagnostic accuracy",
+    "dataset": "H2-SimNet",
+    "evaluation_unit": "scenario or independent family",
+    "result": null,
+    "validity": "NOT_ESTABLISHED",
+    "source_evidence": "research_report.md",
+    "table_path": "research_report.md",
+    "limitations": "Missing test class support or qualified independent physical evidence"
+  },
+  {
+    "metric": "Independent location recognition",
+    "definition": "Independent location recognition",
+    "dataset": "H2-SimNet",
+    "evaluation_unit": "scenario or independent family",
+    "result": null,
+    "validity": "NOT_ESTABLISHED",
+    "source_evidence": "research_report.md",
+    "table_path": "research_report.md",
+    "limitations": "Missing test class support or qualified independent physical evidence"
+  },
+  {
+    "metric": "Qualified uncertainty",
+    "definition": "Qualified uncertainty",
+    "dataset": "H2-SimNet",
+    "evaluation_unit": "scenario or independent family",
+    "result": null,
+    "validity": "NOT_ESTABLISHED",
+    "source_evidence": "research_report.md",
+    "table_path": "research_report.md",
+    "limitations": "Missing test class support or qualified independent physical evidence"
+  },
+  {
+    "metric": "Hydrogen physical fidelity",
+    "definition": "Hydrogen physical fidelity",
+    "dataset": "H2-SimNet",
+    "evaluation_unit": "scenario or independent family",
+    "result": null,
+    "validity": "NOT_ESTABLISHED",
+    "source_evidence": "research_report.md",
+    "table_path": "research_report.md",
+    "limitations": "Missing test class support or qualified independent physical evidence"
+  },
+  {
+    "metric": "Clean-release provenance",
+    "definition": "Clean-release provenance",
+    "dataset": "H2-SimNet",
+    "evaluation_unit": "scenario or independent family",
+    "result": null,
+    "validity": "NOT_ESTABLISHED",
+    "source_evidence": "research_report.md",
+    "table_path": "research_report.md",
+    "limitations": "Missing test class support or qualified independent physical evidence"
+  }
+]

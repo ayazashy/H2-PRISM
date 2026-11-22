@@ -1,0 +1,10 @@
+cost_term,parametric_form,source_supported_value,status,total_cost_model
+A sensor procurement,"c_s,i per channel type (pressure, mass flow)",no source-supported price in repository,symbolic,"C_total = Σ_i n_i (c_s,i + c_inst,i + c_cal,i + T·c_m,i + c_daq) + c_pwr + c_compute + c_FP·FP + c_FN·FN"
+B installation,"c_inst,i (site, hot-tap or insertion)",not available,symbolic,"C_total = Σ_i n_i (c_s,i + c_inst,i + c_cal,i + T·c_m,i + c_daq) + c_pwr + c_compute + c_FP·FP + c_FN·FN"
+C calibration,"c_cal,i per interval",not available,symbolic,"C_total = Σ_i n_i (c_s,i + c_inst,i + c_cal,i + T·c_m,i + c_daq) + c_pwr + c_compute + c_FP·FP + c_FN·FN"
+D maintenance,"c_m,i per year",not available,symbolic,"C_total = Σ_i n_i (c_s,i + c_inst,i + c_cal,i + T·c_m,i + c_daq) + c_pwr + c_compute + c_FP·FP + c_FN·FN"
+E data acquisition / communication,c_daq per channel,not available,symbolic,"C_total = Σ_i n_i (c_s,i + c_inst,i + c_cal,i + T·c_m,i + c_daq) + c_pwr + c_compute + c_FP·FP + c_FN·FN"
+F power / infrastructure,c_pwr,not available,symbolic,"C_total = Σ_i n_i (c_s,i + c_inst,i + c_cal,i + T·c_m,i + c_daq) + c_pwr + c_compute + c_FP·FP + c_FN·FN"
+G compute hardware,measured latency (A14) × required decisions per hour,latency measured; hardware price not available,partly measured,"C_total = Σ_i n_i (c_s,i + c_inst,i + c_cal,i + T·c_m,i + c_daq) + c_pwr + c_compute + c_FP·FP + c_FN·FN"
+H software runtime,CPU-seconds per decision (A14),measured,"measured (time, not money)","C_total = Σ_i n_i (c_s,i + c_inst,i + c_cal,i + T·c_m,i + c_daq) + c_pwr + c_compute + c_FP·FP + c_FN·FN"
+I inspection / follow-up,c_FP × false-specific rate + c_FN × missed-event rate,rates only conditional (Center) or exploratory (R2),symbolic,"C_total = Σ_i n_i (c_s,i + c_inst,i + c_cal,i + T·c_m,i + c_daq) + c_pwr + c_compute + c_FP·FP + c_FN·FN"

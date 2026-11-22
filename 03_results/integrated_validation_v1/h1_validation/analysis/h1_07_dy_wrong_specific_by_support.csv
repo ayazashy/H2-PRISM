@@ -1,0 +1,3 @@
+universe,true_supported,specific,wrong,analysis_status
+restricted,False,11,11,CONDITIONAL_HYPOTHETICAL_BOUNDS
+restricted,True,48,0,CONDITIONAL_HYPOTHETICAL_BOUNDS

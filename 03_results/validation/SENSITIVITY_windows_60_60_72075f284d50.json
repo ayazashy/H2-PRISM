@@ -1,0 +1,179 @@
+{
+  "run_dir": "SENSITIVITY_windows_60_60",
+  "run_key": "72075f284d5044f8d8ac45c440d3bdacc8d710e93f040304a3e7369b52385060",
+  "artifact_class": "SENSITIVITY_EXPERIMENT",
+  "analysis": "windows_60_60",
+  "config_sha256": "f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae",
+  "effective_config_sha256": "3d601dbb5d9941edd8fcd491df59e114ecea772053b2efb6ab25e551cd3eed53",
+  "git_commit": "ddb91aecbafe3d7211902749a3a2365239c11582",
+  "status": "VALID",
+  "n_checks": 33,
+  "n_failed": 0,
+  "checks": [
+    {
+      "check": "run_manifest_present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "status_completed",
+      "ok": true,
+      "detail": "COMPLETED"
+    },
+    {
+      "check": "execution_class",
+      "ok": true,
+      "detail": "SENSITIVITY_EXPERIMENT"
+    },
+    {
+      "check": "authorization_recorded",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "protocol_config_is_pinned",
+      "ok": true,
+      "detail": "f788b6d870183303b4478b2852858e270074cd1d716398e6058b6c650b234aae"
+    },
+    {
+      "check": "present:coverage_risk.csv",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "columns:coverage_risk.csv",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "present:estimability.csv",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "columns:estimability.csv",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "present:rq1.csv",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "columns:rq1.csv",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "present:rq2.csv",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "columns:rq2.csv",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "present:calibration_reliability.csv",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "columns:calibration_reliability.csv",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "present:risk_coverage_curve.csv",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "columns:risk_coverage_curve.csv",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "present:confusion_matrix.csv",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "columns:confusion_matrix.csv",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "present:class_metrics.csv",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "columns:class_metrics.csv",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "present:rq1_by_topology.csv",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "columns:rq1_by_topology.csv",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "present:decision_reasons.csv",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "columns:decision_reasons.csv",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "present:ambiguity_sizes.csv",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "columns:ambiguity_sizes.csv",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "present:support_flags_summary.csv",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "columns:support_flags_summary.csv",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "present:tie_sensitivity.csv",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "rq2_shares_sum_to_one",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "rank_matched_coverage_matched",
+      "ok": true,
+      "detail": "0 estimable rank-matched comparisons"
+    },
+    {
+      "check": "unique_window_ids",
+      "ok": true,
+      "detail": ""
+    }
+  ]
+}

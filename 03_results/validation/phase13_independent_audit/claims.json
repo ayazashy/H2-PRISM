@@ -1,0 +1,29 @@
+{
+  "replay": {
+    "verdict": "PASS",
+    "rows": 702
+  },
+  "known_dependency_crossing": {
+    "verdict": "PASS",
+    "edges": 0
+  },
+  "preevent_history": {
+    "verdict": "INCONCLUSIVE",
+    "flagged_pairs": 8,
+    "long_scored_pairs": 2
+  },
+  "real_time_detection": {
+    "verdict": "FAIL",
+    "reason": "oracle annotation and onset plus four seconds"
+  },
+  "in_fold_preprocessing": {
+    "verdict": "PASS"
+  },
+  "confirmatory_performance": {
+    "verdict": "FAIL",
+    "reason": "single class and reused folds"
+  },
+  "demonstrated_overfitting": {
+    "verdict": "INCONCLUSIVE"
+  }
+}

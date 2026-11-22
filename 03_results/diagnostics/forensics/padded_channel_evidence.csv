@@ -1,0 +1,7 @@
+source_folder_or_file,PS11_mean,PS11_std,PS12_mean,PS12_std,MFS4_mean,MFS4_std
+anom_gestcent,6.5043,1.49654,6.5733,0.741564,35.8108,9.25443
+anom_gestdown,3.3828,1.3323e-15,2.3819,8.88201e-16,0,0
+anom_gestup,3.3828,1.3323e-15,2.3819,8.88201e-16,0,0
+normality_gest_center,3.339,0,2.3377,4.441e-16,0,0
+normality_gest_down,6.4638,0.293158,6.5526,0.287177,35.4688,1.271
+normality_gest_up,3.339,0,2.3377,4.441e-16,0,0

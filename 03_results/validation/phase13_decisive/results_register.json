@@ -1,0 +1,137 @@
+[
+  {
+    "metric": "Early detection and trade-off",
+    "status": "EXPLORATORY",
+    "result": "48 annotated events; 65.6283 inactive hours",
+    "artifact": "comparison.csv",
+    "dataset": "historical archive or controlled Center",
+    "independent_units": 0,
+    "blocker": "independent roots and qualified mechanisms/bounds needed for confirmation"
+  },
+  {
+    "metric": "False starts, duty and delay",
+    "status": "EXPLORATORY",
+    "result": "new starts, exposure and conditional delay",
+    "artifact": "comparison_matrix.csv",
+    "dataset": "historical archive or controlled Center",
+    "independent_units": 0,
+    "blocker": "independent roots and qualified mechanisms/bounds needed for confirmation"
+  },
+  {
+    "metric": "Failure mechanisms",
+    "status": "EXPLORATORY",
+    "result": "signed sensor innovation and causal reference state",
+    "artifact": "failure_matrix.csv",
+    "dataset": "historical archive or controlled Center",
+    "independent_units": 0,
+    "blocker": "independent roots and qualified mechanisms/bounds needed for confirmation"
+  },
+  {
+    "metric": "Noise robustness",
+    "status": "EXPLORATORY",
+    "result": "white CUSUM 35/48 and 45 false episodes; correlated 48/48 and 226",
+    "artifact": "tradeoffs.png",
+    "dataset": "historical archive or controlled Center",
+    "independent_units": 0,
+    "blocker": "independent roots and qualified mechanisms/bounds needed for confirmation"
+  },
+  {
+    "metric": "Causal mechanism ranking",
+    "status": "EXPLORATORY",
+    "result": "1440 dependent comparisons on one held-template alternate source run",
+    "artifact": "delayed_prefix_ranks.csv",
+    "dataset": "historical archive or controlled Center",
+    "independent_units": 0,
+    "blocker": "independent roots and qualified mechanisms/bounds needed for confirmation"
+  },
+  {
+    "metric": "Timing and sensor ablation",
+    "status": "EXPLORATORY",
+    "result": "offsets, alert delay, per-sensor restoration",
+    "artifact": "sensor_restore.csv",
+    "dataset": "historical archive or controlled Center",
+    "independent_units": 0,
+    "blocker": "independent roots and qualified mechanisms/bounds needed for confirmation"
+  },
+  {
+    "metric": "Formal outcome",
+    "status": "ESTABLISHED",
+    "result": "12/12 unresolved within evidence scope; no qualified exclusions; L0",
+    "artifact": "evidence_sufficiency.json",
+    "dataset": "historical archive or controlled Center",
+    "independent_units": 0,
+    "blocker": "independent roots and qualified mechanisms/bounds needed for confirmation"
+  },
+  {
+    "metric": "Incremental formal benefit",
+    "status": "NOT_ESTABLISHED",
+    "result": "NO DEMONSTRATED FORMAL DECISION IMPROVEMENT",
+    "artifact": "evidence_sufficiency.json",
+    "dataset": "historical archive or controlled Center",
+    "independent_units": 0,
+    "blocker": "independent roots and qualified mechanisms/bounds needed for confirmation"
+  },
+  {
+    "metric": "Independent multiclass accuracy",
+    "status": "BLOCKED",
+    "result": "zero verified independent generating families or missing qualification",
+    "artifact": "report.md",
+    "dataset": "historical archive or controlled Center",
+    "independent_units": 0,
+    "blocker": "independent roots and qualified mechanisms/bounds needed for confirmation"
+  },
+  {
+    "metric": "Independent localization accuracy",
+    "status": "BLOCKED",
+    "result": "zero verified independent generating families or missing qualification",
+    "artifact": "report.md",
+    "dataset": "historical archive or controlled Center",
+    "independent_units": 0,
+    "blocker": "independent roots and qualified mechanisms/bounds needed for confirmation"
+  },
+  {
+    "metric": "Calibration",
+    "status": "BLOCKED",
+    "result": "zero verified independent generating families or missing qualification",
+    "artifact": "report.md",
+    "dataset": "historical archive or controlled Center",
+    "independent_units": 0,
+    "blocker": "independent roots and qualified mechanisms/bounds needed for confirmation"
+  },
+  {
+    "metric": "Selective risk",
+    "status": "BLOCKED",
+    "result": "zero verified independent generating families or missing qualification",
+    "artifact": "report.md",
+    "dataset": "historical archive or controlled Center",
+    "independent_units": 0,
+    "blocker": "independent roots and qualified mechanisms/bounds needed for confirmation"
+  },
+  {
+    "metric": "Cross-topology generalization",
+    "status": "BLOCKED",
+    "result": "zero verified independent generating families or missing qualification",
+    "artifact": "report.md",
+    "dataset": "historical archive or controlled Center",
+    "independent_units": 0,
+    "blocker": "independent roots and qualified mechanisms/bounds needed for confirmation"
+  },
+  {
+    "metric": "Industrial readiness",
+    "status": "BLOCKED",
+    "result": "zero verified independent generating families or missing qualification",
+    "artifact": "report.md",
+    "dataset": "historical archive or controlled Center",
+    "independent_units": 0,
+    "blocker": "independent roots and qualified mechanisms/bounds needed for confirmation"
+  },
+  {
+    "metric": "Qualified uncertainty",
+    "status": "BLOCKED",
+    "result": "zero verified independent generating families or missing qualification",
+    "artifact": "report.md",
+    "dataset": "historical archive or controlled Center",
+    "independent_units": 0,
+    "blocker": "independent roots and qualified mechanisms/bounds needed for confirmation"
+  }
+]

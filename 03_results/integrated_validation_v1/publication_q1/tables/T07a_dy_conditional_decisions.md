@@ -1,0 +1,24 @@
+### T07a — Formal D(Y) decisions by universe, sensor group and clock bound
+
+CONDITIONAL_HYPOTHETICAL_BOUNDS — not calibrated uncertainty. 42 cells per row (6 queries × 7 bound scenarios); rows are repeated views of the same captures.
+
+| universe | group | clock_bound_s | cells | specific | specific_correct | specific_wrong | ambiguous | unresolved |
+|---|---|---|---|---|---|---|---|---|
+| full | all | 0 | 42 | 0 | 0 | 0 | 0 | 42 |
+| full | all | 1 | 42 | 0 | 0 | 0 | 0 | 42 |
+| full | flow | 0 | 42 | 0 | 0 | 0 | 0 | 42 |
+| full | flow | 1 | 42 | 0 | 0 | 0 | 0 | 42 |
+| full | omit_MFS3 | 0 | 42 | 0 | 0 | 0 | 0 | 42 |
+| full | omit_MFS3 | 1 | 42 | 0 | 0 | 0 | 0 | 42 |
+| full | pressure | 0 | 42 | 0 | 0 | 0 | 0 | 42 |
+| full | pressure | 1 | 42 | 0 | 0 | 0 | 0 | 42 |
+| restricted | all | 0 | 42 | 10 | 8 | 2 | 4 | 28 |
+| restricted | all | 1 | 42 | 10 | 8 | 2 | 4 | 28 |
+| restricted | flow | 0 | 42 | 11 | 8 | 3 | 8 | 23 |
+| restricted | flow | 1 | 42 | 12 | 8 | 4 | 7 | 23 |
+| restricted | omit_MFS3 | 0 | 42 | 4 | 4 | 0 | 12 | 26 |
+| restricted | omit_MFS3 | 1 | 42 | 4 | 4 | 0 | 12 | 26 |
+| restricted | pressure | 0 | 42 | 4 | 4 | 0 | 14 | 24 |
+| restricted | pressure | 1 | 42 | 4 | 4 | 0 | 14 | 24 |
+
+Source: `03_results/validation/center_evidence_enhancement/analysis/dy_decisions.json` · Script: `publication_q1/scripts/build_tables.py`

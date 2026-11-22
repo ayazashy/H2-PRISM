@@ -1,0 +1,17 @@
+claim,evidence_level,evidence,limiting_factor
+Registered H1,NOT ESTIMABLE,R2 rq1.csv 12/12,Gate 06/19
+H1 exploratory (s_C vs s_C−D),INCONCLUSIVE,A01: intervals include 0; 0 errors outside disputed runs,"L01, L04"
+Evidence guard vs conventional confidence,"EXPLORATORY, CONFOUNDED",A02a: 0 vs 655 false LEAK calls on NORMAL at 0.25 — one template,"L01, L04"
+D(x) incremental information,NOT SUPPORTED,development ablation,—
+D(Y) engine semantics and certificates,VERIFIED (mathematical),"A04a: 0 violations; 11,061 + 1,552 re-verified",—
+D(Y) refuses with incomplete declared library,CONDITIONALLY DEMONSTRATED,A05 full: 42/42 UNRESOLVED,hypothetical bounds
+Restricted library → false SPECIFIC,CONDITIONALLY DEMONSTRATED,A05: minus-true 2/2 SPECIFIC wrong; restricted 2/10,hypothetical bounds
+Missing pressure sensors increase false specificity,CONDITIONALLY DEMONSTRATED,A08: flow-only 4 wrong vs 2 (all),one family
+Delay beyond admissible clock bound → abstention,CONDITIONALLY DEMONSTRATED,"A09: correct SPECIFIC 8 → 0, wrong unchanged 2",one family
+Formal minimum sensor set (template level),CONDITIONALLY DEMONSTRATED,A16b: 2 channels (MFS1+MFS3) preserve 14/15 pairs at REF,"templates, not field"
+Categorical localization,"LEVEL 2, ONE OUTLET","A06: SID 213, 2 captures",L03
+Fault classification / localization accuracy,BLOCKED BY EVIDENCE,no independent labels,—
+Pure-H2 or H2/NG diagnostic transfer,NOT ESTABLISHED,A13: no transient gas-specific model,—
+Cost saving,NOT QUANTIFIABLE,A15: no source-supported prices,—
+Computational scaling,MEASURED (this hardware),A14,—
+Cross-study engine portability,NOT DEMONSTRATED,A12: engine executed on Center only,—

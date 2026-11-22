@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "<repo>\tools\experiments\run_primary_protocol.py", line 79, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "<repo>\tools\experiments\run_primary_protocol.py", line 67, in main
+    res = pp.run(a.config, a.root, a.raw_parent, a.out, "execute", artifact_class=cls, authorization=a.authorization,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>\src\h2prism\experiments\primary_protocol.py", line 903, in run
+    devres = development_stage(cfg, dev, feats)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>\src\h2prism\experiments\primary_protocol.py", line 411, in development_stage
+    fitC = fit_combined_score(P_cal, correct, topo, CombinedScoreConfig(include_D=True, **csc), D)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<repo>\src\h2prism\combined_score.py", line 77, in fit_combined_score
+    raise ValueError("development data contain a single correctness outcome; meta-model not estimable")
+ValueError: development data contain a single correctness outcome; meta-model not estimable
+ELAPSED_S 4071
+RUN_EXIT 1
+# [redacted 2026-11-11: local repository root replaced by <repo> before commit; content otherwise unchanged]

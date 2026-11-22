@@ -1,0 +1,22 @@
+# UNSIGNED TEMPLATE - not an approval. See SIGNOFF_PACKAGE.md.
+approval_id: T9_matched_selection_ties__dbf11518__REVIEWER
+artifact_id: T9_matched_selection_ties
+claim_scope: DESCRIPTIVE
+decision: TO_BE_DECIDED_BY_REVIEWER
+approved_claims:
+- Share of each estimable matched selection decided by the label-free PA-1 tie key rather than by score (coarse scores; forensic
+  FA-09).
+limitations_acknowledged:
+- reporting of selection arbitrariness; risk unchanged across 20 alternative salts in R2
+reviewer:
+  name: TO_BE_FILLED_BY_REVIEWER
+  role: TO_BE_FILLED_BY_REVIEWER
+date: YYYY-MM-DD
+statement: ''
+binding:
+  input_sha256:
+    03_results/derived/PRIMARY/matched_selection_ties.csv: 748a86e044deb740ba8d180806e7f2ed9d52a4d1b74ebd3b97a22c3a35818902
+  spec_sha256: dbf1151879cbb46f064128e6234ddf019752337a8ff83595007054bad57797a4
+  renderer_sha256: 12ba184bfc5f603546a75e47764b8f3569dffc44810423add4bc024b4cdfdd66
+  source_run_keys:
+  - a10530f1fcf2957097c37fcab72d5eccf2b2fbe6b90cc500efb83314aaec22bb

@@ -1,0 +1,64 @@
+{
+  "release_at_28_s": [
+    {
+      "sensor": "PS1",
+      "time_s": 28,
+      "values": {
+        "capture": 4.089159670115274,
+        "archive": 4.08915965358888,
+        "clean_csv": 4.178862610056379,
+        "parquet": 4.178862610056379
+      },
+      "capture_minus_archive": 1.652639358695751e-08,
+      "parquet_minus_archive": 0.08970295646749893,
+      "status": "CONTRADICTED",
+      "finding": "Release differs at an exact shared knot, ruling out linear interpolation of the archived solver CSV alone."
+    },
+    {
+      "sensor": "MFS3",
+      "time_s": 28,
+      "values": {
+        "capture": 5.039656353398599,
+        "archive": 5.03965616593723,
+        "clean_csv": 5.092684381599982,
+        "parquet": 5.092684381599982
+      },
+      "capture_minus_archive": 1.8746136909442157e-07,
+      "parquet_minus_archive": 0.053028215662751954,
+      "status": "CONTRADICTED",
+      "finding": "Release differs at an exact shared knot, ruling out linear interpolation of the archived solver CSV alone."
+    }
+  ],
+  "source_to_release_processing": {
+    "status": "UNVERIFIED",
+    "finding": "Exact generation and preprocessing chain for the clean release is unidentified."
+  },
+  "storage_integral": {
+    "scope": "Seven compressible pipes and one single-port chamber, bounded by six reservoirs",
+    "external_flow": "negative sum of reservoir mdot_A; reservoir signs checked against network-side rates",
+    "pointwise_boundary_minus_storage_port_sum_max_kg_s": 2.2737367544323206e-13,
+    "storage_initial_kg": 991685.961968459,
+    "storage_final_kg": 1000107.3541840501,
+    "storage_change_kg": 8421.392215591157,
+    "integrated_boundary_net_kg": 8877.345474606058,
+    "integrated_boundary_gross_kg": 4212511.260386882,
+    "final_storage_minus_integrated_net_kg": -455.95325901490105,
+    "max_absolute_residual_kg": 455.96236410007987,
+    "peak_residual_time_s": 17259.2,
+    "final_residual_fraction_of_gross": 0.00010823787304797037,
+    "quadrature": "trapezoidal integration at saved 0.8 s knots; no bound for between-knot integration error",
+    "status": "PARTIALLY VERIFIED"
+  },
+  "gas_qualification": {
+    "status": "UNVERIFIED",
+    "finding": "No source-bound composition or validation; fitted/effective model constants cannot establish mixture identity."
+  },
+  "boundary_configuration": {
+    "status": "VERIFIED",
+    "finding": "Fixed reservoirs use atmospheric pressure at runtime (0.1 MPa), while their stored specified-pressure field is 0.101325 MPa."
+  },
+  "initial_targets": {
+    "status": "VERIFIED",
+    "finding": "Stored targets and logged time-zero states differ; the audit uses the logged states for physical checks."
+  }
+}

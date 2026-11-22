@@ -1,0 +1,67 @@
+{
+  "population": "Historical clean released simulations only. Noisy assets are linked provenance, not additional independent observations. Source-reproduced and ten controlled Center runs remain a separate source family.",
+  "tasks": [
+    {
+      "id": "A",
+      "task": "binary event detection",
+      "prediction_time": "last of five 1 s samples; first decision at archive start +4 s, stride 120 s",
+      "allowed": "16 named pressure/flow channels at or before deadline",
+      "truth": "archived label_anomaly at decision knot, event onset for post-hoc event scoring only",
+      "unit": "conservative dependency component as split proxy; no verified independent generating family",
+      "metrics": "binary confusion, balanced accuracy, MCC, macro F1, active-event capture and delay at sampled decisions",
+      "status": "EXPLORATORY"
+    },
+    {
+      "id": "B",
+      "task": "four-class diagnosis",
+      "prediction_time": "final sensor sample",
+      "allowed": "causal sensor windows",
+      "truth": "qualified source event class",
+      "unit": "independent producing family",
+      "metrics": "per-class recall/precision, macro F1, calibration if supported",
+      "status": "BLOCKED: rare class provenance and class-complete held-out support"
+    },
+    {
+      "id": "C",
+      "task": "conditional localization",
+      "prediction_time": "after supported leak inference",
+      "allowed": "same-clock causal measurements and qualified physical enclosures",
+      "truth": "source-traceable leak location",
+      "unit": "independent leak family per candidate",
+      "metrics": "conditional confusion and region exclusions",
+      "status": "BLOCKED: one controlled family and unavailable qualified exclusions"
+    },
+    {
+      "id": "D",
+      "task": "formal evidence-guided policy",
+      "prediction_time": "end of checked observation",
+      "allowed": "qualified consistency evidence only",
+      "truth": "configured intervention for exploratory captures",
+      "unit": "controlled capture; one Center family",
+      "metrics": "specific/ambiguous/unresolved counts",
+      "status": "ESTABLISHED for existing cases: 0/0/10, L0; added value NOT ESTABLISHED"
+    },
+    {
+      "id": "E",
+      "task": "invalid input and OOD",
+      "prediction_time": "before inference",
+      "allowed": "declared mapping and units, observed clock and samples",
+      "truth": "explicit violations or independently documented domain shift",
+      "unit": "validation fixture or independent domain",
+      "metrics": "schema rejection and coverage when qualified",
+      "status": "schema checks tested; statistical OOD NOT ESTABLISHED"
+    }
+  ],
+  "gates": {
+    "G1": "archive bytes verified; generating ancestry unresolved",
+    "G2": "fixed-clock causal feature tests pass; legacy onset leakage remains in frozen benchmark",
+    "G3": "independence not established",
+    "G4": "binary window support; four-class independent support absent",
+    "G5": "descriptive binary controls only",
+    "G6": "previous instability documented; prospective nested tuning unqualified",
+    "G7": "blocked by independent calibration",
+    "G8": "hypothetical sensor perturbations and schema tests",
+    "G9": "external domains and independent topology transfer unestablished",
+    "G10": "not qualified for industrial deployment"
+  }
+}

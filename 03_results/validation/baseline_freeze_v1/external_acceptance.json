@@ -1,0 +1,31 @@
+{
+  "version": "external-validation-v1",
+  "status": "BLOCKED_NO_INDEPENDENT_DATA",
+  "partitions": {
+    "development": "fit and search only",
+    "calibration": "independent score thresholds, probability mapping and coverage schedule; no model selection using untouched test",
+    "untouched_test": "sealed by default; opened once by independent steward after protocol/references are locked"
+  },
+  "accepted_input": {
+    "schema": "numeric s or ms clock on declared timebase; named pressure and signed mass flow with explicit role, native unit and polarity",
+    "metadata": "topology optional for in-domain intake; required to substantiate topology transfer; record intervention truth, physical event onset/end, root and family, parent receipts, known shared histories and SHA-256",
+    "provenance": "independent review registry hash pinned out of band and bound to exact manifest and source receipts"
+  },
+  "requirements": {
+    "multiclass": "class-complete independent producing families for NORMAL/LEAK/FAULT/DELAY in all partitions; class-specific source mechanism and verified onset/offset; prospective causal observation protocol; precision design by independent unit",
+    "localization": "predeclared candidates, traceable actual location for every supported leak, independent root and per-site coverage in each relevant partition; report conditional set coverage, wrong singleton and set size",
+    "calibration": "independent representative calibration, frozen model and score contract, independent untouched evaluation; prespecified bins/score metric and family-based uncertainty",
+    "formal": "qualified simultaneous observation and prediction enclosures; units, signed flow, clock synchronization, boundary/initial, parameter, numerical and independent model discrepancy bounds, domain receipt",
+    "incremental_value": "same original observations, hypotheses and source roots; classifier-only, calibrated abstention and formal policy; preregister paired selective-risk comparison at attained nonzero matched coverage, limits and uncertainty",
+    "normal_reference": "prospectively available and time synchronized nominal model or acquisition record; matched experimental counterfactual is excluded from operational mode"
+  },
+  "precision": "Choose minima prospectively from operational detection/false-episode/diagnostic targets, independent-unit variability and desired interval precision. A class-present split alone is not adequate.",
+  "missing_now": [
+    "independent confirmed generating families",
+    "qualified compressor-fault mechanism",
+    "synchronized actuator command and actual response with measured nominal lag",
+    "verified independent per-location truth",
+    "coverage-calibration roots",
+    "measurement, clock and simultaneous prediction enclosures"
+  ]
+}

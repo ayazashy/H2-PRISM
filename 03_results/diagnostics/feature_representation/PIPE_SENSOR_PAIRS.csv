@@ -1,0 +1,6 @@
+pipe_sid,length_m,sensor_A_end,sensor_B_end
+106,8000.0,PS10,PS9
+106,8000.0,PS3,PS9
+221,4000.0,PS9,PS4
+47,16000.0,PS7,PS1
+48,30000.0,PS1,PS2

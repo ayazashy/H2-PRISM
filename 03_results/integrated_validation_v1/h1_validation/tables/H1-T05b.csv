@@ -1,0 +1,4 @@
+setting,evidence,n_windows,n_errors,spearman_D_confidence,auroc_s_C,auroc_s_C_minus_D,auroc_confidence,auroc_margin,auroc_neg_entropy,auroc_D_only
+R2 Center,"R2 outer test, guard-available windows (exploratory)",2405,1091,0.1870955305,0.9809573834,0.5216619442,0.9826294283,0.790455184,0.9999309418,0.5647622655
+R2 Downstream,"R2 outer test, guard-available windows (exploratory)",6733,650,0.6901930358,1,1,0,0,0,0.3162091073
+R2 Upstream,"R2 outer test, guard-available windows (exploratory)",6871,0,0.08044765907,,,,,,

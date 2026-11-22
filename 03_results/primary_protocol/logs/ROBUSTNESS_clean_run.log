@@ -1,0 +1,7 @@
+{
+  "status": "COMPLETED",
+  "artifact_class": "ROBUSTNESS_EXPERIMENT",
+  "out": "03_results\\primary_protocol\\ROBUSTNESS_clean"
+}
+ELAPSED_S 2326
+RUN_EXIT 0

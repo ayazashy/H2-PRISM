@@ -1,0 +1,13 @@
+topology,method,target,requested_count,n_tied_at_boundary,n_tied_selected,share_selected_by_tie_key
+Downstream,s_C,0.6,5599,38,32,0.005715306305
+Downstream,s_C_minus_D,0.6,5599,39,36,0.006429719593
+Downstream,confidence,0.6,5599,228,6,0.001071619932
+Downstream,margin,0.6,5599,228,6,0.001071619932
+Downstream,neg_entropy,0.6,5599,228,6,0.001071619932
+Downstream,D_only,0.6,5599,433,273,0.04875870691
+Upstream,s_C,0.6,5599,383,351,0.06268976603
+Upstream,s_C_minus_D,0.6,5599,5471,4224,0.7544204322
+Upstream,confidence,0.6,5599,241,128,0.02286122522
+Upstream,margin,0.6,5599,241,128,0.02286122522
+Upstream,neg_entropy,0.6,5599,241,128,0.02286122522
+Upstream,D_only,0.6,5599,496,199,0.03554206108

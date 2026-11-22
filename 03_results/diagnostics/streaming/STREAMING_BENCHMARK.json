@@ -1,0 +1,55 @@
+{
+ "status": "ENGINEERING_EVIDENCE_SYNTHETIC_REPLAY",
+ "python": "3.12.1",
+ "machine": "AMD64",
+ "runs": [
+  {
+   "evidence": "ENGINEERING_EVIDENCE_SYNTHETIC_REPLAY",
+   "n_samples": 36000,
+   "n_windows": 119,
+   "n_unresolved": 2,
+   "latency_ms_p50": 5.300299962982535,
+   "latency_ms_p99": 8.168745980365198,
+   "latency_ms_max": 8.297500025946647,
+   "peak_traced_memory_kB": 340.443359375,
+   "channels": 16,
+   "sampling_hz": 10.0,
+   "duration_s": 3600.0,
+   "window_s": 60.0,
+   "stride_s": 30.0,
+   "realtime_budget_ms_per_window": 30000.0
+  },
+  {
+   "evidence": "ENGINEERING_EVIDENCE_SYNTHETIC_REPLAY",
+   "n_samples": 36000,
+   "n_windows": 119,
+   "n_unresolved": 2,
+   "latency_ms_p50": 12.331200006883591,
+   "latency_ms_p99": 17.411960007157177,
+   "latency_ms_max": 17.818499996792525,
+   "peak_traced_memory_kB": 754.828125,
+   "channels": 64,
+   "sampling_hz": 10.0,
+   "duration_s": 3600.0,
+   "window_s": 60.0,
+   "stride_s": 30.0,
+   "realtime_budget_ms_per_window": 30000.0
+  },
+  {
+   "evidence": "ENGINEERING_EVIDENCE_SYNTHETIC_REPLAY",
+   "n_samples": 36000,
+   "n_windows": 119,
+   "n_unresolved": 2,
+   "latency_ms_p50": 41.51839995756745,
+   "latency_ms_p99": 54.36776401824317,
+   "latency_ms_max": 55.72720000054687,
+   "peak_traced_memory_kB": 2647.84375,
+   "channels": 256,
+   "sampling_hz": 10.0,
+   "duration_s": 3600.0,
+   "window_s": 60.0,
+   "stride_s": 30.0,
+   "realtime_budget_ms_per_window": 30000.0
+  }
+ ]
+}

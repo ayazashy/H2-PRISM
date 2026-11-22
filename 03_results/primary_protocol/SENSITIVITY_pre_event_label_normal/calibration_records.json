@@ -1,0 +1,92 @@
+[
+  {
+    "dev_support_flags": {
+      "": 12610,
+      "OUT_OF_SUPPORT": 766,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS": 1120,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY": 6786,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY|OUT_OF_SUPPORT": 1,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|OUT_OF_SUPPORT": 3
+    },
+    "feasibility": {
+      "allowed_methods": [
+        "none",
+        "sigmoid"
+      ],
+      "groups_per_class": {
+        "0": 2,
+        "1": 2,
+        "2": 2,
+        "3": 2
+      },
+      "reason": "all classes have sufficient independent groups"
+    },
+    "fold": 1,
+    "method": "none",
+    "params": {
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 300
+    }
+  },
+  {
+    "dev_support_flags": {
+      "": 108,
+      "OUT_OF_SUPPORT": 10139,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS": 220,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY": 10787,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY|OUT_OF_SUPPORT": 21,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|OUT_OF_SUPPORT": 11
+    },
+    "feasibility": {
+      "allowed_methods": [
+        "none",
+        "sigmoid"
+      ],
+      "groups_per_class": {
+        "0": 2,
+        "1": 2,
+        "2": 2,
+        "3": 2
+      },
+      "reason": "all classes have sufficient independent groups"
+    },
+    "fold": 2,
+    "method": "none",
+    "params": {
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 500
+    }
+  },
+  {
+    "dev_support_flags": {
+      "": 1327,
+      "OUT_OF_SUPPORT": 265,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS": 588,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY": 18994,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY|OUT_OF_SUPPORT": 90,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|OUT_OF_SUPPORT": 22
+    },
+    "feasibility": {
+      "allowed_methods": [
+        "none",
+        "sigmoid"
+      ],
+      "groups_per_class": {
+        "0": 2,
+        "1": 2,
+        "2": 2,
+        "3": 2
+      },
+      "reason": "all classes have sufficient independent groups"
+    },
+    "fold": 3,
+    "method": "none",
+    "params": {
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 300
+    }
+  }
+]

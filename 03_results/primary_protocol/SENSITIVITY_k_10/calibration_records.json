@@ -1,0 +1,95 @@
+[
+  {
+    "dev_support_flags": {
+      "": 8764,
+      "LOW_SUPPORT|TOP_CLASS_FEW_INDEPENDENT_RUNS": 3,
+      "LOW_SUPPORT|TOP_CLASS_FEW_INDEPENDENT_RUNS|OUT_OF_SUPPORT": 5,
+      "OUT_OF_SUPPORT": 699,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS": 117,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY": 9042,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY|OUT_OF_SUPPORT": 1,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|OUT_OF_SUPPORT": 31
+    },
+    "feasibility": {
+      "allowed_methods": [
+        "none",
+        "sigmoid"
+      ],
+      "groups_per_class": {
+        "0": 2,
+        "1": 2,
+        "2": 2,
+        "3": 2
+      },
+      "reason": "all classes have sufficient independent groups"
+    },
+    "fold": 1,
+    "method": "none",
+    "params": {
+      "max_features": "sqrt",
+      "min_samples_leaf": 1,
+      "n_estimators": 500
+    }
+  },
+  {
+    "dev_support_flags": {
+      "LOW_SUPPORT|TOP_CLASS_FEW_INDEPENDENT_RUNS": 3,
+      "LOW_SUPPORT|TOP_CLASS_FEW_INDEPENDENT_RUNS|OUT_OF_SUPPORT": 5,
+      "OUT_OF_SUPPORT": 8681,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS": 109,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY": 9817,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY|OUT_OF_SUPPORT": 17,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|OUT_OF_SUPPORT": 30
+    },
+    "feasibility": {
+      "allowed_methods": [
+        "none",
+        "sigmoid"
+      ],
+      "groups_per_class": {
+        "0": 2,
+        "1": 2,
+        "2": 2,
+        "3": 2
+      },
+      "reason": "all classes have sufficient independent groups"
+    },
+    "fold": 2,
+    "method": "none",
+    "params": {
+      "max_features": "sqrt",
+      "min_samples_leaf": 5,
+      "n_estimators": 500
+    }
+  },
+  {
+    "dev_support_flags": {
+      "": 1304,
+      "OUT_OF_SUPPORT": 27,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS": 333,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY": 16914,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY|OUT_OF_SUPPORT": 31,
+      "TOP_CLASS_FEW_INDEPENDENT_RUNS|OUT_OF_SUPPORT": 53
+    },
+    "feasibility": {
+      "allowed_methods": [
+        "none",
+        "sigmoid"
+      ],
+      "groups_per_class": {
+        "0": 2,
+        "1": 2,
+        "2": 2,
+        "3": 2
+      },
+      "reason": "all classes have sufficient independent groups"
+    },
+    "fold": 3,
+    "method": "none",
+    "params": {
+      "max_features": 0.3,
+      "min_samples_leaf": 1,
+      "n_estimators": 300
+    }
+  }
+]

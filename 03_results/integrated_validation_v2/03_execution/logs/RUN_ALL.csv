@@ -1,0 +1,11 @@
+script,exit_code,wall_s
+d1_correction.py,0,3.2
+dx_experiments.py,0,14.2
+r2_descriptive.py,0,9.4
+dy_stress.py,0,58.1
+dy_isolability.py,0,10.3
+hy2res_dy_adapter.py,0,25.9
+triage_tests.py,0,7.2
+build_v2_tables.py,0,6.3
+fig_v2.py,0,16.0
+v2_reports.py,0,3.7

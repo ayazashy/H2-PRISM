@@ -1,0 +1,27 @@
+{
+  "aggregation": "unweighted mean of per-run metrics",
+  "protocol_sha256": "843200f94f8f3b13b69efcc7cf550d087b7c1f7d5543ec4df94a4fcf44566710",
+  "development_pairs": 25757,
+  "summary": {
+    "P-2": {
+      "unit": "barg",
+      "n": 15885,
+      "runs": 3,
+      "b0_mae": 0.15899335946792134,
+      "b0_rmse": 0.3810008338629404,
+      "b1_mae": 0.17366038148163984,
+      "b1_rmse": 0.37899737354108565,
+      "delta_mae_b1_minus_b0": 0.014667022013718473
+    },
+    "MFC-3": {
+      "unit": "ln/min",
+      "n": 15885,
+      "runs": 3,
+      "b0_mae": 0.031649162240596856,
+      "b0_rmse": 0.2876442315225006,
+      "b1_mae": 0.04241101307462886,
+      "b1_rmse": 0.287409773651123,
+      "delta_mae_b1_minus_b0": 0.010761850834032013
+    }
+  }
+}

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="691.2pt" height="388.8pt" viewBox="0 0 691.2 388.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-11-18T04:01:29.484122</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.7, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 388.8 
+L 691.2 388.8 
+L 691.2 0 
+L 0 0 
+z
+" style="fill: #f4f4e9"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 179.712 334.368 
+L 670.464 334.368 
+L 670.464 46.656 
+L 179.712 46.656 
+z
+" style="fill: #f4f4e9"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 202.716 60.356571 
+L 340.74 60.356571 
+L 340.74 115.158857 
+L 202.716 115.158857 
+z
+" clip-path="url(#pf93b4c5e7c)" style="fill: #007f86; stroke: #10263e; stroke-width: 2.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 356.076 60.356571 
+L 494.1 60.356571 
+L 494.1 115.158857 
+L 356.076 115.158857 
+z
+" clip-path="url(#pf93b4c5e7c)" style="fill: #dcecec; stroke: #d9dfde; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 509.436 60.356571 
+L 647.46 60.356571 
+L 647.46 115.158857 
+L 509.436 115.158857 
+z
+" clip-path="url(#pf93b4c5e7c)" style="fill: #9cc9cb; stroke: #d9dfde; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 202.716 128.859429 
+L 340.74 128.859429 
+L 340.74 183.661714 
+L 202.716 183.661714 
+z
+" clip-path="url(#pf93b4c5e7c)" style="fill: #007f86; stroke: #10263e; stroke-width: 2.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 356.076 128.859429 
+L 494.1 128.859429 
+L 494.1 183.661714 
+L 356.076 183.661714 
+z
+" clip-path="url(#pf93b4c5e7c)" style="fill: #dcecec; stroke: #d9dfde; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 509.436 128.859429 
+L 647.46 128.859429 
+L 647.46 183.661714 
+L 509.436 183.661714 
+z
+" clip-path="url(#pf93b4c5e7c)" style="fill: #9cc9cb; stroke: #d9dfde; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 202.716 197.362286 
+L 340.74 197.362286 
+L 340.74 252.164571 
+L 202.716 252.164571 
+z
+" clip-path="url(#pf93b4c5e7c)" style="fill: #9cc9cb; stroke: #d9dfde; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 356.076 197.362286 
+L 494.1 197.362286 
+L 494.1 252.164571 
+L 356.076 252.164571 
+z
+" clip-path="url(#pf93b4c5e7c)" style="fill: url(#ha0405888a8); stroke: #a33f43; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 509.436 197.362286 
+L 647.46 197.362286 
+L 647.46 252.164571 
+L 509.436 252.164571 
+z
+" clip-path="url(#pf93b4c5e7c)" style="fill: #007f86; stroke: #d9dfde; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 202.716 265.865143 
+L 340.74 265.865143 
+L 340.74 320.667429 
+L 202.716 320.667429 
+z
+" clip-path="url(#pf93b4c5e7c)" style="fill: #007f86; stroke: #d9dfde; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 356.076 265.865143 
+L 494.1 265.865143 
+L 494.1 320.667429 
+L 356.076 320.667429 
+z
+" clip-path="url(#pf93b4c5e7c)" style="fill: #9cc9cb; stroke: #d9dfde; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 509.436 265.865143 
+L 647.46 265.865143 
+L 647.46 320.667429 
+L 509.436 320.667429 
+z
+" clip-path="url(#pf93b4c5e7c)" style="fill: url(#ha0405888a8); stroke: #a33f43; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1"/>
+     <g id="text_1">
+      <text style="font-size: 11px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #1f2933" x="271.728" y="346.011437" transform="rotate(-0 271.728 346.011437)">Outlet SID 213</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2"/>
+     <g id="text_2">
+      <text style="font-size: 11px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #1f2933" x="425.088" y="346.011437" transform="rotate(-0 425.088 346.011437)">Outlet SID 312</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3"/>
+     <g id="text_3">
+      <text style="font-size: 11px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #1f2933" x="578.448" y="346.011437" transform="rotate(-0 578.448 346.011437)">Outlet SID 215</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_4"/>
+     <g id="text_4">
+      <text style="font-size: 11px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #1f2933" x="176.212" y="91.829433" transform="rotate(-0 176.212 91.829433)">SID 213 withdrawal</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_5"/>
+     <g id="text_5">
+      <text style="font-size: 11px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #1f2933" x="176.212" y="160.390728" transform="rotate(-0 176.212 160.390728)">SID 213 withdrawal, alt. profile</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_6"/>
+     <g id="text_6">
+      <text style="font-size: 11px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #1f2933" transform="translate(83.237937 223.439991)">SID 312 withdrawal</text>
+      <text style="font-size: 11px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #1f2933" transform="translate(19.798875 235.882366)">(configured outlet unsupported)</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_7"/>
+     <g id="text_7">
+      <text style="font-size: 11px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #1f2933" transform="translate(83.237937 291.942848)">SID 215 withdrawal</text>
+      <text style="font-size: 11px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #1f2933" transform="translate(19.798875 304.385223)">(configured outlet unsupported)</text>
+     </g>
+    </g>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 600; font-size: 12px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #ffffff" x="271.728" y="85.339361" transform="rotate(-0 271.728 85.339361)">rank 1</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #ffffff" x="271.728" y="104.009848" transform="rotate(-0 271.728 104.009848)">2.76e-05</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 600; font-size: 12px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #10263e" x="425.088" y="85.339361" transform="rotate(-0 425.088 85.339361)">rank 3</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #1f2933" x="425.088" y="104.009848" transform="rotate(-0 425.088 104.009848)">0.0405</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 600; font-size: 12px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #10263e" x="578.448" y="85.339361" transform="rotate(-0 578.448 85.339361)">rank 2</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #1f2933" x="578.448" y="104.009848" transform="rotate(-0 578.448 104.009848)">0.0284</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 600; font-size: 12px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #ffffff" x="271.728" y="153.842218" transform="rotate(-0 271.728 153.842218)">rank 1</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #ffffff" x="271.728" y="172.512705" transform="rotate(-0 271.728 172.512705)">2.76e-05</text>
+   </g>
+   <g id="text_16">
+    <text style="font-weight: 600; font-size: 12px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #10263e" x="425.088" y="153.842218" transform="rotate(-0 425.088 153.842218)">rank 3</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #1f2933" x="425.088" y="172.512705" transform="rotate(-0 425.088 172.512705)">0.0405</text>
+   </g>
+   <g id="text_18">
+    <text style="font-weight: 600; font-size: 12px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #10263e" x="578.448" y="153.842218" transform="rotate(-0 578.448 153.842218)">rank 2</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #1f2933" x="578.448" y="172.512705" transform="rotate(-0 578.448 172.512705)">0.0285</text>
+   </g>
+   <g id="text_20">
+    <text style="font-weight: 600; font-size: 12px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #10263e" x="271.728" y="222.345075" transform="rotate(-0 271.728 222.345075)">rank 2</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #1f2933" x="271.728" y="241.015563" transform="rotate(-0 271.728 241.015563)">0.0405</text>
+   </g>
+   <g id="text_22">
+    <g id="patch_15">
+     <path d="M 389.655969 236.679694 
+L 460.520031 236.679694 
+L 460.520031 212.847163 
+L 389.655969 212.847163 
+z
+" style="fill: #f4f4e9"/>
+    </g>
+    <text style="font-size: 9.5px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #a33f43" transform="translate(391.650969 221.875132)">no independent</text>
+    <text style="font-size: 9.5px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #a33f43" transform="translate(406.519953 232.499694)">template</text>
+   </g>
+   <g id="text_23">
+    <text style="font-weight: 600; font-size: 12px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #ffffff" x="578.448" y="222.345075" transform="rotate(-0 578.448 222.345075)">rank 1</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #ffffff" x="578.448" y="241.015563" transform="rotate(-0 578.448 241.015563)">0.0294</text>
+   </g>
+   <g id="text_25">
+    <text style="font-weight: 600; font-size: 12px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #ffffff" x="271.728" y="290.847932" transform="rotate(-0 271.728 290.847932)">rank 1</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #ffffff" x="271.728" y="309.51842" transform="rotate(-0 271.728 309.51842)">0.028</text>
+   </g>
+   <g id="text_27">
+    <text style="font-weight: 600; font-size: 12px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #10263e" x="425.088" y="290.847932" transform="rotate(-0 425.088 290.847932)">rank 2</text>
+   </g>
+   <g id="text_28">
+    <text style="font-size: 10px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #1f2933" x="425.088" y="309.51842" transform="rotate(-0 425.088 309.51842)">0.0289</text>
+   </g>
+   <g id="text_29">
+    <g id="patch_16">
+     <path d="M 543.015969 305.182551 
+L 613.880031 305.182551 
+L 613.880031 281.35002 
+L 543.015969 281.35002 
+z
+" style="fill: #f4f4e9"/>
+    </g>
+    <text style="font-size: 9.5px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #a33f43" transform="translate(545.010969 290.377989)">no independent</text>
+    <text style="font-size: 9.5px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #a33f43" transform="translate(559.879953 301.002551)">template</text>
+   </g>
+   <g id="text_30">
+    <text style="font-weight: 600; font-size: 13px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #1f2933" x="179.712" y="40.656" transform="rotate(-0 179.712 40.656)">Categorical outlet ranking with own template excluded (4 queries, 1 outlet supported)</text>
+   </g>
+  </g>
+  <g id="text_31">
+   <text style="font-size: 8.6px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #64748b" transform="translate(8.2944 371.236847)">Navy outline = configured outlet. Cell text = B3 normalized RMS. All sensors, 30 s, ±1 s. Supported queries (SID 213, alt. profile) are near-duplicate</text>
+   <text style="font-size: 8.6px; font-family: 'IBM Plex Sans', 'Segoe UI', 'DejaVu Sans', sans-serif; fill: #64748b" transform="translate(8.2944 381.333113)">signatures of one outlet; not independent trials.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pf93b4c5e7c">
+   <rect x="179.712" y="46.656" width="490.752" height="287.712"/>
+  </clipPath>
+ </defs>
+ <defs>
+  <pattern id="ha0405888a8" patternUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+   <rect x="0" y="0" width="73" height="73" fill="#f4f4e9"/>
+   <path d="M -36 36 
+L 36 -36 
+M -30 42 
+L 42 -30 
+M -24 48 
+L 48 -24 
+M -18 54 
+L 54 -18 
+M -12 60 
+L 60 -12 
+M -6 66 
+L 66 -6 
+M 0 72 
+L 72 0 
+M 6 78 
+L 78 6 
+M 12 84 
+L 84 12 
+M 18 90 
+L 90 18 
+M 24 96 
+L 96 24 
+M 30 102 
+L 102 30 
+M 36 108 
+L 108 36 
+" style="fill: #a33f43; stroke: #a33f43; stroke-width: 1.0; stroke-linecap: butt; stroke-linejoin: miter"/>
+  </pattern>
+ </defs>
+</svg>

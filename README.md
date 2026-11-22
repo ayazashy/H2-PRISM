@@ -1,267 +1,243 @@
-# H2-PRISM: Physics-Anchored, Observability-Gated Framework for Event Attribution in Hydrogen Pipelines
+# H2-PRISM: Identifiability-Aware Event Attribution and Selective Diagnosis in Hydrogen-Blend Pipeline Networks
 
-> **Document Status**: Functional Prototype & Engineering Workspace  
-> **Evaluation Protocol Focus**: False Physical Attribution Rate (FPAR), Leak Recall, and Decision Coverage under Condition-Based Splitting.
-
----
-
-## 1. Project Concept & Core Philosophy
-
-Abnormal pressure or flow readings in a hydrogen transmission pipeline do not automatically indicate a leak. Operational maneuvers (valve throttling, compressor cycles), dynamic line-pack inventory redistribution, sensor drift/biases, and packet dropouts produce transient signatures that mimic genuine loss of containment.
-
-**H2-PRISM** reframes pipeline monitoring from generic anomaly detection into **event attribution under structural ambiguity**:
-1. **Treats Sensor and Operational Transients as First-Class Competing Hypotheses**: Never collapses abnormalities into a single scalar anomaly score.
-2. **Physics-Anchored Consistency**: Leverages real-gas hydrogen equation of state (EOS), line-pack-corrected mass conservation, and acoustic cross-station propagation delay.
-3. **Independent Observability Gating**: Computes an objective observability score $O = \min(O_Q, O_S, O_E)$ strictly from data quality and instrumentation topology—independent of classifier confidence.
-4. **Honest Abstention (UNKNOWN)**: Withholds classification and issues an explicit diagnostic reason whenever data quality, sensor topology, or propagation evidence is structurally incapable of distinguishing hypotheses.
+> **Project Phase**: Stage 2 Active Research & Engineering Workspace  
+> **Target Research Deadline**: 4 November 2026  
+> **Dataset Anchor**: Peer-Reviewed H2-SimNet Dataset (Zenodo Record 17871393)  
+> **Experiment status (2026-11)**: the primary protocol is selected and hash-pinned (`06_audit_preparation/FINAL_EXPERIMENT_CONFIG.yaml`); **no primary experiment has been run and no research result exists**. Runner: `tools/experiments/run_primary_protocol.py` (dry run by default; execution requires an authorization file).  
+> **Legacy Archive**: Stage 1 prototype and visual dashboard are preserved on branch [`old-main`](https://github.com/ayazashy/H2-PRISM/tree/old-main).
 
 ---
 
-## 2. Repository & Workspace Structure
+## 1. Project Overview & Research Identity
+
+Abnormal pressure or flow readings in hydrogen-blend transmission networks do not automatically indicate physical containment loss. Fast operational transients (compressor ramp-up, valve throttling) and sensor malfunctions produce steep transient signatures ($dP/dt$) that can mimic genuine pipeline leaks.
+
+**H2-PRISM (Stage 2)** reformulates pipeline monitoring from generic scalar anomaly detection into **identifiability-aware event attribution and selective diagnosis under structural ambiguity**:
+1. **Empirical Distinguishability $D(x)$**: Investigates whether an empirical class-support statistic $D(x) = q_{(1)}(x) - q_{(2)}(x)$ derived from reference neighborhoods provides incremental decision value beyond calibrated confidence, probability margin, and entropy at matched coverage (**RQ1**).
+2. **Three-Outcome Selective Diagnostic Policy**: Formulates a policy $g(x) \in \{\text{SPECIFIC}, \text{AMBIGUITY\_SET}, \text{UNRESOLVED}\}$ that produces informative ambiguity sets and explicit diagnostic abstentions when evidence is structurally insufficient (**RQ2**).
+3. **Leakage-Safe Grouped Evaluation**: Enforces `Scenario_Family_ID` and topology-stratified cross-validation, strictly prohibiting random window splitting.
+
+---
+
+## 2. Quickstart: 5 Simple Steps to Run & Verify
+
+Anyone opening this repository can inspect data, audit, test, and visualize the entire framework in under 30 seconds:
+
+```bash
+# Step 1: Install dependencies and editable package
+pip install -r requirements.txt
+pip install -e .
+
+# Step 2: 1-Click dataset setup & verification (automatically downloads from Zenodo if fresh clone)
+python3 setup_data.py
+
+# Step 3: Execute the deterministic dataset audit suite (Completes in ~12 seconds)
+python3 audit/run_all_audits.py
+
+# Step 4: Run the automated test suite (current totals: 06_audit_preparation/final_acceptance/FINAL_VALIDATION_EVIDENCE.md)
+pytest tests/
+
+# Step 5: Generate the ILLUSTRATIVE demo figures/dashboard (invented values, quarantined; NOT results)
+python3 scripts/visualize.py --demo
+# (Optional: append --open to automatically launch the interactive dashboard in your browser)
+```
+
+---
+
+## 3. Clean Repository Architecture (Stage 2 Standard)
+
+This repository is strictly organized to maintain reproducibility, separation of concerns, and scientific traceability:
 
 ```
 H2-PRISM/
-├── .vscode/                               # Development workspace configuration
-│   ├── settings.json                      # Python, pytest, formatting settings
-│   └── extensions.json                    # Recommended VS Code extensions
+├── 00_governance/                         # Governance, task tracking & audit ledgers
+│   ├── MASTER_TASK_REGISTER.csv           # Complete tasks across Ahmed, Faisal, Yazan
+│   ├── GATE_DECISIONS.md                  # Formal gate approval decisions (Gates 1–8)
+│   ├── REPO_CLASSIFICATION.csv            # Forensic classification of all components (Task F1)
+│   ├── REPOSITORY_AUDIT_REPORT.md         # Full audit report of legacy vs Stage 2 items
+│   └── LEGACY_RESULTS_STATUS.md           # Explicit status of prior Stage 1 claims
+├── 01_dataset_audit/                      # Complete verified dataset audit (Yazan Tasks Y1–Y8)
+│   ├── raw_checksums.sha256               # Cryptographic SHA-256 for all 265 raw files
+│   ├── FILE_LEVEL_AUDIT.csv               # 265 file records with row counts, sampling dt, missingness
+│   ├── SENSOR_CHANNEL_AUDIT.csv           # Comprehensive audit of PS1–PS12, MFS1–MFS4 (0 temp)
+│   ├── DUPLICATE_EXPORT_AUDIT.csv         # Reconciled CSV vs Parquet mirror exports (1,423 pairs)
+│   ├── DATASET_INVENTORY.md               # Definitive dataset inventory specification
+│   ├── DATASET_SCENARIO_MAP.csv           # Reconciled 242 data files -> 58 scenarios -> 13 families
+│   ├── SCENARIO_RELATIONSHIP_EDGES.csv    # 481 relationship edges between exports and variants
+│   ├── SCENARIO_FAMILY_REPORT.md          # 13 defensible scenario families
+│   ├── OPERATING_CONDITIONS_AUDIT.csv     # Operating phases & network topologies
+│   ├── EVENT_TIMING_AUDIT.csv             # Ground truth event onset/offset timestamps
+│   ├── PHASE_CONFOUNDING_REPORT.md        # Confounding warning: phase shortcut prevention
+│   ├── ORIGINAL_LABEL_INVENTORY.csv       # Raw multi-label binary indicators
+│   ├── LABEL_OVERLAP_MATRIX.csv           # Label co-occurrence matrix
+│   ├── class_mapping.yaml                 # Frozen YAML class mapping contract for Faisal
+│   ├── provisional/                       # Task Y8: Early provisional freeze unblocking Faisal
+│   │   ├── PROVISIONAL_DATA_FREEZE_MANIFEST.csv
+│   │   ├── PROVISIONAL_LABEL_MAPPING.yaml
+│   │   ├── PROVISIONAL_DATA_FREEZE_NOTES.md
+│   │   └── PROVISIONAL_DATA_FREEZE_VERSION.txt
+│   ├── SPLIT_FEASIBILITY_REPORT.md        # Mathematical proof: 3-fold topology CV feasible
+│   ├── DATA_LEAKAGE_ASSESSMENT.md         # 6 leakage pathways & verified assertions
+│   ├── folds.csv                          # Outer fold assignments (276 records, 0 leakage)
+│   └── DATASET_READINESS_REPORT.md        # Final Task Y7 Decision: READY_WITH_EXCLUSIONS
+├── 02_methodology/                        # Methodology specifications (Ahmed & Faisal)
+├── 03_results/                            # Machine-readable outputs & visual artifacts (Faisal)
+│   ├── figures/                           # High-resolution (300 DPI) publication figures
+│   │   ├── fig1_family_distribution.png
+│   │   ├── fig2_pipeline_telemetry.png
+│   │   ├── fig3_confusion_matrix.png
+│   │   ├── fig4_risk_coverage_curve.png
+│   │   ├── fig5_calibration_reliability.png
+│   │   └── fig6_distinguishability_separation.png
+│   └── dashboard.html                     # Standalone interactive evaluation dashboard (self-contained Base64)
+├── 04_validation/                         # Software testing & leakage verification (Faisal)
+├── 05_documentation/                      # Scientific manuscripts & provenance registers (Ahmed)
+│   └── FIGURE_SPECIFICATION.md            # Formal figure registry and RQ mapping
 ├── assets/                                # Foundation project assets & signed plans
-│   ├── Ahmed Plan.pdf                     # Person 1 master specification
-│   ├── Faisal Plan.pdf                    # Person 2 master specification
-│   ├── Yazan Plan.pdf                     # Person 3 master specification
-│   ├── _Materials & Data Provenance Lead.pdf # Materials lead mandate
-│   ├── H2-PRISM_Proposal.pdf             # Engineering & scientific proposal
-│   └── Team Contribution & Authorship.pdf # Intellectual property & authorship agreement
-├── data/                                  # Data directory (Raw untouched vs Derived)
-│   ├── raw/H2-SimNet-Dataset/             # Primary official dataset (Zenodo 17871393)
-│   ├── selected/                          # The 6 representative evaluation scenarios
-│   ├── processed/                         # Standardized/synchronized scenario copies
-│   └── synthetic/                         # Controlled synthetic sensor faults (strictly isolated)
-├── docs/                                  # Architectural documentation
-│   ├── ARCHITECTURE.md                    # Data flow and component block diagrams
-│   └── TEAM_ROLES.md                      # Authorship and responsibility division
-├── notebooks/                             # Exploratory and experimental notebooks
-│   ├── baseline_models.ipynb              # Baseline evaluation (LR, RF, XGBoost)
-│   ├── feature_ablation.ipynb             # Feature ablation study (Configs A-D)
-│   └── demonstration.ipynb                # 4-scenario end-to-end demonstration
-├── results/                               # Reproducibility manifests and generated outputs
-│   ├── figures/                           # Exported evaluation plots
-│   ├── data_audit.csv                     # Automated forensic audit metrics (123 records)
-│   ├── dataset_truth_table.md             # Verified vs assumed properties table
-│   └── materials_manifest.csv             # Machine-readable data manifest (123 records)
-├── scripts/                               # Inspection and utility scripts
-│   └── data_inspection/
-│       ├── audit_dataset.py               # Reproducible forensic inspection script
-│       └── select_scenarios.py            # Benchmark scenario selector & standardizer
-├── src/                                   # Core modular codebase
-│   ├── __init__.py                        # Package root and public exports
-│   ├── schema.py                          # Shared dataclasses and cross-module contracts
-│   ├── data.py                            # Data loader & mock scenario generator (Person 1)
-│   ├── quality.py                         # Quality control & flag generator (Person 1)
-│   ├── physics.py                         # Line-pack corrected mass balance engine (Person 1)
-│   ├── propagation.py                     # Cross-correlation delay & localization (Person 1)
-│   ├── detector.py                        # Stage 1 lightweight candidate detector (Person 3)
-│   ├── features.py                        # Multi-group feature extraction (Person 2)
-│   ├── fingerprint.py                     # Candidate transient wavelet/CWT layer (Person 2)
-│   ├── model.py                           # XGBoost attribution & calibration (Person 2)
-│   ├── evidence.py                        # Contradiction scoring & fusion (Person 2)
-│   ├── observability.py                   # Independent 3-axis observability engine (Person 3)
-│   ├── decision.py                        # Gating engine & UNKNOWN abstention (Person 3)
-│   └── pipeline.py                        # Master pipeline orchestrator (Person 3)
-├── tests/                                 # Unit & integration test suite
-│   ├── __init__.py
-│   ├── test_physics.py                    # Physics engine & residual unit tests (Person 1)
-│   ├── test_model.py                      # Classifier & feature tests (Person 2)
-│   ├── test_observability.py              # Observability gating tests (Person 3)
-│   └── test_pipeline.py                   # End-to-end integration tests (Person 3)
-├── run_scenario.py                        # Unified CLI scenario execution tool
-├── AUDIT.md                               # H2-SimNet dataset forensic audit report
-├── ASSUMPTIONS.md                         # Scientific & thermodynamic assumptions log
-├── MATERIALS.md                           # Materials inventory & provenance record
-├── README_data.md                         # Data acquisition & reproducibility guide
-├── requirements.txt                       # Project dependencies
-└── .gitignore                             # Git ignore rules
+│   ├── Ahmed new plan.pdf                 # Ahmed Stage 2 research plan
+│   ├── Faisal new plan.pdf                # Faisal Stage 2 ML plan
+│   ├── Yazan new plan.pdf                 # Yazan Stage 2 dataset & readiness plan
+│   ├── H2-PRISM_Proposal.pdf              # Foundation proposal
+│   └── Team Contribution & Authorship.pdf # Intellectual property agreement
+├── audit/                                 # Deterministic Python audit scripts (Yazan)
+│   ├── 01_inventory_integrity.py          # Task Y1 audit engine
+│   ├── 02_scenario_family_mapping.py      # Task Y2 scenario & family mapper
+│   ├── 03_04_timing_labels_concurrency.py # Tasks Y3 & Y4 timing & label auditor
+│   ├── 05_split_feasibility_leakage.py    # Task Y5 split feasibility & fold generator
+│   ├── 07_readiness_decision.py           # Task Y7 readiness decision synthesizer
+│   ├── 08_provisional_freeze.py           # Task Y8 provisional freeze packager
+│   └── run_all_audits.py                  # One-click master audit orchestrator
+├── configs/                               # Configuration contracts (Faisal & Yazan)
+│   └── interface_contracts.yaml           # Schema specifications (Task F12)
+├── data/                                  # Primary data directory
+│   ├── raw/                               # Untouched raw H2-SimNet dataset (Zenodo 17871393: 998 MB)
+│   └── sample/                            # Lightweight 4-class sample dataset (Tracked in Git: 10 MB)
+├── scripts/                               # Automation & reporting scripts
+│   ├── download_data.py                   # Automated dataset download & SHA256 integrity verifier
+│   └── visualize.py                       # Master CLI visualizer & dashboard compiler
+├── src/                                   # Stage 2 modular codebase (H2-PRISM core package)
+│   └── h2prism/                           # Core Python package
+│       ├── data/                          # Dataset loader API (instant scenario & fold access)
+│       │   ├── loader.py                  # Direct loaders (load_scenario, load_fold, list_scenarios)
+│       │   └── __main__.py                # CLI inspection (python3 -m h2prism.data)
+│       └── visualization/                 # Academic publication plotting engine
+│           ├── theme.py                   # IEEE/Nature high-contrast, colorblind-safe theme
+│           ├── curves.py                  # Risk-coverage curves, reliability diagrams, ablations
+│           ├── matrices.py                # 4-class confusion matrix, family distributions
+│           ├── distinguishability.py      # D(x) separation density, indicator correlations
+│           ├── telemetry.py               # Synchronized pressure & mass flow timeseries
+│           └── dashboard.py               # Self-contained HTML report compiler
+├── tests/                                 # Automated test suite (Pytest: 23 passing tests)
+│   ├── test_data_loader.py                # Dataset loading & fold integrity tests
+│   ├── test_dataset_audit.py              # Audit integrity & zero-leakage assertions
+│   └── test_visualization.py              # Plotting, CLI, and dashboard compilation tests
+├── pyproject.toml                         # Project configuration
+└── requirements.txt                       # Python dependencies
 ```
 
 ---
 
-## 3. Specialized Member Plans & File Ownership
+## 4. Direct Dataset Access & Testing (Python API)
 
-### 3.1 Ahmed — Project Lead / Plan 1
-* **Scope**: Data Audit + Data Engineering + Physics Consistency + Propagation / Time-Delay.
-* **Daily Workflow**:
-  - **Day 1**: Inspect repo, execute forensic dataset audit (`AUDIT.md`), select 6 complete representative scenarios, build data loader (`src/data.py`), implement quality control flags (`src/quality.py`).
-  - **Day 2**: Implement real-gas line-pack mass balance residual $z_{MB}$ (`src/physics.py`), implement cross-correlation acoustic propagation delay $\Delta t_{12}$ and conditional localization interval $\hat{x} \pm \delta$ (`src/propagation.py`), write unit tests (`tests/test_physics.py`).
-  - **Day 3**: Clean interfaces, document all physical assumptions in `ASSUMPTIONS.md`, and complete dataset truth table.
-* **Corresponding Files & Exact Roles**:
-  - [`src/data.py`](file:///Users/ya/Documents/codes/H2-PRISM/src/data.py): Ingests CSV/Parquet scenarios, standardizes columns, and preserves metadata without altering variables.
-  - [`src/quality.py`](file:///Users/ya/Documents/codes/H2-PRISM/src/quality.py): Computes non-destructive quality flags (`GOOD`, `MISSING`, `GAP`, `STUCK`, `INVALID`) and data adequacy $O_Q$.
-  - [`src/physics.py`](file:///Users/ya/Documents/codes/H2-PRISM/src/physics.py): Evaluates real-gas hydrogen density $\rho(P, T)$, line-pack mass accumulation $\Delta \hat{M}_{line}$, and normalized residual $z_{MB} = \hat{m}_{loss} / \sigma_{MB}$.
-  - [`src/propagation.py`](file:///Users/ya/Documents/codes/H2-PRISM/src/propagation.py): Estimates cross-station lag $\Delta t_{12} = \arg\max_\tau C_{12}(\tau)$ and outputs localization interval bounded by sampling resolution floor $\delta = a \cdot \Delta t / 2$.
-  - [`AUDIT.md`](file:///Users/ya/Documents/codes/H2-PRISM/AUDIT.md): Detailed forensic audit of Zenodo record 17871393.
-  - [`ASSUMPTIONS.md`](file:///Users/ya/Documents/codes/H2-PRISM/ASSUMPTIONS.md): Rigorous ledger of thermodynamic, geometric, and sampling assumptions.
-  - [`tests/test_physics.py`](file:///Users/ya/Documents/codes/H2-PRISM/tests/test_physics.py): Sanity unit tests verifying sign conventions, steady state zero imbalance, and synthetic leak responses.
-* **Hard Exclusions**: Do NOT build XGBoost, deep learning (CNN/GRU/TCN), the final fusion engine, dashboard UI, or fabricate missing sensor measurements.
+A unified data access layer is provided in [`src/h2prism/data/`](src/h2prism/data/) and documented in [`01_dataset_audit/HOW_TO_ACCESS_DATA.md`](01_dataset_audit/HOW_TO_ACCESS_DATA.md).
 
----
+### 1. Where Does the Data Live?
+- **Full Benchmark (`data/raw/H2-SimNet-Dataset/`)**: **998 MB**, 265 files (Zenodo Record 17871393). Ignored by Git.
+- **Offline Quickstart Sample (`data/sample/`)**: **10 MB**, 4 complete scenarios covering all 4 target classes (`NORMAL`, `LEAK`, `COMPRESSOR_FAULT`, `COMPRESSOR_DELAY`). **Tracked in Git for immediate zero-download testing**.
 
-### 3.2 Faisal — Engineering / AI Lead (Plan 2)
-* **Scope**: Feature Engineering + Transient Fingerprinting + XGBoost + Event Attribution + Evidence Fusion.
-* **Daily Workflow**:
-  - **Day 1**: Inspect Person 1's interfaces, construct multi-group feature extraction (`src/features.py`), establish leakage-safe scenario-level splits, build sanity baselines (Logistic Regression, Random Forest, XGBoost).
-  - **Day 2**: Implement candidate CWT/wavelet transient fingerprinting (`src/fingerprint.py`), run ablation against non-wavelet features, train multi-class XGBoost classifier with probability calibration (`src/model.py`).
-  - **Day 3**: Build contradiction-aware evidence engine and compare fusion mechanisms (Calibrated Stacking vs. Dempster-Shafer) (`src/evidence.py`), evaluate FPAR and coverage curves.
-* **Corresponding Files & Exact Roles**:
-  - [`src/features.py`](file:///Users/ya/Documents/codes/H2-PRISM/src/features.py): Extracts Group A (raw), Group B (temporal rates/derivatives), Group C (cross-station coupling), and incorporates Group D (physics) and Group E (propagation) from Person 1.
-  - [`src/fingerprint.py`](file:///Users/ya/Documents/codes/H2-PRISM/src/fingerprint.py): Candidate wavelet/CWT spectral energy layer; subject to strict ablation testing (A6/B4 vs B3).
-  - [`src/model.py`](file:///Users/ya/Documents/codes/H2-PRISM/src/model.py): Implements multi-class attribution classifier and post-hoc probability calibration (Platt/Isotonic).
-  - [`src/evidence.py`](file:///Users/ya/Documents/codes/H2-PRISM/src/evidence.py): Computes contradiction metric (disagreement between ML leak likelihood and physical mass balance) and fuses multi-stream evidence.
-  - [`notebooks/baseline_models.ipynb`](file:///Users/ya/Documents/codes/H2-PRISM/notebooks/baseline_models.ipynb): Benchmark experiments comparing simple linear/tree baselines against XGBoost.
-  - [`notebooks/feature_ablation.ipynb`](file:///Users/ya/Documents/codes/H2-PRISM/notebooks/feature_ablation.ipynb): Controlled ablation study across feature configurations A, B, C, and D.
-  - [`tests/test_model.py`](file:///Users/ya/Documents/codes/H2-PRISM/tests/test_model.py): Unit tests verifying feature vector dimensions, heuristic fallback, and probability calibration.
-* **Hard Exclusions**: Do NOT build the data loader, redesign physics equations, build final pipeline orchestration, or use random row-level train/test splits.
+### 2. Load Any Scenario in Python (2 Lines):
+```python
+from h2prism.data import load_scenario, load_fold, list_scenarios
 
----
+# Load any scenario by short name, ID, or relative path
+df = load_scenario("leakG4")  # 20,000 timesteps x 24 channels (PS1-PS12, MFS1-MFS4)
+print(f"Loaded scenario: {df.shape}, PS1={df['PS1'].iloc[0]:.2f} MPa")
 
-### 3.3 Yazan — Materials / Data Provenance & Integration Lead (Plan 3)
-* **Scope**: Materials Verification + Pipeline Orchestration + Observability + Decision Logic + Validation + Reproducibility.
-* **Daily Workflow**:
-  - **Day 1**: Execute dataset acquisition and forensic verification (`MATERIALS.md`, `README_data.md`), establish shared dataclass contracts (`src/schema.py`), implement Stage 1 lightweight candidate event trigger (`src/detector.py`).
-  - **Day 2**: Connect Person 1 and Person 2 modules into master pipeline (`src/pipeline.py`, `run_scenario.py`), implement independent 3-axis observability engine (`src/observability.py`), implement gated UNKNOWN abstention logic (`src/decision.py`).
-  - **Day 3**: Architecture freeze, evaluate on held-out operating regimes, generate four representative demonstration walkthroughs (`notebooks/demonstration.ipynb`), package full reproducibility suite.
-* **Corresponding Files & Exact Roles**:
-  - [`src/schema.py`](file:///Users/ya/Documents/codes/H2-PRISM/src/schema.py): Master dataclass contracts (`EventCandidate`, `PhysicsEvidence`, `PropagationEvidence`, `MLResult`, `ObservabilityResult`, `Decision`, `StructuredEventReport`).
-  - [`src/detector.py`](file:///Users/ya/Documents/codes/H2-PRISM/src/detector.py): Stage 1 online trigger that scans rolling mass imbalance and $dP/dt$, extracting isolated pre/post event analysis windows.
-  - [`src/observability.py`](file:///Users/ya/Documents/codes/H2-PRISM/src/observability.py): Independent 3-axis observability calculation $O = \min(O_Q, O_S, O_E)$, quantifying data quality, structural acoustic discriminability, and evidential conflict.
-  - [`src/decision.py`](file:///Users/ya/Documents/codes/H2-PRISM/src/decision.py): Enforces gating thresholds on confidence, margin, and observability; returns `UNKNOWN` with explicit diagnostics when evidence is weak.
-  - [`src/pipeline.py`](file:///Users/ya/Documents/codes/H2-PRISM/src/pipeline.py): Orchestrates end-to-end execution across all stages and produces SCADA-compatible event reports.
-  - [`run_scenario.py`](file:///Users/ya/Documents/codes/H2-PRISM/run_scenario.py): Command-line scenario execution entrypoint.
-  - [`MATERIALS.md`](file:///Users/ya/Documents/codes/H2-PRISM/MATERIALS.md): Forensic materials record, dataset claims, verified vs unverified items, and provenance statement.
-  - [`README_data.md`](file:///Users/ya/Documents/codes/H2-PRISM/README_data.md): Step-by-step instructions for acquiring and verifying H2-SimNet data.
-  - [`results/materials_manifest.csv`](file:///Users/ya/Documents/codes/H2-PRISM/results/materials_manifest.csv): Machine-readable record of all scenario files and roles.
-  - [`notebooks/demonstration.ipynb`](file:///Users/ya/Documents/codes/H2-PRISM/notebooks/demonstration.ipynb): Four end-to-end demonstrations (Normal, Leak, Operational Transient, Ambiguous / UNKNOWN).
-  - [`tests/test_observability.py`](file:///Users/ya/Documents/codes/H2-PRISM/tests/test_observability.py) & [`tests/test_pipeline.py`](file:///Users/ya/Documents/codes/H2-PRISM/tests/test_pipeline.py): Pipeline validation tests.
-* **Hard Exclusions**: Do NOT modify physics equations, build separate ML models, fabricate metrics, or claim real-world field validation.
-
----
-
-## 4. Cross-Module Data Flow & Contracts
-
-```
-[Raw Scenario Data]
-         │
-         ▼
-src/quality.py (Ahmed) ──────────► Data Quality Flags & O_Q
-         │
-         ▼
-src/detector.py (Yazan) ─────────► EventCandidate Window
-         │
-    ┌────┴───────────────────────────┐
-    ▼                                ▼
-src/physics.py (Ahmed)     src/propagation.py (Ahmed)
-    │ PhysicsEvidence                │ PropagationEvidence
-    └────┬───────────────────────────┘
-         ├───────────────────────────┐
-         ▼                           ▼
-src/features.py (Faisal)   src/fingerprint.py (Faisal)
-         │ Multi-Group Feature Vector
-         ▼
-src/model.py (Faisal) ────────────► MLResult (Likelihoods)
-         │
-         ▼
-src/evidence.py (Faisal) ─────────► EvidenceResult & Contradiction Score
-         │
-         ▼
-src/observability.py (Yazan) ────► ObservabilityResult O = min(O_Q, O_S, O_E)
-         │
-         ▼
-src/decision.py (Yazan) ─────────► Decision (Attribution or UNKNOWN)
-         │
-         ▼
-src/pipeline.py (Yazan) ─────────► StructuredEventReport
+# Load training and testing splits for Outer Fold 1:
+train_scenarios, test_scenarios = load_fold(fold_id=1)
 ```
 
----
-
-## 5. Non-Negotiable Scientific Guidelines
-
-1. **No Data Fabrication**: Never invent missing sensor channels (e.g., temperature) or undocumented physical geometry.
-2. **Strict Scenario Splitting**: Never use random row-level train/test splits. Always split by scenario/run to prevent temporal data leakage.
-3. **Condition-Based Generalization**: At least one complete operational regime must be held out entirely from training.
-4. **Joint Evaluation Metric Reporting**: False Physical Attribution Rate (FPAR) must **always** be reported jointly with leak recall and decision coverage. Never report accuracy or FPAR in isolation.
-5. **Ablation-Driven Architecture**: The candidate wavelet/CWT transient fingerprinting layer must earn its place via measurable FPAR reduction in ablation testing; otherwise, it must be removed.
-6. **Simulation-Only Ground Truth**: All validation is strictly simulation-based (H2-SimNet). Never describe simulation results as field-validated data.
-
----
-
-## 6. Quickstart & Demonstration
-
-### Installation
+### 3. Dataset Provisioning & Checksum Verification:
 ```bash
-pip install -r requirements.txt
-```
+# Verify cryptographic SHA-256 integrity against raw_checksums.sha256
+python3 scripts/download_data.py --verify
 
-### Prototype Validation Suite & Visual Dashboard
-Run the end-to-end prototype validation suite to evaluate all benchmark scenarios, generate high-resolution engineering figures, and build the interactive HTML dashboard:
-```bash
-# Execute validation runner & generate all visuals
-python3 run_prototype.py
-
-# Open interactive executive dashboard in browser
-python3 run_prototype.py --open
-# or
-open results/prototype_dashboard.html
-```
-
-### Running Mock Scenario Demonstrations
-Execute individual scenario demonstrations:
-```bash
-# 1. Genuine Leak with Acoustic Propagation Delay & Mass Balance Residual
-python3 run_scenario.py --mock leak
-
-# 2. Operational Transient Explained by Line-Pack Accumulation
-python3 run_scenario.py --mock operational_transient
-
-# 3. Sensor Fault (Single-Channel Pressure Deviation without Flow Loss)
-python3 run_scenario.py --mock sensor_fault
-
-# 4. Ambiguous Scenario (Low Observability -> UNKNOWN Abstention)
-python3 run_scenario.py --mock ambiguous
-```
-
-### Running Test Suite
-```bash
-pytest tests/
+# Print dataset summary & file locations
+python3 scripts/download_data.py --summary
 ```
 
 ---
 
-## 7. Prototype Validation Figures & Visual Outputs
+## 5. Team Ownership & Research Triad (Stage 2)
 
-The prototype validation suite produces 5 dedicated engineering visual figures in `results/figures/` and an interactive executive dashboard in `results/prototype_dashboard.html`:
+```
++─────────────────────────────────────────────────────────────────────────────+
+|                                H2-PRISM TEAM                                |
++───────────────────────┬─────────────────────────────┬───────────────────────+
+|         AHMED         |           FAISAL            |         YAZAN         |
+|     (Research Lead)   |          (AI Lead)          |    (Data & Readiness) |
++───────────────────────┼─────────────────────────────┼───────────────────────+
+| • Scientific problem  | • Windowing & Features      | • Forensic Data Audit |
+|   formulation (A1, A2)| • Baseline Models (F5)      | • Scenario & Family   |
+| • Notation consistency| • Probability Calibration   |   Mapping (Y2)        |
+| • Scientific Claim &  | • Distinguishability D(x)   | • Timing & Labels     |
+|   Limit Register (A7) | • Selective Policy (F9)     | • Provisional Freeze  |
+| • Scientific          | • Statistical Evaluation    | • Split Feasibility   |
+|   Provenance (A10)    |   & Matched Coverage (F10)  | • Readiness Decision  |
+| • Final Paper & Freeze| • Technical Integration     |   (READY_WITH_EXCL)   |
++───────────────────────┴─────────────────────────────┴───────────────────────+
+```
 
-| Artifact | Visual Output | Description |
+---
+
+## 6. Visualization Subpackage & Research Reporting Engine
+
+A centralized, publication-grade visual reporting suite is implemented in [`src/h2prism/visualization/`](src/h2prism/visualization/) and documented in [`05_documentation/FIGURE_SPECIFICATION.md`](05_documentation/FIGURE_SPECIFICATION.md).
+
+> **Status (2026-11):** figures 3–6 and the dashboard are illustrative mock-ups generated from invented values and are quarantined in `03_results/ILLUSTRATIVE_DEMO_NOT_RESULTS/`. **No experimental figure or result exists yet**; real figures will be built by `tools/reporting/` from authorized runner outputs (see `05_documentation/FIGURE_SPECIFICATION.md`).
+
+### Quick Usage:
+```bash
+# 1. Generate full demonstration figure suite & compile interactive HTML dashboard
+python3 scripts/visualize.py --demo
+
+# 2. View generated dashboard in default browser
+python3 scripts/visualize.py --demo --open
+```
+
+### Generated Figures:
+| Figure File | Specification | Research Question / Task |
 | :--- | :--- | :--- |
-| **Figure 1** | [`results/figures/kpi_confusion_matrix.png`](file:///Users/ya/Documents/codes/H2-PRISM/results/figures/kpi_confusion_matrix.png) | Multi-class attribution confusion matrix and validation KPI bars (FPAR, Recall, Covered Acc, Abstention Honesty). |
-| **Figure 2** | [`results/figures/linepack_mass_balance.png`](file:///Users/ya/Documents/codes/H2-PRISM/results/figures/linepack_mass_balance.png) | Real-gas line-pack dynamics ($dM/dt$), uncorrected mass imbalance, and normalized residual $z_{MB}$. |
-| **Figure 3** | [`results/figures/acoustic_localization_profile.png`](file:///Users/ya/Documents/codes/H2-PRISM/results/figures/acoustic_localization_profile.png) | Cross-correlation signal lag $\Delta t_{12}$, spatial delay profile, and $\pm 650\text{ m}$ localization bounding interval. |
-| **Figure 4** | [`results/figures/observability_radar_gauge.png`](file:///Users/ya/Documents/codes/H2-PRISM/results/figures/observability_radar_gauge.png) | 3-Axis Observability radar ($O_Q, O_S, O_E$), composite score gauge, and gated decision flow tree. |
-| **Figure 5** | [`results/figures/scada_event_signatures.png`](file:///Users/ya/Documents/codes/H2-PRISM/results/figures/scada_event_signatures.png) | SCADA pressure/flow timeseries across 4 operational regimes (Leak, Transient, Sensor Fault, Ambiguous). |
-| **Interactive Dashboard** | [`results/prototype_dashboard.html`](file:///Users/ya/Documents/codes/H2-PRISM/results/prototype_dashboard.html) | Standalone interactive HTML dashboard combining telemetry graphs, KPI cards, and scenario truth table. |
+| `fig1_family_distribution.png` | Grouped Family Count per Target Class | Historical (built from the superseded 2026-10-30 family map); not evidence for the current LOTO folds |
+| `fig2_pipeline_telemetry.png` | SCADA Pressure & Flow Dynamics with Event Shading | Visualizes raw physical transients (Task Y3) |
+| `fig3_confusion_matrix.png` | Normalized 4-Class Attribution Matrix | Primary Attribution Evaluation (Task F5) |
+| `fig4_risk_coverage_curve.png` | Risk-Coverage Comparison (Method C vs C-D vs B) | **RQ1**: Distinguishability value beyond confidence |
+| `fig5_calibration_reliability.png` | 10-bin Reliability Diagram (ECE & Brier score) | Calibrated Probabilistic Attribution (Task F6) |
+| `fig6_distinguishability_separation.png`| Empirical $D(x) = q_{(1)} - q_{(2)}$ Density Separation | **RQ1**: Separation between correct vs ambiguous cases |
+
+### Standalone HTML Dashboard:
+The compiler in [`src/h2prism/visualization/dashboard.py`](src/h2prism/visualization/dashboard.py) embeds all 300 DPI figures as Base64 URIs into [`03_results/dashboard.html`](03_results/dashboard.html). The resulting dashboard is **100% self-contained**, responsive, and requires zero external servers, local dependencies, or active internet connection to inspect.
 
 ---
 
-## 8. Executive KPI Target & Validation Scorecard
+## 7. Verified Dataset Truth & Scientific Boundaries
 
-```
-========================================================================================
-                      H2-PRISM PROTOTYPE VALIDATION SCORECARD
-========================================================================================
-  [1] False Physical Attribution Rate (FPAR): 0.0%    (Target: <= 0.0% | Status: PASS)
-  [2] Leak Detection Recall:                  100.0%  (Target: >= 98.0%| Status: PASS)
-  [3] Covered Decision Accuracy:              100.0%  (Target: >= 95.0%| Status: PASS)
-  [4] Intelligent Abstention Honesty:         100.0%  (Target: 100.0%  | Status: PASS)
-  [5] Acoustic Spatial Resolution:            +/-650m (a = 1300 m/s @ 1 Hz dt)
-  [6] Verified Dataset Scope:                 123 Scenarios (2.47M Continuous Timesteps)
-========================================================================================
-```
+1. **Fluid Composition**: the dataset documentation reports a 10% H₂ / 90% CH₄ blend simulated in Simscape Gas Fluids. This is **REFUTED by the released models** (2026-11-13).
+   - All six released `.slx` files define an air-like gas: R = 0.287 kJ/kg/K, molar mass ≈ 29 g/mol. A 10% blend would have R ≈ 0.57 kJ/kg/K.
+   - The models' active perfect-gas constants are physically inconsistent (γ ≈ 5.75); see `05_documentation/GAS_MODEL_LIMITATION.md`.
+   - No hydrogen, blend or physical-validation claim may be made from the released data.
+   - The hydrogen-specific path is `02_methodology/HYDROGEN_MODEL_SPECIFICATION.md`. Open issues are tracked in `00_governance/MASTER_ISSUE_REGISTER.csv`.
+2. **Sensor Channels**: Pressure transmitters `PS1` through `PS12` (MPa) and mass flow meters `MFS1` through `MFS4` (kg/s) are verified. **Zero localized temperature channels exist**.
+3. **No Continuous Metric Localization Over-claiming**: Categorical valve restriction labels (`leak_G3` through `leak_G6`) represent discrete valve zones, not continuous metric coordinates.
+4. **Primary Evaluation Strategy**: leave-one-topology-out over 57 underlying runs (51 eligible, 39 families nested in topology; manifest v0.2). Folds are family-, topology- and duplicate-disjoint and every class appears in every fold, but NORMAL/FAULT/DELAY have only 1–2 runs per topology, so their per-class results are descriptive only. The original `01_dataset_audit/folds.csv` leaks (every family on both sides) and must not be used. See `02_methodology/GROUPED_EVALUATION_PROTOCOL.md`.
+5. **Phase-Event Confounding**: phase is not a model input, but COMPRESSOR_DELAY windows all come from the start-up segment, so DELAY cannot be separated from start-up behaviour (descriptive only). Absolute-level features also nearly identify each run; a registered offset-invariant sensitivity analysis addresses this. See `05_documentation/DATASET_LIMITATIONS.md`.
 
+---
+
+## 8. Historical Stage 1 Archive
+
+All Stage 1 prototype implementations, presentation dashboard HTML, animations, and preliminary mock scripts have been retired from the active branch and are permanently preserved in Git history:
+```bash
+git checkout old-main
+```
+Or view online at [GitHub: `ayazashy/H2-PRISM/tree/old-main`](https://github.com/ayazashy/H2-PRISM/tree/old-main).

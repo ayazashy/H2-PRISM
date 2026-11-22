@@ -1,0 +1,38 @@
+component,dimension,value,median_s,p95_s,min_s,max_s,reps,peak_tracemalloc_MB
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",M_channels,1,0.025389,0.03023921,0.01926489999,0.03086130001,15,0.07871341705
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",M_channels,2,0.04597399999,0.05103013,0.03959449999,0.05114849999,15,0.1473817825
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",M_channels,3,0.08105209999,0.1326545,0.07708260001,0.227242,15,0.2164325714
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",M_channels,4,0.1091382,0.1302441,0.1041712,0.1432823,15,0.285484314
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",M_channels,5,0.1329596,0.18842902,0.1019151,0.1944409,15,0.4035835266
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",M_channels,6,0.155126,0.19207752,0.1465978,0.1946748,15,0.4228515625
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",M_channels,7,0.1588297,0.19545551,0.132091,0.2250233,15,0.4915218353
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",M_channels,8,0.2082539,0.25918295,0.1641879,0.2738126,15,0.5601902008
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",M_channels,9,0.2245965,0.25687207,0.1705295,0.2683737,15,0.7481975555
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",M_channels,10,0.2565924,0.36652812,0.2165419,0.3729425,15,0.6975879669
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",M_channels,11,0.2847169,0.34466608,0.2302327,0.3545715,15,0.8825349808
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",M_channels,12,0.3053176,0.35733984,0.259713,0.3689842,15,0.8349199295
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",M_channels,13,0.3638951,0.41508851,0.331089,0.4570526,15,0.9040231705
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",H_hypotheses,1,0.0583362,0.07109976001,0.0433299,0.0962922,15,0.9321212769
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",H_hypotheses,2,0.1306682,0.1495246,0.1047408,0.1551638,15,0.9020013809
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",H_hypotheses,3,0.1607545,0.23879176,0.1247873,0.2875609,15,0.9022340775
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",H_hypotheses,4,0.2448032,0.29579314,0.223981,0.3212219,15,0.9027919769
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",H_hypotheses,5,0.2904937,0.33644945,0.2787187,0.3530615,15,0.903380394
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",H_hypotheses,6,0.3405538,0.386645,0.2616449,0.4062128,15,1.110955238
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",S_shifts,1,0.3787898,0.45821661,0.2944977,0.5014113,15,0.6479654312
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",S_shifts,11,0.3839175,0.41148448,0.3345368,0.4249312,15,0.9040231705
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",S_shifts,21,0.3708992,0.40947732,0.3119076,0.4356772,15,1.271904945
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",S_shifts,51,0.3865031,0.41975974,0.3354067,0.4483427,15,2.103104591
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",S_shifts,101,0.387777,0.4807294,0.2917715,0.49652,15,3.793557167
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",T_window_samples,31,0.06950880001,0.08752775,0.0612689,0.1077007,15,0.1914834976
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",T_window_samples,61,0.1435644,0.18660913,0.1180241,0.2301926,15,0.3685235977
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",T_window_samples,91,0.2291604,0.27624003,0.1760975,0.280704,15,0.5498895645
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",T_window_samples,121,0.3164818,0.42443404,0.2310002,0.4266102,15,0.7269296646
+"formal D(Y) decision (diagnose, 6 restricted hypotheses unless varied)",T_window_samples,151,0.351791,0.39929268,0.2657048,0.410176,15,0.9040231705
+"empirical D(x) compute, 500 queries",N_reference_windows,1000,0.3718455,0.57807728,0.3488892,0.5919246,5,4.531624794
+"empirical D(x) compute, 500 queries",N_reference_windows,2000,0.4713918,0.59203462,0.4203982,0.6071881,5,8.346261024
+"empirical D(x) compute, 500 queries",N_reference_windows,5000,0.9136764,0.94928828,0.8963046,0.9550049,5,19.7903223
+"empirical D(x) compute, 500 queries",N_reference_windows,10000,1.4794967,1.68777852,1.407714,1.703717,5,38.93746948
+"empirical D(x) compute, 500 queries",N_reference_windows,20000,3.0582469,3.29347052,2.6217174,3.3511136,5,77.24656677
+"empirical D(x) compute, 500 queries",K_neighbours,10,1.4348714,1.6550247,1.3956291,1.7014945,5,38.93746948
+"empirical D(x) compute, 500 queries",K_neighbours,25,1.4796063,1.58390342,1.3906672,1.6022057,5,38.93746948
+"empirical D(x) compute, 500 queries",K_neighbours,50,1.4961895,1.5397628,1.4252004,1.5462037,5,38.93746948

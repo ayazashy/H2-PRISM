@@ -1,0 +1,1172 @@
+{
+ "status": "PROVISIONAL_EXPLORATORY (D1+D7 proposals; not owner decisions; not X06 targets)",
+ "assumptions": [
+  "isothermal pipes at T_ref after aftercoolers",
+  "compressors as pressure-rise elements, fixed dp in faults",
+  "leak modelled as an extra sink at a network node (steady state); choked leak flow independent of downstream",
+  "steady states only: transient signatures (DELAY, onset dynamics, line-pack) need MATLAB"
+ ],
+ "D1_D7": {
+  "supply_MPa": 3.2,
+  "discharge_MPa": {
+   "C1": 5.0,
+   "C2": 6.5
+  }
+ },
+ "models": {
+  "Normal_HNetwork_gest_center": {
+   "A_nominal": {
+    "feasible_normal_envelope": true,
+    "min_pipe_pressure_MPa": 4.986084465958577,
+    "max_pipe_pressure_MPa": 6.5,
+    "max_outlet_velocity_m_s": 4.704944264323232,
+    "mass_residual_kg_s": 0.0,
+    "C1": {
+     "p_suction_MPa": 3.2,
+     "p_discharge_MPa": 5.0,
+     "dp_MPa": 1.7999999999999998,
+     "mdot_kg_s": 20.0,
+     "T_discharge_isentropic_K": 356.58401414621045,
+     "power_isentropic_kW": 12774.875059695714,
+     "T_discharge_eta0.75_K": 371.2381606737387,
+     "power_eta0.75_kW": 17033.16674626096,
+     "aftercooler_duty_eta0.75_kW": 16854.673660452117
+    },
+    "C2": {
+     "p_suction_MPa": 4.986084465958577,
+     "p_discharge_MPa": 6.5,
+     "dp_MPa": 1.5139155340414234,
+     "mdot_kg_s": 16.0,
+     "T_discharge_isentropic_K": 337.6496644091953,
+     "power_isentropic_kW": 5814.318275424463,
+     "T_discharge_eta0.75_K": 345.98213229765025,
+     "power_eta0.75_kW": 7752.424367232612,
+     "aftercooler_duty_eta0.75_kW": 7628.985493118787
+    }
+   },
+   "B_load": {
+    "x0.5": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 4.996258588594904,
+     "max_pipe_pressure_MPa": 6.5,
+     "max_outlet_velocity_m_s": 2.3503789481624633,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 5.0,
+      "dp_MPa": 1.7999999999999998,
+      "mdot_kg_s": 10.0,
+      "T_discharge_isentropic_K": 356.58401414621045,
+      "power_isentropic_kW": 6387.437529847857,
+      "T_discharge_eta0.75_K": 371.2381606737387,
+      "power_eta0.75_kW": 8516.58337313048,
+      "aftercooler_duty_eta0.75_kW": 8427.336830226059
+     },
+     "C2": {
+      "p_suction_MPa": 4.996258588594904,
+      "p_discharge_MPa": 6.5,
+      "dp_MPa": 1.5037414114050964,
+      "mdot_kg_s": 8.0,
+      "T_discharge_isentropic_K": 337.43198494025677,
+      "power_isentropic_kW": 2881.4490487841686,
+      "T_discharge_eta0.75_K": 345.69092068065055,
+      "power_eta0.75_kW": 3841.9320650455556,
+      "aftercooler_duty_eta0.75_kW": 3780.6189649183507
+     }
+    },
+    "x1.5": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 4.969660063228028,
+     "max_pipe_pressure_MPa": 6.5,
+     "max_outlet_velocity_m_s": 7.067590705721608,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 5.0,
+      "dp_MPa": 1.7999999999999998,
+      "mdot_kg_s": 30.0,
+      "T_discharge_isentropic_K": 356.58401414621045,
+      "power_isentropic_kW": 19162.312589543573,
+      "T_discharge_eta0.75_K": 371.2381606737387,
+      "power_eta0.75_kW": 25549.750119391436,
+      "aftercooler_duty_eta0.75_kW": 25282.010490678178
+     },
+     "C2": {
+      "p_suction_MPa": 4.969660063228028,
+      "p_discharge_MPa": 6.5,
+      "dp_MPa": 1.5303399367719717,
+      "mdot_kg_s": 24.0,
+      "T_discharge_isentropic_K": 338.00107114880484,
+      "power_isentropic_kW": 8845.991202645739,
+      "T_discharge_eta0.75_K": 346.45224427176197,
+      "power_eta0.75_kW": 11794.654936860978,
+      "aftercooler_duty_eta0.75_kW": 11607.528738644913
+     }
+    }
+   },
+   "C_faults": {
+    "C1_trip": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 3.1784383780086642,
+     "max_pipe_pressure_MPa": 4.692353912050088,
+     "max_outlet_velocity_m_s": 7.2899340684900045,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 3.2,
+      "dp_MPa": 0.0,
+      "mdot_kg_s": 20.0,
+      "T_discharge_isentropic_K": 313.1499999999999,
+      "power_isentropic_kW": 1.8189894035458565e-11,
+      "T_discharge_eta0.75_K": 313.15,
+      "power_eta0.75_kW": 1.8189894035458565e-11,
+      "aftercooler_duty_eta0.75_kW": 1.8189894035458565e-11
+     },
+     "C2": {
+      "p_suction_MPa": 3.1784383780086642,
+      "p_discharge_MPa": 4.692353912050088,
+      "dp_MPa": 1.5139155340414234,
+      "mdot_kg_s": 16.0,
+      "T_discharge_isentropic_K": 350.251401581523,
+      "power_isentropic_kW": 8721.919489745895,
+      "T_discharge_eta0.75_K": 362.76567526469506,
+      "power_eta0.75_kW": 11629.22598632786,
+      "aftercooler_duty_eta0.75_kW": 11509.309461779878
+     },
+     "within_fault_envelope_2p5MPa": true,
+     "node_pressure_change_vs_nominal_kPa": {
+      "N1": 0.0,
+      "N2": -1799.9999999999998,
+      "N3": -1803.4244658863129,
+      "N4": -1807.6460879499123,
+      "N5": -1807.6460879499123,
+      "N6": -1808.45379545549,
+      "N7": -1808.9221162673202,
+      "N8": -1809.7692278544164,
+      "N13": -1808.9221162673202,
+      "N11": -1809.9222257091815,
+      "N14": -1808.9221162673202,
+      "N9": -1809.9222257091815,
+      "N10": -1812.3953515802446
+     }
+    },
+    "C1_half": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 4.083106190913924,
+     "max_pipe_pressure_MPa": 5.597021724955347,
+     "max_outlet_velocity_m_s": 5.712057939402174,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 4.1,
+      "dp_MPa": 0.8999999999999995,
+      "mdot_kg_s": 20.0,
+      "T_discharge_isentropic_K": 336.6780227781655,
+      "power_isentropic_kW": 6897.480791638627,
+      "T_discharge_eta0.75_K": 344.6098574694182,
+      "power_eta0.75_kW": 9196.641055518176,
+      "aftercooler_duty_eta0.75_kW": 9108.009093319797
+     },
+     "C2": {
+      "p_suction_MPa": 4.083106190913924,
+      "p_discharge_MPa": 5.597021724955347,
+      "dp_MPa": 1.5139155340414234,
+      "mdot_kg_s": 16.0,
+      "T_discharge_isentropic_K": 342.6100398235026,
+      "power_isentropic_kW": 6958.086370621837,
+      "T_discharge_eta0.75_K": 352.58878354407227,
+      "power_eta0.75_kW": 9277.448494162454,
+      "aftercooler_duty_eta0.75_kW": 9155.774083579745
+     },
+     "within_fault_envelope_2p5MPa": true,
+     "node_pressure_change_vs_nominal_kPa": {
+      "N1": 0.0,
+      "N2": -900.0000000000003,
+      "N3": -901.335201397421,
+      "N4": -902.978275044653,
+      "N5": -902.978275044653,
+      "N6": -903.3164534893423,
+      "N7": -903.512493162518,
+      "N8": -903.8670226215099,
+      "N13": -903.512493162518,
+      "N11": -903.9310436665949,
+      "N14": -903.512493162518,
+      "N9": -903.9310436665949,
+      "N10": -904.9654868980718
+     }
+    },
+    "C2_trip": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 4.969579192833809,
+     "max_pipe_pressure_MPa": 5.0,
+     "max_outlet_velocity_m_s": 5.401423766336123,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 5.0,
+      "dp_MPa": 1.7999999999999998,
+      "mdot_kg_s": 20.0,
+      "T_discharge_isentropic_K": 356.58401414621045,
+      "power_isentropic_kW": 12774.875059695714,
+      "T_discharge_eta0.75_K": 371.2381606737387,
+      "power_eta0.75_kW": 17033.16674626096,
+      "aftercooler_duty_eta0.75_kW": 16854.673660452117
+     },
+     "C2": {
+      "p_suction_MPa": 4.986084465958577,
+      "p_discharge_MPa": 4.986084465958577,
+      "dp_MPa": 0.0,
+      "mdot_kg_s": 16.0,
+      "T_discharge_isentropic_K": 313.15000000000003,
+      "power_isentropic_kW": 1.4551915228366852e-11,
+      "T_discharge_eta0.75_K": 313.15000000000003,
+      "power_eta0.75_kW": 1.4551915228366852e-11,
+      "aftercooler_duty_eta0.75_kW": 1.4551915228366852e-11
+     },
+     "within_fault_envelope_2p5MPa": true,
+     "node_pressure_change_vs_nominal_kPa": {
+      "N1": 0.0,
+      "N2": 0.0,
+      "N3": 0.0,
+      "N4": 0.0,
+      "N5": -1513.9155340414234,
+      "N6": -1514.5520783659317,
+      "N7": -1514.9211266830155,
+      "N8": -1515.588620181407,
+      "N13": -1514.9211266830155,
+      "N11": -1515.7091690783088,
+      "N14": -1514.9211266830155,
+      "N9": -1515.7091690783088,
+      "N10": -1517.657477249057
+     }
+    },
+    "C2_half": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 4.986084465958577,
+     "max_pipe_pressure_MPa": 5.743042232979288,
+     "max_outlet_velocity_m_s": 4.705815399440664,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 5.0,
+      "dp_MPa": 1.7999999999999998,
+      "mdot_kg_s": 20.0,
+      "T_discharge_isentropic_K": 356.58401414621045,
+      "power_isentropic_kW": 12774.875059695714,
+      "T_discharge_eta0.75_K": 371.2381606737387,
+      "power_eta0.75_kW": 17033.16674626096,
+      "aftercooler_duty_eta0.75_kW": 16854.673660452117
+     },
+     "C2": {
+      "p_suction_MPa": 4.986084465958577,
+      "p_discharge_MPa": 5.743042232979288,
+      "dp_MPa": 0.7569577670207117,
+      "mdot_kg_s": 16.0,
+      "T_discharge_isentropic_K": 325.8748028087269,
+      "power_isentropic_kW": 3012.505398870271,
+      "T_discharge_eta0.75_K": 330.2018522894905,
+      "power_eta0.75_kW": 4016.6738651603664,
+      "aftercooler_duty_eta0.75_kW": 3955.279672508259
+     },
+     "within_fault_envelope_2p5MPa": true,
+     "node_pressure_change_vs_nominal_kPa": {
+      "N1": 0.0,
+      "N2": 0.0,
+      "N3": 0.0,
+      "N4": 0.0,
+      "N5": -756.9577670207117,
+      "N6": -757.234038897483,
+      "N7": -757.3941875671419,
+      "N8": -757.6838026458157,
+      "N13": -757.3941875671419,
+      "N11": -757.7361002832043,
+      "N14": -757.3941875671419,
+      "N9": -757.7361002832043,
+      "N10": -758.5810776259532
+     }
+    }
+   },
+   "D_signatures": {
+    "leak_0.005_at_G3": {
+     "leak_kg_s": 0.1,
+     "max_abs_node_dp_kPa": 0.060120246303974056,
+     "supply_flow_change_kg_s": 0.10000000000000142
+    },
+    "leak_0.020_at_G3": {
+     "leak_kg_s": 0.4,
+     "max_abs_node_dp_kPa": 0.24217373013435406,
+     "supply_flow_change_kg_s": 0.3999999999999986
+    },
+    "leak_0.100_at_G3": {
+     "leak_kg_s": 2.0,
+     "max_abs_node_dp_kPa": 1.2559969388838965,
+     "supply_flow_change_kg_s": 2.0
+    },
+    "leak_0.005_at_G4": {
+     "leak_kg_s": 0.1,
+     "max_abs_node_dp_kPa": 0.15169748736187927,
+     "supply_flow_change_kg_s": 0.10000000000000142
+    },
+    "leak_0.020_at_G4": {
+     "leak_kg_s": 0.4,
+     "max_abs_node_dp_kPa": 0.6116853414859236,
+     "supply_flow_change_kg_s": 0.3999999999999986
+    },
+    "leak_0.100_at_G4": {
+     "leak_kg_s": 2.0,
+     "max_abs_node_dp_kPa": 3.1889535035478644,
+     "supply_flow_change_kg_s": 2.0
+    },
+    "normal_load_x0.5_to_x1.5_max_abs_node_dp_kPa": 26.598525366875236
+   },
+   "E_line_pack": {
+    "pipes": {
+     "47": {
+      "name": "Pipe (G)1",
+      "volume_m3": 18095.57368467721,
+      "mean_p_MPa": 4.996874373332589,
+      "dM_dp_kg_per_kPa": 13.235848186719513,
+      "mass_kg": 68054.93093538108
+     },
+     "48": {
+      "name": "Pipe (G)2",
+      "volume_m3": 33929.20065876977,
+      "mean_p_MPa": 4.989916606311877,
+      "dM_dp_kg_per_kPa": 24.820241822740304,
+      "mass_kg": 127430.30880785716
+     },
+     "49": {
+      "name": "Pipe (G)3",
+      "volume_m3": 12440.706908215581,
+      "mean_p_MPa": 6.498911719261701,
+      "dM_dp_kg_per_kPa": 8.94470789072946,
+      "mass_kg": 60338.81906946279
+     },
+     "309": {
+      "name": "Pipe (G)8",
+      "volume_m3": 12440.706908215581,
+      "mean_p_MPa": 6.49719291349777,
+      "dM_dp_kg_per_kPa": 8.94488102439116,
+      "mass_kg": 60323.444705241425
+     },
+     "106": {
+      "name": "Pipe (G)4",
+      "volume_m3": 6283.185307179586,
+      "mean_p_MPa": 6.4954230481866855,
+      "dM_dp_kg_per_kPa": 4.517706720445843,
+      "mass_kg": 30458.390562064604
+     },
+     "221": {
+      "name": "Pipe (G)7",
+      "volume_m3": 3141.592653589793,
+      "mean_p_MPa": 6.494078026541802,
+      "dM_dp_kg_per_kPa": 2.2588875749451165,
+      "mass_kg": 15226.157051370123
+     },
+     "107": {
+      "name": "Pipe (G)5",
+      "volume_m3": 395.91921416865364,
+      "mean_p_MPa": 6.490554507632618,
+      "dM_dp_kg_per_kPa": 0.28468760289868017,
+      "mass_kg": 1917.8733601515785
+     }
+    },
+    "control_volumes": {
+     "CV_A": {
+      "pipes": [
+       "47",
+       "48",
+       "49",
+       "309"
+      ],
+      "dM_dp_kg_per_kPa": 55.945678924580434,
+      "mass_kg": 316147.5035179425,
+      "dp_dt_resolution_for_0p1_kg_s_Pa_per_s": 1.787448144740697
+     },
+     "CV_B": {
+      "pipes": [
+       "106",
+       "221",
+       "107"
+      ],
+      "dM_dp_kg_per_kPa": 7.061281898289639,
+      "mass_kg": 47602.420973586304,
+      "dp_dt_resolution_for_0p1_kg_s_Pa_per_s": 14.161734574599222
+     }
+    }
+   }
+  },
+  "Normal_HNetwork_gest_up": {
+   "A_nominal": {
+    "feasible_normal_envelope": true,
+    "min_pipe_pressure_MPa": 4.986084465958577,
+    "max_pipe_pressure_MPa": 6.5,
+    "max_outlet_velocity_m_s": 4.704944264323232,
+    "mass_residual_kg_s": 0.0,
+    "C1": {
+     "p_suction_MPa": 3.2,
+     "p_discharge_MPa": 5.0,
+     "dp_MPa": 1.7999999999999998,
+     "mdot_kg_s": 20.0,
+     "T_discharge_isentropic_K": 356.58401414621045,
+     "power_isentropic_kW": 12774.875059695714,
+     "T_discharge_eta0.75_K": 371.2381606737387,
+     "power_eta0.75_kW": 17033.16674626096,
+     "aftercooler_duty_eta0.75_kW": 16854.673660452117
+    },
+    "C2": {
+     "p_suction_MPa": 4.986084465958577,
+     "p_discharge_MPa": 6.5,
+     "dp_MPa": 1.5139155340414234,
+     "mdot_kg_s": 16.0,
+     "T_discharge_isentropic_K": 337.6496644091953,
+     "power_isentropic_kW": 5814.318275424463,
+     "T_discharge_eta0.75_K": 345.98213229765025,
+     "power_eta0.75_kW": 7752.424367232612,
+     "aftercooler_duty_eta0.75_kW": 7628.985493118787
+    }
+   },
+   "B_load": {
+    "x0.5": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 4.996258588594904,
+     "max_pipe_pressure_MPa": 6.5,
+     "max_outlet_velocity_m_s": 2.3503789481624633,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 5.0,
+      "dp_MPa": 1.7999999999999998,
+      "mdot_kg_s": 10.0,
+      "T_discharge_isentropic_K": 356.58401414621045,
+      "power_isentropic_kW": 6387.437529847857,
+      "T_discharge_eta0.75_K": 371.2381606737387,
+      "power_eta0.75_kW": 8516.58337313048,
+      "aftercooler_duty_eta0.75_kW": 8427.336830226059
+     },
+     "C2": {
+      "p_suction_MPa": 4.996258588594904,
+      "p_discharge_MPa": 6.5,
+      "dp_MPa": 1.5037414114050964,
+      "mdot_kg_s": 8.0,
+      "T_discharge_isentropic_K": 337.43198494025677,
+      "power_isentropic_kW": 2881.4490487841686,
+      "T_discharge_eta0.75_K": 345.69092068065055,
+      "power_eta0.75_kW": 3841.9320650455556,
+      "aftercooler_duty_eta0.75_kW": 3780.6189649183507
+     }
+    },
+    "x1.5": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 4.969660063228028,
+     "max_pipe_pressure_MPa": 6.5,
+     "max_outlet_velocity_m_s": 7.067590705721608,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 5.0,
+      "dp_MPa": 1.7999999999999998,
+      "mdot_kg_s": 30.0,
+      "T_discharge_isentropic_K": 356.58401414621045,
+      "power_isentropic_kW": 19162.312589543573,
+      "T_discharge_eta0.75_K": 371.2381606737387,
+      "power_eta0.75_kW": 25549.750119391436,
+      "aftercooler_duty_eta0.75_kW": 25282.010490678178
+     },
+     "C2": {
+      "p_suction_MPa": 4.969660063228028,
+      "p_discharge_MPa": 6.5,
+      "dp_MPa": 1.5303399367719717,
+      "mdot_kg_s": 24.0,
+      "T_discharge_isentropic_K": 338.00107114880484,
+      "power_isentropic_kW": 8845.991202645739,
+      "T_discharge_eta0.75_K": 346.45224427176197,
+      "power_eta0.75_kW": 11794.654936860978,
+      "aftercooler_duty_eta0.75_kW": 11607.528738644913
+     }
+    }
+   },
+   "C_faults": {
+    "C1_trip": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 3.1784383780086642,
+     "max_pipe_pressure_MPa": 4.692353912050088,
+     "max_outlet_velocity_m_s": 7.2899340684900045,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 3.2,
+      "dp_MPa": 0.0,
+      "mdot_kg_s": 20.0,
+      "T_discharge_isentropic_K": 313.1499999999999,
+      "power_isentropic_kW": 1.8189894035458565e-11,
+      "T_discharge_eta0.75_K": 313.15,
+      "power_eta0.75_kW": 1.8189894035458565e-11,
+      "aftercooler_duty_eta0.75_kW": 1.8189894035458565e-11
+     },
+     "C2": {
+      "p_suction_MPa": 3.1784383780086642,
+      "p_discharge_MPa": 4.692353912050088,
+      "dp_MPa": 1.5139155340414234,
+      "mdot_kg_s": 16.0,
+      "T_discharge_isentropic_K": 350.251401581523,
+      "power_isentropic_kW": 8721.919489745895,
+      "T_discharge_eta0.75_K": 362.76567526469506,
+      "power_eta0.75_kW": 11629.22598632786,
+      "aftercooler_duty_eta0.75_kW": 11509.309461779878
+     },
+     "within_fault_envelope_2p5MPa": true,
+     "node_pressure_change_vs_nominal_kPa": {
+      "N1": 0.0,
+      "N2": -1799.9999999999998,
+      "N3": -1803.4244658863129,
+      "N4": -1807.6460879499123,
+      "N5": -1807.6460879499123,
+      "N6": -1808.45379545549,
+      "N7": -1808.785696325309,
+      "N9": -1808.45379545549,
+      "N8": -1809.3841133215296,
+      "N13": -1808.785696325309,
+      "N10": -1810.9205453075622,
+      "N11": -1809.4654535475252,
+      "N14": -1808.785696325309
+     }
+    },
+    "C1_half": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 4.083106190913924,
+     "max_pipe_pressure_MPa": 5.597021724955347,
+     "max_outlet_velocity_m_s": 5.712057939402174,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 4.1,
+      "dp_MPa": 0.8999999999999995,
+      "mdot_kg_s": 20.0,
+      "T_discharge_isentropic_K": 336.6780227781655,
+      "power_isentropic_kW": 6897.480791638627,
+      "T_discharge_eta0.75_K": 344.6098574694182,
+      "power_eta0.75_kW": 9196.641055518176,
+      "aftercooler_duty_eta0.75_kW": 9108.009093319797
+     },
+     "C2": {
+      "p_suction_MPa": 4.083106190913924,
+      "p_discharge_MPa": 5.597021724955347,
+      "dp_MPa": 1.5139155340414234,
+      "mdot_kg_s": 16.0,
+      "T_discharge_isentropic_K": 342.6100398235026,
+      "power_isentropic_kW": 6958.086370621837,
+      "T_discharge_eta0.75_K": 352.58878354407227,
+      "power_eta0.75_kW": 9277.448494162454,
+      "aftercooler_duty_eta0.75_kW": 9155.774083579745
+     },
+     "within_fault_envelope_2p5MPa": true,
+     "node_pressure_change_vs_nominal_kPa": {
+      "N1": 0.0,
+      "N2": -900.0000000000003,
+      "N3": -901.335201397421,
+      "N4": -902.978275044653,
+      "N5": -902.978275044653,
+      "N6": -903.3164534893423,
+      "N7": -903.4553901723461,
+      "N9": -903.3164534893423,
+      "N8": -903.7058571338932,
+      "N13": -903.4553901723461,
+      "N10": -904.3487179624758,
+      "N11": -903.7398978593627,
+      "N14": -903.4553901723461
+     }
+    },
+    "C2_trip": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 4.97469594013475,
+     "max_pipe_pressure_MPa": 5.0,
+     "max_outlet_velocity_m_s": 5.396023540034798,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 5.0,
+      "dp_MPa": 1.7999999999999998,
+      "mdot_kg_s": 20.0,
+      "T_discharge_isentropic_K": 356.58401414621045,
+      "power_isentropic_kW": 12774.875059695714,
+      "T_discharge_eta0.75_K": 371.2381606737387,
+      "power_eta0.75_kW": 17033.16674626096,
+      "aftercooler_duty_eta0.75_kW": 16854.673660452117
+     },
+     "C2": {
+      "p_suction_MPa": 4.986084465958577,
+      "p_discharge_MPa": 4.986084465958577,
+      "dp_MPa": 0.0,
+      "mdot_kg_s": 16.0,
+      "T_discharge_isentropic_K": 313.15000000000003,
+      "power_isentropic_kW": 1.4551915228366852e-11,
+      "T_discharge_eta0.75_K": 313.15000000000003,
+      "power_eta0.75_kW": 1.4551915228366852e-11,
+      "aftercooler_duty_eta0.75_kW": 1.4551915228366852e-11
+     },
+     "within_fault_envelope_2p5MPa": true,
+     "node_pressure_change_vs_nominal_kPa": {
+      "N1": 0.0,
+      "N2": 0.0,
+      "N3": 0.0,
+      "N4": 0.0,
+      "N5": -1513.9155340414234,
+      "N6": -1514.5520783659317,
+      "N7": -1514.8136261621464,
+      "N9": -1514.5520783659317,
+      "N8": -1515.2851714199844,
+      "N13": -1514.8136261621464,
+      "N10": -1516.4957116671153,
+      "N11": -1515.3492634808608,
+      "N14": -1514.8136261621464
+     }
+    },
+    "C2_half": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 4.986084465958577,
+     "max_pipe_pressure_MPa": 5.743042232979288,
+     "max_outlet_velocity_m_s": 4.704944264323232,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 5.0,
+      "dp_MPa": 1.7999999999999998,
+      "mdot_kg_s": 20.0,
+      "T_discharge_isentropic_K": 356.58401414621045,
+      "power_isentropic_kW": 12774.875059695714,
+      "T_discharge_eta0.75_K": 371.2381606737387,
+      "power_eta0.75_kW": 17033.16674626096,
+      "aftercooler_duty_eta0.75_kW": 16854.673660452117
+     },
+     "C2": {
+      "p_suction_MPa": 4.986084465958577,
+      "p_discharge_MPa": 5.743042232979288,
+      "dp_MPa": 0.7569577670207117,
+      "mdot_kg_s": 16.0,
+      "T_discharge_isentropic_K": 325.8748028087269,
+      "power_isentropic_kW": 3012.505398870271,
+      "T_discharge_eta0.75_K": 330.2018522894905,
+      "power_eta0.75_kW": 4016.6738651603664,
+      "aftercooler_duty_eta0.75_kW": 3955.279672508259
+     },
+     "within_fault_envelope_2p5MPa": true,
+     "node_pressure_change_vs_nominal_kPa": {
+      "N1": 0.0,
+      "N2": 0.0,
+      "N3": 0.0,
+      "N4": 0.0,
+      "N5": -756.9577670207117,
+      "N6": -757.234038897483,
+      "N7": -757.3475392245559,
+      "N9": -757.234038897483,
+      "N8": -757.5521475838763,
+      "N13": -757.3475392245559,
+      "N10": -758.0772851604918,
+      "N11": -757.5799552577056,
+      "N14": -757.3475392245559
+     }
+    }
+   },
+   "D_signatures": {
+    "leak_0.005_at_G3": {
+     "leak_kg_s": 0.1,
+     "max_abs_node_dp_kPa": 0.060120246303974056,
+     "supply_flow_change_kg_s": 0.10000000000000142
+    },
+    "leak_0.020_at_G3": {
+     "leak_kg_s": 0.4,
+     "max_abs_node_dp_kPa": 0.24217373013435406,
+     "supply_flow_change_kg_s": 0.3999999999999986
+    },
+    "leak_0.100_at_G3": {
+     "leak_kg_s": 2.0,
+     "max_abs_node_dp_kPa": 1.2559969388838965,
+     "supply_flow_change_kg_s": 2.0
+    },
+    "leak_0.005_at_G4": {
+     "leak_kg_s": 0.1,
+     "max_abs_node_dp_kPa": 0.15169748736187927,
+     "supply_flow_change_kg_s": 0.10000000000000142
+    },
+    "leak_0.020_at_G4": {
+     "leak_kg_s": 0.4,
+     "max_abs_node_dp_kPa": 0.6116853414859236,
+     "supply_flow_change_kg_s": 0.3999999999999986
+    },
+    "leak_0.100_at_G4": {
+     "leak_kg_s": 2.0,
+     "max_abs_node_dp_kPa": 3.1889535035478644,
+     "supply_flow_change_kg_s": 2.0
+    },
+    "normal_load_x0.5_to_x1.5_max_abs_node_dp_kPa": 26.598525366875236
+   },
+   "E_line_pack": {
+    "pipes": {
+     "47": {
+      "name": "Pipe (G)1",
+      "volume_m3": 18095.57368467721,
+      "mean_p_MPa": 4.996874373332589,
+      "dM_dp_kg_per_kPa": 13.235848186719513,
+      "mass_kg": 68054.93093538108
+     },
+     "48": {
+      "name": "Pipe (G)2",
+      "volume_m3": 33929.20065876977,
+      "mean_p_MPa": 4.989916606311877,
+      "dM_dp_kg_per_kPa": 24.820241822740304,
+      "mass_kg": 127430.30880785716
+     },
+     "49": {
+      "name": "Pipe (G)3",
+      "volume_m3": 12440.706908215581,
+      "mean_p_MPa": 6.498911719261701,
+      "dM_dp_kg_per_kPa": 8.94470789072946,
+      "mass_kg": 60338.81906946279
+     },
+     "309": {
+      "name": "Pipe (G)8",
+      "volume_m3": 12440.706908215581,
+      "mean_p_MPa": 6.497376510682502,
+      "dM_dp_kg_per_kPa": 8.94486253058103,
+      "mass_kg": 60325.08695851233
+     },
+     "106": {
+      "name": "Pipe (G)4",
+      "volume_m3": 6283.185307179586,
+      "mean_p_MPa": 6.496124387163507,
+      "dM_dp_kg_per_kPa": 4.517671039676672,
+      "mass_kg": 30461.55899335126
+     },
+     "107": {
+      "name": "Pipe (G)5",
+      "volume_m3": 395.91921416865364,
+      "mean_p_MPa": 6.494507545162634,
+      "dM_dp_kg_per_kPa": 0.28467492965824925,
+      "mass_kg": 1918.9987158774222
+     },
+     "221": {
+      "name": "Pipe (G)7",
+      "volume_m3": 3141.592653589793,
+      "mean_p_MPa": 6.495209766245635,
+      "dM_dp_kg_per_kPa": 2.2588587856471545,
+      "mass_kg": 15228.713507826034
+     }
+    },
+    "control_volumes": {
+     "CV_A": {
+      "pipes": [
+       "47",
+       "48",
+       "49",
+       "309",
+       "107"
+      ],
+      "dM_dp_kg_per_kPa": 56.230335360428555,
+      "mass_kg": 318068.1444870908,
+      "dp_dt_resolution_for_0p1_kg_s_Pa_per_s": 1.7783994948458701
+     },
+     "CV_B": {
+      "pipes": [
+       "106",
+       "221"
+      ],
+      "dM_dp_kg_per_kPa": 6.776529825323826,
+      "mass_kg": 45690.27250117729,
+      "dp_dt_resolution_for_0p1_kg_s_Pa_per_s": 14.756815446499028
+     }
+    }
+   }
+  },
+  "Normal_HNetwork_gest_down": {
+   "A_nominal": {
+    "feasible_normal_envelope": true,
+    "min_pipe_pressure_MPa": 3.9956243637354767,
+    "max_pipe_pressure_MPa": 6.5,
+    "max_outlet_velocity_m_s": 5.262500294576405,
+    "mass_residual_kg_s": 0.0,
+    "C1": {
+     "p_suction_MPa": 3.2,
+     "p_discharge_MPa": 5.0,
+     "dp_MPa": 1.7999999999999998,
+     "mdot_kg_s": 20.0,
+     "T_discharge_isentropic_K": 356.58401414621045,
+     "power_isentropic_kW": 12774.875059695714,
+     "T_discharge_eta0.75_K": 371.2381606737387,
+     "power_eta0.75_kW": 17033.16674626096,
+     "aftercooler_duty_eta0.75_kW": 16854.673660452117
+    },
+    "C2": {
+     "p_suction_MPa": 4.986084465958577,
+     "p_discharge_MPa": 6.5,
+     "dp_MPa": 1.5139155340414234,
+     "mdot_kg_s": 16.0,
+     "T_discharge_isentropic_K": 337.6496644091953,
+     "power_isentropic_kW": 5814.318275424463,
+     "T_discharge_eta0.75_K": 345.98213229765025,
+     "power_eta0.75_kW": 7752.424367232612,
+     "aftercooler_duty_eta0.75_kW": 7628.985493118787
+    }
+   },
+   "B_load": {
+    "x0.5": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 3.9988185992610408,
+     "max_pipe_pressure_MPa": 6.5,
+     "max_outlet_velocity_m_s": 2.629195655874628,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 5.0,
+      "dp_MPa": 1.7999999999999998,
+      "mdot_kg_s": 10.0,
+      "T_discharge_isentropic_K": 356.58401414621045,
+      "power_isentropic_kW": 6387.437529847857,
+      "T_discharge_eta0.75_K": 371.2381606737387,
+      "power_eta0.75_kW": 8516.58337313048,
+      "aftercooler_duty_eta0.75_kW": 8427.336830226059
+     },
+     "C2": {
+      "p_suction_MPa": 4.996258588594904,
+      "p_discharge_MPa": 6.5,
+      "dp_MPa": 1.5037414114050964,
+      "mdot_kg_s": 8.0,
+      "T_discharge_isentropic_K": 337.43198494025677,
+      "power_isentropic_kW": 2881.4490487841686,
+      "T_discharge_eta0.75_K": 345.69092068065055,
+      "power_eta0.75_kW": 3841.9320650455556,
+      "aftercooler_duty_eta0.75_kW": 3780.6189649183507
+     }
+    },
+    "x1.5": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 3.990477701636613,
+     "max_pipe_pressure_MPa": 6.5,
+     "max_outlet_velocity_m_s": 7.903702000830185,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 5.0,
+      "dp_MPa": 1.7999999999999998,
+      "mdot_kg_s": 30.0,
+      "T_discharge_isentropic_K": 356.58401414621045,
+      "power_isentropic_kW": 19162.312589543573,
+      "T_discharge_eta0.75_K": 371.2381606737387,
+      "power_eta0.75_kW": 25549.750119391436,
+      "aftercooler_duty_eta0.75_kW": 25282.010490678178
+     },
+     "C2": {
+      "p_suction_MPa": 4.969660063228028,
+      "p_discharge_MPa": 6.5,
+      "dp_MPa": 1.5303399367719717,
+      "mdot_kg_s": 24.0,
+      "T_discharge_isentropic_K": 338.00107114880484,
+      "power_isentropic_kW": 8845.991202645739,
+      "T_discharge_eta0.75_K": 346.45224427176197,
+      "power_eta0.75_kW": 11794.654936860978,
+      "aftercooler_duty_eta0.75_kW": 11607.528738644913
+     }
+    }
+   },
+   "C_faults": {
+    "C1_trip": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 3.1784383780086642,
+     "max_pipe_pressure_MPa": 4.692353912050088,
+     "max_outlet_velocity_m_s": 7.2899340684900045,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 3.2,
+      "dp_MPa": 0.0,
+      "mdot_kg_s": 20.0,
+      "T_discharge_isentropic_K": 313.1499999999999,
+      "power_isentropic_kW": 1.8189894035458565e-11,
+      "T_discharge_eta0.75_K": 313.15,
+      "power_eta0.75_kW": 1.8189894035458565e-11,
+      "aftercooler_duty_eta0.75_kW": 1.8189894035458565e-11
+     },
+     "C2": {
+      "p_suction_MPa": 3.1784383780086642,
+      "p_discharge_MPa": 4.692353912050088,
+      "dp_MPa": 1.5139155340414234,
+      "mdot_kg_s": 16.0,
+      "T_discharge_isentropic_K": 350.251401581523,
+      "power_isentropic_kW": 8721.919489745895,
+      "T_discharge_eta0.75_K": 362.76567526469506,
+      "power_eta0.75_kW": 11629.22598632786,
+      "aftercooler_duty_eta0.75_kW": 11509.309461779878
+     },
+     "within_fault_envelope_2p5MPa": true,
+     "node_pressure_change_vs_nominal_kPa": {
+      "N1": 0.0,
+      "N2": -1799.9999999999998,
+      "N3": -1803.4244658863129,
+      "N4": -1807.6460879499123,
+      "N5": -1807.6460879499123,
+      "N6": -1808.45379545549,
+      "N7": -1808.9221162673202,
+      "N8": -1809.7692278544164,
+      "N15": -1808.9221162673202,
+      "N11": -1809.9222257091815,
+      "N16": -1808.9221162673202,
+      "N12": -1809.9222257091815,
+      "N13": 0.0,
+      "N9": 0.0,
+      "N10": 0.0
+     }
+    },
+    "C1_half": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 3.9956243637354767,
+     "max_pipe_pressure_MPa": 5.597021724955347,
+     "max_outlet_velocity_m_s": 5.712057939402174,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 4.1,
+      "dp_MPa": 0.8999999999999995,
+      "mdot_kg_s": 20.0,
+      "T_discharge_isentropic_K": 336.6780227781655,
+      "power_isentropic_kW": 6897.480791638627,
+      "T_discharge_eta0.75_K": 344.6098574694182,
+      "power_eta0.75_kW": 9196.641055518176,
+      "aftercooler_duty_eta0.75_kW": 9108.009093319797
+     },
+     "C2": {
+      "p_suction_MPa": 4.083106190913924,
+      "p_discharge_MPa": 5.597021724955347,
+      "dp_MPa": 1.5139155340414234,
+      "mdot_kg_s": 16.0,
+      "T_discharge_isentropic_K": 342.6100398235026,
+      "power_isentropic_kW": 6958.086370621837,
+      "T_discharge_eta0.75_K": 352.58878354407227,
+      "power_eta0.75_kW": 9277.448494162454,
+      "aftercooler_duty_eta0.75_kW": 9155.774083579745
+     },
+     "within_fault_envelope_2p5MPa": true,
+     "node_pressure_change_vs_nominal_kPa": {
+      "N1": 0.0,
+      "N2": -900.0000000000003,
+      "N3": -901.335201397421,
+      "N4": -902.978275044653,
+      "N5": -902.978275044653,
+      "N6": -903.3164534893423,
+      "N7": -903.512493162518,
+      "N8": -903.8670226215099,
+      "N15": -903.512493162518,
+      "N11": -903.9310436665949,
+      "N16": -903.512493162518,
+      "N12": -903.9310436665949,
+      "N13": 0.0,
+      "N9": 0.0,
+      "N10": 0.0
+     }
+    },
+    "C2_trip": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 3.9956243637354767,
+     "max_pipe_pressure_MPa": 5.0,
+     "max_outlet_velocity_m_s": 5.262500294576405,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 5.0,
+      "dp_MPa": 1.7999999999999998,
+      "mdot_kg_s": 20.0,
+      "T_discharge_isentropic_K": 356.58401414621045,
+      "power_isentropic_kW": 12774.875059695714,
+      "T_discharge_eta0.75_K": 371.2381606737387,
+      "power_eta0.75_kW": 17033.16674626096,
+      "aftercooler_duty_eta0.75_kW": 16854.673660452117
+     },
+     "C2": {
+      "p_suction_MPa": 4.986084465958577,
+      "p_discharge_MPa": 4.986084465958577,
+      "dp_MPa": 0.0,
+      "mdot_kg_s": 16.0,
+      "T_discharge_isentropic_K": 313.15000000000003,
+      "power_isentropic_kW": 1.4551915228366852e-11,
+      "T_discharge_eta0.75_K": 313.15000000000003,
+      "power_eta0.75_kW": 1.4551915228366852e-11,
+      "aftercooler_duty_eta0.75_kW": 1.4551915228366852e-11
+     },
+     "within_fault_envelope_2p5MPa": true,
+     "node_pressure_change_vs_nominal_kPa": {
+      "N1": 0.0,
+      "N2": 0.0,
+      "N3": 0.0,
+      "N4": 0.0,
+      "N5": -1513.9155340414234,
+      "N6": -1514.5520783659317,
+      "N7": -1514.9211266830155,
+      "N8": -1515.588620181407,
+      "N15": -1514.9211266830155,
+      "N11": -1515.7091690783088,
+      "N16": -1514.9211266830155,
+      "N12": -1515.7091690783088,
+      "N13": 0.0,
+      "N9": 0.0,
+      "N10": 0.0
+     }
+    },
+    "C2_half": {
+     "feasible_normal_envelope": true,
+     "min_pipe_pressure_MPa": 3.9956243637354767,
+     "max_pipe_pressure_MPa": 5.743042232979288,
+     "max_outlet_velocity_m_s": 5.262500294576405,
+     "mass_residual_kg_s": 0.0,
+     "C1": {
+      "p_suction_MPa": 3.2,
+      "p_discharge_MPa": 5.0,
+      "dp_MPa": 1.7999999999999998,
+      "mdot_kg_s": 20.0,
+      "T_discharge_isentropic_K": 356.58401414621045,
+      "power_isentropic_kW": 12774.875059695714,
+      "T_discharge_eta0.75_K": 371.2381606737387,
+      "power_eta0.75_kW": 17033.16674626096,
+      "aftercooler_duty_eta0.75_kW": 16854.673660452117
+     },
+     "C2": {
+      "p_suction_MPa": 4.986084465958577,
+      "p_discharge_MPa": 5.743042232979288,
+      "dp_MPa": 0.7569577670207117,
+      "mdot_kg_s": 16.0,
+      "T_discharge_isentropic_K": 325.8748028087269,
+      "power_isentropic_kW": 3012.505398870271,
+      "T_discharge_eta0.75_K": 330.2018522894905,
+      "power_eta0.75_kW": 4016.6738651603664,
+      "aftercooler_duty_eta0.75_kW": 3955.279672508259
+     },
+     "within_fault_envelope_2p5MPa": true,
+     "node_pressure_change_vs_nominal_kPa": {
+      "N1": 0.0,
+      "N2": 0.0,
+      "N3": 0.0,
+      "N4": 0.0,
+      "N5": -756.9577670207117,
+      "N6": -757.234038897483,
+      "N7": -757.3941875671419,
+      "N8": -757.6838026458157,
+      "N15": -757.3941875671419,
+      "N11": -757.7361002832043,
+      "N16": -757.3941875671419,
+      "N12": -757.7361002832043,
+      "N13": 0.0,
+      "N9": 0.0,
+      "N10": 0.0
+     }
+    }
+   },
+   "D_signatures": {
+    "leak_0.005_at_G3": {
+     "leak_kg_s": 0.1,
+     "max_abs_node_dp_kPa": 0.060120246303974056,
+     "supply_flow_change_kg_s": 0.10000000000000142
+    },
+    "leak_0.020_at_G3": {
+     "leak_kg_s": 0.4,
+     "max_abs_node_dp_kPa": 0.24217373013435406,
+     "supply_flow_change_kg_s": 0.3999999999999986
+    },
+    "leak_0.100_at_G3": {
+     "leak_kg_s": 2.0,
+     "max_abs_node_dp_kPa": 1.2559969388838965,
+     "supply_flow_change_kg_s": 2.0
+    },
+    "leak_0.005_at_G4": {
+     "leak_kg_s": 0.1,
+     "max_abs_node_dp_kPa": 0.15169748736187927,
+     "supply_flow_change_kg_s": 0.10000000000000142
+    },
+    "leak_0.020_at_G4": {
+     "leak_kg_s": 0.4,
+     "max_abs_node_dp_kPa": 0.6116853414859236,
+     "supply_flow_change_kg_s": 0.3999999999999986
+    },
+    "leak_0.100_at_G4": {
+     "leak_kg_s": 2.0,
+     "max_abs_node_dp_kPa": 3.1889535035478644,
+     "supply_flow_change_kg_s": 2.0
+    },
+    "normal_load_x0.5_to_x1.5_max_abs_node_dp_kPa": 26.598525366875236
+   },
+   "E_line_pack": {
+    "pipes": {
+     "47": {
+      "name": "Pipe (G)1",
+      "volume_m3": 18095.57368467721,
+      "mean_p_MPa": 4.996874373332589,
+      "dM_dp_kg_per_kPa": 13.235848186719513,
+      "mass_kg": 68054.93093538108
+     },
+     "48": {
+      "name": "Pipe (G)2",
+      "volume_m3": 33929.20065876977,
+      "mean_p_MPa": 4.989916606311877,
+      "dM_dp_kg_per_kPa": 24.820241822740304,
+      "mass_kg": 127430.30880785716
+     },
+     "49": {
+      "name": "Pipe (G)3",
+      "volume_m3": 12440.706908215581,
+      "mean_p_MPa": 6.498911719261701,
+      "dM_dp_kg_per_kPa": 8.94470789072946,
+      "mass_kg": 60338.81906946279
+     },
+     "309": {
+      "name": "Pipe (G)8",
+      "volume_m3": 12440.706908215581,
+      "mean_p_MPa": 6.49719291349777,
+      "dM_dp_kg_per_kPa": 8.94488102439116,
+      "mass_kg": 60323.444705241425
+     },
+     "106": {
+      "name": "Pipe (G)4",
+      "volume_m3": 6283.185307179586,
+      "mean_p_MPa": 6.4954230481866855,
+      "dM_dp_kg_per_kPa": 4.517706720445843,
+      "mass_kg": 30458.390562064604
+     },
+     "221": {
+      "name": "Pipe (G)7",
+      "volume_m3": 3141.592653589793,
+      "mean_p_MPa": 6.494078026541802,
+      "dM_dp_kg_per_kPa": 2.2588875749451165,
+      "mass_kg": 15226.157051370123
+     },
+     "108": {
+      "name": "Pipe (G)6",
+      "volume_m3": 376.9911184307752,
+      "mean_p_MPa": 3.9978121818677383,
+      "dM_dp_kg_per_kPa": 0.2789034828222918,
+      "mass_kg": 1140.7526751874013
+     }
+    },
+    "control_volumes": {
+     "CV_A": {
+      "pipes": [
+       "47",
+       "48",
+       "49",
+       "309"
+      ],
+      "dM_dp_kg_per_kPa": 55.945678924580434,
+      "mass_kg": 316147.5035179425,
+      "dp_dt_resolution_for_0p1_kg_s_Pa_per_s": 1.787448144740697
+     },
+     "CV_B": {
+      "pipes": [
+       "106",
+       "221",
+       "108"
+      ],
+      "dM_dp_kg_per_kPa": 7.055497778213251,
+      "mass_kg": 46825.30028862213,
+      "dp_dt_resolution_for_0p1_kg_s_Pa_per_s": 14.173344410764482
+     }
+    }
+   }
+  }
+ }
+}

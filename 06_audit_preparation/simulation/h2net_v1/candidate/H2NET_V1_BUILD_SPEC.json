@@ -1,0 +1,2072 @@
+{
+ "status": "SPECIFICATION_PROPOSED (values not owner-approved; structural ops not implemented)",
+ "library": {
+  "flow_source": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+  "reservoir": "fl_lib/Gas/Elements/Reservoir (G)",
+  "pipe": "fl_lib/Gas/Elements/Pipe (G)",
+  "restriction": "fl_lib/Gas/Elements/Local Restriction (G)",
+  "temperature_source": "fl_lib/Thermal/Thermal Sources/Temperature Source",
+  "thermal_reference": "fl_lib/Thermal/Thermal Elements/Thermal Reference"
+ },
+ "library_note": "Library block names may contain a line break (e.g. 'Local Restriction\\n(G)' in the library browser); resolve with find_system('fl_lib', 'LookUnderMasks','all', 'Name', ...) before add_block.",
+ "provenance": {
+  "RELEASED_NETWORK_GRAPH.json": "10d1c49837296b4dbe6717cc4e859f0d3e663d434ade79bac07830cec8b6445f",
+  "PARAMETER_DECISIONS_PROPOSED.yaml": "9856b8500c1e064ce51f02ff0b5965a02fbe31bdbd44d26edf29005ca35c30ce",
+  "PROVISIONAL_STEADY_STATES.json": "7e9c6139fbf1bc81829f686419d19cf3328eaad37a323d0f0f98ba2648148505"
+ },
+ "models": {
+  "Normal_HNetwork_gest_center": {
+   "position": "center",
+   "target_file": "h2net_v1_center.slx",
+   "source_sha256": "710711f41e33adb9ea54220580adefd0065eeb9a8a376727dd045fc474ed7b1e",
+   "parameter_ops": [
+    {
+     "sid": "4",
+     "block": "Gas Properties (G)",
+     "op": "apply_h2_tables",
+     "detail": "h2prism_apply_h2_gas_to_copy: gas_spec = real_gas (3) + the 15 fields of H2_REALGAS_TLU2_params.m"
+    },
+    {
+     "sid": "47",
+     "block": "Pipe (G)1",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.000045 m"
+     }
+    },
+    {
+     "sid": "47",
+     "block": "Pipe (G)1",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.500000",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "48",
+     "block": "Pipe (G)2",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.0045 m"
+     }
+    },
+    {
+     "sid": "48",
+     "block": "Pipe (G)2",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.495151",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "49",
+     "block": "Pipe (G)3",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.00045 m"
+     }
+    },
+    {
+     "sid": "49",
+     "block": "Pipe (G)3",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.500000",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "106",
+     "block": "Pipe (G)4",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.05 m"
+     }
+    },
+    {
+     "sid": "106",
+     "block": "Pipe (G)4",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.496562",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "107",
+     "block": "Pipe (G)5",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.0045 mm"
+     }
+    },
+    {
+     "sid": "107",
+     "block": "Pipe (G)5",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.493872",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "221",
+     "block": "Pipe (G)7",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.05 m"
+     }
+    },
+    {
+     "sid": "221",
+     "block": "Pipe (G)7",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.494284",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "309",
+     "block": "Pipe (G)8",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.00045 m"
+     }
+    },
+    {
+     "sid": "309",
+     "block": "Pipe (G)8",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.497823",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "55",
+     "block": "Pressure Source (G)3",
+     "op": "keep",
+     "params": {
+      "power_spec": "isentropic (1)"
+     },
+     "note": "discharge set-point 6.5 MPa is applied through its control signal (released: step SID 59 / ramp SID 241)"
+    },
+    {
+     "sid": "239",
+     "block": "Pressure Source (G)1",
+     "op": "keep",
+     "params": {
+      "power_spec": "isentropic (1)"
+     },
+     "note": "discharge set-point 6.5 MPa is applied through its control signal (released: step SID 59 / ramp SID 241)"
+    }
+   ],
+   "structural_ops": [
+    {
+     "op": "replace_end_vent",
+     "sid": "195",
+     "outlet": "END",
+     "network_net": "N10",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+       "params": {
+        "flow_type": "mass",
+        "source_type": "controlled",
+        "power_spec": "none (0)"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "demand profile END (nominal 2.0 kg/s)"
+    },
+    {
+     "op": "replace_demand_orifice",
+     "sid": "213",
+     "outlet": "G3",
+     "network_net": "N3",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+       "params": {
+        "flow_type": "mass",
+        "source_type": "controlled",
+        "power_spec": "none (0)"
+       },
+       "port_A": "N3",
+       "port_B": "new atmospheric Reservoir (G)"
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "demand profile G3 (nominal 4.0 kg/s) via Simulink-PS Converter",
+     "keep_sensor": "existing Flow Rate Sensor (G) on this branch stays in series (MFS ids unchanged)"
+    },
+    {
+     "op": "replace_demand_orifice",
+     "sid": "215",
+     "outlet": "G6",
+     "network_net": "N11",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+       "params": {
+        "flow_type": "mass",
+        "source_type": "controlled",
+        "power_spec": "none (0)"
+       },
+       "port_A": "N11",
+       "port_B": "new atmospheric Reservoir (G)"
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "demand profile G6 (nominal 5.0 kg/s) via Simulink-PS Converter",
+     "keep_sensor": "existing Flow Rate Sensor (G) on this branch stays in series (MFS ids unchanged)"
+    },
+    {
+     "op": "replace_demand_orifice",
+     "sid": "222",
+     "outlet": "G4",
+     "network_net": "N8",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+       "params": {
+        "flow_type": "mass",
+        "source_type": "controlled",
+        "power_spec": "none (0)"
+       },
+       "port_A": "N8",
+       "port_B": "new atmospheric Reservoir (G)"
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "demand profile G4 (nominal 5.0 kg/s) via Simulink-PS Converter",
+     "keep_sensor": "existing Flow Rate Sensor (G) on this branch stays in series (MFS ids unchanged)"
+    },
+    {
+     "op": "replace_demand_orifice",
+     "sid": "312",
+     "outlet": "G5",
+     "network_net": "N6",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+       "params": {
+        "flow_type": "mass",
+        "source_type": "controlled",
+        "power_spec": "none (0)"
+       },
+       "port_A": "N6",
+       "port_B": "new atmospheric Reservoir (G)"
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "demand profile G5 (nominal 4.0 kg/s) via Simulink-PS Converter",
+     "keep_sensor": "existing Flow Rate Sensor (G) on this branch stays in series (MFS ids unchanged)"
+    },
+    {
+     "op": "insert_aftercooler",
+     "after_sid": "55",
+     "between_nets": [
+      "N2",
+      "new net"
+     ],
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Pipe (G)",
+       "params": {
+        "Dh": "same as downstream pipe",
+        "length": "to be sized in V3 (outlet T within 0.5 K of set-point)"
+       }
+      },
+      {
+       "lib": "fl_lib/Thermal/Thermal Sources/Temperature Source",
+       "params": {
+        "T": "313.15 K"
+       }
+      },
+      {
+       "lib": "fl_lib/Thermal/Thermal Elements/Thermal Reference"
+      }
+     ],
+     "check": "V3: outlet temperature and duty vs PROVISIONAL_STEADY_STATES compressor records"
+    },
+    {
+     "op": "insert_aftercooler",
+     "after_sid": "239",
+     "between_nets": [
+      "N5",
+      "new net"
+     ],
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Pipe (G)",
+       "params": {
+        "Dh": "same as downstream pipe",
+        "length": "to be sized in V3 (outlet T within 0.5 K of set-point)"
+       }
+      },
+      {
+       "lib": "fl_lib/Thermal/Thermal Sources/Temperature Source",
+       "params": {
+        "T": "313.15 K"
+       }
+      },
+      {
+       "lib": "fl_lib/Thermal/Thermal Elements/Thermal Reference"
+      }
+     ],
+     "check": "V3: outlet temperature and duty vs PROVISIONAL_STEADY_STATES compressor records"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "47",
+     "pipe": "Pipe (G)1",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)1@0.5L; never on a demand block"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "48",
+     "pipe": "Pipe (G)2",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)2@0.5L; never on a demand block"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "49",
+     "pipe": "Pipe (G)3",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)3@0.5L; never on a demand block"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "309",
+     "pipe": "Pipe (G)8",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)8@0.5L; never on a demand block"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "106",
+     "pipe": "Pipe (G)4",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)4@0.5L; never on a demand block"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "221",
+     "pipe": "Pipe (G)7",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)7@0.5L; never on a demand block"
+    }
+   ],
+   "sensor_map": [
+    {
+     "sensor_id": "MFS1",
+     "sid": "311",
+     "variable": "flow_sensor1",
+     "nets": [
+      "N18",
+      "N19"
+     ],
+     "steady_pressure_MPa": null
+    },
+    {
+     "sensor_id": "MFS2",
+     "sid": "210",
+     "variable": "flow_sensor2",
+     "nets": [
+      "N7",
+      "N13"
+     ],
+     "steady_pressure_MPa": 6.496562388472136
+    },
+    {
+     "sensor_id": "MFS3",
+     "sid": "218",
+     "variable": "flow_sensor3",
+     "nets": [
+      "N15",
+      "N12"
+     ],
+     "steady_pressure_MPa": null
+    },
+    {
+     "sensor_id": "PS1",
+     "sid": "50",
+     "variable": "pressure_sensor1",
+     "nets": [
+      "N3"
+     ],
+     "steady_pressure_MPa": 6.495150909022879
+    },
+    {
+     "sensor_id": "PS2",
+     "sid": "51",
+     "variable": "pressure_sensor2",
+     "nets": [
+      "N4"
+     ],
+     "steady_pressure_MPa": 6.48920890891638
+    },
+    {
+     "sensor_id": "PS3",
+     "sid": "52",
+     "variable": "pressure_sensor3",
+     "nets": [
+      "N7"
+     ],
+     "steady_pressure_MPa": 6.496562388472136
+    },
+    {
+     "sensor_id": "PS4",
+     "sid": "109",
+     "variable": "pressure_sensor4",
+     "nets": [
+      "N11"
+     ],
+     "steady_pressure_MPa": 6.493872345182371
+    },
+    {
+     "sensor_id": "PS5",
+     "sid": "187",
+     "variable": "pressure_sensor5",
+     "nets": [
+      "N1"
+     ],
+     "steady_pressure_MPa": 3.0
+    },
+    {
+     "sensor_id": "PS6",
+     "sid": "318",
+     "variable": "pressure_sensor6",
+     "nets": [
+      "N5"
+     ],
+     "steady_pressure_MPa": 6.5
+    },
+    {
+     "sensor_id": "PS7",
+     "sid": "392",
+     "variable": "pressure_sensor7",
+     "nets": [
+      "N2"
+     ],
+     "steady_pressure_MPa": 6.5
+    },
+    {
+     "sensor_id": "PS8",
+     "sid": "418",
+     "variable": "pressure_sensor8",
+     "nets": [
+      "N9"
+     ],
+     "steady_pressure_MPa": 6.493872345182371
+    },
+    {
+     "sensor_id": "PS9",
+     "sid": "428",
+     "variable": "pressure_sensor9",
+     "nets": [
+      "N8"
+     ],
+     "steady_pressure_MPa": 6.494283707901234
+    },
+    {
+     "sensor_id": "PS10",
+     "sid": "431",
+     "variable": "pressure_sensor10",
+     "nets": [
+      "N7"
+     ],
+     "steady_pressure_MPa": 6.496562388472136
+    }
+   ],
+   "findings": [
+    "Constant Volume Chamber (G) SID 205 behind Flow Rate Sensor (G)1 (MFS2) has ONE gas port (num_ports = one; its other connection, net N14, is thermal port H on a Perfect Insulator) -> dead-end volume: MFS2 measures only chamber filling (0 kg/s in steady state)"
+   ]
+  },
+  "Normal_HNetwork_gest_up": {
+   "position": "up",
+   "target_file": "h2net_v1_up.slx",
+   "source_sha256": "5c3c76e9866dcbbe0a2ec6937d150c6ab9af3ec010ea92df19c2ff92426380d4",
+   "parameter_ops": [
+    {
+     "sid": "4",
+     "block": "Gas Properties (G)",
+     "op": "apply_h2_tables",
+     "detail": "h2prism_apply_h2_gas_to_copy: gas_spec = real_gas (3) + the 15 fields of H2_REALGAS_TLU2_params.m"
+    },
+    {
+     "sid": "47",
+     "block": "Pipe (G)1",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.000045 m"
+     }
+    },
+    {
+     "sid": "47",
+     "block": "Pipe (G)1",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.500000",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "48",
+     "block": "Pipe (G)2",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.0045 m"
+     }
+    },
+    {
+     "sid": "48",
+     "block": "Pipe (G)2",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.495151",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "49",
+     "block": "Pipe (G)3",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.00045 m"
+     }
+    },
+    {
+     "sid": "49",
+     "block": "Pipe (G)3",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.500000",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "106",
+     "block": "Pipe (G)4",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.05 m"
+     }
+    },
+    {
+     "sid": "106",
+     "block": "Pipe (G)4",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.496930",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "107",
+     "block": "Pipe (G)5",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.0045 mm"
+     }
+    },
+    {
+     "sid": "107",
+     "block": "Pipe (G)5",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.497823",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "221",
+     "block": "Pipe (G)7",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.05 m"
+     }
+    },
+    {
+     "sid": "221",
+     "block": "Pipe (G)7",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.495319",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "309",
+     "block": "Pipe (G)8",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.00045 m"
+     }
+    },
+    {
+     "sid": "309",
+     "block": "Pipe (G)8",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.497823",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "55",
+     "block": "Pressure Source (G)3",
+     "op": "keep",
+     "params": {
+      "power_spec": "isentropic (1)"
+     },
+     "note": "discharge set-point 6.5 MPa is applied through its control signal (released: step SID 59 / ramp SID 241)"
+    },
+    {
+     "sid": "239",
+     "block": "Pressure Source (G)1",
+     "op": "keep",
+     "params": {
+      "power_spec": "isentropic (1)"
+     },
+     "note": "discharge set-point 6.5 MPa is applied through its control signal (released: step SID 59 / ramp SID 241)"
+    }
+   ],
+   "structural_ops": [
+    {
+     "op": "replace_end_vent",
+     "sid": "195",
+     "outlet": "END",
+     "network_net": "N10",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+       "params": {
+        "flow_type": "mass",
+        "source_type": "controlled",
+        "power_spec": "none (0)"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "demand profile END (nominal 2.0 kg/s)"
+    },
+    {
+     "op": "replace_demand_orifice",
+     "sid": "213",
+     "outlet": "G3",
+     "network_net": "N3",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+       "params": {
+        "flow_type": "mass",
+        "source_type": "controlled",
+        "power_spec": "none (0)"
+       },
+       "port_A": "N3",
+       "port_B": "new atmospheric Reservoir (G)"
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "demand profile G3 (nominal 4.0 kg/s) via Simulink-PS Converter",
+     "keep_sensor": "existing Flow Rate Sensor (G) on this branch stays in series (MFS ids unchanged)"
+    },
+    {
+     "op": "replace_demand_orifice",
+     "sid": "215",
+     "outlet": "G6",
+     "network_net": "N11",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+       "params": {
+        "flow_type": "mass",
+        "source_type": "controlled",
+        "power_spec": "none (0)"
+       },
+       "port_A": "N11",
+       "port_B": "new atmospheric Reservoir (G)"
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "demand profile G6 (nominal 5.0 kg/s) via Simulink-PS Converter",
+     "keep_sensor": "existing Flow Rate Sensor (G) on this branch stays in series (MFS ids unchanged)"
+    },
+    {
+     "op": "replace_demand_orifice",
+     "sid": "222",
+     "outlet": "G4",
+     "network_net": "N8",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+       "params": {
+        "flow_type": "mass",
+        "source_type": "controlled",
+        "power_spec": "none (0)"
+       },
+       "port_A": "N8",
+       "port_B": "new atmospheric Reservoir (G)"
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "demand profile G4 (nominal 5.0 kg/s) via Simulink-PS Converter",
+     "keep_sensor": "existing Flow Rate Sensor (G) on this branch stays in series (MFS ids unchanged)"
+    },
+    {
+     "op": "replace_demand_orifice",
+     "sid": "312",
+     "outlet": "G5",
+     "network_net": "N6",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+       "params": {
+        "flow_type": "mass",
+        "source_type": "controlled",
+        "power_spec": "none (0)"
+       },
+       "port_A": "N6",
+       "port_B": "new atmospheric Reservoir (G)"
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "demand profile G5 (nominal 4.0 kg/s) via Simulink-PS Converter",
+     "keep_sensor": "existing Flow Rate Sensor (G) on this branch stays in series (MFS ids unchanged)"
+    },
+    {
+     "op": "insert_aftercooler",
+     "after_sid": "55",
+     "between_nets": [
+      "N2",
+      "new net"
+     ],
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Pipe (G)",
+       "params": {
+        "Dh": "same as downstream pipe",
+        "length": "to be sized in V3 (outlet T within 0.5 K of set-point)"
+       }
+      },
+      {
+       "lib": "fl_lib/Thermal/Thermal Sources/Temperature Source",
+       "params": {
+        "T": "313.15 K"
+       }
+      },
+      {
+       "lib": "fl_lib/Thermal/Thermal Elements/Thermal Reference"
+      }
+     ],
+     "check": "V3: outlet temperature and duty vs PROVISIONAL_STEADY_STATES compressor records"
+    },
+    {
+     "op": "insert_aftercooler",
+     "after_sid": "239",
+     "between_nets": [
+      "N5",
+      "new net"
+     ],
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Pipe (G)",
+       "params": {
+        "Dh": "same as downstream pipe",
+        "length": "to be sized in V3 (outlet T within 0.5 K of set-point)"
+       }
+      },
+      {
+       "lib": "fl_lib/Thermal/Thermal Sources/Temperature Source",
+       "params": {
+        "T": "313.15 K"
+       }
+      },
+      {
+       "lib": "fl_lib/Thermal/Thermal Elements/Thermal Reference"
+      }
+     ],
+     "check": "V3: outlet temperature and duty vs PROVISIONAL_STEADY_STATES compressor records"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "47",
+     "pipe": "Pipe (G)1",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)1@0.5L; never on a demand block"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "48",
+     "pipe": "Pipe (G)2",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)2@0.5L; never on a demand block"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "49",
+     "pipe": "Pipe (G)3",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)3@0.5L; never on a demand block"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "309",
+     "pipe": "Pipe (G)8",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)8@0.5L; never on a demand block"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "106",
+     "pipe": "Pipe (G)4",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)4@0.5L; never on a demand block"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "221",
+     "pipe": "Pipe (G)7",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)7@0.5L; never on a demand block"
+    }
+   ],
+   "sensor_map": [
+    {
+     "sensor_id": "MFS1",
+     "sid": "311",
+     "variable": "flow_sensor1",
+     "nets": [
+      "N18",
+      "N19"
+     ],
+     "steady_pressure_MPa": null
+    },
+    {
+     "sensor_id": "MFS2",
+     "sid": "210",
+     "variable": "flow_sensor2",
+     "nets": [
+      "N7",
+      "N13"
+     ],
+     "steady_pressure_MPa": 6.4969295828416005
+    },
+    {
+     "sensor_id": "MFS3",
+     "sid": "218",
+     "variable": "flow_sensor3",
+     "nets": [
+      "N15",
+      "N12"
+     ],
+     "steady_pressure_MPa": null
+    },
+    {
+     "sensor_id": "PS1",
+     "sid": "50",
+     "variable": "pressure_sensor1",
+     "nets": [
+      "N3"
+     ],
+     "steady_pressure_MPa": 6.495150909022879
+    },
+    {
+     "sensor_id": "PS2",
+     "sid": "51",
+     "variable": "pressure_sensor2",
+     "nets": [
+      "N4"
+     ],
+     "steady_pressure_MPa": 6.48920890891638
+    },
+    {
+     "sensor_id": "PS3",
+     "sid": "52",
+     "variable": "pressure_sensor3",
+     "nets": [
+      "N7"
+     ],
+     "steady_pressure_MPa": 6.4969295828416005
+    },
+    {
+     "sensor_id": "PS4",
+     "sid": "109",
+     "variable": "pressure_sensor4",
+     "nets": [
+      "N11"
+     ],
+     "steady_pressure_MPa": 6.495100341005856
+    },
+    {
+     "sensor_id": "PS5",
+     "sid": "187",
+     "variable": "pressure_sensor5",
+     "nets": [
+      "N1"
+     ],
+     "steady_pressure_MPa": 3.0
+    },
+    {
+     "sensor_id": "PS6",
+     "sid": "318",
+     "variable": "pressure_sensor6",
+     "nets": [
+      "N5"
+     ],
+     "steady_pressure_MPa": 6.5
+    },
+    {
+     "sensor_id": "PS7",
+     "sid": "392",
+     "variable": "pressure_sensor7",
+     "nets": [
+      "N2"
+     ],
+     "steady_pressure_MPa": 6.5
+    },
+    {
+     "sensor_id": "PS8",
+     "sid": "418",
+     "variable": "pressure_sensor8",
+     "nets": [
+      "N9"
+     ],
+     "steady_pressure_MPa": 6.497823438523403
+    },
+    {
+     "sensor_id": "PS9",
+     "sid": "428",
+     "variable": "pressure_sensor9",
+     "nets": [
+      "N8"
+     ],
+     "steady_pressure_MPa": 6.495319191485413
+    },
+    {
+     "sensor_id": "PS10",
+     "sid": "431",
+     "variable": "pressure_sensor10",
+     "nets": [
+      "N7"
+     ],
+     "steady_pressure_MPa": 6.4969295828416005
+    }
+   ],
+   "findings": [
+    "Constant Volume Chamber (G) SID 205 behind Flow Rate Sensor (G)1 (MFS2) has ONE gas port (num_ports = one; its other connection, net N14, is thermal port H on a Perfect Insulator) -> dead-end volume: MFS2 measures only chamber filling (0 kg/s in steady state)"
+   ]
+  },
+  "Normal_HNetwork_gest_down": {
+   "position": "down",
+   "target_file": "h2net_v1_down.slx",
+   "source_sha256": "2fcf47dfe91adf54b758b3f2562a727755e4f0ecd8bbc8e6783aaceced14f496",
+   "parameter_ops": [
+    {
+     "sid": "4",
+     "block": "Gas Properties (G)",
+     "op": "apply_h2_tables",
+     "detail": "h2prism_apply_h2_gas_to_copy: gas_spec = real_gas (3) + the 15 fields of H2_REALGAS_TLU2_params.m"
+    },
+    {
+     "sid": "47",
+     "block": "Pipe (G)1",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.000045 m"
+     }
+    },
+    {
+     "sid": "47",
+     "block": "Pipe (G)1",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.500000",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "48",
+     "block": "Pipe (G)2",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.0045 m"
+     }
+    },
+    {
+     "sid": "48",
+     "block": "Pipe (G)2",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.495151",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "49",
+     "block": "Pipe (G)3",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.00045 m"
+     }
+    },
+    {
+     "sid": "49",
+     "block": "Pipe (G)3",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.500000",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "106",
+     "block": "Pipe (G)4",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.05 m"
+     }
+    },
+    {
+     "sid": "106",
+     "block": "Pipe (G)4",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.496562",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "108",
+     "block": "Pipe (G)6",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.045 m"
+     }
+    },
+    {
+     "sid": "108",
+     "block": "Pipe (G)6",
+     "op": "set_param",
+     "params": {
+      "p_init": "4.000000",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "221",
+     "block": "Pipe (G)7",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.05 m"
+     }
+    },
+    {
+     "sid": "221",
+     "block": "Pipe (G)7",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.494284",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "309",
+     "block": "Pipe (G)8",
+     "op": "set_param",
+     "params": {
+      "roughness": "4.5e-05",
+      "roughness_unit": "m"
+     },
+     "released": {
+      "roughness": "0.00045 m"
+     }
+    },
+    {
+     "sid": "309",
+     "block": "Pipe (G)8",
+     "op": "set_param",
+     "params": {
+      "p_init": "6.497823",
+      "p_init_unit": "MPa",
+      "T_init": "313.15",
+      "T_init_unit": "K"
+     },
+     "released": {
+      "p_init": "0.101325 MPa",
+      "T_init": "293.15 K"
+     },
+     "note": "provisional steady-state initial condition (P13); recompute from X06 targets"
+    },
+    {
+     "sid": "55",
+     "block": "Pressure Source (G)3",
+     "op": "keep",
+     "params": {
+      "power_spec": "isentropic (1)"
+     },
+     "note": "discharge set-point 6.5 MPa is applied through its control signal (released: step SID 59 / ramp SID 241)"
+    },
+    {
+     "sid": "239",
+     "block": "Pressure Source (G)1",
+     "op": "keep",
+     "params": {
+      "power_spec": "isentropic (1)"
+     },
+     "note": "discharge set-point 6.5 MPa is applied through its control signal (released: step SID 59 / ramp SID 241)"
+    }
+   ],
+   "structural_ops": [
+    {
+     "op": "replace_end_vent",
+     "sid": "195",
+     "outlet": "END",
+     "network_net": "N10",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+       "params": {
+        "flow_type": "mass",
+        "source_type": "controlled",
+        "power_spec": "none (0)"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "demand profile END (nominal 2.0 kg/s)"
+    },
+    {
+     "op": "replace_demand_orifice",
+     "sid": "213",
+     "outlet": "G3",
+     "network_net": "N3",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+       "params": {
+        "flow_type": "mass",
+        "source_type": "controlled",
+        "power_spec": "none (0)"
+       },
+       "port_A": "N3",
+       "port_B": "new atmospheric Reservoir (G)"
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "demand profile G3 (nominal 4.0 kg/s) via Simulink-PS Converter",
+     "keep_sensor": "existing Flow Rate Sensor (G) on this branch stays in series (MFS ids unchanged)"
+    },
+    {
+     "op": "replace_demand_orifice",
+     "sid": "215",
+     "outlet": "G6",
+     "network_net": "N11",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+       "params": {
+        "flow_type": "mass",
+        "source_type": "controlled",
+        "power_spec": "none (0)"
+       },
+       "port_A": "N11",
+       "port_B": "new atmospheric Reservoir (G)"
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "demand profile G6 (nominal 5.0 kg/s) via Simulink-PS Converter",
+     "keep_sensor": "existing Flow Rate Sensor (G) on this branch stays in series (MFS ids unchanged)"
+    },
+    {
+     "op": "replace_demand_orifice",
+     "sid": "222",
+     "outlet": "G4",
+     "network_net": "N8",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+       "params": {
+        "flow_type": "mass",
+        "source_type": "controlled",
+        "power_spec": "none (0)"
+       },
+       "port_A": "N8",
+       "port_B": "new atmospheric Reservoir (G)"
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "demand profile G4 (nominal 5.0 kg/s) via Simulink-PS Converter",
+     "keep_sensor": "existing Flow Rate Sensor (G) on this branch stays in series (MFS ids unchanged)"
+    },
+    {
+     "op": "replace_demand_orifice",
+     "sid": "312",
+     "outlet": "G5",
+     "network_net": "N6",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Sources/Flow Rate Source (G)",
+       "params": {
+        "flow_type": "mass",
+        "source_type": "controlled",
+        "power_spec": "none (0)"
+       },
+       "port_A": "N6",
+       "port_B": "new atmospheric Reservoir (G)"
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "demand profile G5 (nominal 4.0 kg/s) via Simulink-PS Converter",
+     "keep_sensor": "existing Flow Rate Sensor (G) on this branch stays in series (MFS ids unchanged)"
+    },
+    {
+     "op": "insert_aftercooler",
+     "after_sid": "55",
+     "between_nets": [
+      "N2",
+      "new net"
+     ],
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Pipe (G)",
+       "params": {
+        "Dh": "same as downstream pipe",
+        "length": "to be sized in V3 (outlet T within 0.5 K of set-point)"
+       }
+      },
+      {
+       "lib": "fl_lib/Thermal/Thermal Sources/Temperature Source",
+       "params": {
+        "T": "313.15 K"
+       }
+      },
+      {
+       "lib": "fl_lib/Thermal/Thermal Elements/Thermal Reference"
+      }
+     ],
+     "check": "V3: outlet temperature and duty vs PROVISIONAL_STEADY_STATES compressor records"
+    },
+    {
+     "op": "insert_aftercooler",
+     "after_sid": "239",
+     "between_nets": [
+      "N5",
+      "new net"
+     ],
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Pipe (G)",
+       "params": {
+        "Dh": "same as downstream pipe",
+        "length": "to be sized in V3 (outlet T within 0.5 K of set-point)"
+       }
+      },
+      {
+       "lib": "fl_lib/Thermal/Thermal Sources/Temperature Source",
+       "params": {
+        "T": "313.15 K"
+       }
+      },
+      {
+       "lib": "fl_lib/Thermal/Thermal Elements/Thermal Reference"
+      }
+     ],
+     "check": "V3: outlet temperature and duty vs PROVISIONAL_STEADY_STATES compressor records"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "47",
+     "pipe": "Pipe (G)1",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)1@0.5L; never on a demand block"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "48",
+     "pipe": "Pipe (G)2",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)2@0.5L; never on a demand block"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "49",
+     "pipe": "Pipe (G)3",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)3@0.5L; never on a demand block"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "309",
+     "pipe": "Pipe (G)8",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)8@0.5L; never on a demand block"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "106",
+     "pipe": "Pipe (G)4",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)4@0.5L; never on a demand block"
+    },
+    {
+     "op": "insert_leak_branch",
+     "pipe_sid": "221",
+     "pipe": "Pipe (G)7",
+     "position": "split the pipe at 50 % length into two Pipe (G) blocks (lengths L/2, length_add split equally)",
+     "new_blocks": [
+      {
+       "lib": "fl_lib/Gas/Elements/Local Restriction (G)",
+       "params": {
+        "restriction_type": "variable",
+        "Cd": "0.64"
+       }
+      },
+      {
+       "lib": "fl_lib/Gas/Elements/Reservoir (G)",
+       "params": {
+        "pressure_spec": "atmospheric"
+       }
+      }
+     ],
+     "signal": "leak area AR from the scenario (0 when no leak); severity definition A or B (owner)",
+     "label": "LEAK@Pipe (G)7@0.5L; never on a demand block"
+    },
+    {
+     "op": "replace_letdown",
+     "sid": "111",
+     "status": "DEFERRED (P15)",
+     "provisional": "pressure reduction to 4.0 MPa; isenthalpic outlet temperature 314.0 K in provisional steady states"
+    }
+   ],
+   "sensor_map": [
+    {
+     "sensor_id": "MFS1",
+     "sid": "311",
+     "variable": "flow_sensor1",
+     "nets": [
+      "N20",
+      "N21"
+     ],
+     "steady_pressure_MPa": null
+    },
+    {
+     "sensor_id": "MFS2",
+     "sid": "210",
+     "variable": "flow_sensor2",
+     "nets": [
+      "N7",
+      "N15"
+     ],
+     "steady_pressure_MPa": 6.496562388472136
+    },
+    {
+     "sensor_id": "MFS3",
+     "sid": "218",
+     "variable": "flow_sensor3",
+     "nets": [
+      "N17",
+      "N14"
+     ],
+     "steady_pressure_MPa": null
+    },
+    {
+     "sensor_id": "MFS4",
+     "sid": "196",
+     "variable": "flow_sensor4",
+     "nets": [
+      "N13",
+      "N9"
+     ],
+     "steady_pressure_MPa": 4.0
+    },
+    {
+     "sensor_id": "PS1",
+     "sid": "50",
+     "variable": "pressure_sensor1",
+     "nets": [
+      "N3"
+     ],
+     "steady_pressure_MPa": 6.495150909022879
+    },
+    {
+     "sensor_id": "PS2",
+     "sid": "51",
+     "variable": "pressure_sensor2",
+     "nets": [
+      "N4"
+     ],
+     "steady_pressure_MPa": 6.48920890891638
+    },
+    {
+     "sensor_id": "PS3",
+     "sid": "52",
+     "variable": "pressure_sensor3",
+     "nets": [
+      "N7"
+     ],
+     "steady_pressure_MPa": 6.496562388472136
+    },
+    {
+     "sensor_id": "PS4",
+     "sid": "109",
+     "variable": "pressure_sensor4",
+     "nets": [
+      "N11"
+     ],
+     "steady_pressure_MPa": 6.493872345182371
+    },
+    {
+     "sensor_id": "PS5",
+     "sid": "134",
+     "variable": "pressure_sensor5",
+     "nets": [
+      "N10"
+     ],
+     "steady_pressure_MPa": 3.9956243637354767
+    },
+    {
+     "sensor_id": "PS6",
+     "sid": "187",
+     "variable": "pressure_sensor6",
+     "nets": [
+      "N1"
+     ],
+     "steady_pressure_MPa": 3.0
+    },
+    {
+     "sensor_id": "PS7",
+     "sid": "318",
+     "variable": "pressure_sensor7",
+     "nets": [
+      "N5"
+     ],
+     "steady_pressure_MPa": 6.5
+    },
+    {
+     "sensor_id": "PS8",
+     "sid": "392",
+     "variable": "pressure_sensor8",
+     "nets": [
+      "N2"
+     ],
+     "steady_pressure_MPa": 6.5
+    },
+    {
+     "sensor_id": "PS9",
+     "sid": "402",
+     "variable": "pressure_sensor9",
+     "nets": [
+      "N12"
+     ],
+     "steady_pressure_MPa": 6.493872345182371
+    },
+    {
+     "sensor_id": "PS10",
+     "sid": "403",
+     "variable": "pressure_sensor10",
+     "nets": [
+      "N13"
+     ],
+     "steady_pressure_MPa": 4.0
+    },
+    {
+     "sensor_id": "PS11",
+     "sid": "428",
+     "variable": "pressure_sensor11",
+     "nets": [
+      "N8"
+     ],
+     "steady_pressure_MPa": 6.494283707901234
+    },
+    {
+     "sensor_id": "PS12",
+     "sid": "431",
+     "variable": "pressure_sensor12",
+     "nets": [
+      "N7"
+     ],
+     "steady_pressure_MPa": 6.496562388472136
+    }
+   ],
+   "findings": [
+    "Constant Volume Chamber (G) SID 205 behind Flow Rate Sensor (G)1 (MFS2) has ONE gas port (num_ports = one; its other connection, net N16, is thermal port H on a Perfect Insulator) -> dead-end volume: MFS2 measures only chamber filling (0 kg/s in steady state)"
+   ]
+  }
+ }
+}

@@ -1,0 +1,58 @@
+item,reported,expected,match
+AV-F01.png sha256,26457c036baf5d82,26457c036baf5d82,True
+AV-F01.svg sha256,d3eef49687b38477,d3eef49687b38477,True
+AV-F01 QA,APPROVED,APPROVED,True
+AV-F02.png sha256,70a3e8bec53009da,70a3e8bec53009da,True
+AV-F02.svg sha256,ce1a3d4cb645358f,ce1a3d4cb645358f,True
+AV-F02 QA,APPROVED,APPROVED,True
+AV-F03.png sha256,f49e1746ab0c1dd7,f49e1746ab0c1dd7,True
+AV-F03.svg sha256,2ee06de9c8d56a63,2ee06de9c8d56a63,True
+AV-F03 QA,APPROVED,APPROVED,True
+AV-F04.png sha256,325f4accec7a1e2b,325f4accec7a1e2b,True
+AV-F04.svg sha256,1e9bf762e94471e3,1e9bf762e94471e3,True
+AV-F04 QA,APPROVED,APPROVED,True
+AV-F05.png sha256,2785a45c5b962f72,2785a45c5b962f72,True
+AV-F05.svg sha256,9ad844501b7a6439,9ad844501b7a6439,True
+AV-F05 QA,APPROVED,APPROVED,True
+AV-F06.png sha256,904bc8adab92f1ca,904bc8adab92f1ca,True
+AV-F06.svg sha256,60f6a2d8d20d122c,60f6a2d8d20d122c,True
+AV-F06 QA,APPROVED,APPROVED,True
+AV-F07.png sha256,beca3be874f8720c,beca3be874f8720c,True
+AV-F07.svg sha256,5155b2091ca95d5d,5155b2091ca95d5d,True
+AV-F07 QA,APPROVED,APPROVED,True
+AV-F08.png sha256,7fa3737cce1c64f3,7fa3737cce1c64f3,True
+AV-F08.svg sha256,37672343b54f7e02,37672343b54f7e02,True
+AV-F08 QA,APPROVED,APPROVED,True
+AV-F09.png sha256,83c78125c68f79c4,83c78125c68f79c4,True
+AV-F09.svg sha256,c7b8d4dd818c0dab,c7b8d4dd818c0dab,True
+AV-F09 QA,APPROVED,APPROVED,True
+AV-F10.png sha256,6a2576515cffd84d,6a2576515cffd84d,True
+AV-F10.svg sha256,c4f437cd282d8416,c4f437cd282d8416,True
+AV-F10 QA,APPROVED,APPROVED,True
+AV-F11.png sha256,40a7727b9e60706d,40a7727b9e60706d,True
+AV-F11.svg sha256,8726b86e34cb88b9,8726b86e34cb88b9,True
+AV-F11 QA,APPROVED,APPROVED,True
+AV-F12.png sha256,18f21512962b7e39,18f21512962b7e39,True
+AV-F12.svg sha256,b7487bf42bfeb578,b7487bf42bfeb578,True
+AV-F12 QA,APPROVED,APPROVED,True
+AV-F13.png sha256,b1fe2e335267c3e0,b1fe2e335267c3e0,True
+AV-F13.svg sha256,ce746496214cd273,ce746496214cd273,True
+AV-F13 QA,APPROVED,APPROVED,True
+AV-F14.png sha256,a3227a467064bf14,a3227a467064bf14,True
+AV-F14.svg sha256,8c4b036ba8b71c3b,8c4b036ba8b71c3b,True
+AV-F14 QA,APPROVED,APPROVED,True
+AV-F15.png sha256,7851addfccd9a4d0,7851addfccd9a4d0,True
+AV-F15.svg sha256,73a48280d58c593a,73a48280d58c593a,True
+AV-F15 QA,APPROVED,APPROVED,True
+AV-F16.png sha256,f7ceeffba74ff443,f7ceeffba74ff443,True
+AV-F16.svg sha256,eb2420808a172a5f,eb2420808a172a5f,True
+AV-F16 QA,APPROVED,APPROVED,True
+decisions computed,2376,2376,True
+exclusion certificates re-verified,11061,11061,True
+feasibility witnesses re-verified,1552,1552,True
+invariant violations,0,0,True
+A08 flow_only wrong SPECIFIC vs runs,4,4,True
+A01 rows equal H1 paired comparisons,30,30,True
+A02a wrong counts equal H1 selections,35,35,True
+REF isolable pairs (all channels) vs minimum-set record,14,14,True
+files changed outside the package,0,0,True

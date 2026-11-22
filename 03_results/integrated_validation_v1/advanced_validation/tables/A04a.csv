@@ -1,0 +1,6 @@
+test,paired_comparisons,hypothesis_checks,violations,result
+bound widening (frozen grid),1920,13760,0,PASS
+clock-bound widening,240,1280,0,PASS
+sensor removal (subset of all 13 channels),1872,9984,0,PASS
+EXCLUDED certificates re-verified independently,2376,11061,0,PASS
+FEASIBLE witnesses re-verified (exact rationals),2376,1552,0,PASS

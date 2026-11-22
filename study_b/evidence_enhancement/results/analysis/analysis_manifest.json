@@ -1,0 +1,107 @@
+{
+  "analysis": "mhc_evidence_enhancement_v1",
+  "source_sha256": "91755fb1e555e0eb32d160ac140a4261b6bb47d24944c7e717b723fe2a641e32",
+  "replay_gate_passed": true,
+  "change_bins": {
+    "P-2": [
+      [
+        0.0,
+        0.0,
+        "no change"
+      ],
+      [
+        0.2,
+        0.2,
+        "1 increment"
+      ],
+      [
+        0.4,
+        2.0,
+        "2–10 increments"
+      ],
+      [
+        2.2,
+        20.0,
+        "11–100 increments"
+      ],
+      [
+        20.200000000000003,
+        "inf",
+        ">100 increments"
+      ]
+    ],
+    "MFC-3": [
+      [
+        0.0,
+        0.0,
+        "no change"
+      ],
+      [
+        0.01,
+        0.01,
+        "1 increment"
+      ],
+      [
+        0.02,
+        0.1,
+        "2–10 increments"
+      ],
+      [
+        0.11,
+        1.0,
+        "11–100 increments"
+      ],
+      [
+        1.01,
+        "inf",
+        ">100 increments"
+      ]
+    ]
+  },
+  "tail_fractions": [
+    0.001,
+    0.01,
+    0.05
+  ],
+  "quantile_method": "inverted_cdf (an observed value)",
+  "representative_windows": {
+    "22": [
+      "11:03:00",
+      "11:33:00"
+    ],
+    "23": [
+      "14:13:00",
+      "14:33:00"
+    ],
+    "24": [
+      "14:30:00",
+      "15:00:00"
+    ],
+    "25": [
+      "17:30:00",
+      "17:50:00"
+    ],
+    "26": [
+      "10:13:00",
+      "10:43:00"
+    ],
+    "27": [
+      "11:50:00",
+      "12:10:00"
+    ],
+    "28": [
+      "11:30:00",
+      "11:50:00"
+    ],
+    "29": [
+      "14:10:00",
+      "14:30:00"
+    ]
+  },
+  "nominal_outlet_setpoints_bar": {
+    "24": 180,
+    "28": 140,
+    "29": 180
+  },
+  "independent_units": "3 held-out runs on 2 recording dates; rows are serially dependent"
+}

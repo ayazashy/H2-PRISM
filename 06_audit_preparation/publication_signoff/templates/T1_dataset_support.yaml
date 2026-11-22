@@ -1,0 +1,23 @@
+# UNSIGNED TEMPLATE - not an approval. See SIGNOFF_PACKAGE.md.
+approval_id: T1_dataset_support__8496c0a3__REVIEWER
+artifact_id: T1_dataset_support
+claim_scope: DATASET
+decision: TO_BE_DECIDED_BY_REVIEWER
+approved_claims:
+- 'Eligible runs, topology-scoped families and 60 s windows per class and topology (topology = ALL: totals). Topology labels
+  follow the release folders (Center/Downstream event attribution disputed, L12 / R-18); families are not independent across
+  topologies.'
+limitations_acknowledged:
+- ''
+reviewer:
+  name: TO_BE_FILLED_BY_REVIEWER
+  role: TO_BE_FILLED_BY_REVIEWER
+date: YYYY-MM-DD
+statement: ''
+binding:
+  input_sha256:
+    03_results/dataset_design/class_distribution.csv: d815067c5cbd383d29178a01204e012143269e6854f92ca728d2fb4ee6ff4043
+  spec_sha256: 8496c0a3c2ca5b560463086c75f4c4f0a338a5f5b6dd8e5ddfa2b7bfc3bc6f6e
+  renderer_sha256: 12ba184bfc5f603546a75e47764b8f3569dffc44810423add4bc024b4cdfdd66
+  source_run_keys:
+  - dataset_design_4d1310a6509f

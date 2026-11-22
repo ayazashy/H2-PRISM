@@ -1,0 +1,11 @@
+{
+  "ALT": {
+    "alternate_profile:normal": "51170d2b5cfaed1b1e74b7a2c910f287e98cb5c74547c920e0f2177c095efafd",
+    "alternate_profile:outlet_opening": "664d4c1b39295d6efd93ba941a0ec9bd94dec9179082c4a884c382fa25d13113"
+  },
+  "TIMING": {
+    "timing:normal": "15d4851f8c034ffdcfd29e81bccf062d1b820515ba6c8515051b76427f4cdef3",
+    "timing:outlet_opening": "370b0f92876de7e985d2e2f178a9b613acd9409aa04adb8613898fc23adf870a"
+  },
+  "output_sha256": "a937dfb08d413227967e3bc32109d14d41afb3aabfe363d2019679bac296baf0"
+}

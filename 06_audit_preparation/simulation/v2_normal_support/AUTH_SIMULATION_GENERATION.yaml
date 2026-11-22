@@ -1,0 +1,19 @@
+# Project-lead authorization given explicitly in-session on 2026-11-13 (next-step answer: 'Authorize request').
+authorized: true
+scope: SIMULATION_GENERATION:V2_NORMAL_SUPPORT_DEV_AND_CONFIRMATION
+authorized_by: Ahmed Zayed (project lead)
+date: '2026-11-13'
+bound_to:
+  design: {file: 06_audit_preparation/simulation/v2_normal_support/DESIGN.csv, sha256: c59caa77fba33a9e604feed681f649ef753f12cfd42da7a6bcdf3c65e829788c}
+  generator: {file: 06_audit_preparation/simulation/v2_normal_support/generate_v2_normal_support.m, sha256: 63c6f2ab4c7171548e9b092807635e80e1572bab9697aefd36c6ac2ce2d1e0b2}
+  noise_tool: {file: tools/simulation/add_measurement_noise.py, sha256: 81132d60ebe0300d36c19a3790e930a67a5d28ece9c4c72118c1c7b93352fea5}
+  validator: {file: tools/simulation/validate_v2_normal_outputs.py, sha256: 793d03e4f23e5a03d82d9b78a2457aba2affa6dadd2b030a89efd667af84feb6}
+covers: generation of the 9 NORMAL operating points x 3 released NORMAL models in DESIGN.csv (27 runs, clean and
+  noise_added), their provenance, validation, and sealing of the confirmation partition
+executor: Yazan (dataset owner) or a person he designates; executor acceptance NOT_RECORDED (MATLAB/Simulink is not
+  available in this environment, so nothing has been generated)
+output_location: outside the release and outside git (data/generated/v2_normal_support/, git-ignored)
+not_covered: any event scenario; any model training or evaluation; opening or analysing the confirmation partition;
+  any change to the released data or models, R2, arms A-H, RC1 or manifest v0.3; activation of protocol 2.0;
+  Yazan's D1/D2 decisions or Faisal's acceptance of any component
+void_if: any bound file's SHA-256 differs from the values above

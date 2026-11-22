@@ -1,0 +1,13 @@
+fold,held_out,method,target,requested_count,n_tied_at_boundary,n_selected_by_tie_key,share_selected_by_tie_key,distinct_score_values_in_fold,share_windows_at_max_score
+2,Downstream,s_C,0.6,5599,38,32,0.00571531,1471,0.00010717
+2,Downstream,s_C_minus_D,0.6,5599,39,36,0.00642972,1147,0.00010717
+2,Downstream,confidence,0.6,5599,228,6,0.00107162,1137,0.174365
+2,Downstream,margin,0.6,5599,228,6,0.00107162,1146,0.174365
+2,Downstream,neg_entropy,0.6,5599,228,6,0.00107162,1148,0.174365
+2,Downstream,D_only,0.6,5599,433,273,0.0487587,27,0.747508
+3,Upstream,s_C,0.6,5599,383,351,0.0626898,126,0.00182188
+3,Upstream,s_C_minus_D,0.6,5599,5471,4224,0.75442,41,0.0271139
+3,Upstream,confidence,0.6,5599,241,128,0.0228612,20,0.780302
+3,Upstream,margin,0.6,5599,241,128,0.0228612,31,0.780302
+3,Upstream,neg_entropy,0.6,5599,241,128,0.0228612,42,0.780302
+3,Upstream,D_only,0.6,5599,496,199,0.0355421,22,0.673883

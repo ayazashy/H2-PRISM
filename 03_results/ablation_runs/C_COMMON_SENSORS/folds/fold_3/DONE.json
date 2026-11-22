@@ -1,0 +1,17 @@
+{
+  "calibration": "none",
+  "fold": 3,
+  "meta_model_status": "FITTED",
+  "params": {
+    "max_features": "sqrt",
+    "min_samples_leaf": 1,
+    "n_estimators": 300
+  },
+  "run_key": "e99e620f56aef1f4055868bf0db2e0fb29f2f7a5ba1b69fd67bd35f5c19539f3",
+  "target_rule": {
+    "min_dev_attainable": 0.06982102668524275,
+    "reason": "minimum development attainability 0.070 minus margin 0.05 is below 0.3",
+    "status": "NOT_ESTIMABLE_BY_DESIGN",
+    "target": null
+  }
+}

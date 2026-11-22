@@ -1,0 +1,145 @@
+variant,method,target,mode,class,scope,topologies_included,topologies_excluded,exclusion_reason,n_windows,n_runs,n_families,n_scenario_ancestors,n_independence_groups,n_specific,n_specific_correct,n_ambiguity_set,n_ambiguity_includes_true,n_unresolved,share_specific,share_ambiguity_set,share_unresolved,specific_correct,ambiguity_inclusion
+primary,D_only,0.6,rank_matched,COMPRESSOR_DELAY,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),62,2,2,1,1,0,0,31,31,31,0,0.5,0.5,,1
+primary,D_only,0.6,rank_matched,COMPRESSOR_DELAY,Downstream,Downstream,,,31,1,1,1,1,0,0,31,31,0,0,1,0,,1
+primary,D_only,0.6,rank_matched,COMPRESSOR_DELAY,Upstream,Upstream,,,31,1,1,1,1,0,0,0,0,31,0,0,1,,
+primary,D_only,0.6,rank_matched,COMPRESSOR_FAULT,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),2656,4,2,2,1,0,0,0,0,2656,0,0,1,,
+primary,D_only,0.6,rank_matched,COMPRESSOR_FAULT,Downstream,Downstream,,,1328,2,1,2,1,0,0,0,0,1328,0,0,1,,
+primary,D_only,0.6,rank_matched,COMPRESSOR_FAULT,Upstream,Upstream,,,1328,2,1,2,1,0,0,0,0,1328,0,0,1,,
+primary,D_only,0.6,rank_matched,LEAK,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),14614,26,20,13,10,10090,10090,299,299,4225,0.6904338306,0.02045983304,0.2891063364,1,1
+primary,D_only,0.6,rank_matched,LEAK,Downstream,Downstream,,,7307,13,10,13,10,4949,4949,299,299,2059,0.6772957438,0.04091966607,0.2817845901,1,1
+primary,D_only,0.6,rank_matched,LEAK,Upstream,Upstream,,,7307,13,10,13,10,5141,5141,0,0,2166,0.7035719173,0,0.2964280827,1,
+primary,D_only,0.6,rank_matched,NORMAL,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),1330,2,2,1,1,1108,458,0,0,222,0.8330827068,0,0.1669172932,0.4133574007,
+primary,D_only,0.6,rank_matched,NORMAL,Downstream,Downstream,,,665,1,1,1,1,650,0,0,0,15,0.977443609,0,0.02255639098,0,
+primary,D_only,0.6,rank_matched,NORMAL,Upstream,Upstream,,,665,1,1,1,1,458,458,0,0,207,0.6887218045,0,0.3112781955,1,
+primary,confidence,0.6,rank_matched,COMPRESSOR_DELAY,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),62,2,2,1,1,0,0,31,31,31,0,0.5,0.5,,1
+primary,confidence,0.6,rank_matched,COMPRESSOR_DELAY,Downstream,Downstream,,,31,1,1,1,1,0,0,31,31,0,0,1,0,,1
+primary,confidence,0.6,rank_matched,COMPRESSOR_DELAY,Upstream,Upstream,,,31,1,1,1,1,0,0,0,0,31,0,0,1,,
+primary,confidence,0.6,rank_matched,COMPRESSOR_FAULT,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),2656,4,2,2,1,3,3,0,0,2653,0.001129518072,0,0.9988704819,1,
+primary,confidence,0.6,rank_matched,COMPRESSOR_FAULT,Downstream,Downstream,,,1328,2,1,2,1,1,1,0,0,1327,0.0007530120482,0,0.999246988,1,
+primary,confidence,0.6,rank_matched,COMPRESSOR_FAULT,Upstream,Upstream,,,1328,2,1,2,1,2,2,0,0,1326,0.001506024096,0,0.9984939759,1,
+primary,confidence,0.6,rank_matched,LEAK,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),14614,26,20,13,10,10405,10405,738,738,3471,0.7119885042,0.05049952101,0.2375119748,1,1
+primary,confidence,0.6,rank_matched,LEAK,Downstream,Downstream,,,7307,13,10,13,10,4948,4948,738,738,1621,0.6771588887,0.100999042,0.2218420692,1,1
+primary,confidence,0.6,rank_matched,LEAK,Upstream,Upstream,,,7307,13,10,13,10,5457,5457,0,0,1850,0.7468181196,0,0.2531818804,1,
+primary,confidence,0.6,rank_matched,NORMAL,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),1330,2,2,1,1,790,140,0,0,540,0.5939849624,0,0.4060150376,0.1772151899,
+primary,confidence,0.6,rank_matched,NORMAL,Downstream,Downstream,,,665,1,1,1,1,650,0,0,0,15,0.977443609,0,0.02255639098,0,
+primary,confidence,0.6,rank_matched,NORMAL,Upstream,Upstream,,,665,1,1,1,1,140,140,0,0,525,0.2105263158,0,0.7894736842,1,
+primary,margin,0.6,rank_matched,COMPRESSOR_DELAY,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),62,2,2,1,1,0,0,31,31,31,0,0.5,0.5,,1
+primary,margin,0.6,rank_matched,COMPRESSOR_DELAY,Downstream,Downstream,,,31,1,1,1,1,0,0,31,31,0,0,1,0,,1
+primary,margin,0.6,rank_matched,COMPRESSOR_DELAY,Upstream,Upstream,,,31,1,1,1,1,0,0,0,0,31,0,0,1,,
+primary,margin,0.6,rank_matched,COMPRESSOR_FAULT,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),2656,4,2,2,1,3,3,0,0,2653,0.001129518072,0,0.9988704819,1,
+primary,margin,0.6,rank_matched,COMPRESSOR_FAULT,Downstream,Downstream,,,1328,2,1,2,1,1,1,0,0,1327,0.0007530120482,0,0.999246988,1,
+primary,margin,0.6,rank_matched,COMPRESSOR_FAULT,Upstream,Upstream,,,1328,2,1,2,1,2,2,0,0,1326,0.001506024096,0,0.9984939759,1,
+primary,margin,0.6,rank_matched,LEAK,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),14614,26,20,13,10,10406,10406,738,738,3470,0.7120569317,0.05049952101,0.2374435473,1,1
+primary,margin,0.6,rank_matched,LEAK,Downstream,Downstream,,,7307,13,10,13,10,4948,4948,738,738,1621,0.6771588887,0.100999042,0.2218420692,1,1
+primary,margin,0.6,rank_matched,LEAK,Upstream,Upstream,,,7307,13,10,13,10,5458,5458,0,0,1849,0.7469549747,0,0.2530450253,1,
+primary,margin,0.6,rank_matched,NORMAL,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),1330,2,2,1,1,789,139,0,0,541,0.5932330827,0,0.4067669173,0.1761723701,
+primary,margin,0.6,rank_matched,NORMAL,Downstream,Downstream,,,665,1,1,1,1,650,0,0,0,15,0.977443609,0,0.02255639098,0,
+primary,margin,0.6,rank_matched,NORMAL,Upstream,Upstream,,,665,1,1,1,1,139,139,0,0,526,0.2090225564,0,0.7909774436,1,
+primary,neg_entropy,0.6,rank_matched,COMPRESSOR_DELAY,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),62,2,2,1,1,0,0,31,31,31,0,0.5,0.5,,1
+primary,neg_entropy,0.6,rank_matched,COMPRESSOR_DELAY,Downstream,Downstream,,,31,1,1,1,1,0,0,31,31,0,0,1,0,,1
+primary,neg_entropy,0.6,rank_matched,COMPRESSOR_DELAY,Upstream,Upstream,,,31,1,1,1,1,0,0,0,0,31,0,0,1,,
+primary,neg_entropy,0.6,rank_matched,COMPRESSOR_FAULT,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),2656,4,2,2,1,3,3,0,0,2653,0.001129518072,0,0.9988704819,1,
+primary,neg_entropy,0.6,rank_matched,COMPRESSOR_FAULT,Downstream,Downstream,,,1328,2,1,2,1,1,1,0,0,1327,0.0007530120482,0,0.999246988,1,
+primary,neg_entropy,0.6,rank_matched,COMPRESSOR_FAULT,Upstream,Upstream,,,1328,2,1,2,1,2,2,0,0,1326,0.001506024096,0,0.9984939759,1,
+primary,neg_entropy,0.6,rank_matched,LEAK,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),14614,26,20,13,10,10405,10405,738,738,3471,0.7119885042,0.05049952101,0.2375119748,1,1
+primary,neg_entropy,0.6,rank_matched,LEAK,Downstream,Downstream,,,7307,13,10,13,10,4948,4948,738,738,1621,0.6771588887,0.100999042,0.2218420692,1,1
+primary,neg_entropy,0.6,rank_matched,LEAK,Upstream,Upstream,,,7307,13,10,13,10,5457,5457,0,0,1850,0.7468181196,0,0.2531818804,1,
+primary,neg_entropy,0.6,rank_matched,NORMAL,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),1330,2,2,1,1,790,140,0,0,540,0.5939849624,0,0.4060150376,0.1772151899,
+primary,neg_entropy,0.6,rank_matched,NORMAL,Downstream,Downstream,,,665,1,1,1,1,650,0,0,0,15,0.977443609,0,0.02255639098,0,
+primary,neg_entropy,0.6,rank_matched,NORMAL,Upstream,Upstream,,,665,1,1,1,1,140,140,0,0,525,0.2105263158,0,0.7894736842,1,
+primary,s_C,0.6,rank_matched,COMPRESSOR_DELAY,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),62,2,2,1,1,0,0,31,31,31,0,0.5,0.5,,1
+primary,s_C,0.6,rank_matched,COMPRESSOR_DELAY,Downstream,Downstream,,,31,1,1,1,1,0,0,31,31,0,0,1,0,,1
+primary,s_C,0.6,rank_matched,COMPRESSOR_DELAY,Upstream,Upstream,,,31,1,1,1,1,0,0,0,0,31,0,0,1,,
+primary,s_C,0.6,rank_matched,COMPRESSOR_FAULT,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),2656,4,2,2,1,1,1,0,0,2655,0.0003765060241,0,0.999623494,1,
+primary,s_C,0.6,rank_matched,COMPRESSOR_FAULT,Downstream,Downstream,,,1328,2,1,2,1,1,1,0,0,1327,0.0007530120482,0,0.999246988,1,
+primary,s_C,0.6,rank_matched,COMPRESSOR_FAULT,Upstream,Upstream,,,1328,2,1,2,1,0,0,0,0,1328,0,0,1,,
+primary,s_C,0.6,rank_matched,LEAK,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),14614,26,20,13,10,10597,10597,33,33,3984,0.7251265909,0.002258108663,0.2726153004,1,1
+primary,s_C,0.6,rank_matched,LEAK,Downstream,Downstream,,,7307,13,10,13,10,5598,5598,33,33,1676,0.7661146845,0.004516217326,0.2293690981,1,1
+primary,s_C,0.6,rank_matched,LEAK,Upstream,Upstream,,,7307,13,10,13,10,4999,4999,0,0,2308,0.6841384973,0,0.3158615027,1,
+primary,s_C,0.6,rank_matched,NORMAL,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),1330,2,2,1,1,600,600,0,0,730,0.4511278195,0,0.5488721805,1,
+primary,s_C,0.6,rank_matched,NORMAL,Downstream,Downstream,,,665,1,1,1,1,0,0,0,0,665,0,0,1,,
+primary,s_C,0.6,rank_matched,NORMAL,Upstream,Upstream,,,665,1,1,1,1,600,600,0,0,65,0.9022556391,0,0.0977443609,1,
+primary,s_C_minus_D,0.6,rank_matched,COMPRESSOR_DELAY,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),62,2,2,1,1,0,0,31,31,31,0,0.5,0.5,,1
+primary,s_C_minus_D,0.6,rank_matched,COMPRESSOR_DELAY,Downstream,Downstream,,,31,1,1,1,1,0,0,31,31,0,0,1,0,,1
+primary,s_C_minus_D,0.6,rank_matched,COMPRESSOR_DELAY,Upstream,Upstream,,,31,1,1,1,1,0,0,0,0,31,0,0,1,,
+primary,s_C_minus_D,0.6,rank_matched,COMPRESSOR_FAULT,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),2656,4,2,2,1,2,2,0,0,2654,0.0007530120482,0,0.999246988,1,
+primary,s_C_minus_D,0.6,rank_matched,COMPRESSOR_FAULT,Downstream,Downstream,,,1328,2,1,2,1,0,0,0,0,1328,0,0,1,,
+primary,s_C_minus_D,0.6,rank_matched,COMPRESSOR_FAULT,Upstream,Upstream,,,1328,2,1,2,1,2,2,0,0,1326,0.001506024096,0,0.9984939759,1,
+primary,s_C_minus_D,0.6,rank_matched,LEAK,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),14614,26,20,13,10,10585,10585,33,33,3996,0.7243054605,0.002258108663,0.2734364308,1,1
+primary,s_C_minus_D,0.6,rank_matched,LEAK,Downstream,Downstream,,,7307,13,10,13,10,5599,5599,33,33,1675,0.7662515396,0.004516217326,0.2292322431,1,1
+primary,s_C_minus_D,0.6,rank_matched,LEAK,Upstream,Upstream,,,7307,13,10,13,10,4986,4986,0,0,2321,0.6823593814,0,0.3176406186,1,
+primary,s_C_minus_D,0.6,rank_matched,NORMAL,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.217),1330,2,2,1,1,611,611,0,0,719,0.4593984962,0,0.5406015038,1,
+primary,s_C_minus_D,0.6,rank_matched,NORMAL,Downstream,Downstream,,,665,1,1,1,1,0,0,0,0,665,0,0,1,,
+primary,s_C_minus_D,0.6,rank_matched,NORMAL,Upstream,Upstream,,,665,1,1,1,1,611,611,0,0,54,0.9187969925,0,0.08120300752,1,
+warning_only,D_only,0.6,rank_matched,COMPRESSOR_DELAY,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),62,2,2,1,1,38,38,7,7,17,0.6129032258,0.1129032258,0.2741935484,1,1
+warning_only,D_only,0.6,rank_matched,COMPRESSOR_DELAY,Downstream,Downstream,,,31,1,1,1,1,24,24,7,7,0,0.7741935484,0.2258064516,0,1,1
+warning_only,D_only,0.6,rank_matched,COMPRESSOR_DELAY,Upstream,Upstream,,,31,1,1,1,1,14,14,0,0,17,0.4516129032,0,0.5483870968,1,
+warning_only,D_only,0.6,rank_matched,COMPRESSOR_FAULT,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),2656,4,2,2,1,28,28,0,0,2628,0.01054216867,0,0.9894578313,1,
+warning_only,D_only,0.6,rank_matched,COMPRESSOR_FAULT,Downstream,Downstream,,,1328,2,1,2,1,7,7,0,0,1321,0.005271084337,0,0.9947289157,1,
+warning_only,D_only,0.6,rank_matched,COMPRESSOR_FAULT,Upstream,Upstream,,,1328,2,1,2,1,21,21,0,0,1307,0.01581325301,0,0.984186747,1,
+warning_only,D_only,0.6,rank_matched,LEAK,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),14614,26,20,13,10,10037,10037,304,304,4273,0.6868071712,0.02080197071,0.2923908581,1,1
+warning_only,D_only,0.6,rank_matched,LEAK,Downstream,Downstream,,,7307,13,10,13,10,4918,4918,304,304,2085,0.6730532366,0.04160394143,0.285342822,1,1
+warning_only,D_only,0.6,rank_matched,LEAK,Upstream,Upstream,,,7307,13,10,13,10,5119,5119,0,0,2188,0.7005611058,0,0.2994388942,1,
+warning_only,D_only,0.6,rank_matched,NORMAL,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),1330,2,2,1,1,1095,445,0,0,235,0.8233082707,0,0.1766917293,0.4063926941,
+warning_only,D_only,0.6,rank_matched,NORMAL,Downstream,Downstream,,,665,1,1,1,1,650,0,0,0,15,0.977443609,0,0.02255639098,0,
+warning_only,D_only,0.6,rank_matched,NORMAL,Upstream,Upstream,,,665,1,1,1,1,445,445,0,0,220,0.6691729323,0,0.3308270677,1,
+warning_only,confidence,0.6,rank_matched,COMPRESSOR_DELAY,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),62,2,2,1,1,21,21,31,31,10,0.3387096774,0.5,0.1612903226,1,1
+warning_only,confidence,0.6,rank_matched,COMPRESSOR_DELAY,Downstream,Downstream,,,31,1,1,1,1,0,0,31,31,0,0,1,0,,1
+warning_only,confidence,0.6,rank_matched,COMPRESSOR_DELAY,Upstream,Upstream,,,31,1,1,1,1,21,21,0,0,10,0.6774193548,0,0.3225806452,1,
+warning_only,confidence,0.6,rank_matched,COMPRESSOR_FAULT,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),2656,4,2,2,1,33,33,0,0,2623,0.0124246988,0,0.9875753012,1,
+warning_only,confidence,0.6,rank_matched,COMPRESSOR_FAULT,Downstream,Downstream,,,1328,2,1,2,1,9,9,0,0,1319,0.006777108434,0,0.9932228916,1,
+warning_only,confidence,0.6,rank_matched,COMPRESSOR_FAULT,Upstream,Upstream,,,1328,2,1,2,1,24,24,0,0,1304,0.01807228916,0,0.9819277108,1,
+warning_only,confidence,0.6,rank_matched,LEAK,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),14614,26,20,13,10,10424,10424,756,756,3434,0.7132886273,0.05173121664,0.234980156,1,1
+warning_only,confidence,0.6,rank_matched,LEAK,Downstream,Downstream,,,7307,13,10,13,10,4940,4940,756,756,1611,0.6760640482,0.1034624333,0.2204735185,1,1
+warning_only,confidence,0.6,rank_matched,LEAK,Upstream,Upstream,,,7307,13,10,13,10,5484,5484,0,0,1823,0.7505132065,0,0.2494867935,1,
+warning_only,confidence,0.6,rank_matched,NORMAL,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),1330,2,2,1,1,720,70,0,0,610,0.5413533835,0,0.4586466165,0.09722222222,
+warning_only,confidence,0.6,rank_matched,NORMAL,Downstream,Downstream,,,665,1,1,1,1,650,0,0,0,15,0.977443609,0,0.02255639098,0,
+warning_only,confidence,0.6,rank_matched,NORMAL,Upstream,Upstream,,,665,1,1,1,1,70,70,0,0,595,0.1052631579,0,0.8947368421,1,
+warning_only,margin,0.6,rank_matched,COMPRESSOR_DELAY,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),62,2,2,1,1,21,21,31,31,10,0.3387096774,0.5,0.1612903226,1,1
+warning_only,margin,0.6,rank_matched,COMPRESSOR_DELAY,Downstream,Downstream,,,31,1,1,1,1,0,0,31,31,0,0,1,0,,1
+warning_only,margin,0.6,rank_matched,COMPRESSOR_DELAY,Upstream,Upstream,,,31,1,1,1,1,21,21,0,0,10,0.6774193548,0,0.3225806452,1,
+warning_only,margin,0.6,rank_matched,COMPRESSOR_FAULT,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),2656,4,2,2,1,33,33,0,0,2623,0.0124246988,0,0.9875753012,1,
+warning_only,margin,0.6,rank_matched,COMPRESSOR_FAULT,Downstream,Downstream,,,1328,2,1,2,1,9,9,0,0,1319,0.006777108434,0,0.9932228916,1,
+warning_only,margin,0.6,rank_matched,COMPRESSOR_FAULT,Upstream,Upstream,,,1328,2,1,2,1,24,24,0,0,1304,0.01807228916,0,0.9819277108,1,
+warning_only,margin,0.6,rank_matched,LEAK,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),14614,26,20,13,10,10424,10424,756,756,3434,0.7132886273,0.05173121664,0.234980156,1,1
+warning_only,margin,0.6,rank_matched,LEAK,Downstream,Downstream,,,7307,13,10,13,10,4940,4940,756,756,1611,0.6760640482,0.1034624333,0.2204735185,1,1
+warning_only,margin,0.6,rank_matched,LEAK,Upstream,Upstream,,,7307,13,10,13,10,5484,5484,0,0,1823,0.7505132065,0,0.2494867935,1,
+warning_only,margin,0.6,rank_matched,NORMAL,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),1330,2,2,1,1,720,70,0,0,610,0.5413533835,0,0.4586466165,0.09722222222,
+warning_only,margin,0.6,rank_matched,NORMAL,Downstream,Downstream,,,665,1,1,1,1,650,0,0,0,15,0.977443609,0,0.02255639098,0,
+warning_only,margin,0.6,rank_matched,NORMAL,Upstream,Upstream,,,665,1,1,1,1,70,70,0,0,595,0.1052631579,0,0.8947368421,1,
+warning_only,neg_entropy,0.6,rank_matched,COMPRESSOR_DELAY,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),62,2,2,1,1,21,21,31,31,10,0.3387096774,0.5,0.1612903226,1,1
+warning_only,neg_entropy,0.6,rank_matched,COMPRESSOR_DELAY,Downstream,Downstream,,,31,1,1,1,1,0,0,31,31,0,0,1,0,,1
+warning_only,neg_entropy,0.6,rank_matched,COMPRESSOR_DELAY,Upstream,Upstream,,,31,1,1,1,1,21,21,0,0,10,0.6774193548,0,0.3225806452,1,
+warning_only,neg_entropy,0.6,rank_matched,COMPRESSOR_FAULT,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),2656,4,2,2,1,33,33,0,0,2623,0.0124246988,0,0.9875753012,1,
+warning_only,neg_entropy,0.6,rank_matched,COMPRESSOR_FAULT,Downstream,Downstream,,,1328,2,1,2,1,9,9,0,0,1319,0.006777108434,0,0.9932228916,1,
+warning_only,neg_entropy,0.6,rank_matched,COMPRESSOR_FAULT,Upstream,Upstream,,,1328,2,1,2,1,24,24,0,0,1304,0.01807228916,0,0.9819277108,1,
+warning_only,neg_entropy,0.6,rank_matched,LEAK,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),14614,26,20,13,10,10424,10424,756,756,3434,0.7132886273,0.05173121664,0.234980156,1,1
+warning_only,neg_entropy,0.6,rank_matched,LEAK,Downstream,Downstream,,,7307,13,10,13,10,4940,4940,756,756,1611,0.6760640482,0.1034624333,0.2204735185,1,1
+warning_only,neg_entropy,0.6,rank_matched,LEAK,Upstream,Upstream,,,7307,13,10,13,10,5484,5484,0,0,1823,0.7505132065,0,0.2494867935,1,
+warning_only,neg_entropy,0.6,rank_matched,NORMAL,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),1330,2,2,1,1,720,70,0,0,610,0.5413533835,0,0.4586466165,0.09722222222,
+warning_only,neg_entropy,0.6,rank_matched,NORMAL,Downstream,Downstream,,,665,1,1,1,1,650,0,0,0,15,0.977443609,0,0.02255639098,0,
+warning_only,neg_entropy,0.6,rank_matched,NORMAL,Upstream,Upstream,,,665,1,1,1,1,70,70,0,0,595,0.1052631579,0,0.8947368421,1,
+warning_only,s_C,0.6,rank_matched,COMPRESSOR_DELAY,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),62,2,2,1,1,40,40,2,2,20,0.6451612903,0.03225806452,0.3225806452,1,1
+warning_only,s_C,0.6,rank_matched,COMPRESSOR_DELAY,Downstream,Downstream,,,31,1,1,1,1,29,29,2,2,0,0.935483871,0.06451612903,0,1,1
+warning_only,s_C,0.6,rank_matched,COMPRESSOR_DELAY,Upstream,Upstream,,,31,1,1,1,1,11,11,0,0,20,0.3548387097,0,0.6451612903,1,
+warning_only,s_C,0.6,rank_matched,COMPRESSOR_FAULT,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),2656,4,2,2,1,23,23,0,0,2633,0.008659638554,0,0.9913403614,1,
+warning_only,s_C,0.6,rank_matched,COMPRESSOR_FAULT,Downstream,Downstream,,,1328,2,1,2,1,2,2,0,0,1326,0.001506024096,0,0.9984939759,1,
+warning_only,s_C,0.6,rank_matched,COMPRESSOR_FAULT,Upstream,Upstream,,,1328,2,1,2,1,21,21,0,0,1307,0.01581325301,0,0.984186747,1,
+warning_only,s_C,0.6,rank_matched,LEAK,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),14614,26,20,13,10,10564,10564,0,0,4050,0.7228684823,0,0.2771315177,1,
+warning_only,s_C,0.6,rank_matched,LEAK,Downstream,Downstream,,,7307,13,10,13,10,5568,5568,0,0,1739,0.7620090324,0,0.2379909676,1,
+warning_only,s_C,0.6,rank_matched,LEAK,Upstream,Upstream,,,7307,13,10,13,10,4996,4996,0,0,2311,0.6837279321,0,0.3162720679,1,
+warning_only,s_C,0.6,rank_matched,NORMAL,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),1330,2,2,1,1,571,571,0,0,759,0.4293233083,0,0.5706766917,1,
+warning_only,s_C,0.6,rank_matched,NORMAL,Downstream,Downstream,,,665,1,1,1,1,0,0,0,0,665,0,0,1,,
+warning_only,s_C,0.6,rank_matched,NORMAL,Upstream,Upstream,,,665,1,1,1,1,571,571,0,0,94,0.8586466165,0,0.1413533835,1,
+warning_only,s_C_minus_D,0.6,rank_matched,COMPRESSOR_DELAY,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),62,2,2,1,1,56,56,2,2,4,0.9032258065,0.03225806452,0.06451612903,1,1
+warning_only,s_C_minus_D,0.6,rank_matched,COMPRESSOR_DELAY,Downstream,Downstream,,,31,1,1,1,1,29,29,2,2,0,0.935483871,0.06451612903,0,1,1
+warning_only,s_C_minus_D,0.6,rank_matched,COMPRESSOR_DELAY,Upstream,Upstream,,,31,1,1,1,1,27,27,0,0,4,0.8709677419,0,0.1290322581,1,
+warning_only,s_C_minus_D,0.6,rank_matched,COMPRESSOR_FAULT,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),2656,4,2,2,1,20,20,0,0,2636,0.007530120482,0,0.9924698795,1,
+warning_only,s_C_minus_D,0.6,rank_matched,COMPRESSOR_FAULT,Downstream,Downstream,,,1328,2,1,2,1,0,0,0,0,1328,0,0,1,,
+warning_only,s_C_minus_D,0.6,rank_matched,COMPRESSOR_FAULT,Upstream,Upstream,,,1328,2,1,2,1,20,20,0,0,1308,0.01506024096,0,0.984939759,1,
+warning_only,s_C_minus_D,0.6,rank_matched,LEAK,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),14614,26,20,13,10,10484,10484,0,0,4130,0.7173942795,0,0.2826057205,1,
+warning_only,s_C_minus_D,0.6,rank_matched,LEAK,Downstream,Downstream,,,7307,13,10,13,10,5570,5570,0,0,1737,0.7622827426,0,0.2377172574,1,
+warning_only,s_C_minus_D,0.6,rank_matched,LEAK,Upstream,Upstream,,,7307,13,10,13,10,4914,4914,0,0,2393,0.6725058163,0,0.3274941837,1,
+warning_only,s_C_minus_D,0.6,rank_matched,NORMAL,POOLED_ESTIMABLE,Downstream|Upstream,Center,Center: NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL (max attainable 0.230),1330,2,2,1,1,638,638,0,0,692,0.4796992481,0,0.5203007519,1,
+warning_only,s_C_minus_D,0.6,rank_matched,NORMAL,Downstream,Downstream,,,665,1,1,1,1,0,0,0,0,665,0,0,1,,
+warning_only,s_C_minus_D,0.6,rank_matched,NORMAL,Upstream,Upstream,,,665,1,1,1,1,638,638,0,0,27,0.9593984962,0,0.04060150376,1,

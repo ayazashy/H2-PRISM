@@ -1,0 +1,13 @@
+{
+  "cross_topology_pairs": 1083,
+  "cross_topology_pairs_with_shared_rows": 0,
+  "dependent_edges": 12,
+  "min_dependent_rows": 400,
+  "n_eligible": 51,
+  "n_files": 242,
+  "n_scenarios": 57,
+  "order": "deterministic",
+  "short_segment_edges": 19,
+  "status": "CANDIDATE_NOT_APPROVED",
+  "validation_issue_rows": 0
+}

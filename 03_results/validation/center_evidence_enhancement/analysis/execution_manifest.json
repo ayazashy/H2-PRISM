@@ -1,0 +1,125 @@
+{
+  "experiment": "center_evidence_enhancement_v1",
+  "label": "CONDITIONAL_HYPOTHETICAL_BOUNDS",
+  "baseline_commit": "6fee8a0a58a0773ad0ac6f0d5eb1f71ae4d984ed",
+  "baseline_tag": "h2prism-center-baseline-v1",
+  "capture_raw_sha256": {
+    "A:normal": "82487367abc40f5ac4a22324eca3178c39ed95e3fad35a650a8a08d92823a5a7",
+    "A:outlet_opening": "a8cb6432e8b1860805a3a2b3c90f1af1644f6757a17e403c44be831131fe5513",
+    "sid312:normal": "1abb27b0cadff569872fa47b5274dd67ffe542146b11671d533af8fbaa8f8400",
+    "sid312:outlet_opening": "f7672fe69f79779b76a4a5ae520180ed70ef747b6989689c971eec08af4ea017",
+    "sid215:normal": "8e8609d0e469fb03022f6763c0f44fbf73b647b398859e070fbbe6cfdd75b4e0",
+    "sid215:outlet_opening": "9dbcd50e5fdcb8f9b7e480a5d1a663fac95f16a6c03e13777eddadb7a51cd847",
+    "pressure_rival:normal": "9294d23b7e0a8a1e8a2cbd48ef50a5e7d2d2b2994cda329f9c4af26ed730e534",
+    "pressure_rival:outlet_opening": "6fb49fec31dbd399254d63668e6079753d45012b4d3b5c461f71de1676e209a1",
+    "alternate_profile:normal": "51170d2b5cfaed1b1e74b7a2c910f287e98cb5c74547c920e0f2177c095efafd",
+    "alternate_profile:outlet_opening": "664d4c1b39295d6efd93ba941a0ec9bd94dec9179082c4a884c382fa25d13113",
+    "timing:normal": "15d4851f8c034ffdcfd29e81bccf062d1b820515ba6c8515051b76427f4cdef3",
+    "timing:outlet_opening": "370b0f92876de7e985d2e2f178a9b613acd9409aa04adb8613898fc23adf870a"
+  },
+  "kernel": "nres.rank (frozen B3) via mechanism_screen.screen",
+  "kernel_sha256": {
+    "nres.py": "408a7a6ed70cdb8b893a405dec94285585415621dff0e63dd87d8ed4d159fff1",
+    "mechanism_screen.py": "05e832122c5b47e42091b75622cbd0715a87ceba1b32f52a50675c066034ad8f",
+    "certified_evidence.py": "aa715ccf3d244c2a00efe48ce39e1a0e01914d144d1a33f193e7a02f5dec3aae"
+  },
+  "window": {
+    "prefix_s": 30,
+    "samples": 151,
+    "step_s": 0.2,
+    "anchors": "controlled (retrospective) 1000 s; TIMING 26 s; NOMINAL 25 s"
+  },
+  "clock_bounds_s": [
+    1.0,
+    0.0
+  ],
+  "groups": [
+    "all",
+    "pressure",
+    "flow",
+    "omit_MFS3"
+  ],
+  "near_duplicate_fraction": 0.01,
+  "exclusion_rule": "drop templates whose primary capture equals the query's primary capture",
+  "independent_source_families": 1,
+  "verified_independent_families": 0,
+  "dy_hypotheses": {
+    "NORMAL_OPERATION": [
+      "NORMAL_ZERO"
+    ],
+    "WITHDRAWAL_SID213": [
+      "SID213",
+      "ALT"
+    ],
+    "WITHDRAWAL_SID312": [
+      "SID312"
+    ],
+    "WITHDRAWAL_SID215": [
+      "SID215"
+    ],
+    "PRESSURE_COMMAND_SID55": [
+      "PRESSURE"
+    ],
+    "COMMAND_ISSUANCE_SHIFT_SID59": [
+      "TIMING"
+    ]
+  },
+  "dy_unmodelled": [
+    "WITHDRAWAL_SID222",
+    "COMPRESSOR_FAULT",
+    "ACTUATOR_DELAY"
+  ],
+  "ladder": [
+    [
+      "S1",
+      1e-06,
+      1e-05
+    ],
+    [
+      "S2",
+      1e-05,
+      0.0001
+    ],
+    [
+      "S3",
+      0.0001,
+      0.001
+    ],
+    [
+      "S4",
+      0.001,
+      0.01
+    ],
+    [
+      "S5",
+      0.01,
+      0.1
+    ],
+    [
+      "S6",
+      0.1,
+      1.0
+    ]
+  ],
+  "solver_refinement_reference": {
+    "pressure_MPa": 0.034447880819561405,
+    "flow_kg_s": 0.01822308612894652
+  },
+  "environment": {
+    "python": "3.12.1",
+    "numpy": "2.3.1",
+    "pandas": "2.3.3",
+    "platform": "Windows-11-10.0.26300-SP0"
+  },
+  "stop_conditions": [
+    "raw capture hash mismatch",
+    "frozen focal margins not reproduced",
+    "engine status disagrees with closed-form threshold prediction"
+  ],
+  "gates": {
+    "frozen_reproduction": true,
+    "engine_vs_closed_form": true,
+    "n_engine_checks": 3584,
+    "split_invariance": true
+  }
+}

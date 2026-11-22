@@ -1,0 +1,30 @@
+{
+  "dev_support_flags": {
+    "INSUFFICIENT_CLASS_REFERENCE": 5,
+    "INSUFFICIENT_CLASS_REFERENCE|OUT_OF_SUPPORT": 4342,
+    "INSUFFICIENT_CLASS_REFERENCE|TOP_CLASS_FEW_INDEPENDENT_RUNS": 232,
+    "INSUFFICIENT_CLASS_REFERENCE|TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY": 4729,
+    "INSUFFICIENT_CLASS_REFERENCE|TOP_CLASS_FEW_INDEPENDENT_RUNS|LOW_SCENARIO_DIVERSITY|OUT_OF_SUPPORT": 2,
+    "INSUFFICIENT_CLASS_REFERENCE|TOP_CLASS_FEW_INDEPENDENT_RUNS|OUT_OF_SUPPORT": 32
+  },
+  "feasibility": {
+    "allowed_methods": [
+      "none",
+      "sigmoid"
+    ],
+    "groups_per_class": {
+      "0": 2,
+      "1": 2,
+      "2": 2,
+      "3": 2
+    },
+    "reason": "all classes have sufficient independent groups"
+  },
+  "fold": 2,
+  "method": "none",
+  "params": {
+    "max_features": "sqrt",
+    "min_samples_leaf": 5,
+    "n_estimators": 500
+  }
+}

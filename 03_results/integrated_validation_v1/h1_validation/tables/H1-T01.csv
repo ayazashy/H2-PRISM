@@ -1,0 +1,4 @@
+protocol,fold,held_out_topology,windows,families,scenario_ancestors,max_coverage_primary,max_coverage_warning_only,dev_max_coverage_primary,rank_matched_0.60,rank_matched_0.80,rank_matched_0.90
+R2 (registered primary),1,Center,9331,13,17,0.2577430072,0.2639588469,0.5692851784,NOT_ESTIMABLE,NOT_ESTIMABLE,NOT_ESTIMABLE
+R2 (registered primary),2,Downstream,9331,13,17,0.7215732505,0.7276819205,5.358482478e-05,ESTIMABLE,NOT_ESTIMABLE,NOT_ESTIMABLE
+R2 (registered primary),3,Upstream,9331,13,17,0.7363626621,0.7490086807,0.03493730576,ESTIMABLE,NOT_ESTIMABLE,NOT_ESTIMABLE
