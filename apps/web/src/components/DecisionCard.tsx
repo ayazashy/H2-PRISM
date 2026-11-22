@@ -57,11 +57,11 @@ export function DecisionCard({
                 <Icon size={15} />
                 {model_result.decision}
               </span>
-              <span className="mono" title="Reason code">
+              <span className="mono" style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
                 {model_result.reason_code}
               </span>
             </div>
-            <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--ink-secondary)', lineHeight: 1.45 }}>
+            <p style={{ margin: 0, fontSize: '13.5px', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
               {model_result.reason_summary}
             </p>
           </>
@@ -70,15 +70,15 @@ export function DecisionCard({
             <div className="decision-row">
               <span className="decision-badge UNRESOLVED">
                 <Info size={15} />
-                EVIDENCE UNAVAILABLE (PER-RUN INFERENCE NOT EXPORTED)
+                PER-RUN INFERENCE NOT EXPORTED
               </span>
               <button type="button" className="seg-btn" onClick={onOpenBenchmarks}>
                 View R2 Benchmarks
               </button>
             </div>
-            <p style={{ margin: 0, fontSize: '0.84rem', color: 'var(--ink-secondary)', lineHeight: 1.45 }}>
-              This replay exposes verified <span className="mono">{scenario.source_artifact}</span> sensor
-              telemetry and audited ground truth only. No fabricated per-run score is shown.
+            <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+              This replay displays verified <span className="mono">{scenario.source_artifact}</span>{' '}
+              telemetry and ground truth only. No fabricated per-run score is shown.
             </p>
           </>
         )}
@@ -93,15 +93,25 @@ export function DecisionCard({
             </div>
           </div>
 
-          <div className="meta-box" style={{ borderColor: 'rgba(185, 28, 28, 0.25)' }}>
-            <div className="meta-label" style={{ color: 'var(--truth-accent)' }}>
+          <div className="meta-box" style={{ borderColor: 'rgba(220, 119, 108, 0.45)' }}>
+            <div className="meta-label" style={{ color: 'var(--state-event)' }}>
               Ground Truth ({event.label_status})
             </div>
             <div className="meta-value">
               {event.ground_truth_class}
               {event.onset_time !== null && (
-                <span style={{ display: 'block', fontSize: '0.75rem', fontWeight: 500, color: 'var(--ink-muted)' }}>
-                  Window: [{event.onset_time.toFixed(0)}s, {(event.end_time ?? scenario.time_seconds[scenario.time_seconds.length - 1])?.toFixed(0)}s]
+                <span
+                  className="mono"
+                  style={{
+                    display: 'block',
+                    fontSize: '11.5px',
+                    fontWeight: 500,
+                    color: 'var(--text-secondary)',
+                    marginTop: 2,
+                  }}
+                >
+                  [{event.onset_time.toFixed(0)}s,{' '}
+                  {(event.end_time ?? scenario.time_seconds[scenario.time_seconds.length - 1])?.toFixed(0)}s]
                 </span>
               )}
             </div>
@@ -129,7 +139,7 @@ export function DecisionCard({
                     : ''}
                 </span>
               ) : (
-                <span style={{ color: 'var(--ink-muted)', fontWeight: 500 }}>
+                <span style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>
                   Location not evaluated
                 </span>
               )}

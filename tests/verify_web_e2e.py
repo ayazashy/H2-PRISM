@@ -1,4 +1,4 @@
-"""End-to-end Playwright smoke verification against the built Vite bundle."""
+"""End-to-end Playwright smoke & overlap verification against the built Vite bundle."""
 
 from __future__ import annotations
 
@@ -40,7 +40,7 @@ def main() -> int:
         with sync_playwright() as p:
             browser = p.chromium.launch()
             for name, width, height in [
-                ("desktop", 1366, 768),
+                ("desktop", 1440, 900),
                 ("ipad", 1024, 768),
                 ("mobile", 390, 844),
             ]:
@@ -60,27 +60,44 @@ def main() -> int:
                 assert "Location not evaluated" in body_text
                 assert "Integrity Failure" not in body_text
 
-                # Verify horizontal overflow <= 2px
+                # Assert 0 SVG sensor pin overlaps
+                overlaps = page.evaluate("""() => {
+                    const rects = Array.from(document.querySelectorAll('svg g[role="button"] rect')).map(r => {
+                        const b = r.getBoundingClientRect();
+                        const label = r.parentElement.getAttribute('aria-label') || '';
+                        return { label, x: b.x, y: b.y, w: b.width, h: b.height };
+                    });
+                    const hits = [];
+                    for (let i = 0; i < rects.length; i++) {
+                        for (let j = i + 1; j < rects.length; j++) {
+                            const a = rects[i], b = rects[j];
+                            if (a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y) {
+                                hits.push([a.label, b.label]);
+                            }
+                        }
+                    }
+                    return hits;
+                }""")
+                assert not overlaps, f"SVG sensor overlaps on {name}: {overlaps}"
+
+                # Assert zero horizontal page overflow
                 overflow = page.evaluate(
                     "document.documentElement.scrollWidth - document.documentElement.clientWidth"
                 )
                 assert overflow <= 2, f"Horizontal overflow {overflow}px on {name}"
 
                 if name == "desktop":
-                    # Switch scenario to Leak G4 and jump to onset
                     page.select_option("#scenario-select", "SCEN_CENTER_TRANSIENT_LEAKG4")
                     page.wait_for_selector(".hint-strip >> text=Transient Leak (G4)")
                     page.wait_for_selector("button:has-text('Onset (400.0s)')")
                     page.click("button:has-text('Onset (400.0s)')")
                     assert "t = 400.0s" in page.inner_text("body")
 
-                    # Check Benchmarks view
-                    page.click("button.nav-tab:has-text('Benchmarks')")
+                    page.click("button.nav-item:has-text('Benchmarks (R2)')")
                     page.wait_for_selector("text=NOT_ESTIMABLE_UNDER_PRIMARY_PROTOCOL")
                     assert "27,993" in page.inner_text("body")
 
-                    # Check Methods & Limits view
-                    page.click("button.nav-tab:has-text('Methods & Limits')")
+                    page.click("button.nav-item:has-text('Methods & Limits')")
                     page.wait_for_selector("text=Explicitly Prohibited Claims")
 
                 assert not errors, f"Console/page errors on {name}: {errors}"

@@ -10,6 +10,19 @@ interface SignalChartsProps {
   selectedChannelId: string | null;
 }
 
+const SERIES_COLORS = [
+  '#34B5A5',
+  '#E5AB65',
+  '#60A5FA',
+  '#F472B6',
+  '#91D7C6',
+  '#A78BFA',
+  '#FBBF24',
+  '#38BDF8',
+  '#FB7185',
+  '#4ADE80',
+];
+
 function ChannelChart({
   title,
   channels,
@@ -17,6 +30,7 @@ function ChannelChart({
   timeIndex,
   onChangeTimeIndex,
   onsetTime,
+  endTime,
   selectedChannelId,
 }: {
   title: string;
@@ -25,6 +39,7 @@ function ChannelChart({
   timeIndex: number;
   onChangeTimeIndex: (idx: number) => void;
   onsetTime: number | null;
+  endTime: number | null;
   selectedChannelId: string | null;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -42,7 +57,6 @@ function ChannelChart({
     const chart = echarts.init(containerRef.current);
     chartRef.current = chart;
 
-    // Bidirectional scrub: click anywhere on plot to jump replay timestamp
     const zr = chart.getZr();
     const handleClick = (params: { offsetX: number; offsetY: number }) => {
       const point = [params.offsetX, params.offsetY];
@@ -83,53 +97,79 @@ function ChannelChart({
     const markLines: Record<string, unknown>[] = [
       {
         xAxis: currentT,
-        lineStyle: { color: '#10263E', width: 2, type: 'solid' },
+        lineStyle: { color: '#EDF5F1', width: 2, type: 'solid' },
         label: { show: false },
       },
     ];
     if (onsetTime !== null) {
       markLines.push({
         xAxis: onsetTime,
-        lineStyle: { color: '#B91C1C', width: 1.5, type: 'dashed' },
-        label: { formatter: 'Onset', color: '#B91C1C', fontSize: 10 },
+        lineStyle: { color: '#DC776C', width: 1.5, type: 'dashed' },
+        label: { formatter: 'Onset', color: '#DC776C', fontSize: 10 },
+      });
+    }
+    if (endTime !== null && endTime < timeSeconds[timeSeconds.length - 1]) {
+      markLines.push({
+        xAxis: endTime,
+        lineStyle: { color: '#E5AB65', width: 1.4, type: 'dotted' },
+        label: { formatter: 'End', color: '#E5AB65', fontSize: 10 },
       });
     }
 
     chart.setOption(
       {
         animation: false,
-        grid: { left: 48, right: 16, top: 26, bottom: 24 },
+        backgroundColor: 'transparent',
+        grid: { left: 52, right: 34, top: 38, bottom: 28 },
         tooltip: {
           trigger: 'axis',
+          backgroundColor: '#0B2B28',
+          borderColor: '#24524A',
+          textStyle: { color: '#EDF5F1', fontSize: 12, fontFamily: 'IBM Plex Mono, monospace' },
           valueFormatter: (v: unknown) =>
             v === null || v === undefined ? 'Missing (null)' : Number(v).toFixed(3),
         },
         legend: {
-          top: 0,
+          top: 2,
           type: 'scroll',
-          textStyle: { fontSize: 11, color: '#3D5166' },
+          pageIconColor: '#91D7C6',
+          pageIconInactiveColor: '#24524A',
+          pageTextStyle: { color: '#9CB9B1', fontSize: 11 },
+          textStyle: { fontSize: 11, color: '#9CB9B1' },
         },
         xAxis: {
           type: 'value',
           min: timeSeconds[0],
           max: timeSeconds[timeSeconds.length - 1],
-          axisLabel: { formatter: '{value}s', fontSize: 10, color: '#5C6F82' },
+          axisLine: { lineStyle: { color: '#24524A' } },
+          splitLine: { lineStyle: { color: 'rgba(36, 82, 74, 0.45)' } },
+          axisLabel: {
+            formatter: '{value}s',
+            fontSize: 10.5,
+            color: '#9CB9B1',
+            hideOverlap: true,
+          },
         },
         yAxis: {
           type: 'value',
           scale: true,
-          axisLabel: { fontSize: 10, color: '#5C6F82' },
+          axisLine: { lineStyle: { color: '#24524A' } },
+          splitLine: { lineStyle: { color: 'rgba(36, 82, 74, 0.45)' } },
+          axisLabel: { fontSize: 10.5, color: '#9CB9B1' },
         },
         series: channels.map((ch, i) => {
           const isHighlighted = selectedChannelId === ch.id;
+          const color = SERIES_COLORS[i % SERIES_COLORS.length];
           return {
-            name: `${ch.id} (${ch.unit})`,
+            name: ch.id,
             type: 'line',
             showSymbol: false,
             connectNulls: false,
+            itemStyle: { color },
             lineStyle: {
-              width: isHighlighted ? 3 : selectedChannelId ? 1.1 : 1.9,
-              opacity: selectedChannelId && !isHighlighted ? 0.28 : 1,
+              color,
+              width: isHighlighted ? 3 : selectedChannelId ? 1.1 : 1.8,
+              opacity: selectedChannelId && !isHighlighted ? 0.25 : 1,
             },
             data: timeSeconds.map((t, idx) => [t, ch.values[idx]]),
             markLine: i === 0 ? { symbol: 'none', silent: true, data: markLines } : undefined,
@@ -138,12 +178,12 @@ function ChannelChart({
       },
       true
     );
-  }, [channels, timeSeconds, timeIndex, onsetTime, selectedChannelId]);
+  }, [channels, timeSeconds, timeIndex, onsetTime, endTime, selectedChannelId]);
 
   const exportPng = () => {
     const chart = chartRef.current;
     if (!chart) return;
-    const url = chart.getDataURL({ type: 'png', pixelRatio: 2, backgroundColor: '#FFFFFF' });
+    const url = chart.getDataURL({ type: 'png', pixelRatio: 2, backgroundColor: '#071F1D' });
     const a = document.createElement('a');
     a.href = url;
     a.download = `h2-prism-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}.png`;
@@ -152,14 +192,14 @@ function ChannelChart({
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-        <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--ink-secondary)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+        <span style={{ fontSize: '12.5px', fontWeight: 600, color: 'var(--text-secondary)' }}>
           {title}
         </span>
         <button
           type="button"
           className="seg-btn"
-          style={{ padding: '2px 7px', fontSize: '0.72rem' }}
+          style={{ minHeight: 26, padding: '2px 8px', fontSize: '11px' }}
           onClick={exportPng}
           title="Export plot as PNG"
         >
@@ -167,7 +207,7 @@ function ChannelChart({
           PNG
         </button>
       </div>
-      <div ref={containerRef} style={{ width: '100%', height: 162, cursor: 'crosshair' }} />
+      <div ref={containerRef} style={{ width: '100%', height: 175, cursor: 'crosshair' }} />
     </div>
   );
 }
@@ -179,16 +219,20 @@ export function SignalCharts({
   selectedChannelId,
 }: SignalChartsProps) {
   const [viewMode, setViewMode] = useState<'charts' | 'table'>('charts');
-  const pressureChannels = scenario.sensor_channels.filter((c) => c.variable === 'pressure');
-  const flowChannels = scenario.sensor_channels.filter((c) => c.variable === 'mass_flow');
+  const pressureChannels = scenario.sensor_channels.filter(
+    (c) => c.variable === 'pressure' && c.observable
+  );
+  const flowChannels = scenario.sensor_channels.filter(
+    (c) => c.variable === 'mass_flow' && c.observable
+  );
   const pressureRef = pressureChannels[0]?.pressure_reference ?? 'declared';
 
   return (
     <section className="panel" aria-label="Time-aligned sensor measurements">
       <div className="panel-header">
         <h2 className="panel-title">Time-Aligned Signals</h2>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ fontSize: '0.74rem', color: 'var(--ink-muted)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+          <span style={{ fontSize: '11.5px', color: 'var(--text-muted)' }}>
             Click plot to scrub
           </span>
           <button
@@ -208,7 +252,7 @@ export function SignalCharts({
         </div>
       </div>
 
-      <div style={{ padding: '10px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div style={{ padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 14 }}>
         {viewMode === 'charts' ? (
           <>
             {pressureChannels.length > 0 && (
@@ -219,6 +263,7 @@ export function SignalCharts({
                 timeIndex={timeIndex}
                 onChangeTimeIndex={onChangeTimeIndex}
                 onsetTime={scenario.event.onset_time}
+                endTime={scenario.event.end_time}
                 selectedChannelId={selectedChannelId}
               />
             )}
@@ -230,38 +275,43 @@ export function SignalCharts({
                 timeIndex={timeIndex}
                 onChangeTimeIndex={onChangeTimeIndex}
                 onsetTime={scenario.event.onset_time}
+                endTime={scenario.event.end_time}
                 selectedChannelId={selectedChannelId}
               />
             )}
           </>
         ) : (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Channel</th>
-                <th>Target</th>
-                <th>Variable</th>
-                <th>Value at t={scenario.time_seconds[timeIndex]?.toFixed(1)}s</th>
-              </tr>
-            </thead>
-            <tbody>
-              {scenario.sensor_channels.map((ch) => {
-                const v = ch.values[timeIndex];
-                return (
-                  <tr key={ch.id}>
-                    <td className="mono">{ch.id}</td>
-                    <td>{ch.node_or_edge}</td>
-                    <td>{ch.variable}</td>
-                    <td className="mono">
-                      {v !== null && v !== undefined
-                        ? `${v.toFixed(3)} ${ch.unit}`
-                        : 'Missing (null)'}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <div className="table-scroll">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Channel</th>
+                  <th>Target</th>
+                  <th>Variable</th>
+                  <th>Value at t={scenario.time_seconds[timeIndex]?.toFixed(1)}s</th>
+                </tr>
+              </thead>
+              <tbody>
+                {scenario.sensor_channels.map((ch) => {
+                  const v = ch.values[timeIndex];
+                  return (
+                    <tr key={ch.id}>
+                      <td className="mono">{ch.id}</td>
+                      <td>{ch.node_or_edge}</td>
+                      <td>{ch.variable}</td>
+                      <td className="mono">
+                        {!ch.observable
+                          ? 'Absent (padded)'
+                          : v !== null && v !== undefined
+                          ? `${v.toFixed(3)} ${ch.unit}`
+                          : 'Missing (null)'}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </section>

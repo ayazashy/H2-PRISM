@@ -6,6 +6,7 @@ import { MethodsView } from './components/MethodsView';
 import { NetworkSchematic2D } from './components/NetworkSchematic2D';
 import { PlaybackBar } from './components/PlaybackBar';
 import { ReleaseFooter } from './components/ReleaseFooter';
+import { Sidebar, type NavTab } from './components/Sidebar';
 import { SignalCharts } from './components/SignalCharts';
 import { TopBar } from './components/TopBar';
 import {
@@ -39,7 +40,8 @@ export function App() {
   const [metrics, setMetrics] = useState<MetricsV1 | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const [activeTab, setActiveTab] = useState<'workspace' | 'benchmarks' | 'methods'>('workspace');
+  const [activeTab, setActiveTab] = useState<NavTab>('workspace');
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [networkMode, setNetworkMode] = useState<'2d' | '3d'>('2d');
   const [showTruthLayer, setShowTruthLayer] = useState(false);
   const [showSymbolicFlow, setShowSymbolicFlow] = useState(() => !prefersReducedMotion());
@@ -114,7 +116,7 @@ export function App() {
 
   if (!catalog) {
     return (
-      <div style={{ padding: 24, color: 'var(--ink-secondary)' }}>
+      <div style={{ padding: 24, color: 'var(--text-secondary)' }}>
         Loading verified catalog…
       </div>
     );
@@ -147,112 +149,112 @@ export function App() {
   };
 
   return (
-    <div className="app-shell">
-      <TopBar
-        scenarios={filteredScenarios}
-        selectedId={selectedId}
-        onSelectScenario={setSelectedId}
+    <div className="shell-layout">
+      <Sidebar
         activeTab={activeTab}
         onChangeTab={setActiveTab}
         onOpenEvidence={() => setEvidenceOpen(true)}
-        provenanceStatus={activeEntry.provenance_status}
+        catalog={catalog}
+        mobileOpen={mobileNavOpen}
+        onCloseMobile={() => setMobileNavOpen(false)}
       />
 
-      <div className="hint-strip">
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
+      <div className="shell-main">
+        <TopBar
+          activeTab={activeTab}
+          scenarios={filteredScenarios}
+          selectedId={selectedId}
+          onSelectScenario={setSelectedId}
+          onOpenEvidence={() => setEvidenceOpen(true)}
+          onOpenMobileNav={() => setMobileNavOpen(true)}
+          provenanceStatus={activeEntry.provenance_status}
+        />
+
+        <div className="hint-strip">
           <span>
             <strong>{activeEntry.display_name}:</strong> {activeEntry.summary_hint}
           </span>
+          <div className="filter-group" aria-label="Filter scenarios by class">
+            {(['ALL', ...catalog.label_set] as const).map((cls) => (
+              <button
+                key={cls}
+                type="button"
+                className={`seg-btn ${classFilter === cls ? 'active' : ''}`}
+                style={{ minHeight: 28, fontSize: '11.5px', padding: '2px 8px' }}
+                onClick={() => handleFilterChange(cls)}
+              >
+                {cls}
+              </button>
+            ))}
+          </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-          {(['ALL', ...catalog.label_set] as const).map((cls) => (
-            <button
-              key={cls}
-              type="button"
-              className={`seg-btn ${classFilter === cls ? 'active' : ''}`}
-              style={{ fontSize: '0.72rem', padding: '2px 7px' }}
-              onClick={() => handleFilterChange(cls)}
-            >
-              {cls}
-            </button>
-          ))}
-        </div>
-      </div>
 
-      {error ? (
-        <div className="integrity-error" role="alert">
-          <h2>Scenario Integrity Failure — Diagnostics Disabled</h2>
-          <p style={{ margin: 0 }}>{error}</p>
-        </div>
-      ) : activeTab === 'benchmarks' ? (
-        <BenchmarksView metrics={metrics} features={catalog.supported_features} />
-      ) : activeTab === 'methods' ? (
-        <MethodsView catalog={catalog} metrics={metrics} />
-      ) : scenario && topology ? (
-        <>
-          <main className="workspace-main">
-            <section className="panel" aria-label="Gas network topology">
-              <div className="panel-header">
-                <h2 className="panel-title">Network Topology</h2>
-                <div className="network-toolbar">
-                  <button
-                    type="button"
-                    className={`seg-btn ${networkMode === '2d' ? 'active' : ''}`}
-                    onClick={() => setNetworkMode('2d')}
-                  >
-                    2D Schematic
-                  </button>
-                  <button
-                    type="button"
-                    className={`seg-btn ${networkMode === '3d' ? 'active' : ''}`}
-                    onClick={() => setNetworkMode('3d')}
-                  >
-                    3D View
-                  </button>
-                  <button
-                    type="button"
-                    className={`seg-btn ${showSymbolicFlow ? 'active' : ''}`}
-                    onClick={() => setShowSymbolicFlow((v) => !v)}
-                    title="Toggle symbolic gas flow direction (not measured fluid velocity)"
-                  >
-                    {showSymbolicFlow ? 'Symbolic Flow: On' : 'Symbolic Flow: Off'}
-                  </button>
-                  <button
-                    type="button"
-                    className={`seg-btn ${showTruthLayer ? 'active' : ''}`}
-                    onClick={() => setShowTruthLayer((v) => !v)}
-                  >
-                    {showTruthLayer ? 'Hide Ground Truth' : 'Show Ground Truth'}
-                  </button>
-                  <button type="button" className="seg-btn" onClick={handleResetWorkspace}>
-                    Reset
-                  </button>
+        {error ? (
+          <div className="integrity-error" role="alert">
+            <h2>Scenario Integrity Failure — Diagnostics Disabled</h2>
+            <p style={{ margin: 0 }}>{error}</p>
+          </div>
+        ) : activeTab === 'benchmarks' ? (
+          <BenchmarksView metrics={metrics} features={catalog.supported_features} />
+        ) : activeTab === 'methods' ? (
+          <MethodsView catalog={catalog} metrics={metrics} />
+        ) : scenario && topology ? (
+          <>
+            <main className="workspace-main">
+              <section className="panel" aria-label="Gas network topology">
+                <div className="panel-header">
+                  <h2 className="panel-title">Network Topology</h2>
+                  <div className="network-toolbar">
+                    <button
+                      type="button"
+                      className={`seg-btn ${networkMode === '2d' ? 'active' : ''}`}
+                      onClick={() => setNetworkMode('2d')}
+                    >
+                      2D Schematic
+                    </button>
+                    <button
+                      type="button"
+                      className={`seg-btn ${networkMode === '3d' ? 'active' : ''}`}
+                      onClick={() => setNetworkMode('3d')}
+                    >
+                      3D View
+                    </button>
+                    <button
+                      type="button"
+                      className={`seg-btn ${showSymbolicFlow ? 'active' : ''}`}
+                      onClick={() => setShowSymbolicFlow((v) => !v)}
+                      title="Toggle symbolic gas flow direction (not measured fluid velocity)"
+                    >
+                      {showSymbolicFlow ? 'Symbolic Flow: On' : 'Symbolic Flow: Off'}
+                    </button>
+                    <button
+                      type="button"
+                      className={`seg-btn ${showTruthLayer ? 'active' : ''}`}
+                      onClick={() => setShowTruthLayer((v) => !v)}
+                    >
+                      {showTruthLayer ? 'Hide Truth' : 'Show Truth'}
+                    </button>
+                    <button type="button" className="seg-btn" onClick={handleResetWorkspace}>
+                      Reset
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              <div className="network-stage">
                 {topology.is_schematic && (
-                  <div className="schematic-badge">
-                    Schematic · Not to Physical Scale
-                    {showSymbolicFlow ? ' · Symbolic Flow (not velocity)' : ''}
+                  <div className="network-subbar">
+                    <span>
+                      Schematic · Not to Physical Scale
+                      {showSymbolicFlow ? ' · Symbolic Flow (not velocity)' : ''}
+                    </span>
+                    <span className="mono">
+                      {selectedChannelId ? `Focused: ${selectedChannelId}` : 'All observable channels plotted'}
+                    </span>
                   </div>
                 )}
-                {networkMode === '2d' ? (
-                  <NetworkSchematic2D
-                    topology={topology}
-                    scenario={scenario}
-                    features={catalog.supported_features}
-                    timeIndex={timeIndex}
-                    isPlaying={isPlaying}
-                    speed={speed}
-                    showSymbolicFlow={showSymbolicFlow}
-                    selectedChannelId={selectedChannelId}
-                    onSelectChannel={setSelectedChannelId}
-                    showTruthLayer={showTruthLayer}
-                  />
-                ) : (
-                  <Suspense fallback={<div style={{ padding: 24 }}>Loading 3D renderer…</div>}>
-                    <NetworkScene3D
+
+                <div className="network-stage">
+                  {networkMode === '2d' ? (
+                    <NetworkSchematic2D
                       topology={topology}
                       scenario={scenario}
                       features={catalog.supported_features}
@@ -264,59 +266,72 @@ export function App() {
                       onSelectChannel={setSelectedChannelId}
                       showTruthLayer={showTruthLayer}
                     />
-                  </Suspense>
-                )}
+                  ) : (
+                    <Suspense fallback={<div style={{ padding: 24 }}>Loading 3D renderer…</div>}>
+                      <NetworkScene3D
+                        topology={topology}
+                        scenario={scenario}
+                        features={catalog.supported_features}
+                        timeIndex={timeIndex}
+                        isPlaying={isPlaying}
+                        speed={speed}
+                        showSymbolicFlow={showSymbolicFlow}
+                        selectedChannelId={selectedChannelId}
+                        onSelectChannel={setSelectedChannelId}
+                        showTruthLayer={showTruthLayer}
+                      />
+                    </Suspense>
+                  )}
+                </div>
+
+                <div className="network-legend">
+                  <span>Click any sensor pin or chip to isolate its curve · Space: Play/Pause · O: Onset</span>
+                  <span className="mono">
+                    {scenario.sensor_channels.filter((c) => c.observable).length}/16 observable
+                  </span>
+                </div>
+              </section>
+
+              <div className="right-stack">
+                <DecisionCard
+                  scenario={scenario}
+                  features={catalog.supported_features}
+                  timeIndex={timeIndex}
+                  onOpenBenchmarks={() => setActiveTab('benchmarks')}
+                />
+                <SignalCharts
+                  scenario={scenario}
+                  timeIndex={timeIndex}
+                  onChangeTimeIndex={setTimeIndex}
+                  selectedChannelId={selectedChannelId}
+                />
               </div>
+            </main>
 
-              <div className="network-legend">
-                <span>
-                  Click any sensor to isolate its curve · Space: Play/Pause · O: Jump to Onset
-                </span>
-                <span>
-                  {selectedChannelId ? `Focused: ${selectedChannelId}` : 'All observable channels plotted'}
-                </span>
-              </div>
-            </section>
+            <PlaybackBar
+              timeSeconds={scenario.time_seconds}
+              timeIndex={timeIndex}
+              onChangeTimeIndex={setTimeIndex}
+              isPlaying={isPlaying}
+              onTogglePlay={handleTogglePlay}
+              onStopPlay={handleStopPlay}
+              speed={speed}
+              onChangeSpeed={setSpeed}
+              onsetTime={scenario.event.onset_time}
+            />
+          </>
+        ) : (
+          <div style={{ padding: 24, color: 'var(--text-secondary)' }}>
+            Validating SHA-256 integrity &amp; loading scenario…
+          </div>
+        )}
 
-            <div className="right-stack">
-              <DecisionCard
-                scenario={scenario}
-                features={catalog.supported_features}
-                timeIndex={timeIndex}
-                onOpenBenchmarks={() => setActiveTab('benchmarks')}
-              />
-              <SignalCharts
-                scenario={scenario}
-                timeIndex={timeIndex}
-                onChangeTimeIndex={setTimeIndex}
-                selectedChannelId={selectedChannelId}
-              />
-            </div>
-          </main>
-
-          <PlaybackBar
-            timeSeconds={scenario.time_seconds}
-            timeIndex={timeIndex}
-            onChangeTimeIndex={setTimeIndex}
-            isPlaying={isPlaying}
-            onTogglePlay={handleTogglePlay}
-            onStopPlay={handleStopPlay}
-            speed={speed}
-            onChangeSpeed={setSpeed}
-            onsetTime={scenario.event.onset_time}
-          />
-        </>
-      ) : (
-        <div style={{ padding: 24, color: 'var(--ink-secondary)' }}>
-          Validating SHA-256 integrity &amp; loading scenario…
-        </div>
-      )}
-
-      <ReleaseFooter
-        catalog={catalog}
-        activeEntry={activeEntry}
-        onOpenMethods={() => setActiveTab('methods')}
-      />
+        <ReleaseFooter
+          catalog={catalog}
+          activeEntry={activeEntry}
+          onOpenMethods={() => setActiveTab('methods')}
+        />
+      </div>
 
       <EvidenceDrawer
         open={evidenceOpen}

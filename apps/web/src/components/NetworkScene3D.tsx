@@ -2,7 +2,7 @@ import { Component, type ReactNode, useEffect, useMemo, useRef, useState } from 
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Html, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
-import type { ScenarioPayloadV1, SupportedFeatures, TopologyNode, TopologyV1 } from '../data/types';
+import type { ScenarioPayloadV1, SupportedFeatures, TopologyV1 } from '../data/types';
 
 interface NetworkScene3DProps {
   topology: TopologyV1;
@@ -28,9 +28,9 @@ class WebGLErrorBoundary extends Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ padding: 24, textAlign: 'center', color: 'var(--ink-secondary)' }}>
+        <div style={{ padding: 24, textAlign: 'center', color: 'var(--text-secondary)' }}>
           <strong>3D WebGL unavailable on this device.</strong>
-          <p style={{ margin: '6px 0 0', fontSize: '0.84rem' }}>
+          <p style={{ margin: '6px 0 0', fontSize: '13px' }}>
             Switch back to <strong>2D Schematic</strong> for full interactive replay.
           </p>
         </div>
@@ -40,9 +40,17 @@ class WebGLErrorBoundary extends Component<
   }
 }
 
-function nodeToVec3(n: TopologyNode): THREE.Vector3 {
-  return new THREE.Vector3(n.x - 3.4, n.z, n.y - 1.0);
-}
+// Well-spread 3D coordinates derived from Simscape node graph so node tags never stack
+const NODE_POS_3D: Record<string, [number, number, number]> = {
+  N47: [-5.4, 0, 0.0],
+  N50: [-3.4, 0, 0.0],
+  N239: [-1.4, 0, 0.0],
+  N309: [0.6, 0, 0.0],
+  N106: [2.4, 0, -1.9],
+  N221: [4.2, 0, 0.0],
+  N109: [2.4, 0, 1.9],
+  N195: [5.4, 0, 1.9],
+};
 
 function PipeSegment3D({
   start,
@@ -76,7 +84,7 @@ function PipeSegment3D({
   useFrame((_, delta) => {
     if (!showSymbolicFlow) return;
     if (isPlaying) {
-      phaseRef.current = (phaseRef.current + delta * 0.45 * Math.max(0.5, speed)) % 1;
+      phaseRef.current = (phaseRef.current + delta * 0.4 * Math.max(0.5, speed)) % 1;
     }
     const count = 3;
     for (let i = 0; i < count; i++) {
@@ -90,8 +98,8 @@ function PipeSegment3D({
   return (
     <group>
       <mesh position={midpoint} quaternion={quaternion}>
-        <cylinderGeometry args={[0.09, 0.09, length, 14]} />
-        <meshStandardMaterial color={color} metalness={0.25} roughness={0.45} />
+        <cylinderGeometry args={[0.1, 0.1, length, 16]} />
+        <meshStandardMaterial color={color} metalness={0.35} roughness={0.55} />
       </mesh>
       {showSymbolicFlow &&
         [0, 1, 2].map((i) => (
@@ -102,8 +110,8 @@ function PipeSegment3D({
             }}
             position={start}
           >
-            <sphereGeometry args={[0.065, 10, 10]} />
-            <meshStandardMaterial color="#2DD4BF" emissive="#007F86" emissiveIntensity={0.9} />
+            <sphereGeometry args={[0.075, 10, 10]} />
+            <meshStandardMaterial color="#91D7C6" emissive="#34B5A5" emissiveIntensity={0.65} />
           </mesh>
         ))}
     </group>
@@ -122,13 +130,13 @@ function CompressorRing3D({
   const ringRef = useRef<THREE.Mesh | null>(null);
   useFrame((_, delta) => {
     if (ringRef.current && isPlaying && showSymbolicFlow) {
-      ringRef.current.rotation.z += delta * 2.0;
+      ringRef.current.rotation.z += delta * 1.8;
     }
   });
   return (
     <mesh ref={ringRef} position={position} rotation={[Math.PI / 2, 0, 0]}>
-      <torusGeometry args={[0.32, 0.032, 10, 28]} />
-      <meshStandardMaterial color="#007F86" emissive="#007F86" emissiveIntensity={0.4} />
+      <torusGeometry args={[0.36, 0.035, 10, 28]} />
+      <meshStandardMaterial color="#34B5A5" metalness={0.3} roughness={0.4} />
     </mesh>
   );
 }
@@ -157,7 +165,6 @@ export function NetworkScene3D({
     return () => document.removeEventListener('visibilitychange', onVis);
   }, []);
 
-  const nodeMap = new Map(topology.nodes.map((n) => [n.id, n]));
   const channelMap = new Map(scenario.sensor_channels.map((c) => [c.id, c]));
   const truthTargets = new Set(scenario.event.true_edges_or_nodes ?? []);
   const predictedTarget =
@@ -165,156 +172,192 @@ export function NetworkScene3D({
       ? scenario.location_prediction.predicted_edge_or_node
       : null;
 
+  const focusedCh = selectedChannelId ? channelMap.get(selectedChannelId) ?? null : null;
+  const focusedVal = focusedCh ? focusedCh.values[timeIndex] : null;
+
   const camPos: [number, number, number] =
-    preset === 'iso' ? [0.2, 4.4, 6.2] : [0, 8.2, 0.01];
+    preset === 'iso' ? [0.0, 6.8, 10.8] : [0.0, 13.0, 0.01];
 
   return (
     <WebGLErrorBoundary>
-      <div style={{ position: 'relative', width: '100%', height: 420 }}>
-        <div
-          style={{
-            position: 'absolute',
-            top: 10,
-            right: 12,
-            zIndex: 3,
-            display: 'flex',
-            gap: 6,
-          }}
-        >
-          <button
-            type="button"
-            className={`seg-btn ${preset === 'iso' ? 'active' : ''}`}
-            onClick={() => setPreset('iso')}
+      <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+        <div style={{ position: 'relative', width: '100%', height: 420 }}>
+          {/* Corner Camera Presets */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 10,
+              right: 12,
+              zIndex: 3,
+              display: 'flex',
+              gap: 6,
+            }}
           >
-            Iso
-          </button>
-          <button
-            type="button"
-            className={`seg-btn ${preset === 'top' ? 'active' : ''}`}
-            onClick={() => setPreset('top')}
+            <button
+              type="button"
+              className={`seg-btn ${preset === 'iso' ? 'active' : ''}`}
+              onClick={() => setPreset('iso')}
+            >
+              Iso
+            </button>
+            <button
+              type="button"
+              className={`seg-btn ${preset === 'top' ? 'active' : ''}`}
+              onClick={() => setPreset('top')}
+            >
+              Top
+            </button>
+            <button
+              type="button"
+              className="seg-btn"
+              onClick={() => setResetTick((k) => k + 1)}
+            >
+              Fit View
+            </button>
+          </div>
+
+          {/* Dedicated Corner Telemetry HUD (replaces overlapping floating HTML boxes) */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 10,
+              left: 12,
+              zIndex: 3,
+              background: 'rgba(11, 43, 40, 0.92)',
+              border: '1px solid var(--border-default)',
+              borderRadius: 'var(--radius-sm)',
+              padding: '6px 10px',
+              fontSize: '12px',
+              color: 'var(--text-primary)',
+              pointerEvents: 'none',
+            }}
           >
-            Top
-          </button>
-          <button
-            type="button"
-            className="seg-btn"
-            onClick={() => setResetTick((k) => k + 1)}
+            {focusedCh ? (
+              <>
+                <strong className="mono">{focusedCh.id}</strong> ({focusedCh.node_or_edge}):{' '}
+                <span className="mono" style={{ color: 'var(--accent-soft)' }}>
+                  {!focusedCh.observable
+                    ? 'Absent (Center)'
+                    : focusedVal !== null && focusedVal !== undefined
+                    ? `${focusedVal.toFixed(3)} ${focusedCh.unit}`
+                    : 'NULL'}
+                </span>
+              </>
+            ) : (
+              <span style={{ color: 'var(--text-secondary)' }}>
+                Select a sensor chip below to highlight &amp; inspect
+              </span>
+            )}
+          </div>
+
+          <Canvas
+            key={`${preset}-${resetTick}`}
+            frameloop={tabHidden ? 'never' : 'always'}
+            camera={{ position: camPos, fov: 42 }}
+            dpr={[1, 1.5]}
           >
-            Reset
-          </button>
+            <color attach="background" args={['#071F1D']} />
+            <fog attach="fog" args={['#071F1D', 12, 24]} />
+            <ambientLight intensity={0.75} />
+            <directionalLight position={[6, 12, 8]} intensity={0.9} color="#EDF5F1" />
+            <directionalLight position={[-6, 4, -6]} intensity={0.35} color="#34B5A5" />
+            <gridHelper args={[18, 22, '#24524A', '#103632']} position={[0, -0.5, 0]} />
+            <OrbitControls enableDamping maxDistance={18} minDistance={4} />
+
+            {topology.edges.map((edge) => {
+              const p1 = NODE_POS_3D[edge.source];
+              const p2 = NODE_POS_3D[edge.target];
+              if (!p1 || !p2) return null;
+              const isTruth = showTruthLayer && truthTargets.has(edge.id);
+              const isPred = predictedTarget === edge.id;
+              const color = isTruth ? '#DC776C' : isPred ? '#34B5A5' : '#2E6760';
+
+              return (
+                <PipeSegment3D
+                  key={edge.id}
+                  start={new THREE.Vector3(...p1)}
+                  end={new THREE.Vector3(...p2)}
+                  color={color}
+                  isPlaying={isPlaying}
+                  speed={speed}
+                  showSymbolicFlow={showSymbolicFlow}
+                />
+              );
+            })}
+
+            {topology.nodes.map((node) => {
+              const coords = NODE_POS_3D[node.id];
+              if (!coords) return null;
+              const pos = new THREE.Vector3(...coords);
+              const isComp = node.kind === 'compressor';
+              const isTruth = showTruthLayer && truthTargets.has(node.id);
+              return (
+                <group key={node.id}>
+                  <mesh position={pos}>
+                    <sphereGeometry args={[isComp ? 0.26 : 0.19, 18, 18]} />
+                    <meshStandardMaterial
+                      color={isTruth ? '#DC776C' : isComp ? '#34B5A5' : '#91D7C6'}
+                      metalness={0.3}
+                      roughness={0.45}
+                    />
+                  </mesh>
+                  {isComp && (
+                    <CompressorRing3D
+                      position={pos}
+                      isPlaying={isPlaying}
+                      showSymbolicFlow={showSymbolicFlow}
+                    />
+                  )}
+                  <Html distanceFactor={10} position={[pos.x, pos.y + 0.42, pos.z]}>
+                    <div
+                      style={{
+                        background: '#0B2B28',
+                        border: '1px solid #24524A',
+                        borderRadius: 4,
+                        padding: '1px 5px',
+                        fontSize: 10,
+                        fontWeight: 600,
+                        fontFamily: 'IBM Plex Mono, monospace',
+                        color: '#EDF5F1',
+                        whiteSpace: 'nowrap',
+                        pointerEvents: 'none',
+                      }}
+                    >
+                      {node.id}
+                    </div>
+                  </Html>
+                </group>
+              );
+            })}
+          </Canvas>
         </div>
 
-        <Canvas
-          key={`${preset}-${resetTick}`}
-          frameloop={tabHidden ? 'never' : 'always'}
-          camera={{ position: camPos, fov: 44 }}
-          dpr={[1, 1.75]}
-        >
-          <color attach="background" args={['#FAFBF7']} />
-          <ambientLight intensity={0.85} />
-          <directionalLight position={[6, 10, 6]} intensity={0.7} />
-          <gridHelper args={[14, 20, '#CBD5E1', '#E2E8F0']} position={[0, -0.45, 0]} />
-          <OrbitControls enableDamping maxDistance={15} minDistance={2.5} />
-
-          {topology.edges.map((edge) => {
-            const src = nodeMap.get(edge.source);
-            const dst = nodeMap.get(edge.target);
-            if (!src || !dst) return null;
-            const isTruth = showTruthLayer && truthTargets.has(edge.id);
-            const isPred = predictedTarget === edge.id;
-            const color = isTruth ? '#DC2626' : isPred ? '#007F86' : '#10263E';
-
-            return (
-              <PipeSegment3D
-                key={edge.id}
-                start={nodeToVec3(src)}
-                end={nodeToVec3(dst)}
-                color={color}
-                isPlaying={isPlaying}
-                speed={speed}
-                showSymbolicFlow={showSymbolicFlow}
-              />
-            );
-          })}
-
-          {topology.nodes.map((node) => {
-            const pos = nodeToVec3(node);
-            const isComp = node.kind === 'compressor';
-            return (
-              <group key={node.id}>
-                <mesh position={pos}>
-                  <sphereGeometry args={[isComp ? 0.22 : 0.16, 16, 16]} />
-                  <meshStandardMaterial
-                    color={
-                      isComp
-                        ? '#0E3F3C'
-                        : node.kind === 'source'
-                        ? '#007F86'
-                        : '#3D5166'
-                    }
-                    metalness={0.2}
-                    roughness={0.4}
-                  />
-                </mesh>
-                {isComp && (
-                  <CompressorRing3D
-                    position={pos}
-                    isPlaying={isPlaying}
-                    showSymbolicFlow={showSymbolicFlow}
-                  />
-                )}
-                <Html distanceFactor={9} position={[pos.x, pos.y + 0.34, pos.z]}>
-                  <div
-                    style={{
-                      background: 'rgba(244,244,233,0.94)',
-                      border: '1px solid #9AA6A3',
-                      borderRadius: 4,
-                      padding: '1px 5px',
-                      fontSize: 10,
-                      fontWeight: 700,
-                      color: '#10263E',
-                      whiteSpace: 'nowrap',
-                      pointerEvents: 'none',
-                    }}
-                  >
-                    {node.id}
-                  </div>
-                </Html>
-              </group>
-            );
-          })}
-
-          {topology.sensors.slice(0, 8).map((s) => {
-            const ch = channelMap.get(s.channel_id);
-            const node = nodeMap.get(s.attached_to);
-            if (!ch || !node || !ch.observable) return null;
-            const pos = nodeToVec3(node);
+        {/* Same 16-channel telemetry grid below 3D viewport for non-overlapping reading */}
+        <div className="sensor-chip-grid" aria-label="Live sensor telemetry grid">
+          {scenario.sensor_channels.map((ch) => {
             const val = ch.values[timeIndex];
-            const isSelected = selectedChannelId === ch.id;
+            const active = selectedChannelId === ch.id;
             return (
-              <Html key={ch.id} distanceFactor={9} position={[pos.x, pos.y - 0.38, pos.z]}>
-                <button
-                  type="button"
-                  onClick={() => onSelectChannel(isSelected ? null : ch.id)}
-                  style={{
-                    background: isSelected ? '#0E3F3C' : '#FFFFFF',
-                    color: isSelected ? '#FFFFFF' : '#10263E',
-                    border: `1.5px solid ${isSelected ? '#2DD4BF' : '#007F86'}`,
-                    borderRadius: 5,
-                    padding: '2px 5px',
-                    fontSize: 9,
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  {ch.id}: {val !== null && val !== undefined ? val.toFixed(2) : 'NULL'}
-                </button>
-              </Html>
+              <button
+                key={ch.id}
+                type="button"
+                className={`sensor-chip ${active ? 'active' : ''} ${!ch.observable ? 'absent' : ''}`}
+                onClick={() => onSelectChannel(active ? null : ch.id)}
+              >
+                <span className="mono" style={{ fontWeight: 700, color: active ? 'var(--accent-soft)' : 'var(--text-secondary)' }}>
+                  {ch.id}
+                </span>
+                <span className="mono" style={{ fontWeight: 600 }}>
+                  {!ch.observable
+                    ? 'Absent'
+                    : val !== null && val !== undefined
+                    ? `${val.toFixed(2)} ${ch.unit}`
+                    : 'NULL'}
+                </span>
+              </button>
             );
           })}
-        </Canvas>
+        </div>
       </div>
     </WebGLErrorBoundary>
   );
