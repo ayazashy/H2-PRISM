@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ar" dir="rtl" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>SAIF 2026 · Check & Map</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230ea5e9'/><text x='16' y='22' text-anchor='middle' font-size='18' fill='white'>★</text></svg>" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar" id="topbar">
+      <div class="top-row-1">
+        <span class="brand-pill">SAIF 26 · S-H5-23</span>
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input id="search-input" class="search-input" type="search" autocomplete="off" />
+          <button id="search-clear" class="search-clear hidden" type="button">✕</button>
+        </div>
+        <div class="top-actions">
+          <button id="btn-filters" class="icon-pill" data-top-act="filters" type="button"></button>
+          <button id="btn-prefs" class="icon-pill" data-top-act="prefs" type="button"></button>
+          <div class="view-seg">
+            <button data-view="split" type="button">◫</button>
+            <button data-view="list" type="button">📋</button>
+            <button data-view="map" type="button">🗺️</button>
+          </div>
+          <button id="btn-lang" class="icon-pill" data-top-act="lang" type="button"></button>
+          <button id="btn-theme" class="icon-pill" data-top-act="theme" type="button"></button>
+          <button id="btn-backup" class="icon-pill" data-top-act="backup" type="button">💾</button>
+        </div>
+      </div>
+
+      <div class="top-row-2" id="status-tabs"></div>
+
+      <div class="quick-strip">
+        <div class="mode-toggle">
+          <button data-fmode="inc" type="button"></button>
+          <button data-fmode="exc" type="button"></button>
+        </div>
+        <div id="quick-pills" class="quick-strip"></div>
+        <select id="sort-select" class="sort-select"></select>
+      </div>
+    </header>
+
+    <div id="active-bar" class="active-bar"></div>
+
+    <main id="workspace" class="workspace mode-split">
+      <section id="list-pane" class="list-pane"></section>
+      <section id="map-pane" class="map-pane"></section>
+    </main>
+
+    <div id="modal-overlay" class="overlay hidden">
+      <div id="modal-body" class="modal"></div>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

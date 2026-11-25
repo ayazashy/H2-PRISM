@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'apps/web/**'
+      - 'check/**'
       - 'contracts/**'
       - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
@@ -45,6 +46,9 @@ jobs:
           npm run typecheck
           npm run test
           npm run build
+
+      - name: Include check tracker in Pages artifact
+        run: cp -r ../../check dist/check
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
