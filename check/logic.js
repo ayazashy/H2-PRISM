@@ -4,12 +4,12 @@
  */
 
 export const CUSTOM_TAGS = [
-  { id: 'prio', icon: '🔥', en: 'Priority', ar: 'أولوية' },
-  { id: 'talked', icon: '🤝', en: 'Networked', ar: 'تواصلت' },
-  { id: 'collab', icon: '💡', en: 'Collab', ar: 'تعاون' },
-  { id: 'startup', icon: '🚀', en: 'Startup', ar: 'ناشئ' },
-  { id: 'demo', icon: '🎤', en: 'Demo', ar: 'عرض' },
-  { id: 'revisit', icon: '📌', en: 'Revisit', ar: 'عودة' },
+  { id: 'prio', icon: 'flame', en: 'Priority', ar: 'أولوية' },
+  { id: 'talked', icon: 'users', en: 'Networked', ar: 'تواصلت' },
+  { id: 'collab', icon: 'lightbulb', en: 'Collab', ar: 'تعاون' },
+  { id: 'startup', icon: 'rocket', en: 'Startup', ar: 'ناشئ' },
+  { id: 'demo', icon: 'mic', en: 'Demo', ar: 'عرض' },
+  { id: 'revisit', icon: 'bookmark', en: 'Revisit', ar: 'عودة' },
 ];
 
 export const DEFAULT_PREFS = {

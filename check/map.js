@@ -1,3 +1,4 @@
+import { ico } from './icons.js';
 import {
   CUSTOM_TAGS,
   HALL_HEIGHT,
@@ -43,10 +44,10 @@ function escapeHtml(s) {
 }
 
 /**
- * Ultra-Light Zero-Lag Map Controller for Low-End Mobile Browsers:
- * - Overview ('All'): Direct single-pass batched fillRect on 1x DPR canvas (~1.2ms),
- *   ZERO offscreen 11MB buffer, ZERO global pointermove listeners, ZERO rAF idle loops.
- * - Zone View ('A'..'K'): Instant native scrollable grid of large thumb-friendly booth buttons.
+ * Ultra-Light Zero-Lag Map Controller:
+ * - Overview ('All'): Direct 1x DPR canvas fitting hall cleanly with native scroll when zoomed.
+ * - Zone View ('A'..'K'): Native scrollable LTR grid (`zgrid-inner` max-content) so 01..24 never clips.
+ * - Zero emojis anywhere (standardized SVG icons only).
  */
 export class FairMapController {
   constructor(container, { meta, projects, onSelectProject, onAction }) {
@@ -70,7 +71,7 @@ export class FairMapController {
 
     this.selectedTable = null;
     this.selectedProjectId = null;
-    this.activeZone = null; // null = Hall Overview, 'A'..'K' = Native Zone Grid
+    this.activeZone = null;
 
     this.stageW = 800;
     this.stageH = 500;
@@ -93,22 +94,22 @@ export class FairMapController {
     this.toolbar.className = 'map-toolbar';
     this.toolbar.innerHTML = `
       <div class="map-seg">
-        <button data-color="status" class="active">●</button>
-        <button data-color="rating">★</button>
-        <button data-color="match">⚡</button>
-        <button data-color="cat">👥</button>
-        <button data-color="path">🧭</button>
+        <button data-color="status" class="active">${ico('circle')}</button>
+        <button data-color="rating">${ico('star')}</button>
+        <button data-color="match">${ico('zap')}</button>
+        <button data-color="cat">${ico('users')}</button>
+        <button data-color="path">${ico('compass')}</button>
       </div>
       <div class="map-toggles">
-        <button class="chip-btn" data-toggle="hideFiltered">👁️</button>
-        <button class="chip-btn" data-toggle="hideIgnored">🚫</button>
-        <button class="chip-btn" data-toggle="showRoute">〰️</button>
+        <button class="chip-btn" data-toggle="hideFiltered">${ico('eyeOff')}</button>
+        <button class="chip-btn" data-toggle="hideIgnored">${ico('ban')}</button>
+        <button class="chip-btn" data-toggle="showRoute">${ico('route')}</button>
       </div>
       <div class="map-zoom-btns">
-        <button data-zoom="out">−</button>
-        <button data-zoom="in">+</button>
-        <button data-zoom="fit">⊡</button>
-        <button data-zoom="me">📍</button>
+        <button data-zoom="out">${ico('minus')}</button>
+        <button data-zoom="in">${ico('plus')}</button>
+        <button data-zoom="fit">${ico('maximize')}</button>
+        <button data-zoom="me">${ico('pin')}</button>
       </div>
     `;
     this.container.appendChild(this.toolbar);
@@ -170,14 +171,19 @@ export class FairMapController {
     if (this.activeZone) return;
     const rect = this.stage.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
-    const nextW = Math.round(rect.width * this.canvasZoom);
-    const nextH = Math.round(rect.height * this.canvasZoom);
-    // Ignore sub-3px Android address-bar jitter
+
+    const fitScale = Math.min(rect.width / HALL_WIDTH, rect.height / HALL_HEIGHT) * 0.94;
+    const nextW = this.canvasZoom <= 1
+      ? Math.round(rect.width)
+      : Math.max(Math.round(rect.width), Math.round(HALL_WIDTH * fitScale * this.canvasZoom + 24));
+    const nextH = this.canvasZoom <= 1
+      ? Math.round(rect.height)
+      : Math.max(Math.round(rect.height), Math.round(HALL_HEIGHT * fitScale * this.canvasZoom + 24));
+
     if (Math.abs(nextW - this.stageW) < 3 && Math.abs(nextH - this.stageH) < 3) return;
 
     this.stageW = nextW;
     this.stageH = nextH;
-    // Keep 1x DPR on mobile <= 900px for 4x lower memory & instant painting
     this.dpr = typeof window !== 'undefined' && window.innerWidth <= 900 ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
     this.canvas.style.width = `${this.stageW}px`;
     this.canvas.style.height = `${this.stageH}px`;
@@ -187,7 +193,7 @@ export class FairMapController {
   }
 
   _baseFit() {
-    const scale = Math.min(this.stageW / HALL_WIDTH, this.stageH / HALL_HEIGHT) * 0.96;
+    const scale = Math.min(this.stageW / HALL_WIDTH, this.stageH / HALL_HEIGHT) * 0.94;
     const ox = (this.stageW - HALL_WIDTH * scale) / 2;
     const oy = (this.stageH - HALL_HEIGHT * scale) / 2;
     return { scale, ox, oy };
@@ -216,11 +222,13 @@ export class FairMapController {
       if (!zBtn) return;
       const mode = zBtn.dataset.zoom;
       if (mode === 'in') {
-        this.canvasZoom = Math.min(3, +(this.canvasZoom + 0.6).toFixed(1));
-        this.stageW = 0; // force crisp resize
+        if (this.activeZone) this.resetView();
+        this.canvasZoom = Math.min(3.4, +(this.canvasZoom + 0.7).toFixed(1));
+        this.stageW = 0;
         this._resizeCanvas();
       } else if (mode === 'out') {
-        this.canvasZoom = Math.max(1, +(this.canvasZoom - 0.6).toFixed(1));
+        if (this.activeZone) this.resetView();
+        this.canvasZoom = Math.max(1, +(this.canvasZoom - 0.7).toFixed(1));
         this.stageW = 0;
         this._resizeCanvas();
       } else if (mode === 'fit') {
@@ -425,6 +433,18 @@ export class FairMapController {
     };
   }
 
+  _tileBadgeHtml(vis, tableStr) {
+    const routeNum = this._routeIndexByTable.get(tableStr);
+    if (routeNum) return `<i>#${routeNum}</i>`;
+    if (vis.isMe) return `<i>ME</i>`;
+    if (vis.maxRat) return `<i>${vis.maxRat}${ico('starFill')}</i>`;
+    if (vis.anyFav && vis.anyVis) return `<i>${ico('starFill')}${ico('check')}</i>`;
+    if (vis.anyFav) return `<i>${ico('starFill')}</i>`;
+    if (vis.anyVis) return `<i>${ico('check')}</i>`;
+    if (vis.multi) return `<i>x2</i>`;
+    return '';
+  }
+
   sync({ evalById, matched, records, prefs, ui }) {
     this._lastArgs = { evalById, matched, records, prefs, ui };
     this._matchedIds = new Set(matched.map((p) => p.id));
@@ -493,23 +513,7 @@ export class FairMapController {
           tile.style.background = vis.fill;
           tile.classList.toggle('dim', !vis.anyMatches && !vis.allIgnored && !vis.isMe);
           tile.classList.toggle('ign', vis.allIgnored && !vis.anyMatches && !vis.isMe);
-          const s = parsed.s;
-          const badge = this._routeIndexByTable.get(tableStr)
-            ? `#${this._routeIndexByTable.get(tableStr)}`
-            : vis.isMe
-            ? '📍'
-            : vis.maxRat
-            ? `${vis.maxRat}★`
-            : vis.anyFav && vis.anyVis
-            ? '★✓'
-            : vis.anyFav
-            ? '★'
-            : vis.anyVis
-            ? '✓'
-            : vis.multi
-            ? '×2'
-            : '';
-          tile.innerHTML = `<b>${s}</b>${badge ? `<i>${badge}</i>` : ''}`;
+          tile.innerHTML = `<b>${parsed.s}</b>${this._tileBadgeHtml(vis, tableStr)}`;
         }
       }
     } else {
@@ -533,7 +537,6 @@ export class FairMapController {
     ctx.translate(ox, oy);
     ctx.scale(scale, scale);
 
-    // Wings
     ctx.fillStyle = isLight ? 'rgba(2, 132, 199, 0.04)' : 'rgba(96, 165, 250, 0.04)';
     ctx.strokeStyle = isLight ? '#cbd5e1' : '#263248';
     ctx.lineWidth = 1.2;
@@ -544,7 +547,6 @@ export class FairMapController {
     ctx.fillRect(896, 8, 856, 678);
     ctx.strokeRect(896, 8, 856, 678);
 
-    // Zone containers
     for (const [zId, g] of Object.entries(ZONE_GEOMETRY)) {
       const box = this.zoneBoxes[zId];
       ctx.fillStyle = isLight ? '#faf9f5' : '#182032';
@@ -571,7 +573,6 @@ export class FairMapController {
       ctx.fillText(`${this._zMatch[zId]}/${this._zTotal[zId]}`, box.x + box.w - 9, box.y + 13);
     }
 
-    // Batch booths by fill & alpha (single pass, ~1.2ms)
     const batches = new Map();
     const pips = [];
 
@@ -673,27 +674,10 @@ export class FairMapController {
           cellsHtml += `<span class="ztile hidden-slot">${s}</span>`;
           continue;
         }
-        const routeNum = this._routeIndexByTable.get(tableStr);
         const dimCls = !vis.anyMatches && !vis.allIgnored && !vis.isMe ? 'dim' : vis.allIgnored && !vis.anyMatches && !vis.isMe ? 'ign' : '';
         const selCls = this.selectedTable === tableStr ? 'selected' : '';
         const meCls = vis.isMe ? 'is-me' : '';
-        const badge = routeNum
-          ? `#${routeNum}`
-          : vis.isMe
-          ? '📍'
-          : vis.maxRat
-          ? `${vis.maxRat}★`
-          : vis.anyFav && vis.anyVis
-          ? '★✓'
-          : vis.anyFav
-          ? '★'
-          : vis.anyVis
-          ? '✓'
-          : vis.multi
-          ? '×2'
-          : '';
-
-        cellsHtml += `<button class="ztile ${dimCls} ${selCls} ${meCls}" data-gtbl="${tableStr}" style="background:${vis.fill}"><b>${s}</b>${badge ? `<i>${badge}</i>` : ''}</button>`;
+        cellsHtml += `<button class="ztile ${dimCls} ${selCls} ${meCls}" data-gtbl="${tableStr}" style="background:${vis.fill}"><b>${s}</b>${this._tileBadgeHtml(vis, tableStr)}</button>`;
       }
       const aisleCls = r % 2 === 0 && r < g.rows ? 'aisle-after' : '';
       rowsHtml += `<div class="zrow ${aisleCls}"><span class="zrow-lbl">R${r}</span><div class="zrow-cells">${cellsHtml}</div></div>`;
@@ -701,12 +685,12 @@ export class FairMapController {
 
     this.zoneGridWrap.innerHTML = `
       <div class="zgrid-head">
-        <button class="bulk-btn" data-back-all>← All</button>
+        <button class="bulk-btn" data-back-all>${ico('chevLeft')} All</button>
         <b>Zone ${zId}</b>
         <span class="badge-mini">${lang === 'ar' ? g.labelAr : g.labelEn}</span>
         <span class="badge-match">${this._zMatch[zId]}/${this._zTotal[zId]}</span>
       </div>
-      <div class="zgrid-rows">${rowsHtml}</div>
+      <div class="zgrid-rows"><div class="zgrid-inner">${rowsHtml}</div></div>
     `;
   }
 
@@ -720,7 +704,7 @@ export class FairMapController {
     const startPill = document.createElement('button');
     startPill.className = 'route-pill start';
     startPill.dataset.routeTable = prefs.myBooth;
-    startPill.textContent = `📍 ${prefs.myBooth}`;
+    startPill.innerHTML = `${ico('pin')} ${escapeHtml(prefs.myBooth)}`;
     this.routeStrip.appendChild(startPill);
 
     this._route.forEach((p, idx) => {
@@ -735,19 +719,19 @@ export class FairMapController {
   _renderLegend(mode, lang) {
     const itemsByMode = {
       status: [
-        ['#9333ea', '📍'],
-        ['#d97706', '★'],
-        ['#059669', '✓'],
-        ['#0d9488', '★+✓'],
-        ['#7c3aed', '⭐'],
-        ['#0284c7', '⚡50+'],
+        ['#9333ea', ico('pin')],
+        ['#d97706', ico('starFill')],
+        ['#059669', ico('check')],
+        ['#0d9488', `${ico('starFill')}+${ico('check')}`],
+        ['#7c3aed', '1-5'],
+        ['#0284c7', `${ico('zap')}50+`],
       ],
       rating: [
-        ['#059669', '5★'],
-        ['#65a30d', '4★'],
-        ['#ca8a04', '3★'],
-        ['#ea580c', '2★'],
-        ['#dc2626', '1★'],
+        ['#059669', `5${ico('starFill')}`],
+        ['#65a30d', `4${ico('starFill')}`],
+        ['#ca8a04', `3${ico('starFill')}`],
+        ['#ea580c', `2${ico('starFill')}`],
+        ['#dc2626', `1${ico('starFill')}`],
       ],
       match: [
         ['#10b981', '80+'],
@@ -761,7 +745,7 @@ export class FairMapController {
         ['#0284c7', '12-17'],
         ['#e11d48', '6-11'],
       ],
-      path: this.meta.paths.slice(0, 6).map((p) => [p.color, p.icon]),
+      path: this.meta.paths.slice(0, 6).map((p) => [p.color, ico(p.icon)]),
     };
     const items = itemsByMode[mode] || [];
     this.legend.innerHTML = items
@@ -794,13 +778,13 @@ export class FairMapController {
     const stars = [1, 2, 3, 4, 5]
       .map(
         (s) =>
-          `<button class="star-btn ${(rec.rat || 0) >= s ? 'on' : ''}" data-insp-action="rat" data-id="${p.id}" data-stars="${s}">★</button>`
+          `<button class="star-btn ${(rec.rat || 0) >= s ? 'on' : ''}" data-insp-action="rat" data-id="${p.id}" data-stars="${s}">${ico((rec.rat || 0) >= s ? 'starFill' : 'star')}</button>`
       )
       .join('');
 
     const tagsHtml = CUSTOM_TAGS.map(
       (t) =>
-        `<button class="tag-pill ${(rec.tags || []).includes(t.id) ? 'on' : ''}" data-insp-action="tag" data-id="${p.id}" data-tag="${t.id}">${t.icon}</button>`
+        `<button class="tag-pill ${(rec.tags || []).includes(t.id) ? 'on' : ''}" data-insp-action="tag" data-id="${p.id}" data-tag="${t.id}">${ico(t.icon)}</button>`
     ).join('');
 
     this.inspector.innerHTML = `
@@ -808,21 +792,21 @@ export class FairMapController {
       <div class="insp-head">
         <span class="badge-table">${p.table}</span>
         <span class="badge-cat c${p.cat}">${ui.lang === 'ar' ? catObj?.ar : catObj?.en}</span>
-        <span class="badge-path">${pathObj?.icon} ${ui.lang === 'ar' ? pathObj?.ar : pathObj?.en}</span>
-        <span class="badge-mini">${flags} ×${p.members.length}</span>
-        <span class="badge-match">⚡${ev.matchScore ?? 0}</span>
-        <button class="insp-close" data-insp-action="close">✕</button>
+        <span class="badge-path">${ico(pathObj?.icon)} ${ui.lang === 'ar' ? pathObj?.ar : pathObj?.en}</span>
+        <span class="badge-mini">${flags} x${p.members.length}</span>
+        <span class="badge-match">${ico('zap')} ${ev.matchScore ?? 0}</span>
+        <button class="insp-close" data-insp-action="close">${ico('x')}</button>
       </div>
       <div class="insp-title" data-insp-action="open" data-id="${p.id}">${escapeHtml(p.title)}</div>
       <div class="insp-actions">
-        <button class="act-btn fav ${rec.fav ? 'on' : ''}" data-insp-action="fav" data-id="${p.id}">${rec.fav ? '★' : '☆'}</button>
-        <button class="act-btn vis ${rec.vis ? 'on' : ''}" data-insp-action="vis" data-id="${p.id}">✓</button>
+        <button class="act-btn fav ${rec.fav ? 'on' : ''}" data-insp-action="fav" data-id="${p.id}">${ico(rec.fav ? 'starFill' : 'star')}</button>
+        <button class="act-btn vis ${rec.vis ? 'on' : ''}" data-insp-action="vis" data-id="${p.id}">${ico('check')}</button>
         <div class="stars-row">${stars}</div>
-        <button class="act-btn ign ${rec.ign ? 'on' : ''}" data-insp-action="ign" data-id="${p.id}">🚫</button>
-        <button class="act-btn open" data-insp-action="open" data-id="${p.id}">⤢</button>
+        <button class="act-btn ign ${rec.ign ? 'on' : ''}" data-insp-action="ign" data-id="${p.id}">${ico('ban')}</button>
+        <button class="act-btn open" data-insp-action="open" data-id="${p.id}">${ico('expand')}</button>
       </div>
       <div class="insp-tags">${tagsHtml}</div>
-      <input class="insp-note" type="text" data-insp-note="${p.id}" value="${escapeHtml(rec.note || '')}" placeholder="📝 LinkedIn / @ / ..." />
+      <input class="insp-note" type="text" data-insp-note="${p.id}" value="${escapeHtml(rec.note || '')}" placeholder="LinkedIn / @ / ..." />
     `;
     this.inspector.classList.remove('hidden');
   }

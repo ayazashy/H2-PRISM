@@ -1,3 +1,4 @@
+import { ico, initIconSprite } from './icons.js';
 import {
   CUSTOM_TAGS,
   ZONE_GEOMETRY,
@@ -15,7 +16,7 @@ const PAGE_SIZE = 15;
 
 const UI_TEXT = {
   ar: {
-    searchPh: '🔍 بحث: مشروع، مشارك (عربي أو إنجليزي)، S-H5-23، -تجاهل...',
+    searchPh: 'بحث: مشروع، مشارك (عربي أو إنجليزي)، S-H5-23، -استبعاد...',
     all: 'الكل',
     prefs: 'تفضيلاتي',
     fav: 'المفضلة',
@@ -25,18 +26,16 @@ const UI_TEXT = {
     noted: 'ملاحظات',
     ignored: 'متجاهَل',
     filters: 'فلاتر',
-    incMode: '✓ تضمين',
-    excMode: '🚫 تجاهل',
+    incMode: 'تضمين',
+    excMode: 'تجاهل',
     clear: 'مسح',
-    showMore: 'عرض المزيد',
-    showAll: 'عرض الكل',
     sortBooth: 'الطاولة (A-K)',
-    sortMatch: '⚡ التوافق',
-    sortNearest: '📍 الأقرب لي',
-    sortRating: '⭐ التقييم',
-    sortMembers: '👥 الفريق',
+    sortMatch: 'التوافق',
+    sortNearest: 'الأقرب لي',
+    sortRating: 'التقييم',
+    sortMembers: 'الفريق',
     sortCode: 'الكود',
-    notePh: '📝 ملاحظة / LinkedIn / تواصل...',
+    notePh: 'ملاحظة / LinkedIn / تواصل...',
     cats: 'الفئات العمرية',
     paths: 'المجالات',
     zones: 'المناطق',
@@ -64,17 +63,17 @@ const UI_TEXT = {
     subTech: 'تقنية',
     subPitch: 'عرض',
     subFit: 'تعاون',
-    locate: '📍 على الخريطة',
-    met: '✓ تواصلت',
-    exportJson: '⬇ نسخ احتياطي JSON',
-    importMerge: '⬆ استيراد (دمج)',
-    importReplace: '⬆ استيراد (استبدال)',
-    exportCsv: '📊 تصدير جهات الاتصال CSV',
-    resetAll: '🗑️ مسح بياناتي',
+    locate: 'على الخريطة',
+    met: 'تواصلت',
+    exportJson: 'نسخ احتياطي JSON',
+    importMerge: 'استيراد (دمج)',
+    importReplace: 'استيراد (استبدال)',
+    exportCsv: 'تصدير جهات الاتصال CSV',
+    resetAll: 'مسح بياناتي',
     empty: 'لا توجد مشاريع مطابقة',
   },
   en: {
-    searchPh: '🔍 Search: project, member (EN/AR), S-H5-23, -exclude...',
+    searchPh: 'Search: project, member (EN/AR), S-H5-23, -exclude...',
     all: 'All',
     prefs: 'My Picks',
     fav: 'Starred',
@@ -84,18 +83,16 @@ const UI_TEXT = {
     noted: 'Notes',
     ignored: 'Ignored',
     filters: 'Filters',
-    incMode: '✓ Include',
-    excMode: '🚫 Ignore',
+    incMode: 'Include',
+    excMode: 'Ignore',
     clear: 'Clear',
-    showMore: 'Load more',
-    showAll: 'Show all',
     sortBooth: 'Booth (A-K)',
-    sortMatch: '⚡ Match',
-    sortNearest: '📍 Nearest',
-    sortRating: '⭐ Rating',
-    sortMembers: '👥 Team',
+    sortMatch: 'Match',
+    sortNearest: 'Nearest',
+    sortRating: 'Rating',
+    sortMembers: 'Team',
     sortCode: 'Code',
-    notePh: '📝 Note / LinkedIn / Handle...',
+    notePh: 'Note / LinkedIn / Handle...',
     cats: 'Age Categories',
     paths: 'Event Paths',
     zones: 'Zones',
@@ -123,13 +120,13 @@ const UI_TEXT = {
     subTech: 'Tech',
     subPitch: 'Pitch',
     subFit: 'Collab',
-    locate: '📍 Locate',
-    met: '✓ Met',
-    exportJson: '⬇ Backup JSON',
-    importMerge: '⬆ Import (Merge)',
-    importReplace: '⬆ Import (Replace)',
-    exportCsv: '📊 Contacts CSV',
-    resetAll: '🗑️ Reset Data',
+    locate: 'Locate',
+    met: 'Met',
+    exportJson: 'Backup JSON',
+    importMerge: 'Import (Merge)',
+    importReplace: 'Import (Replace)',
+    exportCsv: 'Contacts CSV',
+    resetAll: 'Reset Data',
     empty: 'No matching projects',
   },
 };
@@ -174,6 +171,7 @@ class FairApp {
   }
 
   async init() {
+    initIconSprite();
     const res = await fetch('./data.json');
     const data = await res.json();
     this.meta = data.meta;
@@ -254,10 +252,6 @@ class FairApp {
     }
   }
 
-  /**
-   * True O(1) incremental state & DOM update on a single project tap.
-   * Zero loops over 1,242 projects, zero full list DOM rebuilds!
-   */
   _patchSingleRecord(id) {
     const p = this.projectById.get(id);
     if (!p || !this.evalResult || !this._evalCtx) return;
@@ -268,15 +262,12 @@ class FairApp {
     const newRec = records[id] || {};
     const newEv = evaluateProjectFast(p, newRec, this._evalCtx);
 
-    // Recompute only status counters cleanly from existing records map + single eval delta
     if (oldEv.isIgnored !== newEv.isIgnored) {
       counts.ignored += newEv.isIgnored ? 1 : -1;
       counts.visible += newEv.isIgnored ? -1 : 1;
-      if (newEv.matchScore >= 40) {
-        counts.prefs += newEv.isIgnored ? -1 : 1;
-      }
+      if (newEv.matchScore >= 40) counts.prefs += newEv.isIgnored ? -1 : 1;
     }
-    // Lightweight exact counts from sparse records map (typically 5-50 items, not 1,242!)
+
     let fav = 0, todo = 0, visited = 0, rated = 0, noted = 0;
     for (const [rid, r] of Object.entries(records)) {
       const ev = rid === id ? newEv : evalById.get(rid);
@@ -411,7 +402,7 @@ class FairApp {
       if (qZone) {
         e.preventDefault();
         this.page = 0;
-        this.store.toggleFacetValue('zones', qZone.dataset.qzone, 'exc');
+        return this.store.toggleFacetValue('zones', qZone.dataset.qzone, 'exc');
       }
     });
 
@@ -438,7 +429,7 @@ class FairApp {
         const ids = this.evalResult.matched.map((p) => p.id);
         if (!ids.length) return;
         const act = bulk.dataset.bulk;
-        if (act === 'ignore' && ids.length > 25 && !confirm(`🚫 ${ids.length}?`)) return;
+        if (act === 'ignore' && ids.length > 25 && !confirm(`Ignore ${ids.length}?`)) return;
         return this.store.bulkAction(ids, act);
       }
       if (e.target.closest('[data-clear-filters]')) {
@@ -534,13 +525,13 @@ class FairApp {
     const { filters } = this.store.state;
     const statusTabs = [
       ['all', `${this.t('all')} <b>${counts.visible}</b>`],
-      ['prefs', `⚡ ${this.t('prefs')} <b>${counts.prefs}</b>`],
-      ['fav', `★ <b>${counts.fav}</b>`],
-      ['todo', `⏳ <b>${counts.todo}</b>`],
-      ['visited', `✓ <b>${counts.visited}</b>`],
-      ['rated', `⭐ <b>${counts.rated}</b>`],
-      ['noted', `📝 <b>${counts.noted}</b>`],
-      ['ignored', `🚫 <b>${counts.ignored}</b>`],
+      ['prefs', `${ico('zap')} ${this.t('prefs')} <b>${counts.prefs}</b>`],
+      ['fav', `${ico('starFill')} <b>${counts.fav}</b>`],
+      ['todo', `${ico('clock')} <b>${counts.todo}</b>`],
+      ['visited', `${ico('check')} <b>${counts.visited}</b>`],
+      ['rated', `${ico('star')} <b>${counts.rated}</b>`],
+      ['noted', `${ico('note')} <b>${counts.noted}</b>`],
+      ['ignored', `${ico('ban')} <b>${counts.ignored}</b>`],
     ];
     document.getElementById('status-tabs').innerHTML = statusTabs
       .map(
@@ -570,12 +561,12 @@ class FairApp {
     this._renderStatusTabs(counts);
 
     const fCount = countActiveFilterRules(filters, prefs);
-    document.getElementById('btn-filters').innerHTML = `🎛️ ${this.t('filters')}${
+    document.getElementById('btn-filters').innerHTML = `${ico('sliders')} ${this.t('filters')}${
       fCount ? `<span class="count-badge">${fCount}</span>` : ''
     }`;
-    document.getElementById('btn-prefs').innerHTML = `⚡ ${this.t('prefs')}`;
+    document.getElementById('btn-prefs').innerHTML = `${ico('zap')} ${this.t('prefs')}`;
     document.getElementById('btn-lang').textContent = lang === 'ar' ? 'EN' : 'ع';
-    document.getElementById('btn-theme').textContent = ui.theme === 'light' ? '🌙' : '☀️';
+    document.getElementById('btn-theme').innerHTML = ico(ui.theme === 'light' ? 'moon' : 'sun');
 
     for (const vb of document.querySelectorAll('[data-view]')) {
       vb.classList.toggle('active', vb.dataset.view === ui.view);
@@ -584,8 +575,8 @@ class FairApp {
     for (const mb of document.querySelectorAll('[data-fmode]')) {
       mb.classList.toggle('active', mb.dataset.fmode === (ui.filterMode || 'inc'));
     }
-    document.querySelector('[data-fmode="inc"]').textContent = this.t('incMode');
-    document.querySelector('[data-fmode="exc"]').textContent = this.t('excMode');
+    document.querySelector('[data-fmode="inc"]').innerHTML = `${ico('check')} ${this.t('incMode')}`;
+    document.querySelector('[data-fmode="exc"]').innerHTML = `${ico('ban')} ${this.t('excMode')}`;
 
     const myZone = (prefs.myBooth || '').split('-')[1]?.[0];
     const catsHtml = [
@@ -602,7 +593,7 @@ class FairApp {
     const zonesHtml = Object.keys(ZONE_GEOMETRY)
       .map((z) => {
         const cls = filters.zones.inc.includes(z) ? 'inc' : filters.zones.exc.includes(z) ? 'exc' : '';
-        return `<button class="qpill ${cls}" data-qzone="${z}">${z}${z === myZone ? '📍' : ''}</button>`;
+        return `<button class="qpill ${cls}" data-qzone="${z}">${z}${z === myZone ? ico('pin') : ''}</button>`;
       })
       .join('');
 
@@ -629,11 +620,9 @@ class FairApp {
     if (ui.view !== 'map') {
       this._renderList();
     }
+    this.mapCtrl.sync({ evalById, matched, records, prefs, ui });
     if (ui.view !== 'list') {
-      this.mapCtrl.sync({ evalById, matched, records, prefs, ui });
       requestAnimationFrame(() => this.mapCtrl._resizeCanvas());
-    } else {
-      this.mapCtrl.sync({ evalById, matched, records, prefs, ui });
     }
     if (this.openModal) this._renderModal();
   }
@@ -645,37 +634,37 @@ class FairApp {
 
     const addFacetChips = (key, labelFn) => {
       for (const v of filters[key].inc || []) chips.push([key, 'inc', v, `+ ${labelFn(v)}`]);
-      for (const v of filters[key].exc || []) chips.push([key, 'exc', v, `🚫 ${labelFn(v)}`]);
+      for (const v of filters[key].exc || []) chips.push([key, 'exc', v, `${ico('ban')} ${labelFn(v)}`]);
     };
 
-    addFacetChips('cats', (id) => this.catMap.get(id)?.[lang] || id);
+    addFacetChips('cats', (id) => esc(this.catMap.get(id)?.[lang] || id));
     addFacetChips('paths', (id) => {
       const p = this.pathMap.get(id);
-      return p ? `${p.icon} ${p[lang]}` : id;
+      return p ? `${ico(p.icon)} ${esc(p[lang])}` : esc(id);
     });
-    addFacetChips('zones', (z) => z);
+    addFacetChips('zones', (z) => esc(z));
     addFacetChips('rows', (r) => `R${r}`);
     addFacetChips('tags', (id) => {
       const tg = this.tagMap.get(id);
-      return tg ? `${tg.icon} ${tg[lang]}` : id;
+      return tg ? `${ico(tg.icon)} ${esc(tg[lang])}` : esc(id);
     });
     addFacetChips('customTags', (id) => {
       const tg = CUSTOM_TAGS.find((t) => t.id === id);
-      return tg ? `${tg.icon} ${tg[lang]}` : id;
+      return tg ? `${ico(tg.icon)} ${esc(tg[lang])}` : esc(id);
     });
-    addFacetChips('countries', (c) => `${this.meta.countries[c]?.[0] || ''} ${c}`);
-    addFacetChips('sizes', (s) => `👥${s}`);
+    addFacetChips('countries', (c) => `${this.meta.countries[c]?.[0] || ''} ${esc(c)}`);
+    addFacetChips('sizes', (s) => `${ico('users')} ${s}`);
 
-    for (const kw of filters.ignoreKeywords || []) chips.push(['kw', 'exc', kw, `🚫 "${kw}"`]);
-    if (filters.intlMode !== 'all') chips.push(['intl', 'inc', filters.intlMode, `🌍 ${filters.intlMode}`]);
-    if (filters.langMode !== 'all') chips.push(['lang', 'inc', filters.langMode, `Aa ${filters.langMode}`]);
-    if (filters.ratingMode !== 'all') chips.push(['rat', 'inc', filters.ratingMode, `⭐ ${filters.ratingMode}`]);
-    if (filters.minMatch > 0) chips.push(['match', 'inc', filters.minMatch, `⚡≥${filters.minMatch}`]);
+    for (const kw of filters.ignoreKeywords || []) chips.push(['kw', 'exc', kw, `${ico('ban')} "${esc(kw)}"`]);
+    if (filters.intlMode !== 'all') chips.push(['intl', 'inc', filters.intlMode, `${ico('globe')} ${esc(filters.intlMode)}`]);
+    if (filters.langMode !== 'all') chips.push(['lang', 'inc', filters.langMode, `Aa ${esc(filters.langMode)}`]);
+    if (filters.ratingMode !== 'all') chips.push(['rat', 'inc', filters.ratingMode, `${ico('starFill')} ${esc(filters.ratingMode)}`]);
+    if (filters.minMatch > 0) chips.push(['match', 'inc', filters.minMatch, `${ico('zap')} >=${filters.minMatch}`]);
 
     const chipsHtml = chips
       .map(
-        ([key, mode, val, txt]) =>
-          `<button class="active-chip ${mode}" data-remove-chip='${esc(JSON.stringify({ key, mode, val }))}'>${esc(txt)} ✕</button>`
+        ([key, mode, val, html]) =>
+          `<button class="active-chip ${mode}" data-remove-chip='${esc(JSON.stringify({ key, mode, val }))}'>${html} ${ico('x')}</button>`
       )
       .join('');
 
@@ -687,9 +676,9 @@ class FairApp {
     const bulkHtml = `
       <div class="bulk-group">
         <span class="badge-mini">${matchedLen}</span>
-        <button class="bulk-btn" data-bulk="fav">★+</button>
-        <button class="bulk-btn" data-bulk="visit">✓+</button>
-        <button class="bulk-btn" data-bulk="ignore">🚫+</button>
+        <button class="bulk-btn" data-bulk="fav">${ico('starFill')}+</button>
+        <button class="bulk-btn" data-bulk="visit">${ico('check')}+</button>
+        <button class="bulk-btn" data-bulk="ignore">${ico('ban')}+</button>
       </div>
     `;
 
@@ -708,14 +697,14 @@ class FairApp {
     const stars = [1, 2, 3, 4, 5]
       .map(
         (s) =>
-          `<button class="star-btn ${(rec.rat || 0) >= s ? 'on' : ''}" data-card-act="rat" data-id="${p.id}" data-stars="${s}">★</button>`
+          `<button class="star-btn ${(rec.rat || 0) >= s ? 'on' : ''}" data-card-act="rat" data-id="${p.id}" data-stars="${s}">${ico((rec.rat || 0) >= s ? 'starFill' : 'star')}</button>`
       )
       .join('');
 
     const activeTagsHtml = (rec.tags || [])
       .map((tid) => {
         const t = CUSTOM_TAGS.find((x) => x.id === tid);
-        return t ? `<button class="tag-pill on" data-card-act="tag" data-id="${p.id}" data-tag="${t.id}">${t.icon}</button>` : '';
+        return t ? `<button class="tag-pill on" data-card-act="tag" data-id="${p.id}" data-tag="${t.id}">${ico(t.icon)}</button>` : '';
       })
       .join('');
 
@@ -725,12 +714,12 @@ class FairApp {
         const met = (rec.met || []).includes(m.n);
         const dispName = lang === 'ar' ? m.ar || m.n : m.n;
         const q = encodeURIComponent(`${m.n} ${m.nat || ''}`);
-        return `<a class="member-chip ${met ? 'met' : ''}" href="https://www.linkedin.com/search/results/people/?keywords=${q}" target="_blank" rel="noopener" title="${esc(m.n)}">${m.l ? '👑 ' : ''}${esc(dispName)} ${fl}</a>`;
+        return `<a class="member-chip ${met ? 'met' : ''}" href="https://www.linkedin.com/search/results/people/?keywords=${q}" target="_blank" rel="noopener" title="${esc(m.n)}">${m.l ? ico('crown') : ''}${esc(dispName)} ${fl}</a>`;
       })
       .join('');
 
     const noteHtml = rec.note
-      ? `<div class="note-preview" data-card-act="open" data-id="${p.id}">📝 ${esc(rec.note)}</div>`
+      ? `<div class="note-preview" data-card-act="open" data-id="${p.id}">${ico('note')} ${esc(rec.note)}</div>`
       : '';
 
     return `
@@ -738,13 +727,13 @@ class FairApp {
         <div class="card-top">
           <button class="badge-table ${isMe ? 'is-me' : ''}" data-card-act="locate" data-id="${p.id}">${p.table}</button>
           <span class="badge-cat c${p.cat}">${catObj?.[lang] || ''}</span>
-          <span class="badge-path">${pathObj?.icon} ${pathObj?.[lang]}</span>
-          <span class="badge-mini">${flags} ×${p.members.length}</span>
-          <span class="badge-match">⚡${ev.matchScore}</span>
+          <span class="badge-path">${ico(pathObj?.icon)} ${pathObj?.[lang]}</span>
+          <span class="badge-mini">${flags} x${p.members.length}</span>
+          <span class="badge-match">${ico('zap')} ${ev.matchScore}</span>
           <div class="card-quick-ops">
-            <button class="act-btn fav ${rec.fav ? 'on' : ''}" data-card-act="fav" data-id="${p.id}">${rec.fav ? '★' : '☆'}</button>
-            <button class="act-btn vis ${rec.vis ? 'on' : ''}" data-card-act="vis" data-id="${p.id}">✓</button>
-            <button class="act-btn ign ${rec.ign ? 'on' : ''}" data-card-act="ign" data-id="${p.id}">🚫</button>
+            <button class="act-btn fav ${rec.fav ? 'on' : ''}" data-card-act="fav" data-id="${p.id}">${ico(rec.fav ? 'starFill' : 'star')}</button>
+            <button class="act-btn vis ${rec.vis ? 'on' : ''}" data-card-act="vis" data-id="${p.id}">${ico('check')}</button>
+            <button class="act-btn ign ${rec.ign ? 'on' : ''}" data-card-act="ign" data-id="${p.id}">${ico('ban')}</button>
           </div>
         </div>
         <div class="card-title" data-card-act="open" data-id="${p.id}">${esc(p.title)}</div>
@@ -752,7 +741,7 @@ class FairApp {
         <div class="card-rate-bar">
           <div class="stars-row">${stars}</div>
           ${activeTagsHtml}
-          <button class="tag-pill" data-card-act="open" data-id="${p.id}">🏷️+</button>
+          <button class="tag-pill" data-card-act="open" data-id="${p.id}">${ico('tag')}+</button>
         </div>
         <div class="members-row">${membersHtml}</div>
         ${noteHtml}
@@ -782,9 +771,9 @@ class FairApp {
       totalPages > 1
         ? `<div class="pager-bar">
              <button class="load-more-btn" data-page-to="0" ${this.page === 0 ? 'disabled' : ''}>«</button>
-             <button class="load-more-btn" data-page-to="${this.page - 1}" ${this.page === 0 ? 'disabled' : ''}>‹</button>
+             <button class="load-more-btn" data-page-to="${this.page - 1}" ${this.page === 0 ? 'disabled' : ''}>${ico('chevLeft')}</button>
              <span class="pager-info">${this.page + 1} / ${totalPages} (${matched.length})</span>
-             <button class="load-more-btn" data-page-to="${this.page + 1}" ${this.page >= totalPages - 1 ? 'disabled' : ''}>›</button>
+             <button class="load-more-btn" data-page-to="${this.page + 1}" ${this.page >= totalPages - 1 ? 'disabled' : ''}>${ico('chevRight')}</button>
              <button class="load-more-btn" data-page-to="${totalPages - 1}" ${this.page >= totalPages - 1 ? 'disabled' : ''}>»</button>
            </div>`
         : '';
@@ -818,13 +807,13 @@ class FairApp {
 
       body.innerHTML = `
         <div class="modal-head">
-          <h3>🎛️ ${this.t('filters')}</h3>
+          <h3>${ico('sliders')} ${this.t('filters')}</h3>
           <div class="mode-toggle">
-            <button class="${fMode === 'inc' ? 'active' : ''}" data-modal-fmode="inc">${this.t('incMode')}</button>
-            <button class="${fMode === 'exc' ? 'active' : ''}" data-modal-fmode="exc">${this.t('excMode')}</button>
+            <button class="${fMode === 'inc' ? 'active' : ''}" data-modal-fmode="inc">${ico('check')} ${this.t('incMode')}</button>
+            <button class="${fMode === 'exc' ? 'active' : ''}" data-modal-fmode="exc">${ico('ban')} ${this.t('excMode')}</button>
           </div>
           <button class="bulk-btn" data-modal-clear-filters>${this.t('clear')}</button>
-          <button class="modal-close" data-modal-close>✕</button>
+          <button class="modal-close" data-modal-close>${ico('x')}</button>
         </div>
 
         <div class="filter-section">
@@ -834,17 +823,17 @@ class FairApp {
 
         <div class="filter-section">
           <div class="sec-hdr">${this.t('paths')}</div>
-          <div class="chip-grid">${this.meta.paths.map((p) => chip('paths', p.id, `${p.icon} ${p[lang]}`)).join('')}</div>
+          <div class="chip-grid">${this.meta.paths.map((p) => chip('paths', p.id, `${ico(p.icon)} ${p[lang]}`)).join('')}</div>
         </div>
 
         <div class="filter-section">
           <div class="sec-hdr">${this.t('tags')}</div>
-          <div class="chip-grid">${this.meta.tags.map((tg) => chip('tags', tg.id, `${tg.icon} ${tg[lang]}`)).join('')}</div>
+          <div class="chip-grid">${this.meta.tags.map((tg) => chip('tags', tg.id, `${ico(tg.icon)} ${tg[lang]}`)).join('')}</div>
         </div>
 
         <div class="filter-section">
           <div class="sec-hdr">${this.t('customTags')}</div>
-          <div class="chip-grid">${CUSTOM_TAGS.map((tg) => chip('customTags', tg.id, `${tg.icon} ${tg[lang]}`)).join('')}</div>
+          <div class="chip-grid">${CUSTOM_TAGS.map((tg) => chip('customTags', tg.id, `${ico(tg.icon)} ${tg[lang]}`)).join('')}</div>
         </div>
 
         <div class="filter-section">
@@ -859,13 +848,13 @@ class FairApp {
         <div class="filter-section">
           <div class="sec-hdr">${this.t('sizes')} · ${this.t('lang')} · ${this.t('rating')} · ${this.t('minMatch')}</div>
           <div class="chip-grid">
-            ${[1, 2, 3, 4, 5, 6].map((s) => chip('sizes', s, `👥${s}`)).join('')}
+            ${[1, 2, 3, 4, 5, 6].map((s) => chip('sizes', s, `${ico('users')} ${s}`)).join('')}
             <span class="divider-v"></span>
             ${[
-              ['all', '🌐 All'],
-              ['intl_leader', '🌍 Intl Leader'],
-              ['has_intl', '🌐 Any Intl'],
-              ['mixed', '🤝 Mixed'],
+              ['all', `${ico('globe')} All`],
+              ['intl_leader', `${ico('globe')} Intl Leader`],
+              ['has_intl', `${ico('globe')} Any Intl`],
+              ['mixed', `${ico('users')} Mixed`],
               ['saudi_only', '🇸🇦 Only'],
             ]
               .map(([v, l]) => `<button class="fchip ${filters.intlMode === v ? 'inc' : ''}" data-set-filter='{"intlMode":"${v}"}'>${l}</button>`)
@@ -881,25 +870,25 @@ class FairApp {
               .join('')}
             <span class="divider-v"></span>
             ${[
-              ['all', '⭐ All'],
-              ['rated', '⭐ >0'],
-              ['unrated', '☆ 0'],
-              ['3+', '3★+'],
-              ['4+', '4★+'],
-              ['5', '5★'],
+              ['all', `${ico('star')} All`],
+              ['rated', `${ico('starFill')} >0`],
+              ['unrated', `${ico('star')} 0`],
+              ['3+', `3${ico('starFill')}+`],
+              ['4+', `4${ico('starFill')}+`],
+              ['5', `5${ico('starFill')}`],
             ]
               .map(([v, l]) => `<button class="fchip ${filters.ratingMode === v ? 'inc' : ''}" data-set-filter='{"ratingMode":"${v}"}'>${l}</button>`)
               .join('')}
             <span class="divider-v"></span>
             ${[0, 30, 50, 70]
-              .map((m) => `<button class="fchip ${filters.minMatch === m ? 'inc' : ''}" data-set-filter='{"minMatch":${m}}'>⚡≥${m}</button>`)
+              .map((m) => `<button class="fchip ${filters.minMatch === m ? 'inc' : ''}" data-set-filter='{"minMatch":${m}}'>${ico('zap')} >=${m}</button>`)
               .join('')}
           </div>
         </div>
 
         <div class="filter-section">
           <div class="sec-hdr">${this.t('countries')} (${this.countryCounts.length})</div>
-          <input class="kw-input" id="country-search-input" type="text" value="${esc(this.countrySearch)}" placeholder="🔍 Country..." />
+          <input class="kw-input" id="country-search-input" type="text" value="${esc(this.countrySearch)}" placeholder="Country..." />
           <div class="chip-grid" style="max-height:130px;overflow-y:auto">
             ${filteredCountries
               .map(([name, cnt]) => {
@@ -918,7 +907,7 @@ class FairApp {
           </div>
           <div class="chip-grid">
             ${(filters.ignoreKeywords || [])
-              .map((w) => `<button class="fchip exc" data-rem-ign-kw="${esc(w)}">🚫 ${esc(w)} ✕</button>`)
+              .map((w) => `<button class="fchip exc" data-rem-ign-kw="${esc(w)}">${ico('ban')} ${esc(w)} ${ico('x')}</button>`)
               .join('')}
           </div>
         </div>
@@ -931,8 +920,8 @@ class FairApp {
 
       body.innerHTML = `
         <div class="modal-head">
-          <h3>⚡ ${this.t('prefs')}</h3>
-          <button class="modal-close" data-modal-close>✕</button>
+          <h3>${ico('zap')} ${this.t('prefs')}</h3>
+          <button class="modal-close" data-modal-close>${ico('x')}</button>
         </div>
 
         <div class="filter-section">
@@ -950,12 +939,12 @@ class FairApp {
 
         <div class="filter-section">
           <div class="sec-hdr">${this.t('prefPaths')}</div>
-          <div class="chip-grid">${this.meta.paths.map((p) => prefBtn('prefPaths', p.id, `${p.icon} ${p[lang]}`)).join('')}</div>
+          <div class="chip-grid">${this.meta.paths.map((p) => prefBtn('prefPaths', p.id, `${ico(p.icon)} ${p[lang]}`)).join('')}</div>
         </div>
 
         <div class="filter-section">
           <div class="sec-hdr">${this.t('prefTags')}</div>
-          <div class="chip-grid">${this.meta.tags.map((t) => prefBtn('prefTags', t.id, `${t.icon} ${t[lang]}`)).join('')}</div>
+          <div class="chip-grid">${this.meta.tags.map((t) => prefBtn('prefTags', t.id, `${ico(t.icon)} ${t[lang]}`)).join('')}</div>
         </div>
 
         <div class="filter-section">
@@ -966,7 +955,7 @@ class FairApp {
           </div>
           <div class="chip-grid">
             ${(prefs.prefKeywords || [])
-              .map((w) => `<button class="fchip inc" data-rem-pref-kw="${esc(w)}">⚡ ${esc(w)} ✕</button>`)
+              .map((w) => `<button class="fchip inc" data-rem-pref-kw="${esc(w)}">${ico('zap')} ${esc(w)} ${ico('x')}</button>`)
               .join('')}
           </div>
         </div>
@@ -974,9 +963,9 @@ class FairApp {
         <div class="filter-section">
           <div class="sec-hdr">${this.t('globIgnCats')} / ${this.t('globIgnPaths')} / ${this.t('globIgnTags')}</div>
           <div class="chip-grid">
-            ${this.meta.cats.map((c) => prefBtn('ignoreCats', c.id, `🚫 ${c[lang]}`, 'exc')).join('')}
-            ${this.meta.paths.map((p) => prefBtn('ignorePaths', p.id, `🚫 ${p.icon} ${p[lang]}`, 'exc')).join('')}
-            ${this.meta.tags.map((t) => prefBtn('ignoreTags', t.id, `🚫 ${t.icon} ${t[lang]}`, 'exc')).join('')}
+            ${this.meta.cats.map((c) => prefBtn('ignoreCats', c.id, `${ico('ban')} ${c[lang]}`, 'exc')).join('')}
+            ${this.meta.paths.map((p) => prefBtn('ignorePaths', p.id, `${ico('ban')} ${ico(p.icon)} ${p[lang]}`, 'exc')).join('')}
+            ${this.meta.tags.map((t) => prefBtn('ignoreTags', t.id, `${ico('ban')} ${ico(t.icon)} ${t[lang]}`, 'exc')).join('')}
           </div>
         </div>
 
@@ -988,7 +977,7 @@ class FairApp {
           </div>
           <div class="chip-grid">
             ${(prefs.ignoreKeywords || [])
-              .map((w) => `<button class="fchip exc" data-rem-pref-ign-kw="${esc(w)}">🚫 ${esc(w)} ✕</button>`)
+              .map((w) => `<button class="fchip exc" data-rem-pref-ign-kw="${esc(w)}">${ico('ban')} ${esc(w)} ${ico('x')}</button>`)
               .join('')}
           </div>
         </div>
@@ -997,28 +986,28 @@ class FairApp {
       const { counts } = this.evalResult;
       body.innerHTML = `
         <div class="modal-head">
-          <h3>💾 localStorage</h3>
-          <button class="modal-close" data-modal-close>✕</button>
+          <h3>${ico('save')} localStorage</h3>
+          <button class="modal-close" data-modal-close>${ico('x')}</button>
         </div>
         <div class="chip-grid">
-          <span class="badge-mini">★ ${counts.fav}</span>
-          <span class="badge-mini">✓ ${counts.visited}</span>
-          <span class="badge-mini">⭐ ${counts.rated}</span>
-          <span class="badge-mini">📝 ${counts.noted}</span>
-          <span class="badge-mini">🚫 ${counts.ignored}</span>
+          <span class="badge-mini">${ico('starFill')} ${counts.fav}</span>
+          <span class="badge-mini">${ico('check')} ${counts.visited}</span>
+          <span class="badge-mini">${ico('star')} ${counts.rated}</span>
+          <span class="badge-mini">${ico('note')} ${counts.noted}</span>
+          <span class="badge-mini">${ico('ban')} ${counts.ignored}</span>
         </div>
         <div class="chip-grid">
-          <button class="btn-primary" data-backup-act="export-json">${this.t('exportJson')}</button>
-          <button class="btn-primary" data-backup-act="export-csv">${this.t('exportCsv')}</button>
+          <button class="btn-primary" data-backup-act="export-json">${ico('download')} ${this.t('exportJson')}</button>
+          <button class="btn-primary" data-backup-act="export-csv">${ico('table')} ${this.t('exportCsv')}</button>
           <label class="fchip" style="cursor:pointer">
-            ${this.t('importMerge')}
+            ${ico('upload')} ${this.t('importMerge')}
             <input type="file" accept=".json" id="import-merge-file" style="display:none" />
           </label>
           <label class="fchip" style="cursor:pointer">
-            ${this.t('importReplace')}
+            ${ico('upload')} ${this.t('importReplace')}
             <input type="file" accept=".json" id="import-replace-file" style="display:none" />
           </label>
-          <button class="btn-danger" data-backup-act="reset">${this.t('resetAll')}</button>
+          <button class="btn-danger" data-backup-act="reset">${ico('trash')} ${this.t('resetAll')}</button>
         </div>
       `;
     } else if (this.openModal?.type === 'detail') {
@@ -1036,7 +1025,7 @@ class FairApp {
       const starRow = [1, 2, 3, 4, 5]
         .map(
           (s) =>
-            `<button class="star-btn ${(rec.rat || 0) >= s ? 'on' : ''}" data-detail-act="rat" data-id="${p.id}" data-stars="${s}">★</button>`
+            `<button class="star-btn ${(rec.rat || 0) >= s ? 'on' : ''}" data-detail-act="rat" data-id="${p.id}" data-stars="${s}">${ico((rec.rat || 0) >= s ? 'starFill' : 'star')}</button>`
         )
         .join('');
 
@@ -1045,7 +1034,7 @@ class FairApp {
         const stars = [1, 2, 3, 4, 5]
           .map(
             (s) =>
-              `<button class="star-btn ${val >= s ? 'on' : ''}" data-detail-act="sub" data-id="${p.id}" data-axis="${axis}" data-stars="${s}">★</button>`
+              `<button class="star-btn ${val >= s ? 'on' : ''}" data-detail-act="sub" data-id="${p.id}" data-axis="${axis}" data-stars="${s}">${ico(val >= s ? 'starFill' : 'star')}</button>`
           )
           .join('');
         return `<div class="sub-rate-box"><span>${lbl}</span><div class="stars-row">${stars}</div></div>`;
@@ -1058,8 +1047,8 @@ class FairApp {
           const q = encodeURIComponent(`${m.n} ${m.nat || ''}`);
           return `
             <div class="detail-member-row">
-              <button class="act-btn vis ${met ? 'on' : ''}" data-detail-act="met" data-id="${p.id}" data-member="${esc(m.n)}">${this.t('met')}</button>
-              <span>${m.l ? '👑' : '👤'} <b>${esc(m.ar || m.n)}</b> · <small style="color:var(--muted)">${esc(m.n)}</small> ${fl}</span>
+              <button class="act-btn vis ${met ? 'on' : ''}" data-detail-act="met" data-id="${p.id}" data-member="${esc(m.n)}">${ico('check')} ${this.t('met')}</button>
+              <span>${ico(m.l ? 'crown' : 'user')} <b>${esc(m.ar || m.n)}</b> · <small style="color:var(--muted)">${esc(m.n)}</small> ${fl}</span>
               <a href="https://www.linkedin.com/search/results/people/?keywords=${q}" target="_blank" rel="noopener">LinkedIn ↗</a>
             </div>
           `;
@@ -1071,26 +1060,26 @@ class FairApp {
           <span class="badge-table">${p.table}</span>
           <span class="badge-mini">${p.code}</span>
           <span class="badge-cat c${p.cat}">${catObj?.[lang] || ''}</span>
-          <span class="badge-match">⚡${ev?.matchScore ?? 0}</span>
-          <button class="modal-close" data-modal-close>✕</button>
+          <span class="badge-match">${ico('zap')} ${ev?.matchScore ?? 0}</span>
+          <button class="modal-close" data-modal-close>${ico('x')}</button>
         </div>
         <h3>${esc(p.title)}</h3>
         <div class="chip-grid">
-          <span class="badge-path">${pathObj?.icon} ${pathObj?.[lang]}</span>
+          <span class="badge-path">${ico(pathObj?.icon)} ${pathObj?.[lang]}</span>
           ${p.tags
             .map((tid) => {
               const tg = this.tagMap.get(tid);
-              return `<span class="badge-mini">${tg?.icon || ''} ${tg?.[lang] || tid}</span>`;
+              return `<span class="badge-mini">${ico(tg?.icon)} ${tg?.[lang] || tid}</span>`;
             })
             .join('')}
         </div>
         <div class="detail-desc">${esc(p.desc)}</div>
         <div class="card-rate-bar">
-          <button class="act-btn fav ${rec.fav ? 'on' : ''}" data-detail-act="fav" data-id="${p.id}">${rec.fav ? '★' : '☆'}</button>
-          <button class="act-btn vis ${rec.vis ? 'on' : ''}" data-detail-act="vis" data-id="${p.id}">✓</button>
+          <button class="act-btn fav ${rec.fav ? 'on' : ''}" data-detail-act="fav" data-id="${p.id}">${ico(rec.fav ? 'starFill' : 'star')}</button>
+          <button class="act-btn vis ${rec.vis ? 'on' : ''}" data-detail-act="vis" data-id="${p.id}">${ico('check')}</button>
           <div class="stars-row">${starRow}</div>
-          <button class="act-btn ign ${rec.ign ? 'on' : ''}" data-detail-act="ign" data-id="${p.id}">🚫</button>
-          <button class="act-btn" data-detail-act="locate" data-id="${p.id}">${this.t('locate')}</button>
+          <button class="act-btn ign ${rec.ign ? 'on' : ''}" data-detail-act="ign" data-id="${p.id}">${ico('ban')}</button>
+          <button class="act-btn" data-detail-act="locate" data-id="${p.id}">${ico('pin')} ${this.t('locate')}</button>
         </div>
         <div class="sub-ratings">
           ${subBox('tech', this.t('subTech'))}
@@ -1100,7 +1089,7 @@ class FairApp {
         <div class="chip-grid">
           ${CUSTOM_TAGS.map(
             (tg) =>
-              `<button class="tag-pill ${(rec.tags || []).includes(tg.id) ? 'on' : ''}" data-detail-act="tag" data-id="${p.id}" data-tag="${tg.id}">${tg.icon} ${tg[lang]}</button>`
+              `<button class="tag-pill ${(rec.tags || []).includes(tg.id) ? 'on' : ''}" data-detail-act="tag" data-id="${p.id}" data-tag="${tg.id}">${ico(tg.icon)} ${tg[lang]}</button>`
           ).join('')}
         </div>
         <textarea class="kw-input" rows="2" data-detail-note="${p.id}" placeholder="${this.t('notePh')}">${esc(rec.note || '')}</textarea>

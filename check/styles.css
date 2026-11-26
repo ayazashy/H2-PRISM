@@ -63,6 +63,14 @@ button {
   display: none !important;
 }
 
+.ico {
+  width: 1.05em;
+  height: 1.05em;
+  display: inline-block;
+  vertical-align: -0.16em;
+  flex-shrink: 0;
+}
+
 /* Sticky Top Command Bar */
 .topbar {
   position: sticky;
@@ -791,14 +799,13 @@ html[data-theme='light'] .star-btn {
   height: 100%;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  direction: ltr;
+  display: block;
 }
 
 .hall-canvas {
   display: block;
-  flex-shrink: 0;
+  margin: 0 auto;
   cursor: pointer;
 }
 
@@ -818,13 +825,21 @@ html[data-theme='light'] .star-btn {
   padding: 7px 10px;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
+  direction: ltr;
 }
 
 .zgrid-rows {
   flex: 1;
+  min-height: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  direction: ltr;
   padding: 10px;
+}
+
+.zgrid-inner {
+  width: max-content;
+  min-width: 100%;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -834,7 +849,7 @@ html[data-theme='light'] .star-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  direction: ltr;
+  width: max-content;
 }
 
 .zrow.aisle-after {
