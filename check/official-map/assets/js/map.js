@@ -198,6 +198,9 @@ if (canvas && wall) {
         const leaderMem = (p.members && p.members.find(m => m.l === 1)) || (p.members && p.members[0]);
         const leaderName = leaderMem ? (EN ? (leaderMem.n || leaderMem.ar) : (leaderMem.ar || leaderMem.n)) : '';
         Object.assign(t, {
+          projectId: p.id,
+          catId: p.cat,
+          tags: p.tags || [],
           exhibitor: p.title,
           teamCode: p.code,
           track: pathObj ? tr(pathObj.ar, pathObj.en) : null,

@@ -144,13 +144,19 @@ export function mountWayfinding(venue, site) {
     if (popAt !== i) details.close(true);
     popAt = i;
     pop.setAttribute('aria-label', t.exhibitor || BOOTH(t.code));
+    const activeNote = document.activeElement?.dataset?.clNote;
     const clHtml = renderChecklistBar(t);
     const html = '<div class="booth-pop__card">' +
       cardHead(t, zoneOf(t)) + (ADMIN ? teamRows(t) : cardRows(t, !!site.here)) +
       clHtml +
       '<div class="bp-actions">' + (t.exhibitor && !ADMIN ? detailsButton() : '') + goButton(i) + '</div>' +
     '</div>';
-    if (html !== popHtml) { pop.innerHTML = html; popHtml = html; popSize.disconnect(); popSize.observe(pop.firstElementChild); }
+    if (html !== popHtml && !(activeNote && clState?.boothToProjects?.get(t.code)?.some(p => p.id === activeNote))) {
+      pop.innerHTML = html;
+      popHtml = html;
+      popSize.disconnect();
+      popSize.observe(pop.firstElementChild);
+    }
     if (!details.isOpen) pop.hidden = false;
     venue.tables.mark('select', i, css('--brand'));
     placePop();
@@ -171,6 +177,7 @@ export function mountWayfinding(venue, site) {
       const act = clBtn.dataset.clAct;
       const pid = clBtn.dataset.pid;
       if (act === 'rat') window.saifChecklistAction?.('rat', { id: pid, stars: Number(clBtn.dataset.stars) });
+      else if (act === 'tag') window.saifChecklistAction?.('tag', { id: pid, tagId: clBtn.dataset.tag });
       else if (act === 'open') window.saifChecklistAction?.('openProject', pid);
       else window.saifChecklistAction?.(act, pid);
       return;
@@ -182,6 +189,10 @@ export function mountWayfinding(venue, site) {
       details.open(t, popAt, zoneOf(t), () => { pop.hidden = true; });
     }
   });
+  pop.addEventListener('input', e => {
+    const pid = e.target.dataset?.clNote;
+    if (pid) window.saifChecklistAction?.('note', { id: pid, note: e.target.value });
+  });
 
   /* ---------- Checklist Floating Highlight Pins & Actions Layer ---------- */
   let clState = null;
@@ -191,12 +202,21 @@ export function mountWayfinding(venue, site) {
   let pinItems = [];
   const CL_ICO = {
     star: '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/></svg>',
-    starOut: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/></svg>',
-    check: '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>',
+    starOut: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/></svg>',
+    check: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>',
     pin: '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
-    ban: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m4.9 4.9 14.2 14.2"/></svg>',
-    expand: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 3 6 6M9 21l-6-6M21 3l-7 7M3 21l7-7"/></svg>',
+    ban: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m4.9 4.9 14.2 14.2"/></svg>',
+    expand: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m15 3 6 6M9 21l-6-6M21 3l-7 7M3 21l7-7"/></svg>',
+    zap: '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
   };
+  const TAG_OPTS = [
+    ['prio', 'أولوية', 'Priority'],
+    ['talked', 'تواصلت', 'Met'],
+    ['collab', 'تعاون', 'Collab'],
+    ['startup', 'ناشئ', 'Startup'],
+    ['demo', 'عرض', 'Demo'],
+    ['revisit', 'عودة', 'Revisit'],
+  ];
 
   function renderChecklistBar(t) {
     if (!clState || !clState.boothToProjects) return '';
@@ -204,15 +224,28 @@ export function mountWayfinding(venue, site) {
     if (!projs.length) return '';
     const p = projs[0];
     const rec = (clState.records && clState.records[p.id]) || {};
+    const ev = clState.evalById ? clState.evalById.get(p.id) : null;
+    const matchScore = ev ? ev.matchScore : (p._score || 0);
     const stars = [1, 2, 3, 4, 5].map(s =>
       '<button type="button" class="cl-star' + ((rec.rat || 0) >= s ? ' on' : '') + '" data-cl-act="rat" data-pid="' + esc(p.id) + '" data-stars="' + s + '">' + CL_ICO.star + '</button>'
     ).join('');
-    return '<div class="cl-pop-bar">' +
-      '<button type="button" class="cl-act fav' + (rec.fav ? ' on' : '') + '" data-cl-act="fav" data-pid="' + esc(p.id) + '" aria-label="Fav">' + CL_ICO.starOut + '</button>' +
-      '<button type="button" class="cl-act vis' + (rec.vis ? ' on' : '') + '" data-cl-act="vis" data-pid="' + esc(p.id) + '" aria-label="Visited">' + CL_ICO.check + '</button>' +
-      '<span class="cl-stars">' + stars + '</span>' +
-      '<button type="button" class="cl-act ign' + (rec.ign ? ' on' : '') + '" data-cl-act="ign" data-pid="' + esc(p.id) + '" aria-label="Ignore">' + CL_ICO.ban + '</button>' +
-      '<button type="button" class="cl-act" data-cl-act="open" data-pid="' + esc(p.id) + '" aria-label="Open">' + CL_ICO.expand + '</button>' +
+    const recTags = rec.tags || [];
+    const tagsHtml = TAG_OPTS.map(([id, ar, en]) =>
+      '<button type="button" class="cl-tag' + (recTags.includes(id) ? ' on' : '') + '" data-cl-act="tag" data-pid="' + esc(p.id) + '" data-tag="' + id + '">' + tr(ar, en) + '</button>'
+    ).join('');
+    return '<div class="cl-pop-wrap">' +
+      '<div class="cl-pop-bar">' +
+        '<button type="button" class="cl-act fav' + (rec.fav ? ' on' : '') + '" data-cl-act="fav" data-pid="' + esc(p.id) + '">' + CL_ICO.starOut + '<span>' + tr('مفضلة', 'Fav') + '</span></button>' +
+        '<button type="button" class="cl-act vis' + (rec.vis ? ' on' : '') + '" data-cl-act="vis" data-pid="' + esc(p.id) + '">' + CL_ICO.check + '<span>' + tr('تم التحقق', 'Checked') + '</span></button>' +
+        '<button type="button" class="cl-act ign' + (rec.ign ? ' on' : '') + '" data-cl-act="ign" data-pid="' + esc(p.id) + '">' + CL_ICO.ban + '<span>' + tr('تجاهل', 'Ignore') + '</span></button>' +
+        '<span class="cl-match">' + CL_ICO.zap + matchScore + '</span>' +
+      '</div>' +
+      '<div class="cl-pop-row">' +
+        '<span class="cl-stars">' + stars + '</span>' +
+        '<button type="button" class="cl-act open" data-cl-act="open" data-pid="' + esc(p.id) + '">' + CL_ICO.expand + '<span>' + tr('بطاقة المشروع', 'Full Card') + '</span></button>' +
+      '</div>' +
+      '<div class="cl-tags-row">' + tagsHtml + '</div>' +
+      '<input type="text" class="cl-note-inp" data-cl-note="' + esc(p.id) + '" value="' + esc(rec.note || '') + '" placeholder="' + esc(tr('ملاحظة سريعة...', 'Quick note...')) + '">' +
     '</div>';
   }
 

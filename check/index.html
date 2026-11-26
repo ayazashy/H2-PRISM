@@ -20,7 +20,6 @@
           <button id="search-clear" class="search-clear hidden" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
         </div>
         <div class="top-actions">
-          <button id="btn-filters" class="icon-pill" data-top-act="filters" type="button"></button>
           <button id="btn-prefs" class="icon-pill" data-top-act="prefs" type="button"></button>
           <div class="view-seg">
             <button data-view="split" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M12 4v16"/></svg></button>
@@ -33,22 +32,26 @@
           <button id="btn-backup" class="icon-pill" data-top-act="backup" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></button>
         </div>
       </div>
-
-      <div class="top-row-2" id="status-tabs"></div>
     </header>
-
-    <div id="active-bar" class="active-bar">
-      <div id="active-chips" class="active-chips"></div>
-      <div class="active-end">
-        <select id="sort-select" class="sort-select"></select>
-        <div id="bulk-group" class="bulk-group"></div>
-      </div>
-    </div>
 
     <main id="workspace" class="workspace mode-split">
       <section id="list-pane" class="list-pane"></section>
       <section id="map-pane" class="map-pane"></section>
     </main>
+
+    <div id="bottom-drawer" class="bottom-drawer">
+      <button id="drawer-toggle" class="drawer-toggle" type="button"></button>
+      <div id="drawer-panel" class="drawer-panel hidden">
+        <div class="top-row-2" id="status-tabs"></div>
+        <div id="active-bar" class="active-bar">
+          <div id="active-chips" class="active-chips"></div>
+          <div class="active-end">
+            <select id="sort-select" class="sort-select"></select>
+            <div id="bulk-group" class="bulk-group"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div id="modal-overlay" class="overlay hidden">
       <div id="modal-body" class="modal"></div>

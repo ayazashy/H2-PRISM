@@ -184,6 +184,7 @@ class FairApp {
     this.countrySearch = '';
     this.mapCtrl = null;
     this._searchTimer = null;
+    this.drawerOpen = false;
   }
 
   async init() {
@@ -374,21 +375,13 @@ class FairApp {
     });
 
     document.getElementById('topbar').addEventListener('click', (e) => {
-      const tab = e.target.closest('[data-status]');
-      if (tab) {
-        this.page = 0;
-        return this.store.updateFilters({ status: tab.dataset.status });
-      }
       const viewBtn = e.target.closest('[data-view]');
       if (viewBtn) return this.store.updateUI({ view: viewBtn.dataset.view });
 
       const topAct = e.target.closest('[data-top-act]');
       if (!topAct) return;
       const act = topAct.dataset.topAct;
-      if (act === 'filters') {
-        this.openModal = 'filters';
-        this._renderModal();
-      } else if (act === 'prefs') {
+      if (act === 'prefs' || act === 'filters') {
         this.openModal = 'prefs';
         this._renderModal();
       } else if (act === 'help') {
@@ -401,6 +394,19 @@ class FairApp {
         this.store.updateUI({ lang: this.store.state.ui.lang === 'ar' ? 'en' : 'ar' });
       } else if (act === 'theme') {
         this.store.updateUI({ theme: this.store.state.ui.theme === 'dark' ? 'light' : 'dark' });
+      }
+    });
+
+    document.getElementById('drawer-toggle').addEventListener('click', () => {
+      this.drawerOpen = !this.drawerOpen;
+      this._syncDrawer();
+    });
+
+    document.getElementById('bottom-drawer').addEventListener('click', (e) => {
+      const tab = e.target.closest('[data-status]');
+      if (tab) {
+        this.page = 0;
+        return this.store.updateFilters({ status: tab.dataset.status });
       }
     });
 
@@ -521,7 +527,6 @@ class FairApp {
     const { filters } = this.store.state;
     const statusTabs = [
       ['all', `${this.t('all')} <b>${counts.visible}</b>`],
-      ['prefs', `${ico('zap')} ${this.t('prefs')} <b>${counts.prefs}</b>`],
       ['fav', `${ico('starFill')} <b>${counts.fav}</b>`],
       ['todo', `${ico('clock')} <b>${counts.todo}</b>`],
       ['visited', `${ico('check')} <b>${counts.visited}</b>`],
@@ -535,6 +540,28 @@ class FairApp {
           `<button class="stat-tab ${filters.status === k ? 'active' : ''}" data-status="${k}">${lbl}</button>`
       )
       .join('');
+  }
+
+  _syncDrawer(matchedLen = this.evalResult?.matched?.length ?? 0) {
+    const { filters, prefs } = this.store.state;
+    const fCount = countActiveFilterRules(filters, prefs);
+    const panel = document.getElementById('drawer-panel');
+    const toggle = document.getElementById('drawer-toggle');
+    if (panel) panel.classList.toggle('hidden', !this.drawerOpen);
+    if (toggle) {
+      const sortLbl = this.t({
+        booth: 'sortBooth',
+        match: 'sortMatch',
+        nearest: 'sortNearest',
+        rating: 'sortRating',
+        members: 'sortMembers',
+        code: 'sortCode',
+      }[filters.sortBy] || 'sortBooth');
+      toggle.setAttribute('aria-expanded', String(this.drawerOpen));
+      toggle.innerHTML = `${ico(this.drawerOpen ? 'chevDown' : 'chevUp')} <span class="badge-mini">${matchedLen}</span> <span>${sortLbl}</span>${
+        fCount ? `<span class="count-badge">${fCount}</span>` : ''
+      }`;
+    }
   }
 
   render() {
@@ -557,10 +584,9 @@ class FairApp {
     this._renderStatusTabs(counts);
 
     const fCount = countActiveFilterRules(filters, prefs);
-    document.getElementById('btn-filters').innerHTML = `${ico('sliders')} ${this.t('filters')}${
+    document.getElementById('btn-prefs').innerHTML = `${ico('zap')} ${this.t('prefs')}${
       fCount ? `<span class="count-badge">${fCount}</span>` : ''
     }`;
-    document.getElementById('btn-prefs').innerHTML = `${ico('zap')} ${this.t('prefs')}`;
     document.getElementById('btn-lang').textContent = lang === 'ar' ? 'EN' : 'ع';
     document.getElementById('btn-theme').innerHTML = ico(ui.theme === 'light' ? 'moon' : 'sun');
 
@@ -581,6 +607,7 @@ class FairApp {
       .join('');
 
     this._renderActiveBar(matched.length);
+    this._syncDrawer(matched.length);
 
     const ws = document.getElementById('workspace');
     ws.className = `workspace mode-${ui.view}`;
@@ -760,12 +787,13 @@ class FairApp {
     const { filters, prefs, records, ui } = this.store.state;
     const lang = ui.lang === 'en' ? 'en' : 'ar';
 
-    if (this.openModal === 'filters') {
+    if (this.openModal === 'prefs' || this.openModal === 'filters') {
       const fMode = ui.filterMode || 'inc';
       const chip = (key, val, label) => {
         const cls = filters[key].inc.includes(val) ? 'inc' : filters[key].exc.includes(val) ? 'exc' : '';
         return `<button class="fchip ${cls}" data-fchip='${esc(JSON.stringify({ key, val }))}'>${label}</button>`;
       };
+      const isAdult = filters.cats.inc.length === 2 && filters.cats.inc.includes(3) && filters.cats.inc.includes(4);
 
       const filteredCountries = this.countryCounts.filter(([n]) => {
         if (!this.countrySearch) return true;
@@ -775,7 +803,7 @@ class FairApp {
 
       body.innerHTML = `
         <div class="modal-head">
-          <h3>${ico('sliders')} ${this.t('filters')}</h3>
+          <h3>${ico('zap')} ${this.t('prefs')}</h3>
           <div class="mode-toggle">
             <button class="${fMode === 'inc' ? 'active' : ''}" data-modal-fmode="inc">${ico('check')} ${this.t('incMode')}</button>
             <button class="${fMode === 'exc' ? 'active' : ''}" data-modal-fmode="exc">${ico('ban')} ${this.t('excMode')}</button>
@@ -786,22 +814,15 @@ class FairApp {
 
         <div class="filter-section">
           <div class="sec-hdr">${this.t('cats')}</div>
-          <div class="chip-grid">${this.meta.cats.map((c) => chip('cats', c.id, c[lang])).join('')}</div>
+          <div class="chip-grid">
+            <button class="fchip ${isAdult ? 'inc' : ''}" data-adult-toggle>18+</button>
+            ${this.meta.cats.map((c) => chip('cats', c.id, c[lang])).join('')}
+          </div>
         </div>
 
         <div class="filter-section">
           <div class="sec-hdr">${this.t('paths')}</div>
           <div class="chip-grid">${this.meta.paths.map((p) => chip('paths', p.id, `${ico(p.icon)} ${p[lang]}`)).join('')}</div>
-        </div>
-
-        <div class="filter-section">
-          <div class="sec-hdr">${this.t('tags')}</div>
-          <div class="chip-grid">${this.meta.tags.map((tg) => chip('tags', tg.id, `${ico(tg.icon)} ${tg[lang]}`)).join('')}</div>
-        </div>
-
-        <div class="filter-section">
-          <div class="sec-hdr">${this.t('customTags')}</div>
-          <div class="chip-grid">${CUSTOM_TAGS.map((tg) => chip('customTags', tg.id, `${ico(tg.icon)} ${tg[lang]}`)).join('')}</div>
         </div>
 
         <div class="filter-section">
@@ -814,8 +835,23 @@ class FairApp {
         </div>
 
         <div class="filter-section">
-          <div class="sec-hdr">${this.t('sizes')} · ${this.t('lang')} · ${this.t('rating')} · ${this.t('minMatch')}</div>
+          <div class="sec-hdr">${this.t('rating')} · ${this.t('minMatch')} · ${this.t('sizes')} · ${this.t('lang')}</div>
           <div class="chip-grid">
+            ${[
+              ['all', `${ico('star')} All`],
+              ['rated', `${ico('starFill')} >0`],
+              ['unrated', `${ico('star')} 0`],
+              ['3+', `3${ico('starFill')}+`],
+              ['4+', `4${ico('starFill')}+`],
+              ['5', `5${ico('starFill')}`],
+            ]
+              .map(([v, l]) => `<button class="fchip ${filters.ratingMode === v ? 'inc' : ''}" data-set-filter='{"ratingMode":"${v}"}'>${l}</button>`)
+              .join('')}
+            <span class="divider-v"></span>
+            ${[0, 30, 50, 70]
+              .map((m) => `<button class="fchip ${filters.minMatch === m ? 'inc' : ''}" data-set-filter='{"minMatch":${m}}'>${ico('zap')} >=${m}</button>`)
+              .join('')}
+            <span class="divider-v"></span>
             ${[1, 2, 3, 4, 5, 6].map((s) => chip('sizes', s, `${ico('users')} ${s}`)).join('')}
             <span class="divider-v"></span>
             ${[
@@ -836,21 +872,15 @@ class FairApp {
             ]
               .map(([v, l]) => `<button class="fchip ${filters.langMode === v ? 'inc' : ''}" data-set-filter='{"langMode":"${v}"}'>${l}</button>`)
               .join('')}
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <div class="sec-hdr">${this.t('tags')} · ${this.t('customTags')}</div>
+          <div class="chip-grid">
+            ${this.meta.tags.map((tg) => chip('tags', tg.id, `${ico(tg.icon)} ${tg[lang]}`)).join('')}
             <span class="divider-v"></span>
-            ${[
-              ['all', `${ico('star')} All`],
-              ['rated', `${ico('starFill')} >0`],
-              ['unrated', `${ico('star')} 0`],
-              ['3+', `3${ico('starFill')}+`],
-              ['4+', `4${ico('starFill')}+`],
-              ['5', `5${ico('starFill')}`],
-            ]
-              .map(([v, l]) => `<button class="fchip ${filters.ratingMode === v ? 'inc' : ''}" data-set-filter='{"ratingMode":"${v}"}'>${l}</button>`)
-              .join('')}
-            <span class="divider-v"></span>
-            ${[0, 30, 50, 70]
-              .map((m) => `<button class="fchip ${filters.minMatch === m ? 'inc' : ''}" data-set-filter='{"minMatch":${m}}'>${ico('zap')} >=${m}</button>`)
-              .join('')}
+            ${CUSTOM_TAGS.map((tg) => chip('customTags', tg.id, `${ico(tg.icon)} ${tg[lang]}`)).join('')}
           </div>
         </div>
 
@@ -868,58 +898,19 @@ class FairApp {
         </div>
 
         <div class="filter-section">
-          <div class="sec-hdr">${this.t('ignoreKw')}</div>
+          <div class="sec-hdr">${this.t('ignoreKw')} · ${this.t('prefKws')}</div>
           <div class="kw-row">
             <input class="kw-input" id="ign-kw-input" type="text" placeholder="${this.t('addKwPh')}" />
-            <button class="btn-primary" data-add-ign-kw>${this.t('add')}</button>
+            <button class="btn-danger" data-add-ign-kw>${ico('ban')} ${this.t('add')}</button>
           </div>
           <div class="chip-grid">
             ${(filters.ignoreKeywords || [])
               .map((w) => `<button class="fchip exc" data-rem-ign-kw="${esc(w)}">${ico('ban')} ${esc(w)} ${ico('x')}</button>`)
               .join('')}
           </div>
-        </div>
-      `;
-    } else if (this.openModal === 'prefs') {
-      const prefBtn = (field, val, label, cls = 'inc') => {
-        const active = (prefs[field] || []).includes(val);
-        return `<button class="fchip ${active ? cls : ''}" data-pref-toggle='${esc(JSON.stringify({ field, val }))}'>${label}</button>`;
-      };
-
-      body.innerHTML = `
-        <div class="modal-head">
-          <h3>${ico('zap')} ${this.t('prefs')}</h3>
-          <button class="modal-close" data-modal-close>${ico('x')}</button>
-        </div>
-
-        <div class="filter-section">
-          <div class="sec-hdr">${this.t('myBooth')} · ${this.t('intlBoost')}</div>
-          <div class="kw-row">
-            <input class="kw-input" id="pref-my-booth" type="text" value="${esc(prefs.myBooth)}" placeholder="S-B1-05" style="max-width:140px;direction:ltr" />
-            <input class="kw-input" id="pref-intl-boost" type="number" min="0" max="30" value="${prefs.boostIntl ?? 12}" style="max-width:90px" />
-          </div>
-        </div>
-
-        <div class="filter-section">
-          <div class="sec-hdr">${this.t('prefCats')}</div>
-          <div class="chip-grid">${this.meta.cats.map((c) => prefBtn('prefCats', c.id, c[lang])).join('')}</div>
-        </div>
-
-        <div class="filter-section">
-          <div class="sec-hdr">${this.t('prefPaths')}</div>
-          <div class="chip-grid">${this.meta.paths.map((p) => prefBtn('prefPaths', p.id, `${ico(p.icon)} ${p[lang]}`)).join('')}</div>
-        </div>
-
-        <div class="filter-section">
-          <div class="sec-hdr">${this.t('prefTags')}</div>
-          <div class="chip-grid">${this.meta.tags.map((t) => prefBtn('prefTags', t.id, `${ico(t.icon)} ${t[lang]}`)).join('')}</div>
-        </div>
-
-        <div class="filter-section">
-          <div class="sec-hdr">${this.t('prefKws')}</div>
-          <div class="kw-row">
+          <div class="kw-row" style="margin-top:4px">
             <input class="kw-input" id="pref-kw-input" type="text" placeholder="hydrogen, llm, startup..." />
-            <button class="btn-primary" data-add-pref-kw>${this.t('add')}</button>
+            <button class="btn-primary" data-add-pref-kw>${ico('zap')} ${this.t('add')}</button>
           </div>
           <div class="chip-grid">
             ${(prefs.prefKeywords || [])
@@ -929,24 +920,10 @@ class FairApp {
         </div>
 
         <div class="filter-section">
-          <div class="sec-hdr">${this.t('globIgnCats')} / ${this.t('globIgnPaths')} / ${this.t('globIgnTags')}</div>
-          <div class="chip-grid">
-            ${this.meta.cats.map((c) => prefBtn('ignoreCats', c.id, `${ico('ban')} ${c[lang]}`, 'exc')).join('')}
-            ${this.meta.paths.map((p) => prefBtn('ignorePaths', p.id, `${ico('ban')} ${ico(p.icon)} ${p[lang]}`, 'exc')).join('')}
-            ${this.meta.tags.map((t) => prefBtn('ignoreTags', t.id, `${ico('ban')} ${ico(t.icon)} ${t[lang]}`, 'exc')).join('')}
-          </div>
-        </div>
-
-        <div class="filter-section">
-          <div class="sec-hdr">${this.t('globIgnKws')}</div>
+          <div class="sec-hdr">${this.t('myBooth')} · ${this.t('intlBoost')}</div>
           <div class="kw-row">
-            <input class="kw-input" id="pref-ign-kw-input" type="text" placeholder="${this.t('addKwPh')}" />
-            <button class="btn-danger" data-add-pref-ign-kw>${this.t('add')}</button>
-          </div>
-          <div class="chip-grid">
-            ${(prefs.ignoreKeywords || [])
-              .map((w) => `<button class="fchip exc" data-rem-pref-ign-kw="${esc(w)}">${ico('ban')} ${esc(w)} ${ico('x')}</button>`)
-              .join('')}
+            <input class="kw-input" id="pref-my-booth" type="text" value="${esc(prefs.myBooth)}" placeholder="S-B1-05" style="max-width:140px;direction:ltr" />
+            <input class="kw-input" id="pref-intl-boost" type="number" min="0" max="30" value="${prefs.boostIntl ?? 12}" style="max-width:90px" />
           </div>
         </div>
       `;
@@ -983,15 +960,15 @@ class FairApp {
         lang === 'ar'
           ? [
               ['search', '<b>البحث الذكي:</b> ابحث باسم المشروع، اسم المشارك بالعربي أو الإنجليزي، رقم الطاولة (<code>S-B1-05</code>)، أو اكتب <code>-كلمة</code> لاستبعاد نتائجها.'],
-              ['zap', '<b>تفضيلاتي والفلاتر:</b> اضبط تفضيلاتك والتجاهل الدائم من زر <b>تفضيلاتي</b>، واستخدم <b>فلاتر</b> لتضمين أو تجاهل أي منطقة أو جنسية أو تقييم.'],
-              ['map', '<b>الخريطة والمسار:</b> اختر منطقة (A-K) لعرض صفوفها بالعرض الكامل والتمرير الأفقي، واضغط على أي طاولة لفتح تقييماتها السريعة.'],
+              ['zap', '<b>تفضيلاتي:</b> اضبط مجالاتك المفضلة أو المستبعدة (تضمين / تجاهل)، المناطق، الجنسيات، التقييم أو التوافق من زر <b>تفضيلاتي</b>، ومن السهم السفلي بدّل الفرز والتصنيف.'],
+              ['map', '<b>الخريطة والمسار:</b> الخريطة الرسمية تملأ الشاشة وتُبرز مشاريعك المفضلة والمُتحقق منها والمقيّمة مع إمكانية التعديل المباشر عند الضغط على أي بوث.'],
               ['pin', '<b>تخصيص طاولتك (اختياري):</b> إذا كانت لديك طاولة، أضف رقمها من <b>تفضيلاتي</b> لترتيب المشاريع حسب الأقرب وتمييزها على الخريطة.'],
               ['save', '<b>حفظ محلي ونسخ احتياطي:</b> جميع اختياراتك وملاحظاتك تبقى على جهازك، ويمكنك تصديرها JSON أو CSV في أي وقت.'],
             ]
           : [
               ['search', '<b>Smart Search:</b> Search projects, member names (EN or AR), booth codes (<code>S-B1-05</code>), or prefix <code>-word</code> to exclude terms.'],
-              ['zap', '<b>My Picks &amp; Filters:</b> Set preferred or always-ignored topics in <b>My Picks</b>, and use <b>Filters</b> to temporarily include or ignore zones, countries, or ratings.'],
-              ['map', '<b>Floorplan & Route:</b> Tap any Zone (A-K) for full scrollable rows, and tap any booth tile to rate, tag, or inspect details.'],
+              ['zap', '<b>My Picks:</b> Configure whitelists, ignores, zones, countries, ratings, and min match in one place via <b>My Picks</b>, and use the bottom edge arrow drawer for sorting & status tabs.'],
+              ['map', '<b>Full-Screen Official Map:</b> Highlighted Favourite, Checked, and Starred booths float directly on the Hall 4 map with live inline checklist buttons on click.'],
               ['pin', '<b>Optional Booth Setup:</b> If exhibiting, enter your own booth in <b>My Picks</b> to enable Nearest sorting and map highlight.'],
               ['save', '<b>Local Storage & Export:</b> Everything saves automatically on your device; export/import JSON or CSV anytime.'],
             ];
@@ -1160,6 +1137,15 @@ class FairApp {
       document.getElementById('search-input').value = '';
       this.page = 0;
       return this.store.resetFilters();
+    }
+
+    if (e.target.closest('[data-adult-toggle]')) {
+      this.page = 0;
+      const cats = this.store.state.filters.cats;
+      const isAdult = cats.inc.length === 2 && cats.inc.includes(3) && cats.inc.includes(4);
+      return this.store.updateFilters({
+        cats: { ...cats, inc: isAdult ? [] : [3, 4], exc: cats.exc.filter((c) => c !== 3 && c !== 4) },
+      });
     }
 
     const fchip = e.target.closest('[data-fchip]');

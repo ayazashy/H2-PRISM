@@ -289,15 +289,18 @@ export function prepareProjects(rawProjects, meta) {
   });
 }
 
-export function computeMatchScore(project, prefs) {
+export function computeMatchScore(project, prefs, filters = null) {
   let score = 0;
-  if (prefs.prefCats?.includes(project.cat)) score += 28;
-  if (prefs.prefPaths?.includes(project.path)) score += 26;
+  const cats = filters?.cats?.inc?.length ? [...new Set([...(prefs.prefCats || []), ...filters.cats.inc])] : prefs.prefCats;
+  const paths = filters?.paths?.inc?.length ? [...new Set([...(prefs.prefPaths || []), ...filters.paths.inc])] : prefs.prefPaths;
+  const tags = filters?.tags?.inc?.length ? [...new Set([...(prefs.prefTags || []), ...filters.tags.inc])] : prefs.prefTags;
+  if (cats?.includes(project.cat)) score += 28;
+  if (paths?.includes(project.path)) score += 26;
 
-  if (prefs.prefTags?.length && project.tags?.length) {
+  if (tags?.length && project.tags?.length) {
     let tagHits = 0;
     for (const t of project.tags) {
-      if (prefs.prefTags.includes(t)) tagHits += 1;
+      if (tags.includes(t)) tagHits += 1;
     }
     score += Math.min(24, tagHits * 10);
   }
@@ -324,15 +327,15 @@ export function computeMatchScore(project, prefs) {
 }
 
 /**
- * Cache match scores & distances onto project objects ONLY when prefs change.
+ * Cache match scores & distances onto project objects ONLY when prefs or whitelists change.
  * Eliminates ~11,000 substring scans per tap/filter interaction.
  */
-export function refreshPrefsCache(projects, prefs) {
+export function refreshPrefsCache(projects, prefs, filters = null) {
   const myParsed = parseTableCode(prefs.myBooth);
   const myCoords = myParsed ? getBoothRect(myParsed.z, myParsed.r, myParsed.s) : null;
-  const prefCatSet = new Set(prefs.prefCats || []);
-  const prefPathSet = new Set(prefs.prefPaths || []);
-  const prefTagSet = new Set(prefs.prefTags || []);
+  const prefCatSet = new Set([...(prefs.prefCats || []), ...(filters?.cats?.inc || [])]);
+  const prefPathSet = new Set([...(prefs.prefPaths || []), ...(filters?.paths?.inc || [])]);
+  const prefTagSet = new Set([...(prefs.prefTags || []), ...(filters?.tags?.inc || [])]);
   const normKws = (prefs.prefKeywords || []).map(normSearch).filter(Boolean);
   const boostIntl = Number(prefs.boostIntl ?? 12);
 
@@ -527,7 +530,7 @@ export function evaluateProjectFast(p, record, ctx) {
 }
 
 export function evaluateAll(projects, filters, records, prefs) {
-  refreshPrefsCache(projects, prefs);
+  refreshPrefsCache(projects, prefs, filters);
   const ctx = buildEvalContext(filters, prefs);
 
   const evalById = new Map();

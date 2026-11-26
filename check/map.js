@@ -87,6 +87,7 @@ export class FairMapController {
     this._officialLang = null;
     this.officialView = 'perspective';
     this._pendingFocus = null;
+    this.mapTrayOpen = false;
 
     this._buildDOM();
     this._bindEvents();
@@ -94,6 +95,19 @@ export class FairMapController {
 
   _buildDOM() {
     this.container.innerHTML = '';
+
+    this.tray = document.createElement('div');
+    this.tray.className = 'map-tray';
+
+    this.trayBtn = document.createElement('button');
+    this.trayBtn.type = 'button';
+    this.trayBtn.className = 'map-tray-btn';
+    this.trayBtn.dataset.mapTray = '1';
+    this.trayBtn.innerHTML = `${ico('sliders')} ${ico('chevDown')}`;
+    this.tray.appendChild(this.trayBtn);
+
+    this.trayBody = document.createElement('div');
+    this.trayBody.className = 'map-tray-body hidden';
 
     this.toolbar = document.createElement('div');
     this.toolbar.className = 'map-toolbar';
@@ -117,7 +131,7 @@ export class FairMapController {
         <button data-zoom="me">${ico('pin')}</button>
       </div>
     `;
-    this.container.appendChild(this.toolbar);
+    this.trayBody.appendChild(this.toolbar);
 
     this.zoneStrip = document.createElement('div');
     this.zoneStrip.className = 'map-zone-strip';
@@ -134,7 +148,9 @@ export class FairMapController {
       b.textContent = z;
       this.zoneStrip.appendChild(b);
     }
-    this.container.appendChild(this.zoneStrip);
+    this.trayBody.appendChild(this.zoneStrip);
+    this.tray.appendChild(this.trayBody);
+    this.container.appendChild(this.tray);
 
     this.stage = document.createElement('div');
     this.stage.className = 'map-stage';
@@ -236,6 +252,13 @@ export class FairMapController {
   }
 
   _bindEvents() {
+    this.trayBtn.addEventListener('click', () => {
+      this.mapTrayOpen = !this.mapTrayOpen;
+      this.trayBody.classList.toggle('hidden', !this.mapTrayOpen);
+      this.trayBtn.innerHTML = `${ico('sliders')} ${ico(this.mapTrayOpen ? 'chevUp' : 'chevDown')}`;
+      this._resizeCanvas();
+    });
+
     this.toolbar.addEventListener('click', (e) => {
       const colorBtn = e.target.closest('[data-color]');
       if (colorBtn) return this.onAction('mapColor', colorBtn.dataset.color);
@@ -522,6 +545,7 @@ export class FairMapController {
     }
 
     this._renderLegend(ui.mapColor || 'status', ui.lang);
+    this.legend.classList.toggle('hidden', !!this.activeZone || !!this.officialFrame);
     this._renderRouteStrip(prefs);
     if (this.selectedTable) this._renderInspector();
     this._syncOfficialMap();
