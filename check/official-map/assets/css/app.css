@@ -1,0 +1,386 @@
+/* =========================================================
+   يوم التوظيف — لوحة الأدمن
+   السايد منيو + الكارد العلوي منقولان بالمقاسات الأصلية من Figma.
+   ما عدا ذلك: فريمات فارغة بانتظار تحديد المحتوى.
+   ========================================================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------------------------------------------------------
+   Shell
+   --------------------------------------------------------- */
+.shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ---------------------------------------------------------
+   Sidebar  ·  276 × (100vh - 24)، هامش 12، radius 20
+   fill #FFFFFF @50%  ·  stroke #000000 @8% بسمك 0.5 داخلي
+   --------------------------------------------------------- */
+.sidebar {
+  flex: 0 0 auto;
+  width: calc(var(--sidebar-w) + var(--shell-gap) * 2);
+  padding: var(--shell-gap);
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  height: 100vh;
+  transition: width 0.2s ease;
+}
+
+.sidebar__panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--sidebar-radius);
+  background: var(--alpha-white-50);
+  border: 0.5px solid var(--alpha-black-08);
+  overflow: hidden;
+}
+
+/* --- رأس السايد منيو: padding 20 / 20 / 40 / 20 ، توزيع طرفي --- */
+.sidebar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 20px 40px;
+  min-height: 96px;
+  flex: 0 0 auto;
+}
+
+.sidebar__logo {
+  display: block;
+  width: 163px;
+  height: 32px;
+  flex: 0 0 auto;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--icon);
+  cursor: pointer;
+  border-radius: 6px;
+}
+.icon-btn:hover { background: rgba(0, 0, 0, 0.04); }
+
+/* --- قائمة التابات: padding 4 / 12 ، gap 4 --- */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 12px;
+  margin: 0;
+  list-style: none;
+  overflow-y: auto;
+}
+
+/* --- التاب: 251 × 40 ، radius 12 ، padding 0 12 ، gap 4 --- */
+.nav__item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: var(--nav-h);
+  padding: 0 12px;
+  border-radius: var(--nav-radius);
+  text-decoration: none;
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav__label {
+  flex: 1 1 auto;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav__icon {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+}
+
+.nav__item:hover { background: rgba(0, 0, 0, 0.03); }
+
+.nav__item.is-active {
+  background: var(--brand-soft);
+  color: var(--brand);
+  font-weight: 700;
+}
+
+/* تاب لم يُحدَّد محتواه بعد */
+.nav__item.is-undefined { color: var(--alpha-black-30); }
+.nav__item.is-undefined .nav__icon { opacity: 0.5; }
+
+/* --- الحالة المطوية --- */
+.shell.is-collapsed .sidebar { width: calc(var(--sidebar-w-collapsed) + var(--shell-gap) * 2); }
+.shell.is-collapsed .sidebar__logo,
+.shell.is-collapsed .nav__label { display: none; }
+.shell.is-collapsed .sidebar__header { justify-content: center; padding: 20px 0 40px; }
+.shell.is-collapsed .nav__item { justify-content: center; padding: 0; }
+
+/* ---------------------------------------------------------
+   Main content  ·  خلفية #FAFAFA
+   --------------------------------------------------------- */
+.main {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: var(--bg-page);
+}
+
+/* الحاوية الأولى: padding 60 / 30 / 30 / 40 ، gap 40 */
+.main__section {
+  margin: 0 5.5px;
+  padding: 60px 30px 30px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.main__section + .main__section { padding-top: 0; }
+
+/* ---------------------------------------------------------
+   الكارد العلوي "حدث قادم"
+   1070 × 350 · radius 40 · linear-gradient(#FDFCFC → #FFFFFF)
+   shadow: 0 0 80px rgba(0,0,0,.05)
+   --------------------------------------------------------- */
+.hero {
+  position: relative;
+  height: var(--hero-h);
+  border-radius: var(--hero-radius);
+  background: linear-gradient(90deg, #FDFCFC 0%, #FFFFFF 100%);
+  box-shadow: var(--hero-shadow);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.hero:hover {
+  box-shadow: 0 0 80px 0 rgba(0, 0, 0, 0.09);
+  transform: translateY(-2px);
+}
+
+/* رابط يغطي الكارد بالكامل — الكارد كله قابل للضغط */
+.hero__open {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+}
+.hero__open span {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.hero__back,
+.hero__title,
+.stepper { z-index: 3; }
+
+/* الصورة: 942 × 350 ملتصقة بالحافة اليسرى (مقصوصة من 980×654 عند ‎-38/-161‎) */
+.hero__img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 942px;
+  height: 350px;
+  object-fit: cover;
+  object-position: left top;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* تدرّجان أبيضان يذوّبان الصورة في الكارد (Rectangle 1 و 2) */
+.hero__fade {
+  position: absolute;
+  top: 0;
+  height: 350px;
+  pointer-events: none;
+}
+.hero__fade--start {
+  left: 0;
+  width: 520px;
+  background: linear-gradient(90deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+}
+.hero__fade--end {
+  left: 544px;
+  width: 409px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+}
+
+/* العنوان: 24px ، على بُعد 40 من الأعلى واليمين */
+.hero__title {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 36px;
+  color: var(--text-black);
+}
+
+/* زر الرجوع: 44 × 44 دائري ، على بُعد 40 من الأعلى و 36 من اليسار */
+.hero__back {
+  position: absolute;
+  top: 40px;
+  left: 36px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: var(--bg-default);
+  color: var(--alpha-black-30);
+  cursor: pointer;
+}
+.hero__back:hover { color: var(--text-black); }
+
+/* ---------------------------------------------------------
+   مؤشّر مراحل الحدث  ·  143 × 108 ، على بُعد 123 من الأعلى و 77 من اليمين
+   [ العناوين 111 ]  gap 20  [ الشريط 12 ]
+   --------------------------------------------------------- */
+.stepper {
+  position: absolute;
+  top: 123px;
+  right: 77px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 20px;
+  height: 108px;
+}
+
+.stepper__labels {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 8px 0;
+  width: 111px;
+  text-align: right;
+}
+
+.stepper__label {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 8px;   /* مطابق للتصميم — التباعد يأتي من الـ gap */
+  color: var(--alpha-black-20);
+  white-space: nowrap;
+}
+.stepper__label.is-current { color: var(--text-black); }
+
+/* صارت الخطوات روابط — تُلغى زخرفة الرابط ويبقى الشكل كما هو */
+a.stepper__label { text-decoration: none; transition: color 0.15s ease; }
+a.stepper__label:hover { color: var(--brand); }
+/* الشريط: 12 × 108 ، radius 20 ، خلفية #F4F4F5 */
+.stepper__rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 12px;
+  padding-bottom: 8px;
+  border-radius: 20px;
+  background: var(--bg-paper);
+}
+
+/* المؤشّر النشط: 12 × 18.67 ، لون البراند ، بداخله نقطة بيضاء 8 */
+.stepper__thumb {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 18.67px;
+  padding: 2px;
+  border-radius: 20px;
+  background: var(--brand);
+}
+.stepper__thumb::before {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--alpha-white-50);
+}
+
+.stepper__dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--alpha-white-50);
+}
+
+/* ---------------------------------------------------------
+   فريمات فارغة — مناطق لم يُحدَّد محتواها بعد
+   --------------------------------------------------------- */
+.frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--hero-radius);
+  background: var(--bg-default);
+  border: 0.5px solid var(--alpha-black-08);
+  box-shadow: var(--hero-shadow);
+}
+
+.frame--tall { min-height: 460px; }
+.frame--short { min-height: 140px; }
+
+.frame__hint {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.18);
+  letter-spacing: 0.01em;
+}
+
+.frame-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+/* =========================================================
+   شاشات ضيّقة
+   القوقعة مبنية لشاشة المكتب (إطار Figma 1728) — دون 900
+   تُطوى القائمة تلقائيًا إلى أيقونات ليبقى المحتوى صالحًا.
+   ========================================================= */
+@media (max-width: 900px) {
+  .sidebar { width: calc(var(--sidebar-w-collapsed) + var(--shell-gap) * 2); }
+  .sidebar__logo, .nav__label { display: none; }
+  .sidebar__header { justify-content: center; padding: 20px 0 32px; }
+  .nav__item { justify-content: center; padding: 0; }
+  .icon-btn { display: none; }
+
+  .main__section { margin: 0; padding: 32px 16px 16px; gap: 24px; }
+  .frame-row { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+
+  /* الكارد العلوي مبني على إحداثيات ثابتة — يُخفى بدل أن ينكسر */
+  .hero__img, .hero__fade, .hero__back { display: none; }
+  .hero { height: auto; padding: 32px 24px; }
+  .hero__title { position: static; }
+  .stepper { position: static; margin-top: 24px; }
+}

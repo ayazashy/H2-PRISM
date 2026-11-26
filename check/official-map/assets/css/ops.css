@@ -1,0 +1,196 @@
+/* =========================================================
+   مرحلة التشغيل — كانفس موقع الحدث
+   إحداثيات القاعة 2091 × 1248 (معلم الشاشة)، والمخطط مصفوف عليها
+   ========================================================= */
+
+.ops {
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-page);      /* Background/Default = #FAFAFA */
+  margin: 0;
+  padding-bottom: 0;
+}
+
+/* الشريط العلوي القياسي يطفو فوق الكانفس الثابت */
+.ops .ev-topbar { position: fixed; inset-inline: 0; top: 0; }
+
+/* ---------------------------------------------------------
+   الكانفس
+   --------------------------------------------------------- */
+.canvas {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+}
+.canvas.is-panning { cursor: grabbing; }
+
+/* المشهد ثلاثي الأبعاد يملأ الكانفس؛ طبقة عرض الشاشة فوقه لا تلتقط الأحداث
+   إلا بعد الوصول إليها (body.at-screen .w-wall في screen.css) */
+.venue-3d { position:absolute; inset:0; display:block; width:100%; height:100%; outline:none; }
+.ops .canvas__world { pointer-events:none; }
+
+/* عرض الشاشة داخل المشهد: لا جدار ولا أرضية ولا إطار منحنٍ — المحتوى
+   التفاعلي وحده، مطابق على وجه الشاشة ثلاثية الأبعاد (الموضع من ops.js).
+   نسبة 1568:612 تساوي نسبة الشاشة في المشهد (434:170) تقريبًا. */
+.ops .w-wall .scene__wall,
+.ops .w-wall .scene__skirt,
+.ops .w-wall .scene__floor,
+.ops .w-wall .scene__screen svg { display:none; }
+.ops .w-wall .scene__screen { aspect-ratio:1568 / 612; border-radius:4px; overflow:hidden; background:var(--scr-bg); filter:none; }
+
+/* زاوية النظر: منظور / علوي — نفس السطح الزجاجي للشريط العلوي */
+.view-switch {
+  position:fixed; bottom:40px; left:50%; transform:translateX(-50%); z-index:20;
+  display:flex; gap:4px; padding:4px;
+  border-radius:var(--r-pill); background:var(--sheet-bg);
+  backdrop-filter:var(--sheet-blur); -webkit-backdrop-filter:var(--sheet-blur);
+  box-shadow:var(--shadow-sheet);
+  transition:opacity .22s ease;
+}
+.view-switch button {
+  height:36px; padding:0 18px; border:0; border-radius:var(--r-pill);
+  background:transparent; font:500 14px/1 var(--font); color:var(--alpha-black-50); cursor:pointer;
+  transition:background .15s ease, color .15s ease;
+}
+.view-switch button[aria-pressed="true"] { background:var(--bg-default); color:var(--text-black); box-shadow:var(--shadow-float); }
+.view-switch button:focus-visible { outline:2px solid var(--brand); outline-offset:2px; }
+body.is-lifting .view-switch { opacity:0; pointer-events:none; }
+
+/* الموقع: ديفنسثون / هاكاثون أبشر طويق — بنفس سطح زاوية النظر، في الركن المقابل لزر الإضافة */
+.site-switch {
+  position:fixed; bottom:40px; inset-inline-end:40px; z-index:20;
+  display:flex; gap:4px; padding:4px;
+  border-radius:var(--r-pill); background:var(--sheet-bg);
+  backdrop-filter:var(--sheet-blur); -webkit-backdrop-filter:var(--sheet-blur);
+  box-shadow:var(--shadow-sheet);
+  transition:opacity .22s ease;
+}
+.site-switch a {
+  display:inline-flex; align-items:center; height:36px; padding:0 16px; border-radius:var(--r-pill);
+  font:500 14px/1 var(--font); color:var(--alpha-black-50); text-decoration:none;
+  transition:background .15s ease, color .15s ease;
+}
+.site-switch a[aria-current="page"] { background:var(--bg-default); color:var(--text-black); box-shadow:var(--shadow-float); }
+.site-switch a:focus-visible { outline:2px solid var(--brand); outline-offset:2px; }
+body.is-lifting .site-switch { opacity:0; pointer-events:none; }
+@media (max-width:900px) { .site-switch { bottom:92px; inset-inline-end:50%; transform:translateX(-50%); } }
+
+/* =========================================================
+   أداء: أثناء سحب الكانفس نُبقي طبقة بلر واحدة بدل أربع.
+   كل طبقة backdrop-filter تعيد تمويه ما تحتها في كل إطار،
+   والمحتوى تحتها هنا كانفس متحرّك — أغلى حالة ممكنة.
+   ========================================================= */
+body.is-panning .ev-fx > span:not(:first-child) { display: none; }
+body.is-panning .ev-fx > span:first-child { --b: 10px; }
+
+/* الانتقالات على أشكال الطاولة تلزم فقط عند تغيّر الحالة */
+
+/* =========================================================
+   زر "شاشة العرض الرئيسية" · 199 × 48 · radius 96
+   Figma 445:13783 — يتوسّط الشريط أفقيًا، على بعد 20 تحت حبّة المراحل
+   ========================================================= */
+.screen-btn {
+  position: fixed;
+  top: 120px;                 /* أسفل الحبّة (44 + 56) بـ20 */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 36;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 96px;        /* Radius/Full */
+  background: var(--bg-default);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-black);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.screen-btn:hover { background: #FCFCFD; }
+.screen-btn svg { color: var(--alpha-black-50); flex: 0 0 auto; }
+.screen-btn img { display:block; width:16px; height:16px; flex:none; }
+
+/* =========================================================
+   لوحة أدوات التشغيل داخل الكانفس
+   العدّاد وجاهزية الإعداد والتنبيهات والتحديثات — تسكن فوق
+   المخطط بدل صفحة منفصلة، وتُطوى لتخلي الكانفس بالكامل.
+   ========================================================= */
+.dock {
+  position: fixed;
+  top: 180px;
+  inset-inline-start: var(--ev-gutter);
+  z-index: 38;
+  width: 360px;
+  max-width: calc(100vw - var(--ev-gutter) * 2);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: opacity 0.24s ease;
+}
+
+.dock__toggle {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--bg-default);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-black);
+  cursor: pointer;
+}
+.dock__toggle .dock__n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: var(--r-pill);
+  background: var(--brand-50);
+  font-size: 12px;
+  color: var(--brand);
+}
+.dock__toggle svg { color: var(--alpha-black-30); transition: transform 0.18s ease; }
+.dock.is-open .dock__toggle svg { transform: rotate(180deg); }
+
+.dock__body {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  max-height: calc(100vh - 260px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 2px;
+}
+.dock.is-open .dock__body { display: flex; }
+
+/* بطاقات اللوحة فوق الكانفس: زجاج خفيف لتبقى الطاولات محسوسة تحتها */
+.dock .card {
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: var(--r-card);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.07);
+  padding: 18px 20px;
+}
+.dock .ev-countdown { padding: 0 0 4px; }
+.dock .ev-countdown__value { font-size: 28px; }
+
+/* تختفي أثناء حركة الكاميرا وفي عرض الشاشة */
+body.is-lifting .dock,
+body.at-screen .dock { opacity: 0; pointer-events: none; }

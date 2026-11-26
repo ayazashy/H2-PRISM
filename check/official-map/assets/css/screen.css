@@ -1,0 +1,347 @@
+/* =========================================================
+   صفحة الشاشة الكبيرة في موقع الحدث
+   Figma 296:6777 · إطار 1728 × 1117
+   الشاشة 1568 × 600 عند (80, 203) · الأرضية من y=927 · الوزرة 883→927
+   كل المقاسات بالنِّسب حتى تحفظ المنظور على أي شاشة.
+   ========================================================= */
+
+.scr { margin: 0; height: 100vh; overflow: hidden; background: #F7F7F8; }
+
+/* ---- المشهد: جدار + وزرة + أرضية ---- */
+.scene {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+.scene__wall {
+  position: absolute;
+  inset: 0 0 17% 0;                       /* 927/1117 = 83% */
+  background:
+    radial-gradient(120% 90% at 50% 34%, #FFFFFF 0%, #FAFAFA 46%, #F5F5F6 100%);
+}
+
+.scene__skirt {
+  position: absolute;
+  left: 0; right: 0;
+  top: 79.05%;                            /* 883/1117 */
+  height: 3.94%;                          /* 44/1117  */
+  background: linear-gradient(180deg, #FCFCFD 0%, #F6F6F7 100%);
+}
+
+.scene__floor {
+  position: absolute;
+  left: 0; right: 0;
+  top: 83%;
+  bottom: 0;
+  background: linear-gradient(180deg, #ECECEE 0%, #E1E1E4 100%);
+}
+
+/* ---- الشاشة المنحنية ---- */
+.scene__screen {
+  position: absolute;
+  left: 4.63%;                            /* 80/1728  */
+  width: 90.74%;                          /* 1568/1728 */
+  top: 18.17%;                            /* 203/1117 */
+  filter: drop-shadow(0 32px 60px rgba(0, 0, 0, 0.16));
+}
+.scene__screen svg { display: block; width: 100%; height: auto; }
+
+/* ---- شريط الأدوات العلوي · 1528 × 44 عند (100, 99) ---- */
+.scr-bar {
+  position: fixed;
+  left: 5.79%;                            /* 100/1728 */
+  right: 5.79%;
+  top: 8.86%;                             /* 99/1117 */
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 44px;
+}
+
+.scr-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 44px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 96px;                    /* Radius/Full */
+  background: #10413D0D;                  /* Background/Accent-Subtle */
+  font: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--brand);                    /* Action/Primary */
+  cursor: pointer;
+  white-space: nowrap;
+}
+.scr-edit:hover { background: #10413D1A; }
+.scr-edit svg { color: var(--brand); flex: 0 0 auto; }
+
+.scr-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 96px;
+  background: #0000000D;                  /* Alpha/Black-5 */
+  color: #00000080;                       /* Alpha/Black-50 */
+  cursor: pointer;
+  text-decoration: none;
+}
+.scr-back:hover { background: rgba(0, 0, 0, 0.12); color: var(--text-black); }
+
+/* =========================================================
+   انتقال الكاميرا: مشهد واحد ثلاثي الأبعاد
+   الأرضية = مخطط القاعة نفسه · الجدار = مشهد الشاشة في آخر القاعة.
+   الكاميرا تبدأ فوق تنظر عموديًا للأسفل (فتبدو الأرضية مسقطًا
+   مسطّحًا تمامًا كما هي الآن)، ثم تنزل وتتقدّم وترفع رأسها حتى
+   تقف أمام الشاشة. الاثنان مرئيان طوال الحركة.
+   ========================================================= */
+
+/* The camera owns the projection; floor and display share room coordinates. */
+.canvas__world { position:absolute; inset:0; transform-origin:0 0; }
+.w-floor { position:absolute; inset:0; transform-origin:0 0; }
+.w-wall {
+  position:absolute; left:0; top:0;
+  width:100vw; height:100vh;
+  transform-origin:0 0;
+  visibility:hidden; pointer-events:none;
+  backface-visibility:hidden;
+}
+.w-wall .scene { position:absolute; inset:0; overflow:visible; }
+body.is-lifting .canvas { perspective-origin:50% 50%; }
+body.is-lifting .canvas__world,
+body.is-lifting .w-floor,
+body.is-lifting .canvas__stage,
+body.is-lifting .canvas-screen { transform-style:preserve-3d; }
+body.is-lifting .canvas__world { will-change:transform; }
+body.is-lifting .w-wall { visibility:visible; }
+body.at-screen .w-wall { pointer-events:auto; }
+.w-wall .scene__wall,
+.w-wall .scene__skirt,
+.w-wall .scene__floor { opacity:var(--screen-arrival,0); }
+body.is-lifting #grid,
+body.is-lifting .canvas-screen__platform,
+body.is-lifting .canvas-screen__bridge,
+body.is-lifting .canvas-screen__body { opacity:calc(1 - var(--screen-arrival,0)); }
+body.is-lifting .canvas-screen__bridge { transform:translateZ(var(--screen-rise,0px)); }
+.canvas-screen__body { display:none; position:absolute; top:0; left:0; height:var(--screen-body-height); transform-origin:0 0; }
+body.is-lifting .canvas-screen__body { display:block; }
+.canvas-screen__back {
+  width:100%; background:linear-gradient(90deg,#dedee2,#f2f2f4 48%,#d9d9df);
+  transform:translateZ(var(--screen-rise,0px)) rotateX(-90deg) scaleY(var(--screen-unfold,0));
+}
+.canvas-screen__side {
+  width:50.6px; background:linear-gradient(90deg,#d4d4da,#f1f1f3);
+  transform:translateZ(var(--screen-rise,0px)) rotateX(-90deg) rotateY(-90deg) scaleY(var(--screen-unfold,0));
+}
+.canvas-screen__side--right { left:100%; }
+
+/* واجهة المسقط تختفي فور انطلاق الكاميرا */
+body.is-lifting .tool-nav,
+body.is-lifting .screen-btn,
+body.is-lifting .ev-topbar { transition: opacity 0.22s ease; opacity: 0; }
+
+/* =========================================================
+   عرض الشاشة كحالة داخل صفحة المخطط — بلا انتقال صفحة.
+   انتقال الصفحة كان يترك فجوة رسم محسوسة في ذروة الحركة.
+   ========================================================= */
+
+/* شريط أدوات الشاشة يظهر بعد وصول الكاميرا */
+.ops .scr-bar { opacity: 0; pointer-events: none; transition: opacity 0.24s ease; }
+body.at-screen .scr-bar { opacity: 1; pointer-events: auto; }
+
+/* --- تخفيف كلفة الرسم أثناء حركة الكاميرا ---
+   ظل SVG والتدرّجات تُعاد رسترتها في كل إطار مع تغيّر المقياس. */
+body.is-lifting .scene__screen { filter:none; }
+body.is-lifting .w-wall { will-change: transform, opacity; }
+body.is-lifting .w-floor { will-change: transform; }
+
+/* =========================================================
+   محتوى الشاشة · Figma section 460:100817
+   المساحة الداخلية 1472 × 456 داخل شاشة 1568 × 600.
+   كل المقاسات بوحدة cqw (1cqw = 1% من عرض المساحة = 14.72px
+   بمقاس التصميم) فتبقى النِّسب مطابقة على أي حجم شاشة.
+   ========================================================= */
+
+:root {
+  --scr-bg:     #1B1145;   /* لوح الشاشة */
+  --scr-panel:  #251A57;   /* حاوية الودجت */
+  --scr-track:  #332766;   /* مسار الشريط */
+  --scr-badge:  #40337A;   /* شارة العدد */
+  --scr-muted:  #B9B2D6;
+}
+
+/* لوح الشاشة صار كحلي بدل الأسود */
+.scene__screen svg path { fill: var(--scr-bg); }
+
+.disp {
+  position: absolute;
+  left: 3.06%;                 /* (128-80)/1568 */
+  top: 5.33%;                  /* (235-203)/600 */
+  width: 93.88%;               /* 1472/1568 */
+  height: 76%;                 /* 456/600  */
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: 2.99cqw;                /* 44 */
+  color: #fff;
+  font-size: 1.36cqw;
+}
+
+/* --- صف الشعار --- */
+.disp__head { display: flex; align-items: center; height: 2.72cqw; }
+.disp__logo { height: 2.72cqw; width: auto; }
+
+/* --- صف الودجتات ---
+   لوحة العرض تتبع ترتيب التصميم لا اتجاه النص: الأشرطة يسارًا
+   والبطاقات يمينًا. النصوص بداخلها تبقى RTL. */
+.disp__row { flex: 1 1 auto; display: flex; gap: 2.72cqw; min-height: 0; direction: ltr; }
+.disp__row > * { direction: rtl; }
+
+.wg {
+  position: relative;
+  border-radius: 1.36cqw;
+  background: var(--scr-panel);
+  padding: 1.09cqw 1.63cqw;   /* 16 / 24 */
+}
+.wg__title { margin: 0 0 0.8cqw; font-size: 1.36cqw; font-weight: 500; color: #fff; }
+
+/* لوح الأشرطة · 930 من 1472 */
+.wg--bars { flex: 0 0 63.18%; display: flex; flex-direction: column; }
+.bars { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: center; gap: 0.54cqw; }
+
+.bar {
+  display: flex;
+  align-items: center;
+  height: 2.45cqw;
+  border-radius: 0.68cqw;
+  background: var(--scr-track);
+  direction: ltr;            /* الشارة يسارًا والشريط ملاصقًا لليمين */
+}
+.bar__n {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.99cqw;
+  height: 2.45cqw;
+  border-radius: 0.68cqw;
+  background: var(--scr-badge);
+  font-size: 1.22cqw;
+  font-weight: 700;
+}
+.bar__fill {
+  margin-left: auto;         /* يلتصق بالحافة اليمنى ويطول لليسار */
+  direction: rtl;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.54cqw;
+  height: 2.45cqw;
+  padding: 0 0.82cqw;
+  border-radius: 0.68cqw;
+  font-size: 1.22cqw;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.bar__fill img { height: 1.7cqw; width: auto; flex: 0 0 auto; }
+.bar__sp { flex: 1 1 auto; }
+
+/* بطاقات الأرقام · 502 من 1472 · شبكة 2×2 */
+.wg--stats {
+  flex: 0 0 34.1%;
+  align-self: flex-start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.09cqw 2.72cqw;
+  background: none;
+  padding: 0;
+}
+.stat { border-radius: 1.36cqw; background: var(--scr-panel); padding: 1.09cqw 1.63cqw; }
+.stat span { display: block; font-size: 1.36cqw; color: #fff; }
+.stat b { display: block; margin-top: 0.4cqw; font-size: 2.72cqw; font-weight: 700; }
+
+/* شبكة كل الجهات (الشريحة الثانية) */
+.grid-all { flex: 1 1 auto; display: grid; grid-template-columns: repeat(15, 1fr); gap: 0.75cqw; align-content: center; }
+.gcell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2cqw;
+  aspect-ratio: 1;
+  border-radius: 0.82cqw;
+  font-size: 1.09cqw;
+  font-weight: 700;
+}
+.gcell img { height: 1.36cqw; width: auto; }
+
+/* نقاط الشرائح · 64 × 12 عند y=755 */
+.disp-dots {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 92%;                    /* (755-203)/600 */
+  display: flex;
+  align-items: center;
+  gap: 0.5%;
+  height: 2%;
+}
+.disp-dots i { display: block; width: 12px; height: 12px; border-radius: 96px; background: var(--scr-muted); opacity: 0.5; }
+.disp-dots i.is-on { width: 44px; opacity: 1; background: #fff; }
+
+/* --- وضع التعديل --- */
+.wg__del {
+  position: absolute;
+  top: -1.09cqw;
+  left: -1.09cqw;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.18cqw;
+  height: 2.18cqw;
+  border: 0;
+  border-radius: 96px;
+  background: #CFCBDF;
+  color: #1B1145;
+  font-size: 1.6cqw;
+  line-height: 1;
+  cursor: pointer;
+}
+body.is-editing .wg__del,
+.scr.is-editing .wg__del { display: flex; }
+
+.disp__empty {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.disp.is-empty .disp__empty { display: flex; }
+.disp.is-empty .disp__head,
+.disp.is-empty .disp__row { visibility: hidden; }
+.disp__empty button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.54cqw;
+  height: 2.72cqw;
+  padding: 0 1.36cqw;
+  border: 0;
+  border-radius: 96px;
+  background: rgba(255, 255, 255, 0.14);
+  font: inherit;
+  font-size: 1.22cqw;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+}
+
+.room-flight {position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;}

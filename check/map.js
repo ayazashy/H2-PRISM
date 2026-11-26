@@ -82,6 +82,11 @@ export class FairMapController {
     this._matchedIds = new Set();
     this._route = [];
     this._routeIndexByTable = new Map();
+    this.officialFrame = null;
+    this.officialBridge = null;
+    this._officialLang = null;
+    this.officialView = 'perspective';
+    this._pendingFocus = null;
 
     this._buildDOM();
     this._bindEvents();
@@ -106,8 +111,8 @@ export class FairMapController {
         <button class="chip-btn" data-toggle="showRoute">${ico('route')}</button>
       </div>
       <div class="map-zoom-btns">
-        <button data-zoom="out">${ico('minus')}</button>
-        <button data-zoom="in">${ico('plus')}</button>
+        <button data-zoom="3d" class="active">3D</button>
+        <button data-zoom="2d">2D</button>
         <button data-zoom="fit">${ico('maximize')}</button>
         <button data-zoom="me">${ico('pin')}</button>
       </div>
@@ -140,6 +145,26 @@ export class FairMapController {
     this.canvas = document.createElement('canvas');
     this.canvas.className = 'hall-canvas';
     this.ctx = this.canvas.getContext('2d', { alpha: false });
+    if (typeof window !== 'undefined' && typeof window.WebGLRenderingContext !== 'undefined') {
+      this.officialFrame = document.createElement('iframe');
+      this.officialFrame.className = 'official-map-frame';
+      this.officialFrame.title = 'SAIF Official Map';
+      this.canvasScroll.appendChild(this.officialFrame);
+      this.canvas.classList.add('hidden');
+      window.onOfficialMapReady = (bridge) => {
+        this.officialBridge = bridge;
+        this._syncOfficialMap();
+        if (this._pendingFocus) {
+          const pf = this._pendingFocus;
+          this._pendingFocus = null;
+          bridge.focusBooth(pf.tableStr, pf.openInspector);
+        }
+      };
+      window.onOfficialMapAction = (action, payload) => {
+        if (action === 'openProject') this.onSelectProject(payload);
+        else this.onAction(action, payload);
+      };
+    }
     this.canvasScroll.appendChild(this.canvas);
     this.stage.appendChild(this.canvasScroll);
 
@@ -221,18 +246,15 @@ export class FairMapController {
       const zBtn = e.target.closest('[data-zoom]');
       if (!zBtn) return;
       const mode = zBtn.dataset.zoom;
-      if (mode === 'in') {
+      if (mode === '3d' || mode === '2d') {
         if (this.activeZone) this.resetView();
-        this.canvasZoom = Math.min(3.4, +(this.canvasZoom + 0.7).toFixed(1));
-        this.stageW = 0;
-        this._resizeCanvas();
-      } else if (mode === 'out') {
-        if (this.activeZone) this.resetView();
-        this.canvasZoom = Math.max(1, +(this.canvasZoom - 0.7).toFixed(1));
-        this.stageW = 0;
-        this._resizeCanvas();
+        this.officialView = mode === '2d' ? 'top' : 'perspective';
+        this.toolbar.querySelector('[data-zoom="3d"]')?.classList.toggle('active', mode === '3d');
+        this.toolbar.querySelector('[data-zoom="2d"]')?.classList.toggle('active', mode === '2d');
+        this.officialBridge?.setViewMode(this.officialView);
       } else if (mode === 'fit') {
         this.resetView();
+        this.officialBridge?.resetView();
       } else if (mode === 'me' && this._lastArgs) {
         if (this._lastArgs.prefs.myBooth) this.focusTable(this._lastArgs.prefs.myBooth, true);
         else this.onAction('openPrefs');
@@ -322,6 +344,14 @@ export class FairMapController {
   focusTable(tableStr, openInspector = true) {
     const parsed = parseTableCode(tableStr);
     if (!parsed) return;
+    if (!this.activeZone && this.officialFrame) {
+      if (this.officialBridge) {
+        this.officialBridge.focusBooth(tableStr, openInspector);
+      } else {
+        this._pendingFocus = { tableStr, openInspector };
+      }
+      return;
+    }
     this.focusZone(parsed.z);
     if (openInspector && this.boothGroups.has(tableStr)) {
       this.selectTable(tableStr);
@@ -466,6 +496,7 @@ export class FairMapController {
       zTotal[z] = 0;
     }
     for (const p of this.projects) {
+      if (!p.z) continue;
       zTotal[p.z] += 1;
       if (this._matchedIds.has(p.id)) zMatch[p.z] += 1;
     }
@@ -493,11 +524,54 @@ export class FairMapController {
     this._renderLegend(ui.mapColor || 'status', ui.lang);
     this._renderRouteStrip(prefs);
     if (this.selectedTable) this._renderInspector();
+    this._syncOfficialMap();
 
     if (this.activeZone) {
       this._renderZoneGrid();
-    } else {
+    } else if (!this.officialFrame) {
       this._draw();
+    }
+  }
+
+  _colorForGroup(projs, records, mode) {
+    const { evalById } = this._lastArgs || {};
+    let maxRat = 0, maxScore = 0, primary = projs[0];
+    for (const pr of projs) {
+      const ev = evalById?.get(pr.id);
+      const rec = records?.[pr.id] || {};
+      if (this._matchedIds.has(pr.id)) primary = pr;
+      if ((rec.rat || 0) > maxRat) maxRat = rec.rat;
+      if ((ev?.matchScore || pr._score || 0) > maxScore) maxScore = ev?.matchScore || pr._score || 0;
+    }
+    if (mode === 'rating') return RATING_COLORS[maxRat] || '#475569';
+    if (mode === 'match') return matchColor(maxScore);
+    if (mode === 'cat') return CAT_COLORS[primary?.cat] || '#64748b';
+    if (mode === 'path') return this.pathMap.get(primary?.path)?.color || '#64748b';
+    return null;
+  }
+
+  _syncOfficialMap() {
+    if (!this._lastArgs) return;
+    const { evalById, records, prefs, ui } = this._lastArgs;
+    if (this.officialFrame) {
+      const wantLang = ui.lang === 'en' ? 'en' : 'ar';
+      if (this._officialLang !== wantLang) {
+        this._officialLang = wantLang;
+        try { localStorage.setItem('saif-map-lang', wantLang); } catch (_) {}
+        this.officialFrame.src = `./official-map/index.html?embed=1&lang=${wantLang}`;
+      }
+    }
+    if (this.officialBridge) {
+      this.officialBridge.syncChecklist({
+        records,
+        matchedIds: this._matchedIds,
+        evalById,
+        prefs,
+        ui,
+        boothToProjects: this.boothGroups,
+        routeIndexByTable: this._routeIndexByTable,
+        colorForBooth: (projs, recs, mode) => this._colorForGroup(projs, recs, mode),
+      });
     }
   }
 
@@ -547,13 +621,9 @@ export class FairMapController {
 
     ctx.fillStyle = isLight ? 'rgba(2, 132, 199, 0.04)' : 'rgba(96, 165, 250, 0.04)';
     ctx.strokeStyle = isLight ? '#cbd5e1' : '#263248';
-    ctx.lineWidth = 1.2;
-    ctx.fillRect(8, 8, 842, 678);
-    ctx.strokeRect(8, 8, 842, 678);
-
-    ctx.fillStyle = isLight ? 'rgba(124, 58, 237, 0.04)' : 'rgba(167, 139, 250, 0.04)';
-    ctx.fillRect(896, 8, 856, 678);
-    ctx.strokeRect(896, 8, 856, 678);
+    ctx.lineWidth = 1.4;
+    ctx.fillRect(20, 40, HALL_WIDTH - 40, HALL_HEIGHT - 80);
+    ctx.strokeRect(20, 40, HALL_WIDTH - 40, HALL_HEIGHT - 80);
 
     for (const [zId, g] of Object.entries(ZONE_GEOMETRY)) {
       const box = this.zoneBoxes[zId];
@@ -605,14 +675,14 @@ export class FairMapController {
       ctx.globalAlpha = b.alpha;
       ctx.fillStyle = b.fill;
       for (const p0 of b.rects) {
-        ctx.fillRect(p0.x, p0.y, 14, 22);
+        ctx.fillRect(p0.x, p0.y, p0.w || 10, p0.h || 20);
       }
     }
 
     ctx.globalAlpha = 1;
     for (const { p0, vis } of pips) {
       ctx.fillStyle = vis.isMe ? '#ffffff' : vis.anyFav ? '#fef08a' : vis.anyVis ? '#a7f3d0' : '#f472b6';
-      ctx.fillRect(p0.x + 9.5, p0.y + 1.5, 3.2, 3.2);
+      ctx.fillRect(p0.x + (p0.w || 10) - 3.5, p0.y + 1, 3, 3);
     }
 
     if (ui.showRoute && this._route.length) {
@@ -643,7 +713,7 @@ export class FairMapController {
       const mr = getBoothRect(myParsed.z, myParsed.r, myParsed.s);
       ctx.strokeStyle = '#d946ef';
       ctx.lineWidth = 2.5;
-      ctx.strokeRect(mr.x - 3, mr.y - 3, 20, 28);
+      ctx.strokeRect(mr.x - 2.5, mr.y - 2.5, (mr.w || 10) + 5, (mr.h || 20) + 5);
     }
 
     if (this.selectedTable) {
@@ -652,7 +722,7 @@ export class FairMapController {
         const sr = getBoothRect(sp.z, sp.r, sp.s);
         ctx.strokeStyle = isLight ? '#0f172a' : '#ffffff';
         ctx.lineWidth = 2.5;
-        ctx.strokeRect(sr.x - 2.5, sr.y - 2.5, 19, 27);
+        ctx.strokeRect(sr.x - 2.5, sr.y - 2.5, (sr.w || 10) + 5, (sr.h || 20) + 5);
       }
     }
 

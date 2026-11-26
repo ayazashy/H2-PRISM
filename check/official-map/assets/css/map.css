@@ -1,0 +1,1028 @@
+/* =========================================================
+   خريطة هاكاثون أبشر طويق — الصفحة المستقلة
+   لا شريط علوي ولا مبدّل مواقع: الخريطة وحدها، فكل ما كان يطفو
+   تحت الشريط (اللوحة، الشيت، شريط النقل، زر الشاشة) يصعد للحافة.
+   ثم أسطح التنقّل: بطاقة «من / إلى»، شريط الطريق، لافتة الرحلة، البوصلة.
+   ========================================================= */
+.map-app { --map-top: 24px; --map-bottom: 112px; --map-safe: 0px; }
+.map-app.workspace.ops .screen-btn { --screen-dock-top: var(--map-top); }
+/* زرّ الأجندة الراسي يتنحّى بهدوء وقائمة نتائج «من / إلى» مفتوحة — لا يعلوها ولا يقفز تحتها */
+.map-app .screen-btn { transition: opacity .18s ease, visibility .18s; }
+body.is-picking .screen-btn { opacity: 0; visibility: hidden; pointer-events: none; }
+/* المؤشر سهم عادي فوق الخريطة، ويد قابضة أثناء السحب فقط (وإصبع فوق الجناح — wayfinding.js) */
+.map-app .canvas:not(.is-panning) { cursor: default; }
+
+/* ---------- أزرار الخريطة: 3D / 2D فوق بعض، والبوصلة تحتهما — الزاوية اليسرى السفلى ---------- */
+.map-bar {
+  position: fixed; bottom: calc(var(--map-safe) + 40px); inset-inline-end: var(--ev-gutter); z-index: 20;
+  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px;
+  border-radius: var(--r-pill); background: color-mix(in srgb, var(--bg-default) 92%, transparent);
+  backdrop-filter: var(--sheet-blur); -webkit-backdrop-filter: var(--sheet-blur);
+  box-shadow: var(--shadow-sheet);
+}
+.map-bar .view-switch {
+  position: static; transform: none; flex-direction: column; padding: 0; gap: 2px;
+  background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none;
+}
+.map-bar .view-switch button {
+  width: 44px; height: 44px; padding: 0;
+  font-size: 14px; font-weight: 600; letter-spacing: .02em; direction: ltr;
+}
+.map-bar .view-switch button[aria-pressed="true"] { background: var(--alpha-black-5); box-shadow: none; }
+
+/* شارة المنطقة: اسمها وحده، بلا أرقام ولا حالة — والضغط يجعلها وجهتك */
+/* شارة باسم مكان: حشو متساوٍ من الجانبين (الحشو المائل كان لدائرة الحرف في الشارة الأصلية) */
+.zone-chip--name { color: var(--text-black); padding-inline: 14px; }
+.zone-chip--name:hover { background: var(--brand-50); color: var(--brand); }
+
+/* ---------- أمام شاشة العرض: الشاشة وشريطها وحدهما (زر الرجوع تحت بطاقة الاتجاهات) ---------- */
+body.is-lifting .nav-card, body.is-lifting .map-bar, body.is-lifting .nav-bottom, body.is-lifting .nav-banner,
+body.is-lifting .map-overlay { visibility: hidden; }
+.map-app .scr-bar { z-index: 50; }
+
+/* شارة الحرف: دائرة بيضاء تامة (عرضها = طولها) والحرف أسود فيها */
+.zone-chip--letter { width: 30px; height: 30px; min-height: 0; padding: 0; justify-content: center; }
+.zone-chip--letter b { width: auto; height: auto; background: none; color: var(--text-black); font-size: 13px; font-weight: 700; }
+.zone-chip--letter:hover b { color: var(--brand); }
+
+/* ---------- أثناء الرحلة: الطريق وحده على الشاشة ---------- */
+body.is-journey .map-bar,
+body.is-journey .screen-btn,
+body.is-journey .map-overlay { visibility: hidden; }
+
+.nav-card {
+  position: fixed; top: var(--map-top); inset-inline-start: var(--ev-gutter); z-index: 42;
+  width: 360px; max-width: calc(100vw - 32px); max-height: calc(100vh - var(--map-top) - var(--map-bottom));
+  display: flex; flex-direction: column; gap: 8px;
+}
+.nav-card[hidden] { display: none; }
+/* أسطح التنقّل أقرب للمصمت: النص والحقول تُقرأ فوق أي جزء من القاعة */
+.nav-card__box, .nav-results, .nav-pill, .nav-banner {
+  border-radius: var(--r-sheet); background: color-mix(in srgb, var(--bg-default) 92%, transparent);
+  backdrop-filter: var(--sheet-blur); -webkit-backdrop-filter: var(--sheet-blur);
+  box-shadow: var(--shadow-sheet);
+}
+.nav-card__box { flex: none; padding: 8px; }
+.nav-card__head { display: flex; align-items: center; justify-content: space-between; padding-block: 4px 8px; padding-inline: 8px 4px; }
+.nav-card__head h2 { margin: 0; font-size: 16px; font-weight: 700; color: var(--text-black); }
+/* زرّ X لا يغيّر ارتفاع الرأس (كان يزيده 12px فيقفز الحقلان لحظة فتح القائمة) — ويظهر بتلاشٍ هادئ */
+.nav-card__head .ui-icon-btn { margin-block: -6px; animation: navX .18s ease; }
+@keyframes navX { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .nav-card__head .ui-icon-btn { animation: none; } }
+.nav-card__fields { display: flex; align-items: center; gap: 8px; }
+.nav-card__rows { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.nav-card__swap { flex: none; width: 40px; height: 40px; background: var(--bg-default); box-shadow: var(--shadow-float); }
+
+.nav-field {
+  display: flex; align-items: center; gap: 8px; height: 46px; padding-inline: 12px 6px;
+  border-radius: var(--r-row); background: var(--alpha-black-5); cursor: text;
+  transition: background-color .15s ease, box-shadow .15s ease;
+}
+.nav-field:not(.is-on):hover { background: var(--alpha-black-08); }
+/* الحقل المفتوح بلا حدّ: رمادي أعمق قليلًا يكفي ليُعرف أين تكتب */
+.nav-field.is-on { background: var(--alpha-black-08); }
+.nav-field__icon { flex: none; display: grid; place-items: center; width: 22px; color: var(--brand); }
+.nav-field__from {
+  width: 10px; height: 10px; border-radius: var(--r-pill); background: var(--bg-default);
+  box-shadow: 0 0 0 3px var(--alpha-black-50);
+}
+.nav-field__label { flex: none; width: 28px; font-size: 14px; font-weight: 600; color: var(--alpha-black-30); }
+.nav-field .ui-field {
+  flex: 1 1 auto; min-width: 0; height: 40px; padding: 0; border: 0; background: transparent; box-shadow: none;
+  font-size: 16px; font-weight: 500; color: var(--text-black);
+}
+.nav-field .ui-field:focus { outline: none; }
+.nav-field__clear { flex: none; width: 32px; height: 32px; color: var(--alpha-black-30); background: transparent; }
+
+.nav-results {
+  min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  display: flex; flex-direction: column; gap: 4px; padding: 8px;
+}
+.nav-results__hint, .nav-results__empty { margin: 0; padding: 10px 12px; font-size: 13px; line-height: 1.6; color: var(--alpha-black-50); }
+.nav-results__empty { padding-block: 20px; text-align: center; font-size: 14px; }
+.nav-place {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 8px; border: 0; border-radius: var(--r-tile);
+  background: transparent; font: inherit; text-align: start; cursor: pointer;
+  transition: background-color .15s ease;
+}
+/* السطح أبيض شبه مصمت: الهوفر رمادي خفيف لا أبيض، وإلا اختفى */
+.nav-place:hover, .nav-place:focus-visible { background: var(--alpha-black-5); outline: none; }
+.nav-place:active { background: var(--alpha-black-08); }
+.nav-place:focus-visible { box-shadow: inset 0 0 0 1.5px var(--brand-200); }
+.nav-place__icon { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--r-row); }
+.nav-place__icon--brand { background: var(--brand-50); color: var(--brand); }
+.nav-place__icon--ok { background: var(--ok-bg); color: var(--ok-fg); }
+.nav-place__icon--warn { background: var(--warn-bg); color: var(--warn-fg); }
+.nav-place__icon--idle { background: var(--idle-bg); color: var(--idle-fg); }
+.nav-place__main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.nav-place__main b { font-size: 15px; font-weight: 600; color: var(--text-black); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nav-place__main span { font-size: 12px; color: var(--alpha-black-50); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ---------- الأسفل: الطريق ثم الرحلة — مكان شريط الطبقات ---------- */
+.nav-bottom {
+  position: fixed; bottom: calc(var(--map-safe) + 40px); inset-inline: 0; margin-inline: auto; width: max-content; max-width: calc(100vw - 32px); z-index: 43;
+}
+.nav-bottom[hidden] { display: none; }
+.nav-pill { display: flex; align-items: center; gap: 12px; margin: 0; padding: 8px; padding-inline-start: 20px; box-sizing: border-box; }
+.nav-pill__text { display: flex; flex-direction: column; margin: 0; min-width: 0; margin-inline-end: auto; }
+.nav-pill__text b { font-size: 20px; font-weight: 700; line-height: 1.2; color: var(--text-black); font-variant-numeric: tabular-nums; }
+.nav-pill__text span { font-size: 13px; color: var(--alpha-black-50); white-space: nowrap; }
+.nav-pill .ui-btn--lg { height: 44px; padding-inline: 20px; }
+.nav-pill__close { width: 44px; height: 44px; background: var(--bg-default); }
+.nav-failed { padding: 14px 20px; font-size: 14px; font-weight: 500; color: var(--alpha-black-70); }
+
+/* خطوات الطريق قبل البدء: نظرة واحدة تكفي لمعرفة المنعطفات */
+.nav-route__steps {
+  display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; max-width: 520px; overflow-x: auto; scrollbar-width: none;
+}
+.nav-route__steps li {
+  flex: none; display: inline-flex; align-items: center; gap: 6px; height: 32px; padding-inline: 8px 12px;
+  border-radius: var(--r-pill); background: var(--alpha-black-5); font-size: 12px; font-weight: 500; color: var(--alpha-black-70); white-space: nowrap;
+}
+.nav-route__steps li span { display: grid; place-items: center; color: var(--brand); }
+.nav-journey .nav-pill__text b { font-size: 16px; }
+.nav-journey__prev { width: 44px; height: 44px; background: var(--bg-default); }
+.nav-journey__prev:disabled { color: var(--alpha-black-20); cursor: default; }
+.nav-arrived { background: var(--ok-fg); }
+
+/* ---------- لافتة الرحلة: التعليمة نفسها هي العنوان ---------- */
+.nav-banner {
+  position: fixed; top: var(--map-top); inset-inline: 0; margin-inline: auto; z-index: 43;
+  width: 520px; max-width: calc(100vw - 32px); box-sizing: border-box;
+  display: flex; align-items: flex-start; gap: 16px; padding: 16px; padding-inline-start: 20px;
+}
+.nav-banner[hidden] { display: none; }
+.nav-banner__icon { flex: none; display: grid; place-items: center; width: 56px; height: 56px; border-radius: var(--r-tile); background: var(--brand-50); color: var(--brand); }
+.nav-banner__icon.is-arrived { background: var(--ok-bg); color: var(--ok-fg); }
+/* الأسهم مرسومة باتجاه المشي الفعلي: لا تنعكس مع RTL */
+.nav-banner__icon svg, .nav-route__steps svg { direction: ltr; }
+.nav-banner__text { flex: 1 1 auto; display: flex; flex-direction: column; gap: 4px; margin: 0; padding-top: 4px; min-width: 0; }
+.nav-banner__text b { font-size: 20px; font-weight: 700; line-height: 1.35; color: var(--text-black); }
+.nav-banner__text span { font-size: 14px; font-weight: 500; color: var(--alpha-black-50); }
+.nav-banner__end { flex: none; width: 40px; height: 40px; background: var(--bg-default); }
+
+/* ---------- البوصلة داخل شريط الطبقات ---------- */
+.nav-compass[hidden] { display: none; }
+.nav-compass__btn { width: 40px; height: 40px; background: var(--bg-default); box-shadow: var(--shadow-float); }
+.nav-needle {
+  position: relative; display: block; width: 8px; height: 22px; transition: transform .2s ease;
+}
+.nav-needle::before, .nav-needle::after {
+  content: ""; position: absolute; inset-inline-start: 0; width: 0; height: 0;
+  border-inline: 4px solid transparent;
+}
+.nav-needle::before { top: 0; border-bottom: 11px solid var(--risk-fg); }
+.nav-needle::after { bottom: 0; border-top: 11px solid var(--alpha-black-20); }
+
+@media (max-width: 900px) {
+  .map-app { --ev-gutter: 16px; --map-top: 16px; }
+  .nav-card { inset-inline: 16px; width: auto; }
+  .nav-route__steps { display: none; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .nav-card__box, .nav-results, .nav-pill, .nav-banner { background: var(--bg-default); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+
+/* =========================================================
+   شاشة الإرشاد (?kiosk): شريط آمن أسفل الشاشة خارج حسبة الخريطة
+   المشهد والعناصر المعلّقة عليه تنتهي فوقه، فتتكيّف القاعة كلها في الباقي.
+   ========================================================= */
+body.is-kiosk { --map-safe: 12vh; }
+body.is-kiosk .canvas, body.is-kiosk .map-overlay { bottom: var(--map-safe); }
+.safe-area {
+  position: fixed; inset-inline: 0; bottom: 0; z-index: 60; height: var(--map-safe); box-sizing: border-box;
+  display: grid; grid-template-columns: 1fr auto minmax(max-content, 1fr); align-items: center; gap: 24px; padding-inline: var(--ev-gutter);
+  background: var(--bg-default); box-shadow: 0 -1px 0 var(--alpha-black-08);
+}
+.safe-area__brand { grid-column: 2; display: flex; align-items: center; justify-content: center; gap: 40px; }
+.safe-area__saif { height: calc(var(--map-safe) * .6); width: auto; flex: none; }
+.safe-area__rule { width: 1px; height: calc(var(--map-safe) * .46); flex: none; background: var(--alpha-black-20); }
+.safe-area__tuwaiq { height: calc(var(--map-safe) * .38); width: auto; flex: none; }
+
+/* رمز QR: في الطرف الأيسر من الشريط، بشرح قصير بجانبه — يتحدّث حين يُحدَّد مسار */
+.safe-qr {
+  grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 16px; height: calc(var(--map-safe) * .84);
+  padding: 8px; padding-inline-end: 20px; box-sizing: border-box; border-radius: var(--r-tile);
+  background: var(--bg-paper); transition: background-color .25s ease;
+}
+.safe-qr.has-route { background: var(--brand-50); }
+.safe-qr__code { height: 100%; aspect-ratio: 1; flex: none; padding: 6px; box-sizing: border-box; border-radius: 12px; background: var(--bg-default); }
+.safe-qr__code svg { display: block; width: 100%; height: 100%; }
+.safe-qr__text { display: flex; flex-direction: column; gap: 4px; width: 210px; flex: none; }
+.safe-qr__text b { font-size: 16px; font-weight: 700; color: var(--text-black); }
+.safe-qr.has-route .safe-qr__text b { color: var(--brand); }
+.safe-qr__text span { font-size: 13px; line-height: 1.5; color: var(--alpha-black-50); }
+
+/* الشاشة العمودية (الكيوسك): شريط أكبر — الرمز في الأعلى بحجم يُمسح من وقفة عادية، والشعاران تحته */
+@media (orientation: portrait) {
+  body.is-kiosk { --map-safe: 24vh; }
+  .safe-area { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2.4vh; padding-block: 2vh; }
+  .safe-area__brand { gap: 48px; }
+  .safe-area__saif { height: calc(var(--map-safe) * .24); }
+  .safe-area__rule { height: calc(var(--map-safe) * .2); }
+  .safe-area__tuwaiq { height: calc(var(--map-safe) * .15); }
+  .safe-qr { order: -1; height: calc(var(--map-safe) * .46); gap: 24px; padding: 12px; padding-inline-end: 28px; }
+  .safe-qr__text { width: 300px; gap: 8px; }
+  .safe-qr__text b { font-size: 24px; }
+  .safe-qr__text span { font-size: 16px; }
+}
+
+/* أنت هنا: نقطة نابضة بلون الهوية فوق موقع الشاشة، ولافتة تحتها */
+.here-pin {
+  translate: -50% -50%; display: flex; flex-direction: column; align-items: center; gap: 6px; pointer-events: none;
+}
+.here-pin i {
+  position: relative; display: block; width: 20px; height: 20px; border-radius: var(--r-pill);
+  background: var(--route); box-shadow: 0 0 0 4px var(--bg-default), var(--shadow-float);
+}
+.here-pin i::after {
+  content: ""; position: absolute; inset: -4px; border-radius: inherit; border: 2px solid var(--route);
+  animation: herePulse 1.8s ease-out infinite;
+}
+@keyframes herePulse { from { opacity: .8; scale: 1; } to { opacity: 0; scale: 2.6; } }
+.here-pin b {
+  padding: 4px 12px; border-radius: var(--r-pill); background: var(--route); color: var(--bg-default);
+  font-size: 14px; font-weight: 700; white-space: nowrap; box-shadow: var(--shadow-float);
+}
+@media (prefers-reduced-motion: reduce) { .here-pin i::after { animation: none; opacity: 0; } }
+
+/* =========================================================
+   أجندة المعرض على شاشة المسرح — بهوية سيف
+   مقاسات النص بنسبة ارتفاع الشاشة (cqh): نفس التخطيط في النسيج وعند الوقوف أمامها
+   ========================================================= */
+.map-app .w-wall .scene__screen { aspect-ratio: 40 / 13; container-type: size; background: var(--sef-green); border-radius: 4px; }
+.agenda {
+  position: absolute; inset: 0; display: flex; flex-direction: column; gap: 4cqh;
+  padding: 6cqh 4cqw 0; box-sizing: border-box; background: var(--sef-green); color: var(--bg-default);
+}
+.agenda__head { display: flex; align-items: center; gap: 3cqw; }
+.agenda__logo { height: 18cqh; width: auto; }
+.agenda__title { display: flex; flex-direction: column; gap: 1cqh; margin-inline-end: auto; }
+.agenda__title b { font-size: 9cqh; font-weight: 700; color: var(--bg-default); white-space: nowrap; }
+.agenda__title span { font-size: 5cqh; font-weight: 500; color: var(--sef-gold); white-space: nowrap; }
+/* الجهات المنظِّمة بترتيب saifair.sa: شعار وزارة الداخلية ثم أكاديمية طويق */
+.agenda__partners { display: flex; align-items: center; gap: 1.6cqw; }
+.agenda__moi { height: 20cqh; width: auto; }
+.agenda__partner { height: 18cqh; width: auto; }
+.agenda__list { display: grid; grid-template-columns: 1fr 1fr; grid-auto-flow: column; grid-template-rows: repeat(3, auto); gap: 2.4cqh 3cqw; }
+.agenda__row {
+  display: flex; align-items: center; gap: 2cqw; padding: 2.2cqh 2cqw; border-radius: 2.4cqh;
+  background: color-mix(in srgb, var(--bg-default) 8%, transparent);
+}
+.agenda__row.is-past { opacity: .5; }
+.agenda__row.is-now { background: var(--sef-maroon); box-shadow: inset 0 0 0 .5cqh var(--sef-gold); }
+.agenda__time { flex: none; font-size: 5.2cqh; font-weight: 700; color: var(--sef-gold); font-variant-numeric: tabular-nums; direction: ltr; }
+.agenda__text { display: flex; flex-direction: column; gap: .8cqh; min-width: 0; margin-inline-end: auto; }
+.agenda__text b { font-size: 4.6cqh; font-weight: 700; color: var(--bg-default); white-space: nowrap; }
+.agenda__text span { font-size: 3.4cqh; font-weight: 500; color: color-mix(in srgb, var(--bg-default) 70%, transparent); white-space: nowrap; }
+.agenda__now {
+  flex: none; padding: .8cqh 1.6cqw; border-radius: 99cqh; background: var(--sef-gold); color: var(--sef-green);
+  font-size: 3.6cqh; font-weight: 700;
+}
+/* شريط الهوية في أسفل الشاشة: مربعات ألوان سيف */
+.agenda__bar { display: flex; margin-top: auto; margin-inline: -4cqw; height: 3cqh; }
+.agenda__bar i { flex: 1; }
+.agenda__bar i:nth-child(1) { background: var(--sef-coral); }
+.agenda__bar i:nth-child(2) { background: var(--sef-orange); }
+.agenda__bar i:nth-child(3) { background: var(--sef-pink); }
+.agenda__bar i:nth-child(4) { background: var(--sef-teal); }
+.agenda__bar i:nth-child(5) { background: var(--sef-maroon); }
+
+
+/* =========================================================
+   شيت الفريق (team-sheet.js): الضغط على جناح يفتح تفاصيل فريقه — مكان بطاقة الاتجاهات،
+   بروح لوحة الأجندة. للجميع الفكرة والأعضاء، وللمشرف فوقها الحضور والتقييمات
+   ========================================================= */
+.bp-chip { padding: 4px 10px; border-radius: var(--r-pill); background: var(--brand-50); font-size: 12px; font-weight: 700; color: var(--brand); font-variant-numeric: tabular-nums; }
+.bp-zone { font-size: 12px; font-weight: 600; color: var(--alpha-black-50); }
+/* الكود التعريفي للفريق: سطر هادئ تحت الاسم، أرقام متساوية العرض */
+.bp-code { align-self: flex-start; margin: -2px 4px 2px; font-size: 12px; font-weight: 600; letter-spacing: .04em; color: var(--alpha-black-50); font-variant-numeric: tabular-nums; }
+/* ---- بطاقة الجناح (الخريطة العامة): فوق الجناح بسهم صغير يشير إليه — الفريق، دولته، مساره، قائده ---- */
+.booth-pop { pointer-events: none; z-index: 5; }
+.booth-pop[hidden] { display: none; }
+.booth-pop__card {
+  position: relative; translate: calc(-50% + var(--pop-dx, 0px)) calc(-100% - 14px + var(--pop-dy, 0px)); width: 300px; max-width: calc(100vw - 24px); box-sizing: border-box;
+  display: flex; flex-direction: column; gap: 8px; padding: 12px; pointer-events: auto;
+  border-radius: var(--r-sheet); background: var(--bg-default); box-shadow: var(--shadow-sheet);
+  animation: boothPop .2s cubic-bezier(.22,.61,.36,1);
+}
+.booth-pop__card::after {
+  content: ""; position: absolute; inset-block-end: -7px; left: calc(50% - var(--pop-dx, 0px)); translate: -50% 0; rotate: 45deg;
+  width: 14px; height: 14px; border-radius: 3px; background: var(--bg-default);
+}
+.bp-head { display: flex; align-items: center; gap: 8px; padding: 4px 4px 0; }
+.booth-pop__team { margin: 0; padding: 0 4px 2px; font-size: 18px; font-weight: 700; line-height: 1.35; color: var(--text-black); }
+/* صفوف بروح «من / إلى»: رمادية مستديرة، العنوان صغير خافت والقيمة واضحة */
+.bp-rows { display: flex; flex-direction: column; gap: 6px; }
+/* خريطة المشرف: أعضاء الفريق تحت القائد في البوب أوفر نفسه */
+/* خريطة المشرف: «+1» فوق جناح الفريق مع كل تحكيم جديد — شارة بأخضر سيف */
+.judge-plus { pointer-events: none; z-index: 4; }
+.judge-plus span {
+  display: block; translate: -50% -100%; padding: 6px 12px; border-radius: var(--r-pill);
+  background: var(--brand); color: var(--bg-default); box-shadow: var(--shadow-float);   /* أخضر سيف (الزيتي) بنص أبيض */
+  font-size: 16px; font-weight: 800; line-height: 1.2; font-variant-numeric: tabular-nums; white-space: nowrap;
+  animation: judgePlus 3.2s linear both;
+}
+@keyframes judgePlus {
+  /* بلا ارتداد: يظهر صاعدًا بهدوء (0.6 ث)، يبقى (2 ث)، ثم يكمل صعوده ويتلاشى (0.6 ث) — منحنيات ناعمة لكل مرحلة */
+  0% { opacity: 0; transform: translateY(8px) scale(.94); animation-timing-function: cubic-bezier(.22,1,.36,1); }
+  18.75% { opacity: 1; transform: translateY(0) scale(1); animation-timing-function: linear; }
+  81.25% { opacity: 1; transform: translateY(0) scale(1); animation-timing-function: cubic-bezier(.4,0,.6,1); }
+  100% { opacity: 0; transform: translateY(-8px) scale(1); }
+}
+
+@keyframes judgePlusCalm { 0%, 100% { opacity: 0; } 10%, 85% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .judge-plus span { animation-name: judgePlusCalm; } }
+.bp-attend { padding: 10px 12px; border-radius: var(--r-row); }
+.bp-attend .ts-attend__text b, .bp-attend .ts-attend__count { font-size: 14px; }
+/* الفريق في صندوق واحد مضغوط: سطر لكل شخص — القائد أولًا بشارة صغيرة، والبقية تحته */
+.bp-crew { margin: 0; padding: 6px; list-style: none; display: flex; flex-direction: column; gap: 2px;
+  border-radius: var(--r-row); background: var(--alpha-black-5); }
+.bp-crew__row { display: flex; align-items: center; gap: 8px; min-height: 30px; padding-inline: 4px; }
+.bp-crew__dot { flex: none; width: 24px; height: 24px; display: grid; place-items: center; border-radius: var(--r-pill);
+  background: var(--bg-default); font-size: 12px; font-weight: 700; color: var(--alpha-black-50); }
+.bp-crew__name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 500; color: var(--text-black); }
+.bp-crew__row.is-lead .bp-crew__dot { background: var(--brand); color: var(--bg-default); }
+.bp-crew__row.is-lead .bp-crew__name { font-weight: 700; }
+.bp-crew__lead { flex: none; padding: 2px 8px; border-radius: var(--r-pill); background: var(--brand-50);
+  font-size: 11px; font-weight: 700; color: var(--brand); }
+.bp-in { flex: none; margin-inline-start: auto; font-size: 12px; font-weight: 600; color: var(--alpha-black-50); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bp-in.is-in { color: var(--ok-fg); }
+.bp-row {
+  display: flex; align-items: center; gap: 10px; min-height: 48px; padding-inline: 12px; box-sizing: border-box;
+  border-radius: var(--r-row); background: var(--alpha-black-5);
+}
+/* العلم رمز تعبيري: خط الرموز من النظام، بحجم يوازي سطر الصف */
+.bp-flag {
+  flex: none; font-size: 24px; line-height: 1;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+.bp-row__label { flex: none; font-size: 13px; font-weight: 600; color: var(--alpha-black-30); }
+.bp-row__value { margin-inline-start: auto; font-size: 15px; font-weight: 600; color: var(--text-black); text-align: end; }
+.bp-row--leader { padding-block: 8px; padding-inline-start: 8px; }
+.bp-avatar {
+  flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: var(--r-pill);
+  background: var(--brand); color: var(--bg-default); font-size: 13px; font-weight: 700;
+}
+.bp-row__stack { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.bp-row__stack .bp-row__value { margin: 0; text-align: start; }
+/* زرّان متساويان: تفاصيل المشروع (هادئ) والاتجاهات (أساسي) */
+.bp-actions { display: flex; gap: 8px; margin-top: 2px; }
+.bp-actions .ui-btn { flex: 1; height: 44px; }
+.booth-pop.is-below .booth-pop__card { translate: calc(-50% + var(--pop-dx, 0px)) calc(14px + var(--pop-dy, 0px)); }
+.booth-pop.is-shifted .booth-pop__card::after { display: none; }
+.booth-pop.is-below .booth-pop__card::after { inset-block-end: auto; inset-block-start: -7px; }
+@keyframes boothPop { from { opacity: 0; transform: translateY(6px); } }
+@media (prefers-reduced-motion: reduce) { .booth-pop__card { animation: none; } }
+
+/* ---- البوب أب (project-card.js): البوب أوفر نفسه بحجم أكبر في وسط الشاشة، ومعه فكرة المشروع ---- */
+body.is-project-card .nav-card, body.is-project-card .nav-banner { visibility: hidden; }
+body.is-agenda .project-card, body.at-screen .project-card { visibility: hidden; }
+.project-card { position: fixed; inset: 0; z-index: 46; display: grid; place-items: center; padding: 24px 16px; }
+.project-card[hidden] { display: none; }
+.pc-scrim { position: absolute; inset: 0; background: rgb(0 0 0 / .28); }
+/* القياسات نفسها في البطاقتين (حشو 12، فجوة 8، صفوف 48) — الكبيرة أعرض وعنوانها أكبر فقط */
+.pc-card {
+  position: relative; width: min(560px, 100%); max-height: min(760px, 100%); box-sizing: border-box;
+  display: flex; flex-direction: column; overflow: hidden;
+  border-radius: var(--r-sheet); background: var(--bg-default); box-shadow: var(--shadow-sheet);
+}
+.pc-scroll { flex: 0 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 8px; padding: 12px 12px 4px; }
+.pc-card .bp-head { padding-top: 0; }
+.pc-close { width: 36px; height: 36px; margin-inline-start: auto; background: var(--alpha-black-5); }
+.pc-card .booth-pop__team { font-size: 24px; line-height: 1.3; }
+.pc-card .bp-code { margin-top: -4px; }
+/* فكرة المشروع: بلون الصفوف الرمادي وعنوانها كعناوينها، وفي مكان زر «تفاصيل المشروع» الذي تفتّحت منه */
+.pc-idea { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px 14px; border-radius: var(--r-row); background: var(--alpha-black-5); }
+.pc-idea h4 { margin: 0; font-size: 13px; font-weight: 600; color: var(--alpha-black-30); }
+.pc-idea__text { margin: 0; font-size: 15px; line-height: 1.85; color: var(--text-black); white-space: pre-line; }
+.pc-idea__text.is-empty { color: var(--alpha-black-50); }
+/* أعضاء الفريق (البوب أب وحده): نص مجرّد تحت صفّ القائد بعددهم وسهم بجانبه مباشرة — زرّ بلا خلفية.
+   يُضغط فتنسدل صفوف الأعضاء بشكل صفّ القائد نفسه */
+.pc-team { display: flex; flex-direction: column; }
+.pc-team__toggle {
+  align-self: flex-start; display: inline-flex; align-items: center; gap: 4px; padding: 6px 4px; margin-block: -2px;
+  border: 0; border-radius: var(--r-row); background: none; cursor: pointer;
+  font: inherit; font-size: 14px; font-weight: 600; color: var(--alpha-black-50);
+}
+.pc-team__toggle:hover { color: var(--text-black); }
+.pc-team__toggle:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.pc-team__count { font-variant-numeric: tabular-nums; }
+.pc-team__chev { display: grid; transition: rotate .25s cubic-bezier(.22,.61,.36,1); }
+.pc-team.is-open .pc-team__chev { rotate: 180deg; }
+/* الارتفاع من صفر إلى ارتفاع القائمة بحركة ناعمة (صفّ grid من 0fr إلى 1fr) */
+.pc-team__body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s cubic-bezier(.22,.61,.36,1); }
+.pc-team.is-open .pc-team__body { grid-template-rows: 1fr; }
+.pc-team__clip { min-height: 0; overflow: hidden; }
+.pc-team__list { margin: 0; padding: 4px 0 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+/* صفّ العضو = صفّ القائد */
+.pc-member { padding-block: 8px; padding-inline-start: 8px; }
+/* الدور والتخصّص تحت الاسم: أخفّ وزنًا وأقرب إليه قليلًا */
+.pc-member .bp-row__stack { gap: 0; }
+.pc-member .bp-row__label { font-weight: 400; }
+.pc-member__link { margin-inline-start: auto; align-self: center; }
+@media (prefers-reduced-motion: reduce) { .pc-team__body, .pc-team__chev { transition: none; } }
+.pc-team { view-transition-name: pv-team; view-transition-class: pv pv-late; }
+.pc-foot { padding: 8px 12px 12px; }
+.pc-foot .bp-go { width: 100%; height: 48px; }
+/* مقبض الشيت وحافة التمرير: للشيت السفلي في الجوال وحده */
+.pc-grab, .pc-edge { display: none; }
+@media (max-width: 600px) {
+  /* الجوال: البوب أوفر يبقى فوق الجناح كما في كل الشاشات، وتفاصيل المشروع تكبر منه إلى شيت سفلي
+     بسلوك شيت iOS: ارتفاع واحد مهما قلّ المحتوى — الشاشة كلها إلا شريطًا رفيعًا في أعلاها */
+  .project-card { align-items: end; padding: calc(env(safe-area-inset-top) + 12px) 0 0; }
+  .pc-card {
+    width: 100%; height: 100%; max-height: none;
+    border-start-start-radius: 38px; border-start-end-radius: 38px; border-end-start-radius: 0; border-end-end-radius: 0;
+  }
+  /* المحتوى يبدأ من أعلى الشيت تمامًا ويمرّ خلف المقبض — المقبض طافٍ فوقه */
+  .pc-scroll { flex: 1 1 auto; padding-top: 27px; }
+  .pc-foot { padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+  /* المقبض: يُسحب منه الشيت للأسفل فيعود إلى البوب أوفر */
+  .pc-grab { display: block; position: absolute; inset: 0 0 auto 0; z-index: 3; height: 24px; touch-action: none; cursor: grab; }
+  .pc-grab::before {
+    content: ""; position: absolute; top: 8px; left: 50%; translate: -50% 0;
+    width: 36px; height: 5px; border-radius: var(--r-pill); background: var(--alpha-black-20);
+  }
+  .pc-card .bp-head, .pc-card .booth-pop__team, .pc-card .bp-code { touch-action: pan-y; }
+  /* زر الإغلاق ثابت في رأس الشيت لا يتمرّر مع المحتوى (كزرّ شيت iOS) */
+  .pc-card .pc-close { position: absolute; top: 18px; inset-inline-end: 14px; z-index: 3; }
+  .pc-card .bp-head { padding-inline-end: 44px; }
+
+  /* حافة التمرير: حين يمرّ المحتوى تحت رأس الشيت — تدرّج أبيض خفيف يتلاشى، وتمويه متدرّج
+     يبدأ خفيفًا جدًا عند الحافة وينعدم نزولًا. طبقات بتمويه متزايد، كلٌّ مقنّعة على شريطها */
+  /* الوميض كان من تلاشي الحاوية: شفافية الأب تجعله «جذر الخلفية» فلا يرى التمويه ما تحته
+     أثناء الحركة، ثم يظهر فجأة عند اكتمالها. الحاوية تبقى معتمة، وتتلاشى الطبقات نفسها */
+  .pc-edge {
+    display: block; position: absolute; inset: 0 0 auto 0; height: 88px; z-index: 2; pointer-events: none;
+    border-start-start-radius: inherit; border-start-end-radius: inherit; overflow: hidden;
+  }
+  .pc-edge::before {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(to bottom, rgb(255 255 255 / .97) 0%, rgb(255 255 255 / .86) 30%, rgb(255 255 255 / .5) 62%, rgb(255 255 255 / 0) 100%);
+  }
+  .pc-edge::before, .pc-edge i { opacity: 0; transition: opacity .2s ease; }
+  .pc-card.is-scrolled .pc-edge::before, .pc-card.is-scrolled .pc-edge i { opacity: 1; }
+  .pc-edge i { position: absolute; inset: 0; }
+  .pc-edge i:nth-child(1) { backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+    mask-image: linear-gradient(to bottom, #000 50%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent 100%); }
+  .pc-edge i:nth-child(2) { backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px);
+    mask-image: linear-gradient(to bottom, #000 25%, transparent 70%); -webkit-mask-image: linear-gradient(to bottom, #000 25%, transparent 70%); }
+  .pc-edge i:nth-child(3) { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    mask-image: linear-gradient(to bottom, #000 0%, transparent 45%); -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 45%); }
+}
+
+/* ---- الانتقال بين البوب أوفر والبوب أب: كل عنصر ينتقل بنفسه من مكانه إلى مكانه ----
+   الاسم نفسه على العنصر في البطاقتين؛ لا تظهر إلا واحدة في كل لحظة فلا يتكرّر الاسم */
+.booth-pop__team { width: fit-content; }   /* إطار العنوان بقدر نصّه: يكبر بلا تمدّد */
+:is(.booth-pop__card, .pc-card) { view-transition-name: pv-card; view-transition-class: pv; }
+:is(.booth-pop__card, .pc-card) .bp-chip { view-transition-name: pv-chip; view-transition-class: pv pv-text; }
+:is(.booth-pop__card, .pc-card) .bp-zone { view-transition-name: pv-zone; view-transition-class: pv pv-text; }
+:is(.booth-pop__card, .pc-card) .booth-pop__team { view-transition-name: pv-title; view-transition-class: pv pv-text; }
+:is(.booth-pop__card, .pc-card) .bp-code { view-transition-name: pv-code; view-transition-class: pv pv-text; }
+/* الصفوف وزر الاتجاهات: خلفيتها تتمدّد وحدها، ونصوصها وأيقوناتها تنتقل بأنفسها — لا يتمطّط حرف ولا يومض */
+:is(.booth-pop__card, .pc-card) .bp-row--country { view-transition-name: pv-country; view-transition-class: pv pv-box; }
+:is(.booth-pop__card, .pc-card) .bp-row--track { view-transition-name: pv-track; view-transition-class: pv pv-box; }
+:is(.booth-pop__card, .pc-card) .bp-row--leader { view-transition-name: pv-leader; view-transition-class: pv pv-box; }
+:is(.booth-pop__card, .pc-card) .bp-go { view-transition-name: pv-go; view-transition-class: pv pv-box; }
+:is(.booth-pop__card, .pc-card) .bp-row--country .bp-flag { view-transition-name: pv-country-f; view-transition-class: pv pv-text; }
+:is(.booth-pop__card, .pc-card) .bp-row--country .bp-row__label { view-transition-name: pv-country-l; view-transition-class: pv pv-text; }
+:is(.booth-pop__card, .pc-card) .bp-row--country .bp-row__value { view-transition-name: pv-country-v; view-transition-class: pv pv-text; }
+:is(.booth-pop__card, .pc-card) .bp-row--track .bp-row__label { view-transition-name: pv-track-l; view-transition-class: pv pv-text; }
+:is(.booth-pop__card, .pc-card) .bp-row--track .bp-row__value { view-transition-name: pv-track-v; view-transition-class: pv pv-text; }
+:is(.booth-pop__card, .pc-card) .bp-row--leader .bp-avatar { view-transition-name: pv-leader-a; view-transition-class: pv pv-text; }
+:is(.booth-pop__card, .pc-card) .bp-row--leader .bp-row__stack { view-transition-name: pv-leader-t; view-transition-class: pv pv-text; }
+:is(.booth-pop__card, .pc-card) .bp-go > svg { view-transition-name: pv-go-i; view-transition-class: pv pv-text; }
+:is(.booth-pop__card, .pc-card) .bp-go > span { view-transition-name: pv-go-t; view-transition-class: pv pv-text; }
+/* زر «تفاصيل المشروع» هو نفسه قسم الفكرة: يتفتّح منه ويُطوى إليه */
+.booth-pop__card .bp-details, .pc-card .pc-idea { view-transition-name: pv-idea; view-transition-class: pv pv-grow; }
+.pc-card .pc-close { view-transition-name: pv-close; view-transition-class: pv pv-text; }
+/* الحركة الداخلة للبوب أوفر لا تعمل أثناء الانتقال (الانتقال هو الحركة) */
+:root[data-pv] .booth-pop__card, .booth-pop__card.is-back { animation: none; }
+
+/* توقيت واحد للجميع: انطلاق سريع واستقرار ناعم كحركة الآيفون */
+::view-transition-group(*.pv) { animation-duration: .46s; animation-timing-function: cubic-bezier(.32,.72,0,1); }
+:root[data-pv="shrink"]::view-transition-group(*.pv) { animation-duration: .38s; }
+::view-transition-group(root) { animation-duration: .3s; }
+/* الإطار وخلفيات الصفوف والزر: تتمدّد كما هي (لون صافٍ بلا نص) */
+::view-transition-old(pv-card), ::view-transition-new(pv-card),
+::view-transition-old(*.pv-box), ::view-transition-new(*.pv-box) { width: 100%; height: 100%; }
+/* زر الإغلاق جديد على البطاقة: يظهر حين تقارب حجمها لا قبل */
+::view-transition-new(pv-close), ::view-transition-new(*.pv-late) { animation-delay: .22s; animation-duration: .2s; animation-fill-mode: both; }
+:root[data-pv="shrink"]::view-transition-old(*.pv-late) { animation-duration: .12s; }
+:root[data-pv="shrink"]::view-transition-old(pv-close) { animation-duration: .12s; }
+/* النصوص تكبر بنسبتها (الإطار بقدر النص) — بلا تشويه */
+::view-transition-old(*.pv-text), ::view-transition-new(*.pv-text) { width: 100%; height: 100%; object-fit: contain; }
+/* الصفوف والأزرار وقسم الفكرة: تُكشف من بداية السطر بعرضها الحقيقي وهي تتّسع — النص لا يتمطّط */
+::view-transition-image-pair(*.pv-grow) { overflow: clip; border-radius: var(--r-row); }
+::view-transition-old(*.pv-grow), ::view-transition-new(*.pv-grow) {
+  width: auto; height: auto; object-fit: none; inset: 0 0 auto auto; object-position: right top;
+}
+html[dir="ltr"]::view-transition-old(*.pv-grow), html[dir="ltr"]::view-transition-new(*.pv-grow) { inset: 0 auto auto 0; object-position: left top; }
+/* القديم يختفي سريعًا والجديد يظهر بعده بقليل — لا يتراكب نصّان مقروءان */
+::view-transition-old(*.pv-grow) { animation-duration: .16s; }
+::view-transition-new(*.pv-grow) { animation-duration: .3s; animation-delay: .08s; animation-fill-mode: both; }
+:root[data-pv="shrink"]::view-transition-new(*.pv-grow) { animation-delay: .04s; }
+
+body.is-team-sheet .nav-card, body.is-team-sheet .nav-banner { visibility: hidden; }
+/* الأجندة ووقفة شاشة المسرح فوق كل شيء: الشيت يختفي معهما ويعود بعدهما */
+body.is-agenda .team-sheet, body.at-screen .team-sheet, body.is-lifting .team-sheet { visibility: hidden; }
+.team-sheet {
+  /* بطول محتواه لا بطول الشاشة: فريق صغير لا يترك فراغًا تحته (الكيوسك العمودي)، والكبير يتمرّر داخله */
+  position: fixed; top: var(--map-top); inset-inline-start: var(--ev-gutter); z-index: 44;
+  max-height: calc(100vh - var(--map-top) - var(--map-safe) - 24px);
+  width: 420px; max-width: calc(100vw - 32px); box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden;
+  border-radius: var(--r-sheet); background: color-mix(in srgb, var(--bg-default) 97%, transparent);
+  backdrop-filter: var(--sheet-blur); -webkit-backdrop-filter: var(--sheet-blur); box-shadow: var(--shadow-sheet);
+  animation: tsIn .28s cubic-bezier(.22,.61,.36,1);
+}
+.team-sheet[hidden] { display: none; }
+@keyframes tsIn { from { opacity: 0; transform: translateX(calc(var(--ts-dir, 1) * 16px)); } }
+[dir="ltr"] .team-sheet { --ts-dir: -1; }
+.ts-head {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 6px 12px;
+  padding: 16px 16px 6px 20px; padding-inline: 20px 12px;
+}
+.ts-head__chips { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.ts-head__close { width: 40px; height: 40px; background: var(--alpha-black-5); }
+.ts-head__title { grid-column: 1 / -1; margin: 0; font-size: 20px; font-weight: 700; line-height: 1.4; color: var(--text-black); }
+.ts-head .bp-code { grid-column: 1 / -1; margin: -4px 0 0; }
+.ts-body { flex: 0 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 12px; padding: 16px; }
+.ts-foot { padding: 8px 16px 16px; }
+.ts-foot .ui-btn { height: 48px; }
+.ts-empty { margin: 0; padding: 16px; border-radius: var(--r-tile); background: var(--alpha-black-5); font-size: 14px; color: var(--alpha-black-70); }
+
+/* الحضور: أول ما يراه المشرف — أخضر إن حضر الفريق، رمادي إن لم يحضر */
+.ts-attend { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-radius: var(--r-tile); }
+.ts-attend--in { background: var(--ok-bg); color: var(--ok-fg); }
+.ts-attend--out { background: var(--idle-bg); color: var(--alpha-black-70); }
+.ts-attend__dot { flex: none; width: 10px; height: 10px; border-radius: var(--r-pill); background: currentColor; }
+.ts-attend__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ts-attend__text b { font-size: 15px; font-weight: 700; }
+.ts-attend__text span { font-size: 13px; font-weight: 600; opacity: .8; font-variant-numeric: tabular-nums; }
+.ts-attend__count { margin-inline-start: auto; font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.ts-score {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 14px 16px;
+  border-radius: var(--r-tile); background: var(--brand-50);
+}
+.ts-score span { font-size: 14px; font-weight: 600; color: var(--alpha-black-70); }
+.ts-score b { font-size: 24px; font-weight: 700; color: var(--brand); font-variant-numeric: tabular-nums; }
+.ts-score.is-none { background: var(--alpha-black-5); }
+.ts-score.is-none b { font-size: 15px; color: var(--alpha-black-50); }
+.ts-score small { font-size: 14px; font-weight: 600; color: var(--alpha-black-50); }
+
+.ts-block { display: flex; flex-direction: column; gap: 8px; }
+.ts-block h3 { display: flex; align-items: center; gap: 6px; margin: 4px 4px 0; font-size: 14px; font-weight: 700; color: var(--alpha-black-70); }
+.ts-block h3 span {
+  min-width: 22px; padding: 1px 7px; box-sizing: border-box; border-radius: var(--r-pill); background: var(--alpha-black-5);
+  font-size: 12px; text-align: center; font-variant-numeric: tabular-nums;
+}
+.ts-desc { margin: 0; padding: 12px 14px; border-radius: var(--r-row); background: var(--alpha-black-5); font-size: 14px; line-height: 1.7; color: var(--text-black); white-space: pre-line; }
+.ts-rows { display: flex; flex-direction: column; gap: 6px; }
+.ts-row {
+  display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 8px 14px; box-sizing: border-box;
+  border-radius: var(--r-row); background: var(--alpha-black-5);
+}
+.ts-row__label { flex: none; font-size: 13px; font-weight: 600; color: var(--alpha-black-30); }
+.ts-row__value { margin-inline-start: auto; font-size: 14px; font-weight: 600; line-height: 1.5; color: var(--text-black); text-align: end; }
+.ts-flag { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; }
+
+/* الأعضاء: كارد لكل عضو، والقائد أولًا بلون الهوية وشارته */
+.ts-members { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.ts-member {
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 4px 12px; padding: 12px;
+  border-radius: var(--r-tile); background: var(--alpha-black-5);
+}
+.ts-member.is-leader { background: var(--brand-50); }
+.ts-member__avatar {
+  grid-row: span 2; display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--r-pill);
+  background: var(--alpha-black-08); color: var(--alpha-black-70); font-size: 15px; font-weight: 700;
+}
+.ts-member.is-leader .ts-member__avatar { background: var(--brand); color: var(--bg-default); }
+.ts-member__text { grid-row: span 2; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ts-member__text b { font-size: 15px; font-weight: 700; color: var(--text-black); }
+.ts-member__text span { font-size: 13px; color: var(--alpha-black-50); }
+.ts-member__text bdi { font-size: 12px; color: var(--alpha-black-50); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ts-member__link {
+  display: inline-flex; align-items: center; gap: 4px; align-self: flex-start; margin-top: 2px;
+  font-size: 12px; font-weight: 600; color: var(--brand); text-decoration: none;
+}
+.ts-member__link:hover { text-decoration: underline; }
+.ts-member__link:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: var(--r-row); }
+.ts-member__badge {
+  justify-self: end; padding: 3px 10px; border-radius: var(--r-pill); background: var(--brand);
+  font-size: 12px; font-weight: 700; color: var(--bg-default);
+}
+.ts-member__in {
+  grid-column: 3; justify-self: end; padding: 3px 10px; border-radius: var(--r-pill); background: var(--idle-bg);
+  font-size: 12px; font-weight: 600; color: var(--alpha-black-50); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.ts-member__in.is-in { background: var(--ok-bg); color: var(--ok-fg); }
+
+@media (max-width: 900px) {
+  /* الجوال: شيت سفلي بطول الشاشة تقريبًا كشيت الآيفون — لا يبقى من الخريطة خلفه إلا شريط في الأعلى —
+     بمقبض للسحب، ويُسحب للأسفل فيُغلق (team-sheet.js) */
+  .team-sheet {
+    top: calc(env(safe-area-inset-top) + 40px); inset-inline: 0; bottom: 0; width: auto; max-width: none;
+    max-height: none; padding-bottom: env(safe-area-inset-bottom);
+    border-end-start-radius: 0; border-end-end-radius: 0;
+    animation: tsUp .32s cubic-bezier(.22,.61,.36,1);
+  }
+  .team-sheet::before {
+    content: ""; flex: none; align-self: center; width: 40px; height: 5px; margin-top: 8px;
+    border-radius: var(--r-pill); background: var(--alpha-black-20);
+  }
+  .ts-head { padding-top: 8px; touch-action: none; }
+  .ts-body { flex: 1 1 auto; }   /* بطول الشيت: زر الاتجاهات في أسفل الشاشة دائمًا */
+  .team-sheet.is-dragging { animation: none; }
+  @keyframes tsUp { from { transform: translateY(100%); } }
+}
+@media (prefers-reduced-motion: reduce) { .team-sheet { animation: none; } }
+
+/* ---- خريطة المشرف: زرّ الحساب في الزاوية ولوحته بجانبه ---- */
+.map-admin { position: relative; }
+.map-admin__btn { font-family: inherit; font-size: 18px; font-weight: 700; line-height: 1; color: var(--brand); }
+.map-admin__btn.is-warn { box-shadow: var(--shadow-sheet), inset 0 0 0 2px var(--warn-fg); }
+.map-admin__btn[aria-expanded="true"] { background: var(--brand-50); }
+.map-admin__panel {
+  position: absolute; top: 0; inset-inline-end: calc(100% + 12px); width: 280px; box-sizing: border-box;
+  display: flex; flex-direction: column; gap: 10px; padding: 14px;
+  border-radius: var(--r-sheet); background: var(--bg-default); box-shadow: var(--shadow-sheet);
+}
+.map-admin__panel[hidden] { display: none; }
+.map-admin__who { display: flex; flex-direction: column; gap: 2px; padding-inline: 4px; min-width: 0; }
+.map-admin__who b { font-size: 15px; color: var(--text-black); }
+.map-admin__who bdi { font-size: 12px; color: var(--alpha-black-50); overflow: hidden; text-overflow: ellipsis; }
+/* نص إنجليزي (بريد…) في عمود نصوص عربية: يصطفّ مع جيرانه على بداية الصفحة (يمينًا بالعربية)
+   لا على بداية سطره الإنجليزي — صندوقه بعرض نصّه وحده، فيقع حيث يقع العربي */
+.ts-member__text bdi, .map-admin__who bdi { align-self: flex-start; max-width: 100%; }
+.map-admin__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.map-admin__stat {
+  display: flex; flex-direction: column; gap: 2px; padding: 10px 12px;
+  border-radius: var(--r-row); background: var(--alpha-black-5);
+}
+.map-admin__stat b { font-size: 20px; font-weight: 700; color: var(--brand); font-variant-numeric: tabular-nums; }
+.map-admin__stat small { font-size: 13px; font-weight: 600; color: var(--alpha-black-50); }
+
+/* ---- خريطة المشرف: الاتجاهات والأجندة زرّان في الزاوية، وأعلى الخريطة: اليوم · فلاتر الفئات العمرية · حضور اليوم ---- */
+body.is-admin .agenda-btn { display: none; }
+.map-admin__tool { color: var(--text-black); }
+body.is-admin.is-routing .map-admin__dir { color: var(--brand); background: var(--brand-50); }
+.admin-day, .admin-ages, .admin-in { position: fixed; top: var(--map-top); z-index: 30; }
+/* اليوم في زاوية البداية (يمينًا بالعربية)، وحضور اليوم في زاوية النهاية — نص على الخريطة بلا خلفية */
+.admin-day { display: flex; flex-direction: column; gap: 2px; padding-block: 6px; }
+.admin-day { inset-inline-start: var(--ev-gutter); }
+/* حضور اليوم: إطار زرّ (سطح الموقع بظلّه) بأيقونة تكبير — يُضغط فيكبر إلى لوحة الإحصاءات */
+.admin-in {
+  inset-inline-end: var(--ev-gutter); display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box;
+  max-width: calc(100vw - 2 * var(--ev-gutter)); border-radius: 20px;
+  background: color-mix(in srgb, var(--bg-default) 92%, transparent);
+  backdrop-filter: var(--sheet-blur); -webkit-backdrop-filter: var(--sheet-blur); box-shadow: var(--shadow-sheet);
+}
+.admin-in[hidden] { display: none; }
+.admin-in.is-open { width: 380px; max-height: calc(100vh - var(--map-top) - 24px); z-index: 45; }
+.admin-in__head {
+  flex: none; display: flex; align-items: center; gap: 14px; padding: 10px 14px 10px 16px; border: 0; background: transparent;
+  font: inherit; color: inherit; text-align: start; cursor: pointer; border-radius: inherit;
+}
+.admin-in__head:hover { background: var(--alpha-black-5); }
+.admin-in__head:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+.admin-in__sum { display: flex; flex-direction: column; gap: 2px; }
+.admin-in__icon { flex: none; margin-inline-start: auto; padding: 6px; border-radius: var(--r-pill);
+  background: var(--brand-50); color: var(--brand); box-sizing: content-box; transition: transform .2s ease; }
+.admin-in.is-open .admin-in__icon { transform: rotate(180deg); }
+.admin-in__more { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 0 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+.admin-in__more[hidden] { display: none; }
+.admin-in__tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.admin-in__tile { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: var(--r-row); background: var(--alpha-black-5); }
+.admin-in .admin-in__tile b { font-size: 20px; }
+.admin-in .admin-in__tile small { font-size: 13px; }
+.admin-in .admin-in__tile span { font-size: 12px; }
+.admin-in__title { margin: 8px 4px 0; font-size: 14px; font-weight: 700; color: var(--text-black); }
+.admin-in__title small { font-size: 13px; font-weight: 600; color: var(--alpha-black-50); }
+.admin-in__list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.admin-in__row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 4px 10px; padding: 8px 10px; border-radius: 12px; background: var(--alpha-black-5); }
+.admin-in .admin-in__name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 600; color: var(--text-black); }
+.admin-in .admin-in__nums { font-size: 12px; font-weight: 500; color: var(--alpha-black-50); white-space: nowrap; }
+.admin-in .admin-in__nums b { font-size: 14px; font-weight: 700; line-height: 1; color: var(--brand); }
+.admin-in__bar { grid-column: 1 / -1; display: block; height: 4px; border-radius: var(--r-pill); background: var(--alpha-black-08); overflow: hidden; }
+.admin-in__bar i { display: block; height: 100%; border-radius: inherit; background: var(--ok-fg); }
+.admin-day b { font-size: 24px; font-weight: 700; line-height: 1.25; color: var(--text-black); }
+.admin-day span, .admin-in__sum span { font-size: 15px; font-weight: 500; color: var(--alpha-black-50); font-variant-numeric: tabular-nums; }
+.admin-in b { font-size: 24px; font-weight: 700; line-height: 1.25; color: var(--brand); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.admin-in small { font-size: 16px; font-weight: 600; color: var(--alpha-black-50); }
+/* الحافة الناعمة خلف عناصر الأعلى: نفس حافة الشيت السفلي — تدرّج أبيض يتلاشى نزولًا، وتمويه بطبقات
+   يبدأ أقوى عند حافة الشاشة وينعدم نزولًا. ارتفاعها يضبطه admin-ui.js على أسفل العناصر */
+.admin-edge { position: fixed; inset: 0 0 auto 0; height: 120px; z-index: 29; pointer-events: none; }
+.admin-edge::before {
+  content: ""; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgb(255 255 255 / .97) 0%, rgb(255 255 255 / .86) 30%, rgb(255 255 255 / .5) 62%, rgb(255 255 255 / 0) 100%);
+}
+.admin-edge i { position: absolute; inset: 0; }
+.admin-edge i:nth-child(1) { backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+  mask-image: linear-gradient(to bottom, #000 50%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent 100%); }
+.admin-edge i:nth-child(2) { backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px);
+  mask-image: linear-gradient(to bottom, #000 25%, transparent 70%); -webkit-mask-image: linear-gradient(to bottom, #000 25%, transparent 70%); }
+.admin-edge i:nth-child(3) { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 45%); -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 45%); }
+body.is-agenda .admin-edge, body.at-screen .admin-edge, body.is-lifting .admin-edge, body.is-journey .admin-edge { visibility: hidden; }
+/* فلاتر الفئات العمرية في منتصف الأعلى: تاج بلون فئته الرسمي كاملًا ونصّه أبيض؛
+   ومع فلتر مختار تخفت البقية فيبقى المختار ظاهرًا */
+.admin-ages {
+  inset-inline: 0; margin-inline: auto; width: max-content; max-width: calc(100vw - 2 * var(--ev-gutter));
+  display: flex; gap: 8px; padding-block: 6px;
+}
+.admin-age {
+  height: 40px; padding-inline: 16px; border: 0; border-radius: var(--r-pill); cursor: pointer; white-space: nowrap;
+  font: inherit; font-size: 14px; font-weight: 600; color: var(--bg-default); background: var(--age);
+  box-shadow: var(--shadow-sheet); transition: opacity .15s ease, filter .15s ease, scale .15s ease;
+}
+.admin-age:hover { filter: brightness(1.06); }
+.admin-age:active { scale: .97; }
+.admin-ages.has-sel .admin-age:not([aria-pressed="true"]) { opacity: .4; }
+.admin-age:focus-visible { outline: 2px solid var(--age); outline-offset: 2px; }
+/* بطاقة الاتجاهات مفتوحة في مكان اليوم؛ وأثناء الأجندة والتوجيه لا شيء فوق المشهد */
+body.is-admin.is-routing .admin-day,
+body.is-agenda :is(.admin-day, .admin-ages, .admin-in), body.at-screen :is(.admin-day, .admin-ages, .admin-in),
+body.is-lifting :is(.admin-day, .admin-ages, .admin-in), body.is-journey :is(.admin-day, .admin-ages, .admin-in) { visibility: hidden; }
+/* الشاشات الضيقة: اليوم وحضور اليوم في الزاويتين، والفلاتر تحتهما بعرض الشاشة (تُمرَّر أفقيًا إن ضاقت) */
+@media (max-width: 900px) {
+  .admin-ages {
+    top: calc(var(--map-top) + 84px); inset-inline: var(--ev-gutter); width: auto; max-width: none;
+    overflow-x: auto; scrollbar-width: none; padding: 6px 2px;
+  }
+  .admin-ages { gap: 6px; }
+  .admin-age { flex: 1 1 0; min-width: 0; height: 36px; padding-inline: 4px; font-size: 12px; }
+  body.is-admin.is-routing :is(.admin-ages, .admin-in) { visibility: hidden; }
+}
+.map-admin__stat span { font-size: 12px; font-weight: 600; color: var(--alpha-black-50); }
+.map-admin__note { margin: 0; padding-inline: 4px; font-size: 12px; color: var(--alpha-black-50); }
+.map-admin__warn { margin: 0; padding: 10px 12px; border-radius: var(--r-row); background: var(--warn-bg); color: var(--warn-fg); font-size: 13px; line-height: 1.6; }
+.map-admin__panel .ui-btn { height: 44px; }
+@media (max-width: 480px) {
+  .map-admin__panel { position: fixed; top: auto; bottom: calc(var(--map-safe) + 40px); inset-inline: 16px calc(var(--ev-gutter) + 64px); width: auto; }
+}
+
+/* =========================================================
+   الأزرار: حشو جانبي أوسع قليلًا في كل الموقع
+   ========================================================= */
+.map-app .ui-btn { padding-inline: 20px; }
+.map-app .ui-btn--lg { padding-inline: 24px; }
+.map-app .nav-pill .ui-btn--lg { padding-inline: 24px; }
+
+/* زر «أجندة المعرض»: سطح الموقع نفسه (أبيض شبه مصمت بظلّ ناعم)، معلّق فوق المسرح */
+.map-app.workspace.ops .agenda-btn {
+  height: 44px; width: auto; padding-inline: 22px 24px; gap: 8px;
+  background: color-mix(in srgb, var(--bg-default) 92%, transparent);
+  backdrop-filter: var(--sheet-blur); -webkit-backdrop-filter: var(--sheet-blur);
+  box-shadow: var(--shadow-sheet); font-size: 14px; font-weight: 600; color: var(--text-black);
+  transition: background-color .15s ease, scale .15s ease;
+}
+.map-app.workspace.ops .agenda-btn:hover { background: var(--bg-default); }
+.map-app.workspace.ops .agenda-btn:active { scale: .97; }
+.map-app .agenda-btn svg { color: var(--brand); }
+.map-app .agenda-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+/* =========================================================
+   بطاقة الأجندة: مكان بطاقة الاتجاهات، والمسرح ظاهر بجانبها من زاوية جانبية
+   ========================================================= */
+body.is-agenda .nav-card, body.is-agenda .nav-bottom, body.is-agenda .nav-banner,
+body.is-agenda .agenda-btn, body.is-agenda .map-overlay { visibility: hidden; }
+/* أثناء عرض مسار: الزرّ المعلّق فوق المسرح لا يغطّي طرفه */
+body.has-route .agenda-btn { visibility: hidden; }
+.agenda-panel {
+  position: fixed; top: var(--map-top); inset-inline-start: var(--ev-gutter); z-index: 44;
+  width: 440px; max-width: calc(100vw - 32px); max-height: calc(100vh - var(--map-top) - var(--map-safe) - 40px);
+  box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden;
+  border-radius: var(--r-sheet); background: color-mix(in srgb, var(--bg-default) 96%, transparent);
+  backdrop-filter: var(--sheet-blur); -webkit-backdrop-filter: var(--sheet-blur); box-shadow: var(--shadow-sheet);
+  animation: apIn .28s cubic-bezier(.22,.61,.36,1);
+}
+.agenda-panel[hidden] { display: none; }
+@keyframes apIn { from { opacity: 0; transform: translateY(-8px); } }
+.ap-head { display: flex; align-items: center; gap: 12px; padding: 16px 16px 12px 20px; padding-inline: 20px 12px; }
+.ap-head__logo { height: 40px; width: auto; flex: none; }
+.ap-head__title { display: flex; flex-direction: column; gap: 2px; margin-inline-end: auto; }
+.ap-head__title h2 { margin: 0; font-size: 20px; font-weight: 700; color: var(--text-black); }
+.ap-head__title span { font-size: 13px; color: var(--alpha-black-50); }
+.ap-head__close { width: 40px; height: 40px; background: var(--alpha-black-5); }
+
+.ap-heroes { display: flex; flex-direction: column; gap: 8px; padding: 0 16px 12px; }
+.ap-hero {
+  display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 16px; border-radius: var(--r-tile);
+  background: var(--brand-50);
+}
+.ap-hero.is-now { background: var(--brand); }
+.ap-hero__tag {
+  grid-column: 1 / -1; justify-self: start; padding: 2px 10px; border-radius: var(--r-pill);
+  background: var(--bg-default); font-size: 12px; font-weight: 700; color: var(--brand);
+}
+.ap-hero.is-now .ap-hero__tag { background: var(--sef-gold); color: var(--sef-green); }
+.ap-hero__title { grid-column: 1 / -1; font-size: 18px; font-weight: 700; line-height: 1.4; color: var(--text-black); }
+.ap-hero.is-now .ap-hero__title { color: var(--bg-default); }
+.ap-hero__meta { font-size: 13px; color: var(--alpha-black-50); }
+.ap-hero.is-now .ap-hero__meta { color: color-mix(in srgb, var(--bg-default) 70%, transparent); }
+.ap-hero__count { font-size: 13px; font-weight: 700; color: var(--brand); white-space: nowrap; }
+.ap-hero.is-now .ap-hero__count { color: var(--sef-gold); }
+.ap-done { margin: 0; padding: 16px; border-radius: var(--r-tile); background: var(--alpha-black-5); font-size: 14px; color: var(--alpha-black-70); }
+
+.ap-list { list-style: none; margin: 0; padding: 0 16px; overflow-y: auto; overscroll-behavior: contain; min-height: 0; }
+.ap-row { display: flex; align-items: center; gap: 12px; padding: 10px 4px; border-top: 1px solid var(--alpha-black-08); }
+.ap-row.is-past { opacity: .45; }
+.ap-row.is-now .ap-row__time { color: var(--brand); }
+.ap-row__time { flex: none; width: 48px; font-size: 14px; font-weight: 700; color: var(--alpha-black-70); font-variant-numeric: tabular-nums; direction: ltr; text-align: end; }
+.ap-row__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; margin-inline-end: auto; }
+.ap-row__text b { font-size: 14px; font-weight: 600; color: var(--text-black); }
+.ap-row__text span { font-size: 12px; color: var(--alpha-black-50); }
+.ap-row__cal { flex: none; width: 36px; height: 36px; color: var(--brand); background: var(--brand-50); }
+.ap-row__done { flex: none; font-size: 12px; color: var(--alpha-black-30); }
+.ap-foot { padding: 12px 16px 16px; border-top: 1px solid var(--alpha-black-08); }
+
+@media (max-width: 900px) {
+  .agenda-panel { inset-inline: 16px; width: auto; max-height: 62vh; }
+}
+
+/* رمزا الشاشة: الخريطة والأجندة جنبًا إلى جنب */
+.safe-qrs { display: flex; align-items: center; gap: 16px; grid-column: 3; justify-self: end; }
+.safe-qrs .safe-qr { grid-column: auto; justify-self: auto; }
+@media (orientation: portrait) {
+  .safe-qrs { order: -1; gap: 24px; }
+  body.is-kiosk .safe-qrs .safe-qr { order: 0; }
+  .safe-qrs .safe-qr__text { width: 210px; }
+  .safe-qrs .safe-qr__text b { font-size: 20px; }
+}
+
+/* =========================================================
+   زاوية الخريطة: زرّا 3D/2D (والبوصلة) — «أجندة المعرض» معلّق فوق المسرح
+   ========================================================= */
+.map-dock {
+  position: fixed; bottom: calc(var(--map-safe) + 40px); inset-inline-end: var(--ev-gutter); z-index: 20;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+}
+.map-dock .map-bar { position: static; }
+/* زر تدوير زاوية النظر فوق 3D/2D: دائرة بمادة الشريط نفسها */
+.map-turn {
+  width: 52px; height: 52px; display: grid; place-items: center; padding: 0; border: 0; cursor: pointer;
+  border-radius: var(--r-pill); color: var(--text-black);
+  background: color-mix(in srgb, var(--bg-default) 92%, transparent);
+  backdrop-filter: var(--sheet-blur); -webkit-backdrop-filter: var(--sheet-blur);
+  box-shadow: var(--shadow-sheet); transition: background .15s ease, color .15s ease;
+}
+.map-turn svg { transition: transform .35s ease; }
+.map-turn[aria-pressed="true"] { color: var(--brand); }
+.map-turn[aria-pressed="true"] svg { transform: rotate(-90deg); }
+.map-turn:hover { background: var(--brand-50); }
+.map-turn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .map-turn svg { transition: none; } }
+/* زرّ اللغة: حرف اللغة الأخرى بمادة زرّ التدوير */
+.map-lang { font: 700 17px/1 inherit; font-family: inherit; letter-spacing: .02em; }
+.map-lang:lang(ar) { font-size: 22px; }
+body.is-lifting .map-dock, body.is-journey .map-dock { visibility: hidden; }
+
+/* الجلسات على الشاشة أزرار: الضغط عليها أمام الشاشة يفتح تفاصيلها */
+.agenda__row { width: 100%; border: 0; font: inherit; color: inherit; text-align: start; cursor: pointer; }
+body.at-screen .agenda__row:hover { box-shadow: inset 0 0 0 .4cqh var(--sef-gold); }
+.ap-row__open {
+  display: flex; align-items: center; gap: 12px; flex: 1 1 auto; min-width: 0; padding: 0; border: 0;
+  background: transparent; font: inherit; text-align: start; cursor: pointer;
+}
+.ap-row__open:hover .ap-row__text b { color: var(--brand); }
+
+/* =========================================================
+   تفاصيل الجلسة — بروح بطاقة الاتجاهات: صفوف رمادية بعنوان صغير وقيمة واضحة
+   ========================================================= */
+.session-pop {
+  position: fixed; z-index: 70; width: 380px; max-width: calc(100vw - 32px); max-height: calc(100vh - 32px);
+  box-sizing: border-box; overflow-y: auto; overscroll-behavior: contain;
+  display: flex; flex-direction: column; gap: 10px; padding: 16px 20px 20px;
+  border-radius: var(--r-sheet); background: var(--bg-default); box-shadow: var(--shadow-sheet);
+  animation: apIn .22s cubic-bezier(.22,.61,.36,1);
+}
+.session-pop[hidden] { display: none; }
+.session-pop.is-sheet { inset-inline: 16px; bottom: 16px; width: auto; max-height: 78vh; }
+.sp-head { display: flex; align-items: center; gap: 8px; }
+.sp-kind { padding: 4px 10px; border-radius: var(--r-pill); background: var(--brand-50); font-size: 12px; font-weight: 700; color: var(--brand); }
+.sp-state { margin-inline-end: auto; font-size: 12px; font-weight: 600; color: var(--alpha-black-50); }
+.sp-state.is-now { color: var(--ok-fg); }
+.sp-state.is-past { color: var(--alpha-black-30); }
+.sp-close { width: 36px; height: 36px; background: var(--alpha-black-5); }
+.sp-title { margin: 0; font-size: 20px; font-weight: 700; line-height: 1.4; color: var(--text-black); }
+.sp-about { margin: 0; font-size: 14px; line-height: 1.7; color: var(--alpha-black-70); }
+.sp-cols, .sp-col { display: flex; flex-direction: column; gap: 10px; }
+.sp-facts { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1.2fr); gap: 6px; }
+.sp-fact { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: var(--r-row); background: var(--alpha-black-5); min-width: 0; }
+.sp-fact span { font-size: 12px; font-weight: 600; color: var(--alpha-black-30); }
+.sp-fact b { font-size: 14px; font-weight: 600; line-height: 1.4; color: var(--text-black); }
+.sp-label { margin: 6px 0 0; font-size: 13px; font-weight: 700; color: var(--alpha-black-30); }
+.sp-hosts { display: flex; flex-direction: column; gap: 6px; }
+.sp-host { display: flex; align-items: center; gap: 12px; padding: 8px; border-radius: var(--r-row); background: var(--alpha-black-5); }
+.sp-host__avatar {
+  flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: var(--r-pill);
+  background: var(--brand); color: var(--bg-default); font-size: 14px; font-weight: 700;
+}
+.sp-host__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.sp-host__text b { font-size: 14px; font-weight: 600; color: var(--text-black); }
+.sp-host__text span { font-size: 12px; color: var(--alpha-black-50); }
+.sp-topics { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.sp-topics li { padding: 6px 12px; border-radius: var(--r-pill); background: var(--brand-50); font-size: 13px; font-weight: 500; color: var(--brand); }
+.session-pop .ui-btn { margin-top: 6px; }
+
+/* تفاصيل الجلسة فوق شاشة المسرح: مختصرة لتتّسع في المساحة الفارغة — عمودان، وأحجام أصغر */
+.session-pop.is-wide { padding: 12px 18px 14px; gap: 6px; border-radius: var(--r-tile); animation-name: spWide; }
+.session-pop.is-wide .sp-close { width: 32px; height: 32px; }
+.session-pop.is-wide .sp-title { font-size: 18px; }
+.session-pop.is-wide .sp-about { font-size: 13px; line-height: 1.6; }
+.session-pop.is-wide .sp-cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.session-pop.is-wide .sp-col { gap: 8px; }
+.session-pop.is-wide .sp-label { margin: 0; font-size: 12px; }
+.session-pop.is-wide .sp-facts { display: flex; flex-wrap: wrap; gap: 6px; }
+.session-pop.is-wide .sp-fact { flex-direction: row; align-items: baseline; gap: 6px; padding: 6px 10px; border-radius: var(--r-pill); }
+.session-pop.is-wide .sp-fact span { font-size: 11px; }
+.session-pop.is-wide .sp-fact b { font-size: 13px; }
+.session-pop.is-wide .sp-host { padding: 6px; gap: 10px; }
+.session-pop.is-wide .sp-host__avatar { width: 32px; height: 32px; font-size: 12px; }
+.session-pop.is-wide .sp-host__text b { font-size: 13px; }
+.session-pop.is-wide .sp-host__text span { font-size: 11px; }
+.session-pop.is-wide .sp-topics li { padding: 4px 10px; font-size: 12px; }
+.session-pop.is-wide > .ui-btn { display: none; }
+.session-pop.is-wide .sp-host { padding: 4px; padding-inline-end: 10px; }
+.session-pop.is-wide .sp-host__avatar { width: 28px; height: 28px; font-size: 11px; }
+.session-pop.is-wide .sp-about { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.sp-meta { display: none; margin: 0; font-size: 13px; color: var(--alpha-black-50); }
+.sp-meta b { font-weight: 700; color: var(--brand); }
+.session-pop.is-wide .sp-meta { display: block; }
+.session-pop.is-wide .sp-facts { display: none; }
+.session-pop.is-wide .sp-host { padding: 0; background: transparent; }
+.session-pop.is-wide .sp-hosts { gap: 8px; }
+.session-pop.is-wide .sp-host__avatar { width: 26px; height: 26px; }
+.sp-cal { display: none; width: 32px; height: 32px; color: var(--brand); background: var(--brand-50); }
+.session-pop.is-wide .sp-cal { display: inline-flex; }
+@keyframes spWide { from { opacity: 0; transform: translateY(8px); } }
+
+/* شاشة الإرشاد: لا «أضف للتقويم» — التقويم شخصي، يصل إليه الزائر من رمز الأجندة في جوّاله */
+body.is-kiosk [data-sp="ics"], body.is-kiosk [data-ap="ics"], body.is-kiosk [data-ap="ics-all"] { display: none !important; }
+
+/* الإنجليزية من اليسار لليمين: أسهم الرجوع تنعكس */
+[dir="ltr"] .scr-back svg, [dir="ltr"] .nav-journey__prev svg { transform: scaleX(-1); }
+
+
+/* =========================================================
+   خريطة المشرف: شاشة البوّابة بدل الخريطة — بلا صلاحية، أو تعذّر التحقق (admin-gate.js)
+   ========================================================= */
+.admin-gate-page { min-height: 100vh; display: grid; place-items: center; padding: 16px; box-sizing: border-box; background: var(--idle-bg); }
+.admin-gate {
+  width: min(420px, 100%); box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 12px;
+  padding: 32px 24px 24px; text-align: center;
+  border-radius: var(--r-sheet); background: var(--bg-default); box-shadow: var(--shadow-sheet);
+}
+.admin-gate__logo { height: 44px; width: auto; margin-bottom: 4px; }
+.admin-gate__title { margin: 0; font-size: 20px; font-weight: 700; color: var(--text-black); }
+.admin-gate__text { margin: 0; font-size: 14px; line-height: 1.7; color: var(--alpha-black-70); }
+.admin-gate__who { margin: 0; font-size: 13px; color: var(--alpha-black-50); overflow-wrap: anywhere; }
+.admin-gate__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; width: 100%; }
+.admin-gate__actions .ui-btn { flex: 1 1 140px; height: 44px; justify-content: center; }
+
+/* Embedded mode inside FairApp checklist tracker */
+body.is-embed .screen-btn,
+body.is-embed .map-lang { display: none !important; }
+
+/* Floating 3D-projected highlight pins for Favourite / Checked / Starred / My Booth */
+.cl-pins { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
+.cl-pin {
+  pointer-events: auto;
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 2px 6px; border-radius: 999px;
+  border: 1.5px solid rgba(255,255,255,0.85);
+  color: #fff; font: 700 10.5px/1.2 var(--font);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.28);
+  transform-origin: center bottom;
+  margin-left: -18px; margin-top: -20px;
+  cursor: pointer; white-space: nowrap;
+}
+.cl-pin span { font-size: 9.5px; opacity: 0.95; letter-spacing: -0.2px; }
+.cl-pin--fav { background: #d97706; }
+.cl-pin--vis { background: #059669; }
+.cl-pin--both { background: #0d9488; }
+.cl-pin--rat { background: #7c3aed; }
+.cl-pin--me { background: #d946ef; box-shadow: 0 0 0 2px #fff, 0 4px 14px rgba(217,70,239,0.55); }
+.cl-pin--route { background: #ea580c; }
+
+/* Checklist action strip inside official booth popover */
+.cl-pop-bar {
+  display: flex; align-items: center; gap: 5px; flex-wrap: wrap;
+  padding: 6px 8px; margin: 6px 0; border-radius: 12px;
+  background: var(--bg-paper); border: 1px solid var(--alpha-black-08);
+}
+.cl-act {
+  width: 28px; height: 28px; border-radius: 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--alpha-black-08); background: #fff; color: var(--icon); cursor: pointer;
+}
+.cl-act.fav.on { background: #fef3c7; color: #d97706; border-color: #f59e0b; }
+.cl-act.vis.on { background: #d1fae5; color: #059669; border-color: #10b981; }
+.cl-act.ign.on { background: #fee2e2; color: #dc2626; border-color: #ef4444; }
+.cl-stars { display: inline-flex; align-items: center; gap: 1px; margin-inline: 2px; }
+.cl-star { border: 0; background: transparent; padding: 2px; color: #cbd5e1; cursor: pointer; display: inline-flex; }
+.cl-star.on { color: #f59e0b; }
+

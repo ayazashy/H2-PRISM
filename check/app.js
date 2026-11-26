@@ -190,6 +190,7 @@ class FairApp {
     initIconSprite();
     const res = await fetch('./data.json');
     const data = await res.json();
+    if (typeof window !== 'undefined') window.__SAIF_RAW_DATA__ = data;
     this.meta = data.meta;
     this.projects = prepareProjects(data.projects, data.meta);
     for (const p of this.projects) this.projectById.set(p.id, p);

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAIF Exhibition Map</title>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search).get('lang'), s = null;
+  try { s = localStorage.getItem('saif-map-lang'); } catch (e) {}
+  var en = q ? q === 'en' : s === 'en';
+  if (en) {
+    document.documentElement.lang = 'en';
+    document.documentElement.dir = 'ltr';
+    document.title = 'SAIF Exhibition Map';
+  }
+})();
+</script>
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/css/event.css">
+<link rel="stylesheet" href="assets/css/stages.css">
+<link rel="stylesheet" href="assets/css/ops.css">
+<link rel="stylesheet" href="assets/css/screen.css">
+<link rel="stylesheet" href="assets/css/workspace.css">
+<link rel="stylesheet" href="assets/css/event-controls.css">
+<link rel="stylesheet" href="assets/css/admin-map.css">
+<link rel="stylesheet" href="assets/css/map.css">
+</head>
+<body class="ops workspace map-app">
+
+<div class="canvas" id="canvas">
+  <div class="canvas__world" id="world">
+    <div class="w-wall" id="wall">
+      <div class="scene">
+        <div class="scene__wall"></div>
+        <div class="scene__skirt"></div>
+        <div class="scene__floor"></div>
+        <div class="scene__screen">
+          <svg viewBox="0 0 1568 612" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#000" d="M24 0 Q784 22 1544 0 A24 24 0 0 1 1568 24 L1568 576
+                                 A24 24 0 0 1 1544 600 Q784 622 24 600
+                                 A24 24 0 0 1 0 576 L0 24 A24 24 0 0 1 24 0 Z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="screen-btn agenda-btn" type="button" hidden>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h3M8 17h6"/></svg>
+  أجندة المعرض
+</button>
+
+<nav class="view-switch" aria-label="زاوية النظر">
+  <button type="button" data-view="perspective" aria-pressed="true" aria-label="عرض ثلاثي الأبعاد" title="عرض ثلاثي الأبعاد">3D</button>
+  <button type="button" data-view="top" aria-pressed="false" aria-label="عرض مسطّح من الأعلى" title="عرض مسطّح من الأعلى">2D</button>
+</nav>
+
+<div class="scr-bar">
+  <button class="scr-back" type="button" id="backToPlan" aria-label="رجوع إلى الخريطة">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+</div>
+
+<script type="module" src="assets/js/map.js"></script>
+<script type="module" src="assets/js/liquid-glass.js"></script>
+</body>
+</html>

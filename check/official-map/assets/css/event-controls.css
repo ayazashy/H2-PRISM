@@ -1,0 +1,76 @@
+/* Figma 469:15167 — a floating header, with the canvas continuing underneath. */
+.workspace .ev-topbar { height:160px; min-height:0; padding:48px var(--ev-gutter) 0; background:transparent; border:0; }
+.workspace .ev-topbar__row { display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); gap:24px; align-items:center; }
+.workspace .ev-topbar__start,.workspace .ev-topbar__end { width:auto; min-width:0; }
+.workspace .ev-topbar__end { justify-content:flex-end; }
+.workspace .ev-title { max-width:100%; }
+.workspace .ev-close { width:44px; height:44px; background:var(--alpha-black-5); }
+.event-nav { display:flex; align-items:center; gap:44px; padding:14px 40px 14px 24px; min-width:0; border-radius:100px; background:var(--sheet-bg); backdrop-filter:var(--sheet-blur); -webkit-backdrop-filter:var(--sheet-blur); box-shadow:var(--shadow-sheet); }
+.event-nav a { flex:none; display:flex; align-items:center; text-decoration:none; color:var(--text-black); font-size:18px; font-weight:500; line-height:28px; white-space:nowrap; transition:color .18s; }
+.event-nav a:hover { color:var(--brand); }
+.event-nav .event-nav__brand { width:40px; height:32px; justify-content:center; margin-inline-end:-4px; }
+.event-nav__brand img { width:36px; height:26px; display:block; }
+.event-nav a:focus-visible,.participant-actions a:focus-visible,.participant-actions button:focus-visible { outline:2px solid var(--brand); outline-offset:6px; border-radius:6px; }
+.event-page-tools { justify-content:flex-start; margin-bottom:24px; flex-wrap:wrap; }
+.event-page-tools .ev-search { width: min(500px,100%); }
+.workspace.ops .canvas { inset:0; }
+.workspace.ops .screen-btn { --screen-dock-top:128px; top:var(--screen-position-top,var(--screen-dock-top)); bottom:auto; height:48px; width:199px; justify-content:center; background:var(--sheet-bg); box-shadow:0 0 40px rgba(0,0,0,.08); }
+.workspace.ops .screen-btn:hover { background:rgba(255,255,255,.8); }
+body.is-lifting .screen-btn { pointer-events:none; }
+
+/* Figma 513:16569 / 513:19675 — the same anchored button in both states. */
+.participant-actions { --action-inset:60px; position:fixed; inset:0; z-index:35; pointer-events:none; }
+/* Figma geometry and purple tint, rendered as translucent glass. */
+.participant-actions__toggle {
+  position:absolute; right:var(--action-inset); bottom:var(--action-inset);
+  box-sizing:border-box; width:52px; height:52px; padding:16px;
+  display:grid; place-items:center; overflow:hidden;
+  border:0; border-radius:96px;
+  background:linear-gradient(145deg,rgba(255,255,255,.16),transparent 48%,rgba(16,65,61,.04)),rgba(16,65,61,.2);
+  backdrop-filter:blur(10px) saturate(165%);
+  -webkit-backdrop-filter:blur(10px) saturate(165%);
+  box-shadow:0 0 40px rgba(0,0,0,.08),
+    inset 0 1px 1px rgba(255,255,255,.8),
+    inset 1px 0 1px rgba(255,255,255,.3),
+    inset 0 -1px 1px rgba(16,65,61,.16);
+  cursor:pointer; pointer-events:auto; touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+.participant-actions__toggle::before {
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background:radial-gradient(ellipse at 30% 0%,rgba(255,255,255,.28),transparent 62%);
+}
+.participant-actions__toggle img {
+  grid-area:1/1; position:relative; display:block; width:20px; height:20px;
+  transition:opacity .18s,transform .24s;
+}
+.participant-actions button.participant-actions__toggle:focus-visible { border-radius:96px; }
+@media(prefers-reduced-transparency:reduce){.participant-actions__toggle { backdrop-filter:none; -webkit-backdrop-filter:none; background:#d6cfec; }}
+@media(forced-colors:active){.participant-actions__toggle { background:ButtonFace; border:1px solid ButtonText; }.participant-actions__toggle::before { display:none; }}
+.participant-actions__close { opacity:0; transform:rotate(-45deg); }
+.participant-actions.is-open .participant-actions__plus { opacity:0; transform:rotate(45deg); }
+.participant-actions.is-open .participant-actions__close { opacity:1; transform:rotate(0); }
+.participant-actions__links { position:absolute; right:calc(var(--action-inset) + 16px); bottom:calc(var(--action-inset) + 80px); display:flex; flex-direction:column; gap:16px; align-items:flex-start; opacity:0; visibility:hidden; transform:translateY(8px); pointer-events:none; transition:opacity .2s,transform .24s,visibility 0s .24s; }
+.participant-actions__links a { display:flex; align-items:center; gap:8px; font-size:20px; font-weight:500; line-height:32px; text-decoration:none; color:var(--text-black); white-space:nowrap; }
+.participant-actions__links img { width:20px; height:20px; display:block; }
+.participant-actions__links a:hover { color:var(--brand); }
+.participant-actions.is-open .participant-actions__links { opacity:1; visibility:visible; transform:translateY(0); pointer-events:auto; transition-delay:0s; }
+/* A full-viewport radial field reaches zero alpha before its outer radius.
+   No cropped rectangle, hard mask stop, border, or filter edge surrounds it. */
+.participant-actions__wash { position:absolute; inset:0; pointer-events:none; opacity:0; background:radial-gradient(ellipse 636px 596px at 100% 100%,rgba(250,250,250,1) 0%,rgba(250,250,250,.99) 20%,rgba(250,250,250,.94) 34%,rgba(250,250,250,.78) 47%,rgba(250,250,250,.50) 60%,rgba(250,250,250,.23) 73%,rgba(250,250,250,.06) 86%,rgba(250,250,250,.008) 95%,rgba(250,250,250,0) 100%); transition:opacity .3s ease; }
+.participant-actions__wash::before { content:""; position:absolute; inset:0; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); mask-image:radial-gradient(ellipse 580px 540px at 100% 100%,#000 0%,rgba(0,0,0,.94) 28%,rgba(0,0,0,.5) 55%,transparent 100%); -webkit-mask-image:radial-gradient(ellipse 580px 540px at 100% 100%,#000 0%,rgba(0,0,0,.94) 28%,rgba(0,0,0,.5) 55%,transparent 100%); }
+.participant-actions.is-open .participant-actions__wash { opacity:1; }
+body.is-lifting .participant-actions { visibility:hidden; opacity:0; }
+/* Keep the original one-row silhouette until space requires a second row. */
+@media(max-width:1500px){.event-nav{gap:24px;padding-inline:24px;}.event-nav a{font-size:16px;}.workspace .ev-topbar__row{gap:16px;}}
+@media(max-width:1180px){.workspace .ev-topbar{height:204px;padding-top:24px;}.workspace .ev-topbar__row{grid-template-columns:minmax(0,1fr) 44px;gap:16px;}.event-nav{grid-row:2;grid-column:1/-1;justify-self:center;gap:28px;}.workspace .ev-topbar__end{grid-column:2;grid-row:1;}.workspace .ev-title{max-width:440px;}.workspace.ops .screen-btn{--screen-dock-top:176px;}.workspace.ops .ev-topbar{height:244px;}}
+@media(max-width:680px){.workspace{--ev-gutter:20px;}.workspace .ev-topbar{padding:20px 20px 0;height:188px;}.event-nav{max-width:100%;box-sizing:border-box;gap:20px;padding:12px 18px;justify-self:stretch;overflow-x:auto;scrollbar-width:none;}.event-nav a{font-size:14px;}.event-nav .event-nav__brand{width:28px;}.event-nav__brand img{width:28px;height:20px;}.workspace.ops .screen-btn{--screen-dock-top:164px;}.participant-actions{--action-inset:24px;}.participant-actions__links a{font-size:18px;}.participant-actions__wash{background:radial-gradient(ellipse 440px 460px at 100% 100%,#fafafa 0%,rgba(250,250,250,.97) 24%,rgba(250,250,250,.78) 44%,rgba(250,250,250,.4) 64%,rgba(250,250,250,.1) 82%,transparent 100%);}.participant-actions__wash::before{mask-image:radial-gradient(ellipse 420px 440px at 100% 100%,#000,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 420px 440px at 100% 100%,#000,transparent 100%);}}
+@media(prefers-reduced-motion:reduce){.participant-actions *{transition:none!important;}}
+
+/* The shader supplies the glass surface; the original DOM button keeps focus,
+   its exported icon, its accessible name, and all disclosure interactions. */
+.participant-actions__glass { position:absolute; pointer-events:none; visibility:hidden; }
+.participant-actions__toggle.has-liquid-glass { background:transparent; backdrop-filter:none; -webkit-backdrop-filter:none; box-shadow:0 0 40px rgba(0,0,0,.08); }
+.participant-actions__toggle.has-liquid-glass::before { display:none; }
+.participant-actions__toggle.has-liquid-glass .participant-actions__glass { visibility:visible; }
+.participant-actions__toggle img { z-index:1; }

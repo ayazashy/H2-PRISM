@@ -65,53 +65,141 @@ export function normSearch(str) {
     .trim();
 }
 
-export const HALL_WIDTH = 1760;
-export const HALL_HEIGHT = 694;
+export const HALL_WIDTH = 2120;
+export const HALL_HEIGHT = 900;
 
-export const ZONE_GEOMETRY = {
-  A: { x: 22, y: 20, cols: 24, rows: 5, wing: 'youth', labelEn: '6-11y', labelAr: '٦-١١' },
-  B: { x: 446, y: 20, cols: 24, rows: 5, wing: 'youth', labelEn: '12-17y', labelAr: '١٢-١٧' },
-  C: { x: 22, y: 244, cols: 24, rows: 5, wing: 'youth', labelEn: '12-17y', labelAr: '١٢-١٧' },
-  D: { x: 446, y: 244, cols: 24, rows: 5, wing: 'youth', labelEn: '12-17y', labelAr: '١٢-١٧' },
-  E: { x: 22, y: 468, cols: 24, rows: 5, wing: 'youth', labelEn: '12-17y', labelAr: '١٢-١٧' },
-  F: { x: 446, y: 468, cols: 18, rows: 5, wing: 'bridge', labelEn: 'Mixed', labelAr: 'مشترك' },
-  G: { x: 910, y: 20, cols: 24, rows: 5, wing: 'pro', labelEn: '18+ Uni', labelAr: 'جامعي' },
-  H: { x: 910, y: 244, cols: 24, rows: 5, wing: 'pro', labelEn: '18+ Uni', labelAr: 'جامعي' },
-  I: { x: 910, y: 468, cols: 24, rows: 5, wing: 'pro', labelEn: 'Uni/Pro', labelAr: 'جامعي/رواد' },
-  J: { x: 1334, y: 20, cols: 24, rows: 7, wing: 'pro', labelEn: '18+ Pro', labelAr: 'رواد/مطورون' },
-  K: { x: 1334, y: 318, cols: 13, rows: 4, wing: 'pro', labelEn: '18+ Pro', labelAr: 'رواد/مطورون' },
-};
+const M_PX = 10;
+const HALL_OX = 60;
+const HALL_OY = 110;
+const mx = (m) => Math.round((HALL_OX + m * M_PX) * 10) / 10;
+const my = (m) => Math.round((HALL_OY + m * M_PX) * 10) / 10;
 
-const CELL_W = 14;
-const CELL_H = 22;
-const GAP_X = 1.8;
-const PAD_L = 22;
-const PAD_R = 10;
-const HEADER_H = 28;
-const PAD_B = 10;
+// Official SAIF Hall 4 geometry from map.saifair.sa (sef-plan.js)
+const OFF_STRIPS = [68, 72.5, 77, 81.5, 86, 90.5, 95, 99.5, 104, 108.5, 113, 118.07, 122.6,
+  131.6, 136.1, 141.1, 145.6, 150.1, 154.6, 159.1, 163.6, 168, 172.6, 177, 181.6, 186];
+const OFF_BANDS = [5.2, 20.2, 35.2, 50.2];
+const OFF_MEDIA_GAP = { x0: 115, x1: 141.1 };
+const OFF_EAST_BOOTHS = { x0: 191.5, x1: 193.5, per: 6, blocks: [[-0.9, 8.7], [14.2, 23.4], [29.2, 38.7], [44.5, 53.5], [59.2, 67.6]] };
+const OFF_WALL_BOOTHS = [{ x0: 108.25, x1: 118.05, per: 7 }, { x0: 144.25, x1: 154.05, per: 7 }];
+const OFF_ZONES_META = [
+  { letter: 'A', cols: 5, rows: 5, slots: 24, wing: 'youth', labelEn: '6-11y', labelAr: '٦-١١' },
+  { letter: 'B', cols: 5, rows: 5, slots: 24, wing: 'youth', labelEn: '12-17y', labelAr: '١٢-١٧' },
+  { letter: 'C', cols: 5, rows: 5, slots: 24, wing: 'youth', labelEn: '12-17y', labelAr: '١٢-١٧' },
+  { letter: 'D', cols: 5, rows: 5, slots: 24, wing: 'youth', labelEn: '12-17y', labelAr: '١٢-١٧' },
+  { letter: 'E', cols: 5, rows: 5, slots: 24, wing: 'youth', labelEn: '12-17y', labelAr: '١٢-١٧' },
+  { letter: 'F', cols: 5, rows: 5, slots: 18, wing: 'bridge', labelEn: 'Mixed', labelAr: 'مشترك' },
+  { letter: 'G', cols: 5, rows: 5, slots: 24, wing: 'pro', labelEn: '18+ Uni', labelAr: 'جامعي' },
+  { letter: 'H', cols: 5, rows: 5, slots: 24, wing: 'pro', labelEn: '18+ Uni', labelAr: 'جامعي' },
+  { letter: 'I', cols: 5, rows: 5, slots: 24, wing: 'pro', labelEn: 'Uni/Pro', labelAr: 'جامعي/رواد' },
+  { letter: 'J', cols: 7, rows: 7, slots: 24, wing: 'pro', labelEn: '18+ Pro', labelAr: 'رواد/مطورون' },
+  { letter: 'K', cols: 4, rows: 4, slots: 13, wing: 'pro', labelEn: '18+ Wall', labelAr: 'جدار/رواد' },
+];
 
-function rowOffsetY(row) {
-  let y = HEADER_H;
-  for (let r = 1; r < row; r++) {
-    y += CELL_H + (r % 2 === 0 ? 12 : 4);
+const OFFICIAL_BOOTH_RECTS = new Map();
+const OFFICIAL_ZONE_BOXES = {};
+
+(function buildOfficialRects() {
+  const skip = (band, x) => band === 0 && x > OFF_MEDIA_GAP.x0 && x < OFF_MEDIA_GAP.x1;
+  const desc = OFF_STRIPS.slice().reverse();
+  const colIndex = (sx, col) => desc.indexOf(sx) * 2 + (col === 'east' ? 0 : 1);
+  const zoneOfCol = (c) => {
+    let acc = 0;
+    for (let i = 0; i < 10; i++) {
+      acc += OFF_ZONES_META[i].cols;
+      if (c < acc) return i;
+    }
+    return 9;
+  };
+  const zoneStart = (zi) => OFF_ZONES_META.slice(0, zi).reduce((a, z) => a + z.cols, 0);
+
+  const boundsByZ = {};
+  const recordRect = (zLetter, code, xM, zM, wM = 1, dM = 2) => {
+    const x = mx(xM - wM / 2);
+    const y = my(zM - dM / 2);
+    const w = wM * M_PX;
+    const h = dM * M_PX;
+    const rect = { x, y, w, h, cx: x + w / 2, cy: y + h / 2 };
+    OFFICIAL_BOOTH_RECTS.set(code, rect);
+    const b = (boundsByZ[zLetter] ||= { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity });
+    if (x < b.minX) b.minX = x;
+    if (y < b.minY) b.minY = y;
+    if (x + w > b.maxX) b.maxX = x + w;
+    if (y + h > b.maxY) b.maxY = y + h;
+  };
+
+  OFF_BANDS.forEach((z0, band) => {
+    const strips = OFF_STRIPS.filter((x) => !skip(band, x)).slice().reverse();
+    strips.forEach((sx) => {
+      ['east', 'west'].forEach((col) => {
+        const zi = zoneOfCol(colIndex(sx, col));
+        const zLetter = OFF_ZONES_META[zi].letter;
+        const zc = colIndex(sx, col) - zoneStart(zi) + 1;
+        for (let r = 0; r < 6; r++) {
+          const num = (OFF_BANDS.length - 1 - band) * 6 + (6 - r);
+          const code = `S-${zLetter}${zc}-${String(num).padStart(2, '0')}`;
+          const xM = sx + (col === 'east' ? 1.5 : 0.5);
+          const zM = z0 + r * 2 + 1;
+          recordRect(zLetter, code, xM, zM, 1, 2);
+        }
+      });
+    });
+  });
+
+  const wallRowSlots = (a0, a1, per) => {
+    const mid = per - 2, i0 = a0 + 0.65, i1 = a1 - 0.65, step = (i1 - i0) / mid;
+    return [
+      { a: a0 + 0.3, d: 1.3, side: true },
+      ...Array.from({ length: mid }, (_, i) => ({ a: i0 + (i + 0.5) * step, d: 1.25, side: false })),
+      { a: a1 - 0.3, d: 1.3, side: true },
+    ];
+  };
+  let kCol = 1, kNum = 0;
+  const nextK = () => {
+    if (kNum === 12) { kCol++; kNum = 0; }
+    return `S-K${kCol}-${String(++kNum).padStart(2, '0')}`;
+  };
+  OFF_EAST_BOOTHS.blocks.slice().sort((a, b) => b[0] - a[0]).forEach(([z0, z1]) => {
+    wallRowSlots(z0, z1, OFF_EAST_BOOTHS.per).reverse().forEach((slot) => {
+      recordRect('K', nextK(), OFF_EAST_BOOTHS.x1 - slot.d, slot.a, slot.side ? 1.6 : 1, slot.side ? 1 : 1.6);
+    });
+  });
+  OFF_WALL_BOOTHS.slice().sort((a, b) => b.x0 - a.x0).forEach((row, i) => {
+    if (i === 1) { kCol++; kNum = 0; }
+    wallRowSlots(row.x0, row.x1, row.per).reverse().forEach((slot) => {
+      recordRect('K', `S-K${kCol}-${String(++kNum).padStart(2, '0')}`, slot.a, -6.9 + slot.d, slot.side ? 1 : 1.6, slot.side ? 1.6 : 1);
+    });
+  });
+
+  for (const z of OFF_ZONES_META) {
+    const b = boundsByZ[z.letter];
+    OFFICIAL_ZONE_BOXES[z.letter] = b
+      ? { x: b.minX - 6, y: b.minY - 26, w: b.maxX - b.minX + 12, h: b.maxY - b.minY + 32 }
+      : { x: 0, y: 0, w: 0, h: 0 };
   }
-  return y;
-}
+})();
+
+export const ZONE_GEOMETRY = Object.fromEntries(
+  OFF_ZONES_META.map((z) => [
+    z.letter,
+    {
+      x: OFFICIAL_ZONE_BOXES[z.letter].x,
+      y: OFFICIAL_ZONE_BOXES[z.letter].y,
+      cols: z.slots,
+      rows: z.rows,
+      wing: z.wing,
+      labelEn: z.labelEn,
+      labelAr: z.labelAr,
+    },
+  ])
+);
 
 export function getZoneBox(zoneId) {
-  const g = ZONE_GEOMETRY[zoneId];
-  if (!g) return { x: 0, y: 0, w: 0, h: 0 };
-  const w = PAD_L + g.cols * CELL_W + (g.cols - 1) * GAP_X + PAD_R;
-  const h = rowOffsetY(g.rows) + CELL_H + PAD_B;
-  return { x: g.x, y: g.y, w, h };
+  return OFFICIAL_ZONE_BOXES[zoneId] || { x: 0, y: 0, w: 0, h: 0 };
 }
 
 export function getBoothRect(zoneId, row, seat) {
-  const g = ZONE_GEOMETRY[zoneId];
-  if (!g) return { x: 0, y: 0, w: CELL_W, h: CELL_H, cx: 0, cy: 0 };
-  const x = g.x + PAD_L + (seat - 1) * (CELL_W + GAP_X);
-  const y = g.y + rowOffsetY(row);
-  return { x, y, w: CELL_W, h: CELL_H, cx: x + CELL_W / 2, cy: y + CELL_H / 2 };
+  const code = `S-${zoneId}${row}-${String(seat).padStart(2, '0')}`;
+  return OFFICIAL_BOOTH_RECTS.get(code) || { x: 0, y: 0, w: 10, h: 20, cx: 5, cy: 10 };
 }
 
 export function parseTableCode(tableStr) {
@@ -121,28 +209,17 @@ export function parseTableCode(tableStr) {
 }
 
 export function hitTestHall(wx, wy, boothGroups) {
-  for (const [zId, g] of Object.entries(ZONE_GEOMETRY)) {
-    const box = getZoneBox(zId);
-    if (wx < box.x || wx > box.x + box.w || wy < box.y || wy > box.y + box.h) continue;
-
-    if (wy <= box.y + HEADER_H) {
-      return { type: 'zone', zone: zId };
-    }
-
-    const colStep = CELL_W + GAP_X;
-    const seatIdx = Math.floor((wx - (g.x + PAD_L)) / colStep) + 1;
-    if (seatIdx >= 1 && seatIdx <= g.cols) {
-      for (let r = 1; r <= g.rows; r++) {
-        const top = g.y + rowOffsetY(r);
-        if (wy >= top - 2 && wy <= top + CELL_H + 2) {
-          const tableStr = `S-${zId}${r}-${String(seatIdx).padStart(2, '0')}`;
-          if (boothGroups.has(tableStr)) {
-            return { type: 'booth', zone: zId, table: tableStr };
-          }
-        }
+  for (const [tableStr, rect] of OFFICIAL_BOOTH_RECTS.entries()) {
+    if (wx >= rect.x - 1 && wx <= rect.x + rect.w + 1 && wy >= rect.y - 1 && wy <= rect.y + rect.h + 1) {
+      if (!boothGroups || boothGroups.has(tableStr)) {
+        return { type: 'booth', zone: tableStr[2], table: tableStr };
       }
     }
-    return { type: 'zone', zone: zId };
+  }
+  for (const [zId, box] of Object.entries(OFFICIAL_ZONE_BOXES)) {
+    if (wx >= box.x && wx <= box.x + box.w && wy >= box.y && wy <= box.y + box.h) {
+      return { type: 'zone', zone: zId };
+    }
   }
   return null;
 }
@@ -203,6 +280,8 @@ export function prepareProjects(rawProjects, meta) {
       cy: rect.cy,
       x: rect.x,
       y: rect.y,
+      w: rect.w,
+      h: rect.h,
       searchText,
       _score: 0,
       _dist: 0,
