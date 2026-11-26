@@ -24,6 +24,7 @@ function writeRawStorage(value) {
 }
 
 export function createDefaultState() {
+  const narrow = typeof window !== 'undefined' && window.innerWidth <= 900;
   return {
     v: 1,
     records: {}, // { [projectId]: { fav?, vis?, visAt?, rat?, sub?, ign?, tags?, note?, met? } }
@@ -32,7 +33,7 @@ export function createDefaultState() {
     ui: {
       lang: 'ar',
       theme: 'dark',
-      view: 'split', // split | list | map
+      view: narrow ? 'list' : 'split', // split | list | map
       mapColor: 'status', // status | rating | match | cat | path
       hideFilteredOnMap: false,
       hideIgnoredOnMap: false,
@@ -70,9 +71,9 @@ export class TrackerStore {
     }
   }
 
-  save(reason = 'all') {
+  save(reason = 'all', id = null) {
     writeRawStorage(JSON.stringify(this.state));
-    for (const cb of this.listeners) cb(this.state, reason);
+    for (const cb of this.listeners) cb(this.state, reason, id);
   }
 
   subscribe(cb) {
@@ -84,7 +85,7 @@ export class TrackerStore {
     return this.state.records[id] || {};
   }
 
-  _mutateRecord(id, mutator, reason = 'all') {
+  _mutateRecord(id, mutator, reason = 'record') {
     const curr = { ...(this.state.records[id] || {}) };
     mutator(curr);
     // Prune empty keys & delete record if completely empty to keep localStorage crisp
@@ -105,7 +106,7 @@ export class TrackerStore {
     } else {
       this.state.records[id] = curr;
     }
-    this.save(reason);
+    this.save(reason, id);
   }
 
   toggleFav(id) {

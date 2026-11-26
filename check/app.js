@@ -8,11 +8,11 @@ import {
 import { FairMapController } from './map.js';
 import { TrackerStore } from './store.js';
 
-const BATCH_SIZE = 60;
+const BATCH_SIZE = 24;
 
 const UI_TEXT = {
   ar: {
-    searchPh: '🔍 بحث: اسم، عضو، طاولة S-H5-23، -كلمة_للتجاهل...',
+    searchPh: '🔍 بحث: مشروع، مشارك (عربي أو إنجليزي)، S-H5-23، -تجاهل...',
     all: 'الكل',
     prefs: 'تفضيلاتي',
     fav: 'المفضلة',
@@ -22,9 +22,6 @@ const UI_TEXT = {
     noted: 'ملاحظات',
     ignored: 'متجاهَل',
     filters: 'فلاتر',
-    split: '◫',
-    list: '📋',
-    map: '🗺️',
     incMode: '✓ تضمين',
     excMode: '🚫 تجاهل',
     clear: 'مسح',
@@ -74,7 +71,7 @@ const UI_TEXT = {
     empty: 'لا توجد مشاريع مطابقة',
   },
   en: {
-    searchPh: '🔍 Search: title, member, S-H5-23, -exclude...',
+    searchPh: '🔍 Search: project, member (EN/AR), S-H5-23, -exclude...',
     all: 'All',
     prefs: 'My Picks',
     fav: 'Starred',
@@ -84,9 +81,6 @@ const UI_TEXT = {
     noted: 'Notes',
     ignored: 'Ignored',
     filters: 'Filters',
-    split: '◫',
-    list: '📋',
-    map: '🗺️',
     incMode: '✓ Include',
     excMode: '🚫 Ignore',
     clear: 'Clear',
@@ -169,7 +163,7 @@ class FairApp {
     this.countryCounts = [];
     this.evalResult = null;
     this.renderedCount = BATCH_SIZE;
-    this.openModal = null; // null | 'filters' | 'prefs' | 'backup' | { type: 'detail', id }
+    this.openModal = null;
     this.countrySearch = '';
     this.mapCtrl = null;
     this.observer = null;
@@ -186,7 +180,6 @@ class FairApp {
     this.catMap = new Map(this.meta.cats.map((c) => [c.id, c]));
     this.tagMap = new Map(this.meta.tags.map((t) => [t.id, t]));
 
-    // Precompute country frequencies across projects
     const cFreq = new Map();
     for (const p of this.projects) {
       for (const n of p.allNats) cFreq.set(n, (cFreq.get(n) || 0) + 1);
@@ -195,30 +188,16 @@ class FairApp {
 
     this._initMap();
     this._bindGlobalEvents();
-    this.store.subscribe((_state, reason) => {
+    this.store.subscribe((_state, reason, id) => {
       if (reason === 'note') {
-        this._syncNoteCountersOnly();
+        this._syncNoteOnly();
+      } else if (reason === 'record' && id) {
+        this._patchSingleRecord(id);
       } else {
         this.render();
       }
     });
     this.render();
-  }
-
-  _syncNoteCountersOnly() {
-    const { filters, records, prefs } = this.store.state;
-    this.evalResult = evaluateAll(this.projects, filters, records, prefs);
-    const notedTab = document.querySelector('[data-status="noted"] b');
-    if (notedTab) notedTab.textContent = String(this.evalResult.counts.noted);
-    // Keep inline card note and map inspector note synchronized without losing active input focus
-    const active = document.activeElement;
-    if (active?.dataset?.cardNote) {
-      const insp = document.querySelector(`[data-insp-note="${active.dataset.cardNote}"]`);
-      if (insp && insp !== active) insp.value = active.value;
-    } else if (active?.dataset?.inspNote) {
-      const cardInp = document.querySelector(`[data-card-note="${active.dataset.inspNote}"]`);
-      if (cardInp && cardInp !== active) cardInp.value = active.value;
-    }
   }
 
   t(key) {
@@ -249,6 +228,53 @@ class FairApp {
     });
   }
 
+  _syncNoteOnly() {
+    const { filters, records, prefs } = this.store.state;
+    this.evalResult = evaluateAll(this.projects, filters, records, prefs);
+    const notedTab = document.querySelector('[data-status="noted"] b');
+    if (notedTab) notedTab.textContent = String(this.evalResult.counts.noted);
+
+    const active = document.activeElement;
+    if (active?.dataset?.cardNote) {
+      const insp = document.querySelector(`[data-insp-note="${active.dataset.cardNote}"]`);
+      if (insp && insp !== active) insp.value = active.value;
+    } else if (active?.dataset?.inspNote) {
+      const cardInp = document.querySelector(`[data-card-note="${active.dataset.inspNote}"]`);
+      if (cardInp && cardInp !== active) cardInp.value = active.value;
+    }
+  }
+
+  /**
+   * Ultra-fast O(1) DOM patch when toggling star/visit/rating/tag/ignore on a single card.
+   * Avoids rebuilding the entire list DOM on mobile touchscreens.
+   */
+  _patchSingleRecord(id) {
+    const { filters, records, prefs, ui } = this.store.state;
+    this.evalResult = evaluateAll(this.projects, filters, records, prefs);
+    const { evalById, matched, counts } = this.evalResult;
+
+    this._renderStatusTabs(counts);
+    this._renderActiveBar(matched.length);
+    this.mapCtrl.sync({ evalById, matched, records, prefs, ui });
+    if (this.openModal) this._renderModal();
+
+    const p = this.projectById.get(id);
+    if (!p) return;
+    const cardEl = document.querySelector(`[data-pid="${id}"]`);
+    if (!cardEl) return;
+
+    const ev = evalById.get(id);
+    if (!ev?.matches) {
+      cardEl.remove();
+      return;
+    }
+
+    const temp = document.createElement('div');
+    temp.innerHTML = this._cardMarkup(p, records[id] || {}, ev);
+    const nextCard = temp.firstElementChild;
+    if (nextCard) cardEl.replaceWith(nextCard);
+  }
+
   _bindGlobalEvents() {
     const searchEl = document.getElementById('search-input');
     searchEl.value = this.store.state.filters.q || '';
@@ -258,7 +284,7 @@ class FairApp {
       this._searchTimer = setTimeout(() => {
         this.renderedCount = BATCH_SIZE;
         this.store.updateFilters({ q: val });
-      }, 90);
+      }, 110);
     });
 
     document.getElementById('search-clear').addEventListener('click', () => {
@@ -325,7 +351,6 @@ class FairApp {
       }
     });
 
-    // Right-click on quick pills toggles Ignore directly!
     document.getElementById('topbar').addEventListener('contextmenu', (e) => {
       const qCat = e.target.closest('[data-qcat]');
       if (qCat && qCat.dataset.qcat !== 'adult') {
@@ -365,9 +390,7 @@ class FairApp {
         const ids = this.evalResult.matched.map((p) => p.id);
         if (!ids.length) return;
         const act = bulk.dataset.bulk;
-        if (act === 'ignore' && ids.length > 25) {
-          if (!confirm(`🚫 ${ids.length}?`)) return;
-        }
+        if (act === 'ignore' && ids.length > 25 && !confirm(`🚫 ${ids.length}?`)) return;
         this.store.bulkAction(ids, act);
         return;
       }
@@ -392,8 +415,14 @@ class FairApp {
         else if (act === 'locate') {
           const p = this.projectById.get(id);
           if (p) {
-            if (this.store.state.ui.view === 'list') this.store.updateUI({ view: 'split' });
-            setTimeout(() => this.mapCtrl.focusTable(p.table, true), 40);
+            if (this.store.state.ui.view === 'list') {
+              this.store.updateUI({ view: window.innerWidth <= 900 ? 'map' : 'split' });
+            }
+            if (window.innerWidth <= 1020) window.scrollTo({ top: 0, behavior: 'smooth' });
+            requestAnimationFrame(() => {
+              this.mapCtrl._resizeCanvas();
+              this.mapCtrl.focusTable(p.table, true);
+            });
           }
         } else if (act === 'filter-tag') {
           this.renderedCount = BATCH_SIZE;
@@ -431,7 +460,6 @@ class FairApp {
       }
     });
 
-    // Modal Backdrop Close & Actions
     const overlay = document.getElementById('modal-overlay');
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay || e.target.closest('[data-modal-close]')) {
@@ -450,12 +478,8 @@ class FairApp {
         this.store.toggleFacetValue(key, val, 'exc');
       }
     });
-    overlay.addEventListener('input', (e) => {
-      this._handleModalInput(e);
-    });
-    overlay.addEventListener('change', (e) => {
-      this._handleModalChange(e);
-    });
+    overlay.addEventListener('input', (e) => this._handleModalInput(e));
+    overlay.addEventListener('change', (e) => this._handleModalChange(e));
     overlay.addEventListener('keydown', (e) => {
       if (e.key !== 'Enter') return;
       if (e.target.id === 'ign-kw-input') {
@@ -481,24 +505,8 @@ class FairApp {
     });
   }
 
-  render() {
-    const { filters, records, prefs, ui } = this.store.state;
-    const lang = ui.lang === 'en' ? 'en' : 'ar';
-
-    document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.dataset.theme = ui.theme === 'light' ? 'light' : 'dark';
-
-    this.evalResult = evaluateAll(this.projects, filters, records, prefs);
-    const { evalById, matched, counts } = this.evalResult;
-
-    // Update topbar UI
-    const brandPill = document.querySelector('.brand-pill');
-    if (brandPill) brandPill.textContent = `SAIF 26 · ${prefs.myBooth || 'S-H5-23'}`;
-    document.getElementById('search-input').placeholder = this.t('searchPh');
-    document.getElementById('search-clear').classList.toggle('hidden', !filters.q);
-
-    // Status tabs
+  _renderStatusTabs(counts) {
+    const { filters } = this.store.state;
     const statusTabs = [
       ['all', `${this.t('all')} <b>${counts.visible}</b>`],
       ['prefs', `⚡ ${this.t('prefs')} <b>${counts.prefs}</b>`],
@@ -515,8 +523,26 @@ class FairApp {
           `<button class="stat-tab ${filters.status === k ? 'active' : ''}" data-status="${k}">${lbl}</button>`
       )
       .join('');
+  }
 
-    // Top action buttons
+  render() {
+    const { filters, records, prefs, ui } = this.store.state;
+    const lang = ui.lang === 'en' ? 'en' : 'ar';
+
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.dataset.theme = ui.theme === 'light' ? 'light' : 'dark';
+
+    this.evalResult = evaluateAll(this.projects, filters, records, prefs);
+    const { evalById, matched, counts } = this.evalResult;
+
+    const brandPill = document.querySelector('.brand-pill');
+    if (brandPill) brandPill.textContent = `SAIF 26 · ${prefs.myBooth || 'S-H5-23'}`;
+    document.getElementById('search-input').placeholder = this.t('searchPh');
+    document.getElementById('search-clear').classList.toggle('hidden', !filters.q);
+
+    this._renderStatusTabs(counts);
+
     const fCount = countActiveFilterRules(filters, prefs);
     document.getElementById('btn-filters').innerHTML = `🎛️ ${this.t('filters')}${
       fCount ? `<span class="count-badge">${fCount}</span>` : ''
@@ -529,7 +555,6 @@ class FairApp {
       vb.classList.toggle('active', vb.dataset.view === ui.view);
     }
 
-    // Quick strip mode & pills
     for (const mb of document.querySelectorAll('[data-fmode]')) {
       mb.classList.toggle('active', mb.dataset.fmode === (ui.filterMode || 'inc'));
     }
@@ -569,15 +594,15 @@ class FairApp {
       .map(([v, l]) => `<option value="${v}" ${filters.sortBy === v ? 'selected' : ''}>${l}</option>`)
       .join('');
 
-    // Active rules + bulk bar
     this._renderActiveBar(matched.length);
 
-    // Workspace mode
     const ws = document.getElementById('workspace');
     ws.className = `workspace mode-${ui.view}`;
 
-    // Render list & map synchronously
     this._renderList();
+    if (ui.view !== 'list') {
+      requestAnimationFrame(() => this.mapCtrl._resizeCanvas());
+    }
     this.mapCtrl.sync({ evalById, matched, records, prefs, ui });
     if (this.openModal) this._renderModal();
   }
@@ -588,12 +613,8 @@ class FairApp {
     const chips = [];
 
     const addFacetChips = (key, labelFn) => {
-      for (const v of filters[key].inc || []) {
-        chips.push([key, 'inc', v, `+ ${labelFn(v)}`]);
-      }
-      for (const v of filters[key].exc || []) {
-        chips.push([key, 'exc', v, `🚫 ${labelFn(v)}`]);
-      }
+      for (const v of filters[key].inc || []) chips.push([key, 'inc', v, `+ ${labelFn(v)}`]);
+      for (const v of filters[key].exc || []) chips.push([key, 'exc', v, `🚫 ${labelFn(v)}`]);
     };
 
     addFacetChips('cats', (id) => this.catMap.get(id)?.[lang] || id);
@@ -644,12 +665,81 @@ class FairApp {
     document.getElementById('active-bar').innerHTML = `${chipsHtml}${clearHtml}${bulkHtml}`;
   }
 
+  _cardMarkup(p, rec, ev) {
+    const { prefs, ui, filters } = this.store.state;
+    const lang = ui.lang === 'en' ? 'en' : 'ar';
+    const myTable = (prefs.myBooth || '').toUpperCase();
+    const pathObj = this.pathMap.get(p.path);
+    const catObj = this.catMap.get(p.cat);
+    const isMe = p.table === myTable;
+    const flags = p.allNats.map((n) => this.meta.countries[n]?.[0] || '').join('');
+
+    const stars = [1, 2, 3, 4, 5]
+      .map(
+        (s) =>
+          `<button class="star-btn ${(rec.rat || 0) >= s ? 'on' : ''}" data-card-act="rat" data-id="${p.id}" data-stars="${s}">★</button>`
+      )
+      .join('');
+
+    const cTags = CUSTOM_TAGS.map(
+      (t) =>
+        `<button class="tag-pill ${(rec.tags || []).includes(t.id) ? 'on' : ''}" data-card-act="tag" data-id="${p.id}" data-tag="${t.id}">${t.icon}</button>`
+    ).join('');
+
+    const autoTags = p.tags
+      .slice(0, 4)
+      .map((tid) => {
+        const tg = this.tagMap.get(tid);
+        const activeCls = filters.tags.inc.includes(tid)
+          ? 'inc'
+          : filters.tags.exc.includes(tid)
+          ? 'exc'
+          : '';
+        return `<button class="auto-tag ${activeCls}" data-card-act="filter-tag" data-tag="${tid}">${tg?.icon || ''} ${tg?.[lang] || tid}</button>`;
+      })
+      .join('');
+
+    const membersHtml = p.members
+      .map((m) => {
+        const fl = m.nat ? this.meta.countries[m.nat]?.[0] || '' : '';
+        const met = (rec.met || []).includes(m.n);
+        const dispName = lang === 'ar' ? m.ar || m.n : m.n;
+        const q = encodeURIComponent(`${m.n} ${m.nat || ''}`);
+        return `<a class="member-chip ${met ? 'met' : ''}" href="https://www.linkedin.com/search/results/people/?keywords=${q}" target="_blank" rel="noopener" title="${esc(m.n)}">${m.l ? '👑 ' : ''}${esc(dispName)} ${fl}</a>`;
+      })
+      .join('');
+
+    return `
+      <article class="card ${rec.fav ? 'is-fav' : ''} ${rec.vis ? 'is-vis' : ''} ${ev.isIgnored ? 'is-ignored' : ''}" data-pid="${p.id}">
+        <div class="card-top">
+          <button class="badge-table ${isMe ? 'is-me' : ''}" data-card-act="locate" data-id="${p.id}">${p.table}</button>
+          <span class="badge-cat c${p.cat}">${catObj?.[lang] || ''}</span>
+          <span class="badge-path">${pathObj?.icon} ${pathObj?.[lang]}</span>
+          <span class="badge-mini">${flags} ×${p.members.length}</span>
+          <span class="badge-match">⚡${ev.matchScore}</span>
+          <div class="card-quick-ops">
+            <button class="act-btn fav ${rec.fav ? 'on' : ''}" data-card-act="fav" data-id="${p.id}">${rec.fav ? '★' : '☆'}</button>
+            <button class="act-btn vis ${rec.vis ? 'on' : ''}" data-card-act="vis" data-id="${p.id}">✓</button>
+            <button class="act-btn ign ${rec.ign ? 'on' : ''}" data-card-act="ign" data-id="${p.id}">🚫</button>
+          </div>
+        </div>
+        <div class="card-title" data-card-act="open" data-id="${p.id}">${esc(p.title)}</div>
+        <div class="card-desc" data-card-act="desc">${esc(p.desc)}</div>
+        ${autoTags ? `<div class="card-tags-row">${autoTags}</div>` : ''}
+        <div class="card-rate-bar">
+          <div class="stars-row">${stars}</div>
+          ${cTags}
+        </div>
+        <div class="members-row">${membersHtml}</div>
+        <input class="note-inline" type="text" data-card-note="${p.id}" value="${esc(rec.note || '')}" placeholder="${this.t('notePh')}" />
+      </article>
+    `;
+  }
+
   _renderList() {
     const pane = document.getElementById('list-pane');
     const { matched, evalById } = this.evalResult;
-    const { records, prefs, ui, filters } = this.store.state;
-    const lang = ui.lang === 'en' ? 'en' : 'ar';
-    const myTable = (prefs.myBooth || '').toUpperCase();
+    const { records } = this.store.state;
 
     if (!matched.length) {
       pane.innerHTML = `<div class="card" style="text-align:center;padding:30px;color:var(--muted)">${this.t('empty')}</div>`;
@@ -658,74 +748,7 @@ class FairApp {
 
     const slice = matched.slice(0, this.renderedCount);
     const cardsHtml = slice
-      .map((p) => {
-        const rec = records[p.id] || {};
-        const ev = evalById.get(p.id);
-        const pathObj = this.pathMap.get(p.path);
-        const catObj = this.catMap.get(p.cat);
-        const isMe = p.table === myTable;
-        const flags = p.allNats.map((n) => this.meta.countries[n]?.[0] || '').join('');
-
-        const stars = [1, 2, 3, 4, 5]
-          .map(
-            (s) =>
-              `<button class="star-btn ${(rec.rat || 0) >= s ? 'on' : ''}" data-card-act="rat" data-id="${p.id}" data-stars="${s}">★</button>`
-          )
-          .join('');
-
-        const cTags = CUSTOM_TAGS.map(
-          (t) =>
-            `<button class="tag-pill ${(rec.tags || []).includes(t.id) ? 'on' : ''}" data-card-act="tag" data-id="${p.id}" data-tag="${t.id}" title="${t[lang]}">${t.icon}</button>`
-        ).join('');
-
-        const autoTags = p.tags
-          .slice(0, 5)
-          .map((tid) => {
-            const tg = this.tagMap.get(tid);
-            const activeCls = filters.tags.inc.includes(tid)
-              ? 'inc'
-              : filters.tags.exc.includes(tid)
-              ? 'exc'
-              : '';
-            return `<button class="auto-tag ${activeCls}" data-card-act="filter-tag" data-tag="${tid}">${tg?.icon || ''} ${tg?.[lang] || tid}</button>`;
-          })
-          .join('');
-
-        const membersHtml = p.members
-          .map((m) => {
-            const fl = m.nat ? this.meta.countries[m.nat]?.[0] || '' : '';
-            const met = (rec.met || []).includes(m.n);
-            const q = encodeURIComponent(`${m.n} ${m.nat || ''}`);
-            return `<a class="member-chip ${met ? 'met' : ''}" href="https://www.linkedin.com/search/results/people/?keywords=${q}" target="_blank" rel="noopener">${m.l ? '👑 ' : ''}${esc(m.n)} ${fl}</a>`;
-          })
-          .join('');
-
-        return `
-          <article class="card ${rec.fav ? 'is-fav' : ''} ${rec.vis ? 'is-vis' : ''} ${ev.isIgnored ? 'is-ignored' : ''}">
-            <div class="card-top">
-              <button class="badge-table ${isMe ? 'is-me' : ''}" data-card-act="locate" data-id="${p.id}">${p.table}</button>
-              <span class="badge-cat c${p.cat}">${catObj?.[lang] || ''}</span>
-              <span class="badge-path" style="--pc:${pathObj?.color}">${pathObj?.icon} ${pathObj?.[lang]}</span>
-              <span class="badge-mini">${flags} ×${p.members.length}</span>
-              <span class="badge-match">⚡${ev.matchScore}</span>
-              <div class="card-quick-ops">
-                <button class="act-btn fav ${rec.fav ? 'on' : ''}" data-card-act="fav" data-id="${p.id}">${rec.fav ? '★' : '☆'}</button>
-                <button class="act-btn vis ${rec.vis ? 'on' : ''}" data-card-act="vis" data-id="${p.id}">✓</button>
-                <button class="act-btn ign ${rec.ign ? 'on' : ''}" data-card-act="ign" data-id="${p.id}">🚫</button>
-              </div>
-            </div>
-            <div class="card-title" data-card-act="open" data-id="${p.id}">${esc(p.title)}</div>
-            <div class="card-desc" data-card-act="desc">${esc(p.desc)}</div>
-            ${autoTags ? `<div class="card-tags-row">${autoTags}</div>` : ''}
-            <div class="card-rate-bar">
-              <div class="stars-row">${stars}</div>
-              ${cTags}
-            </div>
-            <div class="members-row">${membersHtml}</div>
-            <input class="note-inline" type="text" data-card-note="${p.id}" value="${esc(rec.note || '')}" placeholder="${this.t('notePh')}" />
-          </article>
-        `;
-      })
+      .map((p) => this._cardMarkup(p, records[p.id] || {}, evalById.get(p.id)))
       .join('');
 
     const remaining = matched.length - slice.length;
@@ -739,7 +762,6 @@ class FairApp {
 
     pane.innerHTML = cardsHtml + footer;
 
-    // Re-attach infinite scroll sentinel
     if (this.observer) this.observer.disconnect();
     const sentinel = document.getElementById('scroll-sentinel');
     if (sentinel && typeof IntersectionObserver !== 'undefined') {
@@ -1023,8 +1045,8 @@ class FairApp {
           return `
             <div class="detail-member-row">
               <button class="act-btn vis ${met ? 'on' : ''}" data-detail-act="met" data-id="${p.id}" data-member="${esc(m.n)}">${this.t('met')}</button>
-              <span>${m.l ? '👑' : '👤'} <b>${esc(m.n)}</b> ${fl} ${esc(m.nat || '')}</span>
-              <a href="https://www.linkedin.com/search/results/people/?keywords=${q}" target="_blank" rel="noopener">in LinkedIn ↗</a>
+              <span>${m.l ? '👑' : '👤'} <b>${esc(m.ar || m.n)}</b> · <small style="color:var(--muted)">${esc(m.n)}</small> ${fl}</span>
+              <a href="https://www.linkedin.com/search/results/people/?keywords=${q}" target="_blank" rel="noopener">LinkedIn ↗</a>
             </div>
           `;
         })
@@ -1040,7 +1062,7 @@ class FairApp {
         </div>
         <h3>${esc(p.title)}</h3>
         <div class="chip-grid">
-          <span class="badge-path" style="--pc:${pathObj?.color}">${pathObj?.icon} ${pathObj?.[lang]}</span>
+          <span class="badge-path">${pathObj?.icon} ${pathObj?.[lang]}</span>
           ${p.tags
             .map((tid) => {
               const tg = this.tagMap.get(tid);
@@ -1077,29 +1099,27 @@ class FairApp {
 
   _handleModalClick(e) {
     const fmode = e.target.closest('[data-modal-fmode]');
-    if (fmode) {
-      this.store.updateUI({ filterMode: fmode.dataset.modalFmode });
-      return;
-    }
+    if (fmode) return this.store.updateUI({ filterMode: fmode.dataset.modalFmode });
+
     if (e.target.closest('[data-modal-clear-filters]')) {
       document.getElementById('search-input').value = '';
       this.renderedCount = BATCH_SIZE;
-      this.store.resetFilters();
-      return;
+      return this.store.resetFilters();
     }
+
     const fchip = e.target.closest('[data-fchip]');
     if (fchip) {
       this.renderedCount = BATCH_SIZE;
       const { key, val } = JSON.parse(fchip.dataset.fchip);
-      this.store.toggleFacetValue(key, val);
-      return;
+      return this.store.toggleFacetValue(key, val);
     }
+
     const setF = e.target.closest('[data-set-filter]');
     if (setF) {
       this.renderedCount = BATCH_SIZE;
-      this.store.updateFilters(JSON.parse(setF.dataset.setFilter));
-      return;
+      return this.store.updateFilters(JSON.parse(setF.dataset.setFilter));
     }
+
     if (e.target.closest('[data-add-ign-kw]')) {
       const inp = document.getElementById('ign-kw-input');
       if (inp?.value) {
@@ -1108,22 +1128,19 @@ class FairApp {
       }
       return;
     }
-    const remKw = e.target.closest('[data-rem-ign-kw]');
-    if (remKw) {
-      this.store.removeIgnoreKeyword(remKw.dataset.remIgnKw);
-      return;
-    }
 
-    // Preferences actions
+    const remKw = e.target.closest('[data-rem-ign-kw]');
+    if (remKw) return this.store.removeIgnoreKeyword(remKw.dataset.remIgnKw);
+
     const pTog = e.target.closest('[data-pref-toggle]');
     if (pTog) {
       const { field, val } = JSON.parse(pTog.dataset.prefToggle);
       const curr = new Set(this.store.state.prefs[field] || []);
       if (curr.has(val)) curr.delete(val);
       else curr.add(val);
-      this.store.updatePrefs({ [field]: Array.from(curr) });
-      return;
+      return this.store.updatePrefs({ [field]: Array.from(curr) });
     }
+
     if (e.target.closest('[data-add-pref-kw]')) {
       const inp = document.getElementById('pref-kw-input');
       const w = inp?.value?.trim().toLowerCase();
@@ -1134,14 +1151,15 @@ class FairApp {
       }
       return;
     }
+
     const remPrefKw = e.target.closest('[data-rem-pref-kw]');
     if (remPrefKw) {
       const w = remPrefKw.dataset.remPrefKw;
-      this.store.updatePrefs({
+      return this.store.updatePrefs({
         prefKeywords: (this.store.state.prefs.prefKeywords || []).filter((x) => x !== w),
       });
-      return;
     }
+
     if (e.target.closest('[data-add-pref-ign-kw]')) {
       const inp = document.getElementById('pref-ign-kw-input');
       const w = inp?.value?.trim().toLowerCase();
@@ -1152,16 +1170,15 @@ class FairApp {
       }
       return;
     }
+
     const remPrefIgn = e.target.closest('[data-rem-pref-ign-kw]');
     if (remPrefIgn) {
       const w = remPrefIgn.dataset.remPrefIgnKw;
-      this.store.updatePrefs({
+      return this.store.updatePrefs({
         ignoreKeywords: (this.store.state.prefs.ignoreKeywords || []).filter((x) => x !== w),
       });
-      return;
     }
 
-    // Backup actions
     const bAct = e.target.closest('[data-backup-act]');
     if (bAct) {
       const act = bAct.dataset.backupAct;
@@ -1182,7 +1199,6 @@ class FairApp {
       return;
     }
 
-    // Detail modal actions
     const dAct = e.target.closest('[data-detail-act]');
     if (dAct) {
       const act = dAct.dataset.detailAct;
@@ -1199,8 +1215,13 @@ class FairApp {
         this.openModal = null;
         document.getElementById('modal-overlay').classList.add('hidden');
         if (p) {
-          if (this.store.state.ui.view === 'list') this.store.updateUI({ view: 'split' });
-          setTimeout(() => this.mapCtrl.focusTable(p.table, true), 40);
+          if (this.store.state.ui.view === 'list') {
+            this.store.updateUI({ view: window.innerWidth <= 900 ? 'map' : 'split' });
+          }
+          requestAnimationFrame(() => {
+            this.mapCtrl._resizeCanvas();
+            this.mapCtrl.focusTable(p.table, true);
+          });
         }
       }
     }
@@ -1225,12 +1246,10 @@ class FairApp {
 
   _handleModalChange(e) {
     if (e.target.id === 'pref-my-booth') {
-      this.store.updatePrefs({ myBooth: e.target.value.trim().toUpperCase() || 'S-H5-23' });
-      return;
+      return this.store.updatePrefs({ myBooth: e.target.value.trim().toUpperCase() || 'S-H5-23' });
     }
     if (e.target.id === 'pref-intl-boost') {
-      this.store.updatePrefs({ boostIntl: Math.max(0, Math.min(30, Number(e.target.value) || 0)) });
-      return;
+      return this.store.updatePrefs({ boostIntl: Math.max(0, Math.min(30, Number(e.target.value) || 0)) });
     }
     if (e.target.id === 'import-merge-file' || e.target.id === 'import-replace-file') {
       const file = e.target.files?.[0];

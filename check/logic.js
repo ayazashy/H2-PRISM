@@ -1,6 +1,6 @@
 /**
- * Pure domain, filtering, ignore, preference scoring, and spatial geometry logic.
- * Shared identically by the checklist view, mirrored map, and automated tests.
+ * Pure domain, bilingual search normalization (AR/EN), filtering, ignore,
+ * preference scoring, and O(1) spatial geometry logic.
  */
 
 export const CUSTOM_TAGS = [
@@ -28,7 +28,7 @@ export const DEFAULT_PREFS = {
 export function createDefaultFilters() {
   return {
     q: '',
-    status: 'all', // all | prefs | fav | todo | visited | unvisited | rated | noted | ignored
+    status: 'all',
     cats: { inc: [], exc: [] },
     paths: { inc: [], exc: [] },
     zones: { inc: [], exc: [] },
@@ -37,19 +37,33 @@ export function createDefaultFilters() {
     customTags: { inc: [], exc: [] },
     countries: { inc: [], exc: [] },
     sizes: { inc: [], exc: [] },
-    intlMode: 'all', // all | intl_leader | has_intl | mixed | saudi_only
-    langMode: 'all', // all | en | ar | bi
-    ratingMode: 'all', // all | rated | unrated | 3+ | 4+ | 5
+    intlMode: 'all',
+    langMode: 'all',
+    ratingMode: 'all',
     minMatch: 0,
     ignoreKeywords: [],
-    sortBy: 'booth', // booth | match | nearest | rating | members | code
+    sortBy: 'booth',
   };
 }
 
 /**
- * Architectural SVG layout (viewBox 1760 x 694) for Zones A..K.
- * Left wing: Juniors & Youth (A-E), Center bridge: F, Right wing: 18+ Uni & Pro (G-K).
+ * Bilingual Arabic/English search normalization:
+ * strips Arabic diacritics, unifies alef/taa/yaa variants, and folds "عبد الله" -> "عبدالله".
  */
+export function normSearch(str) {
+  return String(str || '')
+    .toLowerCase()
+    .replace(/[\u064B-\u065F\u0670\u0640]/g, '')
+    .replace(/[أإآٱ]/g, 'ا')
+    .replace(/ة/g, 'ه')
+    .replace(/ى/g, 'ي')
+    .replace(/ؤ/g, 'و')
+    .replace(/ئ/g, 'ي')
+    .replace(/عبد\s+ال/g, 'عبدال')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 export const HALL_WIDTH = 1760;
 export const HALL_HEIGHT = 694;
 
@@ -76,7 +90,6 @@ const HEADER_H = 28;
 const PAD_B = 10;
 
 function rowOffsetY(row) {
-  // Paired expo aisles: R1-R2 close, aisle before R3, R3-R4 close, aisle before R5, etc.
   let y = HEADER_H;
   for (let r = 1; r < row; r++) {
     y += CELL_H + (r % 2 === 0 ? 12 : 4);
@@ -107,8 +120,35 @@ export function parseTableCode(tableStr) {
 }
 
 /**
- * Enrich loaded raw project records once with fast search indexes and spatial coordinates.
+ * O(1) spatial hit-test from hall world coordinates (wx, wy) to zone or booth table code.
  */
+export function hitTestHall(wx, wy, boothGroups) {
+  for (const [zId, g] of Object.entries(ZONE_GEOMETRY)) {
+    const box = getZoneBox(zId);
+    if (wx < box.x || wx > box.x + box.w || wy < box.y || wy > box.y + box.h) continue;
+
+    if (wy <= box.y + HEADER_H) {
+      return { type: 'zone', zone: zId };
+    }
+
+    const colStep = CELL_W + GAP_X;
+    const seatIdx = Math.floor((wx - (g.x + PAD_L)) / colStep) + 1;
+    if (seatIdx >= 1 && seatIdx <= g.cols) {
+      for (let r = 1; r <= g.rows; r++) {
+        const top = g.y + rowOffsetY(r);
+        if (wy >= top - 2 && wy <= top + CELL_H + 2) {
+          const tableStr = `S-${zId}${r}-${String(seatIdx).padStart(2, '0')}`;
+          if (boothGroups.has(tableStr)) {
+            return { type: 'booth', zone: zId, table: tableStr };
+          }
+        }
+      }
+    }
+    return { type: 'zone', zone: zId };
+  }
+  return null;
+}
+
 export function prepareProjects(rawProjects, meta) {
   const pathMap = new Map(meta.paths.map((p) => [p.id, p]));
   const catMap = new Map(meta.cats.map((c) => [c.id, c]));
@@ -123,7 +163,7 @@ export function prepareProjects(rawProjects, meta) {
     const hasIntl = allNats.some((n) => n !== 'Saudi Arabia');
     const intlLeader = p.nat !== 'Saudi Arabia';
     const mixedNat = allNats.length > 1;
-    const leader = p.members.find((m) => m.l === 1) || p.members[0] || { n: '' };
+    const leader = p.members.find((m) => m.l === 1) || p.members[0] || { n: '', ar: '' };
 
     const pathObj = pathMap.get(p.path);
     const catObj = catMap.get(p.cat);
@@ -136,31 +176,34 @@ export function prepareProjects(rawProjects, meta) {
 
     const rect = getBoothRect(p.z, p.r, p.s);
 
-    const searchText = [
-      p.code,
-      p.table,
-      p.z,
-      `${p.z}${p.r}`,
-      p.title,
-      p.desc,
-      pathObj ? `${pathObj.en} ${pathObj.ar}` : '',
-      catObj ? `${catObj.en} ${catObj.ar}` : '',
-      p.tags.join(' '),
-      countryTokens,
-      p.members.map((m) => m.n).join(' '),
-    ]
-      .join(' ')
-      .toLowerCase();
+    const searchText = normSearch(
+      [
+        p.code,
+        p.table,
+        p.z,
+        `${p.z}${p.r}`,
+        p.title,
+        p.desc,
+        pathObj ? `${pathObj.en} ${pathObj.ar}` : '',
+        catObj ? `${catObj.en} ${catObj.ar}` : '',
+        p.tags.join(' '),
+        countryTokens,
+        p.members.map((m) => `${m.n} ${m.ar || ''}`).join(' '),
+      ].join(' ')
+    );
 
     return {
       ...p,
       leader: leader.n,
+      leaderAr: leader.ar || leader.n,
       allNats,
       hasIntl,
       intlLeader,
       mixedNat,
       cx: rect.cx,
       cy: rect.cy,
+      x: rect.x,
+      y: rect.y,
       searchText,
     };
   });
@@ -182,7 +225,7 @@ export function computeMatchScore(project, prefs) {
   if (prefs.prefKeywords?.length) {
     let kwHits = 0;
     for (const kw of prefs.prefKeywords) {
-      const k = kw.trim().toLowerCase();
+      const k = normSearch(kw);
       if (k && project.searchText.includes(k)) kwHits += 1;
     }
     score += Math.min(30, kwHits * 12);
@@ -201,11 +244,8 @@ export function computeMatchScore(project, prefs) {
 }
 
 export function parseSearchTokens(q) {
-  const parts = (q || '')
-    .trim()
-    .toLowerCase()
-    .split(/\s+/)
-    .filter(Boolean);
+  const normalized = normSearch(q);
+  const parts = normalized ? normalized.split(' ').filter(Boolean) : [];
   const pos = [];
   const neg = [];
   for (const tok of parts) {
@@ -230,10 +270,6 @@ function matchesMultiFacet(values, facet, ignoreExc = false) {
   return true;
 }
 
-/**
- * Single source of truth for evaluating every project against active filters,
- * personal records, ignores, and preferences. Used identically by List and Map.
- */
 export function evaluateProject(project, filters, record, prefs, searchTokens, myCoords) {
   const rec = record || {};
   const matchScore = computeMatchScore(project, prefs);
@@ -251,9 +287,7 @@ export function evaluateProject(project, filters, record, prefs, searchTokens, m
   }
   if (filters.zones.exc.includes(project.z)) ignoreReasons.push('zone');
   if (filters.rows.exc.includes(project.r)) ignoreReasons.push('row');
-  if (
-    project.tags.some((t) => prefs.ignoreTags?.includes(t) || filters.tags.exc.includes(t))
-  ) {
+  if (project.tags.some((t) => prefs.ignoreTags?.includes(t) || filters.tags.exc.includes(t))) {
     ignoreReasons.push('tag');
   }
   const userTags = rec.tags || [];
@@ -273,7 +307,7 @@ export function evaluateProject(project, filters, record, prefs, searchTokens, m
     ...searchTokens.neg,
   ];
   for (const kw of allNegWords) {
-    const k = (kw || '').trim().toLowerCase();
+    const k = normSearch(kw);
     if (k && project.searchText.includes(k)) {
       ignoreReasons.push('keyword');
       break;
@@ -282,7 +316,6 @@ export function evaluateProject(project, filters, record, prefs, searchTokens, m
 
   const isIgnored = ignoreReasons.length > 0;
 
-  // Status tab logic
   let statusPass = true;
   if (filters.status === 'ignored') {
     statusPass = isIgnored;
@@ -301,14 +334,12 @@ export function evaluateProject(project, filters, record, prefs, searchTokens, m
     return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
   }
 
-  // Positive search tokens
   for (const tok of searchTokens.pos) {
     if (!project.searchText.includes(tok)) {
       return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
     }
   }
 
-  // Inclusion facets (when viewing the 'ignored' tab, ignore .exc rejections so ignored items are inspectable)
   const viewingIgnored = filters.status === 'ignored';
   if (!matchesFacet(project.cat, filters.cats, viewingIgnored)) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
   if (!matchesFacet(project.path, filters.paths, viewingIgnored)) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
@@ -319,18 +350,15 @@ export function evaluateProject(project, filters, record, prefs, searchTokens, m
   if (!matchesMultiFacet(project.allNats, filters.countries, viewingIgnored)) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
   if (!matchesFacet(project.members.length, filters.sizes, viewingIgnored)) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
 
-  // International filter
   if (filters.intlMode === 'intl_leader' && !project.intlLeader) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
   if (filters.intlMode === 'has_intl' && !project.hasIntl) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
   if (filters.intlMode === 'mixed' && !project.mixedNat) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
   if (filters.intlMode === 'saudi_only' && project.hasIntl) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
 
-  // Language filter
   if (filters.langMode !== 'all' && project.lang !== filters.langMode) {
     return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
   }
 
-  // Rating filter
   const rat = rec.rat || 0;
   if (filters.ratingMode === 'rated' && rat === 0) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
   if (filters.ratingMode === 'unrated' && rat > 0) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
@@ -338,7 +366,6 @@ export function evaluateProject(project, filters, record, prefs, searchTokens, m
   if (filters.ratingMode === '4+' && rat < 4) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
   if (filters.ratingMode === '5' && rat < 5) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
 
-  // Minimum Match Score
   if (filters.minMatch > 0 && matchScore < filters.minMatch) {
     return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
   }
@@ -385,7 +412,6 @@ export function evaluateAll(projects, filters, records, prefs) {
     if (ev.matches) matched.push(p);
   }
 
-  // Sort matched projects
   matched.sort((a, b) => {
     const ea = evalById.get(a.id);
     const eb = evalById.get(b.id);
@@ -417,9 +443,6 @@ export function evaluateAll(projects, filters, records, prefs) {
   return { evalById, matched, counts, myCoords };
 }
 
-/**
- * Nearest-neighbor greedy walking route across selected booths starting from startBooth.
- */
 export function computeWalkingRoute(targets, startBooth, maxStops = 30) {
   if (!targets.length) return [];
   const parsed = parseTableCode(startBooth);
@@ -433,7 +456,6 @@ export function computeWalkingRoute(targets, startBooth, maxStops = 30) {
     let bestD = Infinity;
     for (let i = 0; i < remaining.length; i++) {
       const t = remaining[i];
-      // Slight penalty when switching zones so we finish neighboring aisles first
       const d = Math.hypot(t.cx - curr.cx, t.cy - curr.cy);
       if (d < bestD) {
         bestD = d;
