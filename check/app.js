@@ -381,29 +381,6 @@ class FairApp {
       const viewBtn = e.target.closest('[data-view]');
       if (viewBtn) return this.store.updateUI({ view: viewBtn.dataset.view });
 
-      const modeBtn = e.target.closest('[data-fmode]');
-      if (modeBtn) return this.store.updateUI({ filterMode: modeBtn.dataset.fmode });
-
-      const qCat = e.target.closest('[data-qcat]');
-      if (qCat) {
-        this.page = 0;
-        const val = qCat.dataset.qcat;
-        if (val === 'adult') {
-          const cats = this.store.state.filters.cats;
-          const isAdult = cats.inc.length === 2 && cats.inc.includes(3) && cats.inc.includes(4);
-          return this.store.updateFilters({
-            cats: { ...cats, inc: isAdult ? [] : [3, 4], exc: cats.exc.filter((c) => c !== 3 && c !== 4) },
-          });
-        }
-        return this.store.toggleFacetValue('cats', Number(val));
-      }
-
-      const qZone = e.target.closest('[data-qzone]');
-      if (qZone) {
-        this.page = 0;
-        return this.store.toggleFacetValue('zones', qZone.dataset.qzone);
-      }
-
       const topAct = e.target.closest('[data-top-act]');
       if (!topAct) return;
       const act = topAct.dataset.topAct;
@@ -423,21 +400,6 @@ class FairApp {
         this.store.updateUI({ lang: this.store.state.ui.lang === 'ar' ? 'en' : 'ar' });
       } else if (act === 'theme') {
         this.store.updateUI({ theme: this.store.state.ui.theme === 'dark' ? 'light' : 'dark' });
-      }
-    });
-
-    document.getElementById('topbar').addEventListener('contextmenu', (e) => {
-      const qCat = e.target.closest('[data-qcat]');
-      if (qCat && qCat.dataset.qcat !== 'adult') {
-        e.preventDefault();
-        this.page = 0;
-        return this.store.toggleFacetValue('cats', Number(qCat.dataset.qcat), 'exc');
-      }
-      const qZone = e.target.closest('[data-qzone]');
-      if (qZone) {
-        e.preventDefault();
-        this.page = 0;
-        return this.store.toggleFacetValue('zones', qZone.dataset.qzone, 'exc');
       }
     });
 
@@ -605,33 +567,6 @@ class FairApp {
       vb.classList.toggle('active', vb.dataset.view === ui.view);
     }
 
-    for (const mb of document.querySelectorAll('[data-fmode]')) {
-      mb.classList.toggle('active', mb.dataset.fmode === (ui.filterMode || 'inc'));
-    }
-    document.querySelector('[data-fmode="inc"]').innerHTML = `${ico('check')} ${this.t('incMode')}`;
-    document.querySelector('[data-fmode="exc"]').innerHTML = `${ico('ban')} ${this.t('excMode')}`;
-
-    const myZone = (prefs.myBooth || '').split('-')[1]?.[0];
-    const catsHtml = [
-      `<button class="qpill ${
-        filters.cats.inc.length === 2 && filters.cats.inc.includes(3) && filters.cats.inc.includes(4) ? 'inc' : ''
-      }" data-qcat="adult">18+</button>`,
-      ...[4, 3, 2, 1].map((cid) => {
-        const c = this.catMap.get(cid);
-        const cls = filters.cats.inc.includes(cid) ? 'inc' : filters.cats.exc.includes(cid) ? 'exc' : '';
-        return `<button class="qpill ${cls}" data-qcat="${cid}">${lang === 'ar' ? c.ar : c.en}</button>`;
-      }),
-    ].join('');
-
-    const zonesHtml = Object.keys(ZONE_GEOMETRY)
-      .map((z) => {
-        const cls = filters.zones.inc.includes(z) ? 'inc' : filters.zones.exc.includes(z) ? 'exc' : '';
-        return `<button class="qpill ${cls}" data-qzone="${z}">${z}${z === myZone ? ico('pin') : ''}</button>`;
-      })
-      .join('');
-
-    document.getElementById('quick-pills').innerHTML = `${catsHtml}<span class="divider-v"></span>${zonesHtml}`;
-
     const sortSel = document.getElementById('sort-select');
     sortSel.innerHTML = [
       ['booth', this.t('sortBooth')],
@@ -707,15 +642,14 @@ class FairApp {
         : '';
 
     const bulkHtml = `
-      <div class="bulk-group">
-        <span class="badge-mini">${matchedLen}</span>
-        <button class="bulk-btn" data-bulk="fav">${ico('starFill')}+</button>
-        <button class="bulk-btn" data-bulk="visit">${ico('check')}+</button>
-        <button class="bulk-btn" data-bulk="ignore">${ico('ban')}+</button>
-      </div>
+      <span class="badge-mini">${matchedLen}</span>
+      <button class="bulk-btn" data-bulk="fav">${ico('starFill')}+</button>
+      <button class="bulk-btn" data-bulk="visit">${ico('check')}+</button>
+      <button class="bulk-btn" data-bulk="ignore">${ico('ban')}+</button>
     `;
 
-    document.getElementById('active-bar').innerHTML = `${chipsHtml}${clearHtml}${bulkHtml}`;
+    document.getElementById('active-chips').innerHTML = `${chipsHtml}${clearHtml}`;
+    document.getElementById('bulk-group').innerHTML = bulkHtml;
   }
 
   _cardMarkup(p, rec, ev) {
@@ -1048,14 +982,14 @@ class FairApp {
         lang === 'ar'
           ? [
               ['search', '<b>البحث الذكي:</b> ابحث باسم المشروع، اسم المشارك بالعربي أو الإنجليزي، رقم الطاولة (<code>S-B1-05</code>)، أو اكتب <code>-كلمة</code> لاستبعاد نتائجها.'],
-              ['sliders', '<b>تضمين أو تجاهل:</b> بدّل بين <b>تضمين</b> لإظهار المحدد فقط، أو <b>تجاهل</b> (أو كليك يمين / ضغطة مطولة) لإخفائه من القائمة والخريطة معا.'],
+              ['zap', '<b>تفضيلاتي والفلاتر:</b> اضبط تفضيلاتك والتجاهل الدائم من زر <b>تفضيلاتي</b>، واستخدم <b>فلاتر</b> لتضمين أو تجاهل أي منطقة أو جنسية أو تقييم.'],
               ['map', '<b>الخريطة والمسار:</b> اختر منطقة (A-K) لعرض صفوفها بالعرض الكامل والتمرير الأفقي، واضغط على أي طاولة لفتح تقييماتها السريعة.'],
               ['pin', '<b>تخصيص طاولتك (اختياري):</b> إذا كانت لديك طاولة، أضف رقمها من <b>تفضيلاتي</b> لترتيب المشاريع حسب الأقرب وتمييزها على الخريطة.'],
               ['save', '<b>حفظ محلي ونسخ احتياطي:</b> جميع اختياراتك وملاحظاتك تبقى على جهازك، ويمكنك تصديرها JSON أو CSV في أي وقت.'],
             ]
           : [
               ['search', '<b>Smart Search:</b> Search projects, member names (EN or AR), booth codes (<code>S-B1-05</code>), or prefix <code>-word</code> to exclude terms.'],
-              ['sliders', '<b>Include & Ignore:</b> Switch between <b>Include</b> mode to focus or <b>Ignore</b> mode (or right-click / long-press pill) to hide items from List and Map.'],
+              ['zap', '<b>My Picks &amp; Filters:</b> Set preferred or always-ignored topics in <b>My Picks</b>, and use <b>Filters</b> to temporarily include or ignore zones, countries, or ratings.'],
               ['map', '<b>Floorplan & Route:</b> Tap any Zone (A-K) for full scrollable rows, and tap any booth tile to rate, tag, or inspect details.'],
               ['pin', '<b>Optional Booth Setup:</b> If exhibiting, enter your own booth in <b>My Picks</b> to enable Nearest sorting and map highlight.'],
               ['save', '<b>Local Storage & Export:</b> Everything saves automatically on your device; export/import JSON or CSV anytime.'],
