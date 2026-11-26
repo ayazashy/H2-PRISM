@@ -516,12 +516,17 @@ export class FairMapController {
           tile.style.background = vis.fill;
           tile.classList.toggle('dim', !vis.anyMatches && !vis.allIgnored && !vis.isMe);
           tile.classList.toggle('ign', vis.allIgnored && !vis.anyMatches && !vis.isMe);
-          tile.innerHTML = `<b>${parsed.s}</b>${this._tileBadgeHtml(vis, tableStr)}`;
+          tile.innerHTML = this._tileContentHtml(tableStr, vis);
         }
       }
     } else {
       this._draw();
     }
+  }
+
+  _tileContentHtml(tableStr, vis) {
+    const label = tableStr.startsWith('S-') ? tableStr.slice(2) : tableStr;
+    return `<b>${label}</b>${this._tileBadgeHtml(vis, tableStr)}`;
   }
 
   _draw() {
@@ -674,13 +679,14 @@ export class FairMapController {
         }
         const vis = this._boothVisual(tableStr);
         if (vis.hidden) {
-          cellsHtml += `<span class="ztile hidden-slot">${s}</span>`;
+          const shortLbl = tableStr.startsWith('S-') ? tableStr.slice(2) : tableStr;
+          cellsHtml += `<span class="ztile hidden-slot">${shortLbl}</span>`;
           continue;
         }
         const dimCls = !vis.anyMatches && !vis.allIgnored && !vis.isMe ? 'dim' : vis.allIgnored && !vis.anyMatches && !vis.isMe ? 'ign' : '';
         const selCls = this.selectedTable === tableStr ? 'selected' : '';
         const meCls = vis.isMe ? 'is-me' : '';
-        cellsHtml += `<button class="ztile ${dimCls} ${selCls} ${meCls}" data-gtbl="${tableStr}" style="background:${vis.fill}"><b>${s}</b>${this._tileBadgeHtml(vis, tableStr)}</button>`;
+        cellsHtml += `<button class="ztile ${dimCls} ${selCls} ${meCls}" data-gtbl="${tableStr}" style="background:${vis.fill}">${this._tileContentHtml(tableStr, vis)}</button>`;
       }
       const aisleCls = r % 2 === 0 && r < g.rows ? 'aisle-after' : '';
       rowsHtml += `<div class="zrow ${aisleCls}"><span class="zrow-lbl">R${r}</span><div class="zrow-cells">${cellsHtml}</div></div>`;
