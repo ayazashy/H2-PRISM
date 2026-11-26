@@ -1,6 +1,6 @@
 /**
  * Pure domain, bilingual search normalization (AR/EN), filtering, ignore,
- * preference scoring, and O(1) spatial geometry logic.
+ * precomputed scoring, and O(1) spatial geometry logic.
  */
 
 export const CUSTOM_TAGS = [
@@ -46,10 +46,6 @@ export function createDefaultFilters() {
   };
 }
 
-/**
- * Bilingual Arabic/English search normalization:
- * strips Arabic diacritics, unifies alef/taa/yaa variants, and folds "عبد الله" -> "عبدالله".
- */
 export function normSearch(str) {
   return String(str || '')
     .toLowerCase()
@@ -119,9 +115,6 @@ export function parseTableCode(tableStr) {
   return { z: m[1].toUpperCase(), r: Number(m[2]), s: Number(m[3]) };
 }
 
-/**
- * O(1) spatial hit-test from hall world coordinates (wx, wy) to zone or booth table code.
- */
 export function hitTestHall(wx, wy, boothGroups) {
   for (const [zId, g] of Object.entries(ZONE_GEOMETRY)) {
     const box = getZoneBox(zId);
@@ -153,7 +146,7 @@ export function prepareProjects(rawProjects, meta) {
   const pathMap = new Map(meta.paths.map((p) => [p.id, p]));
   const catMap = new Map(meta.cats.map((c) => [c.id, c]));
 
-  return rawProjects.map((p) => {
+  return rawProjects.map((p, idx) => {
     const nats = new Set();
     if (p.nat) nats.add(p.nat);
     for (const m of p.members) {
@@ -194,6 +187,7 @@ export function prepareProjects(rawProjects, meta) {
 
     return {
       ...p,
+      _idx: idx,
       leader: leader.n,
       leaderAr: leader.ar || leader.n,
       allNats,
@@ -205,6 +199,8 @@ export function prepareProjects(rawProjects, meta) {
       x: rect.x,
       y: rect.y,
       searchText,
+      _score: 0,
+      _dist: 0,
     };
   });
 }
@@ -243,6 +239,45 @@ export function computeMatchScore(project, prefs) {
   return Math.max(0, Math.min(100, Math.round(score)));
 }
 
+/**
+ * Cache match scores & distances onto project objects ONLY when prefs change.
+ * Eliminates ~11,000 substring scans per tap/filter interaction.
+ */
+export function refreshPrefsCache(projects, prefs) {
+  const myParsed = parseTableCode(prefs.myBooth);
+  const myCoords = myParsed ? getBoothRect(myParsed.z, myParsed.r, myParsed.s) : null;
+  const prefCatSet = new Set(prefs.prefCats || []);
+  const prefPathSet = new Set(prefs.prefPaths || []);
+  const prefTagSet = new Set(prefs.prefTags || []);
+  const normKws = (prefs.prefKeywords || []).map(normSearch).filter(Boolean);
+  const boostIntl = Number(prefs.boostIntl ?? 12);
+
+  for (const p of projects) {
+    let score = 0;
+    if (prefCatSet.has(p.cat)) score += 28;
+    if (prefPathSet.has(p.path)) score += 26;
+    if (prefTagSet.size && p.tags.length) {
+      let tagHits = 0;
+      for (const t of p.tags) if (prefTagSet.has(t)) tagHits += 1;
+      score += Math.min(24, tagHits * 10);
+    }
+    if (normKws.length) {
+      let kwHits = 0;
+      for (const k of normKws) if (p.searchText.includes(k)) kwHits += 1;
+      score += Math.min(30, kwHits * 12);
+    }
+    if (p.hasIntl) score += boostIntl;
+    if (p.members.length >= 2) score += 4;
+    if (myParsed && p.z === myParsed.z) {
+      score += 5;
+      if (p.r === myParsed.r) score += 4;
+    }
+    p._score = Math.max(0, Math.min(100, Math.round(score)));
+    p._dist = myCoords ? Math.hypot(p.cx - myCoords.cx, p.cy - myCoords.cy) : 0;
+  }
+  return myCoords;
+}
+
 export function parseSearchTokens(q) {
   const normalized = normSearch(q);
   const parts = normalized ? normalized.split(' ').filter(Boolean) : [];
@@ -259,65 +294,101 @@ export function parseSearchTokens(q) {
 }
 
 function matchesFacet(value, facet, ignoreExc = false) {
-  if (!ignoreExc && facet.exc?.includes(value)) return false;
-  if (facet.inc?.length && !facet.inc.includes(value)) return false;
+  if (!ignoreExc && facet.exc.length && facet.exc.includes(value)) return false;
+  if (facet.inc.length && !facet.inc.includes(value)) return false;
   return true;
 }
 
 function matchesMultiFacet(values, facet, ignoreExc = false) {
-  if (!ignoreExc && facet.exc?.length && values.some((v) => facet.exc.includes(v))) return false;
-  if (facet.inc?.length && !values.some((v) => facet.inc.includes(v))) return false;
+  if (!ignoreExc && facet.exc.length && values.some((v) => facet.exc.includes(v))) return false;
+  if (facet.inc.length && !values.some((v) => facet.inc.includes(v))) return false;
   return true;
 }
 
-export function evaluateProject(project, filters, record, prefs, searchTokens, myCoords) {
-  const rec = record || {};
-  const matchScore = computeMatchScore(project, prefs);
-  const dist = myCoords
-    ? Math.hypot(project.cx - myCoords.cx, project.cy - myCoords.cy)
-    : 0;
-
-  const ignoreReasons = [];
-  if (rec.ign) ignoreReasons.push('manual');
-  if (prefs.ignoreCats?.includes(project.cat) || filters.cats.exc.includes(project.cat)) {
-    ignoreReasons.push('cat');
-  }
-  if (prefs.ignorePaths?.includes(project.path) || filters.paths.exc.includes(project.path)) {
-    ignoreReasons.push('path');
-  }
-  if (filters.zones.exc.includes(project.z)) ignoreReasons.push('zone');
-  if (filters.rows.exc.includes(project.r)) ignoreReasons.push('row');
-  if (project.tags.some((t) => prefs.ignoreTags?.includes(t) || filters.tags.exc.includes(t))) {
-    ignoreReasons.push('tag');
-  }
-  const userTags = rec.tags || [];
-  if (userTags.some((t) => filters.customTags.exc.includes(t))) {
-    ignoreReasons.push('customTag');
-  }
-  if (project.allNats.some((n) => filters.countries.exc.includes(n))) {
-    ignoreReasons.push('country');
-  }
-  if (filters.sizes.exc.includes(project.members.length)) {
-    ignoreReasons.push('size');
-  }
-
+/**
+ * Compile filter & pref lookup Sets once before looping over projects.
+ */
+export function buildEvalContext(filters, prefs) {
+  const searchTokens = parseSearchTokens(filters.q);
   const allNegWords = [
     ...(prefs.ignoreKeywords || []),
     ...(filters.ignoreKeywords || []),
     ...searchTokens.neg,
-  ];
-  for (const kw of allNegWords) {
-    const k = normSearch(kw);
-    if (k && project.searchText.includes(k)) {
-      ignoreReasons.push('keyword');
-      break;
+  ]
+    .map(normSearch)
+    .filter(Boolean);
+
+  return {
+    filters,
+    searchTokens,
+    allNegWords,
+    globIgnCats: new Set(prefs.ignoreCats || []),
+    globIgnPaths: new Set(prefs.ignorePaths || []),
+    globIgnTags: new Set(prefs.ignoreTags || []),
+    excCats: new Set(filters.cats.exc),
+    excPaths: new Set(filters.paths.exc),
+    excZones: new Set(filters.zones.exc),
+    excRows: new Set(filters.rows.exc),
+    excTags: new Set(filters.tags.exc),
+    excCustomTags: new Set(filters.customTags.exc),
+    excCountries: new Set(filters.countries.exc),
+    excSizes: new Set(filters.sizes.exc),
+    viewingIgnored: filters.status === 'ignored',
+  };
+}
+
+export function evaluateProjectFast(p, record, ctx) {
+  const rec = record || {};
+  const filters = ctx.filters;
+  const matchScore = p._score;
+  const dist = p._dist;
+
+  let isIgnored =
+    !!rec.ign ||
+    ctx.globIgnCats.has(p.cat) ||
+    ctx.excCats.has(p.cat) ||
+    ctx.globIgnPaths.has(p.path) ||
+    ctx.excPaths.has(p.path) ||
+    ctx.excZones.has(p.z) ||
+    ctx.excRows.has(p.r) ||
+    ctx.excSizes.has(p.members.length);
+
+  if (!isIgnored && p.tags.length && (ctx.globIgnTags.size || ctx.excTags.size)) {
+    for (const t of p.tags) {
+      if (ctx.globIgnTags.has(t) || ctx.excTags.has(t)) {
+        isIgnored = true;
+        break;
+      }
+    }
+  }
+  const userTags = rec.tags || [];
+  if (!isIgnored && userTags.length && ctx.excCustomTags.size) {
+    for (const t of userTags) {
+      if (ctx.excCustomTags.has(t)) {
+        isIgnored = true;
+        break;
+      }
+    }
+  }
+  if (!isIgnored && ctx.excCountries.size) {
+    for (const n of p.allNats) {
+      if (ctx.excCountries.has(n)) {
+        isIgnored = true;
+        break;
+      }
+    }
+  }
+  if (!isIgnored && ctx.allNegWords.length) {
+    for (const kw of ctx.allNegWords) {
+      if (p.searchText.includes(kw)) {
+        isIgnored = true;
+        break;
+      }
     }
   }
 
-  const isIgnored = ignoreReasons.length > 0;
-
   let statusPass = true;
-  if (filters.status === 'ignored') {
+  if (ctx.viewingIgnored) {
     statusPass = isIgnored;
   } else {
     if (isIgnored) statusPass = false;
@@ -330,53 +401,50 @@ export function evaluateProject(project, filters, record, prefs, searchTokens, m
     else if (filters.status === 'noted') statusPass = !!(rec.note && rec.note.trim());
   }
 
-  if (!statusPass) {
-    return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
-  }
+  if (!statusPass) return { matches: false, isIgnored, matchScore, dist };
 
-  for (const tok of searchTokens.pos) {
-    if (!project.searchText.includes(tok)) {
-      return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
+  for (const tok of ctx.searchTokens.pos) {
+    if (!p.searchText.includes(tok)) {
+      return { matches: false, isIgnored, matchScore, dist };
     }
   }
 
-  const viewingIgnored = filters.status === 'ignored';
-  if (!matchesFacet(project.cat, filters.cats, viewingIgnored)) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
-  if (!matchesFacet(project.path, filters.paths, viewingIgnored)) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
-  if (!matchesFacet(project.z, filters.zones, viewingIgnored)) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
-  if (!matchesFacet(project.r, filters.rows, viewingIgnored)) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
-  if (!matchesMultiFacet(project.tags, filters.tags, viewingIgnored)) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
-  if (!matchesMultiFacet(userTags, filters.customTags, viewingIgnored)) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
-  if (!matchesMultiFacet(project.allNats, filters.countries, viewingIgnored)) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
-  if (!matchesFacet(project.members.length, filters.sizes, viewingIgnored)) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
+  const vi = ctx.viewingIgnored;
+  if (!matchesFacet(p.cat, filters.cats, vi)) return { matches: false, isIgnored, matchScore, dist };
+  if (!matchesFacet(p.path, filters.paths, vi)) return { matches: false, isIgnored, matchScore, dist };
+  if (!matchesFacet(p.z, filters.zones, vi)) return { matches: false, isIgnored, matchScore, dist };
+  if (!matchesFacet(p.r, filters.rows, vi)) return { matches: false, isIgnored, matchScore, dist };
+  if (!matchesMultiFacet(p.tags, filters.tags, vi)) return { matches: false, isIgnored, matchScore, dist };
+  if (!matchesMultiFacet(userTags, filters.customTags, vi)) return { matches: false, isIgnored, matchScore, dist };
+  if (!matchesMultiFacet(p.allNats, filters.countries, vi)) return { matches: false, isIgnored, matchScore, dist };
+  if (!matchesFacet(p.members.length, filters.sizes, vi)) return { matches: false, isIgnored, matchScore, dist };
 
-  if (filters.intlMode === 'intl_leader' && !project.intlLeader) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
-  if (filters.intlMode === 'has_intl' && !project.hasIntl) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
-  if (filters.intlMode === 'mixed' && !project.mixedNat) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
-  if (filters.intlMode === 'saudi_only' && project.hasIntl) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
+  if (filters.intlMode === 'intl_leader' && !p.intlLeader) return { matches: false, isIgnored, matchScore, dist };
+  if (filters.intlMode === 'has_intl' && !p.hasIntl) return { matches: false, isIgnored, matchScore, dist };
+  if (filters.intlMode === 'mixed' && !p.mixedNat) return { matches: false, isIgnored, matchScore, dist };
+  if (filters.intlMode === 'saudi_only' && p.hasIntl) return { matches: false, isIgnored, matchScore, dist };
 
-  if (filters.langMode !== 'all' && project.lang !== filters.langMode) {
-    return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
+  if (filters.langMode !== 'all' && p.lang !== filters.langMode) {
+    return { matches: false, isIgnored, matchScore, dist };
   }
 
   const rat = rec.rat || 0;
-  if (filters.ratingMode === 'rated' && rat === 0) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
-  if (filters.ratingMode === 'unrated' && rat > 0) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
-  if (filters.ratingMode === '3+' && rat < 3) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
-  if (filters.ratingMode === '4+' && rat < 4) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
-  if (filters.ratingMode === '5' && rat < 5) return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
+  if (filters.ratingMode === 'rated' && rat === 0) return { matches: false, isIgnored, matchScore, dist };
+  if (filters.ratingMode === 'unrated' && rat > 0) return { matches: false, isIgnored, matchScore, dist };
+  if (filters.ratingMode === '3+' && rat < 3) return { matches: false, isIgnored, matchScore, dist };
+  if (filters.ratingMode === '4+' && rat < 4) return { matches: false, isIgnored, matchScore, dist };
+  if (filters.ratingMode === '5' && rat < 5) return { matches: false, isIgnored, matchScore, dist };
 
   if (filters.minMatch > 0 && matchScore < filters.minMatch) {
-    return { matches: false, isIgnored, ignoreReasons, matchScore, dist };
+    return { matches: false, isIgnored, matchScore, dist };
   }
 
-  return { matches: true, isIgnored, ignoreReasons, matchScore, dist };
+  return { matches: true, isIgnored, matchScore, dist };
 }
 
 export function evaluateAll(projects, filters, records, prefs) {
-  const searchTokens = parseSearchTokens(filters.q);
-  const myParsed = parseTableCode(prefs.myBooth);
-  const myCoords = myParsed ? getBoothRect(myParsed.z, myParsed.r, myParsed.s) : null;
+  refreshPrefsCache(projects, prefs);
+  const ctx = buildEvalContext(filters, prefs);
 
   const evalById = new Map();
   const matched = [];
@@ -394,7 +462,7 @@ export function evaluateAll(projects, filters, records, prefs) {
 
   for (const p of projects) {
     const rec = records[p.id];
-    const ev = evaluateProject(p, filters, rec, prefs, searchTokens, myCoords);
+    const ev = evaluateProjectFast(p, rec, ctx);
     evalById.set(p.id, ev);
 
     if (ev.isIgnored) {
@@ -412,35 +480,35 @@ export function evaluateAll(projects, filters, records, prefs) {
     if (ev.matches) matched.push(p);
   }
 
-  matched.sort((a, b) => {
-    const ea = evalById.get(a.id);
-    const eb = evalById.get(b.id);
-    const ra = records[a.id]?.rat || 0;
-    const rb = records[b.id]?.rat || 0;
+  sortMatched(matched, filters.sortBy, records);
 
-    switch (filters.sortBy) {
+  return { evalById, matched, counts };
+}
+
+export function sortMatched(matched, sortBy, records) {
+  if (sortBy === 'booth') {
+    matched.sort((a, b) => a._idx - b._idx);
+    return;
+  }
+  matched.sort((a, b) => {
+    switch (sortBy) {
       case 'match':
-        return eb.matchScore - ea.matchScore || a.table.localeCompare(b.table);
+        return b._score - a._score || a._idx - b._idx;
       case 'nearest':
-        return ea.dist - eb.dist || a.table.localeCompare(b.table);
-      case 'rating':
-        return rb - ra || eb.matchScore - ea.matchScore || a.table.localeCompare(b.table);
+        return a._dist - b._dist || a._idx - b._idx;
+      case 'rating': {
+        const ra = records[a.id]?.rat || 0;
+        const rb = records[b.id]?.rat || 0;
+        return rb - ra || b._score - a._score || a._idx - b._idx;
+      }
       case 'members':
-        return b.members.length - a.members.length || eb.matchScore - ea.matchScore;
+        return b.members.length - a.members.length || b._score - a._score || a._idx - b._idx;
       case 'code':
-        return a.code.localeCompare(b.code);
-      case 'booth':
+        return a.code < b.code ? -1 : a.code > b.code ? 1 : 0;
       default:
-        return (
-          a.z.localeCompare(b.z) ||
-          a.r - b.r ||
-          a.s - b.s ||
-          a.code.localeCompare(b.code)
-        );
+        return a._idx - b._idx;
     }
   });
-
-  return { evalById, matched, counts, myCoords };
 }
 
 export function computeWalkingRoute(targets, startBooth, maxStops = 30) {

@@ -23,6 +23,30 @@ function writeRawStorage(value) {
   memoryFallback.set(STORAGE_KEY, value);
 }
 
+let _persistTimer = null;
+let _latestStateForFlush = null;
+function schedulePersist(state) {
+  _latestStateForFlush = state;
+  if (typeof window === 'undefined') {
+    writeRawStorage(JSON.stringify(state));
+    return;
+  }
+  clearTimeout(_persistTimer);
+  _persistTimer = setTimeout(() => {
+    _latestStateForFlush = null;
+    writeRawStorage(JSON.stringify(state));
+  }, 150);
+}
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('pagehide', () => {
+    if (_latestStateForFlush) {
+      writeRawStorage(JSON.stringify(_latestStateForFlush));
+      _latestStateForFlush = null;
+    }
+  });
+}
+
 export function createDefaultState() {
   const narrow = typeof window !== 'undefined' && window.innerWidth <= 900;
   return {
@@ -72,8 +96,8 @@ export class TrackerStore {
   }
 
   save(reason = 'all', id = null) {
-    writeRawStorage(JSON.stringify(this.state));
     for (const cb of this.listeners) cb(this.state, reason, id);
+    schedulePersist(this.state);
   }
 
   subscribe(cb) {

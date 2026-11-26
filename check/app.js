@@ -1,14 +1,17 @@
 import {
   CUSTOM_TAGS,
   ZONE_GEOMETRY,
+  buildEvalContext,
   countActiveFilterRules,
   evaluateAll,
+  evaluateProjectFast,
   prepareProjects,
+  sortMatched,
 } from './logic.js';
 import { FairMapController } from './map.js';
 import { TrackerStore } from './store.js';
 
-const BATCH_SIZE = 24;
+const BATCH_SIZE = 16;
 
 const UI_TEXT = {
   ar: {
@@ -162,6 +165,7 @@ class FairApp {
     this.tagMap = new Map();
     this.countryCounts = [];
     this.evalResult = null;
+    this._evalCtx = null;
     this.renderedCount = BATCH_SIZE;
     this.openModal = null;
     this.countrySearch = '';
@@ -190,7 +194,7 @@ class FairApp {
     this._bindGlobalEvents();
     this.store.subscribe((_state, reason, id) => {
       if (reason === 'note') {
-        this._syncNoteOnly();
+        this._syncNoteOnly(id);
       } else if (reason === 'record' && id) {
         this._patchSingleRecord(id);
       } else {
@@ -228,51 +232,104 @@ class FairApp {
     });
   }
 
-  _syncNoteOnly() {
-    const { filters, records, prefs } = this.store.state;
-    this.evalResult = evaluateAll(this.projects, filters, records, prefs);
+  _syncNoteOnly(id) {
+    const rec = this.store.state.records[id] || {};
     const notedTab = document.querySelector('[data-status="noted"] b');
-    if (notedTab) notedTab.textContent = String(this.evalResult.counts.noted);
+    if (notedTab) {
+      let nCnt = 0;
+      for (const r of Object.values(this.store.state.records)) {
+        if (!r.ign && r.note && r.note.trim()) nCnt += 1;
+      }
+      this.evalResult.counts.noted = nCnt;
+      notedTab.textContent = String(nCnt);
+    }
 
     const active = document.activeElement;
-    if (active?.dataset?.cardNote) {
-      const insp = document.querySelector(`[data-insp-note="${active.dataset.cardNote}"]`);
-      if (insp && insp !== active) insp.value = active.value;
-    } else if (active?.dataset?.inspNote) {
-      const cardInp = document.querySelector(`[data-card-note="${active.dataset.inspNote}"]`);
-      if (cardInp && cardInp !== active) cardInp.value = active.value;
+    if (active?.dataset?.inspNote) {
+      const cardEl = document.querySelector(`[data-pid="${id}"]`);
+      if (cardEl && this.evalResult) {
+        const temp = document.createElement('div');
+        temp.innerHTML = this._cardMarkup(this.projectById.get(id), rec, this.evalResult.evalById.get(id));
+        if (temp.firstElementChild) cardEl.replaceWith(temp.firstElementChild);
+      }
     }
   }
 
   /**
-   * Ultra-fast O(1) DOM patch when toggling star/visit/rating/tag/ignore on a single card.
-   * Avoids rebuilding the entire list DOM on mobile touchscreens.
+   * True O(1) incremental state & DOM update on a single project tap.
+   * Zero loops over 1,242 projects, zero full list DOM rebuilds!
    */
   _patchSingleRecord(id) {
-    const { filters, records, prefs, ui } = this.store.state;
-    this.evalResult = evaluateAll(this.projects, filters, records, prefs);
-    const { evalById, matched, counts } = this.evalResult;
-
-    this._renderStatusTabs(counts);
-    this._renderActiveBar(matched.length);
-    this.mapCtrl.sync({ evalById, matched, records, prefs, ui });
-    if (this.openModal) this._renderModal();
-
     const p = this.projectById.get(id);
-    if (!p) return;
-    const cardEl = document.querySelector(`[data-pid="${id}"]`);
-    if (!cardEl) return;
+    if (!p || !this.evalResult || !this._evalCtx) return;
 
-    const ev = evalById.get(id);
-    if (!ev?.matches) {
-      cardEl.remove();
-      return;
+    const { filters, records, prefs } = this.store.state;
+    const { evalById, matched, counts } = this.evalResult;
+    const oldEv = evalById.get(id);
+    const newRec = records[id] || {};
+    const newEv = evaluateProjectFast(p, newRec, this._evalCtx);
+
+    // Recompute only status counters cleanly from existing records map + single eval delta
+    if (oldEv.isIgnored !== newEv.isIgnored) {
+      counts.ignored += newEv.isIgnored ? 1 : -1;
+      counts.visible += newEv.isIgnored ? -1 : 1;
+      if (newEv.matchScore >= 40) {
+        counts.prefs += newEv.isIgnored ? -1 : 1;
+      }
+    }
+    // Lightweight exact counts from sparse records map (typically 5-50 items, not 1,242!)
+    let fav = 0, todo = 0, visited = 0, rated = 0, noted = 0;
+    for (const [rid, r] of Object.entries(records)) {
+      const ev = rid === id ? newEv : evalById.get(rid);
+      if (ev?.isIgnored) continue;
+      if (r.fav) {
+        fav += 1;
+        if (!r.vis) todo += 1;
+      }
+      if (r.vis) visited += 1;
+      if ((r.rat || 0) > 0) rated += 1;
+      if (r.note && r.note.trim()) noted += 1;
+    }
+    counts.fav = fav;
+    counts.todo = todo;
+    counts.visited = visited;
+    counts.rated = rated;
+    counts.noted = noted;
+
+    evalById.set(id, newEv);
+
+    if (oldEv.matches !== newEv.matches || this.store.state.ui.showRoute) {
+      if (oldEv.matches !== newEv.matches) {
+        if (newEv.matches) {
+          matched.push(p);
+          sortMatched(matched, filters.sortBy, records);
+        } else {
+          const idx = matched.indexOf(p);
+          if (idx !== -1) matched.splice(idx, 1);
+        }
+      }
+      this.mapCtrl.sync({ evalById, matched, records, prefs, ui: this.store.state.ui });
+    } else {
+      this.mapCtrl.refreshBooth(p.table);
+      if (this.mapCtrl.selectedTable === p.table) this.mapCtrl._renderInspector();
     }
 
-    const temp = document.createElement('div');
-    temp.innerHTML = this._cardMarkup(p, records[id] || {}, ev);
-    const nextCard = temp.firstElementChild;
-    if (nextCard) cardEl.replaceWith(nextCard);
+    this._renderStatusTabs(counts);
+    const bulkCount = document.querySelector('#active-bar .bulk-group .badge-mini');
+    if (bulkCount) bulkCount.textContent = String(matched.length);
+
+    if (this.openModal) this._renderModal();
+
+    const cardEl = document.querySelector(`[data-pid="${id}"]`);
+    if (cardEl) {
+      if (!newEv.matches) {
+        cardEl.remove();
+      } else {
+        const temp = document.createElement('div');
+        temp.innerHTML = this._cardMarkup(p, newRec, newEv);
+        if (temp.firstElementChild) cardEl.replaceWith(temp.firstElementChild);
+      }
+    }
   }
 
   _bindGlobalEvents() {
@@ -284,7 +341,7 @@ class FairApp {
       this._searchTimer = setTimeout(() => {
         this.renderedCount = BATCH_SIZE;
         this.store.updateFilters({ q: val });
-      }, 110);
+      }, 120);
     });
 
     document.getElementById('search-clear').addEventListener('click', () => {
@@ -297,19 +354,14 @@ class FairApp {
       const tab = e.target.closest('[data-status]');
       if (tab) {
         this.renderedCount = BATCH_SIZE;
-        this.store.updateFilters({ status: tab.dataset.status });
-        return;
+        return this.store.updateFilters({ status: tab.dataset.status });
       }
       const viewBtn = e.target.closest('[data-view]');
-      if (viewBtn) {
-        this.store.updateUI({ view: viewBtn.dataset.view });
-        return;
-      }
+      if (viewBtn) return this.store.updateUI({ view: viewBtn.dataset.view });
+
       const modeBtn = e.target.closest('[data-fmode]');
-      if (modeBtn) {
-        this.store.updateUI({ filterMode: modeBtn.dataset.fmode });
-        return;
-      }
+      if (modeBtn) return this.store.updateUI({ filterMode: modeBtn.dataset.fmode });
+
       const qCat = e.target.closest('[data-qcat]');
       if (qCat) {
         this.renderedCount = BATCH_SIZE;
@@ -317,37 +369,35 @@ class FairApp {
         if (val === 'adult') {
           const cats = this.store.state.filters.cats;
           const isAdult = cats.inc.length === 2 && cats.inc.includes(3) && cats.inc.includes(4);
-          this.store.updateFilters({
+          return this.store.updateFilters({
             cats: { ...cats, inc: isAdult ? [] : [3, 4], exc: cats.exc.filter((c) => c !== 3 && c !== 4) },
           });
-        } else {
-          this.store.toggleFacetValue('cats', Number(val));
         }
-        return;
+        return this.store.toggleFacetValue('cats', Number(val));
       }
+
       const qZone = e.target.closest('[data-qzone]');
       if (qZone) {
         this.renderedCount = BATCH_SIZE;
-        this.store.toggleFacetValue('zones', qZone.dataset.qzone);
-        return;
+        return this.store.toggleFacetValue('zones', qZone.dataset.qzone);
       }
+
       const topAct = e.target.closest('[data-top-act]');
-      if (topAct) {
-        const act = topAct.dataset.topAct;
-        if (act === 'filters') {
-          this.openModal = 'filters';
-          this._renderModal();
-        } else if (act === 'prefs') {
-          this.openModal = 'prefs';
-          this._renderModal();
-        } else if (act === 'backup') {
-          this.openModal = 'backup';
-          this._renderModal();
-        } else if (act === 'lang') {
-          this.store.updateUI({ lang: this.store.state.ui.lang === 'ar' ? 'en' : 'ar' });
-        } else if (act === 'theme') {
-          this.store.updateUI({ theme: this.store.state.ui.theme === 'dark' ? 'light' : 'dark' });
-        }
+      if (!topAct) return;
+      const act = topAct.dataset.topAct;
+      if (act === 'filters') {
+        this.openModal = 'filters';
+        this._renderModal();
+      } else if (act === 'prefs') {
+        this.openModal = 'prefs';
+        this._renderModal();
+      } else if (act === 'backup') {
+        this.openModal = 'backup';
+        this._renderModal();
+      } else if (act === 'lang') {
+        this.store.updateUI({ lang: this.store.state.ui.lang === 'ar' ? 'en' : 'ar' });
+      } else if (act === 'theme') {
+        this.store.updateUI({ theme: this.store.state.ui.theme === 'dark' ? 'light' : 'dark' });
       }
     });
 
@@ -356,8 +406,7 @@ class FairApp {
       if (qCat && qCat.dataset.qcat !== 'adult') {
         e.preventDefault();
         this.renderedCount = BATCH_SIZE;
-        this.store.toggleFacetValue('cats', Number(qCat.dataset.qcat), 'exc');
-        return;
+        return this.store.toggleFacetValue('cats', Number(qCat.dataset.qcat), 'exc');
       }
       const qZone = e.target.closest('[data-qzone]');
       if (qZone) {
@@ -391,8 +440,7 @@ class FairApp {
         if (!ids.length) return;
         const act = bulk.dataset.bulk;
         if (act === 'ignore' && ids.length > 25 && !confirm(`🚫 ${ids.length}?`)) return;
-        this.store.bulkAction(ids, act);
-        return;
+        return this.store.bulkAction(ids, act);
       }
       if (e.target.closest('[data-clear-filters]')) {
         document.getElementById('search-input').value = '';
@@ -419,14 +467,8 @@ class FairApp {
               this.store.updateUI({ view: window.innerWidth <= 900 ? 'map' : 'split' });
             }
             if (window.innerWidth <= 1020) window.scrollTo({ top: 0, behavior: 'smooth' });
-            requestAnimationFrame(() => {
-              this.mapCtrl._resizeCanvas();
-              this.mapCtrl.focusTable(p.table, true);
-            });
+            requestAnimationFrame(() => this.mapCtrl.focusTable(p.table, true));
           }
-        } else if (act === 'filter-tag') {
-          this.renderedCount = BATCH_SIZE;
-          this.store.toggleFacetValue('tags', btn.dataset.tag);
         } else if (act === 'open') {
           this.openModal = { type: 'detail', id };
           this._renderModal();
@@ -442,21 +484,6 @@ class FairApp {
       } else if (e.target.closest('[data-show-all]')) {
         this.renderedCount = this.evalResult?.matched.length || 9999;
         this._renderList();
-      }
-    });
-
-    listPane.addEventListener('contextmenu', (e) => {
-      const tagBtn = e.target.closest('[data-card-act="filter-tag"]');
-      if (tagBtn) {
-        e.preventDefault();
-        this.renderedCount = BATCH_SIZE;
-        this.store.toggleFacetValue('tags', tagBtn.dataset.tag, 'exc');
-      }
-    });
-
-    listPane.addEventListener('input', (e) => {
-      if (e.target.dataset.cardNote) {
-        this.store.setNote(e.target.dataset.cardNote, e.target.value);
       }
     });
 
@@ -533,6 +560,7 @@ class FairApp {
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.dataset.theme = ui.theme === 'light' ? 'light' : 'dark';
 
+    this._evalCtx = buildEvalContext(filters, prefs);
     this.evalResult = evaluateAll(this.projects, filters, records, prefs);
     const { evalById, matched, counts } = this.evalResult;
 
@@ -599,11 +627,16 @@ class FairApp {
     const ws = document.getElementById('workspace');
     ws.className = `workspace mode-${ui.view}`;
 
-    this._renderList();
+    if (ui.view !== 'map') {
+      this._renderList();
+    }
     if (ui.view !== 'list') {
       requestAnimationFrame(() => this.mapCtrl._resizeCanvas());
+      this.mapCtrl.sync({ evalById, matched, records, prefs, ui });
+    } else {
+      // Keep map data reference fresh for when user switches to Map tab
+      this.mapCtrl.sync({ evalById, matched, records, prefs, ui });
     }
-    this.mapCtrl.sync({ evalById, matched, records, prefs, ui });
     if (this.openModal) this._renderModal();
   }
 
@@ -666,7 +699,7 @@ class FairApp {
   }
 
   _cardMarkup(p, rec, ev) {
-    const { prefs, ui, filters } = this.store.state;
+    const { prefs, ui } = this.store.state;
     const lang = ui.lang === 'en' ? 'en' : 'ar';
     const myTable = (prefs.myBooth || '').toUpperCase();
     const pathObj = this.pathMap.get(p.path);
@@ -681,21 +714,10 @@ class FairApp {
       )
       .join('');
 
-    const cTags = CUSTOM_TAGS.map(
-      (t) =>
-        `<button class="tag-pill ${(rec.tags || []).includes(t.id) ? 'on' : ''}" data-card-act="tag" data-id="${p.id}" data-tag="${t.id}">${t.icon}</button>`
-    ).join('');
-
-    const autoTags = p.tags
-      .slice(0, 4)
+    const activeTagsHtml = (rec.tags || [])
       .map((tid) => {
-        const tg = this.tagMap.get(tid);
-        const activeCls = filters.tags.inc.includes(tid)
-          ? 'inc'
-          : filters.tags.exc.includes(tid)
-          ? 'exc'
-          : '';
-        return `<button class="auto-tag ${activeCls}" data-card-act="filter-tag" data-tag="${tid}">${tg?.icon || ''} ${tg?.[lang] || tid}</button>`;
+        const t = CUSTOM_TAGS.find((x) => x.id === tid);
+        return t ? `<button class="tag-pill on" data-card-act="tag" data-id="${p.id}" data-tag="${t.id}">${t.icon}</button>` : '';
       })
       .join('');
 
@@ -708,6 +730,10 @@ class FairApp {
         return `<a class="member-chip ${met ? 'met' : ''}" href="https://www.linkedin.com/search/results/people/?keywords=${q}" target="_blank" rel="noopener" title="${esc(m.n)}">${m.l ? '👑 ' : ''}${esc(dispName)} ${fl}</a>`;
       })
       .join('');
+
+    const noteHtml = rec.note
+      ? `<div class="note-preview" data-card-act="open" data-id="${p.id}">📝 ${esc(rec.note)}</div>`
+      : '';
 
     return `
       <article class="card ${rec.fav ? 'is-fav' : ''} ${rec.vis ? 'is-vis' : ''} ${ev.isIgnored ? 'is-ignored' : ''}" data-pid="${p.id}">
@@ -725,13 +751,13 @@ class FairApp {
         </div>
         <div class="card-title" data-card-act="open" data-id="${p.id}">${esc(p.title)}</div>
         <div class="card-desc" data-card-act="desc">${esc(p.desc)}</div>
-        ${autoTags ? `<div class="card-tags-row">${autoTags}</div>` : ''}
         <div class="card-rate-bar">
           <div class="stars-row">${stars}</div>
-          ${cTags}
+          ${activeTagsHtml}
+          <button class="tag-pill" data-card-act="open" data-id="${p.id}">🏷️+</button>
         </div>
         <div class="members-row">${membersHtml}</div>
-        <input class="note-inline" type="text" data-card-note="${p.id}" value="${esc(rec.note || '')}" placeholder="${this.t('notePh')}" />
+        ${noteHtml}
       </article>
     `;
   }
@@ -1066,7 +1092,7 @@ class FairApp {
           ${p.tags
             .map((tid) => {
               const tg = this.tagMap.get(tid);
-              return `<span class="auto-tag">${tg?.icon || ''} ${tg?.[lang] || tid}</span>`;
+              return `<span class="badge-mini">${tg?.icon || ''} ${tg?.[lang] || tid}</span>`;
             })
             .join('')}
         </div>
@@ -1218,10 +1244,7 @@ class FairApp {
           if (this.store.state.ui.view === 'list') {
             this.store.updateUI({ view: window.innerWidth <= 900 ? 'map' : 'split' });
           }
-          requestAnimationFrame(() => {
-            this.mapCtrl._resizeCanvas();
-            this.mapCtrl.focusTable(p.table, true);
-          });
+          requestAnimationFrame(() => this.mapCtrl.focusTable(p.table, true));
         }
       }
     }
