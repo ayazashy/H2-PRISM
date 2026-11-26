@@ -9,8 +9,15 @@ import * as THREE from '../vendor/three/three.module.min.js';
 import { OrbitControls } from '../vendor/three/OrbitControls.js';
 import { RoundedBoxGeometry } from '../vendor/three/RoundedBoxGeometry.js';
 
-const root = getComputedStyle(document.documentElement);
-const toneHex = n => root.getPropertyValue('--venue-' + n).trim();
+const FALLBACK_TONES = {
+  100: '#FFFFFF', 98: '#FAFAFA', 97: '#F7F7F8', 96: '#F4F4F5', 95: '#F1F1F3',
+  94: '#EEEEF0', 93: '#EBEBED', 92: '#E8E8EA', 91: '#E5E5E8', 90: '#E2E2E5',
+  88: '#DEDEE1', 87: '#DADADD', 85: '#D6D6DA', 83: '#D1D1D5', 81: '#CDCDD1', 80: '#C9C9CD',
+};
+const toneHex = n => {
+  const v = getComputedStyle(document.documentElement).getPropertyValue('--venue-' + n).trim();
+  return v || FALLBACK_TONES[n] || '#EAEAEF';
+};
 const tone = n => new THREE.Color(toneHex(n));
 const mat = (n, extra) => new THREE.MeshStandardMaterial(Object.assign({ color: tone(n), roughness: .9, metalness: 0 }, extra));
 
@@ -100,7 +107,7 @@ export function createVenue3D(container, site) {
     g.globalAlpha = 1;
     if (!lines) return;
     g.fillStyle = toneHex(98); g.textAlign = 'center';
-    const font = getComputedStyle(document.body).fontFamily;
+    const font = getComputedStyle(document.body).fontFamily || '"IBM Plex Sans Arabic", system-ui, sans-serif';
     g.font = '700 74px ' + font; g.fillText(lines[0], w / 2, 250);
     if (lines[1]) { g.font = '600 44px ' + font; g.fillText(lines[1], w / 2, 312); }
   });
@@ -226,11 +233,12 @@ export function createVenue3D(container, site) {
   /* ---------- الحلقة: رسم عند الحاجة فقط ---------- */
   const listeners = new Set();
   function resize() {
-    const w = container.clientWidth, h = container.clientHeight;
+    const w = Math.max(1, container.clientWidth), h = Math.max(1, container.clientHeight);
     renderer.setSize(w, h);
     camera.aspect = w / h; camera.updateProjectionMatrix(); dirty = true;
   }
   addEventListener('resize', resize);
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(resize).observe(container);
   resize();
   const start = views.perspective();
   camera.position.copy(start.position); controls.target.copy(start.target); controls.update();

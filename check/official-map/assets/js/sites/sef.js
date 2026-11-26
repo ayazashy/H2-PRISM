@@ -16,7 +16,19 @@ import { tr } from '../i18n.js';
 
 const WALL_H = 9 * U, CUT_H = 1.4 * U, ROOM_H = 2.6 * U, STAGE_H = 1.2 * U;
 const m = v => v * U;                                   // طول بالمتر ← وحدات
-const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const FALLBACK_CSS = {
+  '--brand': '#10413D', '--brand-200': '#9DBDB8', '--route': '#CC5E4F',
+  '--ok-fg': '#15803D', '--venue-100': '#FFFFFF', '--venue-98': '#FAFAFA',
+  '--sef-maroon': '#663433', '--sef-green': '#10413D', '--sef-gold': '#D9A23A',
+  '--sef-orange': '#F4A15F', '--sef-teal': '#6FB8C9', '--sef-coral': '#CC5E4F',
+  '--sef-pink': '#F1C4BF', '--sef-area-blue': '#0083AC', '--sef-area-red': '#CC5E4F',
+  '--sef-area-orange': '#F4A15F', '--sef-cafe-maps': '#2B2FA6',
+  '--sef-cafe-dunkin': '#D69A3C', '--sef-cafe-dunkin-sign': '#4A2418',
+  '--sef-cafe-dunkin-ink': '#F0602B', '--sef-cafe-brew': '#1E4FB0',
+  '--sef-cafe-brew-panel': '#1A3E96', '--sef-screen-rig': '#1C1C1F',
+  '--sef-skin': '#C99877', '--sef-beard': '#1F1714',
+};
+const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim() || FALLBACK_CSS[name] || '#10413D';
 
 // الأجنحة بترتيب أرقامها: موضعها في المشهد، وشريحتها، وعمودها، وطرف الشريط
 const BOOTHS = booths();
@@ -114,7 +126,7 @@ export default {
     wallSeg(ux(cursor), uz(HALL.d - .3), ux(HX1 + .9), uz(HALL.d + .3), CUT_H);
 
     /* ---------- بوابات المداخل: إطار بلافتة رقمه، يُرى من الممر ومن داخل القاعة ---------- */
-    const font = getComputedStyle(document.body).fontFamily;
+    const font = getComputedStyle(document.body).fontFamily || '"IBM Plex Sans Arabic", system-ui, sans-serif';
     // الخط بأكبر مقاس يسعه عرض اللافتة (النص الإنجليزي أطول)
     const fitText = (g, text, size, max) => {
       g.font = '700 ' + size + 'px ' + font;

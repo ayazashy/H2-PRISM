@@ -577,7 +577,7 @@ export class FairMapController {
   _syncOfficialMap() {
     if (!this._lastArgs) return;
     const { evalById, records, prefs, ui } = this._lastArgs;
-    if (this.officialFrame) {
+    if (this.officialFrame && ui.view !== 'list') {
       const wantLang = ui.lang === 'en' ? 'en' : 'ar';
       if (this._officialLang !== wantLang) {
         this._officialLang = wantLang;

@@ -17,7 +17,7 @@ const BOOTH = code => tr('بوث ', 'Booth ') + code;
 export function mountWayfinding(venue, site) {
   // بيانات الموقع: الأجنحة («طاولات» المحرّك) ومناطقها — للقراءة فقط
   const S = site.data(venue.tables.list);
-  const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim() || (name === '--brand-200' ? '#9DBDB8' : '#10413D');
   const go = to => document.dispatchEvent(new CustomEvent('map:directions', { detail: { to } }));
 
   /* ---------- شارات المناطق: الاسم وحده ---------- */
