@@ -234,7 +234,8 @@ export class FairMapController {
       } else if (mode === 'fit') {
         this.resetView();
       } else if (mode === 'me' && this._lastArgs) {
-        this.focusTable(this._lastArgs.prefs.myBooth, true);
+        if (this._lastArgs.prefs.myBooth) this.focusTable(this._lastArgs.prefs.myBooth, true);
+        else this.onAction('openPrefs');
       }
     });
 
@@ -455,6 +456,8 @@ export class FairMapController {
     this.toolbar.querySelector('[data-toggle="hideFiltered"]').classList.toggle('active', !!ui.hideFilteredOnMap);
     this.toolbar.querySelector('[data-toggle="hideIgnored"]').classList.toggle('active', !!ui.hideIgnoredOnMap);
     this.toolbar.querySelector('[data-toggle="showRoute"]').classList.toggle('active', !!ui.showRoute);
+    const meBtn = this.toolbar.querySelector('[data-zoom="me"]');
+    if (meBtn) meBtn.classList.toggle('hidden', !prefs.myBooth);
 
     const zMatch = {};
     const zTotal = {};
@@ -701,11 +704,13 @@ export class FairMapController {
       return;
     }
     this.routeStrip.classList.remove('hidden');
-    const startPill = document.createElement('button');
-    startPill.className = 'route-pill start';
-    startPill.dataset.routeTable = prefs.myBooth;
-    startPill.innerHTML = `${ico('pin')} ${escapeHtml(prefs.myBooth)}`;
-    this.routeStrip.appendChild(startPill);
+    if (prefs.myBooth) {
+      const startPill = document.createElement('button');
+      startPill.className = 'route-pill start';
+      startPill.dataset.routeTable = prefs.myBooth;
+      startPill.innerHTML = `${ico('pin')} ${escapeHtml(prefs.myBooth)}`;
+      this.routeStrip.appendChild(startPill);
+    }
 
     this._route.forEach((p, idx) => {
       const b = document.createElement('button');

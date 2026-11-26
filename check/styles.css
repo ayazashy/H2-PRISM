@@ -1244,3 +1244,78 @@ html[data-theme='light'] .ztile.selected {
   font-weight: 700;
   text-decoration: none;
 }
+
+.guide-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin: -4px 0 6px;
+}
+
+.guide-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.guide-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 9px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.guide-step .ico {
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+  gap: 6px;
+}
+
+.guide-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 9px;
+  border-radius: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.guide-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: var(--chip);
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.guide-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.guide-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}

@@ -13,7 +13,7 @@ export const CUSTOM_TAGS = [
 ];
 
 export const DEFAULT_PREFS = {
-  myBooth: 'S-H5-23',
+  myBooth: '',
   prefCats: [3, 4],
   prefPaths: [3, 1, 0, 6, 8, 13],
   prefTags: ['ai', 'startup', 'twin', 'cyber'],

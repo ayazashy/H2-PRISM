@@ -50,7 +50,7 @@ if (typeof window !== 'undefined') {
 export function createDefaultState() {
   const narrow = typeof window !== 'undefined' && window.innerWidth <= 900;
   return {
-    v: 2,
+    v: 3,
     records: {}, // { [projectId]: { fav?, vis?, visAt?, rat?, sub?, ign?, tags?, note?, met? } }
     prefs: structuredClone(DEFAULT_PREFS),
     filters: createDefaultFilters(),
@@ -63,6 +63,7 @@ export function createDefaultState() {
       hideIgnoredOnMap: false,
       showRoute: false,
       filterMode: 'inc', // inc | exc (1-tap switch between Include and Ignore)
+      seenGuide: false,
     },
   };
 }
@@ -71,15 +72,20 @@ function mergeDeepState(parsed) {
   const base = createDefaultState();
   if (!parsed || typeof parsed !== 'object') return base;
   const ui = { ...base.ui, ...(parsed.ui || {}) };
+  const prefs = { ...base.prefs, ...(parsed.prefs || {}) };
   // Migrate v1 mobile users who inherited heavy 'split' default to snappy 'list' once
   const narrow = typeof window !== 'undefined' && window.innerWidth <= 900;
   if ((parsed.v || 1) < 2 && narrow && ui.view === 'split') {
     ui.view = 'list';
   }
+  // Migrate v1/v2 default booth so app starts globally without hardcoding one team's booth
+  if ((parsed.v || 1) < 3 && prefs.myBooth === 'S-H5-23') {
+    prefs.myBooth = '';
+  }
   return {
-    v: 2,
+    v: 3,
     records: parsed.records && typeof parsed.records === 'object' ? parsed.records : {},
-    prefs: { ...base.prefs, ...(parsed.prefs || {}) },
+    prefs,
     filters: { ...base.filters, ...(parsed.filters || {}) },
     ui,
   };

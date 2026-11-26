@@ -16,7 +16,7 @@ const PAGE_SIZE = 15;
 
 const UI_TEXT = {
   ar: {
-    searchPh: 'بحث: مشروع، مشارك (عربي أو إنجليزي)، S-H5-23، -استبعاد...',
+    searchPh: 'بحث: مشروع، مشارك (عربي أو إنجليزي)، S-B1-05، -استبعاد...',
     all: 'الكل',
     prefs: 'تفضيلاتي',
     fav: 'المفضلة',
@@ -71,9 +71,17 @@ const UI_TEXT = {
     exportCsv: 'تصدير جهات الاتصال CSV',
     resetAll: 'مسح بياناتي',
     empty: 'لا توجد مشاريع مطابقة',
+    helpTitle: 'دليل الاستخدام ومعاني الرموز',
+    helpSub: 'دليل تفاعلي سريع لمشاريع معرض SAIF 2026 — تحفظ جميع تقييماتك وملاحظاتك محليا على جهازك.',
+    helpQuick: 'طريقة الاستخدام',
+    helpSymbols: 'معاني الأزرار والرموز',
+    helpTags: 'وسوم البطاقات السريعة',
+    helpMapColors: 'ألوان الخريطة والمسار',
+    helpStart: 'ابدأ التصفح',
+    helpSetBooth: 'تحديد طاولتي (اختياري)',
   },
   en: {
-    searchPh: 'Search: project, member (EN/AR), S-H5-23, -exclude...',
+    searchPh: 'Search: project, member (EN/AR), S-B1-05, -exclude...',
     all: 'All',
     prefs: 'My Picks',
     fav: 'Starred',
@@ -128,6 +136,14 @@ const UI_TEXT = {
     exportCsv: 'Contacts CSV',
     resetAll: 'Reset Data',
     empty: 'No matching projects',
+    helpTitle: 'Instructions & Symbol Guide',
+    helpSub: 'Fast checklist and floorplan explorer for SAIF 2026. All bookmarks, ratings, and notes stay locally on your device.',
+    helpQuick: 'How to Use',
+    helpSymbols: 'Buttons & Status Symbols',
+    helpTags: 'Quick Card Tags',
+    helpMapColors: 'Map Colors & Route',
+    helpStart: 'Start Exploring',
+    helpSetBooth: 'Set My Booth (Optional)',
   },
 };
 
@@ -199,11 +215,23 @@ class FairApp {
       }
     });
     this.render();
+    if (!this.store.state.ui.seenGuide) {
+      this.openModal = 'help';
+      this._renderModal();
+    }
   }
 
   t(key) {
     const lang = this.store.state.ui.lang === 'en' ? 'en' : 'ar';
     return UI_TEXT[lang][key] || key;
+  }
+
+  _closeModal() {
+    const closingHelp = this.openModal === 'help' && !this.store.state.ui.seenGuide;
+    this.openModal = null;
+    document.getElementById('modal-overlay').classList.add('hidden');
+    document.getElementById('modal-body').innerHTML = '';
+    if (closingHelp) this.store.updateUI({ seenGuide: true });
   }
 
   _initMap() {
@@ -225,6 +253,10 @@ class FairApp {
         else if (action === 'rat') this.store.setRating(payload.id, payload.stars);
         else if (action === 'tag') this.store.toggleCustomTag(payload.id, payload.tagId);
         else if (action === 'note') this.store.setNote(payload.id, payload.note);
+        else if (action === 'openPrefs') {
+          this.openModal = 'prefs';
+          this._renderModal();
+        }
       },
     });
   }
@@ -381,6 +413,9 @@ class FairApp {
       } else if (act === 'prefs') {
         this.openModal = 'prefs';
         this._renderModal();
+      } else if (act === 'help') {
+        this.openModal = 'help';
+        this._renderModal();
       } else if (act === 'backup') {
         this.openModal = 'backup';
         this._renderModal();
@@ -479,9 +514,7 @@ class FairApp {
     const overlay = document.getElementById('modal-overlay');
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay || e.target.closest('[data-modal-close]')) {
-        this.openModal = null;
-        overlay.classList.add('hidden');
-        return;
+        return this._closeModal();
       }
       this._handleModalClick(e);
     });
@@ -554,7 +587,7 @@ class FairApp {
     const { evalById, matched, counts } = this.evalResult;
 
     const brandPill = document.querySelector('.brand-pill');
-    if (brandPill) brandPill.textContent = `SAIF 26 · ${prefs.myBooth || 'S-H5-23'}`;
+    if (brandPill) brandPill.textContent = 'SAIF 2026';
     document.getElementById('search-input').placeholder = this.t('searchPh');
     document.getElementById('search-clear').classList.toggle('hidden', !filters.q);
 
@@ -927,7 +960,7 @@ class FairApp {
         <div class="filter-section">
           <div class="sec-hdr">${this.t('myBooth')} · ${this.t('intlBoost')}</div>
           <div class="kw-row">
-            <input class="kw-input" id="pref-my-booth" type="text" value="${esc(prefs.myBooth)}" style="max-width:140px;direction:ltr" />
+            <input class="kw-input" id="pref-my-booth" type="text" value="${esc(prefs.myBooth)}" placeholder="S-B1-05" style="max-width:140px;direction:ltr" />
             <input class="kw-input" id="pref-intl-boost" type="number" min="0" max="30" value="${prefs.boostIntl ?? 12}" style="max-width:90px" />
           </div>
         </div>
@@ -1010,11 +1043,95 @@ class FairApp {
           <button class="btn-danger" data-backup-act="reset">${ico('trash')} ${this.t('resetAll')}</button>
         </div>
       `;
+    } else if (this.openModal === 'help') {
+      const steps =
+        lang === 'ar'
+          ? [
+              ['search', '<b>البحث الذكي:</b> ابحث باسم المشروع، اسم المشارك بالعربي أو الإنجليزي، رقم الطاولة (<code>S-B1-05</code>)، أو اكتب <code>-كلمة</code> لاستبعاد نتائجها.'],
+              ['sliders', '<b>تضمين أو تجاهل:</b> بدّل بين <b>تضمين</b> لإظهار المحدد فقط، أو <b>تجاهل</b> (أو كليك يمين / ضغطة مطولة) لإخفائه من القائمة والخريطة معا.'],
+              ['map', '<b>الخريطة والمسار:</b> اختر منطقة (A-K) لعرض صفوفها بالعرض الكامل والتمرير الأفقي، واضغط على أي طاولة لفتح تقييماتها السريعة.'],
+              ['pin', '<b>تخصيص طاولتك (اختياري):</b> إذا كانت لديك طاولة، أضف رقمها من <b>تفضيلاتي</b> لترتيب المشاريع حسب الأقرب وتمييزها على الخريطة.'],
+              ['save', '<b>حفظ محلي ونسخ احتياطي:</b> جميع اختياراتك وملاحظاتك تبقى على جهازك، ويمكنك تصديرها JSON أو CSV في أي وقت.'],
+            ]
+          : [
+              ['search', '<b>Smart Search:</b> Search projects, member names (EN or AR), booth codes (<code>S-B1-05</code>), or prefix <code>-word</code> to exclude terms.'],
+              ['sliders', '<b>Include & Ignore:</b> Switch between <b>Include</b> mode to focus or <b>Ignore</b> mode (or right-click / long-press pill) to hide items from List and Map.'],
+              ['map', '<b>Floorplan & Route:</b> Tap any Zone (A-K) for full scrollable rows, and tap any booth tile to rate, tag, or inspect details.'],
+              ['pin', '<b>Optional Booth Setup:</b> If exhibiting, enter your own booth in <b>My Picks</b> to enable Nearest sorting and map highlight.'],
+              ['save', '<b>Local Storage & Export:</b> Everything saves automatically on your device; export/import JSON or CSV anytime.'],
+            ];
+
+      const symLegend = [
+        ['starFill', lang === 'ar' ? 'مفضلة / للزيارة' : 'Starred / To Visit'],
+        ['check', lang === 'ar' ? 'تمت الزيارة' : 'Visited'],
+        ['star', lang === 'ar' ? 'تقييم 1-5 + تقنية/عرض/تعاون' : '1-5 Stars & Sub-ratings'],
+        ['ban', lang === 'ar' ? 'تجاهل وإخفاء من القائمة والخريطة' : 'Ignore & hide from List/Map'],
+        ['pin', lang === 'ar' ? 'تحديد الموقع على الخريطة / طاولتك' : 'Locate on Map / Your Booth'],
+        ['note', lang === 'ar' ? 'ملاحظات سريعة أو رابط تواصل' : 'Quick Note / Contact Link'],
+        ['zap', lang === 'ar' ? 'نسبة التوافق مع تفضيلاتك' : 'Match Score from My Picks'],
+        ['sliders', lang === 'ar' ? 'فلاتر متقدمة (منطقة، مجال، جنسية)' : 'Advanced Filters'],
+        ['eyeOff', lang === 'ar' ? 'إخفاء غير المطابق من الخريطة' : 'Hide Unmatched on Map'],
+        ['route', lang === 'ar' ? 'مسار جولة لأقرب الطاولات' : 'Nearest Walking Route'],
+        ['expand', lang === 'ar' ? 'فتح بطاقة التفاصيل الكاملة' : 'Open Full Project Details'],
+        ['save', lang === 'ar' ? 'تصدير / استيراد النسخة الاحتياطية' : 'Backup Export / Import'],
+      ];
+
+      const mapColors = [
+        ['#d97706', lang === 'ar' ? 'مفضلة' : 'Starred'],
+        ['#059669', lang === 'ar' ? 'تمت الزيارة' : 'Visited'],
+        ['#0d9488', lang === 'ar' ? 'مفضلة + تمت الزيارة' : 'Starred + Visited'],
+        ['#7c3aed', lang === 'ar' ? 'مقيّم (1-5)' : 'Rated (1-5)'],
+        ['#0284c7', lang === 'ar' ? 'توافق 50+' : 'Match 50+'],
+        ['#9333ea', lang === 'ar' ? 'طاولتك (عند تحديدها)' : 'Your Booth (if set)'],
+      ];
+
+      body.innerHTML = `
+        <div class="modal-head">
+          <h3>${ico('help')} ${this.t('helpTitle')}</h3>
+          <div style="display:flex;gap:6px;align-items:center">
+            <button class="fchip" data-help-lang type="button">${lang === 'ar' ? 'EN' : 'ع'}</button>
+            <button class="modal-close" data-modal-close type="button">${ico('x')}</button>
+          </div>
+        </div>
+        <p class="guide-sub">${this.t('helpSub')}</p>
+
+        <div class="filter-section">
+          <div class="sec-hdr">${this.t('helpQuick')}</div>
+          <div class="guide-list">
+            ${steps.map(([ic, txt]) => `<div class="guide-step">${ico(ic)} <span>${txt}</span></div>`).join('')}
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <div class="sec-hdr">${this.t('helpSymbols')}</div>
+          <div class="guide-grid">
+            ${symLegend.map(([ic, lbl]) => `<div class="guide-item"><span class="guide-ico">${ico(ic)}</span><span>${lbl}</span></div>`).join('')}
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <div class="sec-hdr">${this.t('helpTags')}</div>
+          <div class="guide-grid">
+            ${CUSTOM_TAGS.map((tg) => `<div class="guide-item"><span class="guide-ico">${ico(tg.icon)}</span><span>${tg[lang]}</span></div>`).join('')}
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <div class="sec-hdr">${this.t('helpMapColors')}</div>
+          <div class="guide-grid">
+            ${mapColors.map(([col, lbl]) => `<div class="guide-item"><span class="guide-swatch" style="background:${col}"></span><span>${lbl}</span></div>`).join('')}
+          </div>
+        </div>
+
+        <div class="guide-foot">
+          <button class="fchip" data-help-prefs type="button">${ico('pin')} ${this.t('helpSetBooth')}</button>
+          <button class="btn-primary" data-modal-close type="button">${this.t('helpStart')}</button>
+        </div>
+      `;
     } else if (this.openModal?.type === 'detail') {
       const p = this.projectById.get(this.openModal.id);
       if (!p) {
-        this.openModal = null;
-        overlay.classList.add('hidden');
+        this._closeModal();
         return;
       }
       const rec = records[p.id] || {};
@@ -1215,8 +1332,7 @@ class FairApp {
       else if (act === 'met') this.store.toggleMet(id, dAct.dataset.member);
       else if (act === 'locate') {
         const p = this.projectById.get(id);
-        this.openModal = null;
-        document.getElementById('modal-overlay').classList.add('hidden');
+        this._closeModal();
         if (p) {
           if (this.store.state.ui.view === 'list') {
             this.store.updateUI({ view: window.innerWidth <= 900 ? 'map' : 'split' });
@@ -1224,6 +1340,18 @@ class FairApp {
           requestAnimationFrame(() => this.mapCtrl.focusTable(p.table, true));
         }
       }
+      return;
+    }
+
+    if (e.target.closest('[data-help-lang]')) {
+      return this.store.updateUI({ lang: this.store.state.ui.lang === 'ar' ? 'en' : 'ar' });
+    }
+    if (e.target.closest('[data-help-prefs]')) {
+      this.openModal = 'prefs';
+      if (!this.store.state.ui.seenGuide) {
+        return this.store.updateUI({ seenGuide: true });
+      }
+      return this._renderModal();
     }
   }
 
@@ -1246,7 +1374,7 @@ class FairApp {
 
   _handleModalChange(e) {
     if (e.target.id === 'pref-my-booth') {
-      return this.store.updatePrefs({ myBooth: e.target.value.trim().toUpperCase() || 'S-H5-23' });
+      return this.store.updatePrefs({ myBooth: e.target.value.trim().toUpperCase() });
     }
     if (e.target.id === 'pref-intl-boost') {
       return this.store.updatePrefs({ boostIntl: Math.max(0, Math.min(30, Number(e.target.value) || 0)) });
@@ -1258,8 +1386,7 @@ class FairApp {
       file.text().then((txt) => {
         try {
           this.store.importJSON(txt, merge);
-          this.openModal = null;
-          document.getElementById('modal-overlay').classList.add('hidden');
+          this._closeModal();
         } catch (err) {
           alert(err.message);
         }
