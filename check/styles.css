@@ -1394,3 +1394,79 @@ html[data-theme='light'] .ztile.selected {
   flex-wrap: wrap;
   margin-top: 6px;
 }
+
+.welcome-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 13px;
+  border-radius: 11px;
+  background: rgba(245, 158, 11, 0.14);
+  border: 1.5px solid var(--gold);
+  color: var(--text);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.welcome-notice .ico {
+  color: var(--gold);
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.welcome-notice strong {
+  display: block;
+  font-size: 14.5px;
+  margin-bottom: 3px;
+  color: var(--gold);
+}
+
+.btn-tweet-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1d9bf0, #0284c7);
+  color: #ffffff;
+  font-size: 15.5px;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(29, 155, 240, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.btn-tweet-cta:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+.tweet-embed-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.tweet-embed-wrap .twitter-tweet {
+  width: 100% !important;
+  max-width: 550px !important;
+  margin: 0 auto !important;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.tweet-embed-wrap .twitter-tweet a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}

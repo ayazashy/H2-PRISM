@@ -79,6 +79,13 @@ const UI_TEXT = {
     helpMapColors: 'ألوان الخريطة والمسار',
     helpStart: 'ابدأ التصفح',
     helpSetBooth: 'تحديد طاولتي (اختياري)',
+    welcomeModalTitle: 'تنويه مهم حول هدف الموقع',
+    welcomeNotVoteTitle: 'التقييم هنا ليس التصويت الرسمي للجمهور!',
+    welcomeNotVoteBody:
+      'النجوم والمفضلة هنا تُحفظ محلياً على جهازك فقط. هدف الموقع هو حفظ المشاريع المميزة (Bookmark) ومساعدتك في إيجاد أقرب المشاريع لاهتماماتك داخل المعرض.',
+    welcomeTweetCta: 'انتقل إلى التغريدة والتوضيح على X (@yaz01n)',
+    welcomeGuideBtn: 'دليل الرموز والطريقة',
+    welcomeContinue: 'فهمت، ابدأ التصفح',
   },
   en: {
     searchPh: 'Search: project, member (EN/AR), S-B1-05, -exclude...',
@@ -144,6 +151,13 @@ const UI_TEXT = {
     helpMapColors: 'Map Colors & Route',
     helpStart: 'Start Exploring',
     helpSetBooth: 'Set My Booth (Optional)',
+    welcomeModalTitle: 'Important Notice About This Site',
+    welcomeNotVoteTitle: 'Ratings Here Are NOT Official Audience Voting!',
+    welcomeNotVoteBody:
+      'Stars and favorites are saved locally on your device as personal bookmarks only. The goal of this website is to bookmark projects and help you find the nearest projects matching your interests.',
+    welcomeTweetCta: 'Open the Official Post on X (@yaz01n)',
+    welcomeGuideBtn: 'Symbols & Guide',
+    welcomeContinue: 'Got It, Start Exploring',
   },
 };
 
@@ -217,10 +231,32 @@ class FairApp {
       }
     });
     this.render();
-    if (!this.store.state.ui.seenGuide) {
-      this.openModal = 'help';
-      this._renderModal();
-    }
+    // Always show the bookmark notice + tweet popup on every entrance/reload
+    this.openModal = 'welcome';
+    this._renderModal();
+  }
+
+  _mountTweetEmbed(container) {
+    if (typeof document === 'undefined' || !container) return;
+    if (typeof navigator !== 'undefined' && /jsdom/i.test(navigator.userAgent || '')) return;
+    try {
+      if (window.twttr?.widgets?.load) {
+        window.twttr.widgets.load(container);
+        return;
+      }
+      if (!document.getElementById('x-wjs')) {
+        const s = document.createElement('script');
+        s.id = 'x-wjs';
+        s.async = true;
+        s.src = 'https://platform.twitter.com/widgets.js';
+        s.onload = () => {
+          try {
+            window.twttr?.widgets?.load(document.getElementById('modal-body'));
+          } catch (_) {}
+        };
+        document.head.appendChild(s);
+      }
+    } catch (_) {}
   }
 
   t(key) {
@@ -229,11 +265,11 @@ class FairApp {
   }
 
   _closeModal() {
-    const closingHelp = this.openModal === 'help' && !this.store.state.ui.seenGuide;
+    const closingIntro = (this.openModal === 'help' || this.openModal === 'welcome') && !this.store.state.ui.seenGuide;
     this.openModal = null;
     document.getElementById('modal-overlay').classList.add('hidden');
     document.getElementById('modal-body').innerHTML = '';
-    if (closingHelp) this.store.updateUI({ seenGuide: true });
+    if (closingIntro) this.store.updateUI({ seenGuide: true });
   }
 
   _initMap() {
@@ -960,6 +996,39 @@ class FairApp {
           <button class="btn-danger" data-backup-act="reset">${ico('trash')} ${this.t('resetAll')}</button>
         </div>
       `;
+    } else if (this.openModal === 'welcome') {
+      const tweetUrl = 'https://x.com/yaz01n/status/2125821129206243725';
+      const xTheme = ui.theme === 'light' ? 'light' : 'dark';
+      body.innerHTML = `
+        <div class="modal-head">
+          <h3>${ico('alert')} ${this.t('welcomeModalTitle')}</h3>
+          <div style="display:flex;gap:6px;align-items:center">
+            <button class="fchip" data-help-lang type="button">${lang === 'ar' ? 'EN' : 'ع'}</button>
+            <button class="modal-close" data-modal-close type="button">${ico('x')}</button>
+          </div>
+        </div>
+        <div class="welcome-notice">
+          ${ico('alert')}
+          <div>
+            <strong>${this.t('welcomeNotVoteTitle')}</strong>
+            <span>${this.t('welcomeNotVoteBody')}</span>
+          </div>
+        </div>
+        <a class="btn-tweet-cta" href="${tweetUrl}" target="_blank" rel="noopener noreferrer">
+          ${ico('external')}
+          <span>${this.t('welcomeTweetCta')}</span>
+        </a>
+        <div class="tweet-embed-wrap">
+          <blockquote class="twitter-tweet" data-dnt="true" data-theme="${xTheme}">
+            <p lang="ar" dir="rtl">الي حابين يستغلون الساعات القليلة المتبقية على #معرض_ومسابقة_سيف باستطلاع المشاريع والبوثات (انا اولهم)<br><br>لاختصار البحث اضفت مزايا فلترة المشاريع حسب الاهتمامات وامكانية تسجيل علامة مرجعية واضافة للمفضلة على خريطة المعرض (تخزين محلي)<br><br>للتجربة: #SAIF2026</p>&mdash; يــ (@yaz01n) <a href="${tweetUrl}?ref_src=twsrc%5Etfw" target="_blank" rel="noopener noreferrer">November 26, 2026</a>
+          </blockquote>
+        </div>
+        <div class="guide-foot">
+          <button class="fchip" data-open-help type="button">${ico('help')} ${this.t('welcomeGuideBtn')}</button>
+          <button class="btn-primary" data-modal-close type="button">${this.t('welcomeContinue')}</button>
+        </div>
+      `;
+      this._mountTweetEmbed(body);
     } else if (this.openModal === 'help') {
       const steps =
         lang === 'ar'
@@ -1271,6 +1340,10 @@ class FairApp {
 
     if (e.target.closest('[data-help-lang]')) {
       return this.store.updateUI({ lang: this.store.state.ui.lang === 'ar' ? 'en' : 'ar' });
+    }
+    if (e.target.closest('[data-open-help]')) {
+      this.openModal = 'help';
+      return this._renderModal();
     }
     if (e.target.closest('[data-help-prefs]')) {
       this.openModal = 'prefs';
