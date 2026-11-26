@@ -11,7 +11,7 @@ import {
 import { FairMapController } from './map.js';
 import { TrackerStore } from './store.js';
 
-const BATCH_SIZE = 16;
+const PAGE_SIZE = 15;
 
 const UI_TEXT = {
   ar: {
@@ -166,11 +166,10 @@ class FairApp {
     this.countryCounts = [];
     this.evalResult = null;
     this._evalCtx = null;
-    this.renderedCount = BATCH_SIZE;
+    this.page = 0;
     this.openModal = null;
     this.countrySearch = '';
     this.mapCtrl = null;
-    this.observer = null;
     this._searchTimer = null;
   }
 
@@ -339,21 +338,21 @@ class FairApp {
       clearTimeout(this._searchTimer);
       const val = e.target.value;
       this._searchTimer = setTimeout(() => {
-        this.renderedCount = BATCH_SIZE;
+        this.page = 0;
         this.store.updateFilters({ q: val });
-      }, 120);
+      }, 140);
     });
 
     document.getElementById('search-clear').addEventListener('click', () => {
       searchEl.value = '';
-      this.renderedCount = BATCH_SIZE;
+      this.page = 0;
       this.store.updateFilters({ q: '' });
     });
 
     document.getElementById('topbar').addEventListener('click', (e) => {
       const tab = e.target.closest('[data-status]');
       if (tab) {
-        this.renderedCount = BATCH_SIZE;
+        this.page = 0;
         return this.store.updateFilters({ status: tab.dataset.status });
       }
       const viewBtn = e.target.closest('[data-view]');
@@ -364,7 +363,7 @@ class FairApp {
 
       const qCat = e.target.closest('[data-qcat]');
       if (qCat) {
-        this.renderedCount = BATCH_SIZE;
+        this.page = 0;
         const val = qCat.dataset.qcat;
         if (val === 'adult') {
           const cats = this.store.state.filters.cats;
@@ -378,7 +377,7 @@ class FairApp {
 
       const qZone = e.target.closest('[data-qzone]');
       if (qZone) {
-        this.renderedCount = BATCH_SIZE;
+        this.page = 0;
         return this.store.toggleFacetValue('zones', qZone.dataset.qzone);
       }
 
@@ -405,26 +404,26 @@ class FairApp {
       const qCat = e.target.closest('[data-qcat]');
       if (qCat && qCat.dataset.qcat !== 'adult') {
         e.preventDefault();
-        this.renderedCount = BATCH_SIZE;
+        this.page = 0;
         return this.store.toggleFacetValue('cats', Number(qCat.dataset.qcat), 'exc');
       }
       const qZone = e.target.closest('[data-qzone]');
       if (qZone) {
         e.preventDefault();
-        this.renderedCount = BATCH_SIZE;
+        this.page = 0;
         this.store.toggleFacetValue('zones', qZone.dataset.qzone, 'exc');
       }
     });
 
     document.getElementById('sort-select').addEventListener('change', (e) => {
-      this.renderedCount = BATCH_SIZE;
+      this.page = 0;
       this.store.updateFilters({ sortBy: e.target.value });
     });
 
     document.getElementById('active-bar').addEventListener('click', (e) => {
       const rem = e.target.closest('[data-remove-chip]');
       if (rem) {
-        this.renderedCount = BATCH_SIZE;
+        this.page = 0;
         const { key, mode, val } = JSON.parse(rem.dataset.removeChip);
         if (key === 'kw') this.store.removeIgnoreKeyword(val);
         else if (key === 'intl') this.store.updateFilters({ intlMode: 'all' });
@@ -444,7 +443,7 @@ class FairApp {
       }
       if (e.target.closest('[data-clear-filters]')) {
         document.getElementById('search-input').value = '';
-        this.renderedCount = BATCH_SIZE;
+        this.page = 0;
         this.store.resetFilters();
       }
     });
@@ -466,7 +465,6 @@ class FairApp {
             if (this.store.state.ui.view === 'list') {
               this.store.updateUI({ view: window.innerWidth <= 900 ? 'map' : 'split' });
             }
-            if (window.innerWidth <= 1020) window.scrollTo({ top: 0, behavior: 'smooth' });
             requestAnimationFrame(() => this.mapCtrl.focusTable(p.table, true));
           }
         } else if (act === 'open') {
@@ -478,12 +476,12 @@ class FairApp {
         return;
       }
 
-      if (e.target.closest('[data-load-more]')) {
-        this.renderedCount += BATCH_SIZE;
+      const pgBtn = e.target.closest('[data-page-to]');
+      if (pgBtn && this.evalResult) {
+        const totalPages = Math.max(1, Math.ceil(this.evalResult.matched.length / PAGE_SIZE));
+        this.page = Math.max(0, Math.min(totalPages - 1, Number(pgBtn.dataset.pageTo)));
         this._renderList();
-      } else if (e.target.closest('[data-show-all]')) {
-        this.renderedCount = this.evalResult?.matched.length || 9999;
-        this._renderList();
+        listPane.scrollTop = 0;
       }
     });
 
@@ -500,7 +498,7 @@ class FairApp {
       const fchip = e.target.closest('[data-fchip]');
       if (fchip) {
         e.preventDefault();
-        this.renderedCount = BATCH_SIZE;
+        this.page = 0;
         const { key, val } = JSON.parse(fchip.dataset.fchip);
         this.store.toggleFacetValue(key, val, 'exc');
       }
@@ -626,15 +624,15 @@ class FairApp {
 
     const ws = document.getElementById('workspace');
     ws.className = `workspace mode-${ui.view}`;
+    document.body.className = `view-${ui.view}`;
 
     if (ui.view !== 'map') {
       this._renderList();
     }
     if (ui.view !== 'list') {
-      requestAnimationFrame(() => this.mapCtrl._resizeCanvas());
       this.mapCtrl.sync({ evalById, matched, records, prefs, ui });
+      requestAnimationFrame(() => this.mapCtrl._resizeCanvas());
     } else {
-      // Keep map data reference fresh for when user switches to Map tab
       this.mapCtrl.sync({ evalById, matched, records, prefs, ui });
     }
     if (this.openModal) this._renderModal();
@@ -772,36 +770,26 @@ class FairApp {
       return;
     }
 
-    const slice = matched.slice(0, this.renderedCount);
+    const totalPages = Math.max(1, Math.ceil(matched.length / PAGE_SIZE));
+    if (this.page >= totalPages) this.page = totalPages - 1;
+    const start = this.page * PAGE_SIZE;
+    const slice = matched.slice(start, start + PAGE_SIZE);
     const cardsHtml = slice
       .map((p) => this._cardMarkup(p, records[p.id] || {}, evalById.get(p.id)))
       .join('');
 
-    const remaining = matched.length - slice.length;
-    const footer =
-      remaining > 0
-        ? `<div id="scroll-sentinel" style="display:flex;gap:8px">
-             <button class="load-more-btn" style="flex:1" data-load-more>${this.t('showMore')} (+${Math.min(BATCH_SIZE, remaining)})</button>
-             <button class="load-more-btn" data-show-all>${this.t('showAll')} (${matched.length})</button>
+    const pager =
+      totalPages > 1
+        ? `<div class="pager-bar">
+             <button class="load-more-btn" data-page-to="0" ${this.page === 0 ? 'disabled' : ''}>«</button>
+             <button class="load-more-btn" data-page-to="${this.page - 1}" ${this.page === 0 ? 'disabled' : ''}>‹</button>
+             <span class="pager-info">${this.page + 1} / ${totalPages} (${matched.length})</span>
+             <button class="load-more-btn" data-page-to="${this.page + 1}" ${this.page >= totalPages - 1 ? 'disabled' : ''}>›</button>
+             <button class="load-more-btn" data-page-to="${totalPages - 1}" ${this.page >= totalPages - 1 ? 'disabled' : ''}>»</button>
            </div>`
         : '';
 
-    pane.innerHTML = cardsHtml + footer;
-
-    if (this.observer) this.observer.disconnect();
-    const sentinel = document.getElementById('scroll-sentinel');
-    if (sentinel && typeof IntersectionObserver !== 'undefined') {
-      this.observer = new IntersectionObserver(
-        (entries) => {
-          if (entries[0].isIntersecting) {
-            this.renderedCount += BATCH_SIZE;
-            this._renderList();
-          }
-        },
-        { root: pane, rootMargin: '180px' }
-      );
-      this.observer.observe(sentinel);
-    }
+    pane.innerHTML = cardsHtml + pager;
   }
 
   _renderModal() {
@@ -1129,20 +1117,20 @@ class FairApp {
 
     if (e.target.closest('[data-modal-clear-filters]')) {
       document.getElementById('search-input').value = '';
-      this.renderedCount = BATCH_SIZE;
+      this.page = 0;
       return this.store.resetFilters();
     }
 
     const fchip = e.target.closest('[data-fchip]');
     if (fchip) {
-      this.renderedCount = BATCH_SIZE;
+      this.page = 0;
       const { key, val } = JSON.parse(fchip.dataset.fchip);
       return this.store.toggleFacetValue(key, val);
     }
 
     const setF = e.target.closest('[data-set-filter]');
     if (setF) {
-      this.renderedCount = BATCH_SIZE;
+      this.page = 0;
       return this.store.updateFilters(JSON.parse(setF.dataset.setFilter));
     }
 

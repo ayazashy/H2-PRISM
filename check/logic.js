@@ -46,9 +46,14 @@ export function createDefaultFilters() {
   };
 }
 
+const AR_CHECK_RE = /[\u0600-\u06FF]/;
+
 export function normSearch(str) {
-  return String(str || '')
-    .toLowerCase()
+  const s = String(str || '').toLowerCase();
+  if (!AR_CHECK_RE.test(s)) {
+    return s.replace(/\s+/g, ' ').trim();
+  }
+  return s
     .replace(/[\u064B-\u065F\u0670\u0640]/g, '')
     .replace(/[أإآٱ]/g, 'ا')
     .replace(/ة/g, 'ه')

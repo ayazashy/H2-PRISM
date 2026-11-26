@@ -50,7 +50,7 @@ if (typeof window !== 'undefined') {
 export function createDefaultState() {
   const narrow = typeof window !== 'undefined' && window.innerWidth <= 900;
   return {
-    v: 1,
+    v: 2,
     records: {}, // { [projectId]: { fav?, vis?, visAt?, rat?, sub?, ign?, tags?, note?, met? } }
     prefs: structuredClone(DEFAULT_PREFS),
     filters: createDefaultFilters(),
@@ -70,12 +70,18 @@ export function createDefaultState() {
 function mergeDeepState(parsed) {
   const base = createDefaultState();
   if (!parsed || typeof parsed !== 'object') return base;
+  const ui = { ...base.ui, ...(parsed.ui || {}) };
+  // Migrate v1 mobile users who inherited heavy 'split' default to snappy 'list' once
+  const narrow = typeof window !== 'undefined' && window.innerWidth <= 900;
+  if ((parsed.v || 1) < 2 && narrow && ui.view === 'split') {
+    ui.view = 'list';
+  }
   return {
-    v: 1,
+    v: 2,
     records: parsed.records && typeof parsed.records === 'object' ? parsed.records : {},
     prefs: { ...base.prefs, ...(parsed.prefs || {}) },
     filters: { ...base.filters, ...(parsed.filters || {}) },
-    ui: { ...base.ui, ...(parsed.ui || {}) },
+    ui,
   };
 }
 

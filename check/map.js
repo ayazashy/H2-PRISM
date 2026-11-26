@@ -43,9 +43,10 @@ function escapeHtml(s) {
 }
 
 /**
- * Built-from-scratch Two-Mode Map Controller:
- * - Overview ('All'): Pre-cached offscreen bitmap Canvas (batch fillRect, 0.2ms pan/zoom blit).
- * - Zone Focus ('A'..'K'): Native 120fps scrollable HTML booth matrix with large thumb-friendly tiles.
+ * Ultra-Light Zero-Lag Map Controller for Low-End Mobile Browsers:
+ * - Overview ('All'): Direct single-pass batched fillRect on 1x DPR canvas (~1.2ms),
+ *   ZERO offscreen 11MB buffer, ZERO global pointermove listeners, ZERO rAF idle loops.
+ * - Zone View ('A'..'K'): Instant native scrollable grid of large thumb-friendly booth buttons.
  */
 export class FairMapController {
   constructor(container, { meta, projects, onSelectProject, onAction }) {
@@ -69,24 +70,13 @@ export class FairMapController {
 
     this.selectedTable = null;
     this.selectedProjectId = null;
-    this.activeZone = null; // null = Hall Overview Canvas, 'A'..'K' = Native Zone Grid
+    this.activeZone = null; // null = Hall Overview, 'A'..'K' = Native Zone Grid
 
-    this.zoom = 1;
-    this.panX = 0;
-    this.panY = 0;
     this.stageW = 800;
     this.stageH = 500;
     this.dpr = 1;
+    this.canvasZoom = 1;
 
-    this.pointers = new Map();
-    this.isDragging = false;
-    this.dragMoved = false;
-    this.dragStart = null;
-    this.pinchDist = 0;
-    this.pinchZoom = 1;
-    this._rafPending = false;
-    this._cacheCanvas = null;
-    this._cacheDirty = true;
     this._lastArgs = null;
     this._matchedIds = new Set();
     this._route = [];
@@ -94,7 +84,6 @@ export class FairMapController {
 
     this._buildDOM();
     this._bindEvents();
-    this._bindPanZoom();
   }
 
   _buildDOM() {
@@ -116,6 +105,8 @@ export class FairMapController {
         <button class="chip-btn" data-toggle="showRoute">〰️</button>
       </div>
       <div class="map-zoom-btns">
+        <button data-zoom="out">−</button>
+        <button data-zoom="in">+</button>
         <button data-zoom="fit">⊡</button>
         <button data-zoom="me">📍</button>
       </div>
@@ -142,10 +133,14 @@ export class FairMapController {
     this.stage = document.createElement('div');
     this.stage.className = 'map-stage';
 
+    this.canvasScroll = document.createElement('div');
+    this.canvasScroll.className = 'canvas-scroll';
+
     this.canvas = document.createElement('canvas');
     this.canvas.className = 'hall-canvas';
     this.ctx = this.canvas.getContext('2d', { alpha: false });
-    this.stage.appendChild(this.canvas);
+    this.canvasScroll.appendChild(this.canvas);
+    this.stage.appendChild(this.canvasScroll);
 
     this.zoneGridWrap = document.createElement('div');
     this.zoneGridWrap.className = 'zone-grid-wrap hidden';
@@ -172,14 +167,23 @@ export class FairMapController {
   }
 
   _resizeCanvas() {
+    if (this.activeZone) return;
     const rect = this.stage.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
-    this.stageW = rect.width;
-    this.stageH = rect.height;
-    this.dpr = Math.min(window.devicePixelRatio || 1, 2);
-    this.canvas.width = Math.round(rect.width * this.dpr);
-    this.canvas.height = Math.round(rect.height * this.dpr);
-    if (!this.activeZone) this._scheduleDraw();
+    const nextW = Math.round(rect.width * this.canvasZoom);
+    const nextH = Math.round(rect.height * this.canvasZoom);
+    // Ignore sub-3px Android address-bar jitter
+    if (Math.abs(nextW - this.stageW) < 3 && Math.abs(nextH - this.stageH) < 3) return;
+
+    this.stageW = nextW;
+    this.stageH = nextH;
+    // Keep 1x DPR on mobile <= 900px for 4x lower memory & instant painting
+    this.dpr = typeof window !== 'undefined' && window.innerWidth <= 900 ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
+    this.canvas.style.width = `${this.stageW}px`;
+    this.canvas.style.height = `${this.stageH}px`;
+    this.canvas.width = Math.round(this.stageW * this.dpr);
+    this.canvas.height = Math.round(this.stageH * this.dpr);
+    this._draw();
   }
 
   _baseFit() {
@@ -195,8 +199,8 @@ export class FairMapController {
     const sy = clientY - rect.top;
     const { scale, ox, oy } = this._baseFit();
     return {
-      wx: ((sx - ox) / scale - this.panX) / this.zoom,
-      wy: ((sy - oy) / scale - this.panY) / this.zoom,
+      wx: (sx - ox) / (scale || 1),
+      wy: (sy - oy) / (scale || 1),
     };
   }
 
@@ -210,8 +214,18 @@ export class FairMapController {
 
       const zBtn = e.target.closest('[data-zoom]');
       if (!zBtn) return;
-      if (zBtn.dataset.zoom === 'fit') this.resetView();
-      else if (zBtn.dataset.zoom === 'me' && this._lastArgs) {
+      const mode = zBtn.dataset.zoom;
+      if (mode === 'in') {
+        this.canvasZoom = Math.min(3, +(this.canvasZoom + 0.6).toFixed(1));
+        this.stageW = 0; // force crisp resize
+        this._resizeCanvas();
+      } else if (mode === 'out') {
+        this.canvasZoom = Math.max(1, +(this.canvasZoom - 0.6).toFixed(1));
+        this.stageW = 0;
+        this._resizeCanvas();
+      } else if (mode === 'fit') {
+        this.resetView();
+      } else if (mode === 'me' && this._lastArgs) {
         this.focusTable(this._lastArgs.prefs.myBooth, true);
       }
     });
@@ -225,19 +239,14 @@ export class FairMapController {
     });
 
     this.canvas.addEventListener('click', (e) => {
-      if (this.dragMoved) return;
       const { wx, wy } = this._screenToWorld(e.clientX, e.clientY);
       const hit = hitTestHall(wx, wy, this.boothGroups);
       if (!hit) {
         this.closeInspector();
         return;
       }
-      if (hit.type === 'booth' && this.zoom >= 1.6) {
-        this.selectTable(hit.table);
-      } else {
-        this.focusZone(hit.zone);
-        if (hit.type === 'booth') this.selectTable(hit.table);
-      }
+      this.focusZone(hit.zone);
+      if (hit.type === 'booth') this.selectTable(hit.table);
     });
 
     this.zoneGridWrap.addEventListener('click', (e) => {
@@ -280,91 +289,11 @@ export class FairMapController {
     });
   }
 
-  _bindPanZoom() {
-    const el = this.canvas;
-
-    el.addEventListener(
-      'wheel',
-      (e) => {
-        e.preventDefault();
-        const factor = e.deltaY < 0 ? 1.22 : 1 / 1.22;
-        const { wx, wy } = this._screenToWorld(e.clientX, e.clientY);
-        this._zoomAtWorld(factor, wx, wy);
-      },
-      { passive: false }
-    );
-
-    el.addEventListener('pointerdown', (e) => {
-      this.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
-      if (this.pointers.size === 1) {
-        this.isDragging = true;
-        this.dragMoved = false;
-        this.dragStart = { x: e.clientX, y: e.clientY, panX: this.panX, panY: this.panY };
-      } else if (this.pointers.size === 2) {
-        const pts = Array.from(this.pointers.values());
-        this.pinchDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
-        this.pinchZoom = this.zoom;
-      }
-    });
-
-    window.addEventListener('pointermove', (e) => {
-      if (this.activeZone || !this.pointers.has(e.pointerId)) return;
-      this.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
-
-      if (this.pointers.size === 2) {
-        const pts = Array.from(this.pointers.values());
-        const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
-        if (this.pinchDist > 0) {
-          const midX = (pts[0].x + pts[1].x) / 2;
-          const midY = (pts[0].y + pts[1].y) / 2;
-          const { wx, wy } = this._screenToWorld(midX, midY);
-          const nextZoom = Math.max(0.85, Math.min(6, this.pinchZoom * (dist / this.pinchDist)));
-          this._zoomAtWorld(nextZoom / this.zoom, wx, wy);
-          this.dragMoved = true;
-        }
-        return;
-      }
-
-      if (this.isDragging && this.dragStart) {
-        const dx = e.clientX - this.dragStart.x;
-        const dy = e.clientY - this.dragStart.y;
-        if (Math.hypot(dx, dy) > 4) this.dragMoved = true;
-        const { scale } = this._baseFit();
-        this.panX = this.dragStart.panX + dx / (scale || 1);
-        this.panY = this.dragStart.panY + dy / (scale || 1);
-        this._scheduleDraw();
-      }
-    });
-
-    const endPtr = (e) => {
-      this.pointers.delete(e.pointerId);
-      if (this.pointers.size === 0) {
-        this.isDragging = false;
-        setTimeout(() => {
-          this.dragMoved = false;
-        }, 0);
-      }
-    };
-    window.addEventListener('pointerup', endPtr);
-    window.addEventListener('pointercancel', endPtr);
-  }
-
-  _zoomAtWorld(factor, wx, wy) {
-    const newZoom = Math.max(0.85, Math.min(6, this.zoom * factor));
-    const screenRelX = this.panX + wx * this.zoom;
-    const screenRelY = this.panY + wy * this.zoom;
-    this.zoom = newZoom;
-    this.panX = screenRelX - wx * this.zoom;
-    this.panY = screenRelY - wy * this.zoom;
-    this._scheduleDraw();
-  }
-
   resetView() {
     this.activeZone = null;
-    this.zoom = 1;
-    this.panX = 0;
-    this.panY = 0;
-    this.canvas.classList.remove('hidden');
+    this.canvasZoom = 1;
+    this.stageW = 0;
+    this.canvasScroll.classList.remove('hidden');
     this.zoneGridWrap.classList.add('hidden');
     this.legend.classList.remove('hidden');
     this._updateZonePillsActive();
@@ -374,7 +303,7 @@ export class FairMapController {
   focusZone(zoneId) {
     if (!ZONE_GEOMETRY[zoneId]) return;
     this.activeZone = zoneId;
-    this.canvas.classList.add('hidden');
+    this.canvasScroll.classList.add('hidden');
     this.zoneGridWrap.classList.remove('hidden');
     this.legend.classList.add('hidden');
     this._updateZonePillsActive();
@@ -392,7 +321,7 @@ export class FairMapController {
     raf(() => {
       const tile = this.zoneGridWrap.querySelector(`[data-gtbl="${tableStr}"]`);
       if (tile?.scrollIntoView) {
-        tile.scrollIntoView({ block: 'center', inline: 'center', behavior: 'smooth' });
+        tile.scrollIntoView({ block: 'center', inline: 'center' });
       }
     });
   }
@@ -416,7 +345,7 @@ export class FairMapController {
       const next = this.zoneGridWrap.querySelector(`[data-gtbl="${tableStr}"]`);
       if (next) next.classList.add('selected');
     } else {
-      this._scheduleDraw();
+      this._draw();
     }
   }
 
@@ -429,7 +358,7 @@ export class FairMapController {
         el.classList.remove('selected');
       }
     } else {
-      this._scheduleDraw();
+      this._draw();
     }
   }
 
@@ -498,8 +427,7 @@ export class FairMapController {
 
   sync({ evalById, matched, records, prefs, ui }) {
     this._lastArgs = { evalById, matched, records, prefs, ui };
-    const matchedIds = new Set(matched.map((p) => p.id));
-    this._matchedIds = matchedIds;
+    this._matchedIds = new Set(matched.map((p) => p.id));
 
     for (const btn of this.toolbar.querySelectorAll('[data-color]')) {
       btn.classList.toggle('active', btn.dataset.color === (ui.mapColor || 'status'));
@@ -516,7 +444,7 @@ export class FairMapController {
     }
     for (const p of this.projects) {
       zTotal[p.z] += 1;
-      if (matchedIds.has(p.id)) zMatch[p.z] += 1;
+      if (this._matchedIds.has(p.id)) zMatch[p.z] += 1;
     }
     this._zMatch = zMatch;
     this._zTotal = zTotal;
@@ -539,7 +467,6 @@ export class FairMapController {
       this._route = [];
     }
 
-    this._cacheDirty = true;
     this._renderLegend(ui.mapColor || 'status', ui.lang);
     this._renderRouteStrip(prefs);
     if (this.selectedTable) this._renderInspector();
@@ -547,85 +474,106 @@ export class FairMapController {
     if (this.activeZone) {
       this._renderZoneGrid();
     } else {
-      if (!this.stageW || !this.stageH) this._resizeCanvas();
-      this._scheduleDraw();
+      this._draw();
     }
   }
 
-  /**
-   * Fast single-booth update when user clicks a button on a card without rebuilding full cache unless needed.
-   */
   refreshBooth(tableStr) {
     if (!this._lastArgs) return;
-    this._cacheDirty = true;
     if (this.activeZone) {
       const parsed = parseTableCode(tableStr);
-      if (parsed?.z === this.activeZone) this._renderZoneGrid();
+      if (parsed?.z === this.activeZone) {
+        const tile = this.zoneGridWrap.querySelector(`[data-gtbl="${tableStr}"]`);
+        if (tile) {
+          const vis = this._boothVisual(tableStr);
+          if (vis.hidden) {
+            this._renderZoneGrid();
+            return;
+          }
+          tile.style.background = vis.fill;
+          tile.classList.toggle('dim', !vis.anyMatches && !vis.allIgnored && !vis.isMe);
+          tile.classList.toggle('ign', vis.allIgnored && !vis.anyMatches && !vis.isMe);
+          const s = parsed.s;
+          const badge = this._routeIndexByTable.get(tableStr)
+            ? `#${this._routeIndexByTable.get(tableStr)}`
+            : vis.isMe
+            ? '📍'
+            : vis.maxRat
+            ? `${vis.maxRat}★`
+            : vis.anyFav && vis.anyVis
+            ? '★✓'
+            : vis.anyFav
+            ? '★'
+            : vis.anyVis
+            ? '✓'
+            : vis.multi
+            ? '×2'
+            : '';
+          tile.innerHTML = `<b>${s}</b>${badge ? `<i>${badge}</i>` : ''}`;
+        }
+      }
     } else {
-      this._scheduleDraw();
+      this._draw();
     }
   }
 
-  _rebuildCache() {
-    if (typeof document === 'undefined') return;
-    const SCALE = 1.5;
-    if (!this._cacheCanvas) {
-      this._cacheCanvas = document.createElement('canvas');
-      this._cacheCanvas.width = Math.round(HALL_WIDTH * SCALE);
-      this._cacheCanvas.height = Math.round(HALL_HEIGHT * SCALE);
-    }
-    const cctx = this._cacheCanvas.getContext('2d');
-    if (!cctx) return;
-
-    const { ui } = this._lastArgs;
+  _draw() {
+    if (!this.ctx || !this._lastArgs || this.activeZone) return;
+    const ctx = this.ctx;
+    const { prefs, ui } = this._lastArgs;
     const isLight = ui.theme === 'light';
+    const myTable = (prefs.myBooth || '').toUpperCase();
 
-    cctx.save();
-    cctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
-    cctx.fillStyle = isLight ? '#ede9df' : '#111622';
-    cctx.fillRect(0, 0, HALL_WIDTH, HALL_HEIGHT);
+    ctx.save();
+    ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    ctx.fillStyle = isLight ? '#ede9df' : '#111622';
+    ctx.fillRect(0, 0, this.stageW, this.stageH);
+
+    const { scale, ox, oy } = this._baseFit();
+    ctx.translate(ox, oy);
+    ctx.scale(scale, scale);
 
     // Wings
-    cctx.fillStyle = isLight ? 'rgba(2, 132, 199, 0.04)' : 'rgba(96, 165, 250, 0.04)';
-    cctx.strokeStyle = isLight ? '#cbd5e1' : '#263248';
-    cctx.lineWidth = 1.2;
-    cctx.fillRect(8, 8, 842, 678);
-    cctx.strokeRect(8, 8, 842, 678);
+    ctx.fillStyle = isLight ? 'rgba(2, 132, 199, 0.04)' : 'rgba(96, 165, 250, 0.04)';
+    ctx.strokeStyle = isLight ? '#cbd5e1' : '#263248';
+    ctx.lineWidth = 1.2;
+    ctx.fillRect(8, 8, 842, 678);
+    ctx.strokeRect(8, 8, 842, 678);
 
-    cctx.fillStyle = isLight ? 'rgba(124, 58, 237, 0.04)' : 'rgba(167, 139, 250, 0.04)';
-    cctx.fillRect(896, 8, 856, 678);
-    cctx.strokeRect(896, 8, 856, 678);
+    ctx.fillStyle = isLight ? 'rgba(124, 58, 237, 0.04)' : 'rgba(167, 139, 250, 0.04)';
+    ctx.fillRect(896, 8, 856, 678);
+    ctx.strokeRect(896, 8, 856, 678);
 
     // Zone containers
     for (const [zId, g] of Object.entries(ZONE_GEOMETRY)) {
       const box = this.zoneBoxes[zId];
-      cctx.fillStyle = isLight ? '#faf9f5' : '#182032';
-      cctx.fillRect(box.x, box.y, box.w, box.h);
-      cctx.strokeStyle = isLight ? '#d6d3c9' : '#2a3750';
-      cctx.strokeRect(box.x, box.y, box.w, box.h);
+      ctx.fillStyle = isLight ? '#faf9f5' : '#182032';
+      ctx.fillRect(box.x, box.y, box.w, box.h);
+      ctx.strokeStyle = isLight ? '#d6d3c9' : '#2a3750';
+      ctx.strokeRect(box.x, box.y, box.w, box.h);
 
-      cctx.fillStyle = isLight ? '#e7e3d8' : '#202b42';
-      cctx.fillRect(box.x + 1, box.y + 1, box.w - 2, 23);
+      ctx.fillStyle = isLight ? '#e7e3d8' : '#202b42';
+      ctx.fillRect(box.x + 1, box.y + 1, box.w - 2, 23);
 
-      cctx.fillStyle = isLight ? '#0f172a' : '#e6edf3';
-      cctx.font = '700 12px sans-serif';
-      cctx.textBaseline = 'middle';
-      cctx.textAlign = 'left';
-      cctx.fillText(zId, box.x + 9, box.y + 13);
+      ctx.fillStyle = isLight ? '#0f172a' : '#e6edf3';
+      ctx.font = '700 12px sans-serif';
+      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'left';
+      ctx.fillText(zId, box.x + 9, box.y + 13);
 
-      cctx.fillStyle = isLight ? '#475569' : '#9aa8be';
-      cctx.font = '600 9.5px sans-serif';
-      cctx.fillText(ui.lang === 'ar' ? g.labelAr : g.labelEn, box.x + 24, box.y + 13);
+      ctx.fillStyle = isLight ? '#475569' : '#9aa8be';
+      ctx.font = '600 9.5px sans-serif';
+      ctx.fillText(ui.lang === 'ar' ? g.labelAr : g.labelEn, box.x + 24, box.y + 13);
 
-      cctx.fillStyle = isLight ? '#0369a1' : '#7dd3fc';
-      cctx.font = '700 10px sans-serif';
-      cctx.textAlign = 'right';
-      cctx.fillText(`${this._zMatch[zId]}/${this._zTotal[zId]}`, box.x + box.w - 9, box.y + 13);
+      ctx.fillStyle = isLight ? '#0369a1' : '#7dd3fc';
+      ctx.font = '700 10px sans-serif';
+      ctx.textAlign = 'right';
+      ctx.fillText(`${this._zMatch[zId]}/${this._zTotal[zId]}`, box.x + box.w - 9, box.y + 13);
     }
 
-    // Batch booths by (fill + alpha) to minimize Canvas state changes!
+    // Batch booths by fill & alpha (single pass, ~1.2ms)
     const batches = new Map();
-    const favOrMe = [];
+    const pips = [];
 
     for (const [tableStr, projs] of this.boothGroups.entries()) {
       const vis = this._boothVisual(tableStr);
@@ -640,60 +588,22 @@ export class FairMapController {
       if (!batches.has(key)) batches.set(key, { fill: vis.fill, alpha, rects: [] });
       batches.get(key).rects.push(p0);
       if (vis.isMe || vis.anyFav || vis.anyVis || vis.multi) {
-        favOrMe.push({ p0, vis });
+        pips.push({ p0, vis });
       }
     }
 
     for (const b of batches.values()) {
-      cctx.globalAlpha = b.alpha;
-      cctx.fillStyle = b.fill;
+      ctx.globalAlpha = b.alpha;
+      ctx.fillStyle = b.fill;
       for (const p0 of b.rects) {
-        cctx.fillRect(p0.x, p0.y, 14, 22);
+        ctx.fillRect(p0.x, p0.y, 14, 22);
       }
     }
 
-    cctx.globalAlpha = 1;
-    for (const { p0, vis } of favOrMe) {
-      cctx.fillStyle = vis.isMe ? '#ffffff' : vis.anyFav ? '#fef08a' : vis.anyVis ? '#a7f3d0' : '#f472b6';
-      cctx.fillRect(p0.x + 9.5, p0.y + 1.5, 3.2, 3.2);
-    }
-
-    cctx.restore();
-    this._cacheDirty = false;
-  }
-
-  _scheduleDraw() {
-    if (this._rafPending || this.activeZone) return;
-    this._rafPending = true;
-    const raf = typeof requestAnimationFrame === 'function' ? requestAnimationFrame : (fn) => setTimeout(fn, 0);
-    raf(() => {
-      this._rafPending = false;
-      this._draw();
-    });
-  }
-
-  _draw() {
-    if (!this.ctx || !this._lastArgs || this.activeZone) return;
-    if (this._cacheDirty) this._rebuildCache();
-
-    const ctx = this.ctx;
-    const { prefs, ui } = this._lastArgs;
-    const isLight = ui.theme === 'light';
-    const myTable = (prefs.myBooth || '').toUpperCase();
-
-    ctx.save();
-    ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
-    ctx.fillStyle = isLight ? '#ede9df' : '#111622';
-    ctx.fillRect(0, 0, this.stageW, this.stageH);
-
-    const { scale, ox, oy } = this._baseFit();
-    const totalScale = scale * this.zoom;
-    ctx.translate(ox + this.panX * scale, oy + this.panY * scale);
-    ctx.scale(totalScale, totalScale);
-
-    // Single GPU bitmap blit (< 0.2ms!)
-    if (this._cacheCanvas) {
-      ctx.drawImage(this._cacheCanvas, 0, 0, HALL_WIDTH, HALL_HEIGHT);
+    ctx.globalAlpha = 1;
+    for (const { p0, vis } of pips) {
+      ctx.fillStyle = vis.isMe ? '#ffffff' : vis.anyFav ? '#fef08a' : vis.anyVis ? '#a7f3d0' : '#f472b6';
+      ctx.fillRect(p0.x + 9.5, p0.y + 1.5, 3.2, 3.2);
     }
 
     if (ui.showRoute && this._route.length) {
@@ -740,9 +650,6 @@ export class FairMapController {
     ctx.restore();
   }
 
-  /**
-   * Native 120fps scrollable HTML booth matrix for the active zone (A..K).
-   */
   _renderZoneGrid() {
     if (!this.activeZone || !this._lastArgs) return;
     const zId = this.activeZone;
