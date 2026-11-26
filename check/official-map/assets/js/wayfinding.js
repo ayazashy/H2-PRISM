@@ -263,19 +263,19 @@ export function mountWayfinding(venue, site) {
 
     S.tables.forEach((t, idx) => {
       const projs = boothToProjects.get(t.code) || [];
-      let fav = false, vis = false, rat = 0, visible = false;
+      let fav = false, vis = false, rat = 0;
       for (const p of projs) {
         const r = records[p.id] || {};
-        const ev = evalById ? evalById.get(p.id) : null;
+        if (r.ign) continue;
         if (r.fav) fav = true;
         if (r.vis) vis = true;
         if ((r.rat || 0) > rat) rat = r.rat || 0;
-        if (!ev || (ev.matches && !ev.isIgnored)) visible = true;
       }
       const isMe = t.code === myTable;
       const routeNum = routeIndexByTable ? routeIndexByTable.get(t.code) : null;
-      if (!isMe && !routeNum && (!visible || (!fav && !vis && !rat))) return;
-      const prio = isMe ? 100 : routeNum ? 90 - routeNum : fav && vis ? 70 : fav ? 60 : rat ? 50 + rat : 40;
+      // Favourite, checked, or rated projects take priority above تفضيلاتي and always appear on map
+      if (!isMe && !routeNum && !fav && !vis && !rat) return;
+      const prio = isMe ? 100 : routeNum ? 90 - routeNum : fav && vis ? 75 : fav ? 68 : vis ? 60 : 50 + rat;
       candidates.push({ t, idx, isMe, routeNum, fav, vis, rat, prio });
     });
 

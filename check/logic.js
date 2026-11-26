@@ -429,57 +429,62 @@ export function evaluateProjectFast(p, record, ctx) {
   const filters = ctx.filters;
   const matchScore = p._score;
   const dist = p._dist;
+  const hasPriority = !rec.ign && (!!rec.fav || !!rec.vis || (rec.rat || 0) > 0);
 
-  let isIgnored =
-    !!rec.ign ||
-    ctx.globIgnCats.has(p.cat) ||
-    ctx.excCats.has(p.cat) ||
-    ctx.globIgnPaths.has(p.path) ||
-    ctx.excPaths.has(p.path) ||
-    ctx.excZones.has(p.z) ||
-    ctx.excRows.has(p.r) ||
-    ctx.excSizes.has(p.members.length);
+  let isIgnored = false;
+  if (!hasPriority) {
+    isIgnored =
+      !!rec.ign ||
+      ctx.globIgnCats.has(p.cat) ||
+      ctx.excCats.has(p.cat) ||
+      ctx.globIgnPaths.has(p.path) ||
+      ctx.excPaths.has(p.path) ||
+      ctx.excZones.has(p.z) ||
+      ctx.excRows.has(p.r) ||
+      ctx.excSizes.has(p.members.length);
 
-  if (!isIgnored && p.tags.length && (ctx.globIgnTags.size || ctx.excTags.size)) {
-    for (const t of p.tags) {
-      if (ctx.globIgnTags.has(t) || ctx.excTags.has(t)) {
-        isIgnored = true;
-        break;
+    if (!isIgnored && p.tags.length && (ctx.globIgnTags.size || ctx.excTags.size)) {
+      for (const t of p.tags) {
+        if (ctx.globIgnTags.has(t) || ctx.excTags.has(t)) {
+          isIgnored = true;
+          break;
+        }
+      }
+    }
+    const userTagsPre = rec.tags || [];
+    if (!isIgnored && userTagsPre.length && ctx.excCustomTags.size) {
+      for (const t of userTagsPre) {
+        if (ctx.excCustomTags.has(t)) {
+          isIgnored = true;
+          break;
+        }
+      }
+    }
+    if (!isIgnored && ctx.excCountries.size) {
+      for (const n of p.allNats) {
+        if (ctx.excCountries.has(n)) {
+          isIgnored = true;
+          break;
+        }
+      }
+    }
+    if (!isIgnored && ctx.allNegWords.length) {
+      for (const kw of ctx.allNegWords) {
+        if (p.searchText.includes(kw)) {
+          isIgnored = true;
+          break;
+        }
       }
     }
   }
   const userTags = rec.tags || [];
-  if (!isIgnored && userTags.length && ctx.excCustomTags.size) {
-    for (const t of userTags) {
-      if (ctx.excCustomTags.has(t)) {
-        isIgnored = true;
-        break;
-      }
-    }
-  }
-  if (!isIgnored && ctx.excCountries.size) {
-    for (const n of p.allNats) {
-      if (ctx.excCountries.has(n)) {
-        isIgnored = true;
-        break;
-      }
-    }
-  }
-  if (!isIgnored && ctx.allNegWords.length) {
-    for (const kw of ctx.allNegWords) {
-      if (p.searchText.includes(kw)) {
-        isIgnored = true;
-        break;
-      }
-    }
-  }
 
   let statusPass = true;
   if (ctx.viewingIgnored) {
     statusPass = isIgnored;
   } else {
     if (isIgnored) statusPass = false;
-    else if (filters.status === 'prefs') statusPass = matchScore >= 40;
+    else if (filters.status === 'prefs') statusPass = hasPriority || matchScore >= 40;
     else if (filters.status === 'fav') statusPass = !!rec.fav;
     else if (filters.status === 'todo') statusPass = !!rec.fav && !rec.vis;
     else if (filters.status === 'visited') statusPass = !!rec.vis;
@@ -494,6 +499,11 @@ export function evaluateProjectFast(p, record, ctx) {
     if (!p.searchText.includes(tok)) {
       return { matches: false, isIgnored, matchScore, dist };
     }
+  }
+
+  // Starred/checked projects take priority above تفضيلاتي filters (except live search & explicit status tabs)
+  if (hasPriority && !ctx.searchTokens.pos.length && (filters.status === 'all' || filters.status === 'prefs')) {
+    return { matches: true, isIgnored, matchScore, dist };
   }
 
   const vi = ctx.viewingIgnored;
@@ -556,7 +566,8 @@ export function evaluateAll(projects, filters, records, prefs) {
       counts.ignored += 1;
     } else {
       counts.visible += 1;
-      if (ev.matchScore >= 40) counts.prefs += 1;
+      const hasPriority = !rec?.ign && (!!rec?.fav || !!rec?.vis || (rec?.rat || 0) > 0);
+      if (hasPriority || ev.matchScore >= 40) counts.prefs += 1;
       if (rec?.fav) counts.fav += 1;
       if (rec?.fav && !rec?.vis) counts.todo += 1;
       if (rec?.vis) counts.visited += 1;
@@ -572,6 +583,15 @@ export function evaluateAll(projects, filters, records, prefs) {
   return { evalById, matched, counts };
 }
 
+function priorityTier(rec) {
+  if (!rec || rec.ign) return 0;
+  if (rec.fav && rec.vis) return 4;
+  if (rec.fav) return 3;
+  if (rec.vis) return 2;
+  if ((rec.rat || 0) > 0) return 1;
+  return 0;
+}
+
 export function sortMatched(matched, sortBy, records) {
   if (sortBy === 'booth') {
     matched.sort((a, b) => a._idx - b._idx);
@@ -579,8 +599,11 @@ export function sortMatched(matched, sortBy, records) {
   }
   matched.sort((a, b) => {
     switch (sortBy) {
-      case 'match':
-        return b._score - a._score || a._idx - b._idx;
+      case 'match': {
+        const pa = priorityTier(records[a.id]);
+        const pb = priorityTier(records[b.id]);
+        return pb - pa || b._score - a._score || a._idx - b._idx;
+      }
       case 'nearest':
         return a._dist - b._dist || a._idx - b._idx;
       case 'rating': {

@@ -566,22 +566,24 @@ export default {
         const b = BOOTHS[i];
         const projs = boothToProjects ? boothToProjects.get(b.code) || [] : [];
         let anyMatches = false, allIgnored = projs.length > 0;
-        let anyFav = false, anyVis = false, maxRat = 0, maxScore = 0;
+        let anyFav = false, anyVis = false, anyPriority = false, maxRat = 0, maxScore = 0;
         for (let j = 0; j < projs.length; j++) {
           const p = projs[j];
           const r = records[p.id] || {};
           const ev = evalById ? evalById.get(p.id) : null;
-          if (!ev || ev.matches) anyMatches = true;
-          if (!ev || !ev.isIgnored) allIgnored = false;
-          if (r.fav) anyFav = true;
-          if (r.vis) anyVis = true;
-          if ((r.rat || 0) > maxRat) maxRat = r.rat || 0;
+          const prPrio = !r.ign && (!!r.fav || !!r.vis || (r.rat || 0) > 0);
+          if (prPrio) anyPriority = true;
+          if (!ev || ev.matches || prPrio) anyMatches = true;
+          if (!ev || (!ev.isIgnored && !prPrio)) allIgnored = false;
+          if (!r.ign && r.fav) anyFav = true;
+          if (!r.ign && r.vis) anyVis = true;
+          if (!r.ign && (r.rat || 0) > maxRat) maxRat = r.rat || 0;
           const sc = ev ? ev.matchScore : (p._score || 0);
           if (sc > maxScore) maxScore = sc;
         }
         const isMe = b.code === myTable;
-        const hidden = !isMe && ((allIgnored && hideIgnored) || (!anyMatches && projs.length > 0 && hideUnmatched));
-        const dimmed = !isMe && projs.length > 0 && (!anyMatches || allIgnored);
+        const hidden = !isMe && !anyPriority && ((allIgnored && hideIgnored) || (!anyMatches && projs.length > 0 && hideUnmatched));
+        const dimmed = !isMe && !anyPriority && projs.length > 0 && (!anyMatches || allIgnored);
 
         let hexFascia = null, hexTable = null, lift = 0, grow = 1;
         if (isMe) {

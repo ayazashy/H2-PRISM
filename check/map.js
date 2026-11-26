@@ -443,24 +443,27 @@ export class FairMapController {
     for (const pr of projs) {
       const ev = evalById.get(pr.id);
       const rec = records[pr.id] || {};
-      if (this._matchedIds.has(pr.id)) {
+      const hasPriority = !rec.ign && (!!rec.fav || !!rec.vis || (rec.rat || 0) > 0);
+      if (this._matchedIds.has(pr.id) || hasPriority) {
         anyMatches = true;
-        primary = pr;
+        if (!primary || hasPriority) primary = pr;
       }
-      if (!ev?.isIgnored) allIgnored = false;
-      if (rec.fav) anyFav = true;
-      if (rec.vis) anyVis = true;
-      if ((rec.rat || 0) > maxRat) maxRat = rec.rat;
+      if (!ev?.isIgnored && !hasPriority) allIgnored = false;
+      if (!rec.ign && rec.fav) anyFav = true;
+      if (!rec.ign && rec.vis) anyVis = true;
+      if (!rec.ign && (rec.rat || 0) > maxRat) maxRat = rec.rat;
       if ((ev?.matchScore || 0) > maxScore) maxScore = ev.matchScore;
     }
 
+    const anyPriority = anyFav || anyVis || maxRat > 0;
     const hidden =
-      (allIgnored && ui.hideIgnoredOnMap && !isMe) ||
-      (!anyMatches && !allIgnored && ui.hideFilteredOnMap && !isMe);
+      !isMe &&
+      !anyPriority &&
+      ((allIgnored && ui.hideIgnoredOnMap) || (!anyMatches && !allIgnored && ui.hideFilteredOnMap));
 
     let fill = isLight ? '#94a3b8' : '#475569';
     if (isMe) fill = '#9333ea';
-    else if (allIgnored && !anyMatches) fill = isLight ? '#cbd5e1' : '#111827';
+    else if (allIgnored && !anyMatches && !anyPriority) fill = isLight ? '#cbd5e1' : '#111827';
     else if (colorMode === 'status') {
       if (anyFav && anyVis) fill = '#0d9488';
       else if (anyFav) fill = '#d97706';
