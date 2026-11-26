@@ -298,7 +298,7 @@ body.is-kiosk .canvas, body.is-kiosk .map-overlay { bottom: var(--map-safe); }
 /* الكود التعريفي للفريق: سطر هادئ تحت الاسم، أرقام متساوية العرض */
 .bp-code { align-self: flex-start; margin: -2px 4px 2px; font-size: 12px; font-weight: 600; letter-spacing: .04em; color: var(--alpha-black-50); font-variant-numeric: tabular-nums; }
 /* ---- بطاقة الجناح (الخريطة العامة): فوق الجناح بسهم صغير يشير إليه — الفريق، دولته، مساره، قائده ---- */
-.booth-pop { pointer-events: none; z-index: 5; }
+.booth-pop { pointer-events: none; z-index: 25; }
 .booth-pop[hidden] { display: none; }
 .booth-pop__card {
   position: relative; translate: calc(-50% + var(--pop-dx, 0px)) calc(-100% - 14px + var(--pop-dy, 0px)); width: 300px; max-width: calc(100vw - 24px); box-sizing: border-box;

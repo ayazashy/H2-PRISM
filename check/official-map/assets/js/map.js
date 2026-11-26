@@ -169,6 +169,13 @@ if (canvas && wall) {
           venue.fly(venue.views[active ? active.dataset.view : 'perspective']());
         },
       };
+      window.saifChecklistAction = (action, payload) => {
+        try {
+          if (window.parent && window.parent !== window && window.parent.onOfficialMapAction) {
+            window.parent.onOfficialMapAction(action, payload);
+          }
+        } catch (_) {}
+      };
       window.saifOfficialMap = bridge;
       if (latestChecklist) bridge.syncChecklist(latestChecklist);
       try {

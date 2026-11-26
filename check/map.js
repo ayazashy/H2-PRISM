@@ -601,6 +601,7 @@ export class FairMapController {
 
   refreshBooth(tableStr) {
     if (!this._lastArgs) return;
+    this._syncOfficialMap();
     if (this.activeZone) {
       const parsed = parseTableCode(tableStr);
       if (parsed?.z === this.activeZone) {
@@ -617,7 +618,7 @@ export class FairMapController {
           tile.innerHTML = this._tileContentHtml(tableStr, vis);
         }
       }
-    } else {
+    } else if (!this.officialFrame) {
       this._draw();
     }
   }

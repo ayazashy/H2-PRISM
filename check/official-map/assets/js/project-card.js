@@ -81,7 +81,7 @@ export const detailsButton = () =>
   button(tr('تفاصيل المشروع', 'Project details'), { variant: 'soft', attrs: { 'data-pop': 'details' }, cls: 'bp-details' });
 
 // onGo(placeId): الاتجاهات إلى الجناح · onBack: عادت البطاقة الصغيرة · noFlags: شاشات الإرشاد
-export function mountProjectCard({ onGo, onBack, noFlags = false }) {
+export function mountProjectCard({ onGo, onBack, noFlags = false, renderChecklist = null }) {
   const root = document.createElement('div');
   root.className = 'project-card';
   root.hidden = true;
@@ -95,12 +95,14 @@ export function mountProjectCard({ onGo, onBack, noFlags = false }) {
   function render() {
     const { t, i, zone } = current, d = t.details || { description: null, members: [], membersCount: 0 };
     const others = d.members.filter(m => m.role !== 'leader');
-    // pc-grab: مقبض الشيت السفلي (الجوال) · pc-edge: حافة التمرير العلوية — تدرّج خفيف وتمويه متدرّج كشيت iOS
+    const clHtml = renderChecklist ? renderChecklist(t) : '';
+    const activeNote = document.activeElement?.dataset?.clNote;
     const next =
       '<div class="pc-grab" aria-hidden="true"></div>' +
       '<div class="pc-scroll">' +
         cardHead(t, zone, iconButton(I.close, tr('رجوع إلى الخريطة', 'Back to map'), { 'data-pc': 'back' }, 'pc-close')) +
         cardRows(t, noFlags) +
+        clHtml +
         // تحت صفّ القائد: «أعضاء الفريق» نصًّا مجرّدًا بعددهم وسهم — يُضغط فتنسدل صفوف الأعضاء بشكل صفّ القائد
         (others.length ? '<div class="pc-team' + (membersOpen ? ' is-open' : '') + '">' +
           '<button type="button" class="pc-team__toggle" data-pc="members" aria-expanded="' + membersOpen + '" aria-controls="pc-team-list">' +
@@ -116,7 +118,7 @@ export function mountProjectCard({ onGo, onBack, noFlags = false }) {
       '</div>' +
       '<div class="pc-edge" aria-hidden="true"><i></i><i></i><i></i></div>' +
       '<div class="pc-foot">' + goButton(i) + '</div>';
-    if (next === html) return;
+    if (next === html || (activeNote && root.contains(document.activeElement))) return;
     const scroll = card.querySelector('.pc-scroll'), top = scroll ? scroll.scrollTop : 0;
     card.innerHTML = html = next;
     if (scroll) card.querySelector('.pc-scroll').scrollTop = top;
@@ -216,6 +218,17 @@ export function mountProjectCard({ onGo, onBack, noFlags = false }) {
   card.addEventListener('pointercancel', release);
 
   root.addEventListener('click', e => {
+    const clBtn = e.target.closest('[data-cl-act]');
+    if (clBtn) {
+      e.stopPropagation();
+      const act = clBtn.dataset.clAct;
+      const pid = clBtn.dataset.pid;
+      if (act === 'rat') window.saifChecklistAction?.('rat', { id: pid, stars: Number(clBtn.dataset.stars) });
+      else if (act === 'tag') window.saifChecklistAction?.('tag', { id: pid, tagId: clBtn.dataset.tag });
+      else if (act === 'open') window.saifChecklistAction?.('openProject', pid);
+      else window.saifChecklistAction?.(act, pid);
+      return;
+    }
     const go = e.target.closest('[data-go]');
     if (go) { const to = go.dataset.go; close(true); onGo(to); return; }
     // أعضاء الفريق: يُفتح ويُطوى في مكانه — الكلاس وحده يحرّك الارتفاع والسهم
@@ -228,6 +241,10 @@ export function mountProjectCard({ onGo, onBack, noFlags = false }) {
       return;
     }
     if (e.target.closest('[data-pc="back"]') && !busy) close();
+  });
+  root.addEventListener('input', e => {
+    const pid = e.target.dataset?.clNote;
+    if (pid) window.saifChecklistAction?.('note', { id: pid, note: e.target.value });
   });
   // فوق بطاقة الجناح: Esc يرجع خطوة واحدة (إلى البطاقة الصغيرة) لا يغلق كل شيء
   addEventListener('keydown', e => { if (e.key === 'Escape' && current) { e.stopImmediatePropagation(); if (!busy) close(); } }, true);

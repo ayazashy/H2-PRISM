@@ -275,6 +275,8 @@ class FairApp {
       notedTab.textContent = String(nCnt);
     }
 
+    if (this.mapCtrl) this.mapCtrl._syncOfficialMap();
+
     const active = document.activeElement;
     if (active?.dataset?.inspNote) {
       const cardEl = document.querySelector(`[data-pid="${id}"]`);

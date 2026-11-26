@@ -108,9 +108,13 @@ export function mountWayfinding(venue, site) {
   let popAt = -1, popHtml = '';
   const zoneOf = t => S.zones[t.zone] ? S.zones[t.zone].name : null;
   // تفاصيل المشروع: تكبر من البطاقة إلى وسط الشاشة، والرجوع يعيدها إلى الجناح
-  const details = mountProjectCard({ onGo: to => { closePop(); go(to); }, noFlags: !!site.here,
+  const details = mountProjectCard({
+    onGo: to => { closePop(); go(to); },
+    noFlags: !!site.here,
+    renderChecklist: t => renderChecklistBar(t),
     // البطاقة عادت بالانتقال نفسه: حركة ظهورها لا تُعاد بعده (كانت تومض لإطار حين ينتهي)
-    onBack: () => { if (popAt >= 0) { pop.firstElementChild.classList.add('is-back'); pop.hidden = false; placePop(); } } });
+    onBack: () => { if (popAt >= 0) { pop.firstElementChild.classList.add('is-back'); pop.hidden = false; placePop(); } }
+  });
   function placePop() {
     if (popAt < 0 || pop.hidden) return;
     const t = S.tables[popAt], p = venue.projectXZ(t.x, t.z, 26);
@@ -386,6 +390,7 @@ export function mountWayfinding(venue, site) {
       clState = next;
       rebuildPins();
       if (popAt >= 0) openPop(popAt);
+      details.refresh();
     },
     focusBooth(code, openCard = true) {
       const idx = S.tables.findIndex(t => t.code === code);
