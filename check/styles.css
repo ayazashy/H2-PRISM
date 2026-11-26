@@ -376,7 +376,7 @@ button {
 @media (max-width: 1020px) {
   .workspace.mode-split {
     grid-template-columns: 1fr;
-    grid-template-rows: 42dvh 1fr;
+    grid-template-rows: minmax(160px, 38dvh) 1fr;
   }
 
   .workspace.mode-split .map-pane {
@@ -647,8 +647,9 @@ html[data-theme='light'] .star-btn {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 6px 0 18px;
+  padding: 6px 0 10px;
   direction: ltr;
+  flex-shrink: 0;
 }
 
 .pager-bar .load-more-btn {
@@ -676,46 +677,52 @@ html[data-theme='light'] .star-btn {
   font-size: 13.5px;
 }
 
-/* Bottom Edge-Arrow Filter & Status Drawer */
+/* Docked Bottom Edge-Arrow Filter & Status Drawer (never overlaps list cards or pager) */
 .bottom-drawer {
-  position: fixed;
-  bottom: max(8px, env(safe-area-inset-bottom));
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
+  flex-shrink: 0;
   z-index: 45;
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
   gap: 6px;
-  width: min(96vw, 760px);
-  pointer-events: none;
+  width: 100%;
+  padding: 4px 10px max(5px, env(safe-area-inset-bottom));
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.22);
 }
 
 .drawer-toggle {
-  pointer-events: auto;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 5px 13px;
+  padding: 4px 14px;
   border-radius: 999px;
-  background: var(--surface);
+  background: var(--surface-2);
   border: 1px solid var(--border);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
   font-size: 12px;
   font-weight: 700;
 }
 
 .drawer-panel {
-  pointer-events: auto;
-  width: 100%;
-  background: var(--surface);
+  width: min(100%, 860px);
+  max-height: 40dvh;
+  overflow-y: auto;
+  background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 8px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  border-radius: 12px;
+  padding: 7px 8px;
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.drawer-panel .active-bar {
+  background: transparent;
+  border-bottom: none;
+  padding: 2px 2px 0;
 }
 
 /* Rebuilt Map (Full-Viewport Map + Collapsible Floating Controls Tray) */

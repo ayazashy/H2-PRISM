@@ -402,6 +402,9 @@ class FairApp {
     document.getElementById('drawer-toggle').addEventListener('click', () => {
       this.drawerOpen = !this.drawerOpen;
       this._syncDrawer();
+      if (this.store.state.ui.view !== 'list') {
+        requestAnimationFrame(() => this.mapCtrl._resizeCanvas());
+      }
     });
 
     document.getElementById('bottom-drawer').addEventListener('click', (e) => {
